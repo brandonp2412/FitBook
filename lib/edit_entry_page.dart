@@ -4,8 +4,6 @@ import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -121,7 +119,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.food != null ? 'Edit ${widget.food!.name}' : 'Add entry',
+          widget.food != null ? 'Edit entry' : 'Add entry',
         ),
         actions: [
           if (widget.food != null)
@@ -199,6 +197,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 );
               },
             ),
+            TextField(
+              controller: _quantityController,
+              decoration: const InputDecoration(label: Text("Quantity")),
+              keyboardType: TextInputType.number,
+            ),
             DropdownButtonFormField<String>(
               value: _unit,
               decoration: const InputDecoration(labelText: 'Unit'),
@@ -213,11 +216,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   _unit = newValue!;
                 });
               },
-            ),
-            TextField(
-              controller: _quantityController,
-              decoration: const InputDecoration(label: Text("Quantity")),
-              keyboardType: TextInputType.number,
             ),
             ListTile(
               title: const Text('Created Date'),
