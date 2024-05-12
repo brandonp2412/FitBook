@@ -40,6 +40,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _name = widget.food?.name ?? "";
     _selectedFood = widget.food;
     _quantityController.text = widget.entry.quantity.toString();
+    _created = widget.entry.created;
     (db.foods.selectOnly()..addColumns([db.foods.name])).get().then(
           (results) => setState(() {
             _nameOptions =
