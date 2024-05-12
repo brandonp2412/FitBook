@@ -104,11 +104,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   late final GeneratedColumn<double> vitaminAIuIu = GeneratedColumn<double>(
       'vitamin_a_iu_iu', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminAReaMcgMeta =
-      const VerificationMeta('vitaminAReaMcg');
+  static const VerificationMeta _vitaminARaeMcgMeta =
+      const VerificationMeta('vitaminARaeMcg');
   @override
-  late final GeneratedColumn<double> vitaminAReaMcg = GeneratedColumn<double>(
-      'vitamin_a_rea_mcg', aliasedName, true,
+  late final GeneratedColumn<double> vitaminARaeMcg = GeneratedColumn<double>(
+      'vitamin_a_rae_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _vitaminCMgMeta =
       const VerificationMeta('vitaminCMg');
@@ -120,7 +120,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       const VerificationMeta('vitaminB12Mcg');
   @override
   late final GeneratedColumn<double> vitaminB12Mcg = GeneratedColumn<double>(
-      'vitamin_b12_mcg', aliasedName, true,
+      'vitamin_b_12_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _vitaminDMcgMeta =
       const VerificationMeta('vitaminDMcg');
@@ -156,13 +156,13 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       const VerificationMeta('omega3sMg');
   @override
   late final GeneratedColumn<double> omega3sMg = GeneratedColumn<double>(
-      'omega3s_mg', aliasedName, true,
+      'omega_3s_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _omega6sMgMeta =
       const VerificationMeta('omega6sMg');
   @override
   late final GeneratedColumn<double> omega6sMg = GeneratedColumn<double>(
-      'omega6s_mg', aliasedName, true,
+      'omega_6s_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _pralScoreMeta =
       const VerificationMeta('pralScore');
@@ -308,11 +308,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   late final GeneratedColumn<double> niacinB3Mg = GeneratedColumn<double>(
       'niacin_b3_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _panthothenicAcidB5MgMeta =
-      const VerificationMeta('panthothenicAcidB5Mg');
+  static const VerificationMeta _pantothenicAcidB5MgMeta =
+      const VerificationMeta('pantothenicAcidB5Mg');
   @override
-  late final GeneratedColumn<double> panthothenicAcidB5Mg =
-      GeneratedColumn<double>('panthothenic_acid_b5_mg', aliasedName, true,
+  late final GeneratedColumn<double> pantothenicAcidB5Mg =
+      GeneratedColumn<double>('pantothenic_acid_b5_mg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _vitaminB6MgMeta =
       const VerificationMeta('vitaminB6Mg');
@@ -428,7 +428,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       const VerificationMeta('menaquinone4Mcg');
   @override
   late final GeneratedColumn<double> menaquinone4Mcg = GeneratedColumn<double>(
-      'menaquinone4_mcg', aliasedName, true,
+      'menaquinone_4_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _fattyAcidsTotalMonounsaturatedMgMeta =
       const VerificationMeta('fattyAcidsTotalMonounsaturatedMg');
@@ -448,25 +448,25 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       const VerificationMeta('u183N3CCCAlaMg');
   @override
   late final GeneratedColumn<double> u183N3CCCAlaMg = GeneratedColumn<double>(
-      '_183N3CCCAlaMg', aliasedName, true,
+      '_18_3_n_3_c_c_c_ala_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _u205N3EpaMgMeta =
       const VerificationMeta('u205N3EpaMg');
   @override
   late final GeneratedColumn<double> u205N3EpaMg = GeneratedColumn<double>(
-      '_205N3EpaMg', aliasedName, true,
+      '_20_5_n_3_epa_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _u225N3DpaMgMeta =
       const VerificationMeta('u225N3DpaMg');
   @override
   late final GeneratedColumn<double> u225N3DpaMg = GeneratedColumn<double>(
-      '_225N3DpaMg', aliasedName, true,
+      '_22_5_n_3_dpa_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _u226N3DhaMgMeta =
       const VerificationMeta('u226N3DhaMg');
   @override
   late final GeneratedColumn<double> u226N3DhaMg = GeneratedColumn<double>(
-      '_226N3DhaMg', aliasedName, true,
+      '_22_6_n_3_dha_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _tryptophanMgMeta =
       const VerificationMeta('tryptophanMg');
@@ -594,161 +594,125 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   late final GeneratedColumn<double> caffeineMg = GeneratedColumn<double>(
       'caffeine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _theobromingMgMeta =
-      const VerificationMeta('theobromingMg');
+  static const VerificationMeta _theobromineMgMeta =
+      const VerificationMeta('theobromineMg');
   @override
-  late final GeneratedColumn<double> theobromingMg = GeneratedColumn<double>(
-      'theobroming_mg', aliasedName, true,
+  late final GeneratedColumn<double> theobromineMg = GeneratedColumn<double>(
+      'theobromine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight1GMeta =
       const VerificationMeta('servingWeight1G');
   @override
   late final GeneratedColumn<double> servingWeight1G = GeneratedColumn<double>(
-      'serving_weight1_g', aliasedName, true,
+      'serving_weight_1_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription1GMeta =
       const VerificationMeta('servingDescription1G');
   @override
   late final GeneratedColumn<String> servingDescription1G =
-      GeneratedColumn<String>(
-          'serving_description1_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_1_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight2GMeta =
       const VerificationMeta('servingWeight2G');
   @override
   late final GeneratedColumn<double> servingWeight2G = GeneratedColumn<double>(
-      'serving_weight2_g', aliasedName, true,
+      'serving_weight_2_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription2GMeta =
       const VerificationMeta('servingDescription2G');
   @override
   late final GeneratedColumn<String> servingDescription2G =
-      GeneratedColumn<String>(
-          'serving_description2_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_2_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight3GMeta =
       const VerificationMeta('servingWeight3G');
   @override
   late final GeneratedColumn<double> servingWeight3G = GeneratedColumn<double>(
-      'serving_weight3_g', aliasedName, true,
+      'serving_weight_3_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription3GMeta =
       const VerificationMeta('servingDescription3G');
   @override
   late final GeneratedColumn<String> servingDescription3G =
-      GeneratedColumn<String>(
-          'serving_description3_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_3_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight4GMeta =
       const VerificationMeta('servingWeight4G');
   @override
   late final GeneratedColumn<double> servingWeight4G = GeneratedColumn<double>(
-      'serving_weight4_g', aliasedName, true,
+      'serving_weight_4_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription4GMeta =
       const VerificationMeta('servingDescription4G');
   @override
   late final GeneratedColumn<String> servingDescription4G =
-      GeneratedColumn<String>(
-          'serving_description4_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_4_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight5GMeta =
       const VerificationMeta('servingWeight5G');
   @override
   late final GeneratedColumn<double> servingWeight5G = GeneratedColumn<double>(
-      'serving_weight5_g', aliasedName, true,
+      'serving_weight_5_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription5GMeta =
       const VerificationMeta('servingDescription5G');
   @override
   late final GeneratedColumn<String> servingDescription5G =
-      GeneratedColumn<String>(
-          'serving_description5_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_5_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight6GMeta =
       const VerificationMeta('servingWeight6G');
   @override
   late final GeneratedColumn<double> servingWeight6G = GeneratedColumn<double>(
-      'serving_weight6_g', aliasedName, true,
+      'serving_weight_6_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription6GMeta =
       const VerificationMeta('servingDescription6G');
   @override
   late final GeneratedColumn<String> servingDescription6G =
-      GeneratedColumn<String>(
-          'serving_description6_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_6_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight7GMeta =
       const VerificationMeta('servingWeight7G');
   @override
   late final GeneratedColumn<double> servingWeight7G = GeneratedColumn<double>(
-      'serving_weight7_g', aliasedName, true,
+      'serving_weight_7_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription7GMeta =
       const VerificationMeta('servingDescription7G');
   @override
   late final GeneratedColumn<String> servingDescription7G =
-      GeneratedColumn<String>(
-          'serving_description7_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_7_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight8GMeta =
       const VerificationMeta('servingWeight8G');
   @override
   late final GeneratedColumn<double> servingWeight8G = GeneratedColumn<double>(
-      'serving_weight8_g', aliasedName, true,
+      'serving_weight_8_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription8GMeta =
       const VerificationMeta('servingDescription8G');
   @override
   late final GeneratedColumn<String> servingDescription8G =
-      GeneratedColumn<String>(
-          'serving_description8_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_8_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _servingWeight9GMeta =
       const VerificationMeta('servingWeight9G');
   @override
   late final GeneratedColumn<double> servingWeight9G = GeneratedColumn<double>(
-      'serving_weight9_g', aliasedName, true,
+      'serving_weight_9_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _servingDescription9GMeta =
       const VerificationMeta('servingDescription9G');
   @override
   late final GeneratedColumn<String> servingDescription9G =
-      GeneratedColumn<String>(
-          'serving_description9_g', aliasedName, true,
-          additionalChecks: GeneratedColumn.checkTextLength(
-              minTextLength: 0, maxTextLength: 191),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false);
+      GeneratedColumn<String>('serving_description_9_g', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _u200calorieWeightGMeta =
       const VerificationMeta('u200calorieWeightG');
   @override
   late final GeneratedColumn<double> u200calorieWeightG =
-      GeneratedColumn<double>('_200calorieWeightG', aliasedName, true,
+      GeneratedColumn<double>('_200_calorie_weight_g', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
@@ -768,7 +732,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
         potassiumKMg,
         magnesiumMg,
         vitaminAIuIu,
-        vitaminAReaMcg,
+        vitaminARaeMcg,
         vitaminCMg,
         vitaminB12Mcg,
         vitaminDMcg,
@@ -802,7 +766,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
         thiaminB1Mg,
         riboflavinB2Mg,
         niacinB3Mg,
-        panthothenicAcidB5Mg,
+        pantothenicAcidB5Mg,
         vitaminB6Mg,
         biotinB7Mcg,
         folateB9Mcg,
@@ -849,7 +813,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
         hydroxyprolineMg,
         alcoholG,
         caffeineMg,
-        theobromingMg,
+        theobromineMg,
         servingWeight1G,
         servingDescription1G,
         servingWeight2G,
@@ -957,11 +921,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           vitaminAIuIu.isAcceptableOrUnknown(
               data['vitamin_a_iu_iu']!, _vitaminAIuIuMeta));
     }
-    if (data.containsKey('vitamin_a_rea_mcg')) {
+    if (data.containsKey('vitamin_a_rae_mcg')) {
       context.handle(
-          _vitaminAReaMcgMeta,
-          vitaminAReaMcg.isAcceptableOrUnknown(
-              data['vitamin_a_rea_mcg']!, _vitaminAReaMcgMeta));
+          _vitaminARaeMcgMeta,
+          vitaminARaeMcg.isAcceptableOrUnknown(
+              data['vitamin_a_rae_mcg']!, _vitaminARaeMcgMeta));
     }
     if (data.containsKey('vitamin_c_mg')) {
       context.handle(
@@ -969,11 +933,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           vitaminCMg.isAcceptableOrUnknown(
               data['vitamin_c_mg']!, _vitaminCMgMeta));
     }
-    if (data.containsKey('vitamin_b12_mcg')) {
+    if (data.containsKey('vitamin_b_12_mcg')) {
       context.handle(
           _vitaminB12McgMeta,
           vitaminB12Mcg.isAcceptableOrUnknown(
-              data['vitamin_b12_mcg']!, _vitaminB12McgMeta));
+              data['vitamin_b_12_mcg']!, _vitaminB12McgMeta));
     }
     if (data.containsKey('vitamin_d_mcg')) {
       context.handle(
@@ -1004,13 +968,17 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       context.handle(_waterGMeta,
           waterG.isAcceptableOrUnknown(data['water_g']!, _waterGMeta));
     }
-    if (data.containsKey('omega3s_mg')) {
-      context.handle(_omega3sMgMeta,
-          omega3sMg.isAcceptableOrUnknown(data['omega3s_mg']!, _omega3sMgMeta));
+    if (data.containsKey('omega_3s_mg')) {
+      context.handle(
+          _omega3sMgMeta,
+          omega3sMg.isAcceptableOrUnknown(
+              data['omega_3s_mg']!, _omega3sMgMeta));
     }
-    if (data.containsKey('omega6s_mg')) {
-      context.handle(_omega6sMgMeta,
-          omega6sMg.isAcceptableOrUnknown(data['omega6s_mg']!, _omega6sMgMeta));
+    if (data.containsKey('omega_6s_mg')) {
+      context.handle(
+          _omega6sMgMeta,
+          omega6sMg.isAcceptableOrUnknown(
+              data['omega_6s_mg']!, _omega6sMgMeta));
     }
     if (data.containsKey('pral_score')) {
       context.handle(_pralScoreMeta,
@@ -1140,11 +1108,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           niacinB3Mg.isAcceptableOrUnknown(
               data['niacin_b3_mg']!, _niacinB3MgMeta));
     }
-    if (data.containsKey('panthothenic_acid_b5_mg')) {
+    if (data.containsKey('pantothenic_acid_b5_mg')) {
       context.handle(
-          _panthothenicAcidB5MgMeta,
-          panthothenicAcidB5Mg.isAcceptableOrUnknown(
-              data['panthothenic_acid_b5_mg']!, _panthothenicAcidB5MgMeta));
+          _pantothenicAcidB5MgMeta,
+          pantothenicAcidB5Mg.isAcceptableOrUnknown(
+              data['pantothenic_acid_b5_mg']!, _pantothenicAcidB5MgMeta));
     }
     if (data.containsKey('vitamin_b6_mg')) {
       context.handle(
@@ -1252,11 +1220,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           dihydrophylloquinoneMcg.isAcceptableOrUnknown(
               data['dihydrophylloquinone_mcg']!, _dihydrophylloquinoneMcgMeta));
     }
-    if (data.containsKey('menaquinone4_mcg')) {
+    if (data.containsKey('menaquinone_4_mcg')) {
       context.handle(
           _menaquinone4McgMeta,
           menaquinone4Mcg.isAcceptableOrUnknown(
-              data['menaquinone4_mcg']!, _menaquinone4McgMeta));
+              data['menaquinone_4_mcg']!, _menaquinone4McgMeta));
     }
     if (data.containsKey('fatty_acids_total_monounsaturated_mg')) {
       context.handle(
@@ -1272,29 +1240,29 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
               data['fatty_acids_total_polyunsaturated_mg']!,
               _fattyAcidsTotalPolyunsaturatedMgMeta));
     }
-    if (data.containsKey('_183N3CCCAlaMg')) {
+    if (data.containsKey('_18_3_n_3_c_c_c_ala_mg')) {
       context.handle(
           _u183N3CCCAlaMgMeta,
           u183N3CCCAlaMg.isAcceptableOrUnknown(
-              data['_183N3CCCAlaMg']!, _u183N3CCCAlaMgMeta));
+              data['_18_3_n_3_c_c_c_ala_mg']!, _u183N3CCCAlaMgMeta));
     }
-    if (data.containsKey('_205N3EpaMg')) {
+    if (data.containsKey('_20_5_n_3_epa_mg')) {
       context.handle(
           _u205N3EpaMgMeta,
           u205N3EpaMg.isAcceptableOrUnknown(
-              data['_205N3EpaMg']!, _u205N3EpaMgMeta));
+              data['_20_5_n_3_epa_mg']!, _u205N3EpaMgMeta));
     }
-    if (data.containsKey('_225N3DpaMg')) {
+    if (data.containsKey('_22_5_n_3_dpa_mg')) {
       context.handle(
           _u225N3DpaMgMeta,
           u225N3DpaMg.isAcceptableOrUnknown(
-              data['_225N3DpaMg']!, _u225N3DpaMgMeta));
+              data['_22_5_n_3_dpa_mg']!, _u225N3DpaMgMeta));
     }
-    if (data.containsKey('_226N3DhaMg')) {
+    if (data.containsKey('_22_6_n_3_dha_mg')) {
       context.handle(
           _u226N3DhaMgMeta,
           u226N3DhaMg.isAcceptableOrUnknown(
-              data['_226N3DhaMg']!, _u226N3DhaMgMeta));
+              data['_22_6_n_3_dha_mg']!, _u226N3DhaMgMeta));
     }
     if (data.containsKey('tryptophan_mg')) {
       context.handle(
@@ -1404,125 +1372,125 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           caffeineMg.isAcceptableOrUnknown(
               data['caffeine_mg']!, _caffeineMgMeta));
     }
-    if (data.containsKey('theobroming_mg')) {
+    if (data.containsKey('theobromine_mg')) {
       context.handle(
-          _theobromingMgMeta,
-          theobromingMg.isAcceptableOrUnknown(
-              data['theobroming_mg']!, _theobromingMgMeta));
+          _theobromineMgMeta,
+          theobromineMg.isAcceptableOrUnknown(
+              data['theobromine_mg']!, _theobromineMgMeta));
     }
-    if (data.containsKey('serving_weight1_g')) {
+    if (data.containsKey('serving_weight_1_g')) {
       context.handle(
           _servingWeight1GMeta,
           servingWeight1G.isAcceptableOrUnknown(
-              data['serving_weight1_g']!, _servingWeight1GMeta));
+              data['serving_weight_1_g']!, _servingWeight1GMeta));
     }
-    if (data.containsKey('serving_description1_g')) {
+    if (data.containsKey('serving_description_1_g')) {
       context.handle(
           _servingDescription1GMeta,
           servingDescription1G.isAcceptableOrUnknown(
-              data['serving_description1_g']!, _servingDescription1GMeta));
+              data['serving_description_1_g']!, _servingDescription1GMeta));
     }
-    if (data.containsKey('serving_weight2_g')) {
+    if (data.containsKey('serving_weight_2_g')) {
       context.handle(
           _servingWeight2GMeta,
           servingWeight2G.isAcceptableOrUnknown(
-              data['serving_weight2_g']!, _servingWeight2GMeta));
+              data['serving_weight_2_g']!, _servingWeight2GMeta));
     }
-    if (data.containsKey('serving_description2_g')) {
+    if (data.containsKey('serving_description_2_g')) {
       context.handle(
           _servingDescription2GMeta,
           servingDescription2G.isAcceptableOrUnknown(
-              data['serving_description2_g']!, _servingDescription2GMeta));
+              data['serving_description_2_g']!, _servingDescription2GMeta));
     }
-    if (data.containsKey('serving_weight3_g')) {
+    if (data.containsKey('serving_weight_3_g')) {
       context.handle(
           _servingWeight3GMeta,
           servingWeight3G.isAcceptableOrUnknown(
-              data['serving_weight3_g']!, _servingWeight3GMeta));
+              data['serving_weight_3_g']!, _servingWeight3GMeta));
     }
-    if (data.containsKey('serving_description3_g')) {
+    if (data.containsKey('serving_description_3_g')) {
       context.handle(
           _servingDescription3GMeta,
           servingDescription3G.isAcceptableOrUnknown(
-              data['serving_description3_g']!, _servingDescription3GMeta));
+              data['serving_description_3_g']!, _servingDescription3GMeta));
     }
-    if (data.containsKey('serving_weight4_g')) {
+    if (data.containsKey('serving_weight_4_g')) {
       context.handle(
           _servingWeight4GMeta,
           servingWeight4G.isAcceptableOrUnknown(
-              data['serving_weight4_g']!, _servingWeight4GMeta));
+              data['serving_weight_4_g']!, _servingWeight4GMeta));
     }
-    if (data.containsKey('serving_description4_g')) {
+    if (data.containsKey('serving_description_4_g')) {
       context.handle(
           _servingDescription4GMeta,
           servingDescription4G.isAcceptableOrUnknown(
-              data['serving_description4_g']!, _servingDescription4GMeta));
+              data['serving_description_4_g']!, _servingDescription4GMeta));
     }
-    if (data.containsKey('serving_weight5_g')) {
+    if (data.containsKey('serving_weight_5_g')) {
       context.handle(
           _servingWeight5GMeta,
           servingWeight5G.isAcceptableOrUnknown(
-              data['serving_weight5_g']!, _servingWeight5GMeta));
+              data['serving_weight_5_g']!, _servingWeight5GMeta));
     }
-    if (data.containsKey('serving_description5_g')) {
+    if (data.containsKey('serving_description_5_g')) {
       context.handle(
           _servingDescription5GMeta,
           servingDescription5G.isAcceptableOrUnknown(
-              data['serving_description5_g']!, _servingDescription5GMeta));
+              data['serving_description_5_g']!, _servingDescription5GMeta));
     }
-    if (data.containsKey('serving_weight6_g')) {
+    if (data.containsKey('serving_weight_6_g')) {
       context.handle(
           _servingWeight6GMeta,
           servingWeight6G.isAcceptableOrUnknown(
-              data['serving_weight6_g']!, _servingWeight6GMeta));
+              data['serving_weight_6_g']!, _servingWeight6GMeta));
     }
-    if (data.containsKey('serving_description6_g')) {
+    if (data.containsKey('serving_description_6_g')) {
       context.handle(
           _servingDescription6GMeta,
           servingDescription6G.isAcceptableOrUnknown(
-              data['serving_description6_g']!, _servingDescription6GMeta));
+              data['serving_description_6_g']!, _servingDescription6GMeta));
     }
-    if (data.containsKey('serving_weight7_g')) {
+    if (data.containsKey('serving_weight_7_g')) {
       context.handle(
           _servingWeight7GMeta,
           servingWeight7G.isAcceptableOrUnknown(
-              data['serving_weight7_g']!, _servingWeight7GMeta));
+              data['serving_weight_7_g']!, _servingWeight7GMeta));
     }
-    if (data.containsKey('serving_description7_g')) {
+    if (data.containsKey('serving_description_7_g')) {
       context.handle(
           _servingDescription7GMeta,
           servingDescription7G.isAcceptableOrUnknown(
-              data['serving_description7_g']!, _servingDescription7GMeta));
+              data['serving_description_7_g']!, _servingDescription7GMeta));
     }
-    if (data.containsKey('serving_weight8_g')) {
+    if (data.containsKey('serving_weight_8_g')) {
       context.handle(
           _servingWeight8GMeta,
           servingWeight8G.isAcceptableOrUnknown(
-              data['serving_weight8_g']!, _servingWeight8GMeta));
+              data['serving_weight_8_g']!, _servingWeight8GMeta));
     }
-    if (data.containsKey('serving_description8_g')) {
+    if (data.containsKey('serving_description_8_g')) {
       context.handle(
           _servingDescription8GMeta,
           servingDescription8G.isAcceptableOrUnknown(
-              data['serving_description8_g']!, _servingDescription8GMeta));
+              data['serving_description_8_g']!, _servingDescription8GMeta));
     }
-    if (data.containsKey('serving_weight9_g')) {
+    if (data.containsKey('serving_weight_9_g')) {
       context.handle(
           _servingWeight9GMeta,
           servingWeight9G.isAcceptableOrUnknown(
-              data['serving_weight9_g']!, _servingWeight9GMeta));
+              data['serving_weight_9_g']!, _servingWeight9GMeta));
     }
-    if (data.containsKey('serving_description9_g')) {
+    if (data.containsKey('serving_description_9_g')) {
       context.handle(
           _servingDescription9GMeta,
           servingDescription9G.isAcceptableOrUnknown(
-              data['serving_description9_g']!, _servingDescription9GMeta));
+              data['serving_description_9_g']!, _servingDescription9GMeta));
     }
-    if (data.containsKey('_200calorieWeightG')) {
+    if (data.containsKey('_200_calorie_weight_g')) {
       context.handle(
           _u200calorieWeightGMeta,
           u200calorieWeightG.isAcceptableOrUnknown(
-              data['_200calorieWeightG']!, _u200calorieWeightGMeta));
+              data['_200_calorie_weight_g']!, _u200calorieWeightGMeta));
     }
     return context;
   }
@@ -1565,12 +1533,12 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           .read(DriftSqlType.double, data['${effectivePrefix}magnesium_mg']),
       vitaminAIuIu: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}vitamin_a_iu_iu']),
-      vitaminAReaMcg: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}vitamin_a_rea_mcg']),
+      vitaminARaeMcg: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}vitamin_a_rae_mcg']),
       vitaminCMg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}vitamin_c_mg']),
-      vitaminB12Mcg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}vitamin_b12_mcg']),
+      vitaminB12Mcg: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}vitamin_b_12_mcg']),
       vitaminDMcg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}vitamin_d_mcg']),
       vitaminEAlphaTocopherolMg: attachedDatabase.typeMapping.read(
@@ -1583,9 +1551,9 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       waterG: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}water_g']),
       omega3sMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}omega3s_mg']),
+          .read(DriftSqlType.double, data['${effectivePrefix}omega_3s_mg']),
       omega6sMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}omega6s_mg']),
+          .read(DriftSqlType.double, data['${effectivePrefix}omega_6s_mg']),
       pralScore: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}pral_score']),
       transFattyAcidsG: attachedDatabase.typeMapping.read(
@@ -1635,9 +1603,9 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           DriftSqlType.double, data['${effectivePrefix}riboflavin_b2_mg']),
       niacinB3Mg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}niacin_b3_mg']),
-      panthothenicAcidB5Mg: attachedDatabase.typeMapping.read(
+      pantothenicAcidB5Mg: attachedDatabase.typeMapping.read(
           DriftSqlType.double,
-          data['${effectivePrefix}panthothenic_acid_b5_mg']),
+          data['${effectivePrefix}pantothenic_acid_b5_mg']),
       vitaminB6Mg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}vitamin_b6_mg']),
       biotinB7Mcg: attachedDatabase.typeMapping
@@ -1678,21 +1646,21 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           DriftSqlType.double,
           data['${effectivePrefix}dihydrophylloquinone_mcg']),
       menaquinone4Mcg: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}menaquinone4_mcg']),
+          DriftSqlType.double, data['${effectivePrefix}menaquinone_4_mcg']),
       fattyAcidsTotalMonounsaturatedMg: attachedDatabase.typeMapping.read(
           DriftSqlType.double,
           data['${effectivePrefix}fatty_acids_total_monounsaturated_mg']),
       fattyAcidsTotalPolyunsaturatedMg: attachedDatabase.typeMapping.read(
           DriftSqlType.double,
           data['${effectivePrefix}fatty_acids_total_polyunsaturated_mg']),
-      u183N3CCCAlaMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}_183N3CCCAlaMg']),
-      u205N3EpaMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}_205N3EpaMg']),
-      u225N3DpaMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}_225N3DpaMg']),
-      u226N3DhaMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}_226N3DhaMg']),
+      u183N3CCCAlaMg: attachedDatabase.typeMapping.read(DriftSqlType.double,
+          data['${effectivePrefix}_18_3_n_3_c_c_c_ala_mg']),
+      u205N3EpaMg: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}_20_5_n_3_epa_mg']),
+      u225N3DpaMg: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}_22_5_n_3_dpa_mg']),
+      u226N3DhaMg: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}_22_6_n_3_dha_mg']),
       tryptophanMg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}tryptophan_mg']),
       threonineMg: attachedDatabase.typeMapping
@@ -1735,55 +1703,55 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           .read(DriftSqlType.double, data['${effectivePrefix}alcohol_g']),
       caffeineMg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}caffeine_mg']),
-      theobromingMg: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}theobroming_mg']),
+      theobromineMg: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}theobromine_mg']),
       servingWeight1G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight1_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_1_g']),
       servingDescription1G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description1_g']),
+          data['${effectivePrefix}serving_description_1_g']),
       servingWeight2G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight2_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_2_g']),
       servingDescription2G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description2_g']),
+          data['${effectivePrefix}serving_description_2_g']),
       servingWeight3G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight3_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_3_g']),
       servingDescription3G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description3_g']),
+          data['${effectivePrefix}serving_description_3_g']),
       servingWeight4G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight4_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_4_g']),
       servingDescription4G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description4_g']),
+          data['${effectivePrefix}serving_description_4_g']),
       servingWeight5G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight5_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_5_g']),
       servingDescription5G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description5_g']),
+          data['${effectivePrefix}serving_description_5_g']),
       servingWeight6G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight6_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_6_g']),
       servingDescription6G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description6_g']),
+          data['${effectivePrefix}serving_description_6_g']),
       servingWeight7G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight7_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_7_g']),
       servingDescription7G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description7_g']),
+          data['${effectivePrefix}serving_description_7_g']),
       servingWeight8G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight8_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_8_g']),
       servingDescription8G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description8_g']),
+          data['${effectivePrefix}serving_description_8_g']),
       servingWeight9G: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}serving_weight9_g']),
+          DriftSqlType.double, data['${effectivePrefix}serving_weight_9_g']),
       servingDescription9G: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}serving_description9_g']),
+          data['${effectivePrefix}serving_description_9_g']),
       u200calorieWeightG: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}_200calorieWeightG']),
+          DriftSqlType.double, data['${effectivePrefix}_200_calorie_weight_g']),
     );
   }
 
@@ -1810,7 +1778,7 @@ class Food extends DataClass implements Insertable<Food> {
   final double? potassiumKMg;
   final double? magnesiumMg;
   final double? vitaminAIuIu;
-  final double? vitaminAReaMcg;
+  final double? vitaminARaeMcg;
   final double? vitaminCMg;
   final double? vitaminB12Mcg;
   final double? vitaminDMcg;
@@ -1844,7 +1812,7 @@ class Food extends DataClass implements Insertable<Food> {
   final double? thiaminB1Mg;
   final double? riboflavinB2Mg;
   final double? niacinB3Mg;
-  final double? panthothenicAcidB5Mg;
+  final double? pantothenicAcidB5Mg;
   final double? vitaminB6Mg;
   final double? biotinB7Mcg;
   final double? folateB9Mcg;
@@ -1891,7 +1859,7 @@ class Food extends DataClass implements Insertable<Food> {
   final double? hydroxyprolineMg;
   final double? alcoholG;
   final double? caffeineMg;
-  final double? theobromingMg;
+  final double? theobromineMg;
   final double? servingWeight1G;
   final String? servingDescription1G;
   final double? servingWeight2G;
@@ -1928,7 +1896,7 @@ class Food extends DataClass implements Insertable<Food> {
       this.potassiumKMg,
       this.magnesiumMg,
       this.vitaminAIuIu,
-      this.vitaminAReaMcg,
+      this.vitaminARaeMcg,
       this.vitaminCMg,
       this.vitaminB12Mcg,
       this.vitaminDMcg,
@@ -1962,7 +1930,7 @@ class Food extends DataClass implements Insertable<Food> {
       this.thiaminB1Mg,
       this.riboflavinB2Mg,
       this.niacinB3Mg,
-      this.panthothenicAcidB5Mg,
+      this.pantothenicAcidB5Mg,
       this.vitaminB6Mg,
       this.biotinB7Mcg,
       this.folateB9Mcg,
@@ -2009,7 +1977,7 @@ class Food extends DataClass implements Insertable<Food> {
       this.hydroxyprolineMg,
       this.alcoholG,
       this.caffeineMg,
-      this.theobromingMg,
+      this.theobromineMg,
       this.servingWeight1G,
       this.servingDescription1G,
       this.servingWeight2G,
@@ -2076,14 +2044,14 @@ class Food extends DataClass implements Insertable<Food> {
     if (!nullToAbsent || vitaminAIuIu != null) {
       map['vitamin_a_iu_iu'] = Variable<double>(vitaminAIuIu);
     }
-    if (!nullToAbsent || vitaminAReaMcg != null) {
-      map['vitamin_a_rea_mcg'] = Variable<double>(vitaminAReaMcg);
+    if (!nullToAbsent || vitaminARaeMcg != null) {
+      map['vitamin_a_rae_mcg'] = Variable<double>(vitaminARaeMcg);
     }
     if (!nullToAbsent || vitaminCMg != null) {
       map['vitamin_c_mg'] = Variable<double>(vitaminCMg);
     }
     if (!nullToAbsent || vitaminB12Mcg != null) {
-      map['vitamin_b12_mcg'] = Variable<double>(vitaminB12Mcg);
+      map['vitamin_b_12_mcg'] = Variable<double>(vitaminB12Mcg);
     }
     if (!nullToAbsent || vitaminDMcg != null) {
       map['vitamin_d_mcg'] = Variable<double>(vitaminDMcg);
@@ -2102,10 +2070,10 @@ class Food extends DataClass implements Insertable<Food> {
       map['water_g'] = Variable<double>(waterG);
     }
     if (!nullToAbsent || omega3sMg != null) {
-      map['omega3s_mg'] = Variable<double>(omega3sMg);
+      map['omega_3s_mg'] = Variable<double>(omega3sMg);
     }
     if (!nullToAbsent || omega6sMg != null) {
-      map['omega6s_mg'] = Variable<double>(omega6sMg);
+      map['omega_6s_mg'] = Variable<double>(omega6sMg);
     }
     if (!nullToAbsent || pralScore != null) {
       map['pral_score'] = Variable<double>(pralScore);
@@ -2179,8 +2147,8 @@ class Food extends DataClass implements Insertable<Food> {
     if (!nullToAbsent || niacinB3Mg != null) {
       map['niacin_b3_mg'] = Variable<double>(niacinB3Mg);
     }
-    if (!nullToAbsent || panthothenicAcidB5Mg != null) {
-      map['panthothenic_acid_b5_mg'] = Variable<double>(panthothenicAcidB5Mg);
+    if (!nullToAbsent || pantothenicAcidB5Mg != null) {
+      map['pantothenic_acid_b5_mg'] = Variable<double>(pantothenicAcidB5Mg);
     }
     if (!nullToAbsent || vitaminB6Mg != null) {
       map['vitamin_b6_mg'] = Variable<double>(vitaminB6Mg);
@@ -2240,7 +2208,7 @@ class Food extends DataClass implements Insertable<Food> {
           Variable<double>(dihydrophylloquinoneMcg);
     }
     if (!nullToAbsent || menaquinone4Mcg != null) {
-      map['menaquinone4_mcg'] = Variable<double>(menaquinone4Mcg);
+      map['menaquinone_4_mcg'] = Variable<double>(menaquinone4Mcg);
     }
     if (!nullToAbsent || fattyAcidsTotalMonounsaturatedMg != null) {
       map['fatty_acids_total_monounsaturated_mg'] =
@@ -2251,16 +2219,16 @@ class Food extends DataClass implements Insertable<Food> {
           Variable<double>(fattyAcidsTotalPolyunsaturatedMg);
     }
     if (!nullToAbsent || u183N3CCCAlaMg != null) {
-      map['_183N3CCCAlaMg'] = Variable<double>(u183N3CCCAlaMg);
+      map['_18_3_n_3_c_c_c_ala_mg'] = Variable<double>(u183N3CCCAlaMg);
     }
     if (!nullToAbsent || u205N3EpaMg != null) {
-      map['_205N3EpaMg'] = Variable<double>(u205N3EpaMg);
+      map['_20_5_n_3_epa_mg'] = Variable<double>(u205N3EpaMg);
     }
     if (!nullToAbsent || u225N3DpaMg != null) {
-      map['_225N3DpaMg'] = Variable<double>(u225N3DpaMg);
+      map['_22_5_n_3_dpa_mg'] = Variable<double>(u225N3DpaMg);
     }
     if (!nullToAbsent || u226N3DhaMg != null) {
-      map['_226N3DhaMg'] = Variable<double>(u226N3DhaMg);
+      map['_22_6_n_3_dha_mg'] = Variable<double>(u226N3DhaMg);
     }
     if (!nullToAbsent || tryptophanMg != null) {
       map['tryptophan_mg'] = Variable<double>(tryptophanMg);
@@ -2325,65 +2293,65 @@ class Food extends DataClass implements Insertable<Food> {
     if (!nullToAbsent || caffeineMg != null) {
       map['caffeine_mg'] = Variable<double>(caffeineMg);
     }
-    if (!nullToAbsent || theobromingMg != null) {
-      map['theobroming_mg'] = Variable<double>(theobromingMg);
+    if (!nullToAbsent || theobromineMg != null) {
+      map['theobromine_mg'] = Variable<double>(theobromineMg);
     }
     if (!nullToAbsent || servingWeight1G != null) {
-      map['serving_weight1_g'] = Variable<double>(servingWeight1G);
+      map['serving_weight_1_g'] = Variable<double>(servingWeight1G);
     }
     if (!nullToAbsent || servingDescription1G != null) {
-      map['serving_description1_g'] = Variable<String>(servingDescription1G);
+      map['serving_description_1_g'] = Variable<String>(servingDescription1G);
     }
     if (!nullToAbsent || servingWeight2G != null) {
-      map['serving_weight2_g'] = Variable<double>(servingWeight2G);
+      map['serving_weight_2_g'] = Variable<double>(servingWeight2G);
     }
     if (!nullToAbsent || servingDescription2G != null) {
-      map['serving_description2_g'] = Variable<String>(servingDescription2G);
+      map['serving_description_2_g'] = Variable<String>(servingDescription2G);
     }
     if (!nullToAbsent || servingWeight3G != null) {
-      map['serving_weight3_g'] = Variable<double>(servingWeight3G);
+      map['serving_weight_3_g'] = Variable<double>(servingWeight3G);
     }
     if (!nullToAbsent || servingDescription3G != null) {
-      map['serving_description3_g'] = Variable<String>(servingDescription3G);
+      map['serving_description_3_g'] = Variable<String>(servingDescription3G);
     }
     if (!nullToAbsent || servingWeight4G != null) {
-      map['serving_weight4_g'] = Variable<double>(servingWeight4G);
+      map['serving_weight_4_g'] = Variable<double>(servingWeight4G);
     }
     if (!nullToAbsent || servingDescription4G != null) {
-      map['serving_description4_g'] = Variable<String>(servingDescription4G);
+      map['serving_description_4_g'] = Variable<String>(servingDescription4G);
     }
     if (!nullToAbsent || servingWeight5G != null) {
-      map['serving_weight5_g'] = Variable<double>(servingWeight5G);
+      map['serving_weight_5_g'] = Variable<double>(servingWeight5G);
     }
     if (!nullToAbsent || servingDescription5G != null) {
-      map['serving_description5_g'] = Variable<String>(servingDescription5G);
+      map['serving_description_5_g'] = Variable<String>(servingDescription5G);
     }
     if (!nullToAbsent || servingWeight6G != null) {
-      map['serving_weight6_g'] = Variable<double>(servingWeight6G);
+      map['serving_weight_6_g'] = Variable<double>(servingWeight6G);
     }
     if (!nullToAbsent || servingDescription6G != null) {
-      map['serving_description6_g'] = Variable<String>(servingDescription6G);
+      map['serving_description_6_g'] = Variable<String>(servingDescription6G);
     }
     if (!nullToAbsent || servingWeight7G != null) {
-      map['serving_weight7_g'] = Variable<double>(servingWeight7G);
+      map['serving_weight_7_g'] = Variable<double>(servingWeight7G);
     }
     if (!nullToAbsent || servingDescription7G != null) {
-      map['serving_description7_g'] = Variable<String>(servingDescription7G);
+      map['serving_description_7_g'] = Variable<String>(servingDescription7G);
     }
     if (!nullToAbsent || servingWeight8G != null) {
-      map['serving_weight8_g'] = Variable<double>(servingWeight8G);
+      map['serving_weight_8_g'] = Variable<double>(servingWeight8G);
     }
     if (!nullToAbsent || servingDescription8G != null) {
-      map['serving_description8_g'] = Variable<String>(servingDescription8G);
+      map['serving_description_8_g'] = Variable<String>(servingDescription8G);
     }
     if (!nullToAbsent || servingWeight9G != null) {
-      map['serving_weight9_g'] = Variable<double>(servingWeight9G);
+      map['serving_weight_9_g'] = Variable<double>(servingWeight9G);
     }
     if (!nullToAbsent || servingDescription9G != null) {
-      map['serving_description9_g'] = Variable<String>(servingDescription9G);
+      map['serving_description_9_g'] = Variable<String>(servingDescription9G);
     }
     if (!nullToAbsent || u200calorieWeightG != null) {
-      map['_200calorieWeightG'] = Variable<double>(u200calorieWeightG);
+      map['_200_calorie_weight_g'] = Variable<double>(u200calorieWeightG);
     }
     return map;
   }
@@ -2431,9 +2399,9 @@ class Food extends DataClass implements Insertable<Food> {
       vitaminAIuIu: vitaminAIuIu == null && nullToAbsent
           ? const Value.absent()
           : Value(vitaminAIuIu),
-      vitaminAReaMcg: vitaminAReaMcg == null && nullToAbsent
+      vitaminARaeMcg: vitaminARaeMcg == null && nullToAbsent
           ? const Value.absent()
-          : Value(vitaminAReaMcg),
+          : Value(vitaminARaeMcg),
       vitaminCMg: vitaminCMg == null && nullToAbsent
           ? const Value.absent()
           : Value(vitaminCMg),
@@ -2533,9 +2501,9 @@ class Food extends DataClass implements Insertable<Food> {
       niacinB3Mg: niacinB3Mg == null && nullToAbsent
           ? const Value.absent()
           : Value(niacinB3Mg),
-      panthothenicAcidB5Mg: panthothenicAcidB5Mg == null && nullToAbsent
+      pantothenicAcidB5Mg: pantothenicAcidB5Mg == null && nullToAbsent
           ? const Value.absent()
-          : Value(panthothenicAcidB5Mg),
+          : Value(pantothenicAcidB5Mg),
       vitaminB6Mg: vitaminB6Mg == null && nullToAbsent
           ? const Value.absent()
           : Value(vitaminB6Mg),
@@ -2678,9 +2646,9 @@ class Food extends DataClass implements Insertable<Food> {
       caffeineMg: caffeineMg == null && nullToAbsent
           ? const Value.absent()
           : Value(caffeineMg),
-      theobromingMg: theobromingMg == null && nullToAbsent
+      theobromineMg: theobromineMg == null && nullToAbsent
           ? const Value.absent()
-          : Value(theobromingMg),
+          : Value(theobromineMg),
       servingWeight1G: servingWeight1G == null && nullToAbsent
           ? const Value.absent()
           : Value(servingWeight1G),
@@ -2761,7 +2729,7 @@ class Food extends DataClass implements Insertable<Food> {
       potassiumKMg: serializer.fromJson<double?>(json['potassiumKMg']),
       magnesiumMg: serializer.fromJson<double?>(json['magnesiumMg']),
       vitaminAIuIu: serializer.fromJson<double?>(json['vitaminAIuIu']),
-      vitaminAReaMcg: serializer.fromJson<double?>(json['vitaminAReaMcg']),
+      vitaminARaeMcg: serializer.fromJson<double?>(json['vitaminARaeMcg']),
       vitaminCMg: serializer.fromJson<double?>(json['vitaminCMg']),
       vitaminB12Mcg: serializer.fromJson<double?>(json['vitaminB12Mcg']),
       vitaminDMcg: serializer.fromJson<double?>(json['vitaminDMcg']),
@@ -2797,8 +2765,8 @@ class Food extends DataClass implements Insertable<Food> {
       thiaminB1Mg: serializer.fromJson<double?>(json['thiaminB1Mg']),
       riboflavinB2Mg: serializer.fromJson<double?>(json['riboflavinB2Mg']),
       niacinB3Mg: serializer.fromJson<double?>(json['niacinB3Mg']),
-      panthothenicAcidB5Mg:
-          serializer.fromJson<double?>(json['panthothenicAcidB5Mg']),
+      pantothenicAcidB5Mg:
+          serializer.fromJson<double?>(json['pantothenicAcidB5Mg']),
       vitaminB6Mg: serializer.fromJson<double?>(json['vitaminB6Mg']),
       biotinB7Mcg: serializer.fromJson<double?>(json['biotinB7Mcg']),
       folateB9Mcg: serializer.fromJson<double?>(json['folateB9Mcg']),
@@ -2851,7 +2819,7 @@ class Food extends DataClass implements Insertable<Food> {
       hydroxyprolineMg: serializer.fromJson<double?>(json['hydroxyprolineMg']),
       alcoholG: serializer.fromJson<double?>(json['alcoholG']),
       caffeineMg: serializer.fromJson<double?>(json['caffeineMg']),
-      theobromingMg: serializer.fromJson<double?>(json['theobromingMg']),
+      theobromineMg: serializer.fromJson<double?>(json['theobromineMg']),
       servingWeight1G: serializer.fromJson<double?>(json['servingWeight1G']),
       servingDescription1G:
           serializer.fromJson<String?>(json['servingDescription1G']),
@@ -2903,7 +2871,7 @@ class Food extends DataClass implements Insertable<Food> {
       'potassiumKMg': serializer.toJson<double?>(potassiumKMg),
       'magnesiumMg': serializer.toJson<double?>(magnesiumMg),
       'vitaminAIuIu': serializer.toJson<double?>(vitaminAIuIu),
-      'vitaminAReaMcg': serializer.toJson<double?>(vitaminAReaMcg),
+      'vitaminARaeMcg': serializer.toJson<double?>(vitaminARaeMcg),
       'vitaminCMg': serializer.toJson<double?>(vitaminCMg),
       'vitaminB12Mcg': serializer.toJson<double?>(vitaminB12Mcg),
       'vitaminDMcg': serializer.toJson<double?>(vitaminDMcg),
@@ -2938,7 +2906,7 @@ class Food extends DataClass implements Insertable<Food> {
       'thiaminB1Mg': serializer.toJson<double?>(thiaminB1Mg),
       'riboflavinB2Mg': serializer.toJson<double?>(riboflavinB2Mg),
       'niacinB3Mg': serializer.toJson<double?>(niacinB3Mg),
-      'panthothenicAcidB5Mg': serializer.toJson<double?>(panthothenicAcidB5Mg),
+      'pantothenicAcidB5Mg': serializer.toJson<double?>(pantothenicAcidB5Mg),
       'vitaminB6Mg': serializer.toJson<double?>(vitaminB6Mg),
       'biotinB7Mcg': serializer.toJson<double?>(biotinB7Mcg),
       'folateB9Mcg': serializer.toJson<double?>(folateB9Mcg),
@@ -2990,7 +2958,7 @@ class Food extends DataClass implements Insertable<Food> {
       'hydroxyprolineMg': serializer.toJson<double?>(hydroxyprolineMg),
       'alcoholG': serializer.toJson<double?>(alcoholG),
       'caffeineMg': serializer.toJson<double?>(caffeineMg),
-      'theobromingMg': serializer.toJson<double?>(theobromingMg),
+      'theobromineMg': serializer.toJson<double?>(theobromineMg),
       'servingWeight1G': serializer.toJson<double?>(servingWeight1G),
       'servingDescription1G': serializer.toJson<String?>(servingDescription1G),
       'servingWeight2G': serializer.toJson<double?>(servingWeight2G),
@@ -3030,7 +2998,7 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> potassiumKMg = const Value.absent(),
           Value<double?> magnesiumMg = const Value.absent(),
           Value<double?> vitaminAIuIu = const Value.absent(),
-          Value<double?> vitaminAReaMcg = const Value.absent(),
+          Value<double?> vitaminARaeMcg = const Value.absent(),
           Value<double?> vitaminCMg = const Value.absent(),
           Value<double?> vitaminB12Mcg = const Value.absent(),
           Value<double?> vitaminDMcg = const Value.absent(),
@@ -3064,7 +3032,7 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> thiaminB1Mg = const Value.absent(),
           Value<double?> riboflavinB2Mg = const Value.absent(),
           Value<double?> niacinB3Mg = const Value.absent(),
-          Value<double?> panthothenicAcidB5Mg = const Value.absent(),
+          Value<double?> pantothenicAcidB5Mg = const Value.absent(),
           Value<double?> vitaminB6Mg = const Value.absent(),
           Value<double?> biotinB7Mcg = const Value.absent(),
           Value<double?> folateB9Mcg = const Value.absent(),
@@ -3113,7 +3081,7 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> hydroxyprolineMg = const Value.absent(),
           Value<double?> alcoholG = const Value.absent(),
           Value<double?> caffeineMg = const Value.absent(),
-          Value<double?> theobromingMg = const Value.absent(),
+          Value<double?> theobromineMg = const Value.absent(),
           Value<double?> servingWeight1G = const Value.absent(),
           Value<String?> servingDescription1G = const Value.absent(),
           Value<double?> servingWeight2G = const Value.absent(),
@@ -3155,8 +3123,8 @@ class Food extends DataClass implements Insertable<Food> {
         magnesiumMg: magnesiumMg.present ? magnesiumMg.value : this.magnesiumMg,
         vitaminAIuIu:
             vitaminAIuIu.present ? vitaminAIuIu.value : this.vitaminAIuIu,
-        vitaminAReaMcg:
-            vitaminAReaMcg.present ? vitaminAReaMcg.value : this.vitaminAReaMcg,
+        vitaminARaeMcg:
+            vitaminARaeMcg.present ? vitaminARaeMcg.value : this.vitaminARaeMcg,
         vitaminCMg: vitaminCMg.present ? vitaminCMg.value : this.vitaminCMg,
         vitaminB12Mcg:
             vitaminB12Mcg.present ? vitaminB12Mcg.value : this.vitaminB12Mcg,
@@ -3207,9 +3175,9 @@ class Food extends DataClass implements Insertable<Food> {
         riboflavinB2Mg:
             riboflavinB2Mg.present ? riboflavinB2Mg.value : this.riboflavinB2Mg,
         niacinB3Mg: niacinB3Mg.present ? niacinB3Mg.value : this.niacinB3Mg,
-        panthothenicAcidB5Mg: panthothenicAcidB5Mg.present
-            ? panthothenicAcidB5Mg.value
-            : this.panthothenicAcidB5Mg,
+        pantothenicAcidB5Mg: pantothenicAcidB5Mg.present
+            ? pantothenicAcidB5Mg.value
+            : this.pantothenicAcidB5Mg,
         vitaminB6Mg: vitaminB6Mg.present ? vitaminB6Mg.value : this.vitaminB6Mg,
         biotinB7Mcg: biotinB7Mcg.present ? biotinB7Mcg.value : this.biotinB7Mcg,
         folateB9Mcg: folateB9Mcg.present ? folateB9Mcg.value : this.folateB9Mcg,
@@ -3290,8 +3258,8 @@ class Food extends DataClass implements Insertable<Food> {
             : this.hydroxyprolineMg,
         alcoholG: alcoholG.present ? alcoholG.value : this.alcoholG,
         caffeineMg: caffeineMg.present ? caffeineMg.value : this.caffeineMg,
-        theobromingMg:
-            theobromingMg.present ? theobromingMg.value : this.theobromingMg,
+        theobromineMg:
+            theobromineMg.present ? theobromineMg.value : this.theobromineMg,
         servingWeight1G: servingWeight1G.present
             ? servingWeight1G.value
             : this.servingWeight1G,
@@ -3369,7 +3337,7 @@ class Food extends DataClass implements Insertable<Food> {
           ..write('potassiumKMg: $potassiumKMg, ')
           ..write('magnesiumMg: $magnesiumMg, ')
           ..write('vitaminAIuIu: $vitaminAIuIu, ')
-          ..write('vitaminAReaMcg: $vitaminAReaMcg, ')
+          ..write('vitaminARaeMcg: $vitaminARaeMcg, ')
           ..write('vitaminCMg: $vitaminCMg, ')
           ..write('vitaminB12Mcg: $vitaminB12Mcg, ')
           ..write('vitaminDMcg: $vitaminDMcg, ')
@@ -3403,7 +3371,7 @@ class Food extends DataClass implements Insertable<Food> {
           ..write('thiaminB1Mg: $thiaminB1Mg, ')
           ..write('riboflavinB2Mg: $riboflavinB2Mg, ')
           ..write('niacinB3Mg: $niacinB3Mg, ')
-          ..write('panthothenicAcidB5Mg: $panthothenicAcidB5Mg, ')
+          ..write('pantothenicAcidB5Mg: $pantothenicAcidB5Mg, ')
           ..write('vitaminB6Mg: $vitaminB6Mg, ')
           ..write('biotinB7Mcg: $biotinB7Mcg, ')
           ..write('folateB9Mcg: $folateB9Mcg, ')
@@ -3452,7 +3420,7 @@ class Food extends DataClass implements Insertable<Food> {
           ..write('hydroxyprolineMg: $hydroxyprolineMg, ')
           ..write('alcoholG: $alcoholG, ')
           ..write('caffeineMg: $caffeineMg, ')
-          ..write('theobromingMg: $theobromingMg, ')
+          ..write('theobromineMg: $theobromineMg, ')
           ..write('servingWeight1G: $servingWeight1G, ')
           ..write('servingDescription1G: $servingDescription1G, ')
           ..write('servingWeight2G: $servingWeight2G, ')
@@ -3494,7 +3462,7 @@ class Food extends DataClass implements Insertable<Food> {
         potassiumKMg,
         magnesiumMg,
         vitaminAIuIu,
-        vitaminAReaMcg,
+        vitaminARaeMcg,
         vitaminCMg,
         vitaminB12Mcg,
         vitaminDMcg,
@@ -3528,7 +3496,7 @@ class Food extends DataClass implements Insertable<Food> {
         thiaminB1Mg,
         riboflavinB2Mg,
         niacinB3Mg,
-        panthothenicAcidB5Mg,
+        pantothenicAcidB5Mg,
         vitaminB6Mg,
         biotinB7Mcg,
         folateB9Mcg,
@@ -3575,7 +3543,7 @@ class Food extends DataClass implements Insertable<Food> {
         hydroxyprolineMg,
         alcoholG,
         caffeineMg,
-        theobromingMg,
+        theobromineMg,
         servingWeight1G,
         servingDescription1G,
         servingWeight2G,
@@ -3616,7 +3584,7 @@ class Food extends DataClass implements Insertable<Food> {
           other.potassiumKMg == this.potassiumKMg &&
           other.magnesiumMg == this.magnesiumMg &&
           other.vitaminAIuIu == this.vitaminAIuIu &&
-          other.vitaminAReaMcg == this.vitaminAReaMcg &&
+          other.vitaminARaeMcg == this.vitaminARaeMcg &&
           other.vitaminCMg == this.vitaminCMg &&
           other.vitaminB12Mcg == this.vitaminB12Mcg &&
           other.vitaminDMcg == this.vitaminDMcg &&
@@ -3650,7 +3618,7 @@ class Food extends DataClass implements Insertable<Food> {
           other.thiaminB1Mg == this.thiaminB1Mg &&
           other.riboflavinB2Mg == this.riboflavinB2Mg &&
           other.niacinB3Mg == this.niacinB3Mg &&
-          other.panthothenicAcidB5Mg == this.panthothenicAcidB5Mg &&
+          other.pantothenicAcidB5Mg == this.pantothenicAcidB5Mg &&
           other.vitaminB6Mg == this.vitaminB6Mg &&
           other.biotinB7Mcg == this.biotinB7Mcg &&
           other.folateB9Mcg == this.folateB9Mcg &&
@@ -3700,7 +3668,7 @@ class Food extends DataClass implements Insertable<Food> {
           other.hydroxyprolineMg == this.hydroxyprolineMg &&
           other.alcoholG == this.alcoholG &&
           other.caffeineMg == this.caffeineMg &&
-          other.theobromingMg == this.theobromingMg &&
+          other.theobromineMg == this.theobromineMg &&
           other.servingWeight1G == this.servingWeight1G &&
           other.servingDescription1G == this.servingDescription1G &&
           other.servingWeight2G == this.servingWeight2G &&
@@ -3739,7 +3707,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<double?> potassiumKMg;
   final Value<double?> magnesiumMg;
   final Value<double?> vitaminAIuIu;
-  final Value<double?> vitaminAReaMcg;
+  final Value<double?> vitaminARaeMcg;
   final Value<double?> vitaminCMg;
   final Value<double?> vitaminB12Mcg;
   final Value<double?> vitaminDMcg;
@@ -3773,7 +3741,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<double?> thiaminB1Mg;
   final Value<double?> riboflavinB2Mg;
   final Value<double?> niacinB3Mg;
-  final Value<double?> panthothenicAcidB5Mg;
+  final Value<double?> pantothenicAcidB5Mg;
   final Value<double?> vitaminB6Mg;
   final Value<double?> biotinB7Mcg;
   final Value<double?> folateB9Mcg;
@@ -3820,7 +3788,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<double?> hydroxyprolineMg;
   final Value<double?> alcoholG;
   final Value<double?> caffeineMg;
-  final Value<double?> theobromingMg;
+  final Value<double?> theobromineMg;
   final Value<double?> servingWeight1G;
   final Value<String?> servingDescription1G;
   final Value<double?> servingWeight2G;
@@ -3857,7 +3825,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.potassiumKMg = const Value.absent(),
     this.magnesiumMg = const Value.absent(),
     this.vitaminAIuIu = const Value.absent(),
-    this.vitaminAReaMcg = const Value.absent(),
+    this.vitaminARaeMcg = const Value.absent(),
     this.vitaminCMg = const Value.absent(),
     this.vitaminB12Mcg = const Value.absent(),
     this.vitaminDMcg = const Value.absent(),
@@ -3891,7 +3859,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.thiaminB1Mg = const Value.absent(),
     this.riboflavinB2Mg = const Value.absent(),
     this.niacinB3Mg = const Value.absent(),
-    this.panthothenicAcidB5Mg = const Value.absent(),
+    this.pantothenicAcidB5Mg = const Value.absent(),
     this.vitaminB6Mg = const Value.absent(),
     this.biotinB7Mcg = const Value.absent(),
     this.folateB9Mcg = const Value.absent(),
@@ -3938,7 +3906,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.hydroxyprolineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
     this.caffeineMg = const Value.absent(),
-    this.theobromingMg = const Value.absent(),
+    this.theobromineMg = const Value.absent(),
     this.servingWeight1G = const Value.absent(),
     this.servingDescription1G = const Value.absent(),
     this.servingWeight2G = const Value.absent(),
@@ -3976,7 +3944,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.potassiumKMg = const Value.absent(),
     this.magnesiumMg = const Value.absent(),
     this.vitaminAIuIu = const Value.absent(),
-    this.vitaminAReaMcg = const Value.absent(),
+    this.vitaminARaeMcg = const Value.absent(),
     this.vitaminCMg = const Value.absent(),
     this.vitaminB12Mcg = const Value.absent(),
     this.vitaminDMcg = const Value.absent(),
@@ -4010,7 +3978,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.thiaminB1Mg = const Value.absent(),
     this.riboflavinB2Mg = const Value.absent(),
     this.niacinB3Mg = const Value.absent(),
-    this.panthothenicAcidB5Mg = const Value.absent(),
+    this.pantothenicAcidB5Mg = const Value.absent(),
     this.vitaminB6Mg = const Value.absent(),
     this.biotinB7Mcg = const Value.absent(),
     this.folateB9Mcg = const Value.absent(),
@@ -4057,7 +4025,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.hydroxyprolineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
     this.caffeineMg = const Value.absent(),
-    this.theobromingMg = const Value.absent(),
+    this.theobromineMg = const Value.absent(),
     this.servingWeight1G = const Value.absent(),
     this.servingDescription1G = const Value.absent(),
     this.servingWeight2G = const Value.absent(),
@@ -4095,7 +4063,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<double>? potassiumKMg,
     Expression<double>? magnesiumMg,
     Expression<double>? vitaminAIuIu,
-    Expression<double>? vitaminAReaMcg,
+    Expression<double>? vitaminARaeMcg,
     Expression<double>? vitaminCMg,
     Expression<double>? vitaminB12Mcg,
     Expression<double>? vitaminDMcg,
@@ -4129,7 +4097,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<double>? thiaminB1Mg,
     Expression<double>? riboflavinB2Mg,
     Expression<double>? niacinB3Mg,
-    Expression<double>? panthothenicAcidB5Mg,
+    Expression<double>? pantothenicAcidB5Mg,
     Expression<double>? vitaminB6Mg,
     Expression<double>? biotinB7Mcg,
     Expression<double>? folateB9Mcg,
@@ -4176,7 +4144,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<double>? hydroxyprolineMg,
     Expression<double>? alcoholG,
     Expression<double>? caffeineMg,
-    Expression<double>? theobromingMg,
+    Expression<double>? theobromineMg,
     Expression<double>? servingWeight1G,
     Expression<String>? servingDescription1G,
     Expression<double>? servingWeight2G,
@@ -4214,17 +4182,17 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       if (potassiumKMg != null) 'potassium_k_mg': potassiumKMg,
       if (magnesiumMg != null) 'magnesium_mg': magnesiumMg,
       if (vitaminAIuIu != null) 'vitamin_a_iu_iu': vitaminAIuIu,
-      if (vitaminAReaMcg != null) 'vitamin_a_rea_mcg': vitaminAReaMcg,
+      if (vitaminARaeMcg != null) 'vitamin_a_rae_mcg': vitaminARaeMcg,
       if (vitaminCMg != null) 'vitamin_c_mg': vitaminCMg,
-      if (vitaminB12Mcg != null) 'vitamin_b12_mcg': vitaminB12Mcg,
+      if (vitaminB12Mcg != null) 'vitamin_b_12_mcg': vitaminB12Mcg,
       if (vitaminDMcg != null) 'vitamin_d_mcg': vitaminDMcg,
       if (vitaminEAlphaTocopherolMg != null)
         'vitamin_e_alpha_tocopherol_mg': vitaminEAlphaTocopherolMg,
       if (addedSugarG != null) 'added_sugar_g': addedSugarG,
       if (netCarbsG != null) 'net_carbs_g': netCarbsG,
       if (waterG != null) 'water_g': waterG,
-      if (omega3sMg != null) 'omega3s_mg': omega3sMg,
-      if (omega6sMg != null) 'omega6s_mg': omega6sMg,
+      if (omega3sMg != null) 'omega_3s_mg': omega3sMg,
+      if (omega6sMg != null) 'omega_6s_mg': omega6sMg,
       if (pralScore != null) 'pral_score': pralScore,
       if (transFattyAcidsG != null) 'trans_fatty_acids_g': transFattyAcidsG,
       if (solubleFiberG != null) 'soluble_fiber_g': solubleFiberG,
@@ -4250,8 +4218,8 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       if (thiaminB1Mg != null) 'thiamin_b1_mg': thiaminB1Mg,
       if (riboflavinB2Mg != null) 'riboflavin_b2_mg': riboflavinB2Mg,
       if (niacinB3Mg != null) 'niacin_b3_mg': niacinB3Mg,
-      if (panthothenicAcidB5Mg != null)
-        'panthothenic_acid_b5_mg': panthothenicAcidB5Mg,
+      if (pantothenicAcidB5Mg != null)
+        'pantothenic_acid_b5_mg': pantothenicAcidB5Mg,
       if (vitaminB6Mg != null) 'vitamin_b6_mg': vitaminB6Mg,
       if (biotinB7Mcg != null) 'biotin_b7_mcg': biotinB7Mcg,
       if (folateB9Mcg != null) 'folate_b9_mcg': folateB9Mcg,
@@ -4274,17 +4242,17 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       if (vitaminKMcg != null) 'vitamin_k_mcg': vitaminKMcg,
       if (dihydrophylloquinoneMcg != null)
         'dihydrophylloquinone_mcg': dihydrophylloquinoneMcg,
-      if (menaquinone4Mcg != null) 'menaquinone4_mcg': menaquinone4Mcg,
+      if (menaquinone4Mcg != null) 'menaquinone_4_mcg': menaquinone4Mcg,
       if (fattyAcidsTotalMonounsaturatedMg != null)
         'fatty_acids_total_monounsaturated_mg':
             fattyAcidsTotalMonounsaturatedMg,
       if (fattyAcidsTotalPolyunsaturatedMg != null)
         'fatty_acids_total_polyunsaturated_mg':
             fattyAcidsTotalPolyunsaturatedMg,
-      if (u183N3CCCAlaMg != null) '_183N3CCCAlaMg': u183N3CCCAlaMg,
-      if (u205N3EpaMg != null) '_205N3EpaMg': u205N3EpaMg,
-      if (u225N3DpaMg != null) '_225N3DpaMg': u225N3DpaMg,
-      if (u226N3DhaMg != null) '_226N3DhaMg': u226N3DhaMg,
+      if (u183N3CCCAlaMg != null) '_18_3_n_3_c_c_c_ala_mg': u183N3CCCAlaMg,
+      if (u205N3EpaMg != null) '_20_5_n_3_epa_mg': u205N3EpaMg,
+      if (u225N3DpaMg != null) '_22_5_n_3_dpa_mg': u225N3DpaMg,
+      if (u226N3DhaMg != null) '_22_6_n_3_dha_mg': u226N3DhaMg,
       if (tryptophanMg != null) 'tryptophan_mg': tryptophanMg,
       if (threonineMg != null) 'threonine_mg': threonineMg,
       if (isoleucineMg != null) 'isoleucine_mg': isoleucineMg,
@@ -4306,35 +4274,36 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       if (hydroxyprolineMg != null) 'hydroxyproline_mg': hydroxyprolineMg,
       if (alcoholG != null) 'alcohol_g': alcoholG,
       if (caffeineMg != null) 'caffeine_mg': caffeineMg,
-      if (theobromingMg != null) 'theobroming_mg': theobromingMg,
-      if (servingWeight1G != null) 'serving_weight1_g': servingWeight1G,
+      if (theobromineMg != null) 'theobromine_mg': theobromineMg,
+      if (servingWeight1G != null) 'serving_weight_1_g': servingWeight1G,
       if (servingDescription1G != null)
-        'serving_description1_g': servingDescription1G,
-      if (servingWeight2G != null) 'serving_weight2_g': servingWeight2G,
+        'serving_description_1_g': servingDescription1G,
+      if (servingWeight2G != null) 'serving_weight_2_g': servingWeight2G,
       if (servingDescription2G != null)
-        'serving_description2_g': servingDescription2G,
-      if (servingWeight3G != null) 'serving_weight3_g': servingWeight3G,
+        'serving_description_2_g': servingDescription2G,
+      if (servingWeight3G != null) 'serving_weight_3_g': servingWeight3G,
       if (servingDescription3G != null)
-        'serving_description3_g': servingDescription3G,
-      if (servingWeight4G != null) 'serving_weight4_g': servingWeight4G,
+        'serving_description_3_g': servingDescription3G,
+      if (servingWeight4G != null) 'serving_weight_4_g': servingWeight4G,
       if (servingDescription4G != null)
-        'serving_description4_g': servingDescription4G,
-      if (servingWeight5G != null) 'serving_weight5_g': servingWeight5G,
+        'serving_description_4_g': servingDescription4G,
+      if (servingWeight5G != null) 'serving_weight_5_g': servingWeight5G,
       if (servingDescription5G != null)
-        'serving_description5_g': servingDescription5G,
-      if (servingWeight6G != null) 'serving_weight6_g': servingWeight6G,
+        'serving_description_5_g': servingDescription5G,
+      if (servingWeight6G != null) 'serving_weight_6_g': servingWeight6G,
       if (servingDescription6G != null)
-        'serving_description6_g': servingDescription6G,
-      if (servingWeight7G != null) 'serving_weight7_g': servingWeight7G,
+        'serving_description_6_g': servingDescription6G,
+      if (servingWeight7G != null) 'serving_weight_7_g': servingWeight7G,
       if (servingDescription7G != null)
-        'serving_description7_g': servingDescription7G,
-      if (servingWeight8G != null) 'serving_weight8_g': servingWeight8G,
+        'serving_description_7_g': servingDescription7G,
+      if (servingWeight8G != null) 'serving_weight_8_g': servingWeight8G,
       if (servingDescription8G != null)
-        'serving_description8_g': servingDescription8G,
-      if (servingWeight9G != null) 'serving_weight9_g': servingWeight9G,
+        'serving_description_8_g': servingDescription8G,
+      if (servingWeight9G != null) 'serving_weight_9_g': servingWeight9G,
       if (servingDescription9G != null)
-        'serving_description9_g': servingDescription9G,
-      if (u200calorieWeightG != null) '_200calorieWeightG': u200calorieWeightG,
+        'serving_description_9_g': servingDescription9G,
+      if (u200calorieWeightG != null)
+        '_200_calorie_weight_g': u200calorieWeightG,
     });
   }
 
@@ -4355,7 +4324,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<double?>? potassiumKMg,
       Value<double?>? magnesiumMg,
       Value<double?>? vitaminAIuIu,
-      Value<double?>? vitaminAReaMcg,
+      Value<double?>? vitaminARaeMcg,
       Value<double?>? vitaminCMg,
       Value<double?>? vitaminB12Mcg,
       Value<double?>? vitaminDMcg,
@@ -4389,7 +4358,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<double?>? thiaminB1Mg,
       Value<double?>? riboflavinB2Mg,
       Value<double?>? niacinB3Mg,
-      Value<double?>? panthothenicAcidB5Mg,
+      Value<double?>? pantothenicAcidB5Mg,
       Value<double?>? vitaminB6Mg,
       Value<double?>? biotinB7Mcg,
       Value<double?>? folateB9Mcg,
@@ -4436,7 +4405,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<double?>? hydroxyprolineMg,
       Value<double?>? alcoholG,
       Value<double?>? caffeineMg,
-      Value<double?>? theobromingMg,
+      Value<double?>? theobromineMg,
       Value<double?>? servingWeight1G,
       Value<String?>? servingDescription1G,
       Value<double?>? servingWeight2G,
@@ -4473,7 +4442,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       potassiumKMg: potassiumKMg ?? this.potassiumKMg,
       magnesiumMg: magnesiumMg ?? this.magnesiumMg,
       vitaminAIuIu: vitaminAIuIu ?? this.vitaminAIuIu,
-      vitaminAReaMcg: vitaminAReaMcg ?? this.vitaminAReaMcg,
+      vitaminARaeMcg: vitaminARaeMcg ?? this.vitaminARaeMcg,
       vitaminCMg: vitaminCMg ?? this.vitaminCMg,
       vitaminB12Mcg: vitaminB12Mcg ?? this.vitaminB12Mcg,
       vitaminDMcg: vitaminDMcg ?? this.vitaminDMcg,
@@ -4508,7 +4477,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       thiaminB1Mg: thiaminB1Mg ?? this.thiaminB1Mg,
       riboflavinB2Mg: riboflavinB2Mg ?? this.riboflavinB2Mg,
       niacinB3Mg: niacinB3Mg ?? this.niacinB3Mg,
-      panthothenicAcidB5Mg: panthothenicAcidB5Mg ?? this.panthothenicAcidB5Mg,
+      pantothenicAcidB5Mg: pantothenicAcidB5Mg ?? this.pantothenicAcidB5Mg,
       vitaminB6Mg: vitaminB6Mg ?? this.vitaminB6Mg,
       biotinB7Mcg: biotinB7Mcg ?? this.biotinB7Mcg,
       folateB9Mcg: folateB9Mcg ?? this.folateB9Mcg,
@@ -4560,7 +4529,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       hydroxyprolineMg: hydroxyprolineMg ?? this.hydroxyprolineMg,
       alcoholG: alcoholG ?? this.alcoholG,
       caffeineMg: caffeineMg ?? this.caffeineMg,
-      theobromingMg: theobromingMg ?? this.theobromingMg,
+      theobromineMg: theobromineMg ?? this.theobromineMg,
       servingWeight1G: servingWeight1G ?? this.servingWeight1G,
       servingDescription1G: servingDescription1G ?? this.servingDescription1G,
       servingWeight2G: servingWeight2G ?? this.servingWeight2G,
@@ -4634,14 +4603,14 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     if (vitaminAIuIu.present) {
       map['vitamin_a_iu_iu'] = Variable<double>(vitaminAIuIu.value);
     }
-    if (vitaminAReaMcg.present) {
-      map['vitamin_a_rea_mcg'] = Variable<double>(vitaminAReaMcg.value);
+    if (vitaminARaeMcg.present) {
+      map['vitamin_a_rae_mcg'] = Variable<double>(vitaminARaeMcg.value);
     }
     if (vitaminCMg.present) {
       map['vitamin_c_mg'] = Variable<double>(vitaminCMg.value);
     }
     if (vitaminB12Mcg.present) {
-      map['vitamin_b12_mcg'] = Variable<double>(vitaminB12Mcg.value);
+      map['vitamin_b_12_mcg'] = Variable<double>(vitaminB12Mcg.value);
     }
     if (vitaminDMcg.present) {
       map['vitamin_d_mcg'] = Variable<double>(vitaminDMcg.value);
@@ -4660,10 +4629,10 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       map['water_g'] = Variable<double>(waterG.value);
     }
     if (omega3sMg.present) {
-      map['omega3s_mg'] = Variable<double>(omega3sMg.value);
+      map['omega_3s_mg'] = Variable<double>(omega3sMg.value);
     }
     if (omega6sMg.present) {
-      map['omega6s_mg'] = Variable<double>(omega6sMg.value);
+      map['omega_6s_mg'] = Variable<double>(omega6sMg.value);
     }
     if (pralScore.present) {
       map['pral_score'] = Variable<double>(pralScore.value);
@@ -4738,9 +4707,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     if (niacinB3Mg.present) {
       map['niacin_b3_mg'] = Variable<double>(niacinB3Mg.value);
     }
-    if (panthothenicAcidB5Mg.present) {
-      map['panthothenic_acid_b5_mg'] =
-          Variable<double>(panthothenicAcidB5Mg.value);
+    if (pantothenicAcidB5Mg.present) {
+      map['pantothenic_acid_b5_mg'] =
+          Variable<double>(pantothenicAcidB5Mg.value);
     }
     if (vitaminB6Mg.present) {
       map['vitamin_b6_mg'] = Variable<double>(vitaminB6Mg.value);
@@ -4801,7 +4770,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           Variable<double>(dihydrophylloquinoneMcg.value);
     }
     if (menaquinone4Mcg.present) {
-      map['menaquinone4_mcg'] = Variable<double>(menaquinone4Mcg.value);
+      map['menaquinone_4_mcg'] = Variable<double>(menaquinone4Mcg.value);
     }
     if (fattyAcidsTotalMonounsaturatedMg.present) {
       map['fatty_acids_total_monounsaturated_mg'] =
@@ -4812,16 +4781,16 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           Variable<double>(fattyAcidsTotalPolyunsaturatedMg.value);
     }
     if (u183N3CCCAlaMg.present) {
-      map['_183N3CCCAlaMg'] = Variable<double>(u183N3CCCAlaMg.value);
+      map['_18_3_n_3_c_c_c_ala_mg'] = Variable<double>(u183N3CCCAlaMg.value);
     }
     if (u205N3EpaMg.present) {
-      map['_205N3EpaMg'] = Variable<double>(u205N3EpaMg.value);
+      map['_20_5_n_3_epa_mg'] = Variable<double>(u205N3EpaMg.value);
     }
     if (u225N3DpaMg.present) {
-      map['_225N3DpaMg'] = Variable<double>(u225N3DpaMg.value);
+      map['_22_5_n_3_dpa_mg'] = Variable<double>(u225N3DpaMg.value);
     }
     if (u226N3DhaMg.present) {
-      map['_226N3DhaMg'] = Variable<double>(u226N3DhaMg.value);
+      map['_22_6_n_3_dha_mg'] = Variable<double>(u226N3DhaMg.value);
     }
     if (tryptophanMg.present) {
       map['tryptophan_mg'] = Variable<double>(tryptophanMg.value);
@@ -4886,74 +4855,74 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     if (caffeineMg.present) {
       map['caffeine_mg'] = Variable<double>(caffeineMg.value);
     }
-    if (theobromingMg.present) {
-      map['theobroming_mg'] = Variable<double>(theobromingMg.value);
+    if (theobromineMg.present) {
+      map['theobromine_mg'] = Variable<double>(theobromineMg.value);
     }
     if (servingWeight1G.present) {
-      map['serving_weight1_g'] = Variable<double>(servingWeight1G.value);
+      map['serving_weight_1_g'] = Variable<double>(servingWeight1G.value);
     }
     if (servingDescription1G.present) {
-      map['serving_description1_g'] =
+      map['serving_description_1_g'] =
           Variable<String>(servingDescription1G.value);
     }
     if (servingWeight2G.present) {
-      map['serving_weight2_g'] = Variable<double>(servingWeight2G.value);
+      map['serving_weight_2_g'] = Variable<double>(servingWeight2G.value);
     }
     if (servingDescription2G.present) {
-      map['serving_description2_g'] =
+      map['serving_description_2_g'] =
           Variable<String>(servingDescription2G.value);
     }
     if (servingWeight3G.present) {
-      map['serving_weight3_g'] = Variable<double>(servingWeight3G.value);
+      map['serving_weight_3_g'] = Variable<double>(servingWeight3G.value);
     }
     if (servingDescription3G.present) {
-      map['serving_description3_g'] =
+      map['serving_description_3_g'] =
           Variable<String>(servingDescription3G.value);
     }
     if (servingWeight4G.present) {
-      map['serving_weight4_g'] = Variable<double>(servingWeight4G.value);
+      map['serving_weight_4_g'] = Variable<double>(servingWeight4G.value);
     }
     if (servingDescription4G.present) {
-      map['serving_description4_g'] =
+      map['serving_description_4_g'] =
           Variable<String>(servingDescription4G.value);
     }
     if (servingWeight5G.present) {
-      map['serving_weight5_g'] = Variable<double>(servingWeight5G.value);
+      map['serving_weight_5_g'] = Variable<double>(servingWeight5G.value);
     }
     if (servingDescription5G.present) {
-      map['serving_description5_g'] =
+      map['serving_description_5_g'] =
           Variable<String>(servingDescription5G.value);
     }
     if (servingWeight6G.present) {
-      map['serving_weight6_g'] = Variable<double>(servingWeight6G.value);
+      map['serving_weight_6_g'] = Variable<double>(servingWeight6G.value);
     }
     if (servingDescription6G.present) {
-      map['serving_description6_g'] =
+      map['serving_description_6_g'] =
           Variable<String>(servingDescription6G.value);
     }
     if (servingWeight7G.present) {
-      map['serving_weight7_g'] = Variable<double>(servingWeight7G.value);
+      map['serving_weight_7_g'] = Variable<double>(servingWeight7G.value);
     }
     if (servingDescription7G.present) {
-      map['serving_description7_g'] =
+      map['serving_description_7_g'] =
           Variable<String>(servingDescription7G.value);
     }
     if (servingWeight8G.present) {
-      map['serving_weight8_g'] = Variable<double>(servingWeight8G.value);
+      map['serving_weight_8_g'] = Variable<double>(servingWeight8G.value);
     }
     if (servingDescription8G.present) {
-      map['serving_description8_g'] =
+      map['serving_description_8_g'] =
           Variable<String>(servingDescription8G.value);
     }
     if (servingWeight9G.present) {
-      map['serving_weight9_g'] = Variable<double>(servingWeight9G.value);
+      map['serving_weight_9_g'] = Variable<double>(servingWeight9G.value);
     }
     if (servingDescription9G.present) {
-      map['serving_description9_g'] =
+      map['serving_description_9_g'] =
           Variable<String>(servingDescription9G.value);
     }
     if (u200calorieWeightG.present) {
-      map['_200calorieWeightG'] = Variable<double>(u200calorieWeightG.value);
+      map['_200_calorie_weight_g'] = Variable<double>(u200calorieWeightG.value);
     }
     return map;
   }
@@ -4977,7 +4946,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           ..write('potassiumKMg: $potassiumKMg, ')
           ..write('magnesiumMg: $magnesiumMg, ')
           ..write('vitaminAIuIu: $vitaminAIuIu, ')
-          ..write('vitaminAReaMcg: $vitaminAReaMcg, ')
+          ..write('vitaminARaeMcg: $vitaminARaeMcg, ')
           ..write('vitaminCMg: $vitaminCMg, ')
           ..write('vitaminB12Mcg: $vitaminB12Mcg, ')
           ..write('vitaminDMcg: $vitaminDMcg, ')
@@ -5011,7 +4980,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           ..write('thiaminB1Mg: $thiaminB1Mg, ')
           ..write('riboflavinB2Mg: $riboflavinB2Mg, ')
           ..write('niacinB3Mg: $niacinB3Mg, ')
-          ..write('panthothenicAcidB5Mg: $panthothenicAcidB5Mg, ')
+          ..write('pantothenicAcidB5Mg: $pantothenicAcidB5Mg, ')
           ..write('vitaminB6Mg: $vitaminB6Mg, ')
           ..write('biotinB7Mcg: $biotinB7Mcg, ')
           ..write('folateB9Mcg: $folateB9Mcg, ')
@@ -5060,7 +5029,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           ..write('hydroxyprolineMg: $hydroxyprolineMg, ')
           ..write('alcoholG: $alcoholG, ')
           ..write('caffeineMg: $caffeineMg, ')
-          ..write('theobromingMg: $theobromingMg, ')
+          ..write('theobromineMg: $theobromineMg, ')
           ..write('servingWeight1G: $servingWeight1G, ')
           ..write('servingDescription1G: $servingDescription1G, ')
           ..write('servingWeight2G: $servingWeight2G, ')
@@ -5085,15 +5054,304 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   }
 }
 
+class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _foodMeta = const VerificationMeta('food');
+  @override
+  late final GeneratedColumn<int> food = GeneratedColumn<int>(
+      'food', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES foods (id)'));
+  static const VerificationMeta _createdMeta =
+      const VerificationMeta('created');
+  @override
+  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
+      'created', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _quantityMeta =
+      const VerificationMeta('quantity');
+  @override
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+      'quantity', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+      'unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, food, created, quantity, unit];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'entries';
+  @override
+  VerificationContext validateIntegrity(Insertable<Entry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('food')) {
+      context.handle(
+          _foodMeta, food.isAcceptableOrUnknown(data['food']!, _foodMeta));
+    } else if (isInserting) {
+      context.missing(_foodMeta);
+    }
+    if (data.containsKey('created')) {
+      context.handle(_createdMeta,
+          created.isAcceptableOrUnknown(data['created']!, _createdMeta));
+    } else if (isInserting) {
+      context.missing(_createdMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(_quantityMeta,
+          quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta));
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
+    } else if (isInserting) {
+      context.missing(_unitMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Entry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Entry(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      food: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}food'])!,
+      created: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
+      quantity: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}quantity'])!,
+      unit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
+    );
+  }
+
+  @override
+  $EntriesTable createAlias(String alias) {
+    return $EntriesTable(attachedDatabase, alias);
+  }
+}
+
+class Entry extends DataClass implements Insertable<Entry> {
+  final int id;
+  final int food;
+  final DateTime created;
+  final double quantity;
+  final String unit;
+  const Entry(
+      {required this.id,
+      required this.food,
+      required this.created,
+      required this.quantity,
+      required this.unit});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['food'] = Variable<int>(food);
+    map['created'] = Variable<DateTime>(created);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit'] = Variable<String>(unit);
+    return map;
+  }
+
+  EntriesCompanion toCompanion(bool nullToAbsent) {
+    return EntriesCompanion(
+      id: Value(id),
+      food: Value(food),
+      created: Value(created),
+      quantity: Value(quantity),
+      unit: Value(unit),
+    );
+  }
+
+  factory Entry.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Entry(
+      id: serializer.fromJson<int>(json['id']),
+      food: serializer.fromJson<int>(json['food']),
+      created: serializer.fromJson<DateTime>(json['created']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unit: serializer.fromJson<String>(json['unit']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'food': serializer.toJson<int>(food),
+      'created': serializer.toJson<DateTime>(created),
+      'quantity': serializer.toJson<double>(quantity),
+      'unit': serializer.toJson<String>(unit),
+    };
+  }
+
+  Entry copyWith(
+          {int? id,
+          int? food,
+          DateTime? created,
+          double? quantity,
+          String? unit}) =>
+      Entry(
+        id: id ?? this.id,
+        food: food ?? this.food,
+        created: created ?? this.created,
+        quantity: quantity ?? this.quantity,
+        unit: unit ?? this.unit,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Entry(')
+          ..write('id: $id, ')
+          ..write('food: $food, ')
+          ..write('created: $created, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, food, created, quantity, unit);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Entry &&
+          other.id == this.id &&
+          other.food == this.food &&
+          other.created == this.created &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit);
+}
+
+class EntriesCompanion extends UpdateCompanion<Entry> {
+  final Value<int> id;
+  final Value<int> food;
+  final Value<DateTime> created;
+  final Value<double> quantity;
+  final Value<String> unit;
+  const EntriesCompanion({
+    this.id = const Value.absent(),
+    this.food = const Value.absent(),
+    this.created = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+  });
+  EntriesCompanion.insert({
+    this.id = const Value.absent(),
+    required int food,
+    required DateTime created,
+    required double quantity,
+    required String unit,
+  })  : food = Value(food),
+        created = Value(created),
+        quantity = Value(quantity),
+        unit = Value(unit);
+  static Insertable<Entry> custom({
+    Expression<int>? id,
+    Expression<int>? food,
+    Expression<DateTime>? created,
+    Expression<double>? quantity,
+    Expression<String>? unit,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (food != null) 'food': food,
+      if (created != null) 'created': created,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+    });
+  }
+
+  EntriesCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? food,
+      Value<DateTime>? created,
+      Value<double>? quantity,
+      Value<String>? unit}) {
+    return EntriesCompanion(
+      id: id ?? this.id,
+      food: food ?? this.food,
+      created: created ?? this.created,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (food.present) {
+      map['food'] = Variable<int>(food.value);
+    }
+    if (created.present) {
+      map['created'] = Variable<DateTime>(created.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EntriesCompanion(')
+          ..write('id: $id, ')
+          ..write('food: $food, ')
+          ..write('created: $created, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
   late final $FoodsTable foods = $FoodsTable(this);
+  late final $EntriesTable entries = $EntriesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [foods];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [foods, entries];
 }
 
 typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
@@ -5113,7 +5371,7 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<double?> potassiumKMg,
   Value<double?> magnesiumMg,
   Value<double?> vitaminAIuIu,
-  Value<double?> vitaminAReaMcg,
+  Value<double?> vitaminARaeMcg,
   Value<double?> vitaminCMg,
   Value<double?> vitaminB12Mcg,
   Value<double?> vitaminDMcg,
@@ -5147,7 +5405,7 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<double?> thiaminB1Mg,
   Value<double?> riboflavinB2Mg,
   Value<double?> niacinB3Mg,
-  Value<double?> panthothenicAcidB5Mg,
+  Value<double?> pantothenicAcidB5Mg,
   Value<double?> vitaminB6Mg,
   Value<double?> biotinB7Mcg,
   Value<double?> folateB9Mcg,
@@ -5194,7 +5452,7 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<double?> hydroxyprolineMg,
   Value<double?> alcoholG,
   Value<double?> caffeineMg,
-  Value<double?> theobromingMg,
+  Value<double?> theobromineMg,
   Value<double?> servingWeight1G,
   Value<String?> servingDescription1G,
   Value<double?> servingWeight2G,
@@ -5232,7 +5490,7 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<double?> potassiumKMg,
   Value<double?> magnesiumMg,
   Value<double?> vitaminAIuIu,
-  Value<double?> vitaminAReaMcg,
+  Value<double?> vitaminARaeMcg,
   Value<double?> vitaminCMg,
   Value<double?> vitaminB12Mcg,
   Value<double?> vitaminDMcg,
@@ -5266,7 +5524,7 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<double?> thiaminB1Mg,
   Value<double?> riboflavinB2Mg,
   Value<double?> niacinB3Mg,
-  Value<double?> panthothenicAcidB5Mg,
+  Value<double?> pantothenicAcidB5Mg,
   Value<double?> vitaminB6Mg,
   Value<double?> biotinB7Mcg,
   Value<double?> folateB9Mcg,
@@ -5313,7 +5571,7 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<double?> hydroxyprolineMg,
   Value<double?> alcoholG,
   Value<double?> caffeineMg,
-  Value<double?> theobromingMg,
+  Value<double?> theobromineMg,
   Value<double?> servingWeight1G,
   Value<String?> servingDescription1G,
   Value<double?> servingWeight2G,
@@ -5370,7 +5628,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> potassiumKMg = const Value.absent(),
             Value<double?> magnesiumMg = const Value.absent(),
             Value<double?> vitaminAIuIu = const Value.absent(),
-            Value<double?> vitaminAReaMcg = const Value.absent(),
+            Value<double?> vitaminARaeMcg = const Value.absent(),
             Value<double?> vitaminCMg = const Value.absent(),
             Value<double?> vitaminB12Mcg = const Value.absent(),
             Value<double?> vitaminDMcg = const Value.absent(),
@@ -5404,7 +5662,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> thiaminB1Mg = const Value.absent(),
             Value<double?> riboflavinB2Mg = const Value.absent(),
             Value<double?> niacinB3Mg = const Value.absent(),
-            Value<double?> panthothenicAcidB5Mg = const Value.absent(),
+            Value<double?> pantothenicAcidB5Mg = const Value.absent(),
             Value<double?> vitaminB6Mg = const Value.absent(),
             Value<double?> biotinB7Mcg = const Value.absent(),
             Value<double?> folateB9Mcg = const Value.absent(),
@@ -5453,7 +5711,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> hydroxyprolineMg = const Value.absent(),
             Value<double?> alcoholG = const Value.absent(),
             Value<double?> caffeineMg = const Value.absent(),
-            Value<double?> theobromingMg = const Value.absent(),
+            Value<double?> theobromineMg = const Value.absent(),
             Value<double?> servingWeight1G = const Value.absent(),
             Value<String?> servingDescription1G = const Value.absent(),
             Value<double?> servingWeight2G = const Value.absent(),
@@ -5491,7 +5749,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             potassiumKMg: potassiumKMg,
             magnesiumMg: magnesiumMg,
             vitaminAIuIu: vitaminAIuIu,
-            vitaminAReaMcg: vitaminAReaMcg,
+            vitaminARaeMcg: vitaminARaeMcg,
             vitaminCMg: vitaminCMg,
             vitaminB12Mcg: vitaminB12Mcg,
             vitaminDMcg: vitaminDMcg,
@@ -5525,7 +5783,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             thiaminB1Mg: thiaminB1Mg,
             riboflavinB2Mg: riboflavinB2Mg,
             niacinB3Mg: niacinB3Mg,
-            panthothenicAcidB5Mg: panthothenicAcidB5Mg,
+            pantothenicAcidB5Mg: pantothenicAcidB5Mg,
             vitaminB6Mg: vitaminB6Mg,
             biotinB7Mcg: biotinB7Mcg,
             folateB9Mcg: folateB9Mcg,
@@ -5572,7 +5830,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             hydroxyprolineMg: hydroxyprolineMg,
             alcoholG: alcoholG,
             caffeineMg: caffeineMg,
-            theobromingMg: theobromingMg,
+            theobromineMg: theobromineMg,
             servingWeight1G: servingWeight1G,
             servingDescription1G: servingDescription1G,
             servingWeight2G: servingWeight2G,
@@ -5610,7 +5868,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> potassiumKMg = const Value.absent(),
             Value<double?> magnesiumMg = const Value.absent(),
             Value<double?> vitaminAIuIu = const Value.absent(),
-            Value<double?> vitaminAReaMcg = const Value.absent(),
+            Value<double?> vitaminARaeMcg = const Value.absent(),
             Value<double?> vitaminCMg = const Value.absent(),
             Value<double?> vitaminB12Mcg = const Value.absent(),
             Value<double?> vitaminDMcg = const Value.absent(),
@@ -5644,7 +5902,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> thiaminB1Mg = const Value.absent(),
             Value<double?> riboflavinB2Mg = const Value.absent(),
             Value<double?> niacinB3Mg = const Value.absent(),
-            Value<double?> panthothenicAcidB5Mg = const Value.absent(),
+            Value<double?> pantothenicAcidB5Mg = const Value.absent(),
             Value<double?> vitaminB6Mg = const Value.absent(),
             Value<double?> biotinB7Mcg = const Value.absent(),
             Value<double?> folateB9Mcg = const Value.absent(),
@@ -5693,7 +5951,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> hydroxyprolineMg = const Value.absent(),
             Value<double?> alcoholG = const Value.absent(),
             Value<double?> caffeineMg = const Value.absent(),
-            Value<double?> theobromingMg = const Value.absent(),
+            Value<double?> theobromineMg = const Value.absent(),
             Value<double?> servingWeight1G = const Value.absent(),
             Value<String?> servingDescription1G = const Value.absent(),
             Value<double?> servingWeight2G = const Value.absent(),
@@ -5731,7 +5989,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             potassiumKMg: potassiumKMg,
             magnesiumMg: magnesiumMg,
             vitaminAIuIu: vitaminAIuIu,
-            vitaminAReaMcg: vitaminAReaMcg,
+            vitaminARaeMcg: vitaminARaeMcg,
             vitaminCMg: vitaminCMg,
             vitaminB12Mcg: vitaminB12Mcg,
             vitaminDMcg: vitaminDMcg,
@@ -5765,7 +6023,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             thiaminB1Mg: thiaminB1Mg,
             riboflavinB2Mg: riboflavinB2Mg,
             niacinB3Mg: niacinB3Mg,
-            panthothenicAcidB5Mg: panthothenicAcidB5Mg,
+            pantothenicAcidB5Mg: pantothenicAcidB5Mg,
             vitaminB6Mg: vitaminB6Mg,
             biotinB7Mcg: biotinB7Mcg,
             folateB9Mcg: folateB9Mcg,
@@ -5812,7 +6070,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             hydroxyprolineMg: hydroxyprolineMg,
             alcoholG: alcoholG,
             caffeineMg: caffeineMg,
-            theobromingMg: theobromingMg,
+            theobromineMg: theobromineMg,
             servingWeight1G: servingWeight1G,
             servingDescription1G: servingDescription1G,
             servingWeight2G: servingWeight2G,
@@ -5931,8 +6189,8 @@ class $$FoodsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<double> get vitaminAReaMcg => $state.composableBuilder(
-      column: $state.table.vitaminAReaMcg,
+  ColumnFilters<double> get vitaminARaeMcg => $state.composableBuilder(
+      column: $state.table.vitaminARaeMcg,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -6102,8 +6360,8 @@ class $$FoodsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<double> get panthothenicAcidB5Mg => $state.composableBuilder(
-      column: $state.table.panthothenicAcidB5Mg,
+  ColumnFilters<double> get pantothenicAcidB5Mg => $state.composableBuilder(
+      column: $state.table.pantothenicAcidB5Mg,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -6341,8 +6599,8 @@ class $$FoodsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<double> get theobromingMg => $state.composableBuilder(
-      column: $state.table.theobromingMg,
+  ColumnFilters<double> get theobromineMg => $state.composableBuilder(
+      column: $state.table.theobromineMg,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -6440,6 +6698,19 @@ class $$FoodsTableFilterComposer
       column: $state.table.u200calorieWeightG,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ComposableFilter entriesRefs(
+      ComposableFilter Function($$EntriesTableFilterComposer f) f) {
+    final $$EntriesTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.entries,
+        getReferencedColumn: (t) => t.food,
+        builder: (joinBuilder, parentComposers) => $$EntriesTableFilterComposer(
+            ComposerState(
+                $state.db, $state.db.entries, joinBuilder, parentComposers)));
+    return f(composer);
+  }
 }
 
 class $$FoodsTableOrderingComposer
@@ -6525,8 +6796,8 @@ class $$FoodsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<double> get vitaminAReaMcg => $state.composableBuilder(
-      column: $state.table.vitaminAReaMcg,
+  ColumnOrderings<double> get vitaminARaeMcg => $state.composableBuilder(
+      column: $state.table.vitaminARaeMcg,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -6696,8 +6967,8 @@ class $$FoodsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<double> get panthothenicAcidB5Mg => $state.composableBuilder(
-      column: $state.table.panthothenicAcidB5Mg,
+  ColumnOrderings<double> get pantothenicAcidB5Mg => $state.composableBuilder(
+      column: $state.table.pantothenicAcidB5Mg,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -6936,8 +7207,8 @@ class $$FoodsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<double> get theobromingMg => $state.composableBuilder(
-      column: $state.table.theobromingMg,
+  ColumnOrderings<double> get theobromineMg => $state.composableBuilder(
+      column: $state.table.theobromineMg,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
@@ -7037,9 +7308,159 @@ class $$FoodsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+typedef $$EntriesTableInsertCompanionBuilder = EntriesCompanion Function({
+  Value<int> id,
+  required int food,
+  required DateTime created,
+  required double quantity,
+  required String unit,
+});
+typedef $$EntriesTableUpdateCompanionBuilder = EntriesCompanion Function({
+  Value<int> id,
+  Value<int> food,
+  Value<DateTime> created,
+  Value<double> quantity,
+  Value<String> unit,
+});
+
+class $$EntriesTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $EntriesTable,
+    Entry,
+    $$EntriesTableFilterComposer,
+    $$EntriesTableOrderingComposer,
+    $$EntriesTableProcessedTableManager,
+    $$EntriesTableInsertCompanionBuilder,
+    $$EntriesTableUpdateCompanionBuilder> {
+  $$EntriesTableTableManager(_$AppDatabase db, $EntriesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$EntriesTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$EntriesTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) => $$EntriesTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<int> food = const Value.absent(),
+            Value<DateTime> created = const Value.absent(),
+            Value<double> quantity = const Value.absent(),
+            Value<String> unit = const Value.absent(),
+          }) =>
+              EntriesCompanion(
+            id: id,
+            food: food,
+            created: created,
+            quantity: quantity,
+            unit: unit,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required int food,
+            required DateTime created,
+            required double quantity,
+            required String unit,
+          }) =>
+              EntriesCompanion.insert(
+            id: id,
+            food: food,
+            created: created,
+            quantity: quantity,
+            unit: unit,
+          ),
+        ));
+}
+
+class $$EntriesTableProcessedTableManager extends ProcessedTableManager<
+    _$AppDatabase,
+    $EntriesTable,
+    Entry,
+    $$EntriesTableFilterComposer,
+    $$EntriesTableOrderingComposer,
+    $$EntriesTableProcessedTableManager,
+    $$EntriesTableInsertCompanionBuilder,
+    $$EntriesTableUpdateCompanionBuilder> {
+  $$EntriesTableProcessedTableManager(super.$state);
+}
+
+class $$EntriesTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $EntriesTable> {
+  $$EntriesTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get created => $state.composableBuilder(
+      column: $state.table.created,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get unit => $state.composableBuilder(
+      column: $state.table.unit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$FoodsTableFilterComposer get food {
+    final $$FoodsTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.food,
+        referencedTable: $state.db.foods,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$FoodsTableFilterComposer(
+            ComposerState(
+                $state.db, $state.db.foods, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$EntriesTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $EntriesTable> {
+  $$EntriesTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get created => $state.composableBuilder(
+      column: $state.table.created,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get quantity => $state.composableBuilder(
+      column: $state.table.quantity,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get unit => $state.composableBuilder(
+      column: $state.table.unit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$FoodsTableOrderingComposer get food {
+    final $$FoodsTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.food,
+        referencedTable: $state.db.foods,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) => $$FoodsTableOrderingComposer(
+            ComposerState(
+                $state.db, $state.db.foods, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 class _$AppDatabaseManager {
   final _$AppDatabase _db;
   _$AppDatabaseManager(this._db);
   $$FoodsTableTableManager get foods =>
       $$FoodsTableTableManager(_db, _db.foods);
+  $$EntriesTableTableManager get entries =>
+      $$EntriesTableTableManager(_db, _db.entries);
 }
