@@ -1,7 +1,10 @@
 import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/entries.dart';
+import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EntryList extends StatelessWidget {
   const EntryList({
@@ -17,6 +20,8 @@ class EntryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsState>();
+
     return Expanded(
       child: ListView.builder(
         itemCount: entryFoods.length,
@@ -38,7 +43,9 @@ class EntryList extends StatelessWidget {
               if (showDivider) const Divider(),
               ListTile(
                 title: Text(food.name),
-                subtitle: Text(entry.created.toString()),
+                subtitle: Text(
+                  DateFormat(settings.longDateFormat).format(entry.created),
+                ),
                 trailing: Text(
                   "${kcal.toStringAsFixed(0)} kcal",
                   style: const TextStyle(fontSize: 16),
