@@ -20,8 +20,6 @@ class EditEntryPage extends StatefulWidget {
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
-  final _repsController = TextEditingController();
-  final _weightController = TextEditingController();
   final _quantityController = TextEditingController();
   late String _name;
   late SettingsState _settings;
@@ -49,8 +47,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   @override
   void dispose() {
-    _repsController.dispose();
-    _weightController.dispose();
     super.dispose();
   }
 
