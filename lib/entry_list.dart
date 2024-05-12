@@ -15,45 +15,6 @@ class EntryList extends StatelessWidget {
   final Set<int> selected;
   final Function(int) onSelect;
 
-  double convertToKcal(double quantity, String unit, double caloriesPer100g) {
-    double quantityInGrams;
-    switch (unit) {
-      case 'grams':
-        quantityInGrams = quantity;
-        break;
-      case 'milligrams':
-        quantityInGrams = quantity / 1000;
-        break;
-      case 'kilograms':
-        quantityInGrams = quantity * 1000;
-        break;
-      case 'cups':
-        quantityInGrams = quantity * 201; // Approximate conversion for water
-        break;
-      case 'tablespoons':
-        quantityInGrams = quantity * 14.3; // Approximate conversion for water
-        break;
-      case 'teaspoons':
-        quantityInGrams = quantity * 4.8; // Approximate conversion for water
-        break;
-      case 'ounces':
-        quantityInGrams = quantity * 28.35; // Exact conversion
-        break;
-      case 'pounds':
-        quantityInGrams = quantity * 453.592; // Exact conversion
-        break;
-      case 'liters':
-        quantityInGrams = quantity * 1000; // Approximate conversion for water
-        break;
-      case 'milliliters':
-        quantityInGrams = quantity; // Approximate conversion for water
-        break;
-      default:
-        throw Exception('Unit not recognized');
-    }
-    return (quantityInGrams / 100) * caloriesPer100g;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -79,7 +40,7 @@ class EntryList extends StatelessWidget {
                 title: Text(food.name),
                 subtitle: Text(entry.created.toString()),
                 trailing: Text(
-                  "$kcal kcal",
+                  "${kcal.toStringAsFixed(0)} kcal",
                   style: const TextStyle(fontSize: 16),
                 ),
                 selected: selected.contains(entry.id),
