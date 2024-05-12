@@ -201,6 +201,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
               controller: _quantityController,
               decoration: const InputDecoration(label: Text("Quantity")),
               keyboardType: TextInputType.number,
+              onTap: () => _quantityController.selection = TextSelection(
+                baseOffset: 0,
+                extentOffset: _quantityController.text.length,
+              ),
             ),
             DropdownButtonFormField<String>(
               value: _unit,
