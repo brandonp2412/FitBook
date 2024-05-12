@@ -1,8 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +24,14 @@ class EditEntryPage extends StatefulWidget {
 class _EditEntryPageState extends State<EditEntryPage> {
   final _repsController = TextEditingController();
   final _weightController = TextEditingController();
-  DateTime _created = DateTime.now();
+  final _quantityController = TextEditingController();
   late String _name;
   late SettingsState _settings;
-  Food? _selectedFood;
 
+  DateTime _created = DateTime.now();
+  Food? _selectedFood;
   List<String> _nameOptions = [];
+  var _unit = 'grams';
 
   @override
   void initState() {
@@ -34,6 +39,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _settings = context.read<SettingsState>();
     _name = widget.food?.name ?? "";
     _selectedFood = widget.food;
+    _quantityController.text = widget.entry.quantity.toString();
     (db.foods.selectOnly()..addColumns([db.foods.name])).get().then(
           (results) => setState(() {
             _nameOptions =
@@ -55,8 +61,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
     var entry = EntriesCompanion.insert(
       food: _selectedFood!.id,
       created: _created,
-      quantity: 0,
-      unit: 'g',
+      quantity: double.parse(_quantityController.text),
+      unit: _unit,
     );
 
     if (widget.entry.id > 0)
@@ -191,6 +197,26 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   }),
                 );
               },
+            ),
+            DropdownButtonFormField<String>(
+              value: _unit,
+              decoration: const InputDecoration(labelText: 'Unit'),
+              items: units.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  _unit = newValue!;
+                });
+              },
+            ),
+            TextField(
+              controller: _quantityController,
+              decoration: const InputDecoration(label: Text("Quantity")),
+              keyboardType: TextInputType.number,
             ),
             ListTile(
               title: const Text('Created Date'),

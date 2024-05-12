@@ -3,3 +3,16 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.month == date2.month &&
       date1.day == date2.day;
 }
+
+List<String> units = [
+  'grams',
+  'milligrams',
+  'cups',
+  'tablespoons',
+  'teaspoons',
+  'ounces',
+  'pounds',
+  'kilograms',
+  'liters',
+  'milliliters',
+];
