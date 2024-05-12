@@ -58,6 +58,15 @@ class DiaryPageState extends State<DiaryPage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
 
+          double total = 0;
+          for (EntryWithFood entryFood in snapshot.data ?? [])
+            if (isSameDay(entryFood.entry.created, DateTime.now()))
+              total += convertToKcal(
+                entryFood.entry.quantity,
+                entryFood.entry.unit,
+                entryFood.food.calories ?? 0,
+              );
+
           final entryFoods = snapshot.data?.where((entry) {
                 final name = entry.food.name.toLowerCase();
                 final searchText = _search.toLowerCase();
@@ -130,7 +139,9 @@ class DiaryPageState extends State<DiaryPage> {
                     });
                 },
               ),
-              Text("1 / ${settings.dailyCalories} kcal"),
+              Text(
+                "${total.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
+              ),
             ],
           );
         },
