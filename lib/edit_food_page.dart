@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'database.dart';
 
@@ -757,6 +759,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsState>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -825,756 +829,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   const TextInputType.numberWithOptions(decimal: true),
             ),
             TextField(
-              controller: fatGController,
-              decoration: const InputDecoration(
-                labelText: 'Fat (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: foodGroupController,
-              decoration: const InputDecoration(
-                labelText: 'Food Group',
-              ),
-            ),
-            TextField(
-              controller: carbohydrateGController,
-              decoration: const InputDecoration(
-                labelText: 'Carbohydrate (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: sugarsGController,
-              decoration: const InputDecoration(
-                labelText: 'Sugars (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: fiberGController,
-              decoration: const InputDecoration(
-                labelText: 'Fiber (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: cholesterolMgController,
-              decoration: const InputDecoration(
-                labelText: 'Cholesterol (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: saturatedFatsGController,
-              decoration: const InputDecoration(
-                labelText: 'Saturated Fats (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: calciumMgController,
-              decoration: const InputDecoration(
-                labelText: 'Calcium (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: ironFeMgController,
-              decoration: const InputDecoration(
-                labelText: 'Iron (Fe mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: potassiumKMgController,
-              decoration: const InputDecoration(
-                labelText: 'Potassium (K mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: magnesiumMgController,
-              decoration: const InputDecoration(
-                labelText: 'Magnesium (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminAIuIuController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin A (IU)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminARaeMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin A (RAE mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminCMgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin C (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminB12McgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin B12 (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminDMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin D (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminEAlphaTocopherolMgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin E Alpha Tocopherol (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: addedSugarGController,
-              decoration: const InputDecoration(
-                labelText: 'Added Sugar (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: netCarbsGController,
-              decoration: const InputDecoration(
-                labelText: 'Net Carbs (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: waterGController,
-              decoration: const InputDecoration(
-                labelText: 'Water (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: omega3sMgController,
-              decoration: const InputDecoration(
-                labelText: 'Omega 3s (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: omega6sMgController,
-              decoration: const InputDecoration(
-                labelText: 'Omega 6s (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: pralScoreController,
-              decoration: const InputDecoration(
-                labelText: 'PRAL Score',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: transFattyAcidsGController,
-              decoration: const InputDecoration(
-                labelText: 'Trans Fatty Acids (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: solubleFiberGController,
-              decoration: const InputDecoration(
-                labelText: 'Soluble Fiber (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: insolubleFiberGController,
-              decoration: const InputDecoration(
-                labelText: 'Insoluble Fiber (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: sucroseGController,
-              decoration: const InputDecoration(
-                labelText: 'Sucrose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: glucoseDextroseGController,
-              decoration: const InputDecoration(
-                labelText: 'Glucose Dextrose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: fructoseGController,
-              decoration: const InputDecoration(
-                labelText: 'Fructose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: lactoseGController,
-              decoration: const InputDecoration(
-                labelText: 'Lactose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: maltoseGController,
-              decoration: const InputDecoration(
-                labelText: 'Maltose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: galactoseGController,
-              decoration: const InputDecoration(
-                labelText: 'Galactose (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: starchGController,
-              decoration: const InputDecoration(
-                labelText: 'Starch (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: totalSugarAlcoholsGController,
-              decoration: const InputDecoration(
-                labelText: 'Total Sugar Alcohols (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: phosphorusPMgController,
-              decoration: const InputDecoration(
-                labelText: 'Phosphorus (P mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: sodiumMgController,
-              decoration: const InputDecoration(
-                labelText: 'Sodium (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: zincZnMgController,
-              decoration: const InputDecoration(
-                labelText: 'Zinc (Zn mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: copperCuMgController,
-              decoration: const InputDecoration(
-                labelText: 'Copper (Cu mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: manganeseMgController,
-              decoration: const InputDecoration(
-                labelText: 'Manganese (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: seleniumSeMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Selenium (Se mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: fluorideFMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Fluoride (F mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: molybdenumMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Molybdenum (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: chlorineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Chlorine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: thiaminB1MgController,
-              decoration: const InputDecoration(
-                labelText: 'Thiamin B1 (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: riboflavinB2MgController,
-              decoration: const InputDecoration(
-                labelText: 'Riboflavin B2 (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: niacinB3MgController,
-              decoration: const InputDecoration(
-                labelText: 'Niacin B3 (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: pantothenicAcidB5MgController,
-              decoration: const InputDecoration(
-                labelText: 'Pantothenic Acid B5 (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminB6MgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin B6 (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: biotinB7McgController,
-              decoration: const InputDecoration(
-                labelText: 'Biotin B7 (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: folateB9McgController,
-              decoration: const InputDecoration(
-                labelText: 'Folate B9 (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: folicAcidMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Folic Acid (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: foodFolateMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Food Folate (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: folateDfeMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Folate DFE (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: cholineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Choline (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: betaineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Betaine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: retinolMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Retinol (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: caroteneBetaMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Carotene Beta (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: caroteneAlphaMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Carotene Alpha (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: lycopeneMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Lycopene (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: luteinZeaxanthinMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Lutein Zeaxanthin (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminD2ErgocalciferolMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin D2 Ergocalciferol (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminD3CholecalciferolMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin D3 Cholecalciferol (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminDIuIuController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin D (IU)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: vitaminKMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Vitamin K (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: dihydrophylloquinoneMcgController,
-              decoration: const InputDecoration(
-                labelText: 'Dihydrophylloquinone (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: menaquinone4McgController,
-              decoration: const InputDecoration(
-                labelText: 'Menaquinone 4 (mcg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: fattyAcidsTotalMonounsaturatedMgController,
-              decoration: const InputDecoration(
-                labelText: 'Fatty Acids Total Monounsaturated (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: fattyAcidsTotalPolyunsaturatedMgController,
-              decoration: const InputDecoration(
-                labelText: 'Fatty Acids Total Polyunsaturated (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: u183N3CCCAlaMgController,
-              decoration: const InputDecoration(
-                labelText: '18:3 n-3 c,c,c ALA (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: u205N3EpaMgController,
-              decoration: const InputDecoration(
-                labelText: '20:5 n-3 EPA (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: u225N3DpaMgController,
-              decoration: const InputDecoration(
-                labelText: '22:5 n-3 DPA (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: u226N3DhaMgController,
-              decoration: const InputDecoration(
-                labelText: '22:6 n-3 DHA (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: tryptophanMgController,
-              decoration: const InputDecoration(
-                labelText: 'Tryptophan (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: threonineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Threonine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: isoleucineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Isoleucine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: leucineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Leucine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: lysineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Lysine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: methionineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Methionine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: cystineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Cystine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: phenylalanineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Phenylalanine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: tyrosineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Tyrosine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: valineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Valine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: arginineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Arginine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: histidineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Histidine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: alanineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Alanine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: asparticAcidMgController,
-              decoration: const InputDecoration(
-                labelText: 'Aspartic Acid (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: glutamicAcidMgController,
-              decoration: const InputDecoration(
-                labelText: 'Glutamic Acid (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: glycineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Glycine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: prolineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Proline (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: serineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Serine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: hydroxyprolineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Hydroxyproline (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: alcoholGController,
-              decoration: const InputDecoration(
-                labelText: 'Alcohol (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: caffeineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Caffeine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: theobromineMgController,
-              decoration: const InputDecoration(
-                labelText: 'Theobromine (mg)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
               controller: servingWeight1GController,
               decoration: const InputDecoration(
                 labelText: 'Serving Weight 1 (g)',
@@ -1588,126 +842,886 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 labelText: 'Serving Description 1',
               ),
             ),
-            TextField(
-              controller: servingWeight2GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 2 (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription2GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 2',
+            ListTile(
+              title: const Text('Show others?'),
+              onTap: () => settings.setShowOthers(!settings.showOthers),
+              trailing: Switch(
+                value: settings.showOthers,
+                onChanged: (value) => settings.setShowOthers(value),
               ),
             ),
-            TextField(
-              controller: servingWeight3GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 3 (g)',
+            if (settings.showOthers) ...[
+              TextField(
+                controller: foodGroupController,
+                decoration: const InputDecoration(
+                  labelText: 'Food Group',
+                ),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription3GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 3',
+              TextField(
+                controller: fatGController,
+                decoration: const InputDecoration(
+                  labelText: 'Fat (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight4GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 4 (g)',
+              TextField(
+                controller: carbohydrateGController,
+                decoration: const InputDecoration(
+                  labelText: 'Carbohydrate (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription4GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 4',
+              TextField(
+                controller: sugarsGController,
+                decoration: const InputDecoration(
+                  labelText: 'Sugars (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight5GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 5 (g)',
+              TextField(
+                controller: fiberGController,
+                decoration: const InputDecoration(
+                  labelText: 'Fiber (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription5GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 5',
+              TextField(
+                controller: cholesterolMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Cholesterol (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight6GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 6 (g)',
+              TextField(
+                controller: saturatedFatsGController,
+                decoration: const InputDecoration(
+                  labelText: 'Saturated Fats (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription6GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 6',
+              TextField(
+                controller: calciumMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Calcium (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight7GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 7 (g)',
+              TextField(
+                controller: ironFeMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Iron (Fe mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription7GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 7',
+              TextField(
+                controller: potassiumKMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Potassium (K mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight8GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 8 (g)',
+              TextField(
+                controller: magnesiumMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Magnesium (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription8GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 8',
+              TextField(
+                controller: vitaminAIuIuController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin A (IU)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: servingWeight9GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Weight 9 (g)',
+              TextField(
+                controller: vitaminARaeMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin A (RAE mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            TextField(
-              controller: servingDescription9GController,
-              decoration: const InputDecoration(
-                labelText: 'Serving Description 9',
+              TextField(
+                controller: vitaminCMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin C (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-            ),
-            TextField(
-              controller: u200calorieWeightGController,
-              decoration: const InputDecoration(
-                labelText: '200 Calorie Weight (g)',
+              TextField(
+                controller: vitaminB12McgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin B12 (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+              TextField(
+                controller: vitaminDMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin D (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminEAlphaTocopherolMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin E Alpha Tocopherol (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: addedSugarGController,
+                decoration: const InputDecoration(
+                  labelText: 'Added Sugar (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: netCarbsGController,
+                decoration: const InputDecoration(
+                  labelText: 'Net Carbs (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: waterGController,
+                decoration: const InputDecoration(
+                  labelText: 'Water (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: omega3sMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Omega 3s (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: omega6sMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Omega 6s (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: pralScoreController,
+                decoration: const InputDecoration(
+                  labelText: 'PRAL Score',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: transFattyAcidsGController,
+                decoration: const InputDecoration(
+                  labelText: 'Trans Fatty Acids (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: solubleFiberGController,
+                decoration: const InputDecoration(
+                  labelText: 'Soluble Fiber (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: insolubleFiberGController,
+                decoration: const InputDecoration(
+                  labelText: 'Insoluble Fiber (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: sucroseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Sucrose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: glucoseDextroseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Glucose Dextrose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: fructoseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Fructose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: lactoseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Lactose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: maltoseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Maltose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: galactoseGController,
+                decoration: const InputDecoration(
+                  labelText: 'Galactose (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: starchGController,
+                decoration: const InputDecoration(
+                  labelText: 'Starch (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: totalSugarAlcoholsGController,
+                decoration: const InputDecoration(
+                  labelText: 'Total Sugar Alcohols (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: phosphorusPMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Phosphorus (P mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: sodiumMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Sodium (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: zincZnMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Zinc (Zn mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: copperCuMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Copper (Cu mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: manganeseMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Manganese (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: seleniumSeMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Selenium (Se mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: fluorideFMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Fluoride (F mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: molybdenumMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Molybdenum (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: chlorineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Chlorine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: thiaminB1MgController,
+                decoration: const InputDecoration(
+                  labelText: 'Thiamin B1 (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: riboflavinB2MgController,
+                decoration: const InputDecoration(
+                  labelText: 'Riboflavin B2 (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: niacinB3MgController,
+                decoration: const InputDecoration(
+                  labelText: 'Niacin B3 (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: pantothenicAcidB5MgController,
+                decoration: const InputDecoration(
+                  labelText: 'Pantothenic Acid B5 (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminB6MgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin B6 (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: biotinB7McgController,
+                decoration: const InputDecoration(
+                  labelText: 'Biotin B7 (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: folateB9McgController,
+                decoration: const InputDecoration(
+                  labelText: 'Folate B9 (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: folicAcidMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Folic Acid (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: foodFolateMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Food Folate (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: folateDfeMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Folate DFE (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: cholineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Choline (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: betaineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Betaine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: retinolMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Retinol (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: caroteneBetaMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Carotene Beta (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: caroteneAlphaMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Carotene Alpha (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: lycopeneMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Lycopene (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: luteinZeaxanthinMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Lutein Zeaxanthin (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminD2ErgocalciferolMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin D2 Ergocalciferol (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminD3CholecalciferolMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin D3 Cholecalciferol (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminDIuIuController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin D (IU)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: vitaminKMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Vitamin K (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: dihydrophylloquinoneMcgController,
+                decoration: const InputDecoration(
+                  labelText: 'Dihydrophylloquinone (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: menaquinone4McgController,
+                decoration: const InputDecoration(
+                  labelText: 'Menaquinone 4 (mcg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: fattyAcidsTotalMonounsaturatedMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Fatty Acids Total Monounsaturated (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: fattyAcidsTotalPolyunsaturatedMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Fatty Acids Total Polyunsaturated (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: u183N3CCCAlaMgController,
+                decoration: const InputDecoration(
+                  labelText: '18:3 n-3 c,c,c ALA (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: u205N3EpaMgController,
+                decoration: const InputDecoration(
+                  labelText: '20:5 n-3 EPA (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: u225N3DpaMgController,
+                decoration: const InputDecoration(
+                  labelText: '22:5 n-3 DPA (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: u226N3DhaMgController,
+                decoration: const InputDecoration(
+                  labelText: '22:6 n-3 DHA (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: tryptophanMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Tryptophan (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: threonineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Threonine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: isoleucineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Isoleucine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: leucineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Leucine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: lysineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Lysine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: methionineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Methionine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: cystineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Cystine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: phenylalanineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Phenylalanine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: tyrosineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Tyrosine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: valineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Valine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: arginineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Arginine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: histidineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Histidine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: alanineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Alanine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: asparticAcidMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Aspartic Acid (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: glutamicAcidMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Glutamic Acid (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: glycineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Glycine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: prolineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Proline (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: serineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Serine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: hydroxyprolineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Hydroxyproline (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: alcoholGController,
+                decoration: const InputDecoration(
+                  labelText: 'Alcohol (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: caffeineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Caffeine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: theobromineMgController,
+                decoration: const InputDecoration(
+                  labelText: 'Theobromine (mg)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingWeight2GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 2 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription2GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 2',
+                ),
+              ),
+              TextField(
+                controller: servingWeight3GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 3 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription3GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 3',
+                ),
+              ),
+              TextField(
+                controller: servingWeight4GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 4 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription4GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 4',
+                ),
+              ),
+              TextField(
+                controller: servingWeight5GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 5 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription5GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 5',
+                ),
+              ),
+              TextField(
+                controller: servingWeight6GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 6 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription6GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 6',
+                ),
+              ),
+              TextField(
+                controller: servingWeight7GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 7 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription7GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 7',
+                ),
+              ),
+              TextField(
+                controller: servingWeight8GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 8 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription8GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 8',
+                ),
+              ),
+              TextField(
+                controller: servingWeight9GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Weight 9 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingDescription9GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving Description 9',
+                ),
+              ),
+              TextField(
+                controller: u200calorieWeightGController,
+                decoration: const InputDecoration(
+                  labelText: '200 Calorie Weight (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+            ],
           ],
         ),
       ),

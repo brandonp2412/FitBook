@@ -1,7 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/app_line.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/foods.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Entries extends Table {
@@ -68,32 +71,44 @@ Stream<List<EntryWithFood>> watchAllEntries() {
   });
 }
 
-Stream<EntryWithFood> watchEntry(int id) {
-  // load information about the entry
-  final entryQuery = db.select(db.entries)
-    ..where((entry) => entry.id.equals(id));
-
-  // and also load information about the food for this entry
-  final foodQuery = db.select(db.foods).join(
-    [
-      innerJoin(
-        db.entries,
-        db.entries.food.equalsExp(db.foods.id),
+Stream<List<GraphData>> watchCalories(
+  Iterable<Expression> group,
+  GraphMetric metric,
+) {
+  final entryQuery = (db.select(db.entries)).join([
+    innerJoin(
+      db.foods,
+      db.entries.food.equalsExp(db.foods.id),
+    ),
+  ])
+    ..addColumns([db.foods.calories.sum(), db.entries.quantity.sum()])
+    ..groupBy(group)
+    ..orderBy([
+      OrderingTerm(
+        expression: db.entries.created,
+        mode: OrderingMode.desc,
       ),
-    ],
-  )..where(db.entries.id.equals(id));
+    ])
+    ..limit(10);
 
-  final entryStream = entryQuery.watchSingle();
+  return entryQuery.watch().map((rows) {
+    List<GraphData> result = [];
 
-  final foodStream = foodQuery.watch().map((rows) {
-    // we join the entries with the foods, but we
-    // only care about the food here.
-    return rows.map((row) => row.readTable(db.foods)).toList();
-  });
+    for (var row in rows) {
+      final food = row.readTable(db.foods);
+      final entry = row.readTable(db.entries);
+      var value = 0.0;
 
-  // now, we can merge the two queries together in one stream
-  return Rx.combineLatest2(entryStream, foodStream,
-      (Entry entry, List<Food> foods) {
-    return (entry: entry, food: foods.first);
+      value = convertToKcal(entry.quantity, entry.unit, food.calories!);
+
+      result.add(
+        GraphData(
+          created: entry.created,
+          value: value,
+        ),
+      );
+    }
+
+    return result;
   });
 }

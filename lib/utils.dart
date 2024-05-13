@@ -4,20 +4,6 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.day == date2.day;
 }
 
-List<String> units = [
-  'grams',
-  'milligrams',
-  'kilojoules',
-  'cups',
-  'tablespoons',
-  'teaspoons',
-  'ounces',
-  'pounds',
-  'kilograms',
-  'liters',
-  'milliliters',
-];
-
 double convertToKcal(double quantity, String unit, double caloriesPer100g) {
   double quantityInGrams;
 

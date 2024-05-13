@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/diary_page.dart';
 import 'package:fit_book/foods_page.dart';
+import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,13 +65,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         body: SafeArea(
           child: TabBarView(
             children: [
               DiaryPage(),
               FoodsPage(),
+              GraphPage(),
             ],
           ),
         ),
@@ -83,6 +85,10 @@ class HomePage extends StatelessWidget {
             Tab(
               icon: Icon(Icons.restaurant),
               text: "Foods",
+            ),
+            Tab(
+              icon: Icon(Icons.insights),
+              text: "Graph",
             ),
           ],
         ),

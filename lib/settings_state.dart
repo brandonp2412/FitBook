@@ -9,6 +9,8 @@ class SettingsState extends ChangeNotifier {
   String shortDateFormat = 'd/M/yy';
 
   bool systemColors = true;
+  bool curveLines = false;
+  bool showOthers = false;
 
   int dailyCalories = 2200;
   int dailyProtein = 100;
@@ -24,8 +26,16 @@ class SettingsState extends ChangeNotifier {
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
     systemColors = prefs?.getBool("systemColors") ?? true;
+    curveLines = prefs?.getBool("curveLines") ?? true;
+    showOthers = prefs?.getBool("showOthers") ?? false;
     dailyCalories = prefs?.getInt('dailyCalories') ?? 2200;
     dailyProtein = prefs?.getInt('dailyProtein') ?? 100;
+  }
+
+  void setShowOthers(bool show) {
+    showOthers = show;
+    prefs?.setBool('showOthers', show);
+    notifyListeners();
   }
 
   void setDailyProtein(int protein) {
@@ -37,6 +47,12 @@ class SettingsState extends ChangeNotifier {
   void setDailyCalories(int calories) {
     dailyCalories = calories;
     prefs?.setInt('dailyCalories', calories);
+    notifyListeners();
+  }
+
+  void setCurve(bool curve) {
+    curveLines = curve;
+    prefs?.setBool('curveLines', curve);
     notifyListeners();
   }
 
