@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database.dart';
-import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/edit_food_page.dart';
 import 'package:fit_book/food_list.dart';
 import 'package:fit_book/main.dart';
@@ -23,11 +22,19 @@ class FoodsPageState extends State<FoodsPage> {
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
+  int _limit = 100;
 
   @override
   void initState() {
     super.initState();
-    _stream = (db.foods.select()).watch();
+    _setStream();
+  }
+
+  void _setStream() {
+    _stream = (db.foods.select()
+          ..where((tbl) => tbl.name.contains(_search.toLowerCase()))
+          ..limit(_limit))
+        .watch();
   }
 
   @override
@@ -56,13 +63,7 @@ class FoodsPageState extends State<FoodsPage> {
         stream: _stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
-
-          final foods = snapshot.data?.where((food) {
-                final name = food.name.toLowerCase();
-                final searchText = _search.toLowerCase();
-                return name.contains(searchText);
-              }).toList() ??
-              [];
+          final foods = snapshot.data!;
 
           return material.Column(
             children: [
@@ -71,6 +72,7 @@ class FoodsPageState extends State<FoodsPage> {
                   setState(() {
                     _search = value;
                   });
+                  _setStream();
                 },
                 onClear: () => setState(() {
                   _selected.clear();
@@ -124,6 +126,12 @@ class FoodsPageState extends State<FoodsPage> {
                     setState(() {
                       _selected.add(id);
                     });
+                },
+                onNext: () {
+                  setState(() {
+                    _limit += 10;
+                  });
+                  _setStream();
                 },
               ),
             ],
