@@ -63,7 +63,7 @@ class FoodsPageState extends State<FoodsPage> {
         stream: _stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
-          final foods = snapshot.data!;
+          final foods = snapshot.data ?? [];
 
           return material.Column(
             children: [
