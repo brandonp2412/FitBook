@@ -163,7 +163,7 @@ class DiaryPageState extends State<DiaryPage> {
             ),
           );
         },
-        tooltip: 'Add exercise',
+        tooltip: 'Add entry',
         child: const Icon(Icons.add),
       ),
     );

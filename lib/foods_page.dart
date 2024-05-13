@@ -147,7 +147,7 @@ class FoodsPageState extends State<FoodsPage> {
             ),
           );
         },
-        tooltip: 'Add exercise',
+        tooltip: 'Add food',
         child: const Icon(Icons.add),
       ),
     );

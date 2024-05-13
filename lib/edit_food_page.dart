@@ -760,7 +760,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.food != null ? 'Edit entry' : 'Add entry',
+          widget.food != null ? 'Edit food' : 'Add food',
         ),
         actions: [
           if (widget.food != null)
@@ -809,15 +809,17 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
             ),
             TextField(
-              controller: foodGroupController,
-              decoration: const InputDecoration(
-                labelText: 'Food Group',
-              ),
-            ),
-            TextField(
               controller: caloriesController,
               decoration: const InputDecoration(
                 labelText: 'Calories',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+            ),
+            TextField(
+              controller: proteinGController,
+              decoration: const InputDecoration(
+                labelText: 'Protein (g)',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
@@ -831,12 +833,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   const TextInputType.numberWithOptions(decimal: true),
             ),
             TextField(
-              controller: proteinGController,
+              controller: foodGroupController,
               decoration: const InputDecoration(
-                labelText: 'Protein (g)',
+                labelText: 'Food Group',
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
             ),
             TextField(
               controller: carbohydrateGController,
