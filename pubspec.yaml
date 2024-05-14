@@ -1,5 +1,5 @@
-name: fit_book
-description: "A new Flutter project."
+name: FitBook
+description: "Track your calories - Completely offline!"
 publish_to: 'none'
 
 version: 1.0.0+1
