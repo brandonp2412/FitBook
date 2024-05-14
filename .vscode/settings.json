@@ -11,6 +11,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "flutter/": true,
-  }
+    "flutter/": true
+  },
+  "dart.flutterSdkPath": ".fvm/versions/3.22.0"
 }
