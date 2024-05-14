@@ -31,6 +31,12 @@ class FoodsPageState extends State<FoodsPage> {
   void _setStream() {
     _stream = (db.foods.select()
           ..where((tbl) => tbl.name.contains(_search.toLowerCase()))
+          ..orderBy([
+            (u) => OrderingTerm(
+                  expression: u.favorite,
+                  mode: OrderingMode.desc,
+                ),
+          ])
           ..limit(_limit))
         .watch();
   }
@@ -101,6 +107,21 @@ class FoodsPageState extends State<FoodsPage> {
                       ),
                     ),
                   );
+                },
+                onFavorite: () async {
+                  final first = await (db.foods.select()
+                        ..where((tbl) => tbl.id.equals(_selected.first)))
+                      .getSingle();
+                  await (db.foods.update()
+                        ..where((tbl) => tbl.id.isIn(_selected)))
+                      .write(
+                    FoodsCompanion(
+                      favorite: Value(first.favorite == true ? false : true),
+                    ),
+                  );
+                  setState(() {
+                    _selected.clear();
+                  });
                 },
               ),
               if (snapshot.data?.isEmpty == true)

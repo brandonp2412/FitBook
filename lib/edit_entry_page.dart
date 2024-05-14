@@ -44,6 +44,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
     return await (db.foods.selectOnly()
           ..where(db.foods.name.contains(term.toLowerCase()))
           ..limit(30)
+          ..orderBy([
+            OrderingTerm(
+              expression: db.foods.favorite,
+              mode: OrderingMode.desc,
+            ),
+          ])
           ..addColumns([db.foods.name]))
         .get()
         .then(

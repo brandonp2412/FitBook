@@ -49,9 +49,13 @@ class _FoodListState extends State<FoodList> {
         itemCount: widget.foods.length,
         itemBuilder: (context, index) {
           final food = widget.foods[index];
+          final previous = index > 0 ? widget.foods[index - 1] : null;
+          final showDivider = previous != null &&
+              (food.favorite ?? false) != (previous.favorite ?? false);
 
           return Column(
             children: [
+              if (showDivider) const Divider(),
               ListTile(
                 title: Text(food.name),
                 subtitle: Text(

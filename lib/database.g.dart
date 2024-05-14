@@ -714,6 +714,15 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   late final GeneratedColumn<double> u200calorieWeightG =
       GeneratedColumn<double>('_200_calorie_weight_g', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _favoriteMeta =
+      const VerificationMeta('favorite');
+  @override
+  late final GeneratedColumn<bool> favorite = GeneratedColumn<bool>(
+      'favorite', aliasedName, true,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("favorite" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -832,7 +841,8 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
         servingDescription8G,
         servingWeight9G,
         servingDescription9G,
-        u200calorieWeightG
+        u200calorieWeightG,
+        favorite
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1492,6 +1502,10 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           u200calorieWeightG.isAcceptableOrUnknown(
               data['_200_calorie_weight_g']!, _u200calorieWeightGMeta));
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    }
     return context;
   }
 
@@ -1752,6 +1766,8 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           data['${effectivePrefix}serving_description_9_g']),
       u200calorieWeightG: attachedDatabase.typeMapping.read(
           DriftSqlType.double, data['${effectivePrefix}_200_calorie_weight_g']),
+      favorite: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}favorite']),
     );
   }
 
@@ -1879,6 +1895,7 @@ class Food extends DataClass implements Insertable<Food> {
   final double? servingWeight9G;
   final String? servingDescription9G;
   final double? u200calorieWeightG;
+  final bool? favorite;
   const Food(
       {required this.id,
       required this.name,
@@ -1996,7 +2013,8 @@ class Food extends DataClass implements Insertable<Food> {
       this.servingDescription8G,
       this.servingWeight9G,
       this.servingDescription9G,
-      this.u200calorieWeightG});
+      this.u200calorieWeightG,
+      this.favorite});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2353,6 +2371,9 @@ class Food extends DataClass implements Insertable<Food> {
     if (!nullToAbsent || u200calorieWeightG != null) {
       map['_200_calorie_weight_g'] = Variable<double>(u200calorieWeightG);
     }
+    if (!nullToAbsent || favorite != null) {
+      map['favorite'] = Variable<bool>(favorite);
+    }
     return map;
   }
 
@@ -2706,6 +2727,9 @@ class Food extends DataClass implements Insertable<Food> {
       u200calorieWeightG: u200calorieWeightG == null && nullToAbsent
           ? const Value.absent()
           : Value(u200calorieWeightG),
+      favorite: favorite == null && nullToAbsent
+          ? const Value.absent()
+          : Value(favorite),
     );
   }
 
@@ -2849,6 +2873,7 @@ class Food extends DataClass implements Insertable<Food> {
           serializer.fromJson<String?>(json['servingDescription9G']),
       u200calorieWeightG:
           serializer.fromJson<double?>(json['u200calorieWeightG']),
+      favorite: serializer.fromJson<bool?>(json['favorite']),
     );
   }
   @override
@@ -2978,6 +3003,7 @@ class Food extends DataClass implements Insertable<Food> {
       'servingWeight9G': serializer.toJson<double?>(servingWeight9G),
       'servingDescription9G': serializer.toJson<String?>(servingDescription9G),
       'u200calorieWeightG': serializer.toJson<double?>(u200calorieWeightG),
+      'favorite': serializer.toJson<bool?>(favorite),
     };
   }
 
@@ -3100,7 +3126,8 @@ class Food extends DataClass implements Insertable<Food> {
           Value<String?> servingDescription8G = const Value.absent(),
           Value<double?> servingWeight9G = const Value.absent(),
           Value<String?> servingDescription9G = const Value.absent(),
-          Value<double?> u200calorieWeightG = const Value.absent()}) =>
+          Value<double?> u200calorieWeightG = const Value.absent(),
+          Value<bool?> favorite = const Value.absent()}) =>
       Food(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -3317,6 +3344,7 @@ class Food extends DataClass implements Insertable<Food> {
         u200calorieWeightG: u200calorieWeightG.present
             ? u200calorieWeightG.value
             : this.u200calorieWeightG,
+        favorite: favorite.present ? favorite.value : this.favorite,
       );
   @override
   String toString() {
@@ -3439,7 +3467,8 @@ class Food extends DataClass implements Insertable<Food> {
           ..write('servingDescription8G: $servingDescription8G, ')
           ..write('servingWeight9G: $servingWeight9G, ')
           ..write('servingDescription9G: $servingDescription9G, ')
-          ..write('u200calorieWeightG: $u200calorieWeightG')
+          ..write('u200calorieWeightG: $u200calorieWeightG, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
@@ -3562,7 +3591,8 @@ class Food extends DataClass implements Insertable<Food> {
         servingDescription8G,
         servingWeight9G,
         servingDescription9G,
-        u200calorieWeightG
+        u200calorieWeightG,
+        favorite
       ]);
   @override
   bool operator ==(Object other) =>
@@ -3687,7 +3717,8 @@ class Food extends DataClass implements Insertable<Food> {
           other.servingDescription8G == this.servingDescription8G &&
           other.servingWeight9G == this.servingWeight9G &&
           other.servingDescription9G == this.servingDescription9G &&
-          other.u200calorieWeightG == this.u200calorieWeightG);
+          other.u200calorieWeightG == this.u200calorieWeightG &&
+          other.favorite == this.favorite);
 }
 
 class FoodsCompanion extends UpdateCompanion<Food> {
@@ -3808,6 +3839,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<double?> servingWeight9G;
   final Value<String?> servingDescription9G;
   final Value<double?> u200calorieWeightG;
+  final Value<bool?> favorite;
   const FoodsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -3926,6 +3958,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.servingWeight9G = const Value.absent(),
     this.servingDescription9G = const Value.absent(),
     this.u200calorieWeightG = const Value.absent(),
+    this.favorite = const Value.absent(),
   });
   FoodsCompanion.insert({
     this.id = const Value.absent(),
@@ -4045,6 +4078,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.servingWeight9G = const Value.absent(),
     this.servingDescription9G = const Value.absent(),
     this.u200calorieWeightG = const Value.absent(),
+    this.favorite = const Value.absent(),
   }) : name = Value(name);
   static Insertable<Food> custom({
     Expression<int>? id,
@@ -4164,6 +4198,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<double>? servingWeight9G,
     Expression<String>? servingDescription9G,
     Expression<double>? u200calorieWeightG,
+    Expression<bool>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -4304,6 +4339,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
         'serving_description_9_g': servingDescription9G,
       if (u200calorieWeightG != null)
         '_200_calorie_weight_g': u200calorieWeightG,
+      if (favorite != null) 'favorite': favorite,
     });
   }
 
@@ -4424,7 +4460,8 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<String?>? servingDescription8G,
       Value<double?>? servingWeight9G,
       Value<String?>? servingDescription9G,
-      Value<double?>? u200calorieWeightG}) {
+      Value<double?>? u200calorieWeightG,
+      Value<bool?>? favorite}) {
     return FoodsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -4549,6 +4586,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       servingWeight9G: servingWeight9G ?? this.servingWeight9G,
       servingDescription9G: servingDescription9G ?? this.servingDescription9G,
       u200calorieWeightG: u200calorieWeightG ?? this.u200calorieWeightG,
+      favorite: favorite ?? this.favorite,
     );
   }
 
@@ -4924,6 +4962,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     if (u200calorieWeightG.present) {
       map['_200_calorie_weight_g'] = Variable<double>(u200calorieWeightG.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<bool>(favorite.value);
+    }
     return map;
   }
 
@@ -5048,7 +5089,8 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           ..write('servingDescription8G: $servingDescription8G, ')
           ..write('servingWeight9G: $servingWeight9G, ')
           ..write('servingDescription9G: $servingDescription9G, ')
-          ..write('u200calorieWeightG: $u200calorieWeightG')
+          ..write('u200calorieWeightG: $u200calorieWeightG, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
@@ -5863,6 +5905,7 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<double?> servingWeight9G,
   Value<String?> servingDescription9G,
   Value<double?> u200calorieWeightG,
+  Value<bool?> favorite,
 });
 typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<int> id,
@@ -5982,6 +6025,7 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<double?> servingWeight9G,
   Value<String?> servingDescription9G,
   Value<double?> u200calorieWeightG,
+  Value<bool?> favorite,
 });
 
 class $$FoodsTableTableManager extends RootTableManager<
@@ -6122,6 +6166,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> servingWeight9G = const Value.absent(),
             Value<String?> servingDescription9G = const Value.absent(),
             Value<double?> u200calorieWeightG = const Value.absent(),
+            Value<bool?> favorite = const Value.absent(),
           }) =>
               FoodsCompanion(
             id: id,
@@ -6241,6 +6286,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             servingWeight9G: servingWeight9G,
             servingDescription9G: servingDescription9G,
             u200calorieWeightG: u200calorieWeightG,
+            favorite: favorite,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
@@ -6362,6 +6408,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> servingWeight9G = const Value.absent(),
             Value<String?> servingDescription9G = const Value.absent(),
             Value<double?> u200calorieWeightG = const Value.absent(),
+            Value<bool?> favorite = const Value.absent(),
           }) =>
               FoodsCompanion.insert(
             id: id,
@@ -6481,6 +6528,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             servingWeight9G: servingWeight9G,
             servingDescription9G: servingDescription9G,
             u200calorieWeightG: u200calorieWeightG,
+            favorite: favorite,
           ),
         ));
 }
@@ -7090,6 +7138,11 @@ class $$FoodsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<bool> get favorite => $state.composableBuilder(
+      column: $state.table.favorite,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ComposableFilter entriesRefs(
       ComposableFilter Function($$EntriesTableFilterComposer f) f) {
     final $$EntriesTableFilterComposer composer = $state.composerBuilder(
@@ -7695,6 +7748,11 @@ class $$FoodsTableOrderingComposer
 
   ColumnOrderings<double> get u200calorieWeightG => $state.composableBuilder(
       column: $state.table.u200calorieWeightG,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get favorite => $state.composableBuilder(
+      column: $state.table.favorite,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

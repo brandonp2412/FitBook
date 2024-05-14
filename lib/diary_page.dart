@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/edit_entry_page.dart';
@@ -102,6 +103,20 @@ class DiaryPageState extends State<DiaryPage> {
                   );
                 }),
                 selected: _selected,
+                onFavorite: () async {
+                  final entries = await (db.entries.select()
+                        ..where(
+                          (tbl) => tbl.id.isIn(_selected),
+                        ))
+                      .get();
+                  final foodIds = entries.map((entry) => entry.food);
+                  await (db.foods.update()
+                        ..where((tbl) => tbl.id.isIn(foodIds)))
+                      .write(const FoodsCompanion(favorite: Value(true)));
+                  setState(() {
+                    _selected.clear();
+                  });
+                },
                 onEdit: () {
                   final entryFood = entryFoods.firstWhere(
                     (element) => element.entry.id == _selected.first,

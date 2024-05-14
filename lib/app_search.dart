@@ -13,6 +13,7 @@ class AppSearch extends StatefulWidget {
     required this.onDelete,
     required this.onSelect,
     this.onRefresh,
+    required this.onFavorite,
   });
 
   final Set<dynamic> selected;
@@ -21,6 +22,7 @@ class AppSearch extends StatefulWidget {
   final Function onEdit;
   final Function onDelete;
   final Function onSelect;
+  final Function onFavorite;
   final Function? onRefresh;
 
   @override
@@ -150,6 +152,16 @@ class _AppSearchState extends State<AppSearch> {
                 ),
               ],
               if (widget.selected.isNotEmpty) ...[
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: const Icon(Icons.favorite_outline),
+                    title: const Text('Favorite'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      widget.onFavorite();
+                    },
+                  ),
+                ),
                 PopupMenuItem(
                   child: ListTile(
                     leading: const Icon(Icons.edit),

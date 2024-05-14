@@ -57,11 +57,10 @@ class _EntryListState extends State<EntryList> {
           final entryFood = widget.entryFoods[index];
           final food = entryFood.food;
           final entry = entryFood.entry;
-          final previousEntryFood =
-              index > 0 ? widget.entryFoods[index - 1] : null;
-          final showDivider = previousEntryFood != null &&
+          final previous = index > 0 ? widget.entryFoods[index - 1] : null;
+          final showDivider = previous != null &&
               !isSameDay(
-                previousEntryFood.entry.created,
+                previous.entry.created,
                 entryFood.entry.created,
               );
 
