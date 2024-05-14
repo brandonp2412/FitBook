@@ -581,6 +581,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
           children: [
             TextField(
               controller: nameController,
+              autofocus: true,
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
