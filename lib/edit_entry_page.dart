@@ -115,6 +115,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
   }
 
   Future<void> _selectTime(DateTime pickedDate) async {
+    if (!_settings.longDateFormat.contains('h:mm')) return;
+
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(_created),
