@@ -27,8 +27,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   DateTime _created = DateTime.now();
   Food? _selectedFood;
-  List<String> _nameOptions = [];
-  var _unit = 'grams';
+  var _unit = 'serving';
 
   @override
   void initState() {
@@ -39,11 +38,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _quantityController.text = widget.entry.quantity.toString();
     _created = widget.entry.created;
     _unit = widget.entry.unit;
-    _search('').then(
-      (value) => setState(() {
-        _nameOptions = value;
-      }),
-    );
   }
 
   Future<List<String>> _search(String term) async {
@@ -79,13 +73,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
     if (_unit == 'kilojoules') {
       final grams = quantity / 4.184;
       entry = entry.copyWith(
-        kCalories: Value(grams / 100 * (food.calories ?? 0)),
+        kCalories: Value(grams / 100 * (food.calories ?? 1)),
       );
     } else {
       final quantity100G = _unit == 'serving'
-          ? (quantity * (food.servingWeight1G ?? 0)) / 100
+          ? (quantity * (food.servingWeight1G ?? 100)) / 100
           : convertToGrams(quantity, _unit) / 100;
-      final kCalories = quantity100G * (food.calories ?? 0);
+      final kCalories = quantity100G * (food.calories ?? 100);
       final proteinG = quantity100G * (food.proteinG ?? 0);
       final fatG = quantity100G * (food.fatG ?? 0);
       final carbG = quantity100G * (food.carbohydrateG ?? 0);
@@ -217,6 +211,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   decoration: const InputDecoration(labelText: 'Name'),
                   controller: textEditingController,
                   focusNode: focusNode,
+                  textCapitalization: TextCapitalization.sentences,
                   onFieldSubmitted: (String value) {
                     onFieldSubmitted();
                   },
