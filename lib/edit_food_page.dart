@@ -391,360 +391,133 @@ class _EditFoodPageState extends State<EditFoodPage> {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameController.text,
-      foodGroup: foodGroupController.text.isNotEmpty
-          ? Value(foodGroupController.text)
-          : const Value.absent(),
-      calories: caloriesController.text.isNotEmpty
-          ? Value(double.parse(caloriesController.text))
-          : const Value.absent(),
-      fatG: fatGController.text.isNotEmpty
-          ? Value(double.parse(fatGController.text))
-          : const Value.absent(),
-      proteinG: proteinGController.text.isNotEmpty
-          ? Value(double.parse(proteinGController.text))
-          : const Value.absent(),
-      carbohydrateG: carbohydrateGController.text.isNotEmpty
-          ? Value(double.parse(carbohydrateGController.text))
-          : const Value.absent(),
-      sugarsG: sugarsGController.text.isNotEmpty
-          ? Value(double.parse(sugarsGController.text))
-          : const Value.absent(),
-      fiberG: fiberGController.text.isNotEmpty
-          ? Value(double.parse(fiberGController.text))
-          : const Value.absent(),
-      cholesterolMg: cholesterolMgController.text.isNotEmpty
-          ? Value(double.parse(cholesterolMgController.text))
-          : const Value.absent(),
-      saturatedFatsG: saturatedFatsGController.text.isNotEmpty
-          ? Value(double.parse(saturatedFatsGController.text))
-          : const Value.absent(),
-      calciumMg: calciumMgController.text.isNotEmpty
-          ? Value(double.parse(calciumMgController.text))
-          : const Value.absent(),
-      ironFeMg: ironFeMgController.text.isNotEmpty
-          ? Value(double.parse(ironFeMgController.text))
-          : const Value.absent(),
-      potassiumKMg: potassiumKMgController.text.isNotEmpty
-          ? Value(double.parse(potassiumKMgController.text))
-          : const Value.absent(),
-      magnesiumMg: magnesiumMgController.text.isNotEmpty
-          ? Value(double.parse(magnesiumMgController.text))
-          : const Value.absent(),
-      vitaminAIuIu: vitaminAIuIuController.text.isNotEmpty
-          ? Value(double.parse(vitaminAIuIuController.text))
-          : const Value.absent(),
-      vitaminARaeMcg: vitaminARaeMcgController.text.isNotEmpty
-          ? Value(double.parse(vitaminARaeMcgController.text))
-          : const Value.absent(),
-      vitaminCMg: vitaminCMgController.text.isNotEmpty
-          ? Value(double.parse(vitaminCMgController.text))
-          : const Value.absent(),
-      vitaminB12Mcg: vitaminB12McgController.text.isNotEmpty
-          ? Value(double.parse(vitaminB12McgController.text))
-          : const Value.absent(),
-      vitaminDMcg: vitaminDMcgController.text.isNotEmpty
-          ? Value(double.parse(vitaminDMcgController.text))
-          : const Value.absent(),
+      foodGroup: Value(foodGroupController.text),
+      calories: Value(double.tryParse(caloriesController.text)),
+      fatG: Value(double.tryParse(fatGController.text)),
+      proteinG: Value(double.tryParse(proteinGController.text)),
+      carbohydrateG: Value(double.tryParse(carbohydrateGController.text)),
+      sugarsG: Value(double.tryParse(sugarsGController.text)),
+      fiberG: Value(double.tryParse(fiberGController.text)),
+      cholesterolMg: Value(double.tryParse(cholesterolMgController.text)),
+      saturatedFatsG: Value(double.tryParse(saturatedFatsGController.text)),
+      calciumMg: Value(double.tryParse(calciumMgController.text)),
+      ironFeMg: Value(double.tryParse(ironFeMgController.text)),
+      potassiumKMg: Value(double.tryParse(potassiumKMgController.text)),
+      magnesiumMg: Value(double.tryParse(magnesiumMgController.text)),
+      vitaminAIuIu: Value(double.tryParse(vitaminAIuIuController.text)),
+      vitaminARaeMcg: Value(double.tryParse(vitaminARaeMcgController.text)),
+      vitaminCMg: Value(double.tryParse(vitaminCMgController.text)),
+      vitaminB12Mcg: Value(double.tryParse(vitaminB12McgController.text)),
+      vitaminDMcg: Value(double.tryParse(vitaminDMcgController.text)),
       vitaminEAlphaTocopherolMg:
-          vitaminEAlphaTocopherolMgController.text.isNotEmpty
-              ? Value(double.parse(vitaminEAlphaTocopherolMgController.text))
-              : const Value.absent(),
-      addedSugarG: addedSugarGController.text.isNotEmpty
-          ? Value(double.parse(addedSugarGController.text))
-          : const Value.absent(),
-      netCarbsG: netCarbsGController.text.isNotEmpty
-          ? Value(double.parse(netCarbsGController.text))
-          : const Value.absent(),
-      waterG: waterGController.text.isNotEmpty
-          ? Value(double.parse(waterGController.text))
-          : const Value.absent(),
-      omega3sMg: omega3sMgController.text.isNotEmpty
-          ? Value(double.parse(omega3sMgController.text))
-          : const Value.absent(),
-      omega6sMg: omega6sMgController.text.isNotEmpty
-          ? Value(double.parse(omega6sMgController.text))
-          : const Value.absent(),
-      pralScore: pralScoreController.text.isNotEmpty
-          ? Value(double.parse(pralScoreController.text))
-          : const Value.absent(),
-      transFattyAcidsG: transFattyAcidsGController.text.isNotEmpty
-          ? Value(double.parse(transFattyAcidsGController.text))
-          : const Value.absent(),
-      solubleFiberG: solubleFiberGController.text.isNotEmpty
-          ? Value(double.parse(solubleFiberGController.text))
-          : const Value.absent(),
-      insolubleFiberG: insolubleFiberGController.text.isNotEmpty
-          ? Value(double.parse(insolubleFiberGController.text))
-          : const Value.absent(),
-      sucroseG: sucroseGController.text.isNotEmpty
-          ? Value(double.parse(sucroseGController.text))
-          : const Value.absent(),
-      glucoseDextroseG: glucoseDextroseGController.text.isNotEmpty
-          ? Value(double.parse(glucoseDextroseGController.text))
-          : const Value.absent(),
-      fructoseG: fructoseGController.text.isNotEmpty
-          ? Value(double.parse(fructoseGController.text))
-          : const Value.absent(),
-      lactoseG: lactoseGController.text.isNotEmpty
-          ? Value(double.parse(lactoseGController.text))
-          : const Value.absent(),
-      maltoseG: maltoseGController.text.isNotEmpty
-          ? Value(double.parse(maltoseGController.text))
-          : const Value.absent(),
-      galactoseG: galactoseGController.text.isNotEmpty
-          ? Value(double.parse(galactoseGController.text))
-          : const Value.absent(),
-      starchG: starchGController.text.isNotEmpty
-          ? Value(double.parse(starchGController.text))
-          : const Value.absent(),
-      totalSugarAlcoholsG: totalSugarAlcoholsGController.text.isNotEmpty
-          ? Value(double.parse(totalSugarAlcoholsGController.text))
-          : const Value.absent(),
-      phosphorusPMg: phosphorusPMgController.text.isNotEmpty
-          ? Value(double.parse(phosphorusPMgController.text))
-          : const Value.absent(),
-      sodiumMg: sodiumMgController.text.isNotEmpty
-          ? Value(double.parse(sodiumMgController.text))
-          : const Value.absent(),
-      zincZnMg: zincZnMgController.text.isNotEmpty
-          ? Value(double.parse(zincZnMgController.text))
-          : const Value.absent(),
-      copperCuMg: copperCuMgController.text.isNotEmpty
-          ? Value(double.parse(copperCuMgController.text))
-          : const Value.absent(),
-      manganeseMg: manganeseMgController.text.isNotEmpty
-          ? Value(double.parse(manganeseMgController.text))
-          : const Value.absent(),
-      seleniumSeMcg: seleniumSeMcgController.text.isNotEmpty
-          ? Value(double.parse(seleniumSeMcgController.text))
-          : const Value.absent(),
-      fluorideFMcg: fluorideFMcgController.text.isNotEmpty
-          ? Value(double.parse(fluorideFMcgController.text))
-          : const Value.absent(),
-      molybdenumMcg: molybdenumMcgController.text.isNotEmpty
-          ? Value(double.parse(molybdenumMcgController.text))
-          : const Value.absent(),
-      chlorineMg: chlorineMgController.text.isNotEmpty
-          ? Value(double.parse(chlorineMgController.text))
-          : const Value.absent(),
-      thiaminB1Mg: thiaminB1MgController.text.isNotEmpty
-          ? Value(double.parse(thiaminB1MgController.text))
-          : const Value.absent(),
-      riboflavinB2Mg: riboflavinB2MgController.text.isNotEmpty
-          ? Value(double.parse(riboflavinB2MgController.text))
-          : const Value.absent(),
-      niacinB3Mg: niacinB3MgController.text.isNotEmpty
-          ? Value(double.parse(niacinB3MgController.text))
-          : const Value.absent(),
-      pantothenicAcidB5Mg: pantothenicAcidB5MgController.text.isNotEmpty
-          ? Value(double.parse(pantothenicAcidB5MgController.text))
-          : const Value.absent(),
-      vitaminB6Mg: vitaminB6MgController.text.isNotEmpty
-          ? Value(double.parse(vitaminB6MgController.text))
-          : const Value.absent(),
-      biotinB7Mcg: biotinB7McgController.text.isNotEmpty
-          ? Value(double.parse(biotinB7McgController.text))
-          : const Value.absent(),
-      folateB9Mcg: folateB9McgController.text.isNotEmpty
-          ? Value(double.parse(folateB9McgController.text))
-          : const Value.absent(),
-      folicAcidMcg: folicAcidMcgController.text.isNotEmpty
-          ? Value(double.parse(folicAcidMcgController.text))
-          : const Value.absent(),
-      foodFolateMcg: foodFolateMcgController.text.isNotEmpty
-          ? Value(double.parse(foodFolateMcgController.text))
-          : const Value.absent(),
-      folateDfeMcg: folateDfeMcgController.text.isNotEmpty
-          ? Value(double.parse(folateDfeMcgController.text))
-          : const Value.absent(),
-      cholineMg: cholineMgController.text.isNotEmpty
-          ? Value(double.parse(cholineMgController.text))
-          : const Value.absent(),
-      betaineMg: betaineMgController.text.isNotEmpty
-          ? Value(double.parse(betaineMgController.text))
-          : const Value.absent(),
-      retinolMcg: retinolMcgController.text.isNotEmpty
-          ? Value(double.parse(retinolMcgController.text))
-          : const Value.absent(),
-      caroteneBetaMcg: caroteneBetaMcgController.text.isNotEmpty
-          ? Value(double.parse(caroteneBetaMcgController.text))
-          : const Value.absent(),
-      caroteneAlphaMcg: caroteneAlphaMcgController.text.isNotEmpty
-          ? Value(double.parse(caroteneAlphaMcgController.text))
-          : const Value.absent(),
-      lycopeneMcg: lycopeneMcgController.text.isNotEmpty
-          ? Value(double.parse(lycopeneMcgController.text))
-          : const Value.absent(),
-      luteinZeaxanthinMcg: luteinZeaxanthinMcgController.text.isNotEmpty
-          ? Value(double.parse(luteinZeaxanthinMcgController.text))
-          : const Value.absent(),
+          Value(double.tryParse(vitaminEAlphaTocopherolMgController.text)),
+      addedSugarG: Value(double.tryParse(addedSugarGController.text)),
+      netCarbsG: Value(double.tryParse(netCarbsGController.text)),
+      waterG: Value(double.tryParse(waterGController.text)),
+      omega3sMg: Value(double.tryParse(omega3sMgController.text)),
+      omega6sMg: Value(double.tryParse(omega6sMgController.text)),
+      pralScore: Value(double.tryParse(pralScoreController.text)),
+      transFattyAcidsG: Value(double.tryParse(transFattyAcidsGController.text)),
+      solubleFiberG: Value(double.tryParse(solubleFiberGController.text)),
+      insolubleFiberG: Value(double.tryParse(insolubleFiberGController.text)),
+      sucroseG: Value(double.tryParse(sucroseGController.text)),
+      glucoseDextroseG: Value(double.tryParse(glucoseDextroseGController.text)),
+      fructoseG: Value(double.tryParse(fructoseGController.text)),
+      lactoseG: Value(double.tryParse(lactoseGController.text)),
+      maltoseG: Value(double.tryParse(maltoseGController.text)),
+      galactoseG: Value(double.tryParse(galactoseGController.text)),
+      starchG: Value(double.tryParse(starchGController.text)),
+      totalSugarAlcoholsG:
+          Value(double.tryParse(totalSugarAlcoholsGController.text)),
+      phosphorusPMg: Value(double.tryParse(phosphorusPMgController.text)),
+      sodiumMg: Value(double.tryParse(sodiumMgController.text)),
+      zincZnMg: Value(double.tryParse(zincZnMgController.text)),
+      copperCuMg: Value(double.tryParse(copperCuMgController.text)),
+      manganeseMg: Value(double.tryParse(manganeseMgController.text)),
+      seleniumSeMcg: Value(double.tryParse(seleniumSeMcgController.text)),
+      fluorideFMcg: Value(double.tryParse(fluorideFMcgController.text)),
+      molybdenumMcg: Value(double.tryParse(molybdenumMcgController.text)),
+      chlorineMg: Value(double.tryParse(chlorineMgController.text)),
+      thiaminB1Mg: Value(double.tryParse(thiaminB1MgController.text)),
+      riboflavinB2Mg: Value(double.tryParse(riboflavinB2MgController.text)),
+      niacinB3Mg: Value(double.tryParse(niacinB3MgController.text)),
+      pantothenicAcidB5Mg:
+          Value(double.tryParse(pantothenicAcidB5MgController.text)),
+      vitaminB6Mg: Value(double.tryParse(vitaminB6MgController.text)),
+      biotinB7Mcg: Value(double.tryParse(biotinB7McgController.text)),
+      folateB9Mcg: Value(double.tryParse(folateB9McgController.text)),
+      folicAcidMcg: Value(double.tryParse(folicAcidMcgController.text)),
+      foodFolateMcg: Value(double.tryParse(foodFolateMcgController.text)),
+      folateDfeMcg: Value(double.tryParse(folateDfeMcgController.text)),
+      cholineMg: Value(double.tryParse(cholineMgController.text)),
+      betaineMg: Value(double.tryParse(betaineMgController.text)),
+      retinolMcg: Value(double.tryParse(retinolMcgController.text)),
+      caroteneBetaMcg: Value(double.tryParse(caroteneBetaMcgController.text)),
+      caroteneAlphaMcg: Value(double.tryParse(caroteneAlphaMcgController.text)),
+      lycopeneMcg: Value(double.tryParse(lycopeneMcgController.text)),
+      luteinZeaxanthinMcg:
+          Value(double.tryParse(luteinZeaxanthinMcgController.text)),
       vitaminD2ErgocalciferolMcg:
-          vitaminD2ErgocalciferolMcgController.text.isNotEmpty
-              ? Value(double.parse(vitaminD2ErgocalciferolMcgController.text))
-              : const Value.absent(),
+          Value(double.tryParse(vitaminD2ErgocalciferolMcgController.text)),
       vitaminD3CholecalciferolMcg:
-          vitaminD3CholecalciferolMcgController.text.isNotEmpty
-              ? Value(double.parse(vitaminD3CholecalciferolMcgController.text))
-              : const Value.absent(),
-      vitaminDIuIu: vitaminDIuIuController.text.isNotEmpty
-          ? Value(double.parse(vitaminDIuIuController.text))
-          : const Value.absent(),
-      vitaminKMcg: vitaminKMcgController.text.isNotEmpty
-          ? Value(double.parse(vitaminKMcgController.text))
-          : const Value.absent(),
-      dihydrophylloquinoneMcg: dihydrophylloquinoneMcgController.text.isNotEmpty
-          ? Value(double.parse(dihydrophylloquinoneMcgController.text))
-          : const Value.absent(),
-      menaquinone4Mcg: menaquinone4McgController.text.isNotEmpty
-          ? Value(double.parse(menaquinone4McgController.text))
-          : const Value.absent(),
-      fattyAcidsTotalMonounsaturatedMg:
-          fattyAcidsTotalMonounsaturatedMgController.text.isNotEmpty
-              ? Value(
-                  double.parse(fattyAcidsTotalMonounsaturatedMgController.text),
-                )
-              : const Value.absent(),
-      fattyAcidsTotalPolyunsaturatedMg:
-          fattyAcidsTotalPolyunsaturatedMgController.text.isNotEmpty
-              ? Value(
-                  double.parse(fattyAcidsTotalPolyunsaturatedMgController.text),
-                )
-              : const Value.absent(),
-      u183N3CCCAlaMg: u183N3CCCAlaMgController.text.isNotEmpty
-          ? Value(double.parse(u183N3CCCAlaMgController.text))
-          : const Value.absent(),
-      u205N3EpaMg: u205N3EpaMgController.text.isNotEmpty
-          ? Value(double.parse(u205N3EpaMgController.text))
-          : const Value.absent(),
-      u225N3DpaMg: u225N3DpaMgController.text.isNotEmpty
-          ? Value(double.parse(u225N3DpaMgController.text))
-          : const Value.absent(),
-      u226N3DhaMg: u226N3DhaMgController.text.isNotEmpty
-          ? Value(double.parse(u226N3DhaMgController.text))
-          : const Value.absent(),
-      tryptophanMg: tryptophanMgController.text.isNotEmpty
-          ? Value(double.parse(tryptophanMgController.text))
-          : const Value.absent(),
-      threonineMg: threonineMgController.text.isNotEmpty
-          ? Value(double.parse(threonineMgController.text))
-          : const Value.absent(),
-      isoleucineMg: isoleucineMgController.text.isNotEmpty
-          ? Value(double.parse(isoleucineMgController.text))
-          : const Value.absent(),
-      leucineMg: leucineMgController.text.isNotEmpty
-          ? Value(double.parse(leucineMgController.text))
-          : const Value.absent(),
-      lysineMg: lysineMgController.text.isNotEmpty
-          ? Value(double.parse(lysineMgController.text))
-          : const Value.absent(),
-      methionineMg: methionineMgController.text.isNotEmpty
-          ? Value(double.parse(methionineMgController.text))
-          : const Value.absent(),
-      cystineMg: cystineMgController.text.isNotEmpty
-          ? Value(double.parse(cystineMgController.text))
-          : const Value.absent(),
-      phenylalanineMg: phenylalanineMgController.text.isNotEmpty
-          ? Value(double.parse(phenylalanineMgController.text))
-          : const Value.absent(),
-      tyrosineMg: tyrosineMgController.text.isNotEmpty
-          ? Value(double.parse(tyrosineMgController.text))
-          : const Value.absent(),
-      valineMg: valineMgController.text.isNotEmpty
-          ? Value(double.parse(valineMgController.text))
-          : const Value.absent(),
-      arginineMg: arginineMgController.text.isNotEmpty
-          ? Value(double.parse(arginineMgController.text))
-          : const Value.absent(),
-      histidineMg: histidineMgController.text.isNotEmpty
-          ? Value(double.parse(histidineMgController.text))
-          : const Value.absent(),
-      alanineMg: alanineMgController.text.isNotEmpty
-          ? Value(double.parse(alanineMgController.text))
-          : const Value.absent(),
-      asparticAcidMg: asparticAcidMgController.text.isNotEmpty
-          ? Value(double.parse(asparticAcidMgController.text))
-          : const Value.absent(),
-      glutamicAcidMg: glutamicAcidMgController.text.isNotEmpty
-          ? Value(double.parse(glutamicAcidMgController.text))
-          : const Value.absent(),
-      glycineMg: glycineMgController.text.isNotEmpty
-          ? Value(double.parse(glycineMgController.text))
-          : const Value.absent(),
-      prolineMg: prolineMgController.text.isNotEmpty
-          ? Value(double.parse(prolineMgController.text))
-          : const Value.absent(),
-      serineMg: serineMgController.text.isNotEmpty
-          ? Value(double.parse(serineMgController.text))
-          : const Value.absent(),
-      hydroxyprolineMg: hydroxyprolineMgController.text.isNotEmpty
-          ? Value(double.parse(hydroxyprolineMgController.text))
-          : const Value.absent(),
-      alcoholG: alcoholGController.text.isNotEmpty
-          ? Value(double.parse(alcoholGController.text))
-          : const Value.absent(),
-      caffeineMg: caffeineMgController.text.isNotEmpty
-          ? Value(double.parse(caffeineMgController.text))
-          : const Value.absent(),
-      theobromineMg: theobromineMgController.text.isNotEmpty
-          ? Value(double.parse(theobromineMgController.text))
-          : const Value.absent(),
-      servingWeight1G: servingWeight1GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight1GController.text))
-          : const Value.absent(),
-      servingDescription1G: servingDescription1GController.text.isNotEmpty
-          ? Value(servingDescription1GController.text)
-          : const Value.absent(),
-      servingWeight2G: servingWeight2GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight2GController.text))
-          : const Value.absent(),
-      servingDescription2G: servingDescription2GController.text.isNotEmpty
-          ? Value(servingDescription2GController.text)
-          : const Value.absent(),
-      servingWeight3G: servingWeight3GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight3GController.text))
-          : const Value.absent(),
-      servingDescription3G: servingDescription3GController.text.isNotEmpty
-          ? Value(servingDescription3GController.text)
-          : const Value.absent(),
-      servingWeight4G: servingWeight4GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight4GController.text))
-          : const Value.absent(),
-      servingDescription4G: servingDescription4GController.text.isNotEmpty
-          ? Value(servingDescription4GController.text)
-          : const Value.absent(),
-      servingWeight5G: servingWeight5GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight5GController.text))
-          : const Value.absent(),
-      servingDescription5G: servingDescription5GController.text.isNotEmpty
-          ? Value(servingDescription5GController.text)
-          : const Value.absent(),
-      servingWeight6G: servingWeight6GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight6GController.text))
-          : const Value.absent(),
-      servingDescription6G: servingDescription6GController.text.isNotEmpty
-          ? Value(servingDescription6GController.text)
-          : const Value.absent(),
-      servingWeight7G: servingWeight7GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight7GController.text))
-          : const Value.absent(),
-      servingDescription7G: servingDescription7GController.text.isNotEmpty
-          ? Value(servingDescription7GController.text)
-          : const Value.absent(),
-      servingWeight8G: servingWeight8GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight8GController.text))
-          : const Value.absent(),
-      servingDescription8G: servingDescription8GController.text.isNotEmpty
-          ? Value(servingDescription8GController.text)
-          : const Value.absent(),
-      servingWeight9G: servingWeight9GController.text.isNotEmpty
-          ? Value(double.parse(servingWeight9GController.text))
-          : const Value.absent(),
-      servingDescription9G: servingDescription9GController.text.isNotEmpty
-          ? Value(servingDescription9GController.text)
-          : const Value.absent(),
-      u200calorieWeightG: u200calorieWeightGController.text.isNotEmpty
-          ? Value(double.parse(u200calorieWeightGController.text))
-          : const Value.absent(),
+          Value(double.tryParse(vitaminD3CholecalciferolMcgController.text)),
+      vitaminDIuIu: Value(double.tryParse(vitaminDIuIuController.text)),
+      vitaminKMcg: Value(double.tryParse(vitaminKMcgController.text)),
+      dihydrophylloquinoneMcg:
+          Value(double.tryParse(dihydrophylloquinoneMcgController.text)),
+      menaquinone4Mcg: Value(double.tryParse(menaquinone4McgController.text)),
+      fattyAcidsTotalMonounsaturatedMg: Value(
+        double.tryParse(fattyAcidsTotalMonounsaturatedMgController.text),
+      ),
+      fattyAcidsTotalPolyunsaturatedMg: Value(
+        double.tryParse(fattyAcidsTotalPolyunsaturatedMgController.text),
+      ),
+      u183N3CCCAlaMg: Value(double.tryParse(u183N3CCCAlaMgController.text)),
+      u205N3EpaMg: Value(double.tryParse(u205N3EpaMgController.text)),
+      u225N3DpaMg: Value(double.tryParse(u225N3DpaMgController.text)),
+      u226N3DhaMg: Value(double.tryParse(u226N3DhaMgController.text)),
+      tryptophanMg: Value(double.tryParse(tryptophanMgController.text)),
+      threonineMg: Value(double.tryParse(threonineMgController.text)),
+      isoleucineMg: Value(double.tryParse(isoleucineMgController.text)),
+      leucineMg: Value(double.tryParse(leucineMgController.text)),
+      lysineMg: Value(double.tryParse(lysineMgController.text)),
+      methionineMg: Value(double.tryParse(methionineMgController.text)),
+      cystineMg: Value(double.tryParse(cystineMgController.text)),
+      phenylalanineMg: Value(double.tryParse(phenylalanineMgController.text)),
+      tyrosineMg: Value(double.tryParse(tyrosineMgController.text)),
+      valineMg: Value(double.tryParse(valineMgController.text)),
+      arginineMg: Value(double.tryParse(arginineMgController.text)),
+      histidineMg: Value(double.tryParse(histidineMgController.text)),
+      alanineMg: Value(double.tryParse(alanineMgController.text)),
+      asparticAcidMg: Value(double.tryParse(asparticAcidMgController.text)),
+      glutamicAcidMg: Value(double.tryParse(glutamicAcidMgController.text)),
+      glycineMg: Value(double.tryParse(glycineMgController.text)),
+      prolineMg: Value(double.tryParse(prolineMgController.text)),
+      serineMg: Value(double.tryParse(serineMgController.text)),
+      hydroxyprolineMg: Value(double.tryParse(hydroxyprolineMgController.text)),
+      alcoholG: Value(double.tryParse(alcoholGController.text)),
+      caffeineMg: Value(double.tryParse(caffeineMgController.text)),
+      theobromineMg: Value(double.tryParse(theobromineMgController.text)),
+      servingWeight1G: Value(double.tryParse(servingWeight1GController.text)),
+      servingDescription1G: Value(servingDescription1GController.text),
+      servingWeight2G: Value(double.tryParse(servingWeight2GController.text)),
+      servingDescription2G: Value(servingDescription2GController.text),
+      servingWeight3G: Value(double.tryParse(servingWeight3GController.text)),
+      servingDescription3G: Value(servingDescription3GController.text),
+      servingWeight4G: Value(double.tryParse(servingWeight4GController.text)),
+      servingDescription4G: Value(servingDescription4GController.text),
+      servingWeight5G: Value(double.tryParse(servingWeight5GController.text)),
+      servingDescription5G: Value(servingDescription5GController.text),
+      servingWeight6G: Value(double.tryParse(servingWeight6GController.text)),
+      servingDescription6G: Value(servingDescription6GController.text),
+      servingWeight7G: Value(double.tryParse(servingWeight7GController.text)),
+      servingDescription7G: Value(servingDescription7GController.text),
+      servingWeight8G: Value(double.tryParse(servingWeight8GController.text)),
+      servingDescription8G: Value(servingDescription8GController.text),
+      servingWeight9G: Value(double.tryParse(servingWeight9GController.text)),
+      servingDescription9G: Value(servingDescription9GController.text),
+      u200calorieWeightG:
+          Value(double.tryParse(u200calorieWeightGController.text)),
     );
 
     if (widget.food != null)
@@ -843,7 +616,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
             ),
             ListTile(
-              title: const Text('Show others?'),
+              title: const Text('Show other fields'),
               onTap: () => settings.setShowOthers(!settings.showOthers),
               trailing: Switch(
                 value: settings.showOthers,
