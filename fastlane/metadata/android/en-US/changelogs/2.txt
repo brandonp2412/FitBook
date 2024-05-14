@@ -1,0 +1,10 @@
+- Skip screenshots if -n is passed to deploy.sh
+- Update fvm
+- Fix building flutter with ./flutter/bin/flutter
+- Add screenshots
+- Add vscode settings
+- Add flutter git submodule
+- Fix name of pubspec.yaml
+- Change descriptions in pubspec.yaml
+- Use same versionCodes as flexify
+- Add deploy.sh

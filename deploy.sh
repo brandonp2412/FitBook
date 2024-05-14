@@ -2,9 +2,11 @@
 
 set -ex
 
-./screenshots.sh "phoneScreenshots"
-./screenshots.sh "sevenInchScreenshots"
-./screenshots.sh "tenInchScreenshots"
+if [[ "$*" != "-n" ]]; then
+  ./screenshots.sh "phoneScreenshots"
+  ./screenshots.sh "sevenInchScreenshots"
+  ./screenshots.sh "tenInchScreenshots"
+fi
 
 line=$(yq -r .version pubspec.yaml)
 build_number=$(cut -d '+' -f 2 <<< "$line")
@@ -21,8 +23,7 @@ yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 rest=$(git log -1 --pretty=%B | tail -n +2)
 git add pubspec.yaml
 last_commits=$(git log --pretty=format:"%s" @{u}..HEAD | awk '{print "- "$0}')
-changelog="$1"
-echo "${changelog:-$last_commits}" > "fastlane/metadata/android/en-US/changelogs/$new_build_number.txt"
+echo "$last_commits" > "fastlane/metadata/android/en-US/changelogs/$new_build_number.txt"
 git add fastlane/metadata
 
 if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
