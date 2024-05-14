@@ -68,6 +68,14 @@ class _GraphPageState extends State<GraphPage> {
                   child: Text("Protein"),
                 ),
                 DropdownMenuItem(
+                  value: GraphMetric.fat,
+                  child: Text("Fat"),
+                ),
+                DropdownMenuItem(
+                  value: GraphMetric.carbs,
+                  child: Text("Carbs"),
+                ),
+                DropdownMenuItem(
                   value: GraphMetric.bodyWeight,
                   child: Text("Body weight"),
                 ),

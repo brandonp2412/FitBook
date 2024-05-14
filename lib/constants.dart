@@ -2,6 +2,8 @@ enum GraphMetric {
   calories,
   protein,
   bodyWeight,
+  fat,
+  carbs,
 }
 
 enum AppGroupBy {

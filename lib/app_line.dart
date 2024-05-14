@@ -92,11 +92,20 @@ class _AppLineState extends State<AppLine> {
         switch (widget.metric) {
           case GraphMetric.calories:
             value = totalCals ?? 0;
+            break;
           case GraphMetric.protein:
             value = totalProtein ?? 0;
             break;
           case GraphMetric.bodyWeight:
             break;
+          case GraphMetric.fat:
+            value = totalFat ?? 0;
+            break;
+          case GraphMetric.carbs:
+            value = totalCarb ?? 0;
+            break;
+          default:
+            throw Exception("Metric not supported.");
         }
 
         return GraphData(created: created, value: value);
