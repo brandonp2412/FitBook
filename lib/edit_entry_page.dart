@@ -50,7 +50,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               mode: OrderingMode.desc,
             ),
           ])
-          ..addColumns([db.foods.name]))
+          ..addColumns([db.foods.name, db.foods.favorite]))
         .get()
         .then(
           (results) =>

@@ -9,10 +9,10 @@ class GraphPage extends StatefulWidget {
   const GraphPage({super.key});
 
   @override
-  createState() => _GraphPageState();
+  createState() => GraphPageState();
 }
 
-class _GraphPageState extends State<GraphPage> {
+class GraphPageState extends State<GraphPage> {
   AppMetric _metric = AppMetric.calories;
   AppGroupBy _groupBy = AppGroupBy.day;
   DateTime? _startDate;
