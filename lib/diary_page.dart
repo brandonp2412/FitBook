@@ -23,12 +23,16 @@ class DiaryPageState extends State<DiaryPage> {
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
+  int _limit = 100;
 
   @override
   void initState() {
     super.initState();
+    _setStream();
+  }
 
-    _stream = watchAllEntries();
+  void _setStream() {
+    _stream = watchEntries(_search, _limit);
   }
 
   @override
@@ -58,17 +62,12 @@ class DiaryPageState extends State<DiaryPage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
 
+          final entryFoods = snapshot.data ?? [];
+
           double total = 0;
-          for (EntryWithFood entryFood in snapshot.data ?? [])
+          for (EntryWithFood entryFood in entryFoods)
             if (isSameDay(entryFood.entry.created, DateTime.now()))
               total += entryFood.entry.kCalories ?? 0;
-
-          final entryFoods = snapshot.data?.where((entry) {
-                final name = entry.food.name.toLowerCase();
-                final searchText = _search.toLowerCase();
-                return name.contains(searchText);
-              }).toList() ??
-              [];
 
           return material.Column(
             children: [
@@ -133,6 +132,12 @@ class DiaryPageState extends State<DiaryPage> {
                     setState(() {
                       _selected.add(id);
                     });
+                },
+                onNext: () {
+                  setState(() {
+                    _limit += 10;
+                  });
+                  _setStream();
                 },
               ),
               Text(

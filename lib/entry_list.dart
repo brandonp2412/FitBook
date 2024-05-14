@@ -6,17 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EntryList extends StatelessWidget {
+class EntryList extends StatefulWidget {
   const EntryList({
     super.key,
     required this.entryFoods,
     required this.selected,
     required this.onSelect,
+    required this.onNext,
   });
 
   final List<EntryWithFood> entryFoods;
   final Set<int> selected;
   final Function(int) onSelect;
+  final Function() onNext;
+
+  @override
+  State<EntryList> createState() => _EntryListState();
+}
+
+class _EntryListState extends State<EntryList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.removeListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels <
+        _scrollController.position.maxScrollExtent - 200) return;
+    widget.onNext();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +51,14 @@ class EntryList extends StatelessWidget {
 
     return Expanded(
       child: ListView.builder(
-        itemCount: entryFoods.length,
+        controller: _scrollController,
+        itemCount: widget.entryFoods.length,
         itemBuilder: (context, index) {
-          final entryFood = entryFoods[index];
+          final entryFood = widget.entryFoods[index];
           final food = entryFood.food;
           final entry = entryFood.entry;
-          final previousEntryFood = index > 0 ? entryFoods[index - 1] : null;
+          final previousEntryFood =
+              index > 0 ? widget.entryFoods[index - 1] : null;
           final showDivider = previousEntryFood != null &&
               !isSameDay(
                 previousEntryFood.entry.created,
@@ -48,10 +77,10 @@ class EntryList extends StatelessWidget {
                   "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
                   style: const TextStyle(fontSize: 16),
                 ),
-                selected: selected.contains(entry.id),
-                onLongPress: () => onSelect(entry.id),
+                selected: widget.selected.contains(entry.id),
+                onLongPress: () => widget.onSelect(entry.id),
                 onTap: () {
-                  if (selected.isEmpty)
+                  if (widget.selected.isEmpty)
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -62,7 +91,7 @@ class EntryList extends StatelessWidget {
                       ),
                     );
                   else
-                    onSelect(entry.id);
+                    widget.onSelect(entry.id);
                 },
               ),
             ],
