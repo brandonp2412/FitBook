@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-// These additional imports are necessary to open the sqlite3 database
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
@@ -27,6 +27,9 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setInt('dailyCalories', 2200);
+        prefs.setInt('dailyProtein', 100);
       },
       onUpgrade: (Migrator m, int from, int to) async {
         if (from < 2) await m.create(db.entries);

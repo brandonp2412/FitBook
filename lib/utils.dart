@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
@@ -40,4 +42,11 @@ double convertToGrams(double quantity, String unit) {
   }
 
   return quantityInGrams;
+}
+
+void selectAll(TextEditingController controller) {
+  controller.selection = TextSelection(
+    baseOffset: 0,
+    extentOffset: controller.text.length,
+  );
 }

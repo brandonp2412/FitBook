@@ -12,8 +12,10 @@ class SettingsState extends ChangeNotifier {
   bool curveLines = false;
   bool showOthers = false;
 
-  int dailyCalories = 2200;
-  int dailyProtein = 100;
+  int? dailyCalories;
+  int? dailyProtein;
+  int? dailyFat;
+  int? dailyCarbs;
 
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
@@ -28,8 +30,10 @@ class SettingsState extends ChangeNotifier {
     systemColors = prefs?.getBool("systemColors") ?? true;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
-    dailyCalories = prefs?.getInt('dailyCalories') ?? 2200;
-    dailyProtein = prefs?.getInt('dailyProtein') ?? 100;
+    dailyCalories = prefs?.getInt('dailyCalories');
+    dailyProtein = prefs?.getInt('dailyProtein');
+    dailyFat = prefs?.getInt('dailyFat');
+    dailyCarbs = prefs?.getInt('dailyCarbs');
   }
 
   void setShowOthers(bool show) {
@@ -38,15 +42,39 @@ class SettingsState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDailyProtein(int protein) {
-    dailyProtein = protein;
-    prefs?.setInt('dailyProtein', protein);
+  void setDailyCarbs(int? value) {
+    dailyCarbs = value;
+    if (value == null)
+      prefs?.remove('dailyCarbs');
+    else
+      prefs?.setInt('dailyCarbs', value);
     notifyListeners();
   }
 
-  void setDailyCalories(int calories) {
+  void setDailyFat(int? value) {
+    dailyFat = value;
+    if (value == null)
+      prefs?.remove('dailyFat');
+    else
+      prefs?.setInt('dailyFat', value);
+    notifyListeners();
+  }
+
+  void setDailyProtein(int? protein) {
+    dailyProtein = protein;
+    if (protein == null)
+      prefs?.remove('dailyProtein');
+    else
+      prefs?.setInt('dailyProtein', protein);
+    notifyListeners();
+  }
+
+  void setDailyCalories(int? calories) {
     dailyCalories = calories;
-    prefs?.setInt('dailyCalories', calories);
+    if (calories == null)
+      prefs?.remove('dailyCalories');
+    else
+      prefs?.setInt('dailyCalories', calories);
     notifyListeners();
   }
 

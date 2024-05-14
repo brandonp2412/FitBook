@@ -1,4 +1,5 @@
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final _searchController = TextEditingController();
   final _caloriesController = TextEditingController();
+  final _proteinController = TextEditingController();
+  final _fatController = TextEditingController();
+  final _carbsController = TextEditingController();
   late SettingsState _settings;
 
   final List<String> shortFormats = [
@@ -44,7 +48,10 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
     _settings = context.read<SettingsState>();
-    _caloriesController.text = _settings.dailyCalories.toString();
+    _caloriesController.text = _settings.dailyCalories?.toString() ?? "";
+    _proteinController.text = _settings.dailyProtein?.toString() ?? "";
+    _fatController.text = _settings.dailyFat?.toString() ?? "";
+    _carbsController.text = _settings.dailyCarbs?.toString() ?? "";
   }
 
   @override
@@ -130,11 +137,66 @@ class _SettingsPageState extends State<SettingsPage> {
           child: TextField(
             controller: _caloriesController,
             onChanged: (newValue) {
-              _settings.setDailyCalories(int.parse(newValue));
+              _settings.setDailyCalories(int.tryParse(newValue));
             },
+            onTap: () => _caloriesController.selection = TextSelection(
+              baseOffset: 0,
+              extentOffset: _caloriesController.text.length,
+            ),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Daily calories',
+            ),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'daily protein',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: TextField(
+            controller: _proteinController,
+            onChanged: (newValue) {
+              _settings.setDailyProtein(int.tryParse(newValue));
+            },
+            onTap: () => selectAll(_proteinController),
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Daily protein',
+            ),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'daily fat',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: TextField(
+            controller: _fatController,
+            onChanged: (newValue) {
+              _settings.setDailyFat(int.tryParse(newValue));
+            },
+            onTap: () => selectAll(_fatController),
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Daily fat',
+            ),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'daily carbs',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: TextField(
+            controller: _carbsController,
+            onChanged: (newValue) {
+              _settings.setDailyCarbs(int.tryParse(newValue));
+            },
+            onTap: () => selectAll(_carbsController),
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Daily carbs',
             ),
           ),
         ),

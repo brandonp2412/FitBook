@@ -64,10 +64,17 @@ class DiaryPageState extends State<DiaryPage> {
 
           final entryFoods = snapshot.data ?? [];
 
-          double total = 0;
+          double totalCals = 0;
+          double totalProtein = 0;
+          double totalFat = 0;
+          double totalCarb = 0;
           for (EntryWithFood entryFood in entryFoods)
-            if (isSameDay(entryFood.entry.created, DateTime.now()))
-              total += entryFood.entry.kCalories ?? 0;
+            if (isSameDay(entryFood.entry.created, DateTime.now())) {
+              totalCals += entryFood.entry.kCalories ?? 0;
+              totalProtein += entryFood.entry.proteinG ?? 0;
+              totalFat += entryFood.entry.fatG ?? 0;
+              totalCarb += entryFood.entry.carbG ?? 0;
+            }
 
           return material.Column(
             children: [
@@ -140,8 +147,26 @@ class DiaryPageState extends State<DiaryPage> {
                   _setStream();
                 },
               ),
-              Text(
-                "Today: ${total.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
+              material.Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (settings.dailyCalories != null)
+                    Text(
+                      "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
+                    ),
+                  if (settings.dailyProtein != null)
+                    Text(
+                      "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g",
+                    ),
+                  if (settings.dailyFat != null)
+                    Text(
+                      "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g",
+                    ),
+                  if (settings.dailyCarbs != null)
+                    Text(
+                      "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g",
+                    ),
+                ],
               ),
             ],
           );
