@@ -189,8 +189,7 @@ class DiaryPageState extends State<DiaryPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.push(
-            context,
+          navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => EditEntryPage(
                 entry: Entry(

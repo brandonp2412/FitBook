@@ -157,8 +157,7 @@ class FoodsPageState extends State<FoodsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.push(
-            context,
+          navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => const EditFoodPage(),
             ),
