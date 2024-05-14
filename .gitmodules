@@ -1,4 +1,4 @@
 [submodule "flutter"]
 	path = flutter
 	url = https://github.com/flutter/flutter
-	branch = 3.19.5
+	branch = 3.22.0
