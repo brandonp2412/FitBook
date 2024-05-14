@@ -4,7 +4,6 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/foods.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Entries extends Table {
@@ -13,6 +12,10 @@ class Entries extends Table {
   DateTimeColumn get created => dateTime()();
   RealColumn get quantity => real()();
   TextColumn get unit => text()();
+  RealColumn get kCalories => real().nullable()();
+  RealColumn get proteinG => real().nullable()();
+  RealColumn get fatG => real().nullable()();
+  RealColumn get carbG => real().nullable()();
 }
 
 typedef EntryWithFood = ({
@@ -99,7 +102,15 @@ Stream<List<GraphData>> watchCalories(
       final entry = row.readTable(db.entries);
       var value = 0.0;
 
-      value = convertToKcal(entry.quantity, entry.unit, food.calories!);
+      switch (metric) {
+        case GraphMetric.protein:
+          value = entry.proteinG ?? 0;
+          break;
+        case GraphMetric.bodyWeight:
+          break;
+        case GraphMetric.calories:
+          value = entry.kCalories ?? 0;
+      }
 
       result.add(
         GraphData(

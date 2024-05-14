@@ -71,8 +71,8 @@ class HomePage extends StatelessWidget {
           child: TabBarView(
             children: [
               DiaryPage(),
-              FoodsPage(),
               GraphPage(),
+              FoodsPage(),
             ],
           ),
         ),
@@ -83,12 +83,12 @@ class HomePage extends StatelessWidget {
               text: "Diary",
             ),
             Tab(
-              icon: Icon(Icons.restaurant),
-              text: "Foods",
-            ),
-            Tab(
               icon: Icon(Icons.insights),
               text: "Graph",
+            ),
+            Tab(
+              icon: Icon(Icons.restaurant),
+              text: "Foods",
             ),
           ],
         ),

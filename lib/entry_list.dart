@@ -35,8 +35,6 @@ class EntryList extends StatelessWidget {
                 previousEntryFood.entry.created,
                 entryFood.entry.created,
               );
-          final kcal =
-              convertToKcal(entry.quantity, entry.unit, food.calories ?? 0);
 
           return Column(
             children: [
@@ -47,7 +45,7 @@ class EntryList extends StatelessWidget {
                   DateFormat(settings.longDateFormat).format(entry.created),
                 ),
                 trailing: Text(
-                  "${kcal.toStringAsFixed(0)} kcal",
+                  "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
                   style: const TextStyle(fontSize: 16),
                 ),
                 selected: selected.contains(entry.id),

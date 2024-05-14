@@ -4,7 +4,7 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.day == date2.day;
 }
 
-double convertToKcal(double quantity, String unit, double caloriesPer100g) {
+double convertToGrams(double quantity, String unit) {
   double quantityInGrams;
 
   switch (unit) {
@@ -35,11 +35,9 @@ double convertToKcal(double quantity, String unit, double caloriesPer100g) {
     case 'milliliters':
       quantityInGrams = quantity; // Approximate conversion for water
       break;
-    case 'kilojoules':
-      return quantity / 4.184;
     default:
       throw Exception('Unit not recognized');
   }
 
-  return (quantityInGrams / 100) * caloriesPer100g;
+  return quantityInGrams;
 }

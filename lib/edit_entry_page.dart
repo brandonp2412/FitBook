@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -37,6 +38,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _selectedFood = widget.food;
     _quantityController.text = widget.entry.quantity.toString();
     _created = widget.entry.created;
+    _unit = widget.entry.unit;
     (db.foods.selectOnly()..addColumns([db.foods.name])).get().then(
           (results) => setState(() {
             _nameOptions =
@@ -53,12 +55,36 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Future<void> _save() async {
     Navigator.pop(context);
     if (_selectedFood == null) return;
+    final food = _selectedFood!;
+
+    final quantity = double.parse(_quantityController.text);
     var entry = EntriesCompanion.insert(
-      food: _selectedFood!.id,
+      food: food.id,
       created: _created,
-      quantity: double.parse(_quantityController.text),
+      quantity: quantity,
       unit: _unit,
     );
+
+    if (_unit == 'kilojoules') {
+      final grams = quantity / 4.184;
+      entry = entry.copyWith(
+        kCalories: Value(grams / 100 * (food.calories ?? 0)),
+      );
+    } else {
+      final quantity100G = _unit == 'serving'
+          ? (quantity * (food.servingWeight1G ?? 0)) / 100
+          : convertToGrams(quantity, _unit) / 100;
+      final kCalories = quantity100G * (food.calories ?? 0);
+      final proteinG = quantity100G * (food.proteinG ?? 0);
+      final fatG = quantity100G * (food.fatG ?? 0);
+      final carbG = quantity100G * (food.carbohydrateG ?? 0);
+      entry = entry.copyWith(
+        kCalories: Value(kCalories),
+        fatG: Value(fatG),
+        carbG: Value(carbG),
+        proteinG: Value(proteinG),
+      );
+    }
 
     if (widget.entry.id > 0)
       db.update(db.entries).replace(

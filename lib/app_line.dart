@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
-import 'package:fit_book/entries.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -43,9 +42,7 @@ class _AppLineState extends State<AppLine> {
   void didUpdateWidget(covariant AppLine oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.groupBy != widget.groupBy ||
-        oldWidget.startDate != widget.startDate ||
-        oldWidget.endDate != widget.endDate) _setStream();
+    _setStream();
   }
 
   @override
@@ -65,7 +62,46 @@ class _AppLineState extends State<AppLine> {
     else if (widget.groupBy == AppGroupBy.year)
       groupBy = [db.entries.created.year];
 
-    _graphStream = watchCalories(groupBy, widget.metric);
+    _graphStream = (db.entries.selectOnly()
+          ..addColumns([
+            db.entries.created,
+            db.entries.kCalories.sum(),
+            db.entries.fatG.sum(),
+            db.entries.proteinG.sum(),
+            db.entries.carbG.sum(),
+          ])
+          ..orderBy([
+            OrderingTerm(
+              expression: db.entries.created,
+              mode: OrderingMode.desc,
+            ),
+          ])
+          ..groupBy(groupBy)
+          ..limit(10))
+        .watch()
+        .map((results) {
+      return results.map((result) {
+        final created = result.read(db.entries.created)!;
+        final totalCals = result.read(db.entries.kCalories.sum());
+        final totalFat = result.read(db.entries.fatG.sum());
+        final totalProtein = result.read(db.entries.proteinG.sum());
+        final totalCarb = result.read(db.entries.carbG.sum());
+
+        var value = 0.0;
+
+        switch (widget.metric) {
+          case GraphMetric.calories:
+            value = totalCals ?? 0;
+          case GraphMetric.protein:
+            value = totalProtein ?? 0;
+            break;
+          case GraphMetric.bodyWeight:
+            break;
+        }
+
+        return GraphData(created: created, value: value);
+      }).toList();
+    });
   }
 
   double getValue(TypedResult row, GraphMetric metric) {

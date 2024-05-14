@@ -5093,8 +5093,31 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
       'unit', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _kCaloriesMeta =
+      const VerificationMeta('kCalories');
   @override
-  List<GeneratedColumn> get $columns => [id, food, created, quantity, unit];
+  late final GeneratedColumn<double> kCalories = GeneratedColumn<double>(
+      'k_calories', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _proteinGMeta =
+      const VerificationMeta('proteinG');
+  @override
+  late final GeneratedColumn<double> proteinG = GeneratedColumn<double>(
+      'protein_g', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _fatGMeta = const VerificationMeta('fatG');
+  @override
+  late final GeneratedColumn<double> fatG = GeneratedColumn<double>(
+      'fat_g', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _carbGMeta = const VerificationMeta('carbG');
+  @override
+  late final GeneratedColumn<double> carbG = GeneratedColumn<double>(
+      'carb_g', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, food, created, quantity, unit, kCalories, proteinG, fatG, carbG];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5132,6 +5155,22 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
     } else if (isInserting) {
       context.missing(_unitMeta);
     }
+    if (data.containsKey('k_calories')) {
+      context.handle(_kCaloriesMeta,
+          kCalories.isAcceptableOrUnknown(data['k_calories']!, _kCaloriesMeta));
+    }
+    if (data.containsKey('protein_g')) {
+      context.handle(_proteinGMeta,
+          proteinG.isAcceptableOrUnknown(data['protein_g']!, _proteinGMeta));
+    }
+    if (data.containsKey('fat_g')) {
+      context.handle(
+          _fatGMeta, fatG.isAcceptableOrUnknown(data['fat_g']!, _fatGMeta));
+    }
+    if (data.containsKey('carb_g')) {
+      context.handle(
+          _carbGMeta, carbG.isAcceptableOrUnknown(data['carb_g']!, _carbGMeta));
+    }
     return context;
   }
 
@@ -5151,6 +5190,14 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
           .read(DriftSqlType.double, data['${effectivePrefix}quantity'])!,
       unit: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
+      kCalories: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}k_calories']),
+      proteinG: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}protein_g']),
+      fatG: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}fat_g']),
+      carbG: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}carb_g']),
     );
   }
 
@@ -5166,12 +5213,20 @@ class Entry extends DataClass implements Insertable<Entry> {
   final DateTime created;
   final double quantity;
   final String unit;
+  final double? kCalories;
+  final double? proteinG;
+  final double? fatG;
+  final double? carbG;
   const Entry(
       {required this.id,
       required this.food,
       required this.created,
       required this.quantity,
-      required this.unit});
+      required this.unit,
+      this.kCalories,
+      this.proteinG,
+      this.fatG,
+      this.carbG});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -5180,6 +5235,18 @@ class Entry extends DataClass implements Insertable<Entry> {
     map['created'] = Variable<DateTime>(created);
     map['quantity'] = Variable<double>(quantity);
     map['unit'] = Variable<String>(unit);
+    if (!nullToAbsent || kCalories != null) {
+      map['k_calories'] = Variable<double>(kCalories);
+    }
+    if (!nullToAbsent || proteinG != null) {
+      map['protein_g'] = Variable<double>(proteinG);
+    }
+    if (!nullToAbsent || fatG != null) {
+      map['fat_g'] = Variable<double>(fatG);
+    }
+    if (!nullToAbsent || carbG != null) {
+      map['carb_g'] = Variable<double>(carbG);
+    }
     return map;
   }
 
@@ -5190,6 +5257,15 @@ class Entry extends DataClass implements Insertable<Entry> {
       created: Value(created),
       quantity: Value(quantity),
       unit: Value(unit),
+      kCalories: kCalories == null && nullToAbsent
+          ? const Value.absent()
+          : Value(kCalories),
+      proteinG: proteinG == null && nullToAbsent
+          ? const Value.absent()
+          : Value(proteinG),
+      fatG: fatG == null && nullToAbsent ? const Value.absent() : Value(fatG),
+      carbG:
+          carbG == null && nullToAbsent ? const Value.absent() : Value(carbG),
     );
   }
 
@@ -5202,6 +5278,10 @@ class Entry extends DataClass implements Insertable<Entry> {
       created: serializer.fromJson<DateTime>(json['created']),
       quantity: serializer.fromJson<double>(json['quantity']),
       unit: serializer.fromJson<String>(json['unit']),
+      kCalories: serializer.fromJson<double?>(json['kCalories']),
+      proteinG: serializer.fromJson<double?>(json['proteinG']),
+      fatG: serializer.fromJson<double?>(json['fatG']),
+      carbG: serializer.fromJson<double?>(json['carbG']),
     );
   }
   @override
@@ -5213,6 +5293,10 @@ class Entry extends DataClass implements Insertable<Entry> {
       'created': serializer.toJson<DateTime>(created),
       'quantity': serializer.toJson<double>(quantity),
       'unit': serializer.toJson<String>(unit),
+      'kCalories': serializer.toJson<double?>(kCalories),
+      'proteinG': serializer.toJson<double?>(proteinG),
+      'fatG': serializer.toJson<double?>(fatG),
+      'carbG': serializer.toJson<double?>(carbG),
     };
   }
 
@@ -5221,13 +5305,21 @@ class Entry extends DataClass implements Insertable<Entry> {
           int? food,
           DateTime? created,
           double? quantity,
-          String? unit}) =>
+          String? unit,
+          Value<double?> kCalories = const Value.absent(),
+          Value<double?> proteinG = const Value.absent(),
+          Value<double?> fatG = const Value.absent(),
+          Value<double?> carbG = const Value.absent()}) =>
       Entry(
         id: id ?? this.id,
         food: food ?? this.food,
         created: created ?? this.created,
         quantity: quantity ?? this.quantity,
         unit: unit ?? this.unit,
+        kCalories: kCalories.present ? kCalories.value : this.kCalories,
+        proteinG: proteinG.present ? proteinG.value : this.proteinG,
+        fatG: fatG.present ? fatG.value : this.fatG,
+        carbG: carbG.present ? carbG.value : this.carbG,
       );
   @override
   String toString() {
@@ -5236,13 +5328,18 @@ class Entry extends DataClass implements Insertable<Entry> {
           ..write('food: $food, ')
           ..write('created: $created, ')
           ..write('quantity: $quantity, ')
-          ..write('unit: $unit')
+          ..write('unit: $unit, ')
+          ..write('kCalories: $kCalories, ')
+          ..write('proteinG: $proteinG, ')
+          ..write('fatG: $fatG, ')
+          ..write('carbG: $carbG')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, food, created, quantity, unit);
+  int get hashCode => Object.hash(
+      id, food, created, quantity, unit, kCalories, proteinG, fatG, carbG);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -5251,7 +5348,11 @@ class Entry extends DataClass implements Insertable<Entry> {
           other.food == this.food &&
           other.created == this.created &&
           other.quantity == this.quantity &&
-          other.unit == this.unit);
+          other.unit == this.unit &&
+          other.kCalories == this.kCalories &&
+          other.proteinG == this.proteinG &&
+          other.fatG == this.fatG &&
+          other.carbG == this.carbG);
 }
 
 class EntriesCompanion extends UpdateCompanion<Entry> {
@@ -5260,12 +5361,20 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
   final Value<DateTime> created;
   final Value<double> quantity;
   final Value<String> unit;
+  final Value<double?> kCalories;
+  final Value<double?> proteinG;
+  final Value<double?> fatG;
+  final Value<double?> carbG;
   const EntriesCompanion({
     this.id = const Value.absent(),
     this.food = const Value.absent(),
     this.created = const Value.absent(),
     this.quantity = const Value.absent(),
     this.unit = const Value.absent(),
+    this.kCalories = const Value.absent(),
+    this.proteinG = const Value.absent(),
+    this.fatG = const Value.absent(),
+    this.carbG = const Value.absent(),
   });
   EntriesCompanion.insert({
     this.id = const Value.absent(),
@@ -5273,6 +5382,10 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
     required DateTime created,
     required double quantity,
     required String unit,
+    this.kCalories = const Value.absent(),
+    this.proteinG = const Value.absent(),
+    this.fatG = const Value.absent(),
+    this.carbG = const Value.absent(),
   })  : food = Value(food),
         created = Value(created),
         quantity = Value(quantity),
@@ -5283,6 +5396,10 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
     Expression<DateTime>? created,
     Expression<double>? quantity,
     Expression<String>? unit,
+    Expression<double>? kCalories,
+    Expression<double>? proteinG,
+    Expression<double>? fatG,
+    Expression<double>? carbG,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -5290,6 +5407,10 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
       if (created != null) 'created': created,
       if (quantity != null) 'quantity': quantity,
       if (unit != null) 'unit': unit,
+      if (kCalories != null) 'k_calories': kCalories,
+      if (proteinG != null) 'protein_g': proteinG,
+      if (fatG != null) 'fat_g': fatG,
+      if (carbG != null) 'carb_g': carbG,
     });
   }
 
@@ -5298,13 +5419,21 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
       Value<int>? food,
       Value<DateTime>? created,
       Value<double>? quantity,
-      Value<String>? unit}) {
+      Value<String>? unit,
+      Value<double?>? kCalories,
+      Value<double?>? proteinG,
+      Value<double?>? fatG,
+      Value<double?>? carbG}) {
     return EntriesCompanion(
       id: id ?? this.id,
       food: food ?? this.food,
       created: created ?? this.created,
       quantity: quantity ?? this.quantity,
       unit: unit ?? this.unit,
+      kCalories: kCalories ?? this.kCalories,
+      proteinG: proteinG ?? this.proteinG,
+      fatG: fatG ?? this.fatG,
+      carbG: carbG ?? this.carbG,
     );
   }
 
@@ -5326,6 +5455,18 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
     if (unit.present) {
       map['unit'] = Variable<String>(unit.value);
     }
+    if (kCalories.present) {
+      map['k_calories'] = Variable<double>(kCalories.value);
+    }
+    if (proteinG.present) {
+      map['protein_g'] = Variable<double>(proteinG.value);
+    }
+    if (fatG.present) {
+      map['fat_g'] = Variable<double>(fatG.value);
+    }
+    if (carbG.present) {
+      map['carb_g'] = Variable<double>(carbG.value);
+    }
     return map;
   }
 
@@ -5336,7 +5477,11 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
           ..write('food: $food, ')
           ..write('created: $created, ')
           ..write('quantity: $quantity, ')
-          ..write('unit: $unit')
+          ..write('unit: $unit, ')
+          ..write('kCalories: $kCalories, ')
+          ..write('proteinG: $proteinG, ')
+          ..write('fatG: $fatG, ')
+          ..write('carbG: $carbG')
           ..write(')'))
         .toString();
   }
@@ -7314,6 +7459,10 @@ typedef $$EntriesTableInsertCompanionBuilder = EntriesCompanion Function({
   required DateTime created,
   required double quantity,
   required String unit,
+  Value<double?> kCalories,
+  Value<double?> proteinG,
+  Value<double?> fatG,
+  Value<double?> carbG,
 });
 typedef $$EntriesTableUpdateCompanionBuilder = EntriesCompanion Function({
   Value<int> id,
@@ -7321,6 +7470,10 @@ typedef $$EntriesTableUpdateCompanionBuilder = EntriesCompanion Function({
   Value<DateTime> created,
   Value<double> quantity,
   Value<String> unit,
+  Value<double?> kCalories,
+  Value<double?> proteinG,
+  Value<double?> fatG,
+  Value<double?> carbG,
 });
 
 class $$EntriesTableTableManager extends RootTableManager<
@@ -7347,6 +7500,10 @@ class $$EntriesTableTableManager extends RootTableManager<
             Value<DateTime> created = const Value.absent(),
             Value<double> quantity = const Value.absent(),
             Value<String> unit = const Value.absent(),
+            Value<double?> kCalories = const Value.absent(),
+            Value<double?> proteinG = const Value.absent(),
+            Value<double?> fatG = const Value.absent(),
+            Value<double?> carbG = const Value.absent(),
           }) =>
               EntriesCompanion(
             id: id,
@@ -7354,6 +7511,10 @@ class $$EntriesTableTableManager extends RootTableManager<
             created: created,
             quantity: quantity,
             unit: unit,
+            kCalories: kCalories,
+            proteinG: proteinG,
+            fatG: fatG,
+            carbG: carbG,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
@@ -7361,6 +7522,10 @@ class $$EntriesTableTableManager extends RootTableManager<
             required DateTime created,
             required double quantity,
             required String unit,
+            Value<double?> kCalories = const Value.absent(),
+            Value<double?> proteinG = const Value.absent(),
+            Value<double?> fatG = const Value.absent(),
+            Value<double?> carbG = const Value.absent(),
           }) =>
               EntriesCompanion.insert(
             id: id,
@@ -7368,6 +7533,10 @@ class $$EntriesTableTableManager extends RootTableManager<
             created: created,
             quantity: quantity,
             unit: unit,
+            kCalories: kCalories,
+            proteinG: proteinG,
+            fatG: fatG,
+            carbG: carbG,
           ),
         ));
 }
@@ -7407,6 +7576,26 @@ class $$EntriesTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<double> get kCalories => $state.composableBuilder(
+      column: $state.table.kCalories,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get proteinG => $state.composableBuilder(
+      column: $state.table.proteinG,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get fatG => $state.composableBuilder(
+      column: $state.table.fatG,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get carbG => $state.composableBuilder(
+      column: $state.table.carbG,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   $$FoodsTableFilterComposer get food {
     final $$FoodsTableFilterComposer composer = $state.composerBuilder(
         composer: this,
@@ -7440,6 +7629,26 @@ class $$EntriesTableOrderingComposer
 
   ColumnOrderings<String> get unit => $state.composableBuilder(
       column: $state.table.unit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get kCalories => $state.composableBuilder(
+      column: $state.table.kCalories,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get proteinG => $state.composableBuilder(
+      column: $state.table.proteinG,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get fatG => $state.composableBuilder(
+      column: $state.table.fatG,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get carbG => $state.composableBuilder(
+      column: $state.table.carbG,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

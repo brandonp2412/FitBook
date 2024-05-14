@@ -61,11 +61,7 @@ class DiaryPageState extends State<DiaryPage> {
           double total = 0;
           for (EntryWithFood entryFood in snapshot.data ?? [])
             if (isSameDay(entryFood.entry.created, DateTime.now()))
-              total += convertToKcal(
-                entryFood.entry.quantity,
-                entryFood.entry.unit,
-                entryFood.food.calories ?? 0,
-              );
+              total += entryFood.entry.kCalories ?? 0;
 
           final entryFoods = snapshot.data?.where((entry) {
                 final name = entry.food.name.toLowerCase();
@@ -140,7 +136,7 @@ class DiaryPageState extends State<DiaryPage> {
                 },
               ),
               Text(
-                "${total.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
+                "Today: ${total.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
               ),
             ],
           );
@@ -157,7 +153,7 @@ class DiaryPageState extends State<DiaryPage> {
                   food: 0,
                   id: 0,
                   quantity: 0,
-                  unit: 'g',
+                  unit: 'grams',
                 ),
               ),
             ),
