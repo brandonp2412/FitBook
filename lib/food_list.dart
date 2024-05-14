@@ -55,7 +55,15 @@ class _FoodListState extends State<FoodList> {
 
           return Column(
             children: [
-              if (showDivider) const Divider(),
+              if (showDivider)
+                const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(child: Divider()),
+                    Icon(Icons.favorite_outline),
+                    Expanded(child: Divider()),
+                  ],
+                ),
               ListTile(
                 title: Text(food.name),
                 subtitle: Text(
