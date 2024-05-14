@@ -5487,16 +5487,262 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
   }
 }
 
+class $WeightsTable extends Weights with TableInfo<$WeightsTable, Weight> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WeightsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _createdMeta =
+      const VerificationMeta('created');
+  @override
+  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
+      'created', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+      'unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, created, unit, amount];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'weights';
+  @override
+  VerificationContext validateIntegrity(Insertable<Weight> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('created')) {
+      context.handle(_createdMeta,
+          created.isAcceptableOrUnknown(data['created']!, _createdMeta));
+    } else if (isInserting) {
+      context.missing(_createdMeta);
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
+    } else if (isInserting) {
+      context.missing(_unitMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Weight map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Weight(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      created: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
+      unit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+    );
+  }
+
+  @override
+  $WeightsTable createAlias(String alias) {
+    return $WeightsTable(attachedDatabase, alias);
+  }
+}
+
+class Weight extends DataClass implements Insertable<Weight> {
+  final int id;
+  final DateTime created;
+  final String unit;
+  final double amount;
+  const Weight(
+      {required this.id,
+      required this.created,
+      required this.unit,
+      required this.amount});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['created'] = Variable<DateTime>(created);
+    map['unit'] = Variable<String>(unit);
+    map['amount'] = Variable<double>(amount);
+    return map;
+  }
+
+  WeightsCompanion toCompanion(bool nullToAbsent) {
+    return WeightsCompanion(
+      id: Value(id),
+      created: Value(created),
+      unit: Value(unit),
+      amount: Value(amount),
+    );
+  }
+
+  factory Weight.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Weight(
+      id: serializer.fromJson<int>(json['id']),
+      created: serializer.fromJson<DateTime>(json['created']),
+      unit: serializer.fromJson<String>(json['unit']),
+      amount: serializer.fromJson<double>(json['amount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'created': serializer.toJson<DateTime>(created),
+      'unit': serializer.toJson<String>(unit),
+      'amount': serializer.toJson<double>(amount),
+    };
+  }
+
+  Weight copyWith({int? id, DateTime? created, String? unit, double? amount}) =>
+      Weight(
+        id: id ?? this.id,
+        created: created ?? this.created,
+        unit: unit ?? this.unit,
+        amount: amount ?? this.amount,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Weight(')
+          ..write('id: $id, ')
+          ..write('created: $created, ')
+          ..write('unit: $unit, ')
+          ..write('amount: $amount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, created, unit, amount);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Weight &&
+          other.id == this.id &&
+          other.created == this.created &&
+          other.unit == this.unit &&
+          other.amount == this.amount);
+}
+
+class WeightsCompanion extends UpdateCompanion<Weight> {
+  final Value<int> id;
+  final Value<DateTime> created;
+  final Value<String> unit;
+  final Value<double> amount;
+  const WeightsCompanion({
+    this.id = const Value.absent(),
+    this.created = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.amount = const Value.absent(),
+  });
+  WeightsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime created,
+    required String unit,
+    required double amount,
+  })  : created = Value(created),
+        unit = Value(unit),
+        amount = Value(amount);
+  static Insertable<Weight> custom({
+    Expression<int>? id,
+    Expression<DateTime>? created,
+    Expression<String>? unit,
+    Expression<double>? amount,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (created != null) 'created': created,
+      if (unit != null) 'unit': unit,
+      if (amount != null) 'amount': amount,
+    });
+  }
+
+  WeightsCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? created,
+      Value<String>? unit,
+      Value<double>? amount}) {
+    return WeightsCompanion(
+      id: id ?? this.id,
+      created: created ?? this.created,
+      unit: unit ?? this.unit,
+      amount: amount ?? this.amount,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (created.present) {
+      map['created'] = Variable<DateTime>(created.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeightsCompanion(')
+          ..write('id: $id, ')
+          ..write('created: $created, ')
+          ..write('unit: $unit, ')
+          ..write('amount: $amount')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
   late final $FoodsTable foods = $FoodsTable(this);
   late final $EntriesTable entries = $EntriesTable(this);
+  late final $WeightsTable weights = $WeightsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [foods, entries];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [foods, entries, weights];
 }
 
 typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
@@ -7665,6 +7911,124 @@ class $$EntriesTableOrderingComposer
   }
 }
 
+typedef $$WeightsTableInsertCompanionBuilder = WeightsCompanion Function({
+  Value<int> id,
+  required DateTime created,
+  required String unit,
+  required double amount,
+});
+typedef $$WeightsTableUpdateCompanionBuilder = WeightsCompanion Function({
+  Value<int> id,
+  Value<DateTime> created,
+  Value<String> unit,
+  Value<double> amount,
+});
+
+class $$WeightsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $WeightsTable,
+    Weight,
+    $$WeightsTableFilterComposer,
+    $$WeightsTableOrderingComposer,
+    $$WeightsTableProcessedTableManager,
+    $$WeightsTableInsertCompanionBuilder,
+    $$WeightsTableUpdateCompanionBuilder> {
+  $$WeightsTableTableManager(_$AppDatabase db, $WeightsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$WeightsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$WeightsTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) => $$WeightsTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<DateTime> created = const Value.absent(),
+            Value<String> unit = const Value.absent(),
+            Value<double> amount = const Value.absent(),
+          }) =>
+              WeightsCompanion(
+            id: id,
+            created: created,
+            unit: unit,
+            amount: amount,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required DateTime created,
+            required String unit,
+            required double amount,
+          }) =>
+              WeightsCompanion.insert(
+            id: id,
+            created: created,
+            unit: unit,
+            amount: amount,
+          ),
+        ));
+}
+
+class $$WeightsTableProcessedTableManager extends ProcessedTableManager<
+    _$AppDatabase,
+    $WeightsTable,
+    Weight,
+    $$WeightsTableFilterComposer,
+    $$WeightsTableOrderingComposer,
+    $$WeightsTableProcessedTableManager,
+    $$WeightsTableInsertCompanionBuilder,
+    $$WeightsTableUpdateCompanionBuilder> {
+  $$WeightsTableProcessedTableManager(super.$state);
+}
+
+class $$WeightsTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $WeightsTable> {
+  $$WeightsTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<DateTime> get created => $state.composableBuilder(
+      column: $state.table.created,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get unit => $state.composableBuilder(
+      column: $state.table.unit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get amount => $state.composableBuilder(
+      column: $state.table.amount,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$WeightsTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $WeightsTable> {
+  $$WeightsTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<DateTime> get created => $state.composableBuilder(
+      column: $state.table.created,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get unit => $state.composableBuilder(
+      column: $state.table.unit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get amount => $state.composableBuilder(
+      column: $state.table.amount,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
 class _$AppDatabaseManager {
   final _$AppDatabase _db;
   _$AppDatabaseManager(this._db);
@@ -7672,4 +8036,6 @@ class _$AppDatabaseManager {
       $$FoodsTableTableManager(_db, _db.foods);
   $$EntriesTableTableManager get entries =>
       $$EntriesTableTableManager(_db, _db.entries);
+  $$WeightsTableTableManager get weights =>
+      $$WeightsTableTableManager(_db, _db.weights);
 }

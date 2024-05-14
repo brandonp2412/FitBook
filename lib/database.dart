@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:fit_book/entries.dart';
 import 'package:fit_book/foods.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/weights.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -15,12 +16,12 @@ import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Foods, Entries])
+@DriftDatabase(tables: [Foods, Entries, Weights])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration {
@@ -54,6 +55,7 @@ class AppDatabase extends _$AppDatabase {
           await db.foods.insertOne(
             FoodsCompanion.insert(name: "Calories", calories: const Value(100)),
           );
+        if (from < 7) await m.createTable(db.weights);
       },
     );
   }

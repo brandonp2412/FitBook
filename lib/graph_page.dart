@@ -13,7 +13,7 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
-  GraphMetric _metric = GraphMetric.calories;
+  AppMetric _metric = AppMetric.calories;
   AppGroupBy _groupBy = AppGroupBy.day;
   DateTime? _startDate;
   DateTime? _endDate;
@@ -60,23 +60,23 @@ class _GraphPageState extends State<GraphPage> {
               value: _metric,
               items: const [
                 DropdownMenuItem(
-                  value: GraphMetric.calories,
+                  value: AppMetric.calories,
                   child: Text("Calories"),
                 ),
                 DropdownMenuItem(
-                  value: GraphMetric.protein,
+                  value: AppMetric.protein,
                   child: Text("Protein"),
                 ),
                 DropdownMenuItem(
-                  value: GraphMetric.fat,
+                  value: AppMetric.fat,
                   child: Text("Fat"),
                 ),
                 DropdownMenuItem(
-                  value: GraphMetric.carbs,
+                  value: AppMetric.carbs,
                   child: Text("Carbs"),
                 ),
                 DropdownMenuItem(
-                  value: GraphMetric.bodyWeight,
+                  value: AppMetric.bodyWeight,
                   child: Text("Body weight"),
                 ),
               ],

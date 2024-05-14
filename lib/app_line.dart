@@ -15,7 +15,7 @@ class GraphData {
 }
 
 class AppLine extends StatefulWidget {
-  final GraphMetric metric;
+  final AppMetric metric;
   final AppGroupBy groupBy;
   final DateTime? startDate;
   final DateTime? endDate;
@@ -62,63 +62,81 @@ class _AppLineState extends State<AppLine> {
     else if (widget.groupBy == AppGroupBy.year)
       groupBy = [db.entries.created.year];
 
-    _graphStream = (db.entries.selectOnly()
-          ..addColumns([
-            db.entries.created,
-            db.entries.kCalories.sum(),
-            db.entries.fatG.sum(),
-            db.entries.proteinG.sum(),
-            db.entries.carbG.sum(),
-          ])
-          ..orderBy([
-            OrderingTerm(
-              expression: db.entries.created,
-              mode: OrderingMode.desc,
-            ),
-          ])
-          ..groupBy(groupBy)
-          ..limit(10))
-        .watch()
-        .map((results) {
-      return results.map((result) {
-        final created = result.read(db.entries.created)!;
-        final totalCals = result.read(db.entries.kCalories.sum());
-        final totalFat = result.read(db.entries.fatG.sum());
-        final totalProtein = result.read(db.entries.proteinG.sum());
-        final totalCarb = result.read(db.entries.carbG.sum());
+    if (widget.metric == AppMetric.bodyWeight)
+      _graphStream = (db.weights.selectOnly()
+            ..addColumns([
+              db.weights.created,
+              db.weights.amount,
+            ]))
+          .watch()
+          .map(
+            (results) => results
+                .map(
+                  (result) => GraphData(
+                    created: result.read(db.weights.created)!,
+                    value: result.read(db.weights.amount)!,
+                  ),
+                )
+                .toList(),
+          );
+    else
+      _graphStream = (db.entries.selectOnly()
+            ..addColumns([
+              db.entries.created,
+              db.entries.kCalories.sum(),
+              db.entries.fatG.sum(),
+              db.entries.proteinG.sum(),
+              db.entries.carbG.sum(),
+            ])
+            ..orderBy([
+              OrderingTerm(
+                expression: db.entries.created,
+                mode: OrderingMode.desc,
+              ),
+            ])
+            ..groupBy(groupBy)
+            ..limit(10))
+          .watch()
+          .map((results) {
+        return results.map((result) {
+          final created = result.read(db.entries.created)!;
+          final totalCals = result.read(db.entries.kCalories.sum());
+          final totalFat = result.read(db.entries.fatG.sum());
+          final totalProtein = result.read(db.entries.proteinG.sum());
+          final totalCarb = result.read(db.entries.carbG.sum());
 
-        var value = 0.0;
+          var value = 0.0;
 
-        switch (widget.metric) {
-          case GraphMetric.calories:
-            value = totalCals ?? 0;
-            break;
-          case GraphMetric.protein:
-            value = totalProtein ?? 0;
-            break;
-          case GraphMetric.bodyWeight:
-            break;
-          case GraphMetric.fat:
-            value = totalFat ?? 0;
-            break;
-          case GraphMetric.carbs:
-            value = totalCarb ?? 0;
-            break;
-          default:
-            throw Exception("Metric not supported.");
-        }
+          switch (widget.metric) {
+            case AppMetric.calories:
+              value = totalCals ?? 0;
+              break;
+            case AppMetric.protein:
+              value = totalProtein ?? 0;
+              break;
+            case AppMetric.bodyWeight:
+              break;
+            case AppMetric.fat:
+              value = totalFat ?? 0;
+              break;
+            case AppMetric.carbs:
+              value = totalCarb ?? 0;
+              break;
+            default:
+              throw Exception("Metric not supported.");
+          }
 
-        return GraphData(created: created, value: value);
-      }).toList();
-    });
+          return GraphData(created: created, value: value);
+        }).toList();
+      });
   }
 
-  double getValue(TypedResult row, GraphMetric metric) {
-    if (metric == GraphMetric.bodyWeight) {
+  double getValue(TypedResult row, AppMetric metric) {
+    if (metric == AppMetric.bodyWeight) {
       return row.read(db.entries.quantity)!;
-    } else if (metric == GraphMetric.calories) {
+    } else if (metric == AppMetric.calories) {
       return row.read(db.entries.quantity)!;
-    } else if (metric == GraphMetric.protein) {
+    } else if (metric == AppMetric.protein) {
       return row.read(db.entries.quantity)!;
     } else {
       throw Exception("Metric not supported.");

@@ -1,4 +1,4 @@
-enum GraphMetric {
+enum AppMetric {
   calories,
   protein,
   bodyWeight,
