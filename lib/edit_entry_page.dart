@@ -39,11 +39,22 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _quantityController.text = widget.entry.quantity.toString();
     _created = widget.entry.created;
     _unit = widget.entry.unit;
-    (db.foods.selectOnly()..addColumns([db.foods.name])).get().then(
-          (results) => setState(() {
-            _nameOptions =
-                results.map((result) => result.read(db.foods.name)!).toList();
-          }),
+    _search('').then(
+      (value) => setState(() {
+        _nameOptions = value;
+      }),
+    );
+  }
+
+  Future<List<String>> _search(String term) async {
+    return await (db.foods.selectOnly()
+          ..where(db.foods.name.contains(term.toLowerCase()))
+          ..limit(30)
+          ..addColumns([db.foods.name]))
+        .get()
+        .then(
+          (results) =>
+              results.map((result) => result.read(db.foods.name)!).toList(),
         );
   }
 
@@ -185,11 +196,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           children: [
             Autocomplete<String>(
               optionsBuilder: (textEditingValue) {
-                return _nameOptions.where(
-                  (option) => option
-                      .toLowerCase()
-                      .contains(textEditingValue.text.toLowerCase()),
-                );
+                return _search(textEditingValue.text);
               },
               onSelected: (option) async {
                 final last = await (db.foods.select()
