@@ -1,9 +1,7 @@
-import 'package:drift/drift.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/edit_food_page.dart';
-import 'package:fit_book/main.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 
 class FoodList extends StatefulWidget {
   const FoodList({
@@ -52,26 +50,22 @@ class _FoodListState extends State<FoodList> {
         itemCount: widget.foods.length,
         itemBuilder: (context, index) {
           final food = widget.foods[index];
+          final previous = index > 0 ? widget.foods[index - 1] : null;
+          final showDivider = previous != null &&
+              (food.favorite ?? false) != (previous.favorite ?? false);
 
           return material.Column(
             children: [
+              if (showDivider)
+                const Row(
+                  children: [
+                    Expanded(child: Divider()),
+                    Icon(Icons.favorite_outline),
+                    Expanded(child: Divider()),
+                  ],
+                ),
               ListTile(
                 title: Text(food.name),
-                leading: IconButton(
-                  icon: Icon(
-                    food.favorite == true
-                        ? Icons.favorite
-                        : Icons.favorite_outline,
-                  ),
-                  onPressed: () {
-                    (db.foods.update()..where((tbl) => tbl.id.equals(food.id)))
-                        .write(
-                      FoodsCompanion(
-                        favorite: Value(food.favorite == true ? false : true),
-                      ),
-                    );
-                  },
-                ),
                 subtitle: Text(
                   "${food.calories?.toStringAsFixed(0)} kcal",
                 ),

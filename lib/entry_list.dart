@@ -66,7 +66,14 @@ class _EntryListState extends State<EntryList> {
 
           return Column(
             children: [
-              if (showDivider) const Divider(),
+              if (showDivider)
+                const Row(
+                  children: [
+                    Expanded(child: Divider()),
+                    Icon(Icons.calendar_today),
+                    Expanded(child: Divider()),
+                  ],
+                ),
               ListTile(
                 title: Text(food.name),
                 subtitle: Text(
