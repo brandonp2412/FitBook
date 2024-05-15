@@ -313,7 +313,47 @@ class _ImportDataState extends State<ImportData> {
     Navigator.pushNamedAndRemoveUntil(widget.pageContext, '/', (_) => false);
   }
 
-  _importEntries(BuildContext context) async {}
+  _importEntries(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    setState(() {
+      _importing = true;
+    });
+
+    File file = File(result!.files.single.path!);
+    String csv;
+    try {
+      csv = await file.readAsString(encoding: utf8);
+    } catch (error) {
+      csv = await file.readAsString(encoding: latin1);
+    }
+    List<List<dynamic>> rows = const CsvToListConverter(eol: "\n").convert(csv);
+
+    List<EntriesCompanion> entries = [];
+    for (final row in rows.skip(1)) {
+      entries.add(
+        EntriesCompanion(
+          id: Value(row[0]),
+          food: Value(row[1]),
+          created: Value(DateTime.parse(row[2])),
+          quantity: Value(row[3] is String ? double.tryParse(row[3]) : row[3]),
+          unit: Value(row[4]),
+          kCalories: Value(row[5] is String ? double.tryParse(row[5]) : row[5]),
+          proteinG: Value(row[6] is String ? double.tryParse(row[6]) : row[6]),
+          fatG: Value(row[7] is String ? double.tryParse(row[7]) : row[7]),
+          carbG: Value(row[8] is String ? double.tryParse(row[8]) : row[8]),
+        ),
+      );
+    }
+
+    await db.entries.deleteAll();
+    await db.entries.insertAll(entries);
+    if (widget.pageContext.mounted)
+      Navigator.pushNamedAndRemoveUntil(
+        widget.pageContext,
+        '/',
+        (_) => false,
+      );
+  }
 
   @override
   Widget build(BuildContext context) {

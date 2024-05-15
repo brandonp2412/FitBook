@@ -60,7 +60,7 @@ class ExportData extends StatelessWidget {
                         const ListToCsvConverter(eol: '\n').convert(csvData);
                     final bytes = Uint8List.fromList(csv.codeUnits);
                     await FilePicker.platform.saveFile(
-                      fileName: 'entries.csv',
+                      fileName: 'diary.csv',
                       bytes: bytes,
                     );
                   },
