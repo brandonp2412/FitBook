@@ -16,17 +16,17 @@ class DeleteRecordsButton extends StatelessWidget {
       onPressed: () {
         showModalBottomSheet(
           context: context,
-          builder: (context) {
+          builder: (sheetContext) {
             return Wrap(
               children: <Widget>[
                 ListTile(
                   leading: const Icon(Icons.date_range),
                   title: const Text('Diary'),
                   onTap: () async {
-                    Navigator.pop(context);
+                    Navigator.pop(sheetContext);
                     showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
+                      context: sheetContext,
+                      builder: (BuildContext dialogContext) {
                         return AlertDialog(
                           title: const Text('Confirm Delete'),
                           content: const Text(
@@ -36,13 +36,13 @@ class DeleteRecordsButton extends StatelessWidget {
                             TextButton(
                               child: const Text('Cancel'),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                               },
                             ),
                             TextButton(
                               child: const Text('Delete'),
                               onPressed: () async {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                                 await db.entries.deleteAll();
                                 if (!pageContext.mounted) return;
                                 Navigator.pop(pageContext);
@@ -58,10 +58,10 @@ class DeleteRecordsButton extends StatelessWidget {
                   leading: const Icon(Icons.restaurant),
                   title: const Text('Food'),
                   onTap: () async {
-                    Navigator.pop(context);
+                    Navigator.pop(sheetContext);
                     showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
+                      context: sheetContext,
+                      builder: (BuildContext dialogContext) {
                         return AlertDialog(
                           title: const Text('Confirm Delete'),
                           content: const Text(
@@ -71,15 +71,17 @@ class DeleteRecordsButton extends StatelessWidget {
                             TextButton(
                               child: const Text('Cancel'),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                               },
                             ),
                             TextButton(
                               child: const Text('Delete'),
                               onPressed: () async {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                                 await db.entries.deleteAll();
                                 await db.foods.deleteAll();
+                                if (pageContext.mounted)
+                                  Navigator.pop(pageContext);
                               },
                             ),
                           ],
@@ -92,10 +94,10 @@ class DeleteRecordsButton extends StatelessWidget {
                   leading: const Icon(Icons.scale),
                   title: const Text('Weight'),
                   onTap: () async {
-                    Navigator.pop(context);
+                    Navigator.pop(sheetContext);
                     showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
+                      context: sheetContext,
+                      builder: (BuildContext dialogContext) {
                         return AlertDialog(
                           title: const Text('Confirm Delete'),
                           content: const Text(
@@ -105,13 +107,13 @@ class DeleteRecordsButton extends StatelessWidget {
                             TextButton(
                               child: const Text('Cancel'),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                               },
                             ),
                             TextButton(
                               child: const Text('Delete'),
                               onPressed: () async {
-                                Navigator.pop(context);
+                                Navigator.pop(dialogContext);
                                 await db.weights.deleteAll();
                               },
                             ),
