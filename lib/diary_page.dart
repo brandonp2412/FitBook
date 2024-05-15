@@ -155,7 +155,9 @@ class DiaryPageState extends State<DiaryPage> {
                       _selected.add(id);
                     });
                 },
-                onNext: () {
+                onNext: () async {
+                  final result = await _stream.first;
+                  if (result.length <= _limit) return;
                   setState(() {
                     _limit += 10;
                   });
