@@ -582,6 +582,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             TextField(
               controller: nameController,
               autofocus: true,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
@@ -603,18 +604,20 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   const TextInputType.numberWithOptions(decimal: true),
             ),
             TextField(
-              controller: servingWeight1GController,
+              controller: carbohydrateGController,
               decoration: const InputDecoration(
-                labelText: 'Serving Weight 1 (g)',
+                labelText: 'Carbohydrate (g)',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
             ),
             TextField(
-              controller: servingDescription1GController,
+              controller: fatGController,
               decoration: const InputDecoration(
-                labelText: 'Serving Description 1',
+                labelText: 'Fat (g)',
               ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             ),
             ListTile(
               title: const Text('Show other fields'),
@@ -632,20 +635,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
               TextField(
-                controller: fatGController,
+                controller: servingWeight1GController,
                 decoration: const InputDecoration(
-                  labelText: 'Fat (g)',
+                  labelText: 'Serving Weight 1 (g)',
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
               ),
               TextField(
-                controller: carbohydrateGController,
+                controller: servingDescription1GController,
                 decoration: const InputDecoration(
-                  labelText: 'Carbohydrate (g)',
+                  labelText: 'Serving Description 1',
                 ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
               ),
               TextField(
                 controller: sugarsGController,
