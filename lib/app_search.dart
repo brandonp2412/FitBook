@@ -41,7 +41,7 @@ class _AppSearchState extends State<AppSearch> {
             ? "Search..."
             : "${widget.selected.length} selected",
         controller: _searchController,
-        padding: MaterialStateProperty.all(
+        padding: WidgetStateProperty.all(
           const EdgeInsets.only(right: 8.0),
         ),
         textCapitalization: TextCapitalization.sentences,
