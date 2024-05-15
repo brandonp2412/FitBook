@@ -8,6 +8,8 @@
 
 - **Graphical Representation**: Visualize your calorie intake over time with our built-in graph feature. This can help you understand your eating habits better and make necessary adjustments.
 
+- **Large dataset**: FitBook ships with over 14 thousand foods (sourced from [MyFoodData](https://tools.myfooddata.com/nutrition-facts-database-spreadsheet.php))
+
 ## Screenshots
 
 <p float="left">
