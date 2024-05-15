@@ -217,7 +217,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ) {
                 return TextFormField(
                   decoration: const InputDecoration(labelText: 'Name'),
-                  autofocus: true,
+                  autofocus: widget.entry.id == 0,
                   controller: textEditingController,
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
