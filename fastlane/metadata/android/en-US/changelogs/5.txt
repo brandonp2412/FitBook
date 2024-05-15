@@ -1,0 +1,4 @@
+- Comment out fastlane supply
+- Optimize getting next pages
+- Fix picking date
+- Capitalize food names and swap around fields
