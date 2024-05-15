@@ -8,7 +8,7 @@ class SettingsState extends ChangeNotifier {
   String longDateFormat = 'dd/MM/yy';
   String shortDateFormat = 'd/M/yy';
 
-  bool systemColors = true;
+  bool systemColors = false;
   bool curveLines = false;
   bool showOthers = false;
 
@@ -27,7 +27,7 @@ class SettingsState extends ChangeNotifier {
     else if (theme == "ThemeMode.light")
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
-    systemColors = prefs?.getBool("systemColors") ?? true;
+    systemColors = prefs?.getBool("systemColors") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
     dailyCalories = prefs?.getInt('dailyCalories');

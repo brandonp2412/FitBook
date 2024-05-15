@@ -1,0 +1,14 @@
+- System color scheme off by default
+- Add little icons to dividers
+- Add importing diary
+- Import foods csv
+- Export foods csv
+- Show foods after import
+- Add export/import/delete
+- Update deprecated calls
+- Update pubspec.lock
+- Auto focus new entries only
+- Update pubspec.lock
+- Fix readme instructions
+- Show favorite buttons on food list
+- Update launcher icon
