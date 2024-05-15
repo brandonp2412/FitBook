@@ -36,6 +36,10 @@ class FoodsPageState extends State<FoodsPage> {
                   expression: u.favorite,
                   mode: OrderingMode.desc,
                 ),
+            (u) => OrderingTerm(
+                  expression: u.name,
+                  mode: OrderingMode.asc,
+                ),
           ])
           ..limit(_limit))
         .watch();
