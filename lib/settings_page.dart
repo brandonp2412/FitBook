@@ -1,3 +1,6 @@
+import 'package:fit_book/delete_records_button.dart';
+import 'package:fit_book/export_data.dart';
+import 'package:fit_book/import_data.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -210,6 +213,22 @@ class _SettingsPageState extends State<SettingsPage> {
             value: _settings.systemColors,
             onChanged: (value) => _settings.setSystem(value),
           ),
+        ),
+      ),
+      SettingsLine(
+        key: 'export data',
+        widget: const ExportData(),
+      ),
+      SettingsLine(
+        key: 'import data',
+        widget: ImportData(
+          pageContext: context,
+        ),
+      ),
+      SettingsLine(
+        key: 'delete data',
+        widget: DeleteRecordsButton(
+          pageContext: context,
         ),
       ),
     ];

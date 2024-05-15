@@ -7,7 +7,7 @@ import 'package:fit_book/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-late final AppDatabase db;
+late AppDatabase db;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
