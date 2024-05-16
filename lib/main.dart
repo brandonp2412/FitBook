@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/diary_page.dart';
+import 'package:fit_book/entries_state.dart';
 import 'package:fit_book/foods_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings_state.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
 Widget appProviders(SettingsState settingsState) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsState),
+        ChangeNotifierProvider(create: (context) => EntriesState()),
       ],
       child: const App(),
     );

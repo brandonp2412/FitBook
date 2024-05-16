@@ -3,6 +3,7 @@ import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/entries.dart';
+import 'package:fit_book/entries_state.dart';
 import 'package:fit_book/entry_list.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
@@ -19,22 +20,10 @@ class DiaryPage extends StatefulWidget {
 }
 
 class DiaryPageState extends State<DiaryPage> {
-  late Stream<List<EntryWithFood>> _stream;
-
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
   int _limit = 100;
-
-  @override
-  void initState() {
-    super.initState();
-    _setStream();
-  }
-
-  void _setStream() {
-    _stream = watchEntries(_search, _limit);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +45,11 @@ class DiaryPageState extends State<DiaryPage> {
 
   Scaffold _graphsPage() {
     final settings = context.watch<SettingsState>();
+    final entriesState = context.watch<EntriesState>();
 
     return Scaffold(
       body: StreamBuilder(
-        stream: _stream,
+        stream: entriesState.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error!);
 
@@ -84,6 +74,7 @@ class DiaryPageState extends State<DiaryPage> {
                   setState(() {
                     _search = value;
                   });
+                  entriesState.setStream(_search, _limit);
                 },
                 onClear: () => setState(() {
                   _selected.clear();
@@ -156,12 +147,12 @@ class DiaryPageState extends State<DiaryPage> {
                     });
                 },
                 onNext: () async {
-                  final result = await _stream.first;
+                  final result = await entriesState.stream.first;
                   if (result.length <= _limit) return;
                   setState(() {
                     _limit += 10;
                   });
-                  _setStream();
+                  entriesState.setStream(_search, _limit);
                 },
               ),
               material.Row(

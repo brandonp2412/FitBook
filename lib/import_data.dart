@@ -5,10 +5,12 @@ import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database.dart';
+import 'package:fit_book/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class ImportData extends StatefulWidget {
   final BuildContext pageContext;
@@ -300,6 +302,7 @@ class _ImportDataState extends State<ImportData> {
   }
 
   _importDatabase(BuildContext context) async {
+    final entriesState = context.read<EntriesState>();
     Navigator.pop(context);
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;
@@ -310,7 +313,8 @@ class _ImportDataState extends State<ImportData> {
     await sourceFile.copy(p.join(dbFolder.path, 'fitbook.sqlite'));
     db = AppDatabase();
     if (!widget.pageContext.mounted) return;
-    Navigator.pushNamedAndRemoveUntil(widget.pageContext, '/', (_) => false);
+    Navigator.pop(widget.pageContext);
+    entriesState.setStream('', 100);
   }
 
   _importEntries(BuildContext context) async {
