@@ -19,6 +19,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final caloriesController = TextEditingController();
+  final kilojoulesController = TextEditingController();
   final fatGController = TextEditingController();
   final proteinGController = TextEditingController();
   final carbohydrateGController = TextEditingController();
@@ -590,10 +591,26 @@ class _EditFoodPageState extends State<EditFoodPage> {
             TextField(
               controller: caloriesController,
               decoration: const InputDecoration(
-                labelText: 'Calories',
+                labelText: 'Calories (kcal)',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                kilojoulesController.text =
+                    (double.parse(value) * 4.184).toStringAsFixed(2);
+              },
+            ),
+            TextField(
+              controller: kilojoulesController,
+              decoration: const InputDecoration(
+                labelText: 'Kilojoules (kj)',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                caloriesController.text =
+                    (double.parse(value) / 4.184).toStringAsFixed(2);
+              },
             ),
             TextField(
               controller: proteinGController,
