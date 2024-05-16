@@ -64,6 +64,12 @@ class _AppLineState extends State<AppLine> {
 
     if (widget.metric == AppMetric.bodyWeight)
       _graphStream = (db.weights.selectOnly()
+            ..orderBy([
+              OrderingTerm(
+                expression: db.entries.created,
+                mode: OrderingMode.desc,
+              ),
+            ])
             ..addColumns([
               db.weights.created,
               db.weights.amount,
@@ -255,8 +261,7 @@ class _AppLineState extends State<AppLine> {
     List<GraphData> rows,
   ) {
     return LineTouchTooltipData(
-      getTooltipColor: (touchedSpot) =>
-          Theme.of(context).colorScheme.background,
+      getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
         final row = rows.elementAt(touchedSpots.first.spotIndex);
         final created =
