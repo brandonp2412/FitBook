@@ -66,7 +66,7 @@ class _AppLineState extends State<AppLine> {
       _graphStream = (db.weights.selectOnly()
             ..orderBy([
               OrderingTerm(
-                expression: db.entries.created,
+                expression: db.weights.created,
                 mode: OrderingMode.desc,
               ),
             ])
