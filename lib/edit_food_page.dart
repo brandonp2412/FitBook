@@ -142,6 +142,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
     nameController.text = food.name;
     foodGroupController.text = food.foodGroup ?? '';
     caloriesController.text = food.calories?.toString() ?? '';
+    kilojoulesController.text = food.calories == null
+        ? ''
+        : (food.calories! * 4.184).toStringAsFixed(2);
     fatGController.text = food.fatG?.toString() ?? '';
     proteinGController.text = food.proteinG?.toString() ?? '';
     carbohydrateGController.text = food.carbohydrateG?.toString() ?? '';
