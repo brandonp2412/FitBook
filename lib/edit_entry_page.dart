@@ -202,6 +202,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
             Autocomplete<String>(
               optionsMaxHeight: 300,
               optionsBuilder: (textEditingValue) {
+                if (textEditingValue.text.isEmpty) return [];
                 return _search(textEditingValue.text);
               },
               onSelected: (option) async {

@@ -1,0 +1,8 @@
+- Open autocomplete lazily
+- Make autocomplete bigger for editing entries
+- Fill in kj field when loading a food
+- Add kilojoules option for foods
+- Fix blank diary after importing database
+- Fix weight graph
+- Fix order of weight graph
+- Update flutter git submodule to 3.22.0
