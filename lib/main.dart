@@ -35,9 +35,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>();
 
-    final defaultTheme = ColorScheme.fromSeed(seedColor: Colors.deepPurple);
+    final defaultTheme = ColorScheme.fromSeed(seedColor: Colors.blue);
     final defaultDark = ColorScheme.fromSeed(
-      seedColor: Colors.deepPurple,
+      seedColor: Colors.blue,
       brightness: Brightness.dark,
     );
 
