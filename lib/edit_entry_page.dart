@@ -200,6 +200,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
         child: material.Column(
           children: [
             Autocomplete<String>(
+              optionsMaxHeight: 300,
               optionsBuilder: (textEditingValue) {
                 return _search(textEditingValue.text);
               },
