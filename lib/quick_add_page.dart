@@ -34,7 +34,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
     final quantity = double.parse(_quantityController.text);
     var entry = EntriesCompanion.insert(
       food: food.id,
-      created: DateTime.now(),
+      created: DateTime.now().toLocal(),
       quantity: quantity,
       unit: 'grams',
     );

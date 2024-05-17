@@ -25,7 +25,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   late String _name;
   late SettingsState _settings;
 
-  DateTime _created = DateTime.now();
+  DateTime _created = DateTime.now().toLocal();
   Food? _selectedFood;
   var _unit = 'serving';
 

@@ -82,7 +82,7 @@ class _EnterWeightPageState extends State<EnterWeightPage> {
           Navigator.pop(context);
           db.weights.insertOne(
             WeightsCompanion.insert(
-              created: DateTime.now(),
+              created: DateTime.now().toLocal(),
               unit: _unit,
               amount: double.parse(_valueController.text),
             ),

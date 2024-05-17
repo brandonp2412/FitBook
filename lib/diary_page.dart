@@ -60,7 +60,7 @@ class DiaryPageState extends State<DiaryPage> {
           double totalFat = 0;
           double totalCarb = 0;
           for (EntryWithFood entryFood in entryFoods)
-            if (isSameDay(entryFood.entry.created, DateTime.now())) {
+            if (isSameDay(entryFood.entry.created, DateTime.now().toLocal())) {
               totalCals += entryFood.entry.kCalories ?? 0;
               totalProtein += entryFood.entry.proteinG ?? 0;
               totalFat += entryFood.entry.fatG ?? 0;
@@ -186,7 +186,7 @@ class DiaryPageState extends State<DiaryPage> {
             MaterialPageRoute(
               builder: (context) => EditEntryPage(
                 entry: Entry(
-                  created: DateTime.now(),
+                  created: DateTime.now().toLocal(),
                   food: 0,
                   id: 0,
                   quantity: 1,
