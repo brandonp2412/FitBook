@@ -28,7 +28,7 @@ class GraphPageState extends State<GraphPage> {
 
     if (pickedDate != null)
       setState(() {
-        _endDate = pickedDate;
+        _endDate = pickedDate.toLocal();
       });
   }
 
@@ -42,7 +42,7 @@ class GraphPageState extends State<GraphPage> {
 
     if (pickedDate != null)
       setState(() {
-        _startDate = pickedDate;
+        _startDate = pickedDate.toLocal();
       });
   }
 

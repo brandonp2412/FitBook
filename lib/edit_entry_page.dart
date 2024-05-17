@@ -123,7 +123,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Future<void> _selectTime(DateTime pickedDate) async {
     if (!_settings.longDateFormat.contains('h:mm'))
       return setState(() {
-        _created = pickedDate;
+        _created = pickedDate.toLocal();
       });
 
     final TimeOfDay? pickedTime = await showTimePicker(
@@ -139,7 +139,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           pickedDate.day,
           pickedTime.hour,
           pickedTime.minute,
-        );
+        ).toLocal();
       });
     }
   }
