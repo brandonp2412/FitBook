@@ -37,7 +37,10 @@ Stream<List<EntryWithFood>> watchEntries(String search, int limit) {
         (results) => results.map((result) {
           final food = result.readTable(db.foods);
           final entry = result.readTable(db.entries);
-          return (entry: entry, food: food);
+          return (
+            entry: entry.copyWith(created: entry.created.toLocal()),
+            food: food
+          );
         }).toList(),
       );
 }

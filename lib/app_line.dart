@@ -35,8 +35,6 @@ class AppLine extends StatefulWidget {
 class _AppLineState extends State<AppLine> {
   late Stream<List<GraphData>> _graphStream;
   late SettingsState _settings;
-  final _weekCol =
-      const CustomExpression<int>("STRFTIME('%W', DATE(created, 'unixepoch'))");
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -53,13 +51,21 @@ class _AppLineState extends State<AppLine> {
   }
 
   void _setStream() {
-    Iterable<Expression> groupBy = [db.entries.created.date];
-
+    Expression<String> createdCol = const CustomExpression<String>(
+      "STRFTIME('%Y-%m-%d', DATE(created, 'unixepoch', 'localtime'))",
+    );
     if (widget.groupBy == Period.month)
-      groupBy = [db.entries.created.year, db.entries.created.month];
+      createdCol = const CustomExpression<String>(
+        "STRFTIME('%Y-%m', DATE(created, 'unixepoch', 'localtime'))",
+      );
     else if (widget.groupBy == Period.week)
-      groupBy = [db.entries.created.year, db.entries.created.month, _weekCol];
-    else if (widget.groupBy == Period.year) groupBy = [db.entries.created.year];
+      createdCol = const CustomExpression<String>(
+        "STRFTIME('%Y-%m-%W', DATE(created, 'unixepoch', 'localtime'))",
+      );
+    else if (widget.groupBy == Period.year)
+      createdCol = const CustomExpression<String>(
+        "STRFTIME('%Y', DATE(created, 'unixepoch', 'localtime'))",
+      );
 
     if (widget.metric == AppMetric.bodyWeight)
       _graphStream = (db.weights.selectOnly()
@@ -99,12 +105,12 @@ class _AppLineState extends State<AppLine> {
                 mode: OrderingMode.desc,
               ),
             ])
-            ..groupBy(groupBy)
+            ..groupBy([createdCol])
             ..limit(10))
           .watch()
           .map((results) {
         return results.map((result) {
-          final created = result.read(db.entries.created)!;
+          final created = result.read(db.entries.created)!.toLocal();
           final totalCals = result.read(db.entries.kCalories.sum());
           final totalFat = result.read(db.entries.fatG.sum());
           final totalProtein = result.read(db.entries.proteinG.sum());

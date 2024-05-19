@@ -25,7 +25,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   late String _name;
   late SettingsState _settings;
 
-  DateTime _created = DateTime.now().toLocal();
+  DateTime _created = DateTime.now();
   Food? _selectedFood;
   var _unit = 'serving';
 
@@ -123,7 +123,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Future<void> _selectTime(DateTime pickedDate) async {
     if (!_settings.longDateFormat.contains('h:mm'))
       return setState(() {
-        _created = pickedDate.toLocal();
+        _created = pickedDate;
       });
 
     final TimeOfDay? pickedTime = await showTimePicker(
@@ -139,7 +139,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           pickedDate.day,
           pickedTime.hour,
           pickedTime.minute,
-        ).toLocal();
+        );
       });
     }
   }

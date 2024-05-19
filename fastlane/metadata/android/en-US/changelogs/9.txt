@@ -1,0 +1,4 @@
+- Fix date issues
+- Uncomment fastlane supply in deployment
+- Rename AppGroupBy -> Period
+- Remove call to init in screenshot_test

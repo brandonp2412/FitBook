@@ -186,7 +186,7 @@ class DiaryPageState extends State<DiaryPage> {
             MaterialPageRoute(
               builder: (context) => EditEntryPage(
                 entry: Entry(
-                  created: DateTime.now().toLocal(),
+                  created: DateTime.now(),
                   food: 0,
                   id: 0,
                   quantity: 1,
