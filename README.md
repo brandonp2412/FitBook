@@ -4,11 +4,15 @@
 
 ## Features
 
-- **Offline Calorie Tracking**: Log your meals and snacks with ease, even without an internet connection. Our app will keep track of the calories you consume throughout the day.
+- **Offline Support**: Log your meals and snacks with ease, even without an internet connection. Our app will keep track of the calories you consume throughout the day.
 
-- **Graphical Representation**: Visualize your calorie intake over time with our built-in graph feature. This can help you understand your eating habits better and make necessary adjustments.
+- **Graphs**: Visualize your calorie intake over time with our built-in graph feature. This can help you understand your eating habits better and make necessary adjustments.
 
 - **Large dataset**: FitBook ships with over 14 thousand foods (sourced from [MyFoodData](https://tools.myfooddata.com/nutrition-facts-database-spreadsheet.php))
+
+<a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'>
+    <img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
+</a>
 
 ## Screenshots
 
