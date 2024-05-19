@@ -14,7 +14,7 @@ class GraphPage extends StatefulWidget {
 
 class GraphPageState extends State<GraphPage> {
   AppMetric _metric = AppMetric.calories;
-  AppGroupBy _groupBy = AppGroupBy.day;
+  Period _groupBy = Period.day;
   DateTime? _startDate;
   DateTime? _endDate;
 
@@ -91,19 +91,19 @@ class GraphPageState extends State<GraphPage> {
               value: _groupBy,
               items: const [
                 DropdownMenuItem(
-                  value: AppGroupBy.day,
+                  value: Period.day,
                   child: Text("Day"),
                 ),
                 DropdownMenuItem(
-                  value: AppGroupBy.week,
+                  value: Period.week,
                   child: Text("Week"),
                 ),
                 DropdownMenuItem(
-                  value: AppGroupBy.month,
+                  value: Period.month,
                   child: Text("Month"),
                 ),
                 DropdownMenuItem(
-                  value: AppGroupBy.year,
+                  value: Period.year,
                   child: Text("Year"),
                 ),
               ],

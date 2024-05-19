@@ -6,7 +6,7 @@ enum AppMetric {
   carbs,
 }
 
-enum AppGroupBy {
+enum Period {
   day,
   week,
   month,

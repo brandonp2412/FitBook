@@ -16,7 +16,7 @@ class GraphData {
 
 class AppLine extends StatefulWidget {
   final AppMetric metric;
-  final AppGroupBy groupBy;
+  final Period groupBy;
   final DateTime? startDate;
   final DateTime? endDate;
 
@@ -55,12 +55,11 @@ class _AppLineState extends State<AppLine> {
   void _setStream() {
     Iterable<Expression> groupBy = [db.entries.created.date];
 
-    if (widget.groupBy == AppGroupBy.month)
+    if (widget.groupBy == Period.month)
       groupBy = [db.entries.created.year, db.entries.created.month];
-    else if (widget.groupBy == AppGroupBy.week)
+    else if (widget.groupBy == Period.week)
       groupBy = [db.entries.created.year, db.entries.created.month, _weekCol];
-    else if (widget.groupBy == AppGroupBy.year)
-      groupBy = [db.entries.created.year];
+    else if (widget.groupBy == Period.year) groupBy = [db.entries.created.year];
 
     if (widget.metric == AppMetric.bodyWeight)
       _graphStream = (db.weights.selectOnly()
