@@ -21,7 +21,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration {
@@ -58,6 +58,14 @@ class AppDatabase extends _$AppDatabase {
           );
         if (from < 7) await m.createTable(db.weights);
         if (from < 8) await m.addColumn(foods, foods.favorite);
+        if (from < 9) {
+          await m.createIndex(
+            Index('Foods', 'CREATE INDEX foods_id ON foods(id)'),
+          );
+          await m.createIndex(
+            Index('Entries', 'CREATE INDEX entries_id ON entries(id)'),
+          );
+        }
       },
     );
   }
