@@ -78,7 +78,8 @@ class _AppLineState extends State<AppLine> {
             ..addColumns([
               db.weights.created,
               db.weights.amount,
-            ]))
+            ])
+            ..groupBy([createdCol]))
           .watch()
           .map(
             (results) => results
