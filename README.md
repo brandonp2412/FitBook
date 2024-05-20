@@ -4,7 +4,7 @@
 
 ## Features
 
-- **Offline Support**: Log your meals and snacks with ease, even without an internet connection. Our app will keep track of the calories you consume throughout the day.
+- **Offline**: Log your meals and snacks with ease, even without an internet connection. Our app will keep track of the calories you consume throughout the day.
 
 - **Graphs**: Visualize your calorie intake over time with our built-in graph feature. This can help you understand your eating habits better and make necessary adjustments.
 
