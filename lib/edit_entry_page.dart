@@ -45,8 +45,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _unit = widget.entry.unit;
 
     if (widget.food != null) {
-      _caloriesController.text = widget.food?.calories.toString() ?? "";
-      _proteinController.text = widget.food?.proteinG.toString() ?? "";
+      _caloriesController.text = widget.food?.calories?.toString() ?? "";
+      _proteinController.text = widget.food?.proteinG?.toString() ?? "";
       _kilojoulesController.text = widget.food?.calories == null
           ? ''
           : (widget.food!.calories! * 4.184).toStringAsFixed(2);
@@ -81,8 +81,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
           name: _nameController!.text,
-          calories: Value(double.parse(_caloriesController.text)),
-          proteinG: Value(double.parse(_proteinController.text)),
+          calories: Value(double.tryParse(_caloriesController.text)),
+          proteinG: Value(double.tryParse(_proteinController.text)),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
@@ -95,8 +95,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ..where((u) => u.id.equals(_selectedFood?.id ?? -1)))
           .write(
         FoodsCompanion(
-          proteinG: Value(double.parse(_proteinController.text)),
-          calories: Value(double.parse(_caloriesController.text)),
+          proteinG: Value(double.tryParse(_proteinController.text)),
+          calories: Value(double.tryParse(_caloriesController.text)),
         ),
       );
       final food = await (db.foods.select()
@@ -254,8 +254,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 if (food == null) return;
                 setState(() {
                   _selectedFood = food;
-                  _caloriesController.text = food.calories.toString();
-                  _proteinController.text = food.proteinG.toString();
+                  _caloriesController.text = food.calories?.toString() ?? "";
+                  _proteinController.text = food.proteinG?.toString() ?? "";
                   _kilojoulesController.text = food.calories == null
                       ? ''
                       : (food.calories! * 4.184).toStringAsFixed(2);
