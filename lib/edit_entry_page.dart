@@ -64,7 +64,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
   }
 
   Future<void> _save() async {
-    Navigator.pop(context);
     if (_selectedFood == null) return;
     final food = _selectedFood!;
 
@@ -98,13 +97,15 @@ class _EditEntryPageState extends State<EditEntryPage> {
     }
 
     if (widget.entry.id > 0)
-      db.update(db.entries).replace(
+      await db.update(db.entries).replace(
             entry.copyWith(
               id: Value(widget.entry.id),
             ),
           );
     else
-      db.into(db.entries).insert(entry);
+      await db.into(db.entries).insert(entry);
+    if (!mounted) return;
+    Navigator.pop(context);
   }
 
   Future<void> _selectDate() async {
