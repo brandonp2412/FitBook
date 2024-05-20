@@ -21,9 +21,11 @@ class EditEntryPage extends StatefulWidget {
 
 class _EditEntryPageState extends State<EditEntryPage> {
   final _quantityController = TextEditingController();
-  final caloriesController = TextEditingController();
-  final kilojoulesController = TextEditingController();
-  final proteinGController = TextEditingController();
+  final _caloriesController = TextEditingController();
+  final _kilojoulesController = TextEditingController();
+  final _proteinController = TextEditingController();
+  final _proteinNode = FocusNode();
+
   late String _name;
   late SettingsState _settings;
 
@@ -41,6 +43,14 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _quantityController.text = widget.entry.quantity.toString();
     _created = widget.entry.created;
     _unit = widget.entry.unit;
+
+    if (widget.food != null) {
+      _caloriesController.text = widget.food?.calories.toString() ?? "";
+      _proteinController.text = widget.food?.proteinG.toString() ?? "";
+      _kilojoulesController.text = widget.food?.calories == null
+          ? ''
+          : (widget.food!.calories! * 4.184).toStringAsFixed(2);
+    }
   }
 
   Future<List<String>> _search(String term) async {
@@ -71,8 +81,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
           name: _nameController!.text,
-          calories: Value(double.parse(caloriesController.text)),
-          proteinG: Value(double.parse(proteinGController.text)),
+          calories: Value(double.parse(_caloriesController.text)),
+          proteinG: Value(double.parse(_proteinController.text)),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
@@ -85,8 +95,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ..where((u) => u.id.equals(_selectedFood?.id ?? -1)))
           .write(
         FoodsCompanion(
-          proteinG: Value(double.parse(proteinGController.text)),
-          calories: Value(double.parse(caloriesController.text)),
+          proteinG: Value(double.parse(_proteinController.text)),
+          calories: Value(double.parse(_caloriesController.text)),
         ),
       );
       final food = await (db.foods.select()
@@ -244,9 +254,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 if (food == null) return;
                 setState(() {
                   _selectedFood = food;
-                  caloriesController.text = food.calories.toString();
-                  proteinGController.text = food.proteinG.toString();
-                  kilojoulesController.text = food.calories == null
+                  _caloriesController.text = food.calories.toString();
+                  _proteinController.text = food.proteinG.toString();
+                  _kilojoulesController.text = food.calories == null
                       ? ''
                       : (food.calories! * 4.184).toStringAsFixed(2);
                 });
@@ -299,34 +309,42 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
             ),
             TextField(
-              controller: caloriesController,
+              controller: _caloriesController,
               decoration: const InputDecoration(
                 labelText: 'Calories (kcal)',
               ),
+              onTap: () => selectAll(_caloriesController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
-                kilojoulesController.text =
+                _kilojoulesController.text =
                     ((double.tryParse(value) ?? 0) * 4.184).toStringAsFixed(2);
+              },
+              onSubmitted: (value) {
+                _proteinNode.requestFocus();
+                selectAll(_proteinController);
               },
             ),
             TextField(
-              controller: kilojoulesController,
+              controller: _kilojoulesController,
               decoration: const InputDecoration(
                 labelText: 'Kilojoules (kj)',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
-                caloriesController.text =
+                _caloriesController.text =
                     ((double.tryParse(value) ?? 0) / 4.184).toStringAsFixed(2);
               },
+              onTap: () => selectAll(_kilojoulesController),
             ),
             TextField(
-              controller: proteinGController,
+              controller: _proteinController,
+              focusNode: _proteinNode,
               decoration: const InputDecoration(
                 labelText: 'Protein (g)',
               ),
+              onTap: () => selectAll(_proteinController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
             ),
