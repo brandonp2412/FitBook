@@ -3,7 +3,6 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,11 +21,15 @@ class EditEntryPage extends StatefulWidget {
 
 class _EditEntryPageState extends State<EditEntryPage> {
   final _quantityController = TextEditingController();
+  final caloriesController = TextEditingController();
+  final kilojoulesController = TextEditingController();
+  final proteinGController = TextEditingController();
   late String _name;
   late SettingsState _settings;
 
   DateTime _created = DateTime.now();
   Food? _selectedFood;
+  TextEditingController? _nameController;
   var _unit = 'serving';
 
   @override
@@ -63,8 +66,41 @@ class _EditEntryPageState extends State<EditEntryPage> {
     super.dispose();
   }
 
+  Future<void> _saveFood() async {
+    if (_selectedFood?.name != _nameController?.text) {
+      final foodId = await (db.foods.insertOne(
+        FoodsCompanion.insert(
+          name: _nameController!.text,
+          calories: Value(double.parse(caloriesController.text)),
+          proteinG: Value(double.parse(proteinGController.text)),
+        ),
+      ));
+      final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
+          .getSingle();
+      setState(() {
+        _selectedFood = food;
+      });
+    } else {
+      await (db.foods.update()
+            ..where((u) => u.id.equals(_selectedFood?.id ?? -1)))
+          .write(
+        FoodsCompanion(
+          proteinG: Value(double.parse(proteinGController.text)),
+          calories: Value(double.parse(caloriesController.text)),
+        ),
+      );
+      final food = await (db.foods.select()
+            ..where((u) => u.id.equals(_selectedFood!.id)))
+          .getSingle();
+      setState(() {
+        _selectedFood = food;
+      });
+    }
+  }
+
   Future<void> _save() async {
-    if (_selectedFood == null) return;
+    await _saveFood();
+
     final food = _selectedFood!;
 
     final quantity = double.parse(_quantityController.text);
@@ -145,12 +181,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
     }
   }
 
-  void _updateFields(Food food, Entry entry) {
-    setState(() {
-      _selectedFood = food;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _settings = context.watch<SettingsState>();
@@ -198,7 +228,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: material.Column(
+        child: ListView(
           children: [
             Autocomplete<String>(
               optionsMaxHeight: 300,
@@ -207,12 +237,19 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 return _search(textEditingValue.text);
               },
               onSelected: (option) async {
-                final last = await (db.foods.select()
+                final food = await (db.foods.select()
                       ..where((tbl) => tbl.name.equals(option))
                       ..limit(1))
                     .getSingleOrNull();
-                if (last == null) return;
-                _updateFields(last, widget.entry);
+                if (food == null) return;
+                setState(() {
+                  _selectedFood = food;
+                  caloriesController.text = food.calories.toString();
+                  proteinGController.text = food.proteinG.toString();
+                  kilojoulesController.text = food.calories == null
+                      ? ''
+                      : (food.calories! * 4.184).toStringAsFixed(2);
+                });
               },
               initialValue: TextEditingValue(text: _name),
               fieldViewBuilder: (
@@ -221,6 +258,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted,
               ) {
+                _nameController = textEditingController;
                 return TextFormField(
                   decoration: const InputDecoration(labelText: 'Name'),
                   autofocus: widget.entry.id == 0,
@@ -259,6 +297,38 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   _unit = newValue!;
                 });
               },
+            ),
+            TextField(
+              controller: caloriesController,
+              decoration: const InputDecoration(
+                labelText: 'Calories (kcal)',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                kilojoulesController.text =
+                    ((double.tryParse(value) ?? 0) * 4.184).toStringAsFixed(2);
+              },
+            ),
+            TextField(
+              controller: kilojoulesController,
+              decoration: const InputDecoration(
+                labelText: 'Kilojoules (kj)',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                caloriesController.text =
+                    ((double.tryParse(value) ?? 0) / 4.184).toStringAsFixed(2);
+              },
+            ),
+            TextField(
+              controller: proteinGController,
+              decoration: const InputDecoration(
+                labelText: 'Protein (g)',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             ),
             ListTile(
               title: const Text('Created Date'),
