@@ -36,14 +36,14 @@ class DiaryPageState extends State<DiaryPage> {
       child: Navigator(
         key: navigatorKey,
         onGenerateRoute: (settings) => MaterialPageRoute(
-          builder: (context) => _graphsPage(),
+          builder: (context) => _diaryPage(),
           settings: settings,
         ),
       ),
     );
   }
 
-  Scaffold _graphsPage() {
+  Scaffold _diaryPage() {
     final settings = context.watch<SettingsState>();
     final entriesState = context.watch<EntriesState>();
 
