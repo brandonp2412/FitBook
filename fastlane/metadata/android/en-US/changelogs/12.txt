@@ -1,0 +1,5 @@
+- Add horizontal line for target cals/protein/fat/etc
+- Add show summary setting
+- Fix graphs summing entire weeks/months/years
+- Remove decimals on summary row of diary page
+- Change editing weights

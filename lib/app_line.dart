@@ -167,6 +167,25 @@ class _AppLineState extends State<AppLine> {
   Widget build(BuildContext context) {
     _settings = context.watch<SettingsState>();
 
+    int y = 0;
+
+    switch (widget.metric) {
+      case AppMetric.calories:
+        y = _settings.dailyCalories ?? 0;
+        break;
+      case AppMetric.protein:
+        y = _settings.dailyProtein ?? 0;
+        break;
+      case AppMetric.bodyWeight:
+        break;
+      case AppMetric.fat:
+        y = _settings.dailyFat ?? 0;
+        break;
+      case AppMetric.carbs:
+        y = _settings.dailyCarbs ?? 0;
+        break;
+    }
+
     return StreamBuilder(
       stream: _graphStream,
       builder: (context, snapshot) {
@@ -191,6 +210,16 @@ class _AppLineState extends State<AppLine> {
                 const EdgeInsets.only(bottom: 80.0, right: 32.0, top: 16.0),
             child: LineChart(
               LineChartData(
+                extraLinesData: ExtraLinesData(
+                  horizontalLines: [
+                    if (y > 0)
+                      HorizontalLine(
+                        y: y.toDouble(),
+                        color: Theme.of(context).colorScheme.secondary,
+                        strokeWidth: 2,
+                      ),
+                  ],
+                ),
                 titlesData: FlTitlesData(
                   topTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
