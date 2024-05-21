@@ -5,6 +5,7 @@ import 'package:fit_book/entries_state.dart';
 import 'package:fit_book/foods_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         body: SafeArea(
           child: TabBarView(
@@ -75,6 +76,7 @@ class HomePage extends StatelessWidget {
               DiaryPage(),
               GraphPage(),
               FoodsPage(),
+              WeightsPage(),
             ],
           ),
         ),
@@ -91,6 +93,10 @@ class HomePage extends StatelessWidget {
             Tab(
               icon: Icon(Icons.restaurant),
               text: "Foods",
+            ),
+            Tab(
+              icon: Icon(Icons.scale),
+              text: "Weight",
             ),
           ],
         ),

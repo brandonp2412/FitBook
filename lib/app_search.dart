@@ -1,4 +1,3 @@
-import 'package:fit_book/enter_weight_page.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -115,21 +114,6 @@ class _AppSearchState extends State<AppSearch> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const QuickAddPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: ListTile(
-                    leading: const Icon(Icons.scale),
-                    title: const Text('Weight'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EnterWeightPage(),
                         ),
                       );
                     },
