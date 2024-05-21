@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,12 @@ class QuickAddPage extends StatefulWidget {
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {
-  final _quantityController = TextEditingController();
+  final _quantityController = TextEditingController(text: "600");
 
   @override
   void initState() {
     super.initState();
+    selectAll(_quantityController);
   }
 
   @override
