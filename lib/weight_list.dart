@@ -1,8 +1,6 @@
 import 'package:fit_book/database.dart';
-import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/edit_weight_page.dart';
 import 'package:fit_book/settings_state.dart';
-import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
