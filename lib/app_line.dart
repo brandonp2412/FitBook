@@ -66,14 +66,21 @@ class _AppLineState extends State<AppLine> {
         "STRFTIME('%Y', DATE(created, 'unixepoch', 'localtime'))",
       );
 
-    final cals = db.entries.kCalories.sum() /
-        db.entries.created.date.count(distinct: true).cast<double>();
-    final fat = db.entries.fatG.sum() /
-        db.entries.created.date.count(distinct: true).cast<double>();
-    final protein = db.entries.proteinG.sum() /
-        db.entries.created.date.count(distinct: true).cast<double>();
-    final carb = db.entries.carbG.sum() /
-        db.entries.created.date.count(distinct: true).cast<double>();
+    var cals = db.entries.kCalories.sum();
+    var fat = db.entries.fatG.sum();
+    var protein = db.entries.proteinG.sum();
+    var carb = db.entries.carbG.sum();
+
+    if (widget.groupBy != Period.day) {
+      cals = db.entries.kCalories.sum() /
+          db.entries.created.date.count(distinct: true).cast<double>();
+      fat = db.entries.fatG.sum() /
+          db.entries.created.date.count(distinct: true).cast<double>();
+      protein = db.entries.proteinG.sum() /
+          db.entries.created.date.count(distinct: true).cast<double>();
+      carb = db.entries.carbG.sum() /
+          db.entries.created.date.count(distinct: true).cast<double>();
+    }
 
     if (widget.metric == AppMetric.bodyWeight)
       _graphStream = (db.weights.selectOnly()
