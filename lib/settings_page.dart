@@ -205,6 +205,17 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'show summary',
+        widget: ListTile(
+          title: const Text('Show summary'),
+          onTap: () => _settings.setShowSummary(!_settings.showSummary),
+          trailing: Switch(
+            value: _settings.showSummary,
+            onChanged: (value) => _settings.setShowSummary(value),
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'show remaining',
         widget: ListTile(
           title: const Text('Show remaining'),

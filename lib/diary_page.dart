@@ -83,6 +83,13 @@ class DiaryPageState extends State<DiaryPage> {
             carb = "${(settings.dailyCarbs ?? 0) - totalCarb} g";
           }
 
+          final children = [
+            if (settings.dailyCalories != null) Text(cals),
+            if (settings.dailyProtein != null) Text(protein),
+            if (settings.dailyFat != null) Text(fat),
+            if (settings.dailyCarbs != null) Text(carb),
+          ];
+
           return material.Column(
             children: [
               AppSearch(
@@ -174,10 +181,7 @@ class DiaryPageState extends State<DiaryPage> {
               material.Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (settings.dailyCalories != null) Text(cals),
-                  if (settings.dailyProtein != null) Text(protein),
-                  if (settings.dailyFat != null) Text(fat),
-                  if (settings.dailyCarbs != null) Text(carb),
+                  if (settings.showSummary) ...children,
                 ],
               ),
             ],

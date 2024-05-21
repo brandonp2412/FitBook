@@ -13,6 +13,7 @@ class SettingsState extends ChangeNotifier {
   bool showOthers = false;
   bool showRemaining = false;
   bool favoriteNew = false;
+  bool showSummary = true;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -21,6 +22,7 @@ class SettingsState extends ChangeNotifier {
 
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
+
     longDateFormat = prefs?.getString('longDateFormat') ?? "dd/MM/yy";
     shortDateFormat = prefs?.getString('shortDateFormat') ?? "d/M/yy";
     final theme = prefs?.getString('themeMode');
@@ -29,15 +31,24 @@ class SettingsState extends ChangeNotifier {
     else if (theme == "ThemeMode.light")
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
+
     systemColors = prefs?.getBool("systemColors") ?? false;
     favoriteNew = prefs?.getBool("favoriteNew") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
     showRemaining = prefs?.getBool("showRemaining") ?? false;
+    showSummary = prefs?.getBool("showSummary") ?? true;
+
     dailyCalories = prefs?.getInt('dailyCalories');
     dailyProtein = prefs?.getInt('dailyProtein');
     dailyFat = prefs?.getInt('dailyFat');
     dailyCarbs = prefs?.getInt('dailyCarbs');
+  }
+
+  void setShowSummary(bool value) {
+    showSummary = value;
+    prefs?.setBool('showSummary', value);
+    notifyListeners();
   }
 
   void setFavoriteNew(bool value) {
