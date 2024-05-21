@@ -84,10 +84,26 @@ class DiaryPageState extends State<DiaryPage> {
           }
 
           final children = [
-            if (settings.dailyCalories != null) Text(cals),
-            if (settings.dailyProtein != null) Text(protein),
-            if (settings.dailyFat != null) Text(fat),
-            if (settings.dailyCarbs != null) Text(carb),
+            if (settings.dailyCalories != null)
+              Text(
+                cals,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            if (settings.dailyProtein != null)
+              Text(
+                protein,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            if (settings.dailyFat != null)
+              Text(
+                fat,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            if (settings.dailyCarbs != null)
+              Text(
+                carb,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
           ];
 
           return material.Column(
