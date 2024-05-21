@@ -16,16 +16,16 @@ enum Period {
 List<String> units = [
   'serving',
   'grams',
-  'milligrams',
+  'milliliters',
   'kilojoules',
   'cups',
   'tablespoons',
+  'milligrams',
   'teaspoons',
   'ounces',
   'pounds',
   'kilograms',
   'liters',
-  'milliliters',
 ];
 
 List<String> foodFields = [
