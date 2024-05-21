@@ -38,7 +38,7 @@ After launching the app, you can start adding your meals and snacks for the day.
 
 ## Contributing
 
-Contributions are welcome! Please read our Contributing Guide for more information.
+Contributions to FitBook are welcomed and encouraged! Whether you want to report a bug, suggest a feature, or submit a pull request, please feel free to contribute. For major changes, please open an issue first to discuss the proposed changes.
 
 ## License
 
