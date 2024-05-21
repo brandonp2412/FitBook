@@ -216,6 +216,17 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'favorite new foods',
+        widget: ListTile(
+          title: const Text('Favorite new foods'),
+          onTap: () => _settings.setFavoriteNew(!_settings.favoriteNew),
+          trailing: Switch(
+            value: _settings.favoriteNew,
+            onChanged: (value) => _settings.setFavoriteNew(value),
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'system color',
         widget: ListTile(
           title: const Text('System color scheme'),

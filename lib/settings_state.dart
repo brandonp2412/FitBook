@@ -12,6 +12,7 @@ class SettingsState extends ChangeNotifier {
   bool curveLines = false;
   bool showOthers = false;
   bool showRemaining = false;
+  bool favoriteNew = false;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -29,6 +30,7 @@ class SettingsState extends ChangeNotifier {
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
     systemColors = prefs?.getBool("systemColors") ?? false;
+    favoriteNew = prefs?.getBool("favoriteNew") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
     showRemaining = prefs?.getBool("showRemaining") ?? false;
@@ -36,6 +38,12 @@ class SettingsState extends ChangeNotifier {
     dailyProtein = prefs?.getInt('dailyProtein');
     dailyFat = prefs?.getInt('dailyFat');
     dailyCarbs = prefs?.getInt('dailyCarbs');
+  }
+
+  void setFavoriteNew(bool value) {
+    favoriteNew = value;
+    prefs?.setBool('favoriteNew', value);
+    notifyListeners();
   }
 
   void setShowRemaining(bool value) {

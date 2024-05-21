@@ -16,6 +16,7 @@ class EditFoodPage extends StatefulWidget {
 }
 
 class _EditFoodPageState extends State<EditFoodPage> {
+  late SettingsState _settings;
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final caloriesController = TextEditingController();
@@ -137,6 +138,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   void initState() {
     super.initState();
+    _settings = context.read<SettingsState>();
     if (widget.food == null) return;
     final food = widget.food!;
     nameController.text = food.name;
@@ -531,12 +533,16 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ),
           );
     else
-      db.into(db.foods).insert(food);
+      db.into(db.foods).insert(
+            food.copyWith(
+              favorite: Value(_settings.favoriteNew),
+            ),
+          );
   }
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsState>();
+    _settings = context.watch<SettingsState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -641,13 +647,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ),
             ListTile(
               title: const Text('Show other fields'),
-              onTap: () => settings.setShowOthers(!settings.showOthers),
+              onTap: () => _settings.setShowOthers(!_settings.showOthers),
               trailing: Switch(
-                value: settings.showOthers,
-                onChanged: (value) => settings.setShowOthers(value),
+                value: _settings.showOthers,
+                onChanged: (value) => _settings.setShowOthers(value),
               ),
             ),
-            if (settings.showOthers) ...[
+            if (_settings.showOthers) ...[
               TextField(
                 controller: foodGroupController,
                 decoration: const InputDecoration(

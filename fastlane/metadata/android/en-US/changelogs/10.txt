@@ -1,0 +1,11 @@
+- Add setting for favoriting all new foods
+- Add setting for show remaining
+- Add weights tab
+- Fix broken entries when protein is null
+- Focus next fields when editing entries
+- Enable quick adding of foods from entries
+- Fix body weight not grouping by period
+- Wait for insert before navigation in entries
+- Fix variable name in diary page
+- Update README
+- Add missing indices to entries and foods id
