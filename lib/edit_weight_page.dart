@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +29,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
   void initState() {
     super.initState();
     _valueController.text = widget.weight.amount.toString();
+    selectAll(_valueController);
     _created = widget.weight.created;
     _settings = context.read<SettingsState>();
     (db.weights.select()
@@ -100,7 +102,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 decoration: const InputDecoration(labelText: 'Weight'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,
-                autofocus: true,
+                autofocus: widget.weight.id == -1,
+                onTap: () => selectAll(_valueController),
               ),
               DropdownButtonFormField<String>(
                 value: _unit,
