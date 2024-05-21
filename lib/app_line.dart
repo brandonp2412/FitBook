@@ -66,6 +66,15 @@ class _AppLineState extends State<AppLine> {
         "STRFTIME('%Y', DATE(created, 'unixepoch', 'localtime'))",
       );
 
+    final cals = db.entries.kCalories.sum() /
+        db.entries.created.date.count(distinct: true).cast<double>();
+    final fat = db.entries.fatG.sum() /
+        db.entries.created.date.count(distinct: true).cast<double>();
+    final protein = db.entries.proteinG.sum() /
+        db.entries.created.date.count(distinct: true).cast<double>();
+    final carb = db.entries.carbG.sum() /
+        db.entries.created.date.count(distinct: true).cast<double>();
+
     if (widget.metric == AppMetric.bodyWeight)
       _graphStream = (db.weights.selectOnly()
             ..orderBy([
@@ -94,10 +103,10 @@ class _AppLineState extends State<AppLine> {
       _graphStream = (db.entries.selectOnly()
             ..addColumns([
               db.entries.created,
-              db.entries.kCalories.sum(),
-              db.entries.fatG.sum(),
-              db.entries.proteinG.sum(),
-              db.entries.carbG.sum(),
+              cals,
+              fat,
+              protein,
+              carb,
             ])
             ..orderBy([
               OrderingTerm(
@@ -111,10 +120,10 @@ class _AppLineState extends State<AppLine> {
           .map((results) {
         return results.map((result) {
           final created = result.read(db.entries.created)!.toLocal();
-          final totalCals = result.read(db.entries.kCalories.sum());
-          final totalFat = result.read(db.entries.fatG.sum());
-          final totalProtein = result.read(db.entries.proteinG.sum());
-          final totalCarb = result.read(db.entries.carbG.sum());
+          final totalCals = result.read(cals);
+          final totalFat = result.read(fat);
+          final totalProtein = result.read(protein);
+          final totalCarb = result.read(carb);
 
           var value = 0.0;
 
