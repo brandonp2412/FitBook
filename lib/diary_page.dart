@@ -68,13 +68,13 @@ class DiaryPageState extends State<DiaryPage> {
             }
 
           String cals =
-              "${totalCals.toStringAsFixed(2)} / ${settings.dailyCalories} kcal";
+              "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
           String protein =
-              "${totalProtein.toStringAsFixed(2)} / ${settings.dailyProtein} g";
+              "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
           String fat =
-              "${totalFat.toStringAsFixed(2)} / ${settings.dailyFat} g";
+              "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
           String carb =
-              "${totalCarb.toStringAsFixed(2)} / ${settings.dailyCarbs} g";
+              "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g";
 
           if (settings.showRemaining) {
             cals = "${(settings.dailyCalories ?? 0) - totalCals} kcal";
