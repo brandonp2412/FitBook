@@ -1,11 +1,15 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/diary_page.dart';
+import 'package:fit_book/edit_entry_page.dart';
+import 'package:fit_book/edit_food_page.dart';
+import 'package:fit_book/edit_weight_page.dart';
 import 'package:fit_book/foods_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/main.dart' as app;
 import 'package:fit_book/settings_page.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -176,7 +180,31 @@ List<EntriesCompanion> entries = [
   ),
 ];
 
-enum TabBarState { diary, graph, foods }
+List<WeightsCompanion> weights = [
+  WeightsCompanion.insert(created: DateTime.now(), unit: 'kg', amount: 70),
+  WeightsCompanion.insert(
+    created: DateTime.now().subtract(const Duration(days: 1)),
+    unit: 'kg',
+    amount: 71.2,
+  ),
+  WeightsCompanion.insert(
+    created: DateTime.now().subtract(const Duration(days: 2)),
+    unit: 'kg',
+    amount: 68.5,
+  ),
+  WeightsCompanion.insert(
+    created: DateTime.now().subtract(const Duration(days: 3)),
+    unit: 'kg',
+    amount: 71.5,
+  ),
+  WeightsCompanion.insert(
+    created: DateTime.now().subtract(const Duration(days: 4)),
+    unit: 'kg',
+    amount: 73.5,
+  ),
+];
+
+enum TabBarState { diary, graph, foods, weights }
 
 const screenshotFood = "Chicken sushi";
 
@@ -201,6 +229,10 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
           .currentContext!;
     case null:
       break;
+    case TabBarState.weights:
+      return (tester.state(find.byType(WeightsPage)) as WeightsPageState)
+          .navigatorKey
+          .currentContext!;
   }
 
   return tester.element(find.byType(TabBarView));
@@ -252,6 +284,7 @@ void main() {
 
     await app.db.entries.insertAll(entries);
     await app.db.foods.insertAll(foods);
+    await app.db.weights.insertAll(weights);
   });
 
   group("Generate default screenshots ", () {
@@ -306,6 +339,90 @@ void main() {
           );
         },
         tabBarState: TabBarState.foods,
+      ),
+    );
+
+    testWidgets(
+      "WeightsPage",
+      (tester) async => await generateScreenshot(
+        binding: binding,
+        tester: tester,
+        screenshotName: '5_en-US',
+        navigateToPage: (context) async {
+          navigateTo(
+            context: context,
+            page: const WeightsPage(),
+          );
+        },
+        tabBarState: TabBarState.weights,
+      ),
+    );
+
+    testWidgets(
+      "EditWeightPage",
+      (tester) async => await generateScreenshot(
+        binding: binding,
+        tester: tester,
+        screenshotName: '6_en-US',
+        navigateToPage: (context) async {
+          navigateTo(
+            context: context,
+            page: EditWeightPage(
+              weight: Weight(
+                amount: 0,
+                created: DateTime.now(),
+                id: -1,
+                unit: 'kg',
+              ),
+            ),
+          );
+        },
+        tabBarState: TabBarState.weights,
+      ),
+    );
+
+    testWidgets(
+      "EditFoodPage",
+      (tester) async => await generateScreenshot(
+        binding: binding,
+        tester: tester,
+        screenshotName: '7_en-US',
+        navigateToPage: (context) async {
+          navigateTo(
+            context: context,
+            page: const EditFoodPage(
+              food: Food(
+                id: 1,
+                name: 'Butter on Toast',
+              ),
+            ),
+          );
+        },
+        tabBarState: TabBarState.foods,
+      ),
+    );
+
+    testWidgets(
+      "EditEntryPage",
+      (tester) async => await generateScreenshot(
+        binding: binding,
+        tester: tester,
+        screenshotName: '8_en-US',
+        navigateToPage: (context) async {
+          navigateTo(
+            context: context,
+            page: EditEntryPage(
+              entry: Entry(
+                id: 1,
+                food: 2,
+                created: DateTime.now(),
+                quantity: 2,
+                unit: 'grams',
+              ),
+            ),
+          );
+        },
+        tabBarState: TabBarState.diary,
       ),
     );
   });

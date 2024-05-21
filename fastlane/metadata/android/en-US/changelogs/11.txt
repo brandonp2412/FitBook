@@ -1,0 +1,2 @@
+- Add screenshots
+- Replace fastlane with bundle exec
