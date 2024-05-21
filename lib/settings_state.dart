@@ -11,6 +11,7 @@ class SettingsState extends ChangeNotifier {
   bool systemColors = false;
   bool curveLines = false;
   bool showOthers = false;
+  bool showRemaining = false;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -30,10 +31,17 @@ class SettingsState extends ChangeNotifier {
     systemColors = prefs?.getBool("systemColors") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
+    showRemaining = prefs?.getBool("showRemaining") ?? false;
     dailyCalories = prefs?.getInt('dailyCalories');
     dailyProtein = prefs?.getInt('dailyProtein');
     dailyFat = prefs?.getInt('dailyFat');
     dailyCarbs = prefs?.getInt('dailyCarbs');
+  }
+
+  void setShowRemaining(bool value) {
+    showRemaining = value;
+    prefs?.setBool('showRemaining', value);
+    notifyListeners();
   }
 
   void setShowOthers(bool show) {

@@ -39,7 +39,6 @@ class _AppLineState extends State<AppLine> {
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     _setStream();
   }
 

@@ -67,6 +67,22 @@ class DiaryPageState extends State<DiaryPage> {
               totalCarb += entryFood.entry.carbG ?? 0;
             }
 
+          String cals =
+              "${totalCals.toStringAsFixed(2)} / ${settings.dailyCalories} kcal";
+          String protein =
+              "${totalProtein.toStringAsFixed(2)} / ${settings.dailyProtein} g";
+          String fat =
+              "${totalFat.toStringAsFixed(2)} / ${settings.dailyFat} g";
+          String carb =
+              "${totalCarb.toStringAsFixed(2)} / ${settings.dailyCarbs} g";
+
+          if (settings.showRemaining) {
+            cals = "${(settings.dailyCalories ?? 0) - totalCals} kcal";
+            protein = "${(settings.dailyProtein ?? 0) - totalProtein} g";
+            fat = "${(settings.dailyFat ?? 0) - totalFat} g";
+            carb = "${(settings.dailyCarbs ?? 0) - totalCarb} g";
+          }
+
           return material.Column(
             children: [
               AppSearch(
@@ -158,22 +174,10 @@ class DiaryPageState extends State<DiaryPage> {
               material.Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (settings.dailyCalories != null)
-                    Text(
-                      "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal",
-                    ),
-                  if (settings.dailyProtein != null)
-                    Text(
-                      "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g",
-                    ),
-                  if (settings.dailyFat != null)
-                    Text(
-                      "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g",
-                    ),
-                  if (settings.dailyCarbs != null)
-                    Text(
-                      "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g",
-                    ),
+                  if (settings.dailyCalories != null) Text(cals),
+                  if (settings.dailyProtein != null) Text(protein),
+                  if (settings.dailyFat != null) Text(fat),
+                  if (settings.dailyCarbs != null) Text(carb),
                 ],
               ),
             ],

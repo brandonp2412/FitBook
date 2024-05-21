@@ -205,6 +205,17 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'show remaining',
+        widget: ListTile(
+          title: const Text('Show remaining'),
+          onTap: () => _settings.setShowRemaining(!_settings.showRemaining),
+          trailing: Switch(
+            value: _settings.showRemaining,
+            onChanged: (value) => _settings.setShowRemaining(value),
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'system color',
         widget: ListTile(
           title: const Text('System color scheme'),
