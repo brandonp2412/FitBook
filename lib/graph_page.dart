@@ -83,6 +83,7 @@ class GraphPageState extends State<GraphPage> {
               onChanged: (value) {
                 setState(() {
                   _metric = value!;
+                  if (value == AppMetric.bodyWeight) _groupBy = Period.week;
                 });
               },
             ),

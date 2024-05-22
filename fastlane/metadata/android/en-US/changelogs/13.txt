@@ -1,0 +1,3 @@
+- Use weekly default for body weight graphs
+- Round remaining summary to 0dp
+- Fix broken daily calorie graphs
