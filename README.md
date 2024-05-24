@@ -19,6 +19,8 @@
         height="75">
 </a>
 
+<img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
+
 ## Screenshots
 
 <p float="left">
