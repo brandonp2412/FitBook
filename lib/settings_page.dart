@@ -5,7 +5,10 @@ import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path/path.dart' as p;
 
 class SettingsLine {
   final String key;
@@ -246,6 +249,18 @@ class _SettingsPageState extends State<SettingsPage> {
             value: _settings.systemColors,
             onChanged: (value) => _settings.setSystem(value),
           ),
+        ),
+      ),
+      SettingsLine(
+        key: 'share database',
+        widget: TextButton.icon(
+          onPressed: () async {
+            final dbFolder = await getApplicationDocumentsDirectory();
+            final dbPath = p.join(dbFolder.path, 'fitbook.sqlite');
+            await Share.shareXFiles([XFile(dbPath)]);
+          },
+          label: const Text("Share database"),
+          icon: const Icon(Icons.share),
         ),
       ),
       SettingsLine(
