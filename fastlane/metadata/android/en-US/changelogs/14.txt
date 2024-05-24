@@ -1,0 +1,5 @@
+- Remove template comments in android/app/build.gradle
+- Tag universal apks with the biggest versionCode
+- Add share database button
+- Add shields badge for f-droid version
+- Add f-droid button to README
