@@ -13,6 +13,11 @@
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'>
     <img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
 </a>
+<a href="https://f-droid.org/packages/com.presley.fit_book">
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+        alt="Get it on F-Droid"
+        height="75">
+</a>
 
 ## Screenshots
 
