@@ -1,0 +1,2 @@
+- Update git clone command
+- Rename "Yesterdays weight" to "Last weight"
