@@ -21,7 +21,7 @@ class EditWeightPage extends StatefulWidget {
 class _EditWeightPageState extends State<EditWeightPage> {
   late SettingsState _settings;
   final TextEditingController _valueController = TextEditingController();
-  String _yesterdaysWeight = "";
+  String _lastWeight = "";
   String _unit = 'kg';
   DateTime _created = DateTime.now();
 
@@ -43,7 +43,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         .getSingleOrNull()
         .then(
           (value) => setState(() {
-            _yesterdaysWeight = value?.amount.toString() ?? "0";
+            _lastWeight = value?.amount.toString() ?? "0";
           }),
         );
   }
@@ -121,9 +121,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 },
               ),
               TextFormField(
-                controller: TextEditingController(text: _yesterdaysWeight),
-                decoration:
-                    const InputDecoration(labelText: 'Yesterdays weight'),
+                controller: TextEditingController(text: _lastWeight),
+                decoration: const InputDecoration(labelText: 'Last weight'),
                 enabled: false,
               ),
               ListTile(
