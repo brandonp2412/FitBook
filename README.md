@@ -1,6 +1,6 @@
 # FitBook
 
-**FitBook** is a Flutter application designed to help you keep track of your daily calorie intake. It works offline and provides a visual representation of your calorie consumption through easy-to-understand graphs.
+**FitBook** is a free and open-source Flutter application designed to help you track your eating habits and visualize your progress with intuitive graphs, all completely offline. Whether you're looking to maintain a healthy diet, manage your weight, or simply gain insights into your nutritional intake, FitBook provides the tools you need to stay on track without needing an internet connection.
 
 ## Features
 
