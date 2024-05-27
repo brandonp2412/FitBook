@@ -645,6 +645,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
             ),
+            TextField(
+              controller: servingWeight1GController,
+              decoration: const InputDecoration(
+                labelText: 'Serving size (g)',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+            ),
             ListTile(
               title: const Text('Show other fields'),
               onTap: () => _settings.setShowOthers(!_settings.showOthers),
@@ -659,14 +667,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 decoration: const InputDecoration(
                   labelText: 'Food Group',
                 ),
-              ),
-              TextField(
-                controller: servingWeight1GController,
-                decoration: const InputDecoration(
-                  labelText: 'Serving Weight 1 (g)',
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
               ),
               TextField(
                 controller: servingDescription1GController,
