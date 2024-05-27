@@ -33,6 +33,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Food? _selectedFood;
   TextEditingController? _nameController;
   var _unit = 'serving';
+  bool _foodDirty = false;
 
   @override
   void initState() {
@@ -110,7 +111,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   }
 
   Future<void> _save() async {
-    await _saveFood();
+    if (_foodDirty) await _saveFood();
 
     final food = _selectedFood!;
 
@@ -254,12 +255,24 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     .getSingleOrNull();
                 if (food == null) return;
                 setState(() {
+                  _foodDirty = false;
                   _selectedFood = food;
-                  _caloriesController.text = food.calories?.toString() ?? "";
-                  _proteinController.text = food.proteinG?.toString() ?? "";
-                  _kilojoulesController.text = food.calories == null
-                      ? ''
-                      : (food.calories! * 4.184).toStringAsFixed(2);
+                  final quantity = double.parse(_quantityController.text);
+                  if (_unit == 'kilojoules') {
+                    final grams = quantity / 4.184;
+                    final kCalories = grams / 100 * (food.calories ?? 1);
+                    _caloriesController.text = kCalories.toString();
+                  } else {
+                    final quantity100G = _unit == 'serving'
+                        ? (quantity * (food.servingWeight1G ?? 100)) / 100
+                        : convertToGrams(quantity, _unit) / 100;
+                    final kCalories = quantity100G * (food.calories ?? 100);
+                    final proteinG = quantity100G * (food.proteinG ?? 0);
+                    _caloriesController.text = kCalories.toString();
+                    _proteinController.text = proteinG.toString();
+                    _kilojoulesController.text =
+                        (kCalories * 4.184).toStringAsFixed(2);
+                  }
                 });
               },
               initialValue: TextEditingValue(text: _name),
@@ -293,6 +306,23 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 baseOffset: 0,
                 extentOffset: _quantityController.text.length,
               ),
+              onChanged: (value) {
+                final food = _selectedFood!;
+                final quantity = double.parse(_quantityController.text);
+                if (_unit == 'kilojoules') {
+                  final grams = quantity / 4.184;
+                  final kCalories = grams / 100 * (food.calories ?? 1);
+                  _caloriesController.text = kCalories.toString();
+                } else {
+                  final quantity100G = _unit == 'serving'
+                      ? (quantity * (food.servingWeight1G ?? 100)) / 100
+                      : convertToGrams(quantity, _unit) / 100;
+                  final kCalories = quantity100G * (food.calories ?? 100);
+                  final proteinG = quantity100G * (food.proteinG ?? 0);
+                  _caloriesController.text = kCalories.toString();
+                  _proteinController.text = proteinG.toString();
+                }
+              },
             ),
             DropdownButtonFormField<String>(
               value: _unit,
@@ -311,43 +341,57 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ),
             TextField(
               controller: _caloriesController,
-              decoration: const InputDecoration(
-                labelText: 'Calories (kcal)',
+              decoration: InputDecoration(
+                labelText: 'Calories ${_foodDirty ? '(per 100g)' : ''}',
               ),
               onTap: () => selectAll(_caloriesController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
-                _kilojoulesController.text =
-                    ((double.tryParse(value) ?? 0) * 4.184).toStringAsFixed(2);
+                setState(() {
+                  _foodDirty = true;
+                  _kilojoulesController.text =
+                      ((double.tryParse(value) ?? 0) * 4.184)
+                          .toStringAsFixed(2);
+                });
               },
               onSubmitted: (value) {
                 _proteinNode.requestFocus();
                 selectAll(_proteinController);
               },
             ),
-            TextField(
-              controller: _kilojoulesController,
-              decoration: const InputDecoration(
-                labelText: 'Kilojoules (kj)',
+            if (_unit != 'kilojoules')
+              TextField(
+                controller: _kilojoulesController,
+                decoration: InputDecoration(
+                  labelText: 'Kilojoules ${_foodDirty ? '(per 100g)' : ''}',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onChanged: (value) {
+                  setState(() {
+                    _foodDirty = true;
+                    _caloriesController.text =
+                        ((double.tryParse(value) ?? 0) / 4.184)
+                            .toStringAsFixed(2);
+                  });
+                },
+                onTap: () => selectAll(_kilojoulesController),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                _caloriesController.text =
-                    ((double.tryParse(value) ?? 0) / 4.184).toStringAsFixed(2);
-              },
-              onTap: () => selectAll(_kilojoulesController),
-            ),
             TextField(
               controller: _proteinController,
               focusNode: _proteinNode,
               decoration: const InputDecoration(
-                labelText: 'Protein (g)',
+                labelText: 'Protein (per 100g)',
               ),
               onTap: () => selectAll(_proteinController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                setState(() {
+                  _foodDirty = true;
+                });
+              },
             ),
             ListTile(
               title: const Text('Created Date'),
