@@ -381,8 +381,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             TextField(
               controller: _proteinController,
               focusNode: _proteinNode,
-              decoration: const InputDecoration(
-                labelText: 'Protein (per 100g)',
+              decoration: InputDecoration(
+                labelText: 'Protein ${_foodDirty ? '(per 100g)' : ''}',
               ),
               onTap: () => selectAll(_proteinController),
               keyboardType:
