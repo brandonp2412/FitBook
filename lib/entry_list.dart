@@ -55,7 +55,7 @@ class _EntryListState extends State<EntryList> {
         itemCount: widget.entryFoods.length,
         itemBuilder: (context, index) {
           final entryFood = widget.entryFoods[index];
-          final food = entryFood.food;
+          final foodName = entryFood.foodName;
           final entry = entryFood.entry;
           final previous = index > 0 ? widget.entryFoods[index - 1] : null;
           final showDivider = previous != null &&
@@ -75,7 +75,7 @@ class _EntryListState extends State<EntryList> {
                   ],
                 ),
               ListTile(
-                title: Text(food.name),
+                title: Text(foodName),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),
                 ),
@@ -91,8 +91,7 @@ class _EntryListState extends State<EntryList> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditEntryPage(
-                          entry: entry,
-                          food: food,
+                          id: entry.id,
                         ),
                       ),
                     );

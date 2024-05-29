@@ -17,13 +17,14 @@ class Entries extends Table {
 
 typedef EntryWithFood = ({
   Entry entry,
-  Food food,
+  String foodName,
 });
 
 Stream<List<EntryWithFood>> watchEntries(String search, int limit) {
   return (db.entries
-          .select()
+          .selectOnly()
           .join([innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))])
+        ..addColumns([...db.entries.$columns, db.foods.name])
         ..where(db.foods.name.contains(search.toLowerCase()))
         ..orderBy([
           OrderingTerm(
@@ -35,11 +36,19 @@ Stream<List<EntryWithFood>> watchEntries(String search, int limit) {
       .watch()
       .map(
         (results) => results.map((result) {
-          final food = result.readTable(db.foods);
-          final entry = result.readTable(db.entries);
           return (
-            entry: entry.copyWith(created: entry.created.toLocal()),
-            food: food
+            entry: Entry(
+              id: result.read(db.entries.id)!,
+              food: result.read(db.entries.food)!,
+              created: result.read(db.entries.created)!.toLocal(),
+              quantity: result.read(db.entries.quantity)!,
+              unit: result.read(db.entries.unit)!,
+              kCalories: result.read(db.entries.kCalories),
+              proteinG: result.read(db.entries.proteinG),
+              fatG: result.read(db.entries.fatG),
+              carbG: result.read(db.entries.carbG),
+            ),
+            foodName: result.read(db.foods.name)!,
           );
         }).toList(),
       );

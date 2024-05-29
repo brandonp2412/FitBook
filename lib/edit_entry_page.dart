@@ -10,48 +10,62 @@ import 'package:provider/provider.dart';
 import 'database.dart';
 
 class EditEntryPage extends StatefulWidget {
-  final Entry entry;
-  final Food? food;
+  final int? id;
 
-  const EditEntryPage({super.key, required this.entry, this.food});
+  const EditEntryPage({super.key, this.id});
 
   @override
   createState() => _EditEntryPageState();
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
-  final _quantityController = TextEditingController();
-  final _caloriesController = TextEditingController();
-  final _kilojoulesController = TextEditingController();
-  final _proteinController = TextEditingController();
+  final _quantityController = TextEditingController(text: "0");
+  final _caloriesController = TextEditingController(text: "0");
+  final _kilojoulesController = TextEditingController(text: "0");
+  final _proteinController = TextEditingController(text: "0");
   final _proteinNode = FocusNode();
 
   late String _name;
   late SettingsState _settings;
 
   DateTime _created = DateTime.now();
-  Food? _selectedFood;
-  TextEditingController? _nameController;
   var _unit = 'serving';
   bool _foodDirty = false;
+  Food? _selectedFood;
+  TextEditingController? _nameController;
 
   @override
   void initState() {
     super.initState();
     _settings = context.read<SettingsState>();
-    _name = widget.food?.name ?? "";
-    _selectedFood = widget.food;
-    _quantityController.text = widget.entry.quantity.toString();
-    _created = widget.entry.created;
-    _unit = widget.entry.unit;
+    if (widget.id == null) return;
 
-    if (widget.food != null) {
-      _caloriesController.text = widget.food?.calories?.toString() ?? "";
-      _proteinController.text = widget.food?.proteinG?.toString() ?? "";
-      _kilojoulesController.text = widget.food?.calories == null
-          ? ''
-          : (widget.food!.calories! * 4.184).toStringAsFixed(2);
-    }
+    (db.entries.select()..where((u) => u.id.equals(widget.id!)))
+        .getSingle()
+        .then(
+      (entry) async {
+        setState(() {
+          _quantityController.text = entry.quantity.toString();
+          _created = entry.created;
+          _unit = entry.unit;
+        });
+
+        final food = await (db.foods.select()
+              ..where((u) => u.id.equals(entry.id)))
+            .getSingleOrNull();
+        if (food == null) return;
+
+        setState(() {
+          _name = food.name;
+          _selectedFood = food;
+          _caloriesController.text = food.calories?.toString() ?? "";
+          _proteinController.text = food.proteinG?.toString() ?? "";
+          _kilojoulesController.text = food.calories == null
+              ? ''
+              : (food.calories! * 4.184).toStringAsFixed(2);
+        });
+      },
+    );
   }
 
   Future<List<String>> _search(String term) async {
@@ -147,14 +161,14 @@ class _EditEntryPageState extends State<EditEntryPage> {
       );
     }
 
-    if (widget.entry.id > 0)
+    if (widget.id == null)
+      await db.into(db.entries).insert(entry);
+    else
       await db.update(db.entries).replace(
             entry.copyWith(
-              id: Value(widget.entry.id),
+              id: Value(entry.id.value),
             ),
           );
-    else
-      await db.into(db.entries).insert(entry);
     if (!mounted) return;
     Navigator.pop(context);
   }
@@ -229,10 +243,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.food != null ? 'Edit entry' : 'Add entry',
+          widget.id == null ? 'Add entry' : 'Edit entry',
         ),
         actions: [
-          if (widget.food != null)
+          if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
@@ -242,7 +256,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     return AlertDialog(
                       title: const Text('Confirm Delete'),
                       content: Text(
-                        'Are you sure you want to delete ${widget.food!.name}?',
+                        'Are you sure you want to delete ${_selectedFood?.name}?',
                       ),
                       actions: <Widget>[
                         TextButton(
@@ -255,7 +269,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                           child: const Text('Delete'),
                           onPressed: () async {
                             Navigator.pop(dialogContext);
-                            await db.delete(db.entries).delete(widget.entry);
+                            await db.entries.deleteWhere(
+                              (tbl) => tbl.id.equals(widget.id!),
+                            );
                             if (context.mounted) Navigator.pop(context);
                           },
                         ),
@@ -299,7 +315,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 _nameController = textEditingController;
                 return TextFormField(
                   decoration: const InputDecoration(labelText: 'Name'),
-                  autofocus: widget.entry.id == 0,
+                  autofocus: widget.id == null,
                   controller: textEditingController,
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,

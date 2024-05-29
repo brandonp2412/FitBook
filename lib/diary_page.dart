@@ -138,12 +138,12 @@ class DiaryPageState extends State<DiaryPage> {
                 }),
                 selected: _selected,
                 onFavorite: () async {
-                  final entries = await (db.entries.select()
-                        ..where(
-                          (tbl) => tbl.id.isIn(_selected),
-                        ))
+                  final entries = await (db.entries.selectOnly()
+                        ..addColumns([db.entries.id, db.entries.food])
+                        ..where(db.entries.id.isIn(_selected)))
                       .get();
-                  final foodIds = entries.map((entry) => entry.food);
+                  final foodIds =
+                      entries.map((entry) => entry.read(db.entries.food)!);
                   await (db.foods.update()
                         ..where((tbl) => tbl.id.isIn(foodIds)))
                       .write(const FoodsCompanion(favorite: Value(true)));
@@ -156,14 +156,12 @@ class DiaryPageState extends State<DiaryPage> {
                     (element) => element.entry.id == _selected.first,
                   );
 
-                  final food = entryFood.food;
                   final entry = entryFood.entry;
                   return Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditEntryPage(
-                        entry: entry,
-                        food: food,
+                        id: entry.id,
                       ),
                     ),
                   );
@@ -212,15 +210,7 @@ class DiaryPageState extends State<DiaryPage> {
         onPressed: () async {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
-              builder: (context) => EditEntryPage(
-                entry: Entry(
-                  created: DateTime.now(),
-                  food: 0,
-                  id: 0,
-                  quantity: 1,
-                  unit: 'serving',
-                ),
-              ),
+              builder: (context) => const EditEntryPage(),
             ),
           );
         },
