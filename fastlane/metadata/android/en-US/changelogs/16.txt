@@ -1,0 +1,4 @@
+- Fix serving size calculations
+- Fix per 100g comment for protein
+- Change editing entries
+- Move serving size above hidden fields

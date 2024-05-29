@@ -129,9 +129,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
         kCalories: Value(grams / 100 * (food.calories ?? 1)),
       );
     } else {
-      final quantity100G = _unit == 'serving'
-          ? (quantity * (food.servingWeight1G ?? 100)) / 100
-          : convertToGrams(quantity, _unit) / 100;
+      double quantity100G;
+      if (_unit == 'serving') {
+        quantity100G = quantity; // 1 serving
+      } else {
+        quantity100G = convertToGrams(quantity, _unit) / 100;
+      }
       final kCalories = quantity100G * (food.calories ?? 100);
       final proteinG = quantity100G * (food.proteinG ?? 0);
       final fatG = quantity100G * (food.fatG ?? 0);
@@ -189,6 +192,32 @@ class _EditEntryPageState extends State<EditEntryPage> {
           pickedTime.hour,
           pickedTime.minute,
         );
+      });
+    }
+  }
+
+  void _recalc() {
+    final food = _selectedFood!;
+    final quantity = double.parse(_quantityController.text);
+    if (_unit == 'kilojoules') {
+      final grams = quantity / 4.184;
+      final kCalories = grams / 100 * (food.calories ?? 1);
+      setState(() {
+        _caloriesController.text = kCalories.toString();
+      });
+    } else {
+      double quantity100G;
+      if (_unit == 'serving') {
+        quantity100G = quantity; // 1 serving
+      } else {
+        quantity100G = convertToGrams(quantity, _unit) / 100;
+      }
+      final kCalories = quantity100G * (food.calories ?? 100);
+      final proteinG = quantity100G * (food.proteinG ?? 0);
+      setState(() {
+        _caloriesController.text = kCalories.toString();
+        _proteinController.text = proteinG.toString();
+        _kilojoulesController.text = (kCalories * 4.184).toStringAsFixed(2);
       });
     }
   }
@@ -257,23 +286,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 setState(() {
                   _foodDirty = false;
                   _selectedFood = food;
-                  final quantity = double.parse(_quantityController.text);
-                  if (_unit == 'kilojoules') {
-                    final grams = quantity / 4.184;
-                    final kCalories = grams / 100 * (food.calories ?? 1);
-                    _caloriesController.text = kCalories.toString();
-                  } else {
-                    final quantity100G = _unit == 'serving'
-                        ? (quantity * (food.servingWeight1G ?? 100)) / 100
-                        : convertToGrams(quantity, _unit) / 100;
-                    final kCalories = quantity100G * (food.calories ?? 100);
-                    final proteinG = quantity100G * (food.proteinG ?? 0);
-                    _caloriesController.text = kCalories.toString();
-                    _proteinController.text = proteinG.toString();
-                    _kilojoulesController.text =
-                        (kCalories * 4.184).toStringAsFixed(2);
-                  }
                 });
+                _recalc();
               },
               initialValue: TextEditingValue(text: _name),
               fieldViewBuilder: (
@@ -307,21 +321,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 extentOffset: _quantityController.text.length,
               ),
               onChanged: (value) {
-                final food = _selectedFood!;
-                final quantity = double.parse(_quantityController.text);
-                if (_unit == 'kilojoules') {
-                  final grams = quantity / 4.184;
-                  final kCalories = grams / 100 * (food.calories ?? 1);
-                  _caloriesController.text = kCalories.toString();
-                } else {
-                  final quantity100G = _unit == 'serving'
-                      ? (quantity * (food.servingWeight1G ?? 100)) / 100
-                      : convertToGrams(quantity, _unit) / 100;
-                  final kCalories = quantity100G * (food.calories ?? 100);
-                  final proteinG = quantity100G * (food.proteinG ?? 0);
-                  _caloriesController.text = kCalories.toString();
-                  _proteinController.text = proteinG.toString();
-                }
+                _recalc();
               },
             ),
             DropdownButtonFormField<String>(
@@ -337,6 +337,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 setState(() {
                   _unit = newValue!;
                 });
+                _recalc();
               },
             ),
             TextField(
