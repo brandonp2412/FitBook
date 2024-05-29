@@ -2,11 +2,9 @@
 
 set -ex
 
-if [[ "$*" != "-n" ]]; then
-  ./screenshots.sh "phoneScreenshots"
-  ./screenshots.sh "sevenInchScreenshots"
-  ./screenshots.sh "tenInchScreenshots"
-fi
+./screenshots.sh "phoneScreenshots"
+./screenshots.sh "sevenInchScreenshots"
+./screenshots.sh "tenInchScreenshots"
 
 line=$(yq -r .version pubspec.yaml)
 build_number=$(cut -d '+' -f 2 <<< "$line")
@@ -23,7 +21,8 @@ yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 rest=$(git log -1 --pretty=%B | tail -n +2)
 git add pubspec.yaml
 last_commits=$(git log --pretty=format:"%s" @{u}..HEAD | awk '{print "- "$0}')
-echo "$last_commits" > "fastlane/metadata/android/en-US/changelogs/$new_build_number.txt"
+changelog_number=$((new_build_number * 10 + 3))
+echo "$last_commits" > "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 git add fastlane/metadata
 
 if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
@@ -31,7 +30,7 @@ if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
     git --no-pager diff
     git restore --staged pubspec.yaml fastlane/metadata
     git restore pubspec.yaml fastlane/metadata
-    rm "fastlane/metadata/android/en-US/changelogs/$new_build_number.txt"
+    rm "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
     exit 1
 fi
 
