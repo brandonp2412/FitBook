@@ -391,10 +391,7 @@ void main() {
           navigateTo(
             context: context,
             page: const EditFoodPage(
-              food: Food(
-                id: 1,
-                name: 'Butter on Toast',
-              ),
+              id: 1,
             ),
           );
         },
@@ -411,14 +408,8 @@ void main() {
         navigateToPage: (context) async {
           navigateTo(
             context: context,
-            page: EditEntryPage(
-              entry: Entry(
-                id: 1,
-                food: 2,
-                created: DateTime.now(),
-                quantity: 2,
-                unit: 'grams',
-              ),
+            page: const EditEntryPage(
+              id: 1,
             ),
           );
         },
