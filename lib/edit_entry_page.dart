@@ -312,7 +312,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ) {
                 _nameController = textEditingController;
                 return TextFormField(
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    floatingLabelBehavior:
+                        widget.id == null ? FloatingLabelBehavior.always : null,
+                  ),
                   autofocus: widget.id == null,
                   controller: textEditingController,
                   focusNode: focusNode,
