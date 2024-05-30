@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -619,6 +620,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 kilojoulesController.text =
                     (double.parse(value) * 4.184).toStringAsFixed(2);
               },
+              onTap: () => selectAll(caloriesController),
             ),
             TextField(
               controller: kilojoulesController,
@@ -631,6 +633,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 caloriesController.text =
                     (double.parse(value) / 4.184).toStringAsFixed(2);
               },
+              onTap: () => selectAll(kilojoulesController),
             ),
             TextField(
               controller: proteinGController,
@@ -639,6 +642,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onTap: () => selectAll(proteinGController),
             ),
             TextField(
               controller: carbohydrateGController,
@@ -647,6 +651,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onTap: () => selectAll(carbohydrateGController),
             ),
             TextField(
               controller: fatGController,
@@ -655,6 +660,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onTap: () => selectAll(fatGController),
             ),
             TextField(
               controller: servingWeight1GController,
@@ -663,6 +669,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onTap: () => selectAll(servingWeight1GController),
             ),
             ListTile(
               title: const Text('Show other fields'),
