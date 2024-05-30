@@ -1,0 +1,4 @@
+- Add serving units to foods
+- Make all input labels floating
+- Add linux build to releases
+- Always delete build for dart watch

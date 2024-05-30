@@ -58,7 +58,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           _nameController?.text = food.name;
           _selectedFood = food;
           _caloriesController.text = food.calories?.toString() ?? "";
-          _proteinController.text = food.proteinG?.toString() ?? "";
+          _proteinController.text = food.proteinG?.toString() ?? "0";
           _kilojoulesController.text = food.calories == null
               ? ''
               : (food.calories! * 4.184).toStringAsFixed(2);
@@ -142,9 +142,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
         kCalories: Value(grams / 100 * (food.calories ?? 1)),
       );
     } else {
+      final weightG = convertToGrams(
+        food.servingWeight1G ?? 100,
+        food.servingUnit ?? 'grams',
+      );
       double quantity100G;
       if (_unit == 'serving') {
-        quantity100G = quantity;
+        quantity100G = quantity * (weightG / 100);
       } else {
         quantity100G = convertToGrams(quantity, _unit) / 100;
       }
@@ -312,10 +316,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ) {
                 _nameController = textEditingController;
                 return TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Name',
-                    floatingLabelBehavior:
-                        widget.id == null ? FloatingLabelBehavior.always : null,
                   ),
                   autofocus: widget.id == null,
                   controller: textEditingController,

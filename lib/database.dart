@@ -21,7 +21,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration {
@@ -66,6 +66,7 @@ class AppDatabase extends _$AppDatabase {
             Index('Entries', 'CREATE INDEX entries_id ON entries(id)'),
           );
         }
+        if (from < 10) await m.addColumn(foods, foods.servingUnit);
       },
     );
   }
