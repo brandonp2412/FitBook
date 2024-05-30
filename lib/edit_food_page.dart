@@ -119,7 +119,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final alcoholGController = TextEditingController(text: "0");
   final caffeineMgController = TextEditingController(text: "0");
   final theobromineMgController = TextEditingController(text: "0");
-  final servingWeight1GController = TextEditingController(text: "0");
+  final servingWeight1GController = TextEditingController(text: "100");
   final servingDescription1GController = TextEditingController(text: "0");
   final servingWeight2GController = TextEditingController(text: "0");
   final servingDescription2GController = TextEditingController(text: "0");

@@ -1,0 +1,7 @@
+- Fix default serving weight editing foods
+- Fix label flickering when editing entries
+- Select all text on first fields of food
+- Fix flickering bug on edit food
+- Fix screenshot tests
+- Improve performance of foods page
+- Improve diary performance
