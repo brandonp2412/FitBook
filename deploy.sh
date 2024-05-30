@@ -37,17 +37,16 @@ fi
 ./flutter/bin/flutter build apk --split-per-abi
 ./flutter/bin/flutter build appbundle
 ./flutter/bin/flutter build linux
+zip -r build/linux-x64.zip build/app/outputs/flutter-apk/pipeline/linux/x64/release/bundle
 
 last_commit=$(git log -1 --pretty=%B | head -n 1)
 git commit --amend -m "$last_commit - $new_version 🚀 
 $rest"
 git push
 
-mv build/app/outputs/flutter-apk/pipeline/linux/x64/release/bundle/fit_book \
-  build/app/outputs/flutter-apk/desktop-linux-release
 gh release create "$new_version" --notes "${changelog:-$last_commits}"  \
   build/app/outputs/flutter-apk/app-*-release.apk \
-  build/app/outputs/flutter-apk/desktop-linux-release
+  build/linux-x64.zip
 git pull
 
 bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.aab
