@@ -14,8 +14,10 @@ class FoodsPage extends StatefulWidget {
   createState() => FoodsPageState();
 }
 
+typedef PartialFood = ({int id, String name, double? calories, bool? favorite});
+
 class FoodsPageState extends State<FoodsPage> {
-  late Stream<List<Food>> _stream;
+  late Stream<List<PartialFood>> _stream;
 
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -29,20 +31,38 @@ class FoodsPageState extends State<FoodsPage> {
   }
 
   void _setStream() {
-    _stream = (db.foods.select()
-          ..where((tbl) => tbl.name.contains(_search.toLowerCase()))
+    _stream = (db.foods.selectOnly()
+          ..addColumns([
+            db.foods.id,
+            db.foods.name,
+            db.foods.calories,
+            db.foods.favorite,
+          ])
+          ..where(db.foods.name.contains(_search.toLowerCase()))
           ..orderBy([
-            (u) => OrderingTerm(
-                  expression: u.favorite,
-                  mode: OrderingMode.desc,
-                ),
-            (u) => OrderingTerm(
-                  expression: u.name,
-                  mode: OrderingMode.asc,
-                ),
+            OrderingTerm(
+              expression: db.foods.favorite,
+              mode: OrderingMode.desc,
+            ),
+            OrderingTerm(
+              expression: db.foods.name,
+              mode: OrderingMode.desc,
+            ),
           ])
           ..limit(_limit))
-        .watch();
+        .watch()
+        .map(
+          (results) => results
+              .map(
+                (result) => (
+                  id: result.read(db.foods.id)!,
+                  name: result.read(db.foods.name)!,
+                  calories: result.read(db.foods.calories),
+                  favorite: result.read(db.foods.favorite),
+                ),
+              )
+              .toList(),
+        );
   }
 
   @override
@@ -107,7 +127,7 @@ class FoodsPageState extends State<FoodsPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditFoodPage(
-                        food: food,
+                        id: food.id,
                       ),
                     ),
                   );

@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import 'database.dart';
 
 class EditFoodPage extends StatefulWidget {
-  final Food? food;
+  final int? id;
 
-  const EditFoodPage({super.key, this.food});
+  const EditFoodPage({super.key, this.id});
 
   @override
   createState() => _EditFoodPageState();
@@ -139,137 +139,141 @@ class _EditFoodPageState extends State<EditFoodPage> {
   void initState() {
     super.initState();
     _settings = context.read<SettingsState>();
-    if (widget.food == null) return;
-    final food = widget.food!;
-    nameController.text = food.name;
-    foodGroupController.text = food.foodGroup ?? '';
-    caloriesController.text = food.calories?.toString() ?? '';
-    kilojoulesController.text = food.calories == null
-        ? ''
-        : (food.calories! * 4.184).toStringAsFixed(2);
-    fatGController.text = food.fatG?.toString() ?? '';
-    proteinGController.text = food.proteinG?.toString() ?? '';
-    carbohydrateGController.text = food.carbohydrateG?.toString() ?? '';
-    sugarsGController.text = food.sugarsG?.toString() ?? '';
-    fiberGController.text = food.fiberG?.toString() ?? '';
-    cholesterolMgController.text = food.cholesterolMg?.toString() ?? '';
-    saturatedFatsGController.text = food.saturatedFatsG?.toString() ?? '';
-    calciumMgController.text = food.calciumMg?.toString() ?? '';
-    ironFeMgController.text = food.ironFeMg?.toString() ?? '';
-    potassiumKMgController.text = food.potassiumKMg?.toString() ?? '';
-    magnesiumMgController.text = food.magnesiumMg?.toString() ?? '';
-    vitaminAIuIuController.text = food.vitaminAIuIu?.toString() ?? '';
-    vitaminARaeMcgController.text = food.vitaminARaeMcg?.toString() ?? '';
-    vitaminCMgController.text = food.vitaminCMg?.toString() ?? '';
-    vitaminB12McgController.text = food.vitaminB12Mcg?.toString() ?? '';
-    vitaminDMcgController.text = food.vitaminDMcg?.toString() ?? '';
-    vitaminEAlphaTocopherolMgController.text =
-        food.vitaminEAlphaTocopherolMg?.toString() ?? '';
-    addedSugarGController.text = food.addedSugarG?.toString() ?? '';
-    netCarbsGController.text = food.netCarbsG?.toString() ?? '';
-    waterGController.text = food.waterG?.toString() ?? '';
-    omega3sMgController.text = food.omega3sMg?.toString() ?? '';
-    omega6sMgController.text = food.omega6sMg?.toString() ?? '';
-    pralScoreController.text = food.pralScore?.toString() ?? '';
-    transFattyAcidsGController.text = food.transFattyAcidsG?.toString() ?? '';
-    solubleFiberGController.text = food.solubleFiberG?.toString() ?? '';
-    insolubleFiberGController.text = food.insolubleFiberG?.toString() ?? '';
-    sucroseGController.text = food.sucroseG?.toString() ?? '';
-    glucoseDextroseGController.text = food.glucoseDextroseG?.toString() ?? '';
-    fructoseGController.text = food.fructoseG?.toString() ?? '';
-    lactoseGController.text = food.lactoseG?.toString() ?? '';
-    maltoseGController.text = food.maltoseG?.toString() ?? '';
-    galactoseGController.text = food.galactoseG?.toString() ?? '';
-    starchGController.text = food.starchG?.toString() ?? '';
-    totalSugarAlcoholsGController.text =
-        food.totalSugarAlcoholsG?.toString() ?? '';
-    phosphorusPMgController.text = food.phosphorusPMg?.toString() ?? '';
-    sodiumMgController.text = food.sodiumMg?.toString() ?? '';
-    zincZnMgController.text = food.zincZnMg?.toString() ?? '';
-    copperCuMgController.text = food.copperCuMg?.toString() ?? '';
-    manganeseMgController.text = food.manganeseMg?.toString() ?? '';
-    seleniumSeMcgController.text = food.seleniumSeMcg?.toString() ?? '';
-    fluorideFMcgController.text = food.fluorideFMcg?.toString() ?? '';
-    molybdenumMcgController.text = food.molybdenumMcg?.toString() ?? '';
-    chlorineMgController.text = food.chlorineMg?.toString() ?? '';
-    thiaminB1MgController.text = food.thiaminB1Mg?.toString() ?? '';
-    riboflavinB2MgController.text = food.riboflavinB2Mg?.toString() ?? '';
-    niacinB3MgController.text = food.niacinB3Mg?.toString() ?? '';
-    pantothenicAcidB5MgController.text =
-        food.pantothenicAcidB5Mg?.toString() ?? '';
-    vitaminB6MgController.text = food.vitaminB6Mg?.toString() ?? '';
-    biotinB7McgController.text = food.biotinB7Mcg?.toString() ?? '';
-    folateB9McgController.text = food.folateB9Mcg?.toString() ?? '';
-    folicAcidMcgController.text = food.folicAcidMcg?.toString() ?? '';
-    foodFolateMcgController.text = food.foodFolateMcg?.toString() ?? '';
-    folateDfeMcgController.text = food.folateDfeMcg?.toString() ?? '';
-    cholineMgController.text = food.cholineMg?.toString() ?? '';
-    betaineMgController.text = food.betaineMg?.toString() ?? '';
-    retinolMcgController.text = food.retinolMcg?.toString() ?? '';
-    caroteneBetaMcgController.text = food.caroteneBetaMcg?.toString() ?? '';
-    caroteneAlphaMcgController.text = food.caroteneAlphaMcg?.toString() ?? '';
-    lycopeneMcgController.text = food.lycopeneMcg?.toString() ?? '';
-    luteinZeaxanthinMcgController.text =
-        food.luteinZeaxanthinMcg?.toString() ?? '';
-    vitaminD2ErgocalciferolMcgController.text =
-        food.vitaminD2ErgocalciferolMcg?.toString() ?? '';
-    vitaminD3CholecalciferolMcgController.text =
-        food.vitaminD3CholecalciferolMcg?.toString() ?? '';
-    vitaminDIuIuController.text = food.vitaminDIuIu?.toString() ?? '';
-    vitaminKMcgController.text = food.vitaminKMcg?.toString() ?? '';
-    dihydrophylloquinoneMcgController.text =
-        food.dihydrophylloquinoneMcg?.toString() ?? '';
-    menaquinone4McgController.text = food.menaquinone4Mcg?.toString() ?? '';
-    fattyAcidsTotalMonounsaturatedMgController.text =
-        food.fattyAcidsTotalMonounsaturatedMg?.toString() ?? '';
-    fattyAcidsTotalPolyunsaturatedMgController.text =
-        food.fattyAcidsTotalPolyunsaturatedMg?.toString() ?? '';
-    u183N3CCCAlaMgController.text = food.u183N3CCCAlaMg?.toString() ?? '';
-    u205N3EpaMgController.text = food.u205N3EpaMg?.toString() ?? '';
-    u225N3DpaMgController.text = food.u225N3DpaMg?.toString() ?? '';
-    u226N3DhaMgController.text = food.u226N3DhaMg?.toString() ?? '';
-    tryptophanMgController.text = food.tryptophanMg?.toString() ?? '';
-    threonineMgController.text = food.threonineMg?.toString() ?? '';
-    isoleucineMgController.text = food.isoleucineMg?.toString() ?? '';
-    leucineMgController.text = food.leucineMg?.toString() ?? '';
-    lysineMgController.text = food.lysineMg?.toString() ?? '';
-    methionineMgController.text = food.methionineMg?.toString() ?? '';
-    cystineMgController.text = food.cystineMg?.toString() ?? '';
-    phenylalanineMgController.text = food.phenylalanineMg?.toString() ?? '';
-    tyrosineMgController.text = food.tyrosineMg?.toString() ?? '';
-    valineMgController.text = food.valineMg?.toString() ?? '';
-    arginineMgController.text = food.arginineMg?.toString() ?? '';
-    histidineMgController.text = food.histidineMg?.toString() ?? '';
-    alanineMgController.text = food.alanineMg?.toString() ?? '';
-    asparticAcidMgController.text = food.asparticAcidMg?.toString() ?? '';
-    glutamicAcidMgController.text = food.glutamicAcidMg?.toString() ?? '';
-    glycineMgController.text = food.glycineMg?.toString() ?? '';
-    prolineMgController.text = food.prolineMg?.toString() ?? '';
-    serineMgController.text = food.serineMg?.toString() ?? '';
-    hydroxyprolineMgController.text = food.hydroxyprolineMg?.toString() ?? '';
-    alcoholGController.text = food.alcoholG?.toString() ?? '';
-    caffeineMgController.text = food.caffeineMg?.toString() ?? '';
-    theobromineMgController.text = food.theobromineMg?.toString() ?? '';
-    servingWeight1GController.text = food.servingWeight1G?.toString() ?? '';
-    servingDescription1GController.text = food.servingDescription1G ?? '';
-    servingWeight2GController.text = food.servingWeight2G?.toString() ?? '';
-    servingDescription2GController.text = food.servingDescription2G ?? '';
-    servingWeight3GController.text = food.servingWeight3G?.toString() ?? '';
-    servingDescription3GController.text = food.servingDescription3G ?? '';
-    servingWeight4GController.text = food.servingWeight4G?.toString() ?? '';
-    servingDescription4GController.text = food.servingDescription4G ?? '';
-    servingWeight5GController.text = food.servingWeight5G?.toString() ?? '';
-    servingDescription5GController.text = food.servingDescription5G ?? '';
-    servingWeight6GController.text = food.servingWeight6G?.toString() ?? '';
-    servingDescription6GController.text = food.servingDescription6G ?? '';
-    servingWeight7GController.text = food.servingWeight7G?.toString() ?? '';
-    servingDescription7GController.text = food.servingDescription7G ?? '';
-    servingWeight8GController.text = food.servingWeight8G?.toString() ?? '';
-    servingDescription8GController.text = food.servingDescription8G ?? '';
-    servingWeight9GController.text = food.servingWeight9G?.toString() ?? '';
-    servingDescription9GController.text = food.servingDescription9G ?? '';
-    u200calorieWeightGController.text =
-        food.u200calorieWeightG?.toString() ?? '';
+    if (widget.id == null) return;
+
+    (db.foods.select()..where((u) => u.id.equals(widget.id!)))
+        .getSingle()
+        .then((food) {
+      nameController.text = food.name;
+      foodGroupController.text = food.foodGroup ?? '';
+      caloriesController.text = food.calories?.toString() ?? '';
+      kilojoulesController.text = food.calories == null
+          ? ''
+          : (food.calories! * 4.184).toStringAsFixed(2);
+      fatGController.text = food.fatG?.toString() ?? '';
+      proteinGController.text = food.proteinG?.toString() ?? '';
+      carbohydrateGController.text = food.carbohydrateG?.toString() ?? '';
+      sugarsGController.text = food.sugarsG?.toString() ?? '';
+      fiberGController.text = food.fiberG?.toString() ?? '';
+      cholesterolMgController.text = food.cholesterolMg?.toString() ?? '';
+      saturatedFatsGController.text = food.saturatedFatsG?.toString() ?? '';
+      calciumMgController.text = food.calciumMg?.toString() ?? '';
+      ironFeMgController.text = food.ironFeMg?.toString() ?? '';
+      potassiumKMgController.text = food.potassiumKMg?.toString() ?? '';
+      magnesiumMgController.text = food.magnesiumMg?.toString() ?? '';
+      vitaminAIuIuController.text = food.vitaminAIuIu?.toString() ?? '';
+      vitaminARaeMcgController.text = food.vitaminARaeMcg?.toString() ?? '';
+      vitaminCMgController.text = food.vitaminCMg?.toString() ?? '';
+      vitaminB12McgController.text = food.vitaminB12Mcg?.toString() ?? '';
+      vitaminDMcgController.text = food.vitaminDMcg?.toString() ?? '';
+      vitaminEAlphaTocopherolMgController.text =
+          food.vitaminEAlphaTocopherolMg?.toString() ?? '';
+      addedSugarGController.text = food.addedSugarG?.toString() ?? '';
+      netCarbsGController.text = food.netCarbsG?.toString() ?? '';
+      waterGController.text = food.waterG?.toString() ?? '';
+      omega3sMgController.text = food.omega3sMg?.toString() ?? '';
+      omega6sMgController.text = food.omega6sMg?.toString() ?? '';
+      pralScoreController.text = food.pralScore?.toString() ?? '';
+      transFattyAcidsGController.text = food.transFattyAcidsG?.toString() ?? '';
+      solubleFiberGController.text = food.solubleFiberG?.toString() ?? '';
+      insolubleFiberGController.text = food.insolubleFiberG?.toString() ?? '';
+      sucroseGController.text = food.sucroseG?.toString() ?? '';
+      glucoseDextroseGController.text = food.glucoseDextroseG?.toString() ?? '';
+      fructoseGController.text = food.fructoseG?.toString() ?? '';
+      lactoseGController.text = food.lactoseG?.toString() ?? '';
+      maltoseGController.text = food.maltoseG?.toString() ?? '';
+      galactoseGController.text = food.galactoseG?.toString() ?? '';
+      starchGController.text = food.starchG?.toString() ?? '';
+      totalSugarAlcoholsGController.text =
+          food.totalSugarAlcoholsG?.toString() ?? '';
+      phosphorusPMgController.text = food.phosphorusPMg?.toString() ?? '';
+      sodiumMgController.text = food.sodiumMg?.toString() ?? '';
+      zincZnMgController.text = food.zincZnMg?.toString() ?? '';
+      copperCuMgController.text = food.copperCuMg?.toString() ?? '';
+      manganeseMgController.text = food.manganeseMg?.toString() ?? '';
+      seleniumSeMcgController.text = food.seleniumSeMcg?.toString() ?? '';
+      fluorideFMcgController.text = food.fluorideFMcg?.toString() ?? '';
+      molybdenumMcgController.text = food.molybdenumMcg?.toString() ?? '';
+      chlorineMgController.text = food.chlorineMg?.toString() ?? '';
+      thiaminB1MgController.text = food.thiaminB1Mg?.toString() ?? '';
+      riboflavinB2MgController.text = food.riboflavinB2Mg?.toString() ?? '';
+      niacinB3MgController.text = food.niacinB3Mg?.toString() ?? '';
+      pantothenicAcidB5MgController.text =
+          food.pantothenicAcidB5Mg?.toString() ?? '';
+      vitaminB6MgController.text = food.vitaminB6Mg?.toString() ?? '';
+      biotinB7McgController.text = food.biotinB7Mcg?.toString() ?? '';
+      folateB9McgController.text = food.folateB9Mcg?.toString() ?? '';
+      folicAcidMcgController.text = food.folicAcidMcg?.toString() ?? '';
+      foodFolateMcgController.text = food.foodFolateMcg?.toString() ?? '';
+      folateDfeMcgController.text = food.folateDfeMcg?.toString() ?? '';
+      cholineMgController.text = food.cholineMg?.toString() ?? '';
+      betaineMgController.text = food.betaineMg?.toString() ?? '';
+      retinolMcgController.text = food.retinolMcg?.toString() ?? '';
+      caroteneBetaMcgController.text = food.caroteneBetaMcg?.toString() ?? '';
+      caroteneAlphaMcgController.text = food.caroteneAlphaMcg?.toString() ?? '';
+      lycopeneMcgController.text = food.lycopeneMcg?.toString() ?? '';
+      luteinZeaxanthinMcgController.text =
+          food.luteinZeaxanthinMcg?.toString() ?? '';
+      vitaminD2ErgocalciferolMcgController.text =
+          food.vitaminD2ErgocalciferolMcg?.toString() ?? '';
+      vitaminD3CholecalciferolMcgController.text =
+          food.vitaminD3CholecalciferolMcg?.toString() ?? '';
+      vitaminDIuIuController.text = food.vitaminDIuIu?.toString() ?? '';
+      vitaminKMcgController.text = food.vitaminKMcg?.toString() ?? '';
+      dihydrophylloquinoneMcgController.text =
+          food.dihydrophylloquinoneMcg?.toString() ?? '';
+      menaquinone4McgController.text = food.menaquinone4Mcg?.toString() ?? '';
+      fattyAcidsTotalMonounsaturatedMgController.text =
+          food.fattyAcidsTotalMonounsaturatedMg?.toString() ?? '';
+      fattyAcidsTotalPolyunsaturatedMgController.text =
+          food.fattyAcidsTotalPolyunsaturatedMg?.toString() ?? '';
+      u183N3CCCAlaMgController.text = food.u183N3CCCAlaMg?.toString() ?? '';
+      u205N3EpaMgController.text = food.u205N3EpaMg?.toString() ?? '';
+      u225N3DpaMgController.text = food.u225N3DpaMg?.toString() ?? '';
+      u226N3DhaMgController.text = food.u226N3DhaMg?.toString() ?? '';
+      tryptophanMgController.text = food.tryptophanMg?.toString() ?? '';
+      threonineMgController.text = food.threonineMg?.toString() ?? '';
+      isoleucineMgController.text = food.isoleucineMg?.toString() ?? '';
+      leucineMgController.text = food.leucineMg?.toString() ?? '';
+      lysineMgController.text = food.lysineMg?.toString() ?? '';
+      methionineMgController.text = food.methionineMg?.toString() ?? '';
+      cystineMgController.text = food.cystineMg?.toString() ?? '';
+      phenylalanineMgController.text = food.phenylalanineMg?.toString() ?? '';
+      tyrosineMgController.text = food.tyrosineMg?.toString() ?? '';
+      valineMgController.text = food.valineMg?.toString() ?? '';
+      arginineMgController.text = food.arginineMg?.toString() ?? '';
+      histidineMgController.text = food.histidineMg?.toString() ?? '';
+      alanineMgController.text = food.alanineMg?.toString() ?? '';
+      asparticAcidMgController.text = food.asparticAcidMg?.toString() ?? '';
+      glutamicAcidMgController.text = food.glutamicAcidMg?.toString() ?? '';
+      glycineMgController.text = food.glycineMg?.toString() ?? '';
+      prolineMgController.text = food.prolineMg?.toString() ?? '';
+      serineMgController.text = food.serineMg?.toString() ?? '';
+      hydroxyprolineMgController.text = food.hydroxyprolineMg?.toString() ?? '';
+      alcoholGController.text = food.alcoholG?.toString() ?? '';
+      caffeineMgController.text = food.caffeineMg?.toString() ?? '';
+      theobromineMgController.text = food.theobromineMg?.toString() ?? '';
+      servingWeight1GController.text = food.servingWeight1G?.toString() ?? '';
+      servingDescription1GController.text = food.servingDescription1G ?? '';
+      servingWeight2GController.text = food.servingWeight2G?.toString() ?? '';
+      servingDescription2GController.text = food.servingDescription2G ?? '';
+      servingWeight3GController.text = food.servingWeight3G?.toString() ?? '';
+      servingDescription3GController.text = food.servingDescription3G ?? '';
+      servingWeight4GController.text = food.servingWeight4G?.toString() ?? '';
+      servingDescription4GController.text = food.servingDescription4G ?? '';
+      servingWeight5GController.text = food.servingWeight5G?.toString() ?? '';
+      servingDescription5GController.text = food.servingDescription5G ?? '';
+      servingWeight6GController.text = food.servingWeight6G?.toString() ?? '';
+      servingDescription6GController.text = food.servingDescription6G ?? '';
+      servingWeight7GController.text = food.servingWeight7G?.toString() ?? '';
+      servingDescription7GController.text = food.servingDescription7G ?? '';
+      servingWeight8GController.text = food.servingWeight8G?.toString() ?? '';
+      servingDescription8GController.text = food.servingDescription8G ?? '';
+      servingWeight9GController.text = food.servingWeight9G?.toString() ?? '';
+      servingDescription9GController.text = food.servingDescription9G ?? '';
+      u200calorieWeightGController.text =
+          food.u200calorieWeightG?.toString() ?? '';
+    });
   }
 
   @override
@@ -526,10 +530,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
           Value(double.tryParse(u200calorieWeightGController.text)),
     );
 
-    if (widget.food != null)
+    if (widget.id != null)
       db.update(db.foods).replace(
             food.copyWith(
-              id: Value(widget.food!.id),
+              id: Value(widget.id!),
             ),
           );
     else
@@ -547,10 +551,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.food != null ? 'Edit food' : 'Add food',
+          widget.id != null ? 'Edit food' : 'Add food',
         ),
         actions: [
-          if (widget.food != null)
+          if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
@@ -560,7 +564,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     return AlertDialog(
                       title: const Text('Confirm Delete'),
                       content: Text(
-                        'Are you sure you want to delete ${widget.food!.name}?',
+                        'Are you sure you want to delete ${nameController.text}?',
                       ),
                       actions: <Widget>[
                         TextButton(
@@ -573,7 +577,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                           child: const Text('Delete'),
                           onPressed: () async {
                             Navigator.pop(dialogContext);
-                            await db.delete(db.foods).delete(widget.food!);
+                            await db.foods.deleteWhere(
+                              (tbl) => tbl.id.equals(widget.id!),
+                            );
                             if (context.mounted) Navigator.pop(context);
                           },
                         ),

@@ -1,5 +1,5 @@
-import 'package:fit_book/database.dart';
 import 'package:fit_book/edit_food_page.dart';
+import 'package:fit_book/foods_page.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class FoodList extends StatefulWidget {
     required this.onNext,
   });
 
-  final List<Food> foods;
+  final List<PartialFood> foods;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
@@ -77,7 +77,7 @@ class _FoodListState extends State<FoodList> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditFoodPage(
-                          food: food,
+                          id: food.id,
                         ),
                       ),
                     );

@@ -19,13 +19,12 @@ class EditEntryPage extends StatefulWidget {
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
-  final _quantityController = TextEditingController(text: "0");
+  final _quantityController = TextEditingController(text: "1");
   final _caloriesController = TextEditingController(text: "0");
   final _kilojoulesController = TextEditingController(text: "0");
   final _proteinController = TextEditingController(text: "0");
   final _proteinNode = FocusNode();
 
-  late String _name;
   late SettingsState _settings;
 
   DateTime _created = DateTime.now();
@@ -51,12 +50,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
         });
 
         final food = await (db.foods.select()
-              ..where((u) => u.id.equals(entry.id)))
+              ..where((u) => u.id.equals(entry.food)))
             .getSingleOrNull();
         if (food == null) return;
 
         setState(() {
-          _name = food.name;
+          _nameController?.text = food.name;
           _selectedFood = food;
           _caloriesController.text = food.calories?.toString() ?? "";
           _proteinController.text = food.proteinG?.toString() ?? "";
@@ -145,7 +144,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     } else {
       double quantity100G;
       if (_unit == 'serving') {
-        quantity100G = quantity; // 1 serving
+        quantity100G = quantity;
       } else {
         quantity100G = convertToGrams(quantity, _unit) / 100;
       }
@@ -166,7 +165,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     else
       await db.update(db.entries).replace(
             entry.copyWith(
-              id: Value(entry.id.value),
+              id: Value(widget.id!),
             ),
           );
     if (!mounted) return;
@@ -305,7 +304,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 });
                 _recalc();
               },
-              initialValue: TextEditingValue(text: _name),
               fieldViewBuilder: (
                 BuildContext context,
                 TextEditingController textEditingController,
@@ -322,9 +320,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   onFieldSubmitted: (String value) {
                     onFieldSubmitted();
                   },
-                  onChanged: (value) => setState(() {
-                    _name = value;
-                  }),
                 );
               },
             ),
