@@ -1,0 +1,2 @@
+- Fix some migration errors
+- Fix labels not always floating on dark theme

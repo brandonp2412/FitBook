@@ -36,20 +36,22 @@ class AppDatabase extends _$AppDatabase {
       onUpgrade: (Migrator m, int from, int to) async {
         if (from < 2) await m.create(db.entries);
         if (from < 3) {
-          await m.addColumn(db.entries, db.entries.quantity);
-          await m.addColumn(db.entries, db.entries.unit);
+          await m.addColumn(db.entries, db.entries.quantity).catchError((_) {});
+          await m.addColumn(db.entries, db.entries.unit).catchError((_) {});
         }
         if (from < 4) {
-          await m.addColumn(db.entries, db.entries.kCalories);
-          await m.addColumn(db.entries, db.entries.proteinG);
-          await m.addColumn(db.entries, db.entries.fatG);
-          await m.addColumn(db.entries, db.entries.carbG);
+          await m
+              .addColumn(db.entries, db.entries.kCalories)
+              .catchError((_) {});
+          await m.addColumn(db.entries, db.entries.proteinG).catchError((_) {});
+          await m.addColumn(db.entries, db.entries.fatG).catchError((_) {});
+          await m.addColumn(db.entries, db.entries.carbG).catchError((_) {});
         }
         if (from < 5)
           await m.createIndex(
             Index(
               'Foods',
-              "CREATE INDEX foods_name ON foods(name);",
+              "CREATE INDEX IF NOT EXISTS foods_name ON foods(name);",
             ),
           );
         if (from < 6)
@@ -57,16 +59,21 @@ class AppDatabase extends _$AppDatabase {
             FoodsCompanion.insert(name: "Calories", calories: const Value(100)),
           );
         if (from < 7) await m.createTable(db.weights);
-        if (from < 8) await m.addColumn(foods, foods.favorite);
+        if (from < 8)
+          await m.addColumn(foods, foods.favorite).catchError((_) {});
         if (from < 9) {
           await m.createIndex(
-            Index('Foods', 'CREATE INDEX foods_id ON foods(id)'),
+            Index('Foods', 'CREATE INDEX IF NOT EXISTS foods_id ON foods(id)'),
           );
           await m.createIndex(
-            Index('Entries', 'CREATE INDEX entries_id ON entries(id)'),
+            Index(
+              'Entries',
+              'CREATE INDEX IF NOT EXISTS entries_id ON entries(id)',
+            ),
           );
         }
-        if (from < 10) await m.addColumn(foods, foods.servingUnit);
+        if (from < 10)
+          await m.addColumn(foods, foods.servingUnit).catchError((_) {});
       },
     );
   }
