@@ -325,8 +325,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ),
             TextField(
               controller: _caloriesController,
-              decoration: InputDecoration(
-                labelText: 'Calories ${_foodDirty ? '(per 100g)' : ''}',
+              decoration: const InputDecoration(
+                labelText: 'Calories',
               ),
               onTap: () => selectAll(_caloriesController),
               keyboardType:
@@ -347,8 +347,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             if (_unit != 'kilojoules')
               TextField(
                 controller: _kilojoulesController,
-                decoration: InputDecoration(
-                  labelText: 'Kilojoules ${_foodDirty ? '(per 100g)' : ''}',
+                decoration: const InputDecoration(
+                  labelText: 'Kilojoules',
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -365,8 +365,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             TextField(
               controller: _proteinController,
               focusNode: _proteinNode,
-              decoration: InputDecoration(
-                labelText: 'Protein ${_foodDirty ? '(per 100g)' : ''}',
+              decoration: const InputDecoration(
+                labelText: 'Protein',
               ),
               onTap: () => selectAll(_proteinController),
               keyboardType:
@@ -389,6 +389,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
+        tooltip: 'Save',
         child: const Icon(Icons.save),
       ),
     );

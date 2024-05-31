@@ -18,7 +18,7 @@ part 'database.g.dart';
 
 @DriftDatabase(tables: [Foods, Entries, Weights])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
 
   @override
   int get schemaVersion => 10;
@@ -28,7 +28,6 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
-        await m.addColumn(foods, foods.favorite);
         final prefs = await SharedPreferences.getInstance();
         prefs.setInt('dailyCalories', 2200);
         prefs.setInt('dailyProtein', 100);
