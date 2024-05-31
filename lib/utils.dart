@@ -19,42 +19,28 @@ EntriesCompanion calculateEntry({
     unit: Value(unit),
   );
 
-  double quantity100G;
-  if (unit == 'kilojoules') {
-    final grams = quantity / 4.184;
-    quantity100G = grams / 100;
-  } else if (unit == 'serving') {
-    quantity100G = quantity;
-  } else {
-    quantity100G = convertToGrams(quantity, unit) / 100;
-  }
-
-  double servingWeight;
-  if (food.servingWeight1G != null) {
-    servingWeight = food.servingWeight1G!;
-    if (food.servingUnit != 'grams') {
-      servingWeight =
-          convertToGrams(servingWeight, food.servingUnit ?? 'grams');
-    }
-  } else {
-    servingWeight = 100;
-  }
-
-  final servingQuantity = quantity100G * servingWeight;
-
-  final kCalories = servingQuantity * (food.calories ?? 100) / servingWeight;
-  final proteinG = servingQuantity * (food.proteinG ?? 0) / servingWeight;
-  final fatG = servingQuantity * (food.fatG ?? 0) / servingWeight;
-  final carbG = servingQuantity * (food.carbohydrateG ?? 0) / servingWeight;
-
-  entry = entry.copyWith(
-    kCalories: Value(kCalories),
-    fatG: Value(fatG),
-    carbG: Value(carbG),
-    proteinG: Value(proteinG),
+  final servingG = convertToGrams(
+    food.servingWeight1G ?? 100,
+    food.servingUnit ?? 'grams',
   );
 
-  return entry;
+  var quantityG = 0.0;
+  if (unit == 'serving')
+    quantityG = quantity * (food.servingWeight1G ?? 100);
+  else
+    quantityG = convertToGrams(quantity, unit);
+
+  final caloriesG = (food.calories ?? 0) / servingG;
+  final proteinG = (food.proteinG ?? 0) / servingG;
+  final fatG = (food.fatG ?? 0) / servingG;
+  final carbG = (food.carbohydrateG ?? 0) / servingG;
+
+  return entry.copyWith(
+    kCalories: Value(quantityG * caloriesG),
+    fatG: Value(quantityG * fatG),
+    carbG: Value(quantityG * carbG),
+    proteinG: Value(quantityG * proteinG),
+  );
 }
 
 double convertToGrams(double quantity, String unit) {
@@ -62,6 +48,7 @@ double convertToGrams(double quantity, String unit) {
 
   switch (unit) {
     case 'grams':
+    case 'milliliters':
       quantityInGrams = quantity;
       break;
     case 'milligrams':
@@ -85,8 +72,8 @@ double convertToGrams(double quantity, String unit) {
     case 'liters':
       quantityInGrams = quantity * 1000; // Approximate conversion for water
       break;
-    case 'milliliters':
-      quantityInGrams = quantity; // Approximate conversion for water
+    case 'kilojoules':
+      quantityInGrams = quantity / 4.184;
       break;
     default:
       throw Exception('Unit not recognized');

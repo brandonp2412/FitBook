@@ -1,0 +1,2 @@
+- Fix calories calculations for entries
+- Fix entering amounts other than serving
