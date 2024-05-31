@@ -29,10 +29,23 @@ EntriesCompanion calculateEntry({
     quantity100G = convertToGrams(quantity, unit) / 100;
   }
 
-  final kCalories = quantity100G * (food.calories ?? 100);
-  final proteinG = quantity100G * (food.proteinG ?? 0);
-  final fatG = quantity100G * (food.fatG ?? 0);
-  final carbG = quantity100G * (food.carbohydrateG ?? 0);
+  double servingWeight;
+  if (food.servingWeight1G != null) {
+    servingWeight = food.servingWeight1G!;
+    if (food.servingUnit != 'grams') {
+      servingWeight =
+          convertToGrams(servingWeight, food.servingUnit ?? 'grams');
+    }
+  } else {
+    servingWeight = 100;
+  }
+
+  final servingQuantity = quantity100G * servingWeight;
+
+  final kCalories = servingQuantity * (food.calories ?? 100) / servingWeight;
+  final proteinG = servingQuantity * (food.proteinG ?? 0) / servingWeight;
+  final fatG = servingQuantity * (food.fatG ?? 0) / servingWeight;
+  final carbG = servingQuantity * (food.carbohydrateG ?? 0) / servingWeight;
 
   entry = entry.copyWith(
     kCalories: Value(kCalories),
