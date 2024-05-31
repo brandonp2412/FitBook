@@ -1,0 +1,5 @@
+- Fix test expectations for entries
+- Round calories + protein in entries
+- Add missing favorite column
+- Test unit conversions
+- Change unit conversions

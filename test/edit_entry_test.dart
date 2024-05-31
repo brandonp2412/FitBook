@@ -53,20 +53,20 @@ void main() async {
     await tester.pump();
     await tester.tap(find.text('cups'));
     await tester.pump();
-    expect(find.text('250.0'), findsOne);
+    var calories = findTextWidget(find.text('Calories'));
+    expect(calories.controller!.text, equals('250.00'));
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
     await tester.pump();
     await tester.tap(find.text('tablespoons'));
     await tester.pump();
-    var calories = findTextWidget(find.text('Calories'));
-    expect(calories.controller!.text, equals('15.0'));
+    expect(calories.controller!.text, equals('15.00'));
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
     await tester.pump();
     await tester.tap(find.text('teaspoons'));
     await tester.pump();
-    expect(calories.controller!.text, equals('5.0'));
+    expect(calories.controller!.text, equals('5.00'));
 
     await db.close();
   });
