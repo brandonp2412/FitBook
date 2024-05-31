@@ -57,6 +57,9 @@ class App extends StatelessWidget {
           colorScheme: settings.systemColors ? darkDynamic : defaultDark,
           fontFamily: 'Manrope',
           useMaterial3: true,
+          inputDecorationTheme: const InputDecorationTheme(
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+          ),
         ),
         themeMode: settings.themeMode,
         home: const HomePage(),
