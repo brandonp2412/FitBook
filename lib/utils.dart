@@ -55,13 +55,13 @@ double convertToGrams(double quantity, String unit) {
       quantityInGrams = quantity / 1000;
       break;
     case 'cups':
-      quantityInGrams = quantity * 201; // Approximate conversion for water
+      quantityInGrams = quantity * 250; // Metric system
       break;
     case 'tablespoons':
-      quantityInGrams = quantity * 14.3; // Approximate conversion for water
+      quantityInGrams = quantity * 15;
       break;
     case 'teaspoons':
-      quantityInGrams = quantity * 4.8; // Approximate conversion for water
+      quantityInGrams = quantity * 5;
       break;
     case 'ounces':
       quantityInGrams = quantity * 28.35; // Exact conversion
