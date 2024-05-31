@@ -57,8 +57,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
         setState(() {
           _nameController?.text = food.name;
           _selectedFood = food;
-          _caloriesController.text = food.calories?.toString() ?? "";
-          _proteinController.text = food.proteinG?.toString() ?? "0";
+          _caloriesController.text = food.calories?.toStringAsFixed(2) ?? "";
+          _proteinController.text = food.proteinG?.toStringAsFixed(2) ?? "0";
           _kilojoulesController.text = food.calories == null
               ? ''
               : (food.calories! * 4.184).toStringAsFixed(2);
@@ -198,8 +198,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     setState(() {
-      _caloriesController.text = entry.kCalories.value.toString();
-      _proteinController.text = entry.proteinG.value.toString();
+      _caloriesController.text =
+          entry.kCalories.value?.toStringAsFixed(2) ?? "0";
+      _proteinController.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
       _kilojoulesController.text =
           ((entry.kCalories.value ?? 0) * 4.184).toStringAsFixed(2);
     });
