@@ -24,11 +24,7 @@ EntriesCompanion calculateEntry({
     final grams = quantity / 4.184;
     quantity100G = grams / 100;
   } else if (unit == 'serving') {
-    final weightG = convertToGrams(
-      food.servingWeight1G ?? 100,
-      food.servingUnit ?? 'grams',
-    );
-    quantity100G = quantity * (weightG / 100);
+    quantity100G = quantity;
   } else {
     quantity100G = convertToGrams(quantity, unit) / 100;
   }
