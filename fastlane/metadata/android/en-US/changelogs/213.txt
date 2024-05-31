@@ -1,0 +1,2 @@
+- Multi-edit entries
+- Fix nested folders in linux release zip

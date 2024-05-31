@@ -102,6 +102,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
+
       setState(() {
         _selectedFood = food;
       });
@@ -117,6 +118,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       final food = await (db.foods.select()
             ..where((u) => u.id.equals(_selectedFood!.id)))
           .getSingle();
+
       setState(() {
         _selectedFood = food;
       });
@@ -125,44 +127,15 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   Future<void> _save() async {
     if (_foodDirty) await _saveFood();
-
     final food = _selectedFood!;
-
     final quantity = double.parse(_quantityController.text);
-    var entry = EntriesCompanion.insert(
-      food: food.id,
-      created: _created,
+    final entry = calculateEntry(
+      food: food,
       quantity: quantity,
       unit: _unit,
+    ).copyWith(
+      created: Value(_created),
     );
-
-    if (_unit == 'kilojoules') {
-      final grams = quantity / 4.184;
-      entry = entry.copyWith(
-        kCalories: Value(grams / 100 * (food.calories ?? 1)),
-      );
-    } else {
-      final weightG = convertToGrams(
-        food.servingWeight1G ?? 100,
-        food.servingUnit ?? 'grams',
-      );
-      double quantity100G;
-      if (_unit == 'serving') {
-        quantity100G = quantity * (weightG / 100);
-      } else {
-        quantity100G = convertToGrams(quantity, _unit) / 100;
-      }
-      final kCalories = quantity100G * (food.calories ?? 100);
-      final proteinG = quantity100G * (food.proteinG ?? 0);
-      final fatG = quantity100G * (food.fatG ?? 0);
-      final carbG = quantity100G * (food.carbohydrateG ?? 0);
-      entry = entry.copyWith(
-        kCalories: Value(kCalories),
-        fatG: Value(fatG),
-        carbG: Value(carbG),
-        proteinG: Value(proteinG),
-      );
-    }
 
     if (widget.id == null)
       await db.into(db.entries).insert(entry);
@@ -216,27 +189,20 @@ class _EditEntryPageState extends State<EditEntryPage> {
   void _recalc() {
     final food = _selectedFood!;
     final quantity = double.parse(_quantityController.text);
-    if (_unit == 'kilojoules') {
-      final grams = quantity / 4.184;
-      final kCalories = grams / 100 * (food.calories ?? 1);
-      setState(() {
-        _caloriesController.text = kCalories.toString();
-      });
-    } else {
-      double quantity100G;
-      if (_unit == 'serving') {
-        quantity100G = quantity; // 1 serving
-      } else {
-        quantity100G = convertToGrams(quantity, _unit) / 100;
-      }
-      final kCalories = quantity100G * (food.calories ?? 100);
-      final proteinG = quantity100G * (food.proteinG ?? 0);
-      setState(() {
-        _caloriesController.text = kCalories.toString();
-        _proteinController.text = proteinG.toString();
-        _kilojoulesController.text = (kCalories * 4.184).toStringAsFixed(2);
-      });
-    }
+    final entry = calculateEntry(
+      food: food,
+      quantity: quantity,
+      unit: _unit,
+    ).copyWith(
+      created: Value(_created),
+    );
+
+    setState(() {
+      _caloriesController.text = entry.kCalories.value.toString();
+      _proteinController.text = entry.proteinG.value.toString();
+      _kilojoulesController.text =
+          ((entry.kCalories.value ?? 0) * 4.184).toStringAsFixed(2);
+    });
   }
 
   @override

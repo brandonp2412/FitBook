@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database.dart';
+import 'package:fit_book/edit_entries_page.dart';
 import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/entries.dart';
 import 'package:fit_book/entries_state.dart';
@@ -152,16 +153,11 @@ class DiaryPageState extends State<DiaryPage> {
                   });
                 },
                 onEdit: () {
-                  final entryFood = entryFoods.firstWhere(
-                    (element) => element.entry.id == _selected.first,
-                  );
-
-                  final entry = entryFood.entry;
                   return Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditEntryPage(
-                        id: entry.id,
+                      builder: (context) => EditEntriesPage(
+                        entryIds: _selected.toList(),
                       ),
                     ),
                   );
