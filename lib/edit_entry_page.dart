@@ -293,6 +293,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   onFieldSubmitted: (String value) {
                     onFieldSubmitted();
                   },
+                  onChanged: (value) => setState(() {
+                    _foodDirty = true;
+                  }),
                 );
               },
             ),
