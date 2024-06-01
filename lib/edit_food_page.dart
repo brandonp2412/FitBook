@@ -1571,6 +1571,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
+        tooltip: 'Save',
         child: const Icon(Icons.save),
       ),
     );

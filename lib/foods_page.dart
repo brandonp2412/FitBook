@@ -189,7 +189,7 @@ class FoodsPageState extends State<FoodsPage> {
             ),
           );
         },
-        tooltip: 'Add food',
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );
