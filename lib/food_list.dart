@@ -1,5 +1,5 @@
 import 'package:fit_book/edit_food_page.dart';
-import 'package:fit_book/foods_page.dart';
+import 'package:fit_book/food_page.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 

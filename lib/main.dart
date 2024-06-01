@@ -2,7 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/diary_page.dart';
 import 'package:fit_book/entries_state.dart';
-import 'package:fit_book/foods_page.dart';
+import 'package:fit_book/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/weights_page.dart';
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
             children: [
               DiaryPage(),
               GraphPage(),
-              FoodsPage(),
+              FoodPage(),
               WeightsPage(),
             ],
           ),
@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
             ),
             Tab(
               icon: Icon(Icons.restaurant),
-              text: "Foods",
+              text: "Food",
             ),
             Tab(
               icon: Icon(Icons.scale),

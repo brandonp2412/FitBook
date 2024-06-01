@@ -115,6 +115,8 @@ class DeleteRecordsButton extends StatelessWidget {
                               onPressed: () async {
                                 Navigator.pop(dialogContext);
                                 await db.weights.deleteAll();
+                                if (pageContext.mounted)
+                                  Navigator.pop(pageContext);
                               },
                             ),
                           ],

@@ -7,16 +7,16 @@ import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
-class FoodsPage extends StatefulWidget {
-  const FoodsPage({super.key});
+class FoodPage extends StatefulWidget {
+  const FoodPage({super.key});
 
   @override
-  createState() => FoodsPageState();
+  createState() => FoodPageState();
 }
 
 typedef PartialFood = ({int id, String name, double? calories, bool? favorite});
 
-class FoodsPageState extends State<FoodsPage> {
+class FoodPageState extends State<FoodPage> {
   late Stream<List<PartialFood>> _stream;
 
   final Set<int> _selected = {};

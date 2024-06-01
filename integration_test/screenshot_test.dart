@@ -4,7 +4,7 @@ import 'package:fit_book/diary_page.dart';
 import 'package:fit_book/edit_entry_page.dart';
 import 'package:fit_book/edit_food_page.dart';
 import 'package:fit_book/edit_weight_page.dart';
-import 'package:fit_book/foods_page.dart';
+import 'package:fit_book/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/main.dart' as app;
 import 'package:fit_book/settings_page.dart';
@@ -224,7 +224,7 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
     case TabBarState.graph:
       return (tester.state(find.byType(GraphPage)) as GraphPageState).context;
     case TabBarState.foods:
-      return (tester.state(find.byType(FoodsPage)) as FoodsPageState)
+      return (tester.state(find.byType(FoodPage)) as FoodPageState)
           .navigatorKey
           .currentContext!;
     case null:
@@ -335,7 +335,7 @@ void main() {
         navigateToPage: (context) async {
           navigateTo(
             context: context,
-            page: const FoodsPage(),
+            page: const FoodPage(),
           );
         },
         tabBarState: TabBarState.foods,
