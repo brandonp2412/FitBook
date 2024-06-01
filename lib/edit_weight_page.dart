@@ -90,7 +90,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     _settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Enter Weight')),
+      appBar: AppBar(title: const Text('Enter weight')),
       body: Form(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -157,7 +157,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
               ),
             );
         },
-        tooltip: "Save today's weight",
+        tooltip: "Save",
         child: const Icon(Icons.save),
       ),
     );

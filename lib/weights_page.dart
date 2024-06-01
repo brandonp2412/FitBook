@@ -155,7 +155,7 @@ class WeightsPageState extends State<WeightsPage> {
             ),
           );
         },
-        tooltip: 'Add weight',
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );
