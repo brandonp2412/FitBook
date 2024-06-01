@@ -14,12 +14,12 @@ class QuickAddPage extends StatefulWidget {
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {
-  final _quantityController = TextEditingController(text: "600");
+  final _caloriesController = TextEditingController(text: "600");
 
   @override
   void initState() {
     super.initState();
-    selectAll(_quantityController);
+    selectAll(_caloriesController);
   }
 
   @override
@@ -30,20 +30,25 @@ class _QuickAddPageState extends State<QuickAddPage> {
   Future<void> _save() async {
     Navigator.pop(context);
     final food = await (db.foods.select()
-          ..where((tbl) => tbl.name.equals('Calories'))
+          ..where((tbl) => tbl.name.equals('Quick-add'))
           ..limit(1))
-        .getSingle();
-    final quantity = double.parse(_quantityController.text);
+        .getSingleOrNull();
+    var foodId = food?.id;
+    foodId ??= await (db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Quick-add',
+      ),
+    ));
+
+    final quantity = double.parse(_caloriesController.text);
     var entry = EntriesCompanion.insert(
-      food: food.id,
+      food: foodId,
       created: DateTime.now(),
       quantity: quantity,
       unit: 'grams',
     );
-    final quantity100G = quantity / 100;
-    final kCalories = quantity100G * (food.calories ?? 100);
     entry = entry.copyWith(
-      kCalories: Value(kCalories),
+      kCalories: Value(quantity),
     );
     db.into(db.entries).insert(entry);
   }
@@ -62,13 +67,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
           children: [
             TextField(
               autofocus: true,
-              controller: _quantityController,
-              decoration: const InputDecoration(label: Text("Calories (kcal)")),
+              controller: _caloriesController,
+              decoration: const InputDecoration(label: Text("Calories")),
               keyboardType: TextInputType.number,
-              onTap: () => _quantityController.selection = TextSelection(
-                baseOffset: 0,
-                extentOffset: _quantityController.text.length,
-              ),
+              onTap: () => selectAll(_caloriesController),
               onSubmitted: (value) => _save(),
             ),
           ],
@@ -76,6 +78,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
+        tooltip: 'Save',
         child: const Icon(Icons.save),
       ),
     );
