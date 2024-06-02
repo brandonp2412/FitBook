@@ -42,7 +42,7 @@ mkdir -p build/native_assets/linux
 ./flutter/bin/flutter build linux
 
 apk=build/app/outputs/flutter-apk
-(cd $apk/pipeline/linux/x64/release/bundle && zip -r linux-x64-release.zip .)
+(cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook.zip .)
 mv $apk/app-release.apk $apk/fitbook.apk
 
 last_commit=$(git log -1 --pretty=%B | head -n 1)

@@ -23,6 +23,11 @@
         alt="Get it on Android"
         height="75">
 </a>
+<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook.zip">
+    <img src="docs/get-it-on-linux.png"
+        alt="Get it on Linux"
+        height="75">
+</a>
 
 <p float="left">
     <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
