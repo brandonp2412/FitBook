@@ -1,0 +1,5 @@
+- Fix deployment failing to build linux
+- Add about page
+- Add universal apk to releases
+- Add "Get it on Android" link to README
+- Fix calories/kilojoules/protein for editing entries

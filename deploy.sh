@@ -38,6 +38,7 @@ fi
 ./flutter/bin/flutter build apk --split-per-abi
 ./flutter/bin/flutter build apk
 ./flutter/bin/flutter build appbundle
+mkdir -p build/native_assets/linux
 ./flutter/bin/flutter build linux
 
 apk=build/app/outputs/flutter-apk
