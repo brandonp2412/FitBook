@@ -18,8 +18,16 @@
         alt="Get it on F-Droid"
         height="75">
 </a>
+<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/app-arm64-v8a-release.apk">
+    <img src="docs/get-it-on-android.png"
+        alt="Get it on Android"
+        height="75">
+</a>
 
-<img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
+<p float="left">
+    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
+    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg">
+</p>
 
 ## Screenshots
 
