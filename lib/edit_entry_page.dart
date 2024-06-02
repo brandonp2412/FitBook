@@ -327,45 +327,55 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 _recalc();
               },
             ),
-            TextField(
-              controller: _caloriesController,
-              decoration: const InputDecoration(
-                labelText: 'Calories',
-              ),
-              onTap: () => selectAll(_caloriesController),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                setState(() {
-                  _foodDirty = true;
-                  _kilojoulesController.text =
-                      ((double.tryParse(value) ?? 0) * 4.184)
-                          .toStringAsFixed(2);
-                });
-              },
-              onSubmitted: (value) {
-                _proteinNode.requestFocus();
-                selectAll(_proteinController);
-              },
-            ),
-            if (_unit != 'kilojoules')
-              TextField(
-                controller: _kilojoulesController,
-                decoration: const InputDecoration(
-                  labelText: 'Kilojoules',
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _caloriesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Calories',
+                    ),
+                    onTap: () => selectAll(_caloriesController),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        _foodDirty = true;
+                        _kilojoulesController.text =
+                            ((double.tryParse(value) ?? 0) * 4.184)
+                                .toStringAsFixed(2);
+                      });
+                    },
+                    onSubmitted: (value) {
+                      _proteinNode.requestFocus();
+                      selectAll(_proteinController);
+                    },
+                  ),
                 ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                onChanged: (value) {
-                  setState(() {
-                    _foodDirty = true;
-                    _caloriesController.text =
-                        ((double.tryParse(value) ?? 0) / 4.184)
-                            .toStringAsFixed(2);
-                  });
-                },
-                onTap: () => selectAll(_kilojoulesController),
-              ),
+                if (_unit != 'kilojoules') ...[
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: TextField(
+                      controller: _kilojoulesController,
+                      decoration: const InputDecoration(
+                        labelText: 'Kilojoules',
+                      ),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      onChanged: (value) {
+                        setState(() {
+                          _foodDirty = true;
+                          _caloriesController.text =
+                              ((double.tryParse(value) ?? 0) / 4.184)
+                                  .toStringAsFixed(2);
+                        });
+                      },
+                      onTap: () => selectAll(_kilojoulesController),
+                    ),
+                  ),
+                ],
+              ],
+            ),
             TextField(
               controller: _proteinController,
               focusNode: _proteinNode,
