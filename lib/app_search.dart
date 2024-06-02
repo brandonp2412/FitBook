@@ -139,21 +139,21 @@ class _AppSearchState extends State<AppSearch> {
               if (widget.selected.isNotEmpty) ...[
                 PopupMenuItem(
                   child: ListTile(
-                    leading: const Icon(Icons.favorite_outline),
-                    title: const Text('Favorite'),
-                    onTap: () async {
-                      Navigator.pop(context);
-                      widget.onFavorite();
-                    },
-                  ),
-                ),
-                PopupMenuItem(
-                  child: ListTile(
                     leading: const Icon(Icons.edit),
                     title: const Text('Edit'),
                     onTap: () async {
                       Navigator.pop(context);
                       widget.onEdit();
+                    },
+                  ),
+                ),
+                PopupMenuItem(
+                  child: ListTile(
+                    leading: const Icon(Icons.favorite_outline),
+                    title: const Text('Favorite'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      widget.onFavorite();
                     },
                   ),
                 ),
