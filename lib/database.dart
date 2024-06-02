@@ -28,7 +28,8 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
-        await m.addColumn(foods, foods.favorite).catchError((_) {});
+        await m.addColumn(foods, foods.favorite);
+        await m.addColumn(foods, foods.servingUnit);
         final prefs = await SharedPreferences.getInstance();
         prefs.setInt('dailyCalories', 2200);
         prefs.setInt('dailyProtein', 100);
@@ -36,16 +37,14 @@ class AppDatabase extends _$AppDatabase {
       onUpgrade: (Migrator m, int from, int to) async {
         if (from < 2) await m.create(db.entries);
         if (from < 3) {
-          await m.addColumn(db.entries, db.entries.quantity).catchError((_) {});
-          await m.addColumn(db.entries, db.entries.unit).catchError((_) {});
+          await m.addColumn(db.entries, db.entries.quantity);
+          await m.addColumn(db.entries, db.entries.unit);
         }
         if (from < 4) {
-          await m
-              .addColumn(db.entries, db.entries.kCalories)
-              .catchError((_) {});
-          await m.addColumn(db.entries, db.entries.proteinG).catchError((_) {});
-          await m.addColumn(db.entries, db.entries.fatG).catchError((_) {});
-          await m.addColumn(db.entries, db.entries.carbG).catchError((_) {});
+          await m.addColumn(db.entries, db.entries.kCalories);
+          await m.addColumn(db.entries, db.entries.proteinG);
+          await m.addColumn(db.entries, db.entries.fatG);
+          await m.addColumn(db.entries, db.entries.carbG);
         }
         if (from < 5)
           await m.createIndex(
@@ -59,8 +58,7 @@ class AppDatabase extends _$AppDatabase {
             FoodsCompanion.insert(name: "Calories", calories: const Value(100)),
           );
         if (from < 7) await m.createTable(db.weights);
-        if (from < 8)
-          await m.addColumn(foods, foods.favorite).catchError((_) {});
+        if (from < 8) await m.addColumn(foods, foods.favorite);
         if (from < 9) {
           await m.createIndex(
             Index('Foods', 'CREATE INDEX IF NOT EXISTS foods_id ON foods(id)'),
@@ -72,8 +70,7 @@ class AppDatabase extends _$AppDatabase {
             ),
           );
         }
-        if (from < 10)
-          await m.addColumn(foods, foods.servingUnit).catchError((_) {});
+        if (from < 10) await m.addColumn(foods, foods.servingUnit);
       },
     );
   }
