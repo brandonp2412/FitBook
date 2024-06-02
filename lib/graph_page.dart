@@ -156,6 +156,28 @@ class GraphPageState extends State<GraphPage> {
               startDate: _startDate,
               endDate: _endDate,
             ),
+            Row(
+              children: [
+                const Text("Goal"),
+                Radio(
+                  value: 1,
+                  groupValue: 1,
+                  onChanged: (value) {},
+                  fillColor: WidgetStateProperty.resolveWith(
+                    (states) => Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                const Text("Average"),
+                Radio(
+                  value: 1,
+                  groupValue: 1,
+                  onChanged: (value) {},
+                  fillColor: WidgetStateProperty.resolveWith(
+                    (states) => Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

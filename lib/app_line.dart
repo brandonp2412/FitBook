@@ -207,14 +207,17 @@ class _AppLineState extends State<AppLine> {
 
         final rows = snapshot.data!.reversed.toList();
         List<FlSpot> spots = [];
-        for (var index = 0; index < rows.length; index++)
+        var average = 0.0;
+        for (var index = 0; index < rows.length; index++) {
           spots.add(FlSpot(index.toDouble(), rows[index].value));
+          average += rows[index].value;
+        }
+        average /= spots.length;
 
         return SizedBox(
           height: 400,
           child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 80.0, right: 32.0, top: 16.0),
+            padding: const EdgeInsets.only(right: 32.0, top: 16.0),
             child: LineChart(
               LineChartData(
                 extraLinesData: ExtraLinesData(
@@ -223,6 +226,12 @@ class _AppLineState extends State<AppLine> {
                       HorizontalLine(
                         y: y.toDouble(),
                         color: Theme.of(context).colorScheme.secondary,
+                        strokeWidth: 2,
+                      ),
+                    if (y > 0)
+                      HorizontalLine(
+                        y: average,
+                        color: Theme.of(context).colorScheme.tertiary,
                         strokeWidth: 2,
                       ),
                   ],
