@@ -85,6 +85,26 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
   }
 
+  _save() {
+    Navigator.of(context).pop();
+    if (widget.weight.id == -1)
+      db.weights.insertOne(
+        WeightsCompanion.insert(
+          created: DateTime.now(),
+          unit: _unit,
+          amount: double.parse(_valueController.text),
+        ),
+      );
+    else
+      (db.weights.update()..where((u) => u.id.equals(widget.weight.id))).write(
+        WeightsCompanion(
+          unit: Value(_unit),
+          amount: Value(double.parse(_valueController.text)),
+          created: Value(_created),
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     _settings = context.watch<SettingsState>();
@@ -104,6 +124,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     value!.isEmpty ? 'Please enter weight' : null,
                 autofocus: widget.weight.id == -1,
                 onTap: () => selectAll(_valueController),
+                onFieldSubmitted: (value) => _save(),
               ),
               DropdownButtonFormField<String>(
                 value: _unit,
@@ -137,26 +158,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Navigator.pop(context);
-          if (widget.weight.id == -1)
-            db.weights.insertOne(
-              WeightsCompanion.insert(
-                created: DateTime.now(),
-                unit: _unit,
-                amount: double.parse(_valueController.text),
-              ),
-            );
-          else
-            (db.weights.update()..where((u) => u.id.equals(widget.weight.id)))
-                .write(
-              WeightsCompanion(
-                unit: Value(_unit),
-                amount: Value(double.parse(_valueController.text)),
-                created: Value(_created),
-              ),
-            );
-        },
+        onPressed: _save,
         tooltip: "Save",
         child: const Icon(Icons.save),
       ),
