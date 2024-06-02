@@ -57,9 +57,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
         setState(() {
           _nameController?.text = food.name;
           _selectedFood = food;
-          _caloriesController.text = food.calories?.toStringAsFixed(2) ?? "";
-          _proteinController.text = food.proteinG?.toStringAsFixed(2) ?? "0";
-          _kilojoulesController.text = food.calories == null
+          _caloriesController.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
+          _proteinController.text = entry.proteinG?.toStringAsFixed(2) ?? "0";
+          _kilojoulesController.text = entry.kCalories == null
               ? ''
               : (food.calories! * 4.184).toStringAsFixed(2);
         });
