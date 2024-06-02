@@ -1,0 +1,3 @@
+- Test app and settings page
+- Test deleting records
+- Fix quick-add for new installs
