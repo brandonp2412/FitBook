@@ -52,7 +52,7 @@ git push
 
 gh release create "$new_version" --notes "${changelog:-$last_commits}"  \
   $apk/app-*-release.apk \
-  $apk/pipeline/linux/x64/release/bundle/linux-x64-release.zip \
+  $apk/pipeline/linux/x64/release/bundle/fitbook.zip \
   $apk/fitbook.apk
 git pull
 
