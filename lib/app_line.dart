@@ -122,7 +122,7 @@ class _AppLineState extends State<AppLine> {
               ),
             ])
             ..groupBy([createdCol])
-            ..limit(10))
+            ..limit(11))
           .watch()
           .map((results) {
         return results.map((result) {
