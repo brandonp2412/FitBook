@@ -1,3 +1,4 @@
+import 'package:fit_book/about_page.dart';
 import 'package:fit_book/delete_records_button.dart';
 import 'package:fit_book/export_data.dart';
 import 'package:fit_book/import_data.dart';
@@ -284,6 +285,16 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const AboutPage(),
+              ),
+            ),
+            icon: const Icon(Icons.info_outline),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
