@@ -18,7 +18,7 @@
         alt="Get it on F-Droid"
         height="75">
 </a>
-<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/app-arm64-v8a-release.apk">
+<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook.apk">
     <img src="docs/get-it-on-android.png"
         alt="Get it on Android"
         height="75">
