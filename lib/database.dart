@@ -4,7 +4,6 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:fit_book/entries.dart';
 import 'package:fit_book/foods.dart';
-import 'package:fit_book/main.dart';
 import 'package:fit_book/weights.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -40,16 +39,16 @@ class AppDatabase extends _$AppDatabase {
         prefs.setInt('dailyProtein', 100);
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        if (from < 2) await m.create(db.entries);
+        if (from < 2) await m.create(entries);
         if (from < 3) {
-          await m.addColumn(db.entries, db.entries.quantity);
-          await m.addColumn(db.entries, db.entries.unit);
+          await m.addColumn(entries, entries.quantity);
+          await m.addColumn(entries, entries.unit);
         }
         if (from < 4) {
-          await m.addColumn(db.entries, db.entries.kCalories);
-          await m.addColumn(db.entries, db.entries.proteinG);
-          await m.addColumn(db.entries, db.entries.fatG);
-          await m.addColumn(db.entries, db.entries.carbG);
+          await m.addColumn(entries, entries.kCalories);
+          await m.addColumn(entries, entries.proteinG);
+          await m.addColumn(entries, entries.fatG);
+          await m.addColumn(entries, entries.carbG);
         }
         if (from < 5)
           await m.createIndex(
@@ -59,10 +58,10 @@ class AppDatabase extends _$AppDatabase {
             ),
           );
         if (from < 6)
-          await db.foods.insertOne(
+          await foods.insertOne(
             FoodsCompanion.insert(name: "Calories", calories: const Value(100)),
           );
-        if (from < 7) await m.createTable(db.weights);
+        if (from < 7) await m.createTable(weights);
         if (from < 8) await m.addColumn(foods, foods.favorite);
         if (from < 9) {
           await m.createIndex(
@@ -86,7 +85,7 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
+    // put the database file, called sqlite here, into the documents folder
     // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
