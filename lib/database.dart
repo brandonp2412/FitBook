@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:fit_book/database/schema_versions.dart';
 import 'package:fit_book/entries.dart';
 import 'package:fit_book/foods.dart';
 import 'package:fit_book/weights.dart';
@@ -38,32 +39,41 @@ class AppDatabase extends _$AppDatabase {
         prefs.setInt('dailyCalories', 2200);
         prefs.setInt('dailyProtein', 100);
       },
-      onUpgrade: (Migrator m, int from, int to) async {
-        if (from < 2) await m.create(entries);
-        if (from < 3) {
-          await m.addColumn(entries, entries.quantity);
-          await m.addColumn(entries, entries.unit);
-        }
-        if (from < 4) {
-          await m.addColumn(entries, entries.kCalories);
-          await m.addColumn(entries, entries.proteinG);
-          await m.addColumn(entries, entries.fatG);
-          await m.addColumn(entries, entries.carbG);
-        }
-        if (from < 5)
+      onUpgrade: stepByStep(
+        from1To3: (m, schema) async {
+          await m.create(schema.entries);
+          await m.alterTable(TableMigration(schema.foods));
+        },
+        from3To4: (m, schema) async {
+          await m.alterTable(TableMigration(schema.entries));
+        },
+        from4To5: (m, schema) async {
+          // await m.addColumn(entries, entries.kCalories);
+          // await m.addColumn(entries, entries.proteinG);
+          // await m.addColumn(entries, entries.fatG);
+          // await m.addColumn(entries, entries.carbG);
+        },
+        from5To6: (m, schema) async {
           await m.createIndex(
             Index(
               'Foods',
               "CREATE INDEX IF NOT EXISTS foods_name ON foods(name);",
             ),
           );
-        if (from < 6)
-          await foods.insertOne(
-            FoodsCompanion.insert(name: "Calories", calories: const Value(100)),
+        },
+        from6To7: (m, schema) async {
+          await m.createTable(schema.weights);
+          await m.createIndex(
+            Index(
+              'Foods',
+              "CREATE INDEX IF NOT EXISTS foods_name ON foods(name);",
+            ),
           );
-        if (from < 7) await m.createTable(weights);
-        if (from < 8) await m.addColumn(foods, foods.favorite);
-        if (from < 9) {
+        },
+        from7To8: (m, schema) async {
+          await m.addColumn(schema.foods, schema.foods.favorite);
+        },
+        from8To9: (m, schema) async {
           await m.createIndex(
             Index('Foods', 'CREATE INDEX IF NOT EXISTS foods_id ON foods(id)'),
           );
@@ -73,11 +83,12 @@ class AppDatabase extends _$AppDatabase {
               'CREATE INDEX IF NOT EXISTS entries_id ON entries(id)',
             ),
           );
-        }
-        if (from < 10) await m.addColumn(foods, foods.servingUnit);
-        if (from < 11)
-          await m.addColumn(foods, foods.servingUnit).catchError((_) {});
-      },
+        },
+        from9To10: (m, schema) async {
+          await m.addColumn(schema.foods, schema.foods.servingUnit);
+        },
+        from10To11: (m, schema) async {},
+      ),
     );
   }
 }

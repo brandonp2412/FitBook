@@ -9,3 +9,4 @@ for commit in $(git log -G'schemaVersion' --pretty=format:'%H' -- lib/database.d
 done
 
 git checkout main
+dart run drift_dev schema steps drift_schemas/ lib/database/schema_versions.dart
