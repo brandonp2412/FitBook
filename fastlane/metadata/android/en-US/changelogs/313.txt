@@ -1,0 +1,5 @@
+- Prevent deploying with unstaged changes
+- Prevent pushing with forgotten migrations
+- Test database migrations
+- Remove db global use from database.dart
+- Write shell script for generating drift schemas

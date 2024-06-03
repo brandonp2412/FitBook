@@ -6,7 +6,7 @@ set -ex
 dart run drift_dev schema dump lib/database.dart drift_schemas
 dart run drift_dev schema steps drift_schemas/ lib/database/schema_versions.dart
 
-if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+if [[ -n "$(git diff --stat)" ]]; then
     echo "There are unstaged changes in the repository:"
     git --no-pager diff
     exit 1
@@ -35,7 +35,7 @@ changelog_number=$((new_build_number * 10 + 3))
 echo "$last_commits" > "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 git add fastlane/metadata
 
-if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+if [[ -n "$(git diff --stat)" ]]; then
     echo "There are unstaged changes in the repository:"
     git --no-pager diff
     exit 1
