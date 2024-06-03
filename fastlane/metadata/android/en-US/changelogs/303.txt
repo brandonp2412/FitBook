@@ -1,0 +1,8 @@
+- Fix unit tests
+- Fix existing installs with broken serving units
+- Fix broken serving units on fresh installs
+- Put calories & kj in a single row
+- Move edit above favorite
+- Add average line to graphs
+- Make number of points on graph 11
+- Submit weight on enter

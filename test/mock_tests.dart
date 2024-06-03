@@ -11,7 +11,10 @@ mockTests() async {
     "themeMode": "ThemeMode.dark",
     "systemColors": false,
   });
-  db = AppDatabase(executor: NativeDatabase.memory());
+  db = AppDatabase(
+    executor: NativeDatabase.memory(),
+    testing: true,
+  );
 }
 
 findTextWidget(FinderBase<Element> of) => find
