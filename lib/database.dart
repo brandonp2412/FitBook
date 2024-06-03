@@ -47,12 +47,7 @@ class AppDatabase extends _$AppDatabase {
         from3To4: (m, schema) async {
           await m.alterTable(TableMigration(schema.entries));
         },
-        from4To5: (m, schema) async {
-          // await m.addColumn(entries, entries.kCalories);
-          // await m.addColumn(entries, entries.proteinG);
-          // await m.addColumn(entries, entries.fatG);
-          // await m.addColumn(entries, entries.carbG);
-        },
+        from4To5: (m, schema) async {},
         from5To6: (m, schema) async {
           await m.createIndex(
             Index(

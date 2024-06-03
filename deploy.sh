@@ -3,6 +3,15 @@
 set -ex
 
 ./flutter/bin/flutter test
+dart run drift_dev schema dump lib/database.dart drift_schemas
+dart run drift_dev schema steps drift_schemas/ lib/database/schema_versions.dart
+
+if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+    echo "There are unstaged changes in the repository:"
+    git --no-pager diff
+    exit 1
+fi
+
 ./screenshots.sh "phoneScreenshots"
 ./screenshots.sh "sevenInchScreenshots"
 ./screenshots.sh "tenInchScreenshots"
@@ -29,13 +38,10 @@ git add fastlane/metadata
 if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
     echo "There are unstaged changes in the repository:"
     git --no-pager diff
-    git restore --staged pubspec.yaml fastlane/metadata
-    git restore pubspec.yaml fastlane/metadata
-    rm "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
     exit 1
 fi
-
 ./flutter/bin/flutter build apk --split-per-abi
+
 ./flutter/bin/flutter build apk
 ./flutter/bin/flutter build appbundle
 mkdir -p build/native_assets/linux
