@@ -98,6 +98,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
           calories: Value(double.tryParse(_caloriesController.text)),
           proteinG: Value(double.tryParse(_proteinController.text)),
           favorite: Value(_settings.favoriteNew),
+          servingWeight1G: Value(double.tryParse(_quantityController.text)),
+          servingUnit: Value(_unit),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
