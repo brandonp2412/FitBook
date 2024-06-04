@@ -4,6 +4,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -214,66 +215,91 @@ class _AppLineState extends State<AppLine> {
         }
         average /= spots.length;
 
-        return SizedBox(
-          height: 400,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 32.0, top: 16.0),
-            child: LineChart(
-              LineChartData(
-                extraLinesData: ExtraLinesData(
-                  horizontalLines: [
-                    if (y > 0)
-                      HorizontalLine(
-                        y: y.toDouble(),
-                        color: Theme.of(context).colorScheme.secondary,
-                        strokeWidth: 2,
-                      ),
-                    if (y > 0)
-                      HorizontalLine(
-                        y: average,
-                        color: Theme.of(context).colorScheme.tertiary,
-                        strokeWidth: 2,
-                      ),
-                  ],
-                ),
-                titlesData: FlTitlesData(
-                  topTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  rightTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  leftTitles: const AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 45,
+        return material.Column(
+          children: [
+            SizedBox(
+              height: 400,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 32.0, top: 16.0),
+                child: LineChart(
+                  LineChartData(
+                    extraLinesData: ExtraLinesData(
+                      horizontalLines: [
+                        if (y > 0)
+                          HorizontalLine(
+                            y: y.toDouble(),
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        if (y > 0)
+                          HorizontalLine(
+                            y: average,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                      ],
                     ),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 27,
-                      interval: 1,
-                      getTitlesWidget: (value, meta) =>
-                          _bottomTitleWidgets(value, meta, rows),
+                    titlesData: FlTitlesData(
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      leftTitles: const AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 45,
+                        ),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 27,
+                          interval: 1,
+                          getTitlesWidget: (value, meta) =>
+                              _bottomTitleWidgets(value, meta, rows),
+                        ),
+                      ),
                     ),
+                    lineTouchData: LineTouchData(
+                      touchTooltipData: _tooltipData(context, rows),
+                    ),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: spots,
+                        isCurved: _settings.curveLines,
+                        color: Theme.of(context).colorScheme.primary,
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                      ),
+                    ],
                   ),
                 ),
-                lineTouchData: LineTouchData(
-                  touchTooltipData: _tooltipData(context, rows),
-                ),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: spots,
-                    isCurved: _settings.curveLines,
-                    color: Theme.of(context).colorScheme.primary,
-                    barWidth: 3,
-                    isStrokeCapRound: true,
-                  ),
-                ],
               ),
             ),
-          ),
+            Row(
+              children: [
+                const Text("Goal"),
+                Radio(
+                  value: 1,
+                  groupValue: 1,
+                  onChanged: (value) {},
+                  fillColor: WidgetStateProperty.resolveWith(
+                    (states) => Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                const Spacer(),
+                const Text("Average"),
+                Radio(
+                  value: 1,
+                  groupValue: 1,
+                  onChanged: (value) {},
+                  fillColor: WidgetStateProperty.resolveWith(
+                    (states) => Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+              ],
+            ),
+          ],
         );
       },
     );
