@@ -13,6 +13,8 @@ enum Period {
   year,
 }
 
+enum DiarySummary { remaining, division, both, none }
+
 List<String> units = [
   'serving',
   'grams',

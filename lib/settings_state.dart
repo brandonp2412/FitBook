@@ -1,3 +1,4 @@
+import 'package:fit_book/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,13 +8,12 @@ class SettingsState extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
   String longDateFormat = 'dd/MM/yy';
   String shortDateFormat = 'd/M/yy';
+  DiarySummary diarySummary = DiarySummary.division;
 
   bool systemColors = false;
   bool curveLines = false;
   bool showOthers = false;
-  bool showRemaining = false;
   bool favoriteNew = false;
-  bool showSummary = true;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -25,6 +25,7 @@ class SettingsState extends ChangeNotifier {
 
     longDateFormat = prefs?.getString('longDateFormat') ?? "dd/MM/yy";
     shortDateFormat = prefs?.getString('shortDateFormat') ?? "d/M/yy";
+
     final theme = prefs?.getString('themeMode');
     if (theme == "ThemeMode.system")
       themeMode = ThemeMode.system;
@@ -32,12 +33,18 @@ class SettingsState extends ChangeNotifier {
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
 
+    final summary = prefs?.getString('diarySummary');
+    if (summary == DiarySummary.both.toString())
+      diarySummary = DiarySummary.both;
+    else if (summary == DiarySummary.division.toString())
+      diarySummary = DiarySummary.division;
+    else if (summary == DiarySummary.remaining.toString())
+      diarySummary = DiarySummary.remaining;
+
     systemColors = prefs?.getBool("systemColors") ?? false;
     favoriteNew = prefs?.getBool("favoriteNew") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
-    showRemaining = prefs?.getBool("showRemaining") ?? false;
-    showSummary = prefs?.getBool("showSummary") ?? true;
 
     dailyCalories = prefs?.getInt('dailyCalories');
     dailyProtein = prefs?.getInt('dailyProtein');
@@ -45,21 +52,15 @@ class SettingsState extends ChangeNotifier {
     dailyCarbs = prefs?.getInt('dailyCarbs');
   }
 
-  void setShowSummary(bool value) {
-    showSummary = value;
-    prefs?.setBool('showSummary', value);
+  void setDiarySummary(DiarySummary value) {
+    diarySummary = value;
     notifyListeners();
+    prefs?.setString('diarySummary', value.toString());
   }
 
   void setFavoriteNew(bool value) {
     favoriteNew = value;
     prefs?.setBool('favoriteNew', value);
-    notifyListeners();
-  }
-
-  void setShowRemaining(bool value) {
-    showRemaining = value;
-    prefs?.setBool('showRemaining', value);
     notifyListeners();
   }
 

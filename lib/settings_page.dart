@@ -1,4 +1,5 @@
 import 'package:fit_book/about_page.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/delete_records_button.dart';
 import 'package:fit_book/export_data.dart';
 import 'package:fit_book/import_data.dart';
@@ -138,6 +139,38 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'diary summary',
+        widget: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DropdownButtonFormField(
+            value: _settings.diarySummary,
+            decoration: const InputDecoration(
+              labelStyle: TextStyle(),
+              labelText: 'Diary summary',
+            ),
+            items: const [
+              DropdownMenuItem(
+                value: DiarySummary.division,
+                child: Text("Division - current / total"),
+              ),
+              DropdownMenuItem(
+                value: DiarySummary.remaining,
+                child: Text("Remaining"),
+              ),
+              DropdownMenuItem(
+                value: DiarySummary.both,
+                child: Text("Both - remaining (total)"),
+              ),
+              DropdownMenuItem(
+                value: DiarySummary.none,
+                child: Text("None"),
+              ),
+            ],
+            onChanged: (value) => _settings.setDiarySummary(value!),
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'daily calories',
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
@@ -205,28 +238,6 @@ class _SettingsPageState extends State<SettingsPage> {
             decoration: const InputDecoration(
               labelText: 'Daily carbs',
             ),
-          ),
-        ),
-      ),
-      SettingsLine(
-        key: 'show summary',
-        widget: ListTile(
-          title: const Text('Show summary'),
-          onTap: () => _settings.setShowSummary(!_settings.showSummary),
-          trailing: Switch(
-            value: _settings.showSummary,
-            onChanged: (value) => _settings.setShowSummary(value),
-          ),
-        ),
-      ),
-      SettingsLine(
-        key: 'show remaining',
-        widget: ListTile(
-          title: const Text('Show remaining'),
-          onTap: () => _settings.setShowRemaining(!_settings.showRemaining),
-          trailing: Switch(
-            value: _settings.showRemaining,
-            onChanged: (value) => _settings.setShowRemaining(value),
           ),
         ),
       ),

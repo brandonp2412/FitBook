@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database.dart';
 import 'package:fit_book/edit_entries_page.dart';
 import 'package:fit_book/edit_entry_page.dart';
@@ -68,24 +69,43 @@ class DiaryPageState extends State<DiaryPage> {
               totalCarb += entryFood.entry.carbG ?? 0;
             }
 
-          String cals =
-              "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
-          String protein =
-              "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
-          String fat =
-              "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
-          String carb =
-              "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g";
+          String cals = "";
+          String protein = "";
+          String fat = "";
+          String carb = "";
 
-          if (settings.showRemaining) {
-            cals =
-                "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
-            protein =
-                "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} g";
-            fat =
-                "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
-            carb =
-                "${((settings.dailyCarbs ?? 0) - totalCarb).toStringAsFixed(0)} g";
+          switch (settings.diarySummary) {
+            case DiarySummary.remaining:
+              cals =
+                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
+              protein =
+                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} g";
+              fat =
+                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
+              carb =
+                  "${((settings.dailyCarbs ?? 0) - totalCarb).toStringAsFixed(0)} g";
+              break;
+            case DiarySummary.division:
+              cals =
+                  "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
+              protein =
+                  "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
+              fat = "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
+              carb =
+                  "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g";
+              break;
+            case DiarySummary.both:
+              cals =
+                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${settings.dailyCalories} kcal)";
+              protein =
+                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} (${settings.dailyProtein} g)";
+              fat =
+                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} (${settings.dailyFat} g)";
+              carb =
+                  "${((settings.dailyCarbs ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarbs} g)";
+              break;
+            case DiarySummary.none:
+              break;
           }
 
           final children = [
@@ -194,9 +214,7 @@ class DiaryPageState extends State<DiaryPage> {
               ),
               material.Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (settings.showSummary) ...children,
-                ],
+                children: children,
               ),
             ],
           );
