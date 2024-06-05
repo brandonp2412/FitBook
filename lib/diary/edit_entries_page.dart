@@ -37,6 +37,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   String? _oldQuantities;
   String? _oldCalories;
   String? _oldKj;
+  String? _oldProtein;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             db.entries.quantity,
             db.entries.unit,
             db.entries.kCalories,
+            db.entries.proteinG,
             db.foods.name,
           ])
           ..where(db.entries.id.isIn(widget.entryIds))
@@ -65,6 +67,9 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             .join(', ');
         _oldCalories = results
             .map((result) => result.read(db.entries.kCalories))
+            .join(', ');
+        _oldProtein = results
+            .map((result) => result.read(db.entries.proteinG))
             .join(', ');
         _oldKj = results
             .map((result) => result.read(db.entries.kCalories))
@@ -344,6 +349,17 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                   ),
                 ],
               ],
+            ),
+            TextField(
+              controller: _proteinController,
+              focusNode: _proteinNode,
+              decoration: InputDecoration(
+                labelText: 'Protein',
+                hintText: _oldProtein,
+              ),
+              onTap: () => selectAll(_proteinController),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             ),
             ListTile(
               title: const Text('Created date'),

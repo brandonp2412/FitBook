@@ -59,22 +59,22 @@ void main() async {
     await tester.enterText(find.text('0.0'), '85');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
-    expect(find.text('85.0'), findsOne);
+    expect(find.textContaining('85.0'), findsOne);
 
-    await tester.tap(find.text('85.0'));
+    await tester.tap(find.text('85.0 kg'));
     await tester.pumpAndSettle();
     await tester.enterText(find.text('85.0').first, '86');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
-    expect(find.text('86.0'), findsOne);
+    expect(find.textContaining('86.0'), findsOne);
 
-    await tester.longPress(find.text('86.0'));
+    await tester.longPress(find.text('86.0 kg'));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Delete'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Delete'));
     await tester.pumpAndSettle();
-    expect(find.text('86.0'), findsNothing);
+    expect(find.textContaining('86.0'), findsNothing);
 
     await db.close();
   });

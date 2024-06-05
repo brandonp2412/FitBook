@@ -1,0 +1,6 @@
+- Add missing protein to multi-edit of entries
+- Add share button to weight editing
+- Add unit to weight list
+- Improve screenshots
+- Add protein, calories to multi-edit on entries
+- Don't select entries on submit by default

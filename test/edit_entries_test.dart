@@ -90,12 +90,20 @@ void main() async {
     await tester.tap(find.text('cups'));
     await tester.pump();
 
+    await tester.enterText(find.bySemanticsLabel('Calories'), '200');
+    await tester.pump();
+
+    await tester.enterText(find.bySemanticsLabel('Protein'), '30');
+    await tester.pump();
+
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final entries =
         await (db.entries.select()..where((u) => u.food.equals(richId))).get();
     expect(entries.length, equals(3));
+    expect(entries.first.kCalories, equals(200));
+    expect(entries.first.proteinG, equals(30));
 
     await db.close();
   });
