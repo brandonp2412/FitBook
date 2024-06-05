@@ -48,6 +48,7 @@ double convertToGrams(double quantity, String unit) {
 
   switch (unit) {
     case 'grams':
+    case 'serving':
     case 'milliliters':
       quantityInGrams = quantity;
       break;
