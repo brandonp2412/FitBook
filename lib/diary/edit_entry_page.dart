@@ -317,10 +317,18 @@ class _EditEntryPageState extends State<EditEntryPage> {
               value: _unit,
               decoration: const InputDecoration(labelText: 'Unit'),
               items: units.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
+                if (value == 'serving' && _selectedFood != null)
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      "serving (${(_selectedFood?.servingWeight1G ?? 100)} ${_selectedFood?.servingUnit ?? 'grams'})",
+                    ),
+                  );
+                else
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
