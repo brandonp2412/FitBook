@@ -14,6 +14,7 @@ class SettingsState extends ChangeNotifier {
   bool curveLines = false;
   bool showOthers = false;
   bool favoriteNew = false;
+  bool selectEntryOnSubmit = false;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -45,6 +46,7 @@ class SettingsState extends ChangeNotifier {
     favoriteNew = prefs?.getBool("favoriteNew") ?? false;
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
+    selectEntryOnSubmit = prefs?.getBool("selectEntryOnSubmit") ?? false;
 
     dailyCalories = prefs?.getInt('dailyCalories');
     dailyProtein = prefs?.getInt('dailyProtein');
@@ -56,6 +58,12 @@ class SettingsState extends ChangeNotifier {
     diarySummary = value;
     notifyListeners();
     prefs?.setString('diarySummary', value.toString());
+  }
+
+  void setSelectEntryOnSubmit(bool value) {
+    selectEntryOnSubmit = value;
+    prefs?.setBool('selectEntryOnSubmit', value);
+    notifyListeners();
   }
 
   void setFavoriteNew(bool value) {

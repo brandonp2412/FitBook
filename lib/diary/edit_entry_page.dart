@@ -293,7 +293,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
                   onFieldSubmitted: (String value) {
-                    onFieldSubmitted();
+                    if (_settings.selectEntryOnSubmit) onFieldSubmitted();
                   },
                   onChanged: (value) => setState(() {
                     _foodDirty = true;

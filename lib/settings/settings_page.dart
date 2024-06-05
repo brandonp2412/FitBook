@@ -242,6 +242,18 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'select entry on submit',
+        widget: ListTile(
+          title: const Text('Select entry on submit'),
+          onTap: () =>
+              _settings.setSelectEntryOnSubmit(!_settings.selectEntryOnSubmit),
+          trailing: Switch(
+            value: _settings.selectEntryOnSubmit,
+            onChanged: (value) => _settings.setSelectEntryOnSubmit(value),
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'favorite new foods',
         widget: ListTile(
           title: const Text('Favorite new foods'),
