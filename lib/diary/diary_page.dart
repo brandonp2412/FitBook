@@ -8,7 +8,7 @@ import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/diary/entry_list.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';

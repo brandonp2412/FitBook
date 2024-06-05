@@ -1,6 +1,6 @@
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

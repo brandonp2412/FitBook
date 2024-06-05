@@ -1,6 +1,6 @@
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 

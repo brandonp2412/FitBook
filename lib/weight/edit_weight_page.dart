@@ -2,7 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';

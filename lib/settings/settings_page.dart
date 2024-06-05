@@ -1,9 +1,9 @@
 import 'package:fit_book/about_page.dart';
 import 'package:fit_book/constants.dart';
-import 'package:fit_book/delete_records_button.dart';
-import 'package:fit_book/export_data.dart';
-import 'package:fit_book/import_data.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/delete_records_button.dart';
+import 'package:fit_book/settings/export_data.dart';
+import 'package:fit_book/settings/import_data.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/settings_state.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
