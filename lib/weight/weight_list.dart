@@ -58,7 +58,7 @@ class _WeightListState extends State<WeightList> {
           return Column(
             children: [
               ListTile(
-                title: Text(weight.amount.toString()),
+                title: Text("${weight.amount} ${weight.unit}"),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(weight.created),
                 ),
