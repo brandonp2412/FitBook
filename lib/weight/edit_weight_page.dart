@@ -8,6 +8,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class EditWeightPage extends StatefulWidget {
   final Weight weight;
@@ -110,7 +111,19 @@ class _EditWeightPageState extends State<EditWeightPage> {
     _settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Enter weight')),
+      appBar: AppBar(
+        title: const Text('Enter weight'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              Share.share(
+                "I just weighed ${widget.weight.amount} ${widget.weight.unit}!",
+              );
+            },
+          ),
+        ],
+      ),
       body: Form(
         child: Padding(
           padding: const EdgeInsets.all(16),
