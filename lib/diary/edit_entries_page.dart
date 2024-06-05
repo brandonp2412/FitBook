@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'database.dart';
+import '../database/database.dart';
 
 class EditEntriesPage extends StatefulWidget {
   final List<int> entryIds;

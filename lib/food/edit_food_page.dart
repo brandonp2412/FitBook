@@ -6,7 +6,7 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'database.dart';
+import '../database/database.dart';
 
 class EditFoodPage extends StatefulWidget {
   final int? id;

@@ -1,4 +1,4 @@
-import 'package:fit_book/entries.dart';
+import 'package:fit_book/database/entries.dart';
 import 'package:flutter/material.dart';
 
 class EntriesState extends ChangeNotifier {

@@ -1,4 +1,4 @@
-import 'package:fit_book/entries_state.dart';
+import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings_state.dart';

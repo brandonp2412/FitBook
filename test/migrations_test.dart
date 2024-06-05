@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:drift_dev/api/migrations.dart';
-import 'package:fit_book/database.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

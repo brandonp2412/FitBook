@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
-import 'package:fit_book/database.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:fit_book/utils.dart';

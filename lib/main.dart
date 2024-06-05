@@ -1,11 +1,11 @@
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:fit_book/database.dart';
-import 'package:fit_book/diary_page.dart';
-import 'package:fit_book/entries_state.dart';
-import 'package:fit_book/food_page.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/diary/diary_page.dart';
+import 'package:fit_book/diary/entries_state.dart';
+import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings_state.dart';
-import 'package:fit_book/weights_page.dart';
+import 'package:fit_book/weight/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

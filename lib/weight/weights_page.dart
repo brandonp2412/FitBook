@@ -1,28 +1,25 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
-import 'package:fit_book/database.dart';
-import 'package:fit_book/edit_food_page.dart';
-import 'package:fit_book/food_list.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/weight/weight_list.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
-class FoodPage extends StatefulWidget {
-  const FoodPage({super.key});
+class WeightsPage extends StatefulWidget {
+  const WeightsPage({super.key});
 
   @override
-  createState() => FoodPageState();
+  createState() => WeightsPageState();
 }
 
-typedef PartialFood = ({int id, String name, double? calories, bool? favorite});
-
-class FoodPageState extends State<FoodPage> {
-  late Stream<List<PartialFood>> _stream;
-
+class WeightsPageState extends State<WeightsPage> {
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
   int _limit = 100;
+  late Stream<List<Weight>> _stream;
 
   @override
   void initState() {
@@ -31,38 +28,16 @@ class FoodPageState extends State<FoodPage> {
   }
 
   void _setStream() {
-    _stream = (db.foods.selectOnly()
-          ..addColumns([
-            db.foods.id,
-            db.foods.name,
-            db.foods.calories,
-            db.foods.favorite,
-          ])
-          ..where(db.foods.name.contains(_search.toLowerCase()))
+    _stream = (db.weights.select()
+          ..where((u) => u.created.date.contains(_search))
           ..orderBy([
-            OrderingTerm(
-              expression: db.foods.favorite,
-              mode: OrderingMode.desc,
-            ),
-            OrderingTerm(
-              expression: db.foods.name,
-              mode: OrderingMode.desc,
-            ),
+            (u) => OrderingTerm(
+                  expression: u.created,
+                  mode: OrderingMode.desc,
+                ),
           ])
           ..limit(_limit))
-        .watch()
-        .map(
-          (results) => results
-              .map(
-                (result) => (
-                  id: result.read(db.foods.id)!,
-                  name: result.read(db.foods.name)!,
-                  calories: result.read(db.foods.calories),
-                  favorite: result.read(db.foods.favorite),
-                ),
-              )
-              .toList(),
-        );
+        .watch();
   }
 
   @override
@@ -76,20 +51,21 @@ class FoodPageState extends State<FoodPage> {
       child: Navigator(
         key: navigatorKey,
         onGenerateRoute: (settings) => MaterialPageRoute(
-          builder: (context) => _foodsPage(),
+          builder: (context) => _weightsPage(),
           settings: settings,
         ),
       ),
     );
   }
 
-  Scaffold _foodsPage() {
+  Scaffold _weightsPage() {
     return Scaffold(
       body: StreamBuilder(
         stream: _stream,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
-          final foods = snapshot.data ?? [];
+          if (snapshot.hasError) return ErrorWidget(snapshot.error!);
+
+          final weights = snapshot.data ?? [];
 
           return material.Column(
             children: [
@@ -108,55 +84,38 @@ class FoodPageState extends State<FoodPage> {
                   setState(() {
                     _selected.clear();
                   });
-                  await (db.delete(db.foods)
+                  await (db.delete(db.weights)
                         ..where((tbl) => tbl.id.isIn(selectedCopy)))
                       .go();
                 },
                 onSelect: () => setState(() {
                   _selected.addAll(
-                    foods.map((food) => food.id),
+                    weights.map((weight) => weight.id),
                   );
                 }),
                 selected: _selected,
+                onFavorite: () {},
                 onEdit: () {
-                  final food = foods.firstWhere(
+                  final weight = weights.firstWhere(
                     (element) => element.id == _selected.first,
                   );
-
-                  return Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditFoodPage(
-                        id: food.id,
-                      ),
+                      builder: (context) => EditWeightPage(weight: weight),
                     ),
                   );
-                },
-                onFavorite: () async {
-                  final first = await (db.foods.select()
-                        ..where((tbl) => tbl.id.equals(_selected.first)))
-                      .getSingle();
-                  await (db.foods.update()
-                        ..where((tbl) => tbl.id.isIn(_selected)))
-                      .write(
-                    FoodsCompanion(
-                      favorite: Value(first.favorite == true ? false : true),
-                    ),
-                  );
-                  setState(() {
-                    _selected.clear();
-                  });
                 },
               ),
               if (snapshot.data?.isEmpty == true)
                 const ListTile(
-                  title: Text("No food yet."),
+                  title: Text("No weights today."),
                   subtitle: Text(
-                    "Tap the plus button to add foods.",
+                    "Tap the plus button to start logging your weight.",
                   ),
                 ),
-              FoodList(
-                foods: foods,
+              WeightList(
+                weights: weights,
                 selected: _selected,
                 onSelect: (id) {
                   if (_selected.contains(id))
@@ -185,7 +144,14 @@ class FoodPageState extends State<FoodPage> {
         onPressed: () async {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
-              builder: (context) => const EditFoodPage(),
+              builder: (context) => EditWeightPage(
+                weight: Weight(
+                  amount: 0.0,
+                  created: DateTime.now(),
+                  id: -1,
+                  unit: 'kg',
+                ),
+              ),
             ),
           );
         },

@@ -1,5 +1,5 @@
 import 'package:drift/native.dart';
-import 'package:fit_book/database.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

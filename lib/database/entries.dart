@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/database.dart';
-import 'package:fit_book/foods.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/database/foods.dart';
 import 'package:fit_book/main.dart';
 
 class Entries extends Table {

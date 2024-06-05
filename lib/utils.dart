@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/database.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
 
 bool isSameDay(DateTime date1, DateTime date2) {

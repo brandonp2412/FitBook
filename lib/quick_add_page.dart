@@ -4,7 +4,7 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
-import 'database.dart';
+import 'database/database.dart';
 
 class QuickAddPage extends StatefulWidget {
   const QuickAddPage({super.key});

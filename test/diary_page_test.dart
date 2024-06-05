@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/database.dart';
-import 'package:fit_book/diary_page.dart';
-import 'package:fit_book/entries_state.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/diary/diary_page.dart';
+import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
 import 'package:flutter/material.dart';

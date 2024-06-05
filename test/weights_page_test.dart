@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/database.dart';
-import 'package:fit_book/entries_state.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings_state.dart';
-import 'package:fit_book/weights_page.dart';
+import 'package:fit_book/weight/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
