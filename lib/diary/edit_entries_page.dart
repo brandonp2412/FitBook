@@ -20,14 +20,23 @@ class EditEntriesPage extends StatefulWidget {
 
 class _EditEntriesPageState extends State<EditEntriesPage> {
   final _quantityController = TextEditingController();
+  final _caloriesController = TextEditingController();
+  final _kilojoulesController = TextEditingController();
+  final _proteinController = TextEditingController();
+  final _proteinNode = FocusNode();
   late SettingsState _settings;
 
+  bool _newFood = false;
+
+  TextEditingController? _nameController;
   String? _unit;
   DateTime? _created;
   Food? _selectedFood;
   String? _oldNames;
   String? _oldUnits;
   String? _oldQuantities;
+  String? _oldCalories;
+  String? _oldKj;
 
   @override
   void initState() {
@@ -39,6 +48,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             db.entries.id,
             db.entries.quantity,
             db.entries.unit,
+            db.entries.kCalories,
             db.foods.name,
           ])
           ..where(db.entries.id.isIn(widget.entryIds))
@@ -52,6 +62,15 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             results.map((result) => result.read(db.entries.unit)).join(', ');
         _oldQuantities = results
             .map((result) => result.read(db.entries.quantity))
+            .join(', ');
+        _oldCalories = results
+            .map((result) => result.read(db.entries.kCalories))
+            .join(', ');
+        _oldKj = results
+            .map((result) => result.read(db.entries.kCalories))
+            .map(
+              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
+            )
             .join(', ');
       });
     });
@@ -69,17 +88,31 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
       final oldEntry = await (db.entries.select()
             ..where((u) => u.id.equals(id)))
           .getSingle();
-      final food = await (db.foods.select()
-            ..where((u) => u.id.equals(_selectedFood?.id ?? oldEntry.food)))
+      int foodId;
+      if (_newFood)
+        foodId = await (db.foods.insertOne(
+          FoodsCompanion.insert(
+            name: _nameController!.text,
+            calories: Value(double.tryParse(_caloriesController.text)),
+            proteinG: Value(double.tryParse(_proteinController.text)),
+          ),
+        ));
+      else
+        foodId = _selectedFood?.id ?? oldEntry.food;
+      final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
       final newEntry = calculateEntry(
         food: food,
         quantity: quantity ?? oldEntry.quantity,
         unit: _unit ?? oldEntry.unit,
       );
+      final cals = double.tryParse(_caloriesController.text);
+      final protein = double.tryParse(_proteinController.text);
       await (db.entries.update()..where((u) => u.id.equals(id))).write(
         newEntry.copyWith(
           created: _created != null ? Value(_created!) : const Value.absent(),
+          kCalories: cals != null ? Value(cals) : const Value.absent(),
+          proteinG: protein != null ? Value(protein) : const Value.absent(),
         ),
       );
     }
@@ -205,6 +238,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                 if (food == null) return;
                 setState(() {
                   _selectedFood = food;
+                  _newFood = false;
                 });
               },
               fieldViewBuilder: (
@@ -213,6 +247,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted,
               ) {
+                _nameController = textEditingController;
                 return TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Name',
@@ -221,8 +256,14 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                   controller: textEditingController,
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
+                  onChanged: (value) => setState(() {
+                    _newFood = true;
+                    _caloriesController.text = '';
+                    _kilojoulesController.text = '';
+                    _proteinController.text = '';
+                  }),
                   onFieldSubmitted: (String value) {
-                    onFieldSubmitted();
+                    if (_settings.selectEntryOnSubmit) onFieldSubmitted();
                   },
                 );
               },
@@ -254,6 +295,55 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                   _unit = newValue!;
                 });
               },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _caloriesController,
+                    decoration: InputDecoration(
+                      labelText: 'Calories',
+                      hintText: _oldCalories,
+                    ),
+                    onTap: () => selectAll(_caloriesController),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        _kilojoulesController.text =
+                            ((double.tryParse(value) ?? 0) * 4.184)
+                                .toStringAsFixed(2);
+                      });
+                    },
+                    onSubmitted: (value) {
+                      _proteinNode.requestFocus();
+                      selectAll(_proteinController);
+                    },
+                  ),
+                ),
+                if (_unit != 'kilojoules') ...[
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: TextField(
+                      controller: _kilojoulesController,
+                      decoration: InputDecoration(
+                        labelText: 'Kilojoules',
+                        hintText: _oldKj,
+                      ),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      onChanged: (value) {
+                        setState(() {
+                          _caloriesController.text =
+                              ((double.tryParse(value) ?? 0) / 4.184)
+                                  .toStringAsFixed(2);
+                        });
+                      },
+                      onTap: () => selectAll(_kilojoulesController),
+                    ),
+                  ),
+                ],
+              ],
             ),
             ListTile(
               title: const Text('Created date'),
