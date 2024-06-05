@@ -256,7 +256,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
               },
             ),
             ListTile(
-              title: const Text('Created Date'),
+              title: const Text('Created date'),
               subtitle: Text(
                 DateFormat(_settings.longDateFormat)
                     .format(_created ?? DateTime.now()),
@@ -269,6 +269,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
+        tooltip: 'Save',
         child: const Icon(Icons.save),
       ),
     );

@@ -1,0 +1,9 @@
+- Test editing entries
+- Fix broken references
+- Re-organize code
+- Handle 'serving' unit in convertToGrams
+- Improve migrations tests
+- Fix editing an entries name
+- Add customization to diary summaries
+- Change colors of goal/average lines
+- Rename file for linux release
