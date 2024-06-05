@@ -212,7 +212,7 @@ Future<void> appWrapper() async {
   WidgetsFlutterBinding.ensureInitialized();
   final settingsState = SettingsState();
   settingsState.setTheme(ThemeMode.dark);
-  runApp(app.appProviders(settingsState));
+  runApp(app.appProviders(settingsState, showBanner: false));
 }
 
 BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
