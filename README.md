@@ -32,6 +32,7 @@
 <p float="left">
     <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
     <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/brandonp2412/fitbook">
 </p>
 
 ## Screenshots
