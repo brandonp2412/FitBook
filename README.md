@@ -48,6 +48,13 @@ Track your eating habits and visualize your progress with intuitive graphs, all 
     <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/8_en-US.png" height="600">
 </p>
 
+## Donations
+
+If you would like to support this project:
+- Bitcoin `bc1qzlte8featxzf7xvtp3rjv7qqtwkgpup8hu85gp`
+- Monero (XMR) `85tmLfWKbpd8nxQnUY878DDuFjmfcoCFXPWR7XYKLHBSbDZV8wxgoKYUtHtq1kHWJg4m14sdBXhYuUSbxEDA29d19XuREL5`
+- [GitHub sponsor](https://github.com/sponsors/brandonp2412)
+
 ## Installation
 
 To install the app, follow these steps:
