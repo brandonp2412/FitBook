@@ -40,10 +40,7 @@ class AboutPage extends StatelessWidget {
           ListTile(
             title: const Text("Author"),
             leading: const Icon(Icons.person),
-            subtitle: FutureBuilder(
-              future: packageInfo,
-              builder: (context, snapshot) => const Text("Brandon Presley"),
-            ),
+            subtitle: const Text("Brandon Presley"),
             onTap: () async {
               const url = 'https://github.com/brandonp2412';
               if (await canLaunchUrlString(url)) await launchUrlString(url);
@@ -52,10 +49,7 @@ class AboutPage extends StatelessWidget {
           ListTile(
             title: const Text("License"),
             leading: const Icon(Icons.balance),
-            subtitle: FutureBuilder(
-              future: packageInfo,
-              builder: (context, snapshot) => const Text("MIT"),
-            ),
+            subtitle: const Text("MIT"),
             onTap: () async {
               const url =
                   'https://github.com/brandonp2412/FitBook?tab=MIT-1-ov-file#readme';
@@ -65,13 +59,17 @@ class AboutPage extends StatelessWidget {
           ListTile(
             title: const Text("Donate"),
             leading: const Icon(Icons.favorite_outline),
-            subtitle: FutureBuilder(
-              future: packageInfo,
-              builder: (context, snapshot) =>
-                  const Text("Help support this project"),
-            ),
+            subtitle: const Text("Help support this project"),
             onTap: () async {
               const url = 'https://github.com/sponsors/brandonp2412';
+              if (await canLaunchUrlString(url)) await launchUrlString(url);
+            },
+          ),
+          ListTile(
+            title: const Text("Source code"),
+            leading: const Icon(Icons.code),
+            onTap: () async {
+              const url = 'https://github.com/brandonp2412/FitBook';
               if (await canLaunchUrlString(url)) await launchUrlString(url);
             },
           ),
