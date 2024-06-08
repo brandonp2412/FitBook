@@ -244,6 +244,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsLine(
         key: 'select entry on submit',
         widget: ListTile(
+          leading: const Icon(Icons.check),
           title: const Text('Select entry on submit'),
           onTap: () =>
               _settings.setSelectEntryOnSubmit(!_settings.selectEntryOnSubmit),
@@ -256,6 +257,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsLine(
         key: 'favorite new foods',
         widget: ListTile(
+          leading: const Icon(Icons.favorite_outline),
           title: const Text('Favorite new foods'),
           onTap: () => _settings.setFavoriteNew(!_settings.favoriteNew),
           trailing: Switch(
@@ -267,6 +269,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsLine(
         key: 'system color',
         widget: ListTile(
+          leading: const Icon(Icons.color_lens_outlined),
           title: const Text('System color scheme'),
           onTap: () => _settings.setSystem(!_settings.systemColors),
           trailing: Switch(
