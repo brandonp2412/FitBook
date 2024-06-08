@@ -95,16 +95,19 @@ class WeightsPageState extends State<WeightsPage> {
                 }),
                 selected: _selected,
                 onFavorite: () {},
-                onEdit: () {
+                onEdit: () async {
                   final weight = weights.firstWhere(
                     (element) => element.id == _selected.first,
                   );
-                  Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditWeightPage(weight: weight),
                     ),
                   );
+                  setState(() {
+                    _selected.clear();
+                  });
                 },
               ),
               if (snapshot.data?.isEmpty == true)

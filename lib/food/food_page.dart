@@ -118,12 +118,12 @@ class FoodPageState extends State<FoodPage> {
                   );
                 }),
                 selected: _selected,
-                onEdit: () {
+                onEdit: () async {
                   final food = foods.firstWhere(
                     (element) => element.id == _selected.first,
                   );
 
-                  return Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditFoodPage(
@@ -131,6 +131,9 @@ class FoodPageState extends State<FoodPage> {
                       ),
                     ),
                   );
+                  setState(() {
+                    _selected.clear();
+                  });
                 },
                 onFavorite: () async {
                   final first = await (db.foods.select()

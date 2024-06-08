@@ -172,8 +172,8 @@ class DiaryPageState extends State<DiaryPage> {
                     _selected.clear();
                   });
                 },
-                onEdit: () {
-                  return Navigator.push(
+                onEdit: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditEntriesPage(
@@ -181,6 +181,9 @@ class DiaryPageState extends State<DiaryPage> {
                       ),
                     ),
                   );
+                  setState(() {
+                    _selected.clear();
+                  });
                 },
               ),
               if (snapshot.data?.isEmpty == true)
