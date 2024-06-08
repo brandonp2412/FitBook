@@ -26,7 +26,7 @@ EntriesCompanion calculateEntry({
 
   var quantityG = 0.0;
   if (unit == 'serving')
-    quantityG = quantity * (food.servingWeight1G ?? 100);
+    quantityG = quantity * servingG;
   else
     quantityG = convertToGrams(quantity, unit);
 
