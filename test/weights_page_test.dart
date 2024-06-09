@@ -55,7 +55,7 @@ void main() async {
 
     await tester.tap(find.byTooltip('Add'));
     await tester.pumpAndSettle();
-    expect(find.text('Enter weight'), findsOne);
+    expect(find.text('Add weight'), findsOne);
     await tester.enterText(find.text('0.0'), '85');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();

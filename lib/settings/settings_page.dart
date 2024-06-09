@@ -32,6 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final _proteinController = TextEditingController();
   final _fatController = TextEditingController();
   final _carbsController = TextEditingController();
+  final _targetWeightController = TextEditingController();
   late SettingsState _settings;
 
   final List<String> shortFormats = [
@@ -60,6 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _proteinController.text = _settings.dailyProtein?.toString() ?? "";
     _fatController.text = _settings.dailyFat?.toString() ?? "";
     _carbsController.text = _settings.dailyCarbs?.toString() ?? "";
+    _targetWeightController.text = _settings.targetWeight?.toString() ?? "";
   }
 
   @override
@@ -238,6 +240,35 @@ class _SettingsPageState extends State<SettingsPage> {
             decoration: const InputDecoration(
               labelText: 'Daily carbs',
             ),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'target weight',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: TextField(
+            controller: _targetWeightController,
+            onChanged: (newValue) {
+              _settings.setTargetWeight(double.tryParse(newValue));
+            },
+            onTap: () => selectAll(_targetWeightController),
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Target weight',
+            ),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'notifications',
+        widget: ListTile(
+          leading: const Icon(Icons.notifications_outlined),
+          title: const Text('Notifications'),
+          onTap: () => _settings.setNotifications(!_settings.notifications),
+          trailing: Switch(
+            value: _settings.notifications,
+            onChanged: (value) => _settings.setNotifications(value),
           ),
         ),
       ),

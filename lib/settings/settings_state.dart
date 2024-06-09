@@ -15,11 +15,13 @@ class SettingsState extends ChangeNotifier {
   bool showOthers = false;
   bool favoriteNew = false;
   bool selectEntryOnSubmit = false;
+  bool notifications = true;
 
   int? dailyCalories;
   int? dailyProtein;
   int? dailyFat;
   int? dailyCarbs;
+  double? targetWeight;
 
   Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
@@ -47,17 +49,25 @@ class SettingsState extends ChangeNotifier {
     curveLines = prefs?.getBool("curveLines") ?? true;
     showOthers = prefs?.getBool("showOthers") ?? false;
     selectEntryOnSubmit = prefs?.getBool("selectEntryOnSubmit") ?? false;
+    notifications = prefs?.getBool('notifications') ?? true;
 
     dailyCalories = prefs?.getInt('dailyCalories');
     dailyProtein = prefs?.getInt('dailyProtein');
     dailyFat = prefs?.getInt('dailyFat');
     dailyCarbs = prefs?.getInt('dailyCarbs');
+    targetWeight = prefs?.getDouble('targetWeight');
   }
 
   void setDiarySummary(DiarySummary value) {
     diarySummary = value;
     notifyListeners();
     prefs?.setString('diarySummary', value.toString());
+  }
+
+  void setNotifications(bool value) {
+    notifications = value;
+    prefs?.setBool('notifications', value);
+    notifyListeners();
   }
 
   void setSelectEntryOnSubmit(bool value) {
@@ -75,6 +85,15 @@ class SettingsState extends ChangeNotifier {
   void setShowOthers(bool show) {
     showOthers = show;
     prefs?.setBool('showOthers', show);
+    notifyListeners();
+  }
+
+  void setTargetWeight(double? value) {
+    targetWeight = value;
+    if (value == null)
+      prefs?.remove('targetWeight');
+    else
+      prefs?.setDouble('targetWeight', value);
     notifyListeners();
   }
 

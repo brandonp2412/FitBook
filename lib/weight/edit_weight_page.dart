@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -22,7 +25,7 @@ class EditWeightPage extends StatefulWidget {
 class _EditWeightPageState extends State<EditWeightPage> {
   late SettingsState _settings;
   final TextEditingController _valueController = TextEditingController();
-  String _lastWeight = "";
+  double? _lastWeight;
   String _unit = 'kg';
   DateTime _created = DateTime.now();
 
@@ -44,7 +47,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         .getSingleOrNull()
         .then(
           (value) => setState(() {
-            _lastWeight = value?.amount.toString() ?? "0";
+            _lastWeight = value?.amount;
           }),
         );
   }
@@ -86,22 +89,38 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
   }
 
-  _save() {
+  _save() async {
     Navigator.of(context).pop();
+    final amount = double.parse(_valueController.text);
     if (widget.weight.id == -1)
       db.weights.insertOne(
         WeightsCompanion.insert(
           created: DateTime.now(),
           unit: _unit,
-          amount: double.parse(_valueController.text),
+          amount: amount,
         ),
       );
     else
       (db.weights.update()..where((u) => u.id.equals(widget.weight.id))).write(
         WeightsCompanion(
           unit: Value(_unit),
-          amount: Value(double.parse(_valueController.text)),
+          amount: Value(amount),
           created: Value(_created),
+        ),
+      );
+
+    if (_settings.targetWeight == null) return;
+    if (_lastWeight == null) return;
+    final show = shouldNotify(amount, _lastWeight!, _settings.targetWeight!);
+    if (!show) return;
+    final random = Random();
+    final message =
+        positiveReinforcements[random.nextInt(positiveReinforcements.length)];
+
+    if (mounted)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
         ),
       );
   }
@@ -112,7 +131,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enter weight'),
+        title: Text(widget.weight.id == -1 ? "Add weight" : "Edit weight"),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
@@ -154,11 +173,13 @@ class _EditWeightPageState extends State<EditWeightPage> {
                   });
                 },
               ),
-              TextFormField(
-                controller: TextEditingController(text: _lastWeight),
-                decoration: const InputDecoration(labelText: 'Last weight'),
-                enabled: false,
-              ),
+              if (_lastWeight != null)
+                TextFormField(
+                  controller:
+                      TextEditingController(text: _lastWeight!.toString()),
+                  decoration: const InputDecoration(labelText: 'Last weight'),
+                  enabled: false,
+                ),
               ListTile(
                 title: const Text('Created Date'),
                 subtitle:

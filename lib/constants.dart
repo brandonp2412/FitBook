@@ -150,3 +150,16 @@ List<String> foodFields = [
   '_200_calorie_weight_g',
   'favorite',
 ];
+
+List<String> positiveReinforcements = [
+  'Great job! Your hard work is paying off.',
+  'Keep it up! You are making excellent progress.',
+  'Fantastic! Your dedication is showing results.',
+  'Well done! You are one step closer to your goal.',
+  'Impressive! Your efforts are bearing fruit.',
+  'Amazing! You are on the right track.',
+  'Bravo! Your commitment is commendable.',
+  'Excellent! Your perseverance is inspiring.',
+  'Superb! You are doing an outstanding job.',
+  'Incredible! Your progress is noticeable.',
+];

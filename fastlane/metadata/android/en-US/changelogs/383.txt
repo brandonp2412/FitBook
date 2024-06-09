@@ -1,0 +1,4 @@
+- Add target weight & notifications
+- Add source code link to about_page
+- Add icons to settings page toggles
+- Clear selections after editing

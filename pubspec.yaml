@@ -1,7 +1,7 @@
 name: fit_book
 description: Track your calories - Completely offline!
 publish_to: none
-version: 1.0.36+37
+version: 1.0.37+38
 environment:
   sdk: '>=3.3.3 <4.0.0'
 dependencies:

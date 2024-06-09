@@ -175,22 +175,23 @@ class _AppLineState extends State<AppLine> {
   Widget build(BuildContext context) {
     _settings = context.watch<SettingsState>();
 
-    int y = 0;
+    double y = 0;
 
     switch (widget.metric) {
       case AppMetric.calories:
-        y = _settings.dailyCalories ?? 0;
+        y = (_settings.dailyCalories ?? 0).toDouble();
         break;
       case AppMetric.protein:
-        y = _settings.dailyProtein ?? 0;
+        y = (_settings.dailyProtein ?? 0).toDouble();
         break;
       case AppMetric.bodyWeight:
+        y = _settings.targetWeight ?? 0;
         break;
       case AppMetric.fat:
-        y = _settings.dailyFat ?? 0;
+        y = (_settings.dailyFat ?? 0).toDouble();
         break;
       case AppMetric.carbs:
-        y = _settings.dailyCarbs ?? 0;
+        y = (_settings.dailyCarbs ?? 0).toDouble();
         break;
     }
 

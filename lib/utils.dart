@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
@@ -88,4 +90,31 @@ void selectAll(TextEditingController controller) {
     baseOffset: 0,
     extentOffset: controller.text.length,
   );
+}
+
+bool shouldNotify(
+  double lastWeight,
+  double secondLastWeight,
+  double goalWeight,
+) {
+  Random random = Random();
+  int chance = random.nextInt(100);
+
+  bool trending = (secondLastWeight > lastWeight && lastWeight > goalWeight) ||
+      (secondLastWeight < lastWeight && lastWeight < goalWeight);
+
+  if (!trending) {
+    return false;
+  }
+
+  if ((goalWeight <= lastWeight && goalWeight - lastWeight > 1) ||
+      (goalWeight >= lastWeight && lastWeight - goalWeight > 1)) {
+    return false;
+  }
+
+  if (chance >= 30) {
+    return false;
+  }
+
+  return true;
 }
