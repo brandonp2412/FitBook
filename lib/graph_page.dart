@@ -1,5 +1,6 @@
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/graph_state.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,42 +14,32 @@ class GraphPage extends StatefulWidget {
 }
 
 class GraphPageState extends State<GraphPage> {
-  AppMetric _metric = AppMetric.calories;
-  Period _groupBy = Period.day;
-  DateTime? _startDate;
-  DateTime? _endDate;
-
-  Future<void> _selectEnd() async {
+  Future<void> _selectEnd(GraphState state) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: _endDate,
+      initialDate: state.endDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null)
-      setState(() {
-        _endDate = pickedDate.toLocal();
-      });
+    if (pickedDate != null) state.setEndDate(pickedDate.toLocal());
   }
 
-  Future<void> _selectStart() async {
+  Future<void> _selectStart(GraphState state) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: _startDate,
+      initialDate: state.startDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null)
-      setState(() {
-        _startDate = pickedDate.toLocal();
-      });
+    if (pickedDate != null) state.setStartDate(pickedDate.toLocal());
   }
 
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>();
+    final state = context.watch<GraphState>();
 
     return Scaffold(
       body: Padding(
@@ -57,7 +48,7 @@ class GraphPageState extends State<GraphPage> {
           children: [
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
-              value: _metric,
+              value: state.metric,
               items: const [
                 DropdownMenuItem(
                   value: AppMetric.calories,
@@ -81,15 +72,12 @@ class GraphPageState extends State<GraphPage> {
                 ),
               ],
               onChanged: (value) {
-                setState(() {
-                  _metric = value!;
-                  if (value == AppMetric.bodyWeight) _groupBy = Period.week;
-                });
+                state.setMetric(value!);
               },
             ),
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Group by'),
-              value: _groupBy,
+              value: state.groupBy,
               items: const [
                 DropdownMenuItem(
                   value: Period.day,
@@ -109,9 +97,7 @@ class GraphPageState extends State<GraphPage> {
                 ),
               ],
               onChanged: (value) {
-                setState(() {
-                  _groupBy = value!;
-                });
+                state.setGroupBy(value!);
               },
             ),
             Row(
@@ -119,42 +105,38 @@ class GraphPageState extends State<GraphPage> {
                 Expanded(
                   child: ListTile(
                     title: const Text('Start date'),
-                    subtitle: _startDate != null
+                    subtitle: state.startDate != null
                         ? Text(
                             DateFormat(settings.shortDateFormat)
-                                .format(_startDate!),
+                                .format(state.startDate!),
                           )
                         : null,
-                    onLongPress: () => setState(() {
-                      _startDate = null;
-                    }),
+                    onLongPress: () => state.setStartDate(null),
                     trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectStart(),
+                    onTap: () => _selectStart(state),
                   ),
                 ),
                 Expanded(
                   child: ListTile(
                     title: const Text('Stop date'),
-                    subtitle: _endDate != null
+                    subtitle: state.endDate != null
                         ? Text(
                             DateFormat(settings.shortDateFormat)
-                                .format(_endDate!),
+                                .format(state.endDate!),
                           )
                         : null,
-                    onLongPress: () => setState(() {
-                      _endDate = null;
-                    }),
+                    onLongPress: () => state.setEndDate(null),
                     trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectEnd(),
+                    onTap: () => _selectEnd(state),
                   ),
                 ),
               ],
             ),
             AppLine(
-              metric: _metric,
-              groupBy: _groupBy,
-              startDate: _startDate,
-              endDate: _endDate,
+              metric: state.metric,
+              groupBy: state.groupBy,
+              startDate: state.startDate,
+              endDate: state.endDate,
             ),
           ],
         ),

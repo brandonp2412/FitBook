@@ -2,20 +2,22 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/graph_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mock_tests.dart';
 
 void main() async {
   testWidgets('GraphPage entries', (WidgetTester tester) async {
     await mockTests();
-    final settingsState = SettingsState();
-    await settingsState.init();
+    final prefs = await SharedPreferences.getInstance();
+    final settingsState = SettingsState(prefs);
 
     await (db.entries.insertAll(
       [
@@ -66,6 +68,9 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => EntriesState()),
+          ChangeNotifierProvider(
+            create: (context) => GraphState(settingsState.prefs),
+          ),
         ],
         child: const MaterialApp(
           home: GraphPage(),
@@ -96,8 +101,8 @@ void main() async {
 
   testWidgets('GraphPage body weight', (WidgetTester tester) async {
     await mockTests();
-    final settingsState = SettingsState();
-    await settingsState.init();
+    final prefs = await SharedPreferences.getInstance();
+    final settingsState = SettingsState(prefs);
 
     await (db.weights.insertAll(
       [
@@ -124,6 +129,9 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => EntriesState()),
+          ChangeNotifierProvider(
+            create: (context) => GraphState(settingsState.prefs),
+          ),
         ],
         child: const MaterialApp(
           home: GraphPage(),

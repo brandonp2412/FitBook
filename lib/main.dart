@@ -4,10 +4,12 @@ import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/graph_state.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/weight/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 late AppDatabase db;
 
@@ -15,8 +17,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   db = AppDatabase();
 
-  final settingsState = SettingsState();
-  await settingsState.init();
+  final sharedPreferences = await SharedPreferences.getInstance();
+  final settingsState = SettingsState(sharedPreferences);
 
   runApp(appProviders(settingsState));
 }
@@ -26,6 +28,9 @@ Widget appProviders(SettingsState settingsState, {bool showBanner = true}) =>
       providers: [
         ChangeNotifierProvider(create: (context) => settingsState),
         ChangeNotifierProvider(create: (context) => EntriesState()),
+        ChangeNotifierProvider(
+          create: (context) => GraphState(settingsState.prefs),
+        ),
       ],
       child: App(
         showBanner: showBanner,

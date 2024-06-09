@@ -7,14 +7,15 @@ import 'package:fit_book/weight/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mock_tests.dart';
 
 void main() async {
   testWidgets('WeightsPage CRUD', (WidgetTester tester) async {
     await mockTests();
-    final settingsState = SettingsState();
-    await settingsState.init();
+    final prefs = await SharedPreferences.getInstance();
+    final settingsState = SettingsState(prefs);
 
     await (db.weights.insertAll(
       [

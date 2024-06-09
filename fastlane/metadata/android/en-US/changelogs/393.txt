@@ -1,0 +1,2 @@
+- Remember selections in graph page
+- Update flutter to 3.22.2
