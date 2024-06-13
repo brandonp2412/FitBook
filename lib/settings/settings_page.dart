@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fit_book/about_page.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
@@ -343,14 +345,15 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Settings'),
         actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const AboutPage(),
+          if (!Platform.isIOS && !Platform.isMacOS)
+            IconButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AboutPage(),
+                ),
               ),
+              icon: const Icon(Icons.info_outline),
             ),
-            icon: const Icon(Icons.info_outline),
-          ),
         ],
       ),
       body: Padding(
