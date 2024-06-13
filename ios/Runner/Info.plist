@@ -58,5 +58,7 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Requested by 3rd party API</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
