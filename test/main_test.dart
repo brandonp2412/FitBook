@@ -19,9 +19,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => EntriesState()),
         ],
-        child: const App(
-          showBanner: false,
-        ),
+        child: const App(),
       ),
     );
     await tester.pumpAndSettle();

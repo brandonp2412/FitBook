@@ -23,8 +23,7 @@ Future<void> main() async {
   runApp(appProviders(settingsState));
 }
 
-Widget appProviders(SettingsState settingsState, {bool showBanner = true}) =>
-    MultiProvider(
+Widget appProviders(SettingsState settingsState) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsState),
         ChangeNotifierProvider(create: (context) => EntriesState()),
@@ -32,15 +31,11 @@ Widget appProviders(SettingsState settingsState, {bool showBanner = true}) =>
           create: (context) => GraphState(settingsState.prefs),
         ),
       ],
-      child: App(
-        showBanner: showBanner,
-      ),
+      child: const App(),
     );
 
 class App extends StatelessWidget {
-  final bool showBanner;
-
-  const App({super.key, required this.showBanner});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +50,7 @@ class App extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) => MaterialApp(
         title: 'FitBook',
-        debugShowCheckedModeBanner: showBanner,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
           fontFamily: 'Manrope',

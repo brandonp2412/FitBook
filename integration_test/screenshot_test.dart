@@ -214,7 +214,7 @@ Future<void> appWrapper() async {
   final prefs = await SharedPreferences.getInstance();
   final settingsState = SettingsState(prefs);
   settingsState.setTheme(ThemeMode.dark);
-  runApp(app.appProviders(settingsState, showBanner: false));
+  runApp(app.appProviders(settingsState));
 }
 
 BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
