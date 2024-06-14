@@ -617,6 +617,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
+              onSubmitted: (_) => selectAll(caloriesController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: caloriesController,
@@ -630,6 +632,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     (double.parse(value) * 4.184).toStringAsFixed(2);
               },
               onTap: () => selectAll(caloriesController),
+              onSubmitted: (_) => selectAll(kilojoulesController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: kilojoulesController,
@@ -642,7 +646,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 caloriesController.text =
                     (double.parse(value) / 4.184).toStringAsFixed(2);
               },
+              onSubmitted: (_) => selectAll(proteinGController),
               onTap: () => selectAll(kilojoulesController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: proteinGController,
@@ -651,7 +657,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => selectAll(carbohydrateGController),
               onTap: () => selectAll(proteinGController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: carbohydrateGController,
@@ -660,7 +668,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => selectAll(fatGController),
               onTap: () => selectAll(carbohydrateGController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: fatGController,
@@ -669,7 +679,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => selectAll(servingWeight1GController),
               onTap: () => selectAll(fatGController),
+              textInputAction: TextInputAction.next,
             ),
             TextField(
               controller: servingWeight1GController,
@@ -679,6 +691,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onTap: () => selectAll(servingWeight1GController),
+              textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
               value: _servingUnit,

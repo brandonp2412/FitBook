@@ -23,7 +23,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final _caloriesController = TextEditingController(text: "0");
   final _kilojoulesController = TextEditingController(text: "0");
   final _proteinController = TextEditingController(text: "0");
-  final _proteinNode = FocusNode();
+  final _quantityNode = FocusNode();
 
   late SettingsState _settings;
 
@@ -276,6 +276,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   _selectedFood = food;
                 });
                 _recalc();
+                _quantityNode.requestFocus();
               },
               fieldViewBuilder: (
                 BuildContext context,
@@ -293,16 +294,21 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
                   onFieldSubmitted: (String value) {
-                    if (_settings.selectEntryOnSubmit) onFieldSubmitted();
+                    if (!_settings.selectEntryOnSubmit) return;
+                    onFieldSubmitted();
                   },
                   onChanged: (value) => setState(() {
                     _foodDirty = true;
                   }),
+                  textInputAction: _settings.selectEntryOnSubmit
+                      ? TextInputAction.next
+                      : null,
                 );
               },
             ),
             TextField(
               controller: _quantityController,
+              focusNode: _quantityNode,
               decoration: const InputDecoration(label: Text("Quantity")),
               keyboardType: TextInputType.number,
               onTap: () => _quantityController.selection = TextSelection(
@@ -312,6 +318,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               onChanged: (value) {
                 _recalc();
               },
+              textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
               value: _unit,
@@ -357,9 +364,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       });
                     },
                     onSubmitted: (value) {
-                      _proteinNode.requestFocus();
                       selectAll(_proteinController);
                     },
+                    textInputAction: TextInputAction.next,
                   ),
                 ),
                 if (_unit != 'kilojoules') ...[
@@ -381,6 +388,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                         });
                       },
                       onTap: () => selectAll(_kilojoulesController),
+                      textInputAction: TextInputAction.next,
                     ),
                   ),
                 ],
@@ -388,7 +396,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ),
             TextField(
               controller: _proteinController,
-              focusNode: _proteinNode,
               decoration: const InputDecoration(
                 labelText: 'Protein',
               ),
@@ -400,6 +407,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   _foodDirty = true;
                 });
               },
+              textInputAction: TextInputAction.next,
             ),
             ListTile(
               title: const Text('Created Date'),

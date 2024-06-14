@@ -23,7 +23,6 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   final _caloriesController = TextEditingController();
   final _kilojoulesController = TextEditingController();
   final _proteinController = TextEditingController();
-  final _proteinNode = FocusNode();
   late SettingsState _settings;
 
   bool _newFood = false;
@@ -270,6 +269,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                   onFieldSubmitted: (String value) {
                     if (_settings.selectEntryOnSubmit) onFieldSubmitted();
                   },
+                  textInputAction: TextInputAction.next,
                 );
               },
             ),
@@ -284,6 +284,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                 baseOffset: 0,
                 extentOffset: _quantityController.text.length,
               ),
+              textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
               value: _unit,
@@ -321,9 +322,9 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                       });
                     },
                     onSubmitted: (value) {
-                      _proteinNode.requestFocus();
                       selectAll(_proteinController);
                     },
+                    textInputAction: TextInputAction.next,
                   ),
                 ),
                 if (_unit != 'kilojoules') ...[
@@ -345,6 +346,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                         });
                       },
                       onTap: () => selectAll(_kilojoulesController),
+                      textInputAction: TextInputAction.next,
                     ),
                   ),
                 ],
@@ -352,7 +354,6 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             ),
             TextField(
               controller: _proteinController,
-              focusNode: _proteinNode,
               decoration: InputDecoration(
                 labelText: 'Protein',
                 hintText: _oldProtein,
@@ -360,6 +361,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
               onTap: () => selectAll(_proteinController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
+              textInputAction: TextInputAction.next,
             ),
             ListTile(
               title: const Text('Created date'),
