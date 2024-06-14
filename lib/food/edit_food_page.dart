@@ -696,8 +696,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             DropdownButtonFormField<String>(
               value: _servingUnit,
               decoration: const InputDecoration(labelText: 'Serving unit'),
-              items:
-                  units.where((unit) => unit != 'serving').map((String value) {
+              items: units.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
