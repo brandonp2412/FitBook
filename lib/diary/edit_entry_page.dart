@@ -277,6 +277,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 });
                 _recalc();
                 _quantityNode.requestFocus();
+                selectAll(_quantityController);
               },
               fieldViewBuilder: (
                 BuildContext context,
