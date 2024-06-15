@@ -15,8 +15,13 @@ import 'package:share_plus/share_plus.dart';
 
 class EditWeightPage extends StatefulWidget {
   final Weight weight;
+  final Weight lastWeight;
 
-  const EditWeightPage({super.key, required this.weight});
+  const EditWeightPage({
+    super.key,
+    required this.weight,
+    required this.lastWeight,
+  });
 
   @override
   createState() => _EditWeightPageState();
@@ -25,7 +30,6 @@ class EditWeightPage extends StatefulWidget {
 class _EditWeightPageState extends State<EditWeightPage> {
   late SettingsState _settings;
   final TextEditingController _valueController = TextEditingController();
-  double? _lastWeight;
   String _unit = 'kg';
   DateTime _created = DateTime.now();
 
@@ -33,23 +37,10 @@ class _EditWeightPageState extends State<EditWeightPage> {
   void initState() {
     super.initState();
     _valueController.text = widget.weight.amount.toString();
+    _unit = widget.weight.unit;
     selectAll(_valueController);
     _created = widget.weight.created;
     _settings = context.read<SettingsState>();
-    (db.weights.select()
-          ..orderBy([
-            (tbl) => OrderingTerm(
-                  expression: tbl.created,
-                  mode: OrderingMode.desc,
-                ),
-          ])
-          ..limit(1))
-        .getSingleOrNull()
-        .then(
-          (value) => setState(() {
-            _lastWeight = value?.amount;
-          }),
-        );
   }
 
   Future<void> _selectDate() async {
@@ -110,8 +101,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
       );
 
     if (_settings.targetWeight == null) return;
-    if (_lastWeight == null) return;
-    final show = shouldNotify(amount, _lastWeight!, _settings.targetWeight!);
+    final show =
+        shouldNotify(amount, widget.lastWeight.amount, _settings.targetWeight!);
     if (!show) return;
     final random = Random();
     final message =
@@ -151,35 +142,39 @@ class _EditWeightPageState extends State<EditWeightPage> {
               TextFormField(
                 controller: _valueController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Weight'),
+                decoration: InputDecoration(labelText: 'Weight ($_unit)'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,
                 autofocus: widget.weight.id == -1,
                 onTap: () => selectAll(_valueController),
                 onFieldSubmitted: (value) => _save(),
               ),
-              DropdownButtonFormField<String>(
-                value: _unit,
-                decoration: const InputDecoration(labelText: 'Unit'),
-                items: (['kg', 'lb']).map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _unit = newValue!;
-                  });
-                },
-              ),
-              if (_lastWeight != null)
-                TextFormField(
-                  controller:
-                      TextEditingController(text: _lastWeight!.toString()),
-                  decoration: const InputDecoration(labelText: 'Last weight'),
-                  enabled: false,
+              TextFormField(
+                controller: TextEditingController(
+                  text: "${widget.lastWeight.amount} ${widget.lastWeight.unit}",
                 ),
+                decoration: const InputDecoration(labelText: 'Last weight'),
+                enabled: false,
+              ),
+              const SizedBox(height: 8.0),
+              ListTile(
+                title: Text("Unit ($_unit)"),
+                leading: _unit == 'kg'
+                    ? const Icon(Icons.straighten)
+                    : const Icon(Icons.square_foot),
+                onTap: () => setState(() {
+                  _unit = _unit == 'kg' ? 'lb' : 'kg';
+                }),
+                trailing: Switch(
+                  value: _unit == 'kg',
+                  onChanged: (value) => setState(() {
+                    if (value)
+                      _unit = 'kg';
+                    else
+                      _unit = 'lb';
+                  }),
+                ),
+              ),
               ListTile(
                 title: const Text('Created Date'),
                 subtitle:

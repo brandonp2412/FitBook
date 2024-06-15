@@ -71,6 +71,7 @@ class _WeightListState extends State<WeightList> {
                       MaterialPageRoute(
                         builder: (context) => EditWeightPage(
                           weight: weight,
+                          lastWeight: widget.weights.first,
                         ),
                       ),
                     );

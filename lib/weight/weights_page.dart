@@ -102,7 +102,10 @@ class WeightsPageState extends State<WeightsPage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditWeightPage(weight: weight),
+                      builder: (context) => EditWeightPage(
+                        weight: weight,
+                        lastWeight: weights.first,
+                      ),
                     ),
                   );
                   setState(() {
@@ -145,6 +148,7 @@ class WeightsPageState extends State<WeightsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          final weights = await _stream.first;
           navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => EditWeightPage(
@@ -154,6 +158,7 @@ class WeightsPageState extends State<WeightsPage> {
                   id: -1,
                   unit: 'kg',
                 ),
+                lastWeight: weights.first,
               ),
             ),
           );
