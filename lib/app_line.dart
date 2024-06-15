@@ -277,7 +277,11 @@ class _AppLineState extends State<AppLine> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 16.0,
+            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Goal"),
                 Radio(
@@ -288,8 +292,6 @@ class _AppLineState extends State<AppLine> {
                     (states) => Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const Spacer(),
-                const Text("Average"),
                 Radio(
                   value: 1,
                   groupValue: 1,
@@ -298,6 +300,7 @@ class _AppLineState extends State<AppLine> {
                     (states) => Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
+                const Text("Average"),
               ],
             ),
           ],
