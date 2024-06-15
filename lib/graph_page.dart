@@ -100,6 +100,9 @@ class GraphPageState extends State<GraphPage> {
                 state.setGroupBy(value!);
               },
             ),
+            const SizedBox(
+              height: 8.0,
+            ),
             Row(
               children: [
                 Expanded(

@@ -176,23 +176,26 @@ class _AppLineState extends State<AppLine> {
   Widget build(BuildContext context) {
     _settings = context.watch<SettingsState>();
 
-    double y = 0;
+    double goal = 0;
+    String unit = 'g';
 
     switch (widget.metric) {
       case AppMetric.calories:
-        y = (_settings.dailyCalories ?? 0).toDouble();
+        goal = (_settings.dailyCalories ?? 0).toDouble();
+        unit = 'kcal';
         break;
       case AppMetric.protein:
-        y = (_settings.dailyProtein ?? 0).toDouble();
+        goal = (_settings.dailyProtein ?? 0).toDouble();
         break;
       case AppMetric.bodyWeight:
-        y = _settings.targetWeight ?? 0;
+        goal = _settings.targetWeight ?? 0;
+        unit = 'kg';
         break;
       case AppMetric.fat:
-        y = (_settings.dailyFat ?? 0).toDouble();
+        goal = (_settings.dailyFat ?? 0).toDouble();
         break;
       case AppMetric.carbs:
-        y = (_settings.dailyCarbs ?? 0).toDouble();
+        goal = (_settings.dailyCarbs ?? 0).toDouble();
         break;
     }
 
@@ -227,9 +230,9 @@ class _AppLineState extends State<AppLine> {
                   LineChartData(
                     extraLinesData: ExtraLinesData(
                       horizontalLines: [
-                        if (y > 0)
+                        if (goal > 0)
                           HorizontalLine(
-                            y: y.toDouble(),
+                            y: goal.toDouble(),
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         if (average > 0)
@@ -263,7 +266,7 @@ class _AppLineState extends State<AppLine> {
                       ),
                     ),
                     lineTouchData: LineTouchData(
-                      touchTooltipData: _tooltipData(context, rows),
+                      touchTooltipData: _tooltipData(context, rows, unit),
                     ),
                     lineBarsData: [
                       LineChartBarData(
@@ -284,10 +287,10 @@ class _AppLineState extends State<AppLine> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (y > 0) ...[
+                if (goal > 0) ...[
                   const Text("Goal"),
                   Tooltip(
-                    message: formatter.format(y),
+                    message: '${formatter.format(goal)} $unit',
                     child: Radio(
                       value: 1,
                       groupValue: 1,
@@ -299,7 +302,7 @@ class _AppLineState extends State<AppLine> {
                   ),
                 ],
                 Tooltip(
-                  message: formatter.format(average),
+                  message: '${formatter.format(average)} $unit',
                   child: Radio(
                     value: 1,
                     groupValue: 1,
@@ -357,6 +360,7 @@ class _AppLineState extends State<AppLine> {
   LineTouchTooltipData _tooltipData(
     BuildContext context,
     List<GraphData> rows,
+    String unit,
   ) {
     return LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
@@ -364,15 +368,15 @@ class _AppLineState extends State<AppLine> {
         final row = rows.elementAt(touchedSpots.first.spotIndex);
         final created =
             DateFormat(_settings.shortDateFormat).format(row.created);
-        final formatter = NumberFormat("#,###.00");
         final value = formatter.format(row.value);
 
-        String text = "$value $created";
+        String text = "$value $unit\n";
 
         return [
           LineTooltipItem(
             text,
             TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
+            children: [TextSpan(text: created)],
           ),
         ];
       },
