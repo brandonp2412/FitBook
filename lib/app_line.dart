@@ -11,8 +11,9 @@ import 'package:provider/provider.dart';
 class GraphData {
   final DateTime created;
   final double value;
+  final String unit;
 
-  GraphData({required this.created, required this.value});
+  GraphData({required this.created, required this.value, required this.unit});
 }
 
 class AppLine extends StatefulWidget {
@@ -95,6 +96,7 @@ class _AppLineState extends State<AppLine> {
             ..addColumns([
               db.weights.created,
               db.weights.amount,
+              db.weights.unit,
             ])
             ..groupBy([createdCol]))
           .watch()
@@ -104,6 +106,7 @@ class _AppLineState extends State<AppLine> {
                   (result) => GraphData(
                     created: result.read(db.weights.created)!,
                     value: result.read(db.weights.amount)!,
+                    unit: result.read(db.weights.unit)!,
                   ),
                 )
                 .toList(),
@@ -134,16 +137,16 @@ class _AppLineState extends State<AppLine> {
           final totalProtein = result.read(protein);
           final totalCarb = result.read(carb);
 
-          var value = 0.0;
+          double value = 0.0;
+          String unit = 'g';
 
           switch (widget.metric) {
             case AppMetric.calories:
               value = totalCals ?? 0;
+              unit = 'kcal';
               break;
             case AppMetric.protein:
               value = totalProtein ?? 0;
-              break;
-            case AppMetric.bodyWeight:
               break;
             case AppMetric.fat:
               value = totalFat ?? 0;
@@ -151,11 +154,11 @@ class _AppLineState extends State<AppLine> {
             case AppMetric.carbs:
               value = totalCarb ?? 0;
               break;
-            default:
-              throw Exception("Metric not supported.");
+            case AppMetric.bodyWeight:
+              throw Exception("Body weight isn't recorded here.");
           }
 
-          return GraphData(created: created, value: value);
+          return GraphData(created: created, value: value, unit: unit);
         }).toList();
       });
   }
@@ -177,19 +180,16 @@ class _AppLineState extends State<AppLine> {
     _settings = context.watch<SettingsState>();
 
     double goal = 0;
-    String unit = 'g';
 
     switch (widget.metric) {
       case AppMetric.calories:
         goal = (_settings.dailyCalories ?? 0).toDouble();
-        unit = 'kcal';
         break;
       case AppMetric.protein:
         goal = (_settings.dailyProtein ?? 0).toDouble();
         break;
       case AppMetric.bodyWeight:
         goal = _settings.targetWeight ?? 0;
-        unit = 'kg';
         break;
       case AppMetric.fat:
         goal = (_settings.dailyFat ?? 0).toDouble();
@@ -266,7 +266,8 @@ class _AppLineState extends State<AppLine> {
                       ),
                     ),
                     lineTouchData: LineTouchData(
-                      touchTooltipData: _tooltipData(context, rows, unit),
+                      touchTooltipData:
+                          _tooltipData(context, rows, rows.first.unit),
                     ),
                     lineBarsData: [
                       LineChartBarData(
@@ -290,7 +291,7 @@ class _AppLineState extends State<AppLine> {
                 if (goal > 0) ...[
                   const Text("Goal"),
                   Tooltip(
-                    message: '${formatter.format(goal)} $unit',
+                    message: '${formatter.format(goal)} ${rows.first.unit}',
                     child: Radio(
                       value: 1,
                       groupValue: 1,
@@ -302,7 +303,7 @@ class _AppLineState extends State<AppLine> {
                   ),
                 ],
                 Tooltip(
-                  message: '${formatter.format(average)} $unit',
+                  message: '${formatter.format(average)} ${rows.first.unit}',
                   child: Radio(
                     value: 1,
                     groupValue: 1,
@@ -326,20 +327,19 @@ class _AppLineState extends State<AppLine> {
     TitleMeta meta,
     List<GraphData> rows,
   ) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double labelWidth = 100;
+    int labelCount = (screenWidth / labelWidth).floor();
+
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
     Widget text;
 
-    int middleIndex = (rows.length / 2).floor();
-    List<int> indices;
-
-    if (rows.length % 2 == 0) {
-      indices = [0, rows.length - 1];
-    } else {
-      indices = [0, middleIndex, rows.length - 1];
-    }
+    List<int> indices = List.generate(labelCount, (index) {
+      return ((rows.length - 1) * index / (labelCount - 1)).round();
+    });
 
     if (indices.contains(value.toInt())) {
       DateTime createdDate = rows[value.toInt()].created;
