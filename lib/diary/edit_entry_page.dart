@@ -98,7 +98,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           calories: Value(double.tryParse(_caloriesController.text)),
           proteinG: Value(double.tryParse(_proteinController.text)),
           favorite: Value(_settings.favoriteNew),
-          servingWeight1G: Value(double.tryParse(_quantityController.text)),
+          servingSize: Value(double.tryParse(_quantityController.text)),
           servingUnit: Value(_unit),
         ),
       ));
@@ -329,7 +329,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
-                      "serving (${(_selectedFood?.servingWeight1G ?? 100)} ${_selectedFood?.servingUnit ?? 'grams'})",
+                      "serving (${(_selectedFood?.servingSize ?? 100)} ${_selectedFood?.servingUnit ?? 'grams'})",
                     ),
                   );
                 else

@@ -142,4 +142,5 @@ class Foods extends Table {
       real().named('_200_calorie_weight_g').nullable()();
   BoolColumn get favorite => boolean().nullable()();
   TextColumn get servingUnit => text().nullable()();
+  RealColumn get servingSize => real().nullable()();
 }

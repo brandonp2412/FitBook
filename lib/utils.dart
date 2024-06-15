@@ -22,7 +22,7 @@ EntriesCompanion calculateEntry({
   );
 
   final servingG = convertToGrams(
-    food.servingWeight1G ?? 100,
+    food.servingSize ?? 100,
     food.servingUnit ?? 'grams',
   );
 

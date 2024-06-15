@@ -120,7 +120,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final alcoholGController = TextEditingController(text: "0");
   final caffeineMgController = TextEditingController(text: "0");
   final theobromineMgController = TextEditingController(text: "0");
-  final servingWeight1GController = TextEditingController(text: "100");
+  final servingWeight1GController = TextEditingController(text: "0");
   final servingDescription1GController = TextEditingController(text: "0");
   final servingWeight2GController = TextEditingController(text: "0");
   final servingDescription2GController = TextEditingController(text: "0");
@@ -139,6 +139,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final servingWeight9GController = TextEditingController(text: "0");
   final servingDescription9GController = TextEditingController(text: "0");
   final u200calorieWeightGController = TextEditingController(text: "0");
+  final servingSizeController = TextEditingController(text: '100');
 
   String _servingUnit = 'grams';
 
@@ -286,6 +287,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         servingDescription9GController.text = food.servingDescription9G ?? '';
         u200calorieWeightGController.text =
             food.u200calorieWeightG?.toString() ?? '';
+        servingSizeController.text = food.servingSize?.toString() ?? '100';
       });
     });
   }
@@ -543,6 +545,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       u200calorieWeightG:
           Value(double.tryParse(u200calorieWeightGController.text)),
       servingUnit: Value(_servingUnit),
+      servingSize: Value(double.tryParse(servingSizeController.text)),
     );
 
     if (widget.id != null)
@@ -684,13 +687,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
               textInputAction: TextInputAction.next,
             ),
             TextField(
-              controller: servingWeight1GController,
+              controller: servingSizeController,
               decoration: const InputDecoration(
                 labelText: 'Serving size',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
-              onTap: () => selectAll(servingWeight1GController),
+              onTap: () => selectAll(servingSizeController),
               textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
@@ -1456,6 +1459,16 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
+              ),
+              TextField(
+                controller: servingWeight1GController,
+                decoration: const InputDecoration(
+                  labelText: 'Serving weight 1 (g)',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onTap: () => selectAll(servingWeight1GController),
+                textInputAction: TextInputAction.next,
               ),
               TextField(
                 controller: servingWeight2GController,

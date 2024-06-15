@@ -280,6 +280,9 @@ class _ImportDataState extends State<ImportData> {
             ),
             favorite: Value(bool.tryParse(row[117])),
             servingUnit: Value(row[118]),
+            servingSize: Value(
+              row[119] is String ? double.tryParse(row[119]) : row[119],
+            ),
           ),
         );
       }

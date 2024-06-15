@@ -196,6 +196,7 @@ class ExportData extends StatelessWidget {
                         food.u200calorieWeightG,
                         food.favorite,
                         food.servingUnit,
+                        food.servingSize,
                       ]);
                     }
                     final csv = const ListToCsvConverter(eol: '\n')
