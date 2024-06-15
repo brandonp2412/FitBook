@@ -36,6 +36,7 @@ class AppLine extends StatefulWidget {
 class _AppLineState extends State<AppLine> {
   late Stream<List<GraphData>> _graphStream;
   late SettingsState _settings;
+  final formatter = NumberFormat('#,##0');
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -231,7 +232,7 @@ class _AppLineState extends State<AppLine> {
                             y: y.toDouble(),
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
-                        if (y > 0)
+                        if (average > 0)
                           HorizontalLine(
                             y: average,
                             color: Theme.of(context).colorScheme.tertiary,
@@ -283,21 +284,29 @@ class _AppLineState extends State<AppLine> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Goal"),
-                Radio(
-                  value: 1,
-                  groupValue: 1,
-                  onChanged: (value) {},
-                  fillColor: WidgetStateProperty.resolveWith(
-                    (states) => Theme.of(context).colorScheme.onSurface,
+                if (y > 0) ...[
+                  const Text("Goal"),
+                  Tooltip(
+                    message: formatter.format(y),
+                    child: Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                   ),
-                ),
-                Radio(
-                  value: 1,
-                  groupValue: 1,
-                  onChanged: (value) {},
-                  fillColor: WidgetStateProperty.resolveWith(
-                    (states) => Theme.of(context).colorScheme.tertiary,
+                ],
+                Tooltip(
+                  message: formatter.format(average),
+                  child: Radio(
+                    value: 1,
+                    groupValue: 1,
+                    onChanged: (value) {},
+                    fillColor: WidgetStateProperty.resolveWith(
+                      (states) => Theme.of(context).colorScheme.tertiary,
+                    ),
                   ),
                 ),
                 const Text("Average"),
