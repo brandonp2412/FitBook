@@ -289,31 +289,39 @@ class _AppLineState extends State<AppLine> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (goal > 0) ...[
-                  const Text("Goal"),
                   Tooltip(
                     message: '${formatter.format(goal)} ${rows.first.unit}',
-                    child: Radio(
-                      value: 1,
-                      groupValue: 1,
-                      onChanged: (value) {},
-                      fillColor: WidgetStateProperty.resolveWith(
-                        (states) => Theme.of(context).colorScheme.onSurface,
-                      ),
+                    child: Row(
+                      children: [
+                        const Text("Goal"),
+                        Radio(
+                          value: 1,
+                          groupValue: 1,
+                          onChanged: (value) {},
+                          fillColor: WidgetStateProperty.resolveWith(
+                            (states) => Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
                 Tooltip(
                   message: '${formatter.format(average)} ${rows.first.unit}',
-                  child: Radio(
-                    value: 1,
-                    groupValue: 1,
-                    onChanged: (value) {},
-                    fillColor: WidgetStateProperty.resolveWith(
-                      (states) => Theme.of(context).colorScheme.tertiary,
-                    ),
+                  child: Row(
+                    children: [
+                      Radio(
+                        value: 1,
+                        groupValue: 1,
+                        onChanged: (value) {},
+                        fillColor: WidgetStateProperty.resolveWith(
+                          (states) => Theme.of(context).colorScheme.tertiary,
+                        ),
+                      ),
+                      const Text("Average"),
+                    ],
                   ),
                 ),
-                const Text("Average"),
               ],
             ),
           ],
