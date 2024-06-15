@@ -2,6 +2,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // [required] background_fetch
+        maven { url "${project(':background_fetch').projectDir}/libs" }
     }
 }
 
@@ -15,4 +17,9 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+ext {
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+    appCompatVersion = "1.4.2"
 }

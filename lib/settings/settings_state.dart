@@ -1,5 +1,8 @@
+import 'package:background_fetch/background_fetch.dart';
+import 'package:fit_book/background.dart';
 import 'package:fit_book/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsState extends ChangeNotifier {
@@ -15,7 +18,7 @@ class SettingsState extends ChangeNotifier {
   bool showOthers = false;
   bool favoriteNew = false;
   bool selectEntryOnSubmit = false;
-  bool notifications = true;
+  bool notifications = false;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -48,7 +51,7 @@ class SettingsState extends ChangeNotifier {
     curveLines = prefs.getBool("curveLines") ?? true;
     showOthers = prefs.getBool("showOthers") ?? false;
     selectEntryOnSubmit = prefs.getBool("selectEntryOnSubmit") ?? false;
-    notifications = prefs.getBool('notifications') ?? true;
+    notifications = prefs.getBool('notifications') ?? false;
 
     dailyCalories = prefs.getInt('dailyCalories');
     dailyProtein = prefs.getInt('dailyProtein');
@@ -63,10 +66,15 @@ class SettingsState extends ChangeNotifier {
     prefs.setString('diarySummary', value.toString());
   }
 
-  void setNotifications(bool value) {
+  void setNotifications(bool value) async {
     notifications = value;
     prefs.setBool('notifications', value);
     notifyListeners();
+    Permission.notification.request();
+    if (value)
+      registerBackground();
+    else
+      BackgroundFetch.stop();
   }
 
   void setSelectEntryOnSubmit(bool value) {
