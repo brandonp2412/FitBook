@@ -32,10 +32,10 @@ EntriesCompanion calculateEntry({
   else
     quantityG = convertToGrams(quantity, unit);
 
-  final caloriesG = (food.calories ?? 0) / servingG;
-  final proteinG = (food.proteinG ?? 0) / servingG;
-  final fatG = (food.fatG ?? 0) / servingG;
-  final carbG = (food.carbohydrateG ?? 0) / servingG;
+  final caloriesG = (food.calories ?? 0) / 100;
+  final proteinG = (food.proteinG ?? 0) / 100;
+  final fatG = (food.fatG ?? 0) / 100;
+  final carbG = (food.carbohydrateG ?? 0) / 100;
 
   return entry.copyWith(
     kCalories: Value(quantityG * caloriesG),
