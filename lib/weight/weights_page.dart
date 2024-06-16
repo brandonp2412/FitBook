@@ -28,16 +28,18 @@ class WeightsPageState extends State<WeightsPage> {
   }
 
   void _setStream() {
-    _stream = (db.weights.select()
-          ..where((u) => u.created.date.contains(_search))
-          ..orderBy([
-            (u) => OrderingTerm(
-                  expression: u.created,
-                  mode: OrderingMode.desc,
-                ),
-          ])
-          ..limit(_limit))
-        .watch();
+    setState(() {
+      _stream = (db.weights.select()
+            ..where((u) => u.created.date.contains(_search))
+            ..orderBy([
+              (u) => OrderingTerm(
+                    expression: u.created,
+                    mode: OrderingMode.desc,
+                  ),
+            ])
+            ..limit(_limit))
+          .watch();
+    });
   }
 
   @override
@@ -64,7 +66,6 @@ class WeightsPageState extends State<WeightsPage> {
         stream: _stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error!);
-
           final weights = snapshot.data ?? [];
 
           return material.Column(
@@ -149,19 +150,19 @@ class WeightsPageState extends State<WeightsPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final weights = await _stream.first;
-          navigatorKey.currentState!.push(
-            MaterialPageRoute(
-              builder: (context) => EditWeightPage(
-                weight: Weight(
-                  amount: 0.0,
-                  created: DateTime.now(),
-                  id: -1,
-                  unit: 'kg',
-                ),
-                lastWeight: weights.first,
-              ),
+          final defaultWeight = Weight(
+            amount: 0.0,
+            created: DateTime.now(),
+            id: -1,
+            unit: 'kg',
+          );
+          final editRoute = MaterialPageRoute(
+            builder: (context) => EditWeightPage(
+              weight: defaultWeight,
+              lastWeight: weights.firstOrNull ?? defaultWeight,
             ),
           );
+          navigatorKey.currentState!.push(editRoute);
         },
         tooltip: 'Add',
         child: const Icon(Icons.add),
