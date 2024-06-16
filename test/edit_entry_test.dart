@@ -21,7 +21,7 @@ void main() async {
       FoodsCompanion.insert(
         name: 'Test',
         calories: const Value(1),
-        servingWeight1G: const Value(1),
+        servingSize: const Value(1),
       ),
     ));
     final entryId = await (db.entries.insertOne(
