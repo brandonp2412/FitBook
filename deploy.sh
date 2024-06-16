@@ -13,9 +13,10 @@ if [[ -n "$(git diff --stat)" ]]; then
     exit 1
 fi
 
-./screenshots.sh "phoneScreenshots"
-./screenshots.sh "sevenInchScreenshots"
-./screenshots.sh "tenInchScreenshots"
+# TODO: Un-comment
+# ./screenshots.sh "phoneScreenshots"
+# ./screenshots.sh "sevenInchScreenshots"
+# ./screenshots.sh "tenInchScreenshots"
 
 line=$(yq -r .version pubspec.yaml)
 build_number=$(cut -d '+' -f 2 <<< "$line")
