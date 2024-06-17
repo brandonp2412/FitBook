@@ -46,3 +46,6 @@ app.*.map.json
 .fvm/
 
 coverage/
+app-store-connect.json
+fastlane/Deliverfile
+fastlane/Preview.html
