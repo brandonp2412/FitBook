@@ -11,6 +11,8 @@ class SettingsState extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
   String longDateFormat = 'dd/MM/yy';
   String shortDateFormat = 'd/M/yy';
+  String entryUnit = 'serving';
+  String foodUnit = 'grams';
   DiarySummary diarySummary = DiarySummary.division;
 
   bool systemColors = false;
@@ -30,6 +32,8 @@ class SettingsState extends ChangeNotifier {
     prefs = sharedPreferences;
     longDateFormat = prefs.getString('longDateFormat') ?? "dd/MM/yy";
     shortDateFormat = prefs.getString('shortDateFormat') ?? "d/M/yy";
+    entryUnit = prefs.getString('entryUnit') ?? 'serving';
+    foodUnit = prefs.getString('foodUnit') ?? 'grams';
 
     final theme = prefs.getString('themeMode');
     if (theme == "ThemeMode.system")
@@ -58,6 +62,18 @@ class SettingsState extends ChangeNotifier {
     dailyFat = prefs.getInt('dailyFat');
     dailyCarbs = prefs.getInt('dailyCarbs');
     targetWeight = prefs.getDouble('targetWeight');
+  }
+
+  void setFoodUnit(String value) {
+    foodUnit = value;
+    notifyListeners();
+    prefs.setString('foodUnit', value);
+  }
+
+  void setEntryUnit(String value) {
+    entryUnit = value;
+    notifyListeners();
+    prefs.setString('entryUnit', value);
   }
 
   void setDiarySummary(DiarySummary value) {

@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsLine(
         key: 'theme',
         widget: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
           child: DropdownButtonFormField(
             value: _settings.themeMode,
             decoration: const InputDecoration(
@@ -143,9 +143,47 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
+        key: 'entry unit',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: DropdownButtonFormField<String>(
+            value: _settings.entryUnit,
+            decoration: const InputDecoration(labelText: 'Diary unit'),
+            items: units.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              _settings.setEntryUnit(newValue!);
+            },
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'food unit',
+        widget: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: DropdownButtonFormField<String>(
+            value: _settings.foodUnit,
+            decoration: const InputDecoration(labelText: 'Food unit'),
+            items: units.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              _settings.setFoodUnit(newValue!);
+            },
+          ),
+        ),
+      ),
+      SettingsLine(
         key: 'diary summary',
         widget: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField(
             value: _settings.diarySummary,
             decoration: const InputDecoration(

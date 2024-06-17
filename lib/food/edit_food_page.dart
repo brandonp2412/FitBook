@@ -19,6 +19,8 @@ class EditFoodPage extends StatefulWidget {
 
 class _EditFoodPageState extends State<EditFoodPage> {
   late SettingsState _settings;
+  late String _servingUnit;
+
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final caloriesController = TextEditingController(text: "0");
@@ -141,19 +143,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final u200calorieWeightGController = TextEditingController(text: "0");
   final servingSizeController = TextEditingController(text: '100');
 
-  String _servingUnit = 'grams';
-
   @override
   void initState() {
     super.initState();
     _settings = context.read<SettingsState>();
+    _servingUnit = _settings.foodUnit;
     if (widget.id == null) return;
 
     (db.foods.select()..where((u) => u.id.equals(widget.id!)))
         .getSingle()
         .then((food) {
       setState(() {
-        _servingUnit = food.servingUnit ?? 'grams';
+        _servingUnit = food.servingUnit ?? _servingUnit;
         nameController.text = food.name;
         foodGroupController.text = food.foodGroup ?? '';
         caloriesController.text = food.calories?.toString() ?? '';

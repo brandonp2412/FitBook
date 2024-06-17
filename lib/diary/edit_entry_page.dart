@@ -26,9 +26,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final _quantityNode = FocusNode();
 
   late SettingsState _settings;
+  late String _unit;
 
   DateTime _created = DateTime.now();
-  var _unit = 'serving';
   bool _foodDirty = false;
   Food? _selectedFood;
   TextEditingController? _nameController;
@@ -37,6 +37,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   void initState() {
     super.initState();
     _settings = context.read<SettingsState>();
+    _unit = _settings.entryUnit;
     if (widget.id == null) return;
 
     (db.entries.select()..where((u) => u.id.equals(widget.id!)))
@@ -329,7 +330,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
-                      "serving (${(_selectedFood?.servingSize ?? 100)} ${_selectedFood?.servingUnit ?? 'grams'})",
+                      "serving (${(_selectedFood?.servingSize ?? 100)} ${_selectedFood?.servingUnit ?? _unit})",
                     ),
                   );
                 else
