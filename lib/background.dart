@@ -1,6 +1,6 @@
 import 'package:background_fetch/background_fetch.dart';
-import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -8,7 +8,7 @@ void registerBackground() async {
   await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
   await BackgroundFetch.configure(
       BackgroundFetchConfig(
-        minimumFetchInterval: const Duration(hours: 4).inMinutes,
+        minimumFetchInterval: 15,
         stopOnTerminate: false,
         enableHeadless: true,
         requiresBatteryNotLow: false,
