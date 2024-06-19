@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
       SettingsLine(
         key: 'theme',
         widget: Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+          padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField(
             value: _settings.themeMode,
             decoration: const InputDecoration(
@@ -409,6 +409,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                   leading: const Icon(Icons.search),
                 ),
+                const SizedBox(height: 8.0),
               ] +
               children
                   .where(
