@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final _targetWeightController = TextEditingController();
   late SettingsState _settings;
 
-  final List<String> shortFormats = [
+  final List<String> _shortFormats = [
     'd/M/yy',
     'M/d/yy',
     'd-M-yy',
@@ -46,14 +46,24 @@ class _SettingsPageState extends State<SettingsPage> {
     'M.d.yy',
   ];
 
-  final List<String> longFormats = [
+  final List<String> _longFormats = [
     'dd/MM/yy',
     'dd/MM/yy h:mm a',
+    'dd/MM/yy H:mm',
     'EEE h:mm a',
     'yyyy-MM-dd',
     'yyyy-MM-dd h:mm a',
+    'yyyy-MM-dd H:mm',
     'yyyy.MM.dd',
+    'yyyy.MM.dd h:mm a',
+    'yyyy.MM.dd H:mm',
   ];
+
+  final now = DateTime.now();
+  String get _longExample => DateFormat(_settings.longDateFormat)
+      .format(DateTime(now.year, now.month, now.day, 13, 54));
+  String get _shortExample => DateFormat(_settings.shortDateFormat)
+      .format(DateTime(now.year, now.month, now.day, 13, 54));
 
   @override
   void initState() {
@@ -104,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
             value: _settings.longDateFormat,
-            items: longFormats.map((String value) {
+            items: _longFormats.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -114,8 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
               _settings.setLong(newValue!);
             },
             decoration: InputDecoration(
-              labelText:
-                  'Long date format (${DateFormat(_settings.longDateFormat).format(DateTime.now())})',
+              labelText: 'Long date format ($_longExample)',
             ),
           ),
         ),
@@ -126,7 +135,7 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
             value: _settings.shortDateFormat,
-            items: shortFormats.map((String value) {
+            items: _shortFormats.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -136,8 +145,7 @@ class _SettingsPageState extends State<SettingsPage> {
               _settings.setShort(newValue!);
             },
             decoration: InputDecoration(
-              labelText:
-                  'Short date format (${DateFormat(_settings.shortDateFormat).format(DateTime.now())})',
+              labelText: 'Short date format ($_shortExample)',
             ),
           ),
         ),
