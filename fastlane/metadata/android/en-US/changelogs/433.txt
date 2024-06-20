@@ -1,0 +1,1 @@
+- Show average + goal numbers below graphs

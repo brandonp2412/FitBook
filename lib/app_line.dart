@@ -37,7 +37,7 @@ class AppLine extends StatefulWidget {
 class _AppLineState extends State<AppLine> {
   late Stream<List<GraphData>> _graphStream;
   late SettingsState _settings;
-  final formatter = NumberFormat('#,##0');
+  final formatter = NumberFormat('#,##0.00');
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -285,42 +285,42 @@ class _AppLineState extends State<AppLine> {
             const SizedBox(
               height: 16.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            material.Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
-                if (goal > 0) ...[
-                  Tooltip(
-                    message: '${formatter.format(goal)} ${rows.first.unit}',
-                    child: Row(
-                      children: [
-                        const Text("Goal"),
-                        Radio(
-                          value: 1,
-                          groupValue: 1,
-                          onChanged: (value) {},
-                          fillColor: WidgetStateProperty.resolveWith(
-                            (states) => Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                Tooltip(
-                  message: '${formatter.format(average)} ${rows.first.unit}',
-                  child: Row(
-                    children: [
-                      Radio(
-                        value: 1,
-                        groupValue: 1,
-                        onChanged: (value) {},
-                        fillColor: WidgetStateProperty.resolveWith(
-                          (states) => Theme.of(context).colorScheme.tertiary,
-                        ),
+                TableRow(
+                  children: [
+                    Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.tertiary,
                       ),
-                      const Text("Average"),
-                    ],
-                  ),
+                    ),
+                    const Text(
+                      "Average",
+                    ),
+                    Text(
+                      "${formatter.format(average)} ${rows.first.unit}",
+                    ),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    const Text(
+                      "Goal",
+                    ),
+                    Text("${formatter.format(goal)} ${rows.first.unit}"),
+                  ],
                 ),
               ],
             ),
