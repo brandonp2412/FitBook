@@ -330,7 +330,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
-                      "serving (${(_selectedFood?.servingSize ?? 100)} ${_selectedFood?.servingUnit ?? _unit})",
+                      "serving (${(_selectedFood?.servingSize ?? 100)} ${_selectedFood?.servingUnit ?? _settings.foodUnit})",
                     ),
                   );
                 else
