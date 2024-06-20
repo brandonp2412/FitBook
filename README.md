@@ -2,13 +2,19 @@
 
 Track your eating habits and visualize your progress with intuitive graphs, all completely offline.
 
+<p float="left">
+    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
+    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/brandonp2412/fitbook">
+</p>
+
 ## Features
 
-- **Offline**: Log your meals and snacks with ease, even without an internet connection. Our app will keep track of the calories you consume throughout the day.
-
-- **Graphs**: Visualize your calorie intake over time with our built-in graph feature. This can help you understand your eating habits better and make necessary adjustments.
-
 - **Large dataset**: FitBook ships with over 14 thousand foods (sourced from [MyFoodData](https://tools.myfooddata.com/nutrition-facts-database-spreadsheet.php))
+
+- **Graphs**: Plot your eating progress by Calories and other macro-nutrients.
+
+- **Offline**: Log your meals and snacks with ease, even without an internet connection.
 
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'>
     <img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
@@ -28,15 +34,10 @@ Track your eating habits and visualize your progress with intuitive graphs, all 
         alt="Get it on Linux"
         height="75">
 </a>
+
 <a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 226.51px; height: 75px;">
     <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1717977600" alt="Download on the App Store" style="border-radius: 13px; width: 226.51px; height: 75px;">
 </a>
-
-<p float="left">
-    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
-    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg">
-    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/brandonp2412/fitbook">
-</p>
 
 ## Screenshots
 
