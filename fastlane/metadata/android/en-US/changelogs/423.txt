@@ -1,0 +1,2 @@
+- Fix screenshot tests
+- Fix deploy.sh
