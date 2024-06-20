@@ -13,10 +13,9 @@ if [[ -n "$(git diff --stat)" ]]; then
     exit 1
 fi
 
-# TODO: Un-comment
-# ./screenshots.sh "phoneScreenshots"
-# ./screenshots.sh "sevenInchScreenshots"
-# ./screenshots.sh "tenInchScreenshots"
+./screenshots.sh "phoneScreenshots"
+./screenshots.sh "sevenInchScreenshots"
+./screenshots.sh "tenInchScreenshots"
 
 line=$(yq -r .version pubspec.yaml)
 build_number=$(cut -d '+' -f 2 <<< "$line")
@@ -50,7 +49,7 @@ mkdir -p build/native_assets/linux
 ./flutter/bin/flutter build linux
 
 apk=build/app/outputs/flutter-apk
-(cd build/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
+(cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
 mv $apk/app-release.apk $apk/fitbook.apk
 
 last_commit=$(git log -1 --pretty=%B | head -n 1)
@@ -60,7 +59,7 @@ git push --force
 
 gh release create "$new_version" --notes "${changelog:-$last_commits}"  \
   $apk/app-*-release.apk \
-  build/linux/x64/release/bundle/fitbook-linux.zip \
+  $apk/pipeline/linux/x64/release/bundle/fitbook-linux.zip \
   $apk/fitbook.apk
 git pull
 
