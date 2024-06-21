@@ -38,9 +38,6 @@ Track your eating habits and visualize your progress with intuitive graphs, all 
 <a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055">
     <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1717977600" alt="Download on the App Store" height="75">
 </a>
-<a href="https://apps.microsoft.com/detail/Flexify/9P13THVK7F69?mode=direct">
-	<img src="https://get.microsoft.com/images/en-us%20dark.svg" height="75"/>
-</a>
 
 ## Screenshots
 
