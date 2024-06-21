@@ -13,6 +13,6 @@
     "**/Thumbs.db": true,
     "flutter/": true
   },
-  "dart.flutterSdkPath": ".fvm/versions/3.22.2",
+  "dart.flutterSdkPath": "flutter/bin",
   "editor.formatOnSave": true,
 }
