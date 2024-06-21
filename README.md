@@ -63,7 +63,7 @@ If you would like to support this project:
 
 To install the app, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/brandonp2412/FitBook fitbook`
+1. Clone the repository: `git clone --recursive https://github.com/brandonp2412/FitBook fitbook`
 2. Navigate into the project directory: `cd fitbook`
 3. Install dependencies: `flutter pub get`
 4. Run the app: `flutter run`
