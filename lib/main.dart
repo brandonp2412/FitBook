@@ -82,11 +82,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        body: SafeArea(
-          child: TabBarView(
+    return const SafeArea(
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          body: TabBarView(
             children: [
               DiaryPage(),
               GraphPage(),
@@ -94,26 +94,26 @@ class HomePage extends StatelessWidget {
               WeightsPage(),
             ],
           ),
-        ),
-        bottomNavigationBar: TabBar(
-          tabs: [
-            Tab(
-              icon: Icon(Icons.date_range),
-              text: "Diary",
-            ),
-            Tab(
-              icon: Icon(Icons.insights),
-              text: "Graph",
-            ),
-            Tab(
-              icon: Icon(Icons.restaurant),
-              text: "Food",
-            ),
-            Tab(
-              icon: Icon(Icons.scale),
-              text: "Weight",
-            ),
-          ],
+          bottomNavigationBar: TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.date_range),
+                text: "Diary",
+              ),
+              Tab(
+                icon: Icon(Icons.insights),
+                text: "Graph",
+              ),
+              Tab(
+                icon: Icon(Icons.restaurant),
+                text: "Food",
+              ),
+              Tab(
+                icon: Icon(Icons.scale),
+                text: "Weight",
+              ),
+            ],
+          ),
         ),
       ),
     );
