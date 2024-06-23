@@ -46,7 +46,7 @@ class FoodPageState extends State<FoodPage> {
             ),
             OrderingTerm(
               expression: db.foods.name,
-              mode: OrderingMode.desc,
+              mode: OrderingMode.asc,
             ),
           ])
           ..limit(_limit))
@@ -172,8 +172,6 @@ class FoodPageState extends State<FoodPage> {
                     });
                 },
                 onNext: () async {
-                  final result = await _stream.first;
-                  if (result.length <= _limit) return;
                   setState(() {
                     _limit += 10;
                   });
