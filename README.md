@@ -16,32 +16,13 @@ Track your eating habits and visualize your progress with intuitive graphs, all 
 
 - **Offline**: Log your meals and snacks with ease, even without an internet connection.
 
-<a href='https://play.google.com/store/apps/details?id=com.presley.fit_book' style="text-decoration: none !important;">
-    <img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
-</a>
-<a href="https://f-droid.org/packages/com.presley.fit_book" style="text-decoration: none !important;">
-    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-        alt="Get it on F-Droid"
-        height="75">
-</a>
-<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook.apk" style="text-decoration: none !important;">
-    <img src="docs/get-it-on-android.png"
-        alt="Get it on Android"
-        height="75">
-</a>
-<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook-linux.zip" style="text-decoration: none !important;">
-    <img src="docs/get-it-on-linux.png"
-        alt="Get it on Linux"
-        height="75">
-</a>
+<a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'><img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href="https://f-droid.org/packages/com.presley.fit_book"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="75"></a>
+<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook.apk"><img src="docs/get-it-on-android.png" alt="Get it on Android" height="75"></a>
+<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook-linux.zip"><img src="docs/get-it-on-linux.png" alt="Get it on Linux" height="75"></a>
 
-<a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055" style="text-decoration: none !important;">
-    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1717977600" 
-        alt="Download on the App Store" height="75">
-</a>
-<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct" style="text-decoration: none !important;">
-	<img src="https://get.microsoft.com/images/en-us%20dark.svg" height="75"/>
-</a>
+<a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1717977600" alt="Download on the App Store" height="75"></a>
+<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" height="75"/></a>
 
 ## Screenshots
 
