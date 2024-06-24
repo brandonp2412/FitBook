@@ -7,7 +7,6 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -137,7 +136,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
       body: Form(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: material.Column(
+          child: ListView(
             children: [
               TextFormField(
                 controller: _valueController,
