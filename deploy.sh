@@ -2,25 +2,6 @@
 
 set -ex
 
-changelogfile=$(mktemp /tmp/changelog.XXXXXX)
-nvim "$changelogfile"
-changelog=$(cat $changelogfile)
-
-./flutter/bin/flutter test
-
-dart run drift_dev schema dump lib/database/database.dart drift_schemas
-dart run drift_dev schema steps drift_schemas/ lib/database/schema_versions.dart
-dart run drift_dev schema generate drift_schemas/ test/generated_migrations/
-if [[ -n "$(git diff --stat)" ]]; then
-    echo "There are unstaged changes in the repository:"
-    git --no-pager diff
-    exit 1
-fi
-
-./screenshots.sh "phoneScreenshots"
-./screenshots.sh "sevenInchScreenshots"
-./screenshots.sh "tenInchScreenshots"
-
 line=$(yq -r .version pubspec.yaml)
 build_number=$(cut -d '+' -f 2 <<< "$line")
 version=$(cut -d '+' -f 1 <<< "$line")
@@ -29,6 +10,24 @@ minor=$(cut -d '.' -f 2 <<< "$version")
 patch=$(cut -d '.' -f 3 <<< "$version")
 new_patch=$((patch + 1))
 new_build_number=$((build_number + 1))
+
+nvim "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
+changelog=$(cat "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt")
+
+./flutter/bin/flutter test
+
+dart run drift_dev schema dump lib/database/database.dart drift_schemas
+dart run drift_dev schema steps drift_schemas/ lib/database/schema_versions.dart
+dart run drift_dev schema generate drift_schemas/ test/generated_migrations/
+if [[ -n "$(git diff --stat drift_schemas lib/database/schema_versions.dart test/generated_migrations)" ]]; then
+    echo "There are unstaged changes in the repository:"
+    git --no-pager diff
+    exit 1
+fi
+
+./screenshots.sh "phoneScreenshots"
+./screenshots.sh "sevenInchScreenshots"
+./screenshots.sh "tenInchScreenshots"
 
 new_flutter_version="$major.$minor.$new_patch+$new_build_number"
 new_version="$major.$minor.$new_patch"
