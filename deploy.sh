@@ -2,6 +2,10 @@
 
 set -ex
 
+changelogfile=$(mktemp /tmp/changelog.XXXXXX)
+nvim "$changelogfile"
+changelog=$(cat $changelogfile)
+
 ./flutter/bin/flutter test
 
 dart run drift_dev schema dump lib/database/database.dart drift_schemas
@@ -31,9 +35,8 @@ new_version="$major.$minor.$new_patch"
 yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 rest=$(git log -1 --pretty=%B | tail -n +2)
 git add pubspec.yaml
-last_commits=$(git log --pretty=format:"%s" @{u}..HEAD | awk '{print "- "$0}')
 changelog_number=$((new_build_number * 10 + 3))
-echo "$last_commits" > "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
+echo "$changelog" > "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 git add fastlane/metadata
 
 if [[ -n "$(git diff --stat)" ]]; then
@@ -57,7 +60,7 @@ git commit --amend -m "$last_commit - $new_version 🚀
 $rest"
 git push --force
 
-gh release create "$new_version" --notes "${changelog:-$last_commits}"  \
+gh release create "$new_version" --notes "$changelog"  \
   $apk/app-*-release.apk \
   $apk/pipeline/linux/x64/release/bundle/fitbook-linux.zip \
   $apk/fitbook.apk
