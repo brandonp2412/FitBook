@@ -285,33 +285,41 @@ class _AppLineState extends State<AppLine> {
             const SizedBox(
               height: 16.0,
             ),
-            ListTile(
-              title: const Text("Average"),
-              subtitle: Text(
-                "${formatter.format(average)} ${rows.first.unit}",
-              ),
-              leading: Radio(
-                value: 1,
-                groupValue: 1,
-                onChanged: (value) {},
-                fillColor: WidgetStateProperty.resolveWith(
-                  (states) => Theme.of(context).colorScheme.tertiary,
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    title: const Text("Average"),
+                    subtitle: Text(
+                      "${formatter.format(average)} ${rows.first.unit}",
+                    ),
+                    leading: Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.tertiary,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            ListTile(
-              title: const Text("Goal"),
-              subtitle: Text(
-                "${formatter.format(goal)} ${rows.first.unit}",
-              ),
-              leading: Radio(
-                value: 1,
-                groupValue: 1,
-                onChanged: (value) {},
-                fillColor: WidgetStateProperty.resolveWith(
-                  (states) => Theme.of(context).colorScheme.onSurface,
+                Expanded(
+                  child: ListTile(
+                    title: const Text("Goal"),
+                    subtitle: Text(
+                      "${formatter.format(goal)} ${rows.first.unit}",
+                    ),
+                    leading: Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         );
