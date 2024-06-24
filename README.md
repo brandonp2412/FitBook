@@ -3,9 +3,9 @@
 Track your eating habits and visualize your progress with intuitive graphs, all completely offline.
 
 <p float="left">
-    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book">
-    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg">
-    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/brandonp2412/fitbook">
+    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
+    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/brandonp2412/fitbook?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
 </p>
 
 ## Features
