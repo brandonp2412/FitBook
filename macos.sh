@@ -2,6 +2,7 @@
 
 set -ex
 
+flutter build macos --release
 APP_NAME="build/macos/Build/Products/Release/FitBook.app"
 PACKAGE_NAME=build/macos/FitBook.pkg
 xcrun productbuild --component "$APP_NAME" /Applications/ build/macos/unsigned.pkg
