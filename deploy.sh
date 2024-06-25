@@ -74,5 +74,6 @@ ssh macbook "
   cd fitbook 
   git pull 
   security unlock-keychain -p '$macpass'
-  nohup ./macos.sh > /var/log/fitbook-deploy.txt 2>&1 &
+  nohup ./macos.sh > /var/log/fitbook-macos.txt 2>&1 &
+  nohup ./ios.sh > /var/log/fitbook-ios.txt 2>&1 &
 "
