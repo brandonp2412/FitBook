@@ -65,6 +65,14 @@ gh release create "$new_version" --notes "$changelog"  \
 git pull
 
 bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.aab
-echo q | flutter run --release -d 'pixel 5'
+echo q | flutter run --release
 
-ssh macos 'cd fitbook && git pull && ./macos.sh'
+macpass="$(pass macbook)"
+ssh macbook "
+  set -e
+  source .zprofile 
+  cd fitbook 
+  git pull 
+  security unlock-keychain -p '$macpass'
+  ./macos.sh
+"
