@@ -17,3 +17,5 @@ xcrun productsign --sign "$INSTALLER_CERT_NAME" build/macos/unsigned.pkg "$PACKA
 rm -f build/macos/unsigned.pkg
 
 fastlane deliver --pkg build/macos/FitBook.pkg
+flutter build ipa
+fastlane deliver --ipa build/ios/ipa/fit_book.ipa
