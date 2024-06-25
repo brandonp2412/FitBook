@@ -305,22 +305,23 @@ class _AppLineState extends State<AppLine> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: ListTile(
-                    title: const Text("Goal"),
-                    subtitle: Text(
-                      "${_formatter.format(goal)} ${rows.first.unit}",
-                    ),
-                    leading: Radio(
-                      value: 1,
-                      groupValue: 1,
-                      onChanged: (value) {},
-                      fillColor: WidgetStateProperty.resolveWith(
-                        (states) => Theme.of(context).colorScheme.onSurface,
+                if (goal > 0)
+                  Expanded(
+                    child: ListTile(
+                      title: const Text("Goal"),
+                      subtitle: Text(
+                        "${_formatter.format(goal)} ${rows.first.unit}",
+                      ),
+                      leading: Radio(
+                        value: 1,
+                        groupValue: 1,
+                        onChanged: (value) {},
+                        fillColor: WidgetStateProperty.resolveWith(
+                          (states) => Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ],
