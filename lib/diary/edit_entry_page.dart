@@ -39,7 +39,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
     _settings = context.read<SettingsState>();
     _unit = _settings.entryUnit;
     if (widget.id == null) return;
-
     (db.entries.select()..where((u) => u.id.equals(widget.id!)))
         .getSingle()
         .then(
@@ -272,10 +271,26 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       ..limit(1))
                     .getSingleOrNull();
                 if (food == null) return;
+
+                final lastEntry = await (db.entries.select()
+                      ..where((u) => u.food.equals(food.id))
+                      ..orderBy([
+                        (u) => OrderingTerm(
+                              expression: u.created,
+                              mode: OrderingMode.desc,
+                            ),
+                      ])
+                      ..limit(1))
+                    .getSingleOrNull();
+
                 setState(() {
                   _foodDirty = false;
                   _selectedFood = food;
+                  if (lastEntry == null) return;
+                  _quantityController.text = lastEntry.quantity.toString();
+                  _unit = lastEntry.unit;
                 });
+
                 _recalc();
                 _quantityNode.requestFocus();
                 selectAll(_quantityController);
