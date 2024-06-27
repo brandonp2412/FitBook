@@ -62,12 +62,12 @@ class _WeightListState extends State<WeightList> {
               ListTile(
                 title: Text(
                   "${weight.amount} ${weight.unit}",
-                  style: isToday
-                      ? const TextStyle(decoration: TextDecoration.underline)
-                      : null,
                 ),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(weight.created),
+                  style: isToday
+                      ? const TextStyle(fontWeight: FontWeight.bold)
+                      : null,
                 ),
                 selected: widget.selected.contains(weight.id),
                 onLongPress: () => widget.onSelect(weight.id),
