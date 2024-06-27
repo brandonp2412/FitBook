@@ -14,6 +14,8 @@ changelog_number=$((new_build_number * 10 + 3))
 
 nvim "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 changelog=$(cat "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt")
+echo "$changelog" > fastlane/metadata/en-AU/release_notes.txt
+echo "$changelog" > fastlane/metadata/en-US/release_notes.txt
 
 ./flutter/bin/flutter test
 
@@ -74,6 +76,6 @@ ssh macbook "
   cd fitbook 
   git pull 
   security unlock-keychain -p '$macpass'
-  nohup ./macos.sh > /var/log/fitbook-macos.txt 2>&1 &
-  nohup ./ios.sh > /var/log/fitbook-ios.txt 2>&1 &
+  ./macos.sh
+  ./ios.sh
 "
