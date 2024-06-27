@@ -1,3 +1,2 @@
-- Limit # of body weight entries
-- Hide goals if they are zero
-- Reduce app size
+- Save after entering quantity
+- Underline todays weight

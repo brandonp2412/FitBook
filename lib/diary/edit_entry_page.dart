@@ -321,6 +321,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 _recalc();
               },
               textInputAction: TextInputAction.next,
+              onSubmitted: (value) {
+                if (_selectedFood != null) _save();
+              },
             ),
             DropdownButtonFormField<String>(
               value: _unit,
