@@ -1,2 +1,2 @@
-- Save after entering quantity
-- Underline todays weight
+- Show date in day separators
+- Auto-complete last entry quantity + unit

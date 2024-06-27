@@ -1,5 +1,5 @@
-import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/database/entries.dart';
+import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -67,11 +67,15 @@ class _EntryListState extends State<EntryList> {
           return Column(
             children: [
               if (showDivider)
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: Divider()),
-                    Icon(Icons.calendar_today),
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
+                    const Icon(Icons.today),
+                    Text(
+                      DateFormat(settings.shortDateFormat)
+                          .format(previous.entry.created),
+                    ),
+                    const Expanded(child: Divider()),
                   ],
                 ),
               ListTile(
