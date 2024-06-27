@@ -1,5 +1,4 @@
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:fit_book/background.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/entries_state.dart';
@@ -22,8 +21,6 @@ Future<void> main() async {
   final settingsState = SettingsState(sharedPreferences);
 
   runApp(appProviders(settingsState));
-
-  if (settingsState.notifications) registerBackground();
 }
 
 Widget appProviders(SettingsState settingsState) => MultiProvider(

@@ -1,8 +1,5 @@
-import 'package:background_fetch/background_fetch.dart';
-import 'package:fit_book/background.dart';
 import 'package:fit_book/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsState extends ChangeNotifier {
@@ -86,11 +83,6 @@ class SettingsState extends ChangeNotifier {
     notifications = value;
     prefs.setBool('notifications', value);
     notifyListeners();
-    Permission.notification.request();
-    if (value)
-      registerBackground();
-    else
-      BackgroundFetch.stop();
   }
 
   void setSelectEntryOnSubmit(bool value) {
