@@ -23,6 +23,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final _caloriesController = TextEditingController(text: "0");
   final _kilojoulesController = TextEditingController(text: "0");
   final _proteinController = TextEditingController(text: "0");
+  final _carbController = TextEditingController(text: "0");
+  final _fatController = TextEditingController(text: "0");
   final _quantityNode = FocusNode();
 
   late SettingsState _settings;
@@ -59,6 +61,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
           _selectedFood = food;
           _caloriesController.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
           _proteinController.text = entry.proteinG?.toStringAsFixed(2) ?? "0";
+          _carbController.text = entry.carbG?.toStringAsFixed(2) ?? "0";
+          _fatController.text = entry.fatG?.toStringAsFixed(2) ?? "0";
           _kilojoulesController.text = entry.kCalories == null
               ? ''
               : (food.calories! * 4.184).toStringAsFixed(2);
@@ -97,6 +101,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
           name: _nameController!.text,
           calories: Value(double.tryParse(_caloriesController.text)),
           proteinG: Value(double.tryParse(_proteinController.text)),
+          carbohydrateG: Value(double.tryParse(_carbController.text)),
+          fatG: Value(double.tryParse(_fatController.text)),
           favorite: Value(_settings.favoriteNew),
           servingSize: Value(double.tryParse(_quantityController.text)),
           servingUnit: Value(_unit),
@@ -115,6 +121,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
         FoodsCompanion(
           proteinG: Value(double.tryParse(_proteinController.text)),
           calories: Value(double.tryParse(_caloriesController.text)),
+          carbohydrateG: Value(double.tryParse(_carbController.text)),
+          fatG: Value(double.tryParse(_fatController.text)),
         ),
       );
       final food = await (db.foods.select()
@@ -205,6 +213,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
       _proteinController.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
       _kilojoulesController.text =
           ((entry.kCalories.value ?? 0) * 4.184).toStringAsFixed(2);
+      _carbController.text = entry.carbG.value?.toStringAsFixed(2) ?? "0";
+      _fatController.text = entry.fatG.value?.toStringAsFixed(2) ?? "0";
     });
   }
 
@@ -384,7 +394,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       });
                     },
                     onSubmitted: (value) {
-                      selectAll(_proteinController);
+                      selectAll(_kilojoulesController);
                     },
                     textInputAction: TextInputAction.next,
                   ),
@@ -420,6 +430,38 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 labelText: 'Protein',
               ),
               onTap: () => selectAll(_proteinController),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                setState(() {
+                  _foodDirty = true;
+                });
+              },
+              onSubmitted: (value) => selectAll(_carbController),
+              textInputAction: TextInputAction.next,
+            ),
+            TextField(
+              controller: _carbController,
+              decoration: const InputDecoration(
+                labelText: 'Carbs',
+              ),
+              onTap: () => selectAll(_carbController),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                setState(() {
+                  _foodDirty = true;
+                });
+              },
+              textInputAction: TextInputAction.next,
+              onSubmitted: (value) => selectAll(_fatController),
+            ),
+            TextField(
+              controller: _fatController,
+              decoration: const InputDecoration(
+                labelText: 'Fat',
+              ),
+              onTap: () => selectAll(_fatController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
