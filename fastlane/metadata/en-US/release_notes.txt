@@ -1,1 +1,3 @@
-Fix serving sizes of default foods
+- Limit # of body weight entries
+- Hide goals if they are zero
+- Reduce app size
