@@ -427,7 +427,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   _foodDirty = true;
                 });
               },
-              textInputAction: TextInputAction.next,
+              onSubmitted: (value) => _save(),
             ),
             ListTile(
               title: const Text('Created Date'),
