@@ -67,7 +67,7 @@ gh release create "$new_version" --notes "$changelog"  \
 git pull
 
 bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.aab
-echo q | flutter run --release
+echo q | flutter run --release || true
 
 macpass="$(pass macbook)"
 ssh macbook "
@@ -76,6 +76,6 @@ ssh macbook "
   cd fitbook 
   git pull 
   security unlock-keychain -p '$macpass'
-  ./macos.sh
+  ./macos.sh || true
   ./ios.sh
 "
