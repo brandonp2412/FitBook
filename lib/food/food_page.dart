@@ -19,6 +19,7 @@ typedef PartialFood = ({int id, String name, double? calories, bool? favorite});
 class FoodPageState extends State<FoodPage> {
   late Stream<List<PartialFood>> _stream;
 
+  final TextEditingController _searchController = TextEditingController();
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
@@ -94,6 +95,7 @@ class FoodPageState extends State<FoodPage> {
           return material.Column(
             children: [
               AppSearch(
+                controller: _searchController,
                 onChange: (value) {
                   setState(() {
                     _search = value;

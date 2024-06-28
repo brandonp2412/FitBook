@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ class WeightsPage extends StatefulWidget {
 class WeightsPageState extends State<WeightsPage> {
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final TextEditingController _searchController = TextEditingController();
   String _search = '';
   int _limit = 100;
   late Stream<List<Weight>> _stream;
@@ -71,6 +72,7 @@ class WeightsPageState extends State<WeightsPage> {
           return material.Column(
             children: [
               AppSearch(
+                controller: _searchController,
                 onChange: (value) {
                   setState(() {
                     _search = value;

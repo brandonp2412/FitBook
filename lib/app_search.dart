@@ -47,18 +47,27 @@ class _AppSearchState extends State<AppSearch> {
         ),
         textCapitalization: TextCapitalization.sentences,
         onChanged: widget.onChange,
-        leading: widget.selected.isEmpty
-            ? const Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 8.0),
-                child: Icon(Icons.search),
-              )
-            : IconButton(
-                onPressed: () {
-                  widget.onClear();
-                },
-                icon: const Icon(Icons.arrow_back),
-                padding: EdgeInsets.zero,
-              ),
+        leading:
+            widget.selected.isEmpty && widget.controller?.text.isEmpty == true
+                ? const Padding(
+                    padding: EdgeInsets.only(left: 16.0, right: 8.0),
+                    child: Icon(Icons.search),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      if (widget.selected.isNotEmpty)
+                        widget.onClear();
+                      else {
+                        widget.controller?.text = '';
+                        widget.onChange('');
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                    padding: const EdgeInsets.only(
+                      left: 16.0,
+                      right: 8.0,
+                    ),
+                  ),
         trailing: [
           if (widget.showFilter != null && widget.selected.isEmpty)
             Badge.count(
