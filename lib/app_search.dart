@@ -55,12 +55,9 @@ class _AppSearchState extends State<AppSearch> {
                   )
                 : IconButton(
                     onPressed: () {
-                      if (widget.selected.isNotEmpty)
-                        widget.onClear();
-                      else {
-                        widget.controller?.text = '';
-                        widget.onChange('');
-                      }
+                      widget.onClear();
+                      widget.controller?.text = '';
+                      widget.onChange('');
                     },
                     icon: const Icon(Icons.arrow_back),
                     padding: const EdgeInsets.only(

@@ -1,4 +1,4 @@
-- Add filters to diary
-- Add carb & fat to entries
-- Save after submitting fat
-- Bold todays dates
+- Add back button for clearing search
+- Add badge for selected items
+- Fix badge count being 1 when searching
+- Fix color of badges
