@@ -25,7 +25,6 @@ class EntriesState extends ChangeNotifier {
   int get limit => _limit;
 
   int get filterCount =>
-      (_search.isNotEmpty ? 1 : 0) +
       (_foodGroup != null ? 1 : 0) +
       (_endDate != null ? 1 : 0) +
       (_startDate != null ? 1 : 0);
