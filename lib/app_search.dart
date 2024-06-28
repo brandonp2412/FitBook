@@ -13,6 +13,9 @@ class AppSearch extends StatefulWidget {
     required this.onSelect,
     this.onRefresh,
     required this.onFavorite,
+    this.showFilter,
+    this.filterCount,
+    this.controller,
   });
 
   final Set<dynamic> selected;
@@ -23,14 +26,15 @@ class AppSearch extends StatefulWidget {
   final Function onSelect;
   final Function onFavorite;
   final Function? onRefresh;
+  final Function? showFilter;
+  final int? filterCount;
+  final TextEditingController? controller;
 
   @override
   State<AppSearch> createState() => _AppSearchState();
 }
 
 class _AppSearchState extends State<AppSearch> {
-  final TextEditingController _searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +43,7 @@ class _AppSearchState extends State<AppSearch> {
         hintText: widget.selected.isEmpty
             ? "Search..."
             : "${widget.selected.length} selected",
-        controller: _searchController,
+        controller: widget.controller,
         padding: WidgetStateProperty.all(
           const EdgeInsets.only(right: 8.0),
         ),
@@ -58,6 +62,18 @@ class _AppSearchState extends State<AppSearch> {
                 padding: EdgeInsets.zero,
               ),
         trailing: [
+          if (widget.showFilter != null && widget.selected.isEmpty)
+            Badge.count(
+              backgroundColor: Theme.of(context).primaryColor,
+              isLabelVisible: widget.filterCount != null,
+              count: widget.filterCount ?? 0,
+              child: IconButton(
+                onPressed: () {
+                  widget.showFilter!();
+                },
+                icon: const Icon(Icons.filter_list_rounded),
+              ),
+            ),
           if (widget.selected.isNotEmpty)
             IconButton(
               tooltip: 'Delete',

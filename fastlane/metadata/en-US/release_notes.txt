@@ -1,2 +1,4 @@
-- Show date in day separators
-- Auto-complete last entry quantity + unit
+- Add filters to diary
+- Add carb & fat to entries
+- Save after submitting fat
+- Bold todays dates

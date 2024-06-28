@@ -318,7 +318,7 @@ class _ImportDataState extends State<ImportData> {
     db = AppDatabase();
     if (!widget.pageContext.mounted) return;
     Navigator.pop(widget.pageContext);
-    entriesState.setStream('', 100);
+    entriesState.limit = 100;
   }
 
   _importEntries(BuildContext context) async {
