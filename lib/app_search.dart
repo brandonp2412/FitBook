@@ -64,7 +64,7 @@ class _AppSearchState extends State<AppSearch> {
         trailing: [
           if (widget.showFilter != null && widget.selected.isEmpty)
             Badge.count(
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               isLabelVisible: widget.filterCount != null,
               count: widget.filterCount ?? 0,
               child: IconButton(
