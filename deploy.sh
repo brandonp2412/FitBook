@@ -69,13 +69,13 @@ git pull
 bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.aab
 echo q | flutter run --release || true
 
-macpass="$(pass macbook)"
+set +x
 ssh macbook "
   set -e
   source .zprofile 
   cd fitbook 
   git pull 
-  security unlock-keychain -p '$macpass'
+  security unlock-keychain -p $(pass macbook)
   ./macos.sh || true
   ./ios.sh
 "
