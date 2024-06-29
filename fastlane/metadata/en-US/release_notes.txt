@@ -1,4 +1,1 @@
-- Add back button for clearing search
-- Add badge for selected items
-- Fix badge count being 1 when searching
-- Fix color of badges
+Fix searching for weights

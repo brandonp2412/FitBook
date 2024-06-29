@@ -29,9 +29,13 @@ class WeightsPageState extends State<WeightsPage> {
   }
 
   void _setStream() {
+    final where = CustomExpression<bool>(
+      "CAST(amount AS TEXT) LIKE '%$_search%'",
+    );
+
     setState(() {
       _stream = (db.weights.select()
-            ..where((u) => u.created.date.contains(_search))
+            ..where((u) => where)
             ..orderBy([
               (u) => OrderingTerm(
                     expression: u.created,
