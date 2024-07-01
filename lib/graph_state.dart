@@ -9,8 +9,8 @@ class GraphState extends ChangeNotifier {
   DateTime? endDate;
   late SharedPreferences prefs;
 
-  GraphState(SharedPreferences prefs) {
-    prefs = prefs;
+  GraphState(SharedPreferences sharedPreferences) {
+    prefs = sharedPreferences;
 
     final metricString = prefs.getString('metric');
     for (var value in AppMetric.values)
