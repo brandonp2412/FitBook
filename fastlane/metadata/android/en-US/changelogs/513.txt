@@ -1,0 +1,2 @@
+- Save after entering quantity
+- Underline todays weight

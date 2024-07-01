@@ -1,0 +1,2 @@
+- Show date in day separators
+- Auto-complete last entry quantity + unit

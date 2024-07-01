@@ -1,0 +1,4 @@
+- Add filters to diary
+- Add carb & fat to entries
+- Save after submitting fat
+- Bold todays dates

@@ -14,11 +14,28 @@ class FoodPage extends StatefulWidget {
   createState() => FoodPageState();
 }
 
-typedef PartialFood = ({int id, String name, double? calories, bool? favorite});
+class PartialFood {
+  final int id;
+  final String name;
+  final double? calories;
+  final bool? favorite;
+  final double? servingSize;
+  final String? servingUnit;
+
+  PartialFood({
+    required this.id,
+    required this.name,
+    required this.calories,
+    required this.favorite,
+    required this.servingSize,
+    required this.servingUnit,
+  });
+}
 
 class FoodPageState extends State<FoodPage> {
   late Stream<List<PartialFood>> _stream;
 
+  final TextEditingController _searchController = TextEditingController();
   final Set<int> _selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _search = '';
@@ -37,6 +54,8 @@ class FoodPageState extends State<FoodPage> {
             db.foods.name,
             db.foods.calories,
             db.foods.favorite,
+            db.foods.servingSize,
+            db.foods.servingUnit,
           ])
           ..where(db.foods.name.contains(_search.toLowerCase()))
           ..orderBy([
@@ -46,7 +65,7 @@ class FoodPageState extends State<FoodPage> {
             ),
             OrderingTerm(
               expression: db.foods.name,
-              mode: OrderingMode.desc,
+              mode: OrderingMode.asc,
             ),
           ])
           ..limit(_limit))
@@ -54,11 +73,13 @@ class FoodPageState extends State<FoodPage> {
         .map(
           (results) => results
               .map(
-                (result) => (
+                (result) => PartialFood(
                   id: result.read(db.foods.id)!,
                   name: result.read(db.foods.name)!,
                   calories: result.read(db.foods.calories),
                   favorite: result.read(db.foods.favorite),
+                  servingSize: result.read(db.foods.servingSize),
+                  servingUnit: result.read(db.foods.servingUnit),
                 ),
               )
               .toList(),
@@ -94,6 +115,7 @@ class FoodPageState extends State<FoodPage> {
           return material.Column(
             children: [
               AppSearch(
+                controller: _searchController,
                 onChange: (value) {
                   setState(() {
                     _search = value;
@@ -172,8 +194,6 @@ class FoodPageState extends State<FoodPage> {
                     });
                 },
                 onNext: () async {
-                  final result = await _stream.first;
-                  if (result.length <= _limit) return;
                   setState(() {
                     _limit += 10;
                   });

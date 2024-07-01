@@ -2,9 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/database/entries.dart';
+import 'package:fit_book/diary/diary_filters.dart';
 import 'package:fit_book/diary/edit_entries_page.dart';
 import 'package:fit_book/diary/edit_entry_page.dart';
-import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/diary/entry_list.dart';
 import 'package:fit_book/main.dart';
@@ -23,9 +24,15 @@ class DiaryPage extends StatefulWidget {
 
 class DiaryPageState extends State<DiaryPage> {
   final Set<int> _selected = {};
+  late final TextEditingController _searchController;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  String _search = '';
-  int _limit = 100;
+
+  @override
+  void initState() {
+    super.initState();
+    final entriesState = context.read<EntriesState>();
+    _searchController = TextEditingController(text: entriesState.search);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,11 +141,18 @@ class DiaryPageState extends State<DiaryPage> {
           return material.Column(
             children: [
               AppSearch(
+                controller: _searchController,
+                filterCount: entriesState.filterCount == 0
+                    ? null
+                    : entriesState.filterCount,
+                showFilter: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => DiaryFilters(dialogContext: context),
+                  );
+                },
                 onChange: (value) {
-                  setState(() {
-                    _search = value;
-                  });
-                  entriesState.setStream(_search, _limit);
+                  entriesState.search = value;
                 },
                 onClear: () => setState(() {
                   _selected.clear();
@@ -207,12 +221,7 @@ class DiaryPageState extends State<DiaryPage> {
                     });
                 },
                 onNext: () async {
-                  final result = await entriesState.stream.first;
-                  if (result.length <= _limit) return;
-                  setState(() {
-                    _limit += 10;
-                  });
-                  entriesState.setStream(_search, _limit);
+                  entriesState.limit += 100;
                 },
               ),
               material.Row(

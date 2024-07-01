@@ -1,5 +1,5 @@
-import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/database/entries.dart';
+import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -63,21 +63,32 @@ class _EntryListState extends State<EntryList> {
                 previous.entry.created,
                 entryFood.entry.created,
               );
+          final isToday = isSameDay(entry.created, DateTime.now());
+          final suffix = entry.unit == 'serving' && entry.quantity > 1
+              ? " x${entry.quantity.toInt()}"
+              : "";
 
           return Column(
             children: [
               if (showDivider)
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: Divider()),
-                    Icon(Icons.calendar_today),
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
+                    const Icon(Icons.today),
+                    Text(
+                      DateFormat(settings.shortDateFormat)
+                          .format(previous.entry.created),
+                    ),
+                    const Expanded(child: Divider()),
                   ],
                 ),
               ListTile(
-                title: Text(foodName),
+                title: Text("$foodName$suffix"),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),
+                  style: isToday
+                      ? const TextStyle(fontWeight: FontWeight.bold)
+                      : null,
                 ),
                 trailing: Text(
                   "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",

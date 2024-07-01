@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:fit_book/database/schema_versions.dart';
 import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/database/foods.dart';
+import 'package:fit_book/database/schema_versions.dart';
 import 'package:fit_book/database/weights.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -24,17 +24,22 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
+
+        // Real devices use our mock database assets/fitbook.sqlite
+        // So any migrations touching foods needs to be repeated here.
         if (!testing) {
           await m.addColumn(foods, foods.favorite);
           await m.addColumn(foods, foods.servingUnit);
+          await m.addColumn(foods, foods.servingSize);
         }
+
         final prefs = await SharedPreferences.getInstance();
         prefs.setInt('dailyCalories', 2200);
         prefs.setInt('dailyProtein', 100);
@@ -86,16 +91,20 @@ class AppDatabase extends _$AppDatabase {
         from11To12: (Migrator m, Schema12 schema) async {
           await m.addColumn(schema.foods, schema.foods.servingSize);
         },
+        from12To13: (Migrator m, Schema13 schema) async {
+          // Serving size wasn't properly initialized in version 12.
+          // It needed to be added in onCreate as well.
+          await m
+              .addColumn(schema.foods, schema.foods.servingSize)
+              .catchError((_) {});
+        },
       ),
     );
   }
 }
 
 LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
-    // put the database file, called sqlite here, into the documents folder
-    // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
 

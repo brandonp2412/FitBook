@@ -1,6 +1,7 @@
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/utils.dart';
+import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -54,13 +55,19 @@ class _WeightListState extends State<WeightList> {
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {
           final weight = widget.weights[index];
+          final isToday = isSameDay(weight.created, DateTime.now());
 
           return Column(
             children: [
               ListTile(
-                title: Text("${weight.amount} ${weight.unit}"),
+                title: Text(
+                  "${weight.amount} ${weight.unit}",
+                ),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(weight.created),
+                  style: isToday
+                      ? const TextStyle(fontWeight: FontWeight.bold)
+                      : null,
                 ),
                 selected: widget.selected.contains(weight.id),
                 onLongPress: () => widget.onSelect(weight.id),

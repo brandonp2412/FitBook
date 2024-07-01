@@ -1,5 +1,4 @@
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:fit_book/background.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/entries_state.dart';
@@ -22,8 +21,6 @@ Future<void> main() async {
   final settingsState = SettingsState(sharedPreferences);
 
   runApp(appProviders(settingsState));
-
-  if (settingsState.notifications) registerBackground();
 }
 
 Widget appProviders(SettingsState settingsState) => MultiProvider(
@@ -82,11 +79,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        body: SafeArea(
-          child: TabBarView(
+    return const SafeArea(
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          body: TabBarView(
             children: [
               DiaryPage(),
               GraphPage(),
@@ -94,26 +91,26 @@ class HomePage extends StatelessWidget {
               WeightsPage(),
             ],
           ),
-        ),
-        bottomNavigationBar: TabBar(
-          tabs: [
-            Tab(
-              icon: Icon(Icons.date_range),
-              text: "Diary",
-            ),
-            Tab(
-              icon: Icon(Icons.insights),
-              text: "Graph",
-            ),
-            Tab(
-              icon: Icon(Icons.restaurant),
-              text: "Food",
-            ),
-            Tab(
-              icon: Icon(Icons.scale),
-              text: "Weight",
-            ),
-          ],
+          bottomNavigationBar: TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.date_range),
+                text: "Diary",
+              ),
+              Tab(
+                icon: Icon(Icons.insights),
+                text: "Graph",
+              ),
+              Tab(
+                icon: Icon(Icons.restaurant),
+                text: "Food",
+              ),
+              Tab(
+                icon: Icon(Icons.scale),
+                text: "Weight",
+              ),
+            ],
+          ),
         ),
       ),
     );

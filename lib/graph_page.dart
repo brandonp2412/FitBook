@@ -113,7 +113,9 @@ class GraphPageState extends State<GraphPage> {
                             DateFormat(settings.shortDateFormat)
                                 .format(state.startDate!),
                           )
-                        : null,
+                        : Text(
+                            settings.shortDateFormat,
+                          ),
                     onLongPress: () => state.setStartDate(null),
                     trailing: const Icon(Icons.calendar_today),
                     onTap: () => _selectStart(state),
@@ -127,7 +129,7 @@ class GraphPageState extends State<GraphPage> {
                             DateFormat(settings.shortDateFormat)
                                 .format(state.endDate!),
                           )
-                        : null,
+                        : Text(settings.shortDateFormat),
                     onLongPress: () => state.setEndDate(null),
                     trailing: const Icon(Icons.calendar_today),
                     onTap: () => _selectEnd(state),

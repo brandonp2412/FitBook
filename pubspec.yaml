@@ -1,7 +1,7 @@
 name: fit_book
 description: Track your calories - Completely offline!
 publish_to: none
-version: 1.0.42+43
+version: 1.0.51+56
 environment:
   sdk: '>=3.3.3 <4.0.0'
 dependencies:
@@ -19,14 +19,11 @@ dependencies:
   fl_chart: ^0.68.0
   intl: ^0.19.0
   csv: ^6.0.0
-  rxdart: ^0.27.7
   sqlite3: ^2.4.3
   share_plus: ^9.0.0
   package_info_plus: ^8.0.0
   url_launcher: ^6.2.6
-  permission_handler: ^11.3.1
-  flutter_local_notifications: ^17.1.2
-  background_fetch: ^1.3.5
+  badges: ^3.1.2
 dev_dependencies:
   integration_test:
     sdk: flutter

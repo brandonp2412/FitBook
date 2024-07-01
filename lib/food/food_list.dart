@@ -1,5 +1,6 @@
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/food_page.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
@@ -54,6 +55,8 @@ class _FoodListState extends State<FoodList> {
           final showDivider = previous != null &&
               (food.favorite ?? false) != (previous.favorite ?? false);
 
+          final shortUnit = getShortUnit(food.servingUnit ?? 'grams');
+
           return material.Column(
             children: [
               if (showDivider)
@@ -68,6 +71,10 @@ class _FoodListState extends State<FoodList> {
                 title: Text(food.name),
                 subtitle: Text(
                   "${food.calories?.toStringAsFixed(0)} kcal",
+                ),
+                trailing: Text(
+                  "${food.servingSize ?? "100"} $shortUnit",
+                  style: const TextStyle(fontSize: 16),
                 ),
                 selected: widget.selected.contains(food.id),
                 onLongPress: () => widget.onSelect(food.id),

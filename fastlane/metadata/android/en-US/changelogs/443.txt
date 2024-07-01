@@ -1,0 +1,6 @@
+- Improve graph visuals
+- Fix infinite scroll on foods
+- Fix foods sorting
+- Fix app bottom being hidden on certain devices
+- Fix label for default serving sizes on entries
+
