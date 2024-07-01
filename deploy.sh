@@ -24,6 +24,10 @@ yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 rest=$(git log -1 --pretty=%B | tail -n +2)
 git add pubspec.yaml
 git add fastlane/metadata
+last_commit=$(git log -1 --pretty=%B | head -n 1)
+git commit --amend -m "$last_commit - $new_version 🚀 
+$rest"
+git push
 
 tmpdir=$(mktemp -d)
 rsync -av --exclude='build' . $tmpdir
@@ -44,11 +48,6 @@ mkdir -p build/native_assets/linux
 apk=build/app/outputs/flutter-apk
 (cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
 mv $apk/app-release.apk $apk/fitbook.apk
-
-last_commit=$(git log -1 --pretty=%B | head -n 1)
-git commit --amend -m "$last_commit - $new_version 🚀 
-$rest"
-git push
 
 gh release create "$new_version" --notes "$changelog"  \
   $apk/app-*-release.apk \
