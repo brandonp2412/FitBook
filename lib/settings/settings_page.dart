@@ -29,15 +29,15 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _searchController = TextEditingController();
-  final _caloriesController = TextEditingController();
-  final _proteinController = TextEditingController();
-  final _fatController = TextEditingController();
-  final _carbsController = TextEditingController();
-  final _targetWeightController = TextEditingController();
-  late SettingsState _settings;
+  final searchController = TextEditingController();
+  final caloriesController = TextEditingController();
+  final proteinController = TextEditingController();
+  final fatController = TextEditingController();
+  final carbsController = TextEditingController();
+  final targetWeightController = TextEditingController();
+  late SettingsState settings;
 
-  final List<String> _shortFormats = [
+  final List<String> shortFormats = [
     'd/M/yy',
     'M/d/yy',
     'd-M-yy',
@@ -46,7 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
     'M.d.yy',
   ];
 
-  final List<String> _longFormats = [
+  final List<String> longFormats = [
     'dd/MM/yy',
     'dd/MM/yy h:mm a',
     'dd/MM/yy H:mm',
@@ -60,32 +60,32 @@ class _SettingsPageState extends State<SettingsPage> {
   ];
 
   final now = DateTime.now();
-  String get _longExample => DateFormat(_settings.longDateFormat)
+  String get _longExample => DateFormat(settings.longDateFormat)
       .format(DateTime(now.year, now.month, now.day, 13, 54));
-  String get _shortExample => DateFormat(_settings.shortDateFormat)
+  String get _shortExample => DateFormat(settings.shortDateFormat)
       .format(DateTime(now.year, now.month, now.day, 13, 54));
 
   @override
   void initState() {
     super.initState();
-    _settings = context.read<SettingsState>();
-    _caloriesController.text = _settings.dailyCalories?.toString() ?? "";
-    _proteinController.text = _settings.dailyProtein?.toString() ?? "";
-    _fatController.text = _settings.dailyFat?.toString() ?? "";
-    _carbsController.text = _settings.dailyCarbs?.toString() ?? "";
-    _targetWeightController.text = _settings.targetWeight?.toString() ?? "";
+    settings = context.read<SettingsState>();
+    caloriesController.text = settings.dailyCalories?.toString() ?? "";
+    proteinController.text = settings.dailyProtein?.toString() ?? "";
+    fatController.text = settings.dailyFat?.toString() ?? "";
+    carbsController.text = settings.dailyCarbs?.toString() ?? "";
+    targetWeightController.text = settings.targetWeight?.toString() ?? "";
   }
 
   @override
   Widget build(BuildContext context) {
-    _settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>();
     List<SettingsLine> children = [
       SettingsLine(
         key: 'theme',
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField(
-            value: _settings.themeMode,
+            value: settings.themeMode,
             decoration: const InputDecoration(
               labelStyle: TextStyle(),
               labelText: 'Theme',
@@ -104,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text("Light"),
               ),
             ],
-            onChanged: (value) => _settings.setTheme(value!),
+            onChanged: (value) => settings.setTheme(value!),
           ),
         ),
       ),
@@ -113,15 +113,15 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
-            value: _settings.longDateFormat,
-            items: _longFormats.map((String value) {
+            value: settings.longDateFormat,
+            items: longFormats.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
               );
             }).toList(),
             onChanged: (newValue) {
-              _settings.setLong(newValue!);
+              settings.setLong(newValue!);
             },
             decoration: InputDecoration(
               labelText: 'Long date format ($_longExample)',
@@ -134,15 +134,15 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
-            value: _settings.shortDateFormat,
-            items: _shortFormats.map((String value) {
+            value: settings.shortDateFormat,
+            items: shortFormats.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
               );
             }).toList(),
             onChanged: (newValue) {
-              _settings.setShort(newValue!);
+              settings.setShort(newValue!);
             },
             decoration: InputDecoration(
               labelText: 'Short date format ($_shortExample)',
@@ -155,7 +155,7 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
-            value: _settings.entryUnit,
+            value: settings.entryUnit,
             decoration: const InputDecoration(labelText: 'Diary unit'),
             items: units.map((String value) {
               return DropdownMenuItem<String>(
@@ -164,7 +164,7 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             }).toList(),
             onChanged: (String? newValue) {
-              _settings.setEntryUnit(newValue!);
+              settings.setEntryUnit(newValue!);
             },
           ),
         ),
@@ -174,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField<String>(
-            value: _settings.foodUnit,
+            value: settings.foodUnit,
             decoration: const InputDecoration(labelText: 'Food unit'),
             items: units.map((String value) {
               return DropdownMenuItem<String>(
@@ -183,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             }).toList(),
             onChanged: (String? newValue) {
-              _settings.setFoodUnit(newValue!);
+              settings.setFoodUnit(newValue!);
             },
           ),
         ),
@@ -193,7 +193,7 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField(
-            value: _settings.diarySummary,
+            value: settings.diarySummary,
             decoration: const InputDecoration(
               labelStyle: TextStyle(),
               labelText: 'Diary summary',
@@ -216,7 +216,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text("None"),
               ),
             ],
-            onChanged: (value) => _settings.setDiarySummary(value!),
+            onChanged: (value) => settings.setDiarySummary(value!),
           ),
         ),
       ),
@@ -225,13 +225,13 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
-            controller: _caloriesController,
+            controller: caloriesController,
             onChanged: (newValue) {
-              _settings.setDailyCalories(int.tryParse(newValue));
+              settings.setDailyCalories(int.tryParse(newValue));
             },
-            onTap: () => _caloriesController.selection = TextSelection(
+            onTap: () => caloriesController.selection = TextSelection(
               baseOffset: 0,
-              extentOffset: _caloriesController.text.length,
+              extentOffset: caloriesController.text.length,
             ),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -245,11 +245,11 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
-            controller: _proteinController,
+            controller: proteinController,
             onChanged: (newValue) {
-              _settings.setDailyProtein(int.tryParse(newValue));
+              settings.setDailyProtein(int.tryParse(newValue));
             },
-            onTap: () => selectAll(_proteinController),
+            onTap: () => selectAll(proteinController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Daily protein',
@@ -262,11 +262,11 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
-            controller: _fatController,
+            controller: fatController,
             onChanged: (newValue) {
-              _settings.setDailyFat(int.tryParse(newValue));
+              settings.setDailyFat(int.tryParse(newValue));
             },
-            onTap: () => selectAll(_fatController),
+            onTap: () => selectAll(fatController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Daily fat',
@@ -279,11 +279,11 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
-            controller: _carbsController,
+            controller: carbsController,
             onChanged: (newValue) {
-              _settings.setDailyCarbs(int.tryParse(newValue));
+              settings.setDailyCarbs(int.tryParse(newValue));
             },
-            onTap: () => selectAll(_carbsController),
+            onTap: () => selectAll(carbsController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Daily carbs',
@@ -296,11 +296,11 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
-            controller: _targetWeightController,
+            controller: targetWeightController,
             onChanged: (newValue) {
-              _settings.setTargetWeight(double.tryParse(newValue));
+              settings.setTargetWeight(double.tryParse(newValue));
             },
-            onTap: () => selectAll(_targetWeightController),
+            onTap: () => selectAll(targetWeightController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: 'Target weight',
@@ -313,10 +313,10 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.notifications_outlined),
           title: const Text('Notifications'),
-          onTap: () => _settings.setNotifications(!_settings.notifications),
+          onTap: () => settings.setNotifications(!settings.notifications),
           trailing: Switch(
-            value: _settings.notifications,
-            onChanged: (value) => _settings.setNotifications(value),
+            value: settings.notifications,
+            onChanged: (value) => settings.setNotifications(value),
           ),
         ),
       ),
@@ -326,10 +326,10 @@ class _SettingsPageState extends State<SettingsPage> {
           leading: const Icon(Icons.check),
           title: const Text('Select entry on submit'),
           onTap: () =>
-              _settings.setSelectEntryOnSubmit(!_settings.selectEntryOnSubmit),
+              settings.setSelectEntryOnSubmit(!settings.selectEntryOnSubmit),
           trailing: Switch(
-            value: _settings.selectEntryOnSubmit,
-            onChanged: (value) => _settings.setSelectEntryOnSubmit(value),
+            value: settings.selectEntryOnSubmit,
+            onChanged: (value) => settings.setSelectEntryOnSubmit(value),
           ),
         ),
       ),
@@ -338,10 +338,10 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.favorite_outline),
           title: const Text('Favorite new foods'),
-          onTap: () => _settings.setFavoriteNew(!_settings.favoriteNew),
+          onTap: () => settings.setFavoriteNew(!settings.favoriteNew),
           trailing: Switch(
-            value: _settings.favoriteNew,
-            onChanged: (value) => _settings.setFavoriteNew(value),
+            value: settings.favoriteNew,
+            onChanged: (value) => settings.setFavoriteNew(value),
           ),
         ),
       ),
@@ -350,10 +350,10 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.color_lens_outlined),
           title: const Text('System color scheme'),
-          onTap: () => _settings.setSystem(!_settings.systemColors),
+          onTap: () => settings.setSystem(!settings.systemColors),
           trailing: Switch(
-            value: _settings.systemColors,
-            onChanged: (value) => _settings.setSystem(value),
+            value: settings.systemColors,
+            onChanged: (value) => settings.setSystem(value),
           ),
         ),
       ),
@@ -408,7 +408,7 @@ class _SettingsPageState extends State<SettingsPage> {
           children: <Widget>[
                 SearchBar(
                   hintText: "Search...",
-                  controller: _searchController,
+                  controller: searchController,
                   padding: WidgetStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 16.0),
                   ),
@@ -422,7 +422,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children
                   .where(
                     (element) => element.key
-                        .contains(_searchController.text.toLowerCase()),
+                        .contains(searchController.text.toLowerCase()),
                   )
                   .map((e) => e.widget)
                   .toList(),

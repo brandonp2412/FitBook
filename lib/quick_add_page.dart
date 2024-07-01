@@ -14,12 +14,12 @@ class QuickAddPage extends StatefulWidget {
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {
-  final _caloriesController = TextEditingController(text: "600");
+  final caloriesController = TextEditingController(text: "600");
 
   @override
   void initState() {
     super.initState();
-    selectAll(_caloriesController);
+    selectAll(caloriesController);
   }
 
   @override
@@ -40,7 +40,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       ),
     ));
 
-    final quantity = double.parse(_caloriesController.text);
+    final quantity = double.parse(caloriesController.text);
     var entry = EntriesCompanion.insert(
       food: foodId,
       created: DateTime.now(),
@@ -67,10 +67,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
           children: [
             TextField(
               autofocus: true,
-              controller: _caloriesController,
+              controller: caloriesController,
               decoration: const InputDecoration(label: Text("Calories")),
               keyboardType: TextInputType.number,
-              onTap: () => selectAll(_caloriesController),
+              onTap: () => selectAll(caloriesController),
               onSubmitted: (value) => _save(),
             ),
           ],

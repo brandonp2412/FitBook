@@ -17,7 +17,7 @@ class DiaryFilters extends StatefulWidget {
 }
 
 class _DiaryFiltersState extends State<DiaryFilters> {
-  late final _groupStream = (db.foods.selectOnly(distinct: true)
+  late final groupStream = (db.foods.selectOnly(distinct: true)
         ..orderBy([
           OrderingTerm(expression: db.foods.foodGroup),
         ])
@@ -36,7 +36,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
         child: material.Column(
           children: [
             StreamBuilder(
-              stream: _groupStream,
+              stream: groupStream,
               builder: (context, snapshot) {
                 return DropdownButtonFormField(
                   decoration: const InputDecoration(

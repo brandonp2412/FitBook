@@ -11,11 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-late AppDatabase db;
+AppDatabase db = AppDatabase();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  db = AppDatabase();
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final settingsState = SettingsState(sharedPreferences);

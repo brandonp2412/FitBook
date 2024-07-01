@@ -35,10 +35,11 @@ class AppLine extends StatefulWidget {
 }
 
 class _AppLineState extends State<AppLine> {
-  late Stream<List<GraphData>> _graphStream;
-  late SettingsState _settings;
-  final _formatter = NumberFormat('#,##0.00');
-  final _limit = 11;
+  final formatter = NumberFormat('#,##0.00');
+  final limit = 11;
+
+  late Stream<List<GraphData>> graphStream;
+  late SettingsState settings = context.read<SettingsState>();
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -50,7 +51,6 @@ class _AppLineState extends State<AppLine> {
   void initState() {
     super.initState();
     _setStream();
-    _settings = context.read<SettingsState>();
   }
 
   void _setStream() {
@@ -87,7 +87,7 @@ class _AppLineState extends State<AppLine> {
     }
 
     if (widget.metric == AppMetric.bodyWeight)
-      _graphStream = (db.weights.selectOnly()
+      graphStream = (db.weights.selectOnly()
             ..orderBy([
               OrderingTerm(
                 expression: db.weights.created,
@@ -110,7 +110,7 @@ class _AppLineState extends State<AppLine> {
                 widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
               ),
             )
-            ..limit(_limit))
+            ..limit(limit))
           .watch()
           .map(
             (results) => results
@@ -124,7 +124,7 @@ class _AppLineState extends State<AppLine> {
                 .toList(),
           );
     else
-      _graphStream = (db.entries.selectOnly()
+      graphStream = (db.entries.selectOnly()
             ..addColumns([
               db.entries.created,
               cals,
@@ -149,7 +149,7 @@ class _AppLineState extends State<AppLine> {
               ),
             )
             ..groupBy([createdCol])
-            ..limit(_limit))
+            ..limit(limit))
           .watch()
           .map((results) {
         return results.map((result) {
@@ -199,30 +199,30 @@ class _AppLineState extends State<AppLine> {
 
   @override
   Widget build(BuildContext context) {
-    _settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>();
 
     double goal = 0;
 
     switch (widget.metric) {
       case AppMetric.calories:
-        goal = (_settings.dailyCalories ?? 0).toDouble();
+        goal = (settings.dailyCalories ?? 0).toDouble();
         break;
       case AppMetric.protein:
-        goal = (_settings.dailyProtein ?? 0).toDouble();
+        goal = (settings.dailyProtein ?? 0).toDouble();
         break;
       case AppMetric.bodyWeight:
-        goal = _settings.targetWeight ?? 0;
+        goal = settings.targetWeight ?? 0;
         break;
       case AppMetric.fat:
-        goal = (_settings.dailyFat ?? 0).toDouble();
+        goal = (settings.dailyFat ?? 0).toDouble();
         break;
       case AppMetric.carbs:
-        goal = (_settings.dailyCarbs ?? 0).toDouble();
+        goal = (settings.dailyCarbs ?? 0).toDouble();
         break;
     }
 
     return StreamBuilder(
-      stream: _graphStream,
+      stream: graphStream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
         if (snapshot.data?.isEmpty == true)
@@ -294,7 +294,7 @@ class _AppLineState extends State<AppLine> {
                     lineBarsData: [
                       LineChartBarData(
                         spots: spots,
-                        isCurved: _settings.curveLines,
+                        isCurved: settings.curveLines,
                         color: Theme.of(context).colorScheme.primary,
                         barWidth: 3,
                         isStrokeCapRound: true,
@@ -313,7 +313,7 @@ class _AppLineState extends State<AppLine> {
                   child: ListTile(
                     title: const Text("Average"),
                     subtitle: Text(
-                      "${_formatter.format(average)} ${rows.first.unit}",
+                      "${formatter.format(average)} ${rows.first.unit}",
                     ),
                     leading: Radio(
                       value: 1,
@@ -330,7 +330,7 @@ class _AppLineState extends State<AppLine> {
                     child: ListTile(
                       title: const Text("Goal"),
                       subtitle: Text(
-                        "${_formatter.format(goal)} ${rows.first.unit}",
+                        "${formatter.format(goal)} ${rows.first.unit}",
                       ),
                       leading: Radio(
                         value: 1,
@@ -372,7 +372,7 @@ class _AppLineState extends State<AppLine> {
     if (indices.contains(value.toInt())) {
       DateTime createdDate = rows[value.toInt()].created;
       text = Text(
-        DateFormat(_settings.shortDateFormat).format(createdDate),
+        DateFormat(settings.shortDateFormat).format(createdDate),
         style: style,
       );
     } else {
@@ -395,8 +395,8 @@ class _AppLineState extends State<AppLine> {
       getTooltipItems: (touchedSpots) {
         final row = rows.elementAt(touchedSpots.first.spotIndex);
         final created =
-            DateFormat(_settings.shortDateFormat).format(row.created);
-        final value = _formatter.format(row.value);
+            DateFormat(settings.shortDateFormat).format(row.created);
+        final value = formatter.format(row.value);
 
         String text = "$value $unit\n";
 

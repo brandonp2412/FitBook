@@ -25,23 +25,23 @@ class WeightList extends StatefulWidget {
 }
 
 class _WeightListState extends State<WeightList> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_scrollListener);
+    scrollController.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _scrollController.removeListener(_scrollListener);
+    scrollController.removeListener(_scrollListener);
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels <
-        _scrollController.position.maxScrollExtent - 200) return;
+    if (scrollController.position.pixels <
+        scrollController.position.maxScrollExtent - 200) return;
     widget.onNext();
   }
 
@@ -51,7 +51,7 @@ class _WeightListState extends State<WeightList> {
 
     return Expanded(
       child: ListView.builder(
-        controller: _scrollController,
+        controller: scrollController,
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {
           final weight = widget.weights[index];

@@ -25,7 +25,7 @@ class ImportData extends StatefulWidget {
 }
 
 class _ImportDataState extends State<ImportData> {
-  bool _importing = false;
+  bool importing = false;
 
   _importFoods(BuildContext context) async {
     Navigator.pop(context);
@@ -33,7 +33,7 @@ class _ImportDataState extends State<ImportData> {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       setState(() {
-        _importing = true;
+        importing = true;
       });
 
       File file = File(result!.files.single.path!);
@@ -300,7 +300,7 @@ class _ImportDataState extends State<ImportData> {
     } finally {
       if (mounted)
         setState(() {
-          _importing = false;
+          importing = false;
         });
     }
   }
@@ -324,7 +324,7 @@ class _ImportDataState extends State<ImportData> {
   _importEntries(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     setState(() {
-      _importing = true;
+      importing = true;
     });
 
     File file = File(result!.files.single.path!);
@@ -393,7 +393,7 @@ class _ImportDataState extends State<ImportData> {
         );
       },
       icon: const Icon(Icons.upload),
-      label: _importing
+      label: importing
           ? const CircularProgressIndicator()
           : const Text('Import data'),
     );

@@ -7,10 +7,10 @@ class GraphState extends ChangeNotifier {
   Period groupBy = Period.day;
   DateTime? startDate;
   DateTime? endDate;
-  late SharedPreferences _prefs;
+  late SharedPreferences prefs;
 
   GraphState(SharedPreferences prefs) {
-    _prefs = prefs;
+    prefs = prefs;
 
     final metricString = prefs.getString('metric');
     for (var value in AppMetric.values)
@@ -28,31 +28,31 @@ class GraphState extends ChangeNotifier {
 
   void setMetric(AppMetric value) {
     metric = value;
-    _prefs.setString('metric', value.toString());
+    prefs.setString('metric', value.toString());
     notifyListeners();
   }
 
   void setGroupBy(Period value) {
     groupBy = value;
-    _prefs.setString('groupBy', value.toString());
+    prefs.setString('groupBy', value.toString());
     notifyListeners();
   }
 
   void setEndDate(DateTime? value) {
     endDate = value;
     if (value == null)
-      _prefs.remove('endDate');
+      prefs.remove('endDate');
     else
-      _prefs.setString('endDate', value.toIso8601String());
+      prefs.setString('endDate', value.toIso8601String());
     notifyListeners();
   }
 
   void setStartDate(DateTime? value) {
     startDate = value;
     if (value == null)
-      _prefs.remove('startDate');
+      prefs.remove('startDate');
     else
-      _prefs.setString('startDate', value.toIso8601String());
+      prefs.setString('startDate', value.toIso8601String());
     notifyListeners();
   }
 }

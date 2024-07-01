@@ -15,12 +15,12 @@ class WeightsPage extends StatefulWidget {
 }
 
 class WeightsPageState extends State<WeightsPage> {
-  final Set<int> _selected = {};
+  final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  final TextEditingController _searchController = TextEditingController();
-  String _search = '';
-  int _limit = 100;
-  late Stream<List<Weight>> _stream;
+  final TextEditingController searchController = TextEditingController();
+  String search = '';
+  int limit = 100;
+  late Stream<List<Weight>> stream;
 
   @override
   void initState() {
@@ -30,11 +30,11 @@ class WeightsPageState extends State<WeightsPage> {
 
   void _setStream() {
     final where = CustomExpression<bool>(
-      "CAST(amount AS TEXT) LIKE '%$_search%'",
+      "CAST(amount AS TEXT) LIKE '%$search%'",
     );
 
     setState(() {
-      _stream = (db.weights.select()
+      stream = (db.weights.select()
             ..where((u) => where)
             ..orderBy([
               (u) => OrderingTerm(
@@ -42,7 +42,7 @@ class WeightsPageState extends State<WeightsPage> {
                     mode: OrderingMode.desc,
                   ),
             ])
-            ..limit(_limit))
+            ..limit(limit))
           .watch();
     });
   }
@@ -68,7 +68,7 @@ class WeightsPageState extends State<WeightsPage> {
   Scaffold _weightsPage() {
     return Scaffold(
       body: StreamBuilder(
-        stream: _stream,
+        stream: stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error!);
           final weights = snapshot.data ?? [];
@@ -76,35 +76,35 @@ class WeightsPageState extends State<WeightsPage> {
           return material.Column(
             children: [
               AppSearch(
-                controller: _searchController,
+                controller: searchController,
                 onChange: (value) {
                   setState(() {
-                    _search = value;
+                    search = value;
                   });
                   _setStream();
                 },
                 onClear: () => setState(() {
-                  _selected.clear();
+                  selected.clear();
                 }),
                 onDelete: () async {
-                  final selectedCopy = _selected.toList();
+                  final selectedCopy = selected.toList();
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                   await (db.delete(db.weights)
                         ..where((tbl) => tbl.id.isIn(selectedCopy)))
                       .go();
                 },
                 onSelect: () => setState(() {
-                  _selected.addAll(
+                  selected.addAll(
                     weights.map((weight) => weight.id),
                   );
                 }),
-                selected: _selected,
+                selected: selected,
                 onFavorite: () {},
                 onEdit: () async {
                   final weight = weights.firstWhere(
-                    (element) => element.id == _selected.first,
+                    (element) => element.id == selected.first,
                   );
                   await Navigator.push(
                     context,
@@ -116,7 +116,7 @@ class WeightsPageState extends State<WeightsPage> {
                     ),
                   );
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                 },
               ),
@@ -129,22 +129,22 @@ class WeightsPageState extends State<WeightsPage> {
                 ),
               WeightList(
                 weights: weights,
-                selected: _selected,
+                selected: selected,
                 onSelect: (id) {
-                  if (_selected.contains(id))
+                  if (selected.contains(id))
                     setState(() {
-                      _selected.remove(id);
+                      selected.remove(id);
                     });
                   else
                     setState(() {
-                      _selected.add(id);
+                      selected.add(id);
                     });
                 },
                 onNext: () async {
-                  final result = await _stream.first;
-                  if (result.length <= _limit) return;
+                  final result = await stream.first;
+                  if (result.length <= limit) return;
                   setState(() {
-                    _limit += 10;
+                    limit += 10;
                   });
                   _setStream();
                 },
@@ -155,7 +155,7 @@ class WeightsPageState extends State<WeightsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final weights = await _stream.first;
+          final weights = await stream.first;
           final defaultWeight = Weight(
             amount: 0.0,
             created: DateTime.now(),

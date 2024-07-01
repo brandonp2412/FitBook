@@ -27,25 +27,25 @@ class EditWeightPage extends StatefulWidget {
 }
 
 class _EditWeightPageState extends State<EditWeightPage> {
-  late SettingsState _settings;
-  final TextEditingController _valueController = TextEditingController();
-  String _unit = 'kg';
-  DateTime _created = DateTime.now();
+  late SettingsState settings;
+  final TextEditingController valueController = TextEditingController();
+  String unit = 'kg';
+  DateTime created = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _valueController.text = widget.weight.amount.toString();
-    _unit = widget.weight.unit;
-    selectAll(_valueController);
-    _created = widget.weight.created;
-    _settings = context.read<SettingsState>();
+    valueController.text = widget.weight.amount.toString();
+    unit = widget.weight.unit;
+    selectAll(valueController);
+    created = widget.weight.created;
+    settings = context.read<SettingsState>();
   }
 
   Future<void> _selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: _created,
+      initialDate: created,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
@@ -56,19 +56,19 @@ class _EditWeightPageState extends State<EditWeightPage> {
   }
 
   Future<void> _selectTime(DateTime pickedDate) async {
-    if (!_settings.longDateFormat.contains('h:mm'))
+    if (!settings.longDateFormat.contains('h:mm'))
       return setState(() {
-        _created = pickedDate;
+        created = pickedDate;
       });
 
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(_created),
+      initialTime: TimeOfDay.fromDateTime(created),
     );
 
     if (pickedTime != null) {
       setState(() {
-        _created = DateTime(
+        created = DateTime(
           pickedDate.year,
           pickedDate.month,
           pickedDate.day,
@@ -81,27 +81,27 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   _save() async {
     Navigator.of(context).pop();
-    final amount = double.parse(_valueController.text);
+    final amount = double.parse(valueController.text);
     if (widget.weight.id == -1)
       db.weights.insertOne(
         WeightsCompanion.insert(
           created: DateTime.now(),
-          unit: _unit,
+          unit: unit,
           amount: amount,
         ),
       );
     else
       (db.weights.update()..where((u) => u.id.equals(widget.weight.id))).write(
         WeightsCompanion(
-          unit: Value(_unit),
+          unit: Value(unit),
           amount: Value(amount),
-          created: Value(_created),
+          created: Value(created),
         ),
       );
 
-    if (_settings.targetWeight == null) return;
+    if (settings.targetWeight == null) return;
     final show =
-        shouldNotify(amount, widget.lastWeight.amount, _settings.targetWeight!);
+        shouldNotify(amount, widget.lastWeight.amount, settings.targetWeight!);
     if (!show) return;
     final random = Random();
     final message =
@@ -117,7 +117,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   @override
   Widget build(BuildContext context) {
-    _settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -139,13 +139,13 @@ class _EditWeightPageState extends State<EditWeightPage> {
           child: ListView(
             children: [
               TextFormField(
-                controller: _valueController,
+                controller: valueController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Weight ($_unit)'),
+                decoration: InputDecoration(labelText: 'Weight ($unit)'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,
                 autofocus: widget.weight.id == -1,
-                onTap: () => selectAll(_valueController),
+                onTap: () => selectAll(valueController),
                 onFieldSubmitted: (value) => _save(),
               ),
               TextFormField(
@@ -157,27 +157,27 @@ class _EditWeightPageState extends State<EditWeightPage> {
               ),
               const SizedBox(height: 8.0),
               ListTile(
-                title: Text("Unit ($_unit)"),
-                leading: _unit == 'kg'
+                title: Text("Unit ($unit)"),
+                leading: unit == 'kg'
                     ? const Icon(Icons.straighten)
                     : const Icon(Icons.square_foot),
                 onTap: () => setState(() {
-                  _unit = _unit == 'kg' ? 'lb' : 'kg';
+                  unit = unit == 'kg' ? 'lb' : 'kg';
                 }),
                 trailing: Switch(
-                  value: _unit == 'kg',
+                  value: unit == 'kg',
                   onChanged: (value) => setState(() {
                     if (value)
-                      _unit = 'kg';
+                      unit = 'kg';
                     else
-                      _unit = 'lb';
+                      unit = 'lb';
                   }),
                 ),
               ),
               ListTile(
                 title: const Text('Created Date'),
                 subtitle:
-                    Text(DateFormat(_settings.longDateFormat).format(_created)),
+                    Text(DateFormat(settings.longDateFormat).format(created)),
                 trailing: const Icon(Icons.calendar_today),
                 onTap: () => _selectDate(),
               ),

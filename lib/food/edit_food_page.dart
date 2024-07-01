@@ -18,8 +18,8 @@ class EditFoodPage extends StatefulWidget {
 }
 
 class _EditFoodPageState extends State<EditFoodPage> {
-  late SettingsState _settings;
-  late String _servingUnit;
+  late SettingsState settings;
+  late String servingUnit;
 
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
@@ -146,15 +146,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   void initState() {
     super.initState();
-    _settings = context.read<SettingsState>();
-    _servingUnit = _settings.foodUnit;
+    settings = context.read<SettingsState>();
+    servingUnit = settings.foodUnit;
     if (widget.id == null) return;
 
     (db.foods.select()..where((u) => u.id.equals(widget.id!)))
         .getSingle()
         .then((food) {
       setState(() {
-        _servingUnit = food.servingUnit ?? _servingUnit;
+        servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
         foodGroupController.text = food.foodGroup ?? '';
         caloriesController.text = food.calories?.toString() ?? '';
@@ -545,7 +545,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       servingDescription9G: Value(servingDescription9GController.text),
       u200calorieWeightG:
           Value(double.tryParse(u200calorieWeightGController.text)),
-      servingUnit: Value(_servingUnit),
+      servingUnit: Value(servingUnit),
       servingSize: Value(double.tryParse(servingSizeController.text)),
     );
 
@@ -558,14 +558,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
     else
       db.into(db.foods).insert(
             food.copyWith(
-              favorite: Value(_settings.favoriteNew),
+              favorite: Value(settings.favoriteNew),
             ),
           );
   }
 
   @override
   Widget build(BuildContext context) {
-    _settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>();
 
     return Scaffold(
       appBar: AppBar(
@@ -698,7 +698,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
-              value: _servingUnit,
+              value: servingUnit,
               decoration: const InputDecoration(labelText: 'Serving unit'),
               items: units.map((String value) {
                 return DropdownMenuItem<String>(
@@ -708,19 +708,19 @@ class _EditFoodPageState extends State<EditFoodPage> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _servingUnit = newValue!;
+                  servingUnit = newValue!;
                 });
               },
             ),
             ListTile(
               title: const Text('Show other fields'),
-              onTap: () => _settings.setShowOthers(!_settings.showOthers),
+              onTap: () => settings.setShowOthers(!settings.showOthers),
               trailing: Switch(
-                value: _settings.showOthers,
-                onChanged: (value) => _settings.setShowOthers(value),
+                value: settings.showOthers,
+                onChanged: (value) => settings.setShowOthers(value),
               ),
             ),
-            if (_settings.showOthers) ...[
+            if (settings.showOthers) ...[
               TextField(
                 controller: foodGroupController,
                 decoration: const InputDecoration(

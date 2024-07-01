@@ -23,16 +23,12 @@ class DiaryPage extends StatefulWidget {
 }
 
 class DiaryPageState extends State<DiaryPage> {
-  final Set<int> _selected = {};
-  late final TextEditingController _searchController;
+  final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  @override
-  void initState() {
-    super.initState();
-    final entriesState = context.read<EntriesState>();
-    _searchController = TextEditingController(text: entriesState.search);
-  }
+  late var entriesState = context.read<EntriesState>();
+  late final TextEditingController searchController =
+      TextEditingController(text: entriesState.search);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +50,7 @@ class DiaryPageState extends State<DiaryPage> {
 
   Scaffold _diaryPage() {
     final settings = context.watch<SettingsState>();
-    final entriesState = context.watch<EntriesState>();
+    entriesState = context.watch<EntriesState>();
 
     return Scaffold(
       body: StreamBuilder(
@@ -141,7 +137,7 @@ class DiaryPageState extends State<DiaryPage> {
           return material.Column(
             children: [
               AppSearch(
-                controller: _searchController,
+                controller: searchController,
                 filterCount: entriesState.filterCount == 0
                     ? null
                     : entriesState.filterCount,
@@ -155,27 +151,27 @@ class DiaryPageState extends State<DiaryPage> {
                   entriesState.search = value;
                 },
                 onClear: () => setState(() {
-                  _selected.clear();
+                  selected.clear();
                 }),
                 onDelete: () async {
-                  final selectedCopy = _selected.toList();
+                  final selectedCopy = selected.toList();
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                   await (db.delete(db.entries)
                         ..where((tbl) => tbl.id.isIn(selectedCopy)))
                       .go();
                 },
                 onSelect: () => setState(() {
-                  _selected.addAll(
+                  selected.addAll(
                     entryFoods.map((entryFood) => entryFood.entry.id),
                   );
                 }),
-                selected: _selected,
+                selected: selected,
                 onFavorite: () async {
                   final entries = await (db.entries.selectOnly()
                         ..addColumns([db.entries.id, db.entries.food])
-                        ..where(db.entries.id.isIn(_selected)))
+                        ..where(db.entries.id.isIn(selected)))
                       .get();
                   final foodIds =
                       entries.map((entry) => entry.read(db.entries.food)!);
@@ -183,7 +179,7 @@ class DiaryPageState extends State<DiaryPage> {
                         ..where((tbl) => tbl.id.isIn(foodIds)))
                       .write(const FoodsCompanion(favorite: Value(true)));
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                 },
                 onEdit: () async {
@@ -191,12 +187,12 @@ class DiaryPageState extends State<DiaryPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditEntriesPage(
-                        entryIds: _selected.toList(),
+                        entryIds: selected.toList(),
                       ),
                     ),
                   );
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                 },
               ),
@@ -209,15 +205,15 @@ class DiaryPageState extends State<DiaryPage> {
                 ),
               EntryList(
                 entryFoods: entryFoods,
-                selected: _selected,
+                selected: selected,
                 onSelect: (id) {
-                  if (_selected.contains(id))
+                  if (selected.contains(id))
                     setState(() {
-                      _selected.remove(id);
+                      selected.remove(id);
                     });
                   else
                     setState(() {
-                      _selected.add(id);
+                      selected.add(id);
                     });
                 },
                 onNext: () async {

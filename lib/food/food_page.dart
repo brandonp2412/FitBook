@@ -33,13 +33,13 @@ class PartialFood {
 }
 
 class FoodPageState extends State<FoodPage> {
-  late Stream<List<PartialFood>> _stream;
+  late Stream<List<PartialFood>> stream;
 
-  final TextEditingController _searchController = TextEditingController();
-  final Set<int> _selected = {};
+  final TextEditingController searchController = TextEditingController();
+  final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  String _search = '';
-  int _limit = 100;
+  String search = '';
+  int limit = 100;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class FoodPageState extends State<FoodPage> {
   }
 
   void _setStream() {
-    _stream = (db.foods.selectOnly()
+    stream = (db.foods.selectOnly()
           ..addColumns([
             db.foods.id,
             db.foods.name,
@@ -57,7 +57,7 @@ class FoodPageState extends State<FoodPage> {
             db.foods.servingSize,
             db.foods.servingUnit,
           ])
-          ..where(db.foods.name.contains(_search.toLowerCase()))
+          ..where(db.foods.name.contains(search.toLowerCase()))
           ..orderBy([
             OrderingTerm(
               expression: db.foods.favorite,
@@ -68,7 +68,7 @@ class FoodPageState extends State<FoodPage> {
               mode: OrderingMode.asc,
             ),
           ])
-          ..limit(_limit))
+          ..limit(limit))
         .watch()
         .map(
           (results) => results
@@ -107,7 +107,7 @@ class FoodPageState extends State<FoodPage> {
   Scaffold _foodsPage() {
     return Scaffold(
       body: StreamBuilder(
-        stream: _stream,
+        stream: stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
           final foods = snapshot.data ?? [];
@@ -115,34 +115,34 @@ class FoodPageState extends State<FoodPage> {
           return material.Column(
             children: [
               AppSearch(
-                controller: _searchController,
+                controller: searchController,
                 onChange: (value) {
                   setState(() {
-                    _search = value;
+                    search = value;
                   });
                   _setStream();
                 },
                 onClear: () => setState(() {
-                  _selected.clear();
+                  selected.clear();
                 }),
                 onDelete: () async {
-                  final selectedCopy = _selected.toList();
+                  final selectedCopy = selected.toList();
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                   await (db.delete(db.foods)
                         ..where((tbl) => tbl.id.isIn(selectedCopy)))
                       .go();
                 },
                 onSelect: () => setState(() {
-                  _selected.addAll(
+                  selected.addAll(
                     foods.map((food) => food.id),
                   );
                 }),
-                selected: _selected,
+                selected: selected,
                 onEdit: () async {
                   final food = foods.firstWhere(
-                    (element) => element.id == _selected.first,
+                    (element) => element.id == selected.first,
                   );
 
                   await Navigator.push(
@@ -154,22 +154,22 @@ class FoodPageState extends State<FoodPage> {
                     ),
                   );
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                 },
                 onFavorite: () async {
                   final first = await (db.foods.select()
-                        ..where((tbl) => tbl.id.equals(_selected.first)))
+                        ..where((tbl) => tbl.id.equals(selected.first)))
                       .getSingle();
                   await (db.foods.update()
-                        ..where((tbl) => tbl.id.isIn(_selected)))
+                        ..where((tbl) => tbl.id.isIn(selected)))
                       .write(
                     FoodsCompanion(
                       favorite: Value(first.favorite == true ? false : true),
                     ),
                   );
                   setState(() {
-                    _selected.clear();
+                    selected.clear();
                   });
                 },
               ),
@@ -182,20 +182,20 @@ class FoodPageState extends State<FoodPage> {
                 ),
               FoodList(
                 foods: foods,
-                selected: _selected,
+                selected: selected,
                 onSelect: (id) {
-                  if (_selected.contains(id))
+                  if (selected.contains(id))
                     setState(() {
-                      _selected.remove(id);
+                      selected.remove(id);
                     });
                   else
                     setState(() {
-                      _selected.add(id);
+                      selected.add(id);
                     });
                 },
                 onNext: () async {
                   setState(() {
-                    _limit += 10;
+                    limit += 10;
                   });
                   _setStream();
                 },
