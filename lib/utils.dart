@@ -4,6 +4,37 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
 
+String getShortUnit(String unit) {
+  switch (unit.toLowerCase()) {
+    case 'serving':
+      return 'srv';
+    case 'grams':
+      return 'g';
+    case 'milliliters':
+      return 'ml';
+    case 'kilojoules':
+      return 'kJ';
+    case 'cups':
+      return 'cup';
+    case 'tablespoons':
+      return 'tbsp';
+    case 'milligrams':
+      return 'mg';
+    case 'teaspoons':
+      return 'tsp';
+    case 'ounces':
+      return 'oz';
+    case 'pounds':
+      return 'lb';
+    case 'kilograms':
+      return 'kg';
+    case 'liters':
+      return 'L';
+    default:
+      return unit; // Return the original unit if no short form is defined
+  }
+}
+
 bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
