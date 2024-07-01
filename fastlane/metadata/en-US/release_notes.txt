@@ -1,1 +1,4 @@
-Fix searching for weights
+- Fix start/stop dates on graphs
+- Say serving amounts on foods list
+- Fix foods page for some versions of app
+- Add quantity multipliers (e.g. x5) to diary page

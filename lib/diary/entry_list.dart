@@ -64,6 +64,9 @@ class _EntryListState extends State<EntryList> {
                 entryFood.entry.created,
               );
           final isToday = isSameDay(entry.created, DateTime.now());
+          final suffix = entry.unit == 'serving' && entry.quantity > 1
+              ? " x${entry.quantity.toInt()}"
+              : "";
 
           return Column(
             children: [
@@ -80,7 +83,7 @@ class _EntryListState extends State<EntryList> {
                   ],
                 ),
               ListTile(
-                title: Text(foodName),
+                title: Text("$foodName$suffix"),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),
                   style: isToday
