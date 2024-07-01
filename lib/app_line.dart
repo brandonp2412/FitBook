@@ -100,6 +100,16 @@ class _AppLineState extends State<AppLine> {
               db.weights.unit,
             ])
             ..groupBy([createdCol])
+            ..where(
+              db.weights.created.isBiggerOrEqualValue(
+                widget.startDate ?? DateTime(0),
+              ),
+            )
+            ..where(
+              db.weights.created.isSmallerOrEqualValue(
+                widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
+              ),
+            )
             ..limit(_limit))
           .watch()
           .map(
@@ -128,6 +138,16 @@ class _AppLineState extends State<AppLine> {
                 mode: OrderingMode.desc,
               ),
             ])
+            ..where(
+              db.entries.created.isBiggerOrEqualValue(
+                widget.startDate ?? DateTime(0),
+              ),
+            )
+            ..where(
+              db.entries.created.isSmallerOrEqualValue(
+                widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
+              ),
+            )
             ..groupBy([createdCol])
             ..limit(_limit))
           .watch()
