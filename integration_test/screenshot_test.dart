@@ -211,8 +211,9 @@ const screenshotFood = "Chicken sushi";
 
 Future<void> appWrapper() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await (app.db.settings.insertOne(
+  await (app.db.settings.insertOnConflictUpdate(
     SettingsCompanion.insert(
+      id: const Value(1),
       longDateFormat: "dd/MM/yy",
       shortDateFormat: 'd/M/yy',
       entryUnit: 'serving',
