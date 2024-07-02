@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 device_type="$1"
 
