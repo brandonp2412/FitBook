@@ -1,10 +1,10 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsState extends ChangeNotifier {
-  late SharedPreferences prefs;
-
   ThemeMode themeMode = ThemeMode.system;
   String longDateFormat = 'dd/MM/yy';
   String shortDateFormat = 'd/M/yy';
@@ -25,156 +25,142 @@ class SettingsState extends ChangeNotifier {
   int? dailyCarbs;
   double? targetWeight;
 
-  SettingsState(SharedPreferences sharedPreferences) {
-    prefs = sharedPreferences;
-    longDateFormat = prefs.getString('longDateFormat') ?? "dd/MM/yy";
-    shortDateFormat = prefs.getString('shortDateFormat') ?? "d/M/yy";
-    entryUnit = prefs.getString('entryUnit') ?? 'serving';
-    foodUnit = prefs.getString('foodUnit') ?? 'grams';
+  SettingsState(Setting settings) {
+    longDateFormat = settings.longDateFormat;
+    shortDateFormat = settings.shortDateFormat;
+    entryUnit = settings.entryUnit;
+    foodUnit = settings.foodUnit;
 
-    final theme = prefs.getString('themeMode');
+    final theme = settings.themeMode;
     if (theme == "ThemeMode.system")
       themeMode = ThemeMode.system;
     else if (theme == "ThemeMode.light")
       themeMode = ThemeMode.light;
     else if (theme == "ThemeMode.dark") themeMode = ThemeMode.dark;
 
-    final summary = prefs.getString('diarySummary');
-    if (summary == DiarySummary.both.toString())
-      diarySummary = DiarySummary.both;
-    else if (summary == DiarySummary.division.toString())
-      diarySummary = DiarySummary.division;
-    else if (summary == DiarySummary.remaining.toString())
-      diarySummary = DiarySummary.remaining;
+    for (final summary in DiarySummary.values)
+      if (settings.diarySummary == summary.toString()) diarySummary = summary;
 
-    systemColors = prefs.getBool("systemColors") ?? false;
-    favoriteNew = prefs.getBool("favoriteNew") ?? false;
-    curveLines = prefs.getBool("curveLines") ?? true;
-    showOthers = prefs.getBool("showOthers") ?? false;
-    selectEntryOnSubmit = prefs.getBool("selectEntryOnSubmit") ?? false;
-    notifications = prefs.getBool('notifications') ?? false;
+    systemColors = settings.systemColors;
+    favoriteNew = settings.favoriteNew;
+    curveLines = settings.curveLines;
+    showOthers = settings.showOthers;
+    selectEntryOnSubmit = settings.selectEntryOnSubmit;
+    notifications = settings.notifications;
 
-    dailyCalories = prefs.getInt('dailyCalories');
-    dailyProtein = prefs.getInt('dailyProtein');
-    dailyFat = prefs.getInt('dailyFat');
-    dailyCarbs = prefs.getInt('dailyCarbs');
-    targetWeight = prefs.getDouble('targetWeight');
+    dailyCalories = settings.dailyCalories;
+    dailyProtein = settings.dailyProtein;
+    dailyFat = settings.dailyFat;
+    dailyCarbs = settings.dailyCarb;
+    targetWeight = settings.targetWeight;
   }
 
   void setFoodUnit(String value) {
     foodUnit = value;
     notifyListeners();
-    prefs.setString('foodUnit', value);
+    (db.settings.update()).write(SettingsCompanion(foodUnit: Value(value)));
   }
 
   void setEntryUnit(String value) {
     entryUnit = value;
     notifyListeners();
-    prefs.setString('entryUnit', value);
+    (db.settings.update()).write(SettingsCompanion(entryUnit: Value(value)));
   }
 
   void setDiarySummary(DiarySummary value) {
     diarySummary = value;
     notifyListeners();
-    prefs.setString('diarySummary', value.toString());
+    (db.settings.update())
+        .write(SettingsCompanion(diarySummary: Value(value.toString())));
   }
 
   void setNotifications(bool value) async {
     notifications = value;
-    prefs.setBool('notifications', value);
+    (db.settings.update())
+        .write(SettingsCompanion(notifications: Value(value)));
     notifyListeners();
   }
 
   void setSelectEntryOnSubmit(bool value) {
     selectEntryOnSubmit = value;
-    prefs.setBool('selectEntryOnSubmit', value);
+    (db.settings.update())
+        .write(SettingsCompanion(selectEntryOnSubmit: Value(value)));
     notifyListeners();
   }
 
   void setFavoriteNew(bool value) {
     favoriteNew = value;
-    prefs.setBool('favoriteNew', value);
+    (db.settings.update()).write(SettingsCompanion(favoriteNew: Value(value)));
     notifyListeners();
   }
 
-  void setShowOthers(bool show) {
-    showOthers = show;
-    prefs.setBool('showOthers', show);
+  void setShowOthers(bool value) {
+    showOthers = value;
+    (db.settings.update()).write(SettingsCompanion(showOthers: Value(value)));
     notifyListeners();
   }
 
   void setTargetWeight(double? value) {
     targetWeight = value;
-    if (value == null)
-      prefs.remove('targetWeight');
-    else
-      prefs.setDouble('targetWeight', value);
+    (db.settings.update()).write(SettingsCompanion(targetWeight: Value(value)));
     notifyListeners();
   }
 
   void setDailyCarbs(int? value) {
     dailyCarbs = value;
-    if (value == null)
-      prefs.remove('dailyCarbs');
-    else
-      prefs.setInt('dailyCarbs', value);
+    (db.settings.update()).write(SettingsCompanion(dailyCarb: Value(value)));
     notifyListeners();
   }
 
   void setDailyFat(int? value) {
     dailyFat = value;
-    if (value == null)
-      prefs.remove('dailyFat');
-    else
-      prefs.setInt('dailyFat', value);
+    (db.settings.update()).write(SettingsCompanion(dailyFat: Value(value)));
     notifyListeners();
   }
 
-  void setDailyProtein(int? protein) {
-    dailyProtein = protein;
-    if (protein == null)
-      prefs.remove('dailyProtein');
-    else
-      prefs.setInt('dailyProtein', protein);
+  void setDailyProtein(int? value) {
+    dailyProtein = value;
+    (db.settings.update()).write(SettingsCompanion(dailyProtein: Value(value)));
     notifyListeners();
   }
 
-  void setDailyCalories(int? calories) {
-    dailyCalories = calories;
-    if (calories == null)
-      prefs.remove('dailyCalories');
-    else
-      prefs.setInt('dailyCalories', calories);
+  void setDailyCalories(int? value) {
+    dailyCalories = value;
+    (db.settings.update())
+        .write(SettingsCompanion(dailyCalories: Value(value)));
     notifyListeners();
   }
 
-  void setCurve(bool curve) {
-    curveLines = curve;
-    prefs.setBool('curveLines', curve);
+  void setCurve(bool value) {
+    curveLines = value;
+    (db.settings.update()).write(SettingsCompanion(curveLines: Value(value)));
     notifyListeners();
   }
 
-  void setSystem(bool system) {
-    systemColors = system;
-    prefs.setBool('systemColors', system);
+  void setSystem(bool value) {
+    systemColors = value;
+    (db.settings.update()).write(SettingsCompanion(systemColors: Value(value)));
     notifyListeners();
   }
 
-  void setLong(String format) {
-    longDateFormat = format;
+  void setLong(String value) {
+    longDateFormat = value;
     notifyListeners();
-    prefs.setString('longDateFormat', format);
+    (db.settings.update())
+        .write(SettingsCompanion(longDateFormat: Value(value)));
   }
 
-  void setShort(String format) {
-    shortDateFormat = format;
+  void setShort(String value) {
+    shortDateFormat = value;
     notifyListeners();
-    prefs.setString('shortDateFormat', format);
+    (db.settings.update())
+        .write(SettingsCompanion(shortDateFormat: Value(value)));
   }
 
-  void setTheme(ThemeMode theme) {
-    themeMode = theme;
-    prefs.setString('themeMode', theme.toString());
+  void setTheme(ThemeMode value) {
+    themeMode = value;
+    (db.settings.update())
+        .write(SettingsCompanion(themeMode: Value(value.toString())));
     notifyListeners();
   }
 }

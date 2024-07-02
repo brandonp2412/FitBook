@@ -32,7 +32,7 @@ class PartialFood {
   });
 }
 
-class FoodPageState extends State<FoodPage> {
+class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   late Stream<List<PartialFood>> stream;
 
   final TextEditingController searchController = TextEditingController();
@@ -88,6 +88,7 @@ class FoodPageState extends State<FoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return NavigatorPopHandler(
       onPop: () {
         if (navigatorKey.currentState!.canPop() == false) return;
@@ -217,4 +218,7 @@ class FoodPageState extends State<FoodPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_page.dart';
@@ -5,15 +6,14 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mock_tests.dart';
 
 void main() async {
   testWidgets('SettingsPage', (WidgetTester tester) async {
     await mockTests();
-    final prefs = await SharedPreferences.getInstance();
-    final settingsState = SettingsState(prefs);
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -28,7 +28,7 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Dark'));
+    await tester.tap(find.text('System'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Light'));
     await tester.pumpAndSettle();

@@ -3282,6 +3282,559 @@ final class Schema13 extends i0.VersionedSchema {
       alias: null);
 }
 
+final class Schema14 extends i0.VersionedSchema {
+  Schema14({required super.database}) : super(version: 14);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    foods,
+    entries,
+    weights,
+    settings,
+  ];
+  late final Shape6 foods = Shape6(
+      source: i0.VersionedTable(
+        entityName: 'foods',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_1,
+          _column_2,
+          _column_3,
+          _column_4,
+          _column_5,
+          _column_6,
+          _column_7,
+          _column_8,
+          _column_9,
+          _column_10,
+          _column_11,
+          _column_12,
+          _column_13,
+          _column_14,
+          _column_15,
+          _column_16,
+          _column_17,
+          _column_18,
+          _column_19,
+          _column_20,
+          _column_21,
+          _column_22,
+          _column_23,
+          _column_24,
+          _column_25,
+          _column_26,
+          _column_27,
+          _column_28,
+          _column_29,
+          _column_30,
+          _column_31,
+          _column_32,
+          _column_33,
+          _column_34,
+          _column_35,
+          _column_36,
+          _column_37,
+          _column_38,
+          _column_39,
+          _column_40,
+          _column_41,
+          _column_42,
+          _column_43,
+          _column_44,
+          _column_45,
+          _column_46,
+          _column_47,
+          _column_48,
+          _column_49,
+          _column_50,
+          _column_51,
+          _column_52,
+          _column_53,
+          _column_54,
+          _column_55,
+          _column_56,
+          _column_57,
+          _column_58,
+          _column_59,
+          _column_60,
+          _column_61,
+          _column_62,
+          _column_63,
+          _column_64,
+          _column_65,
+          _column_66,
+          _column_67,
+          _column_68,
+          _column_69,
+          _column_70,
+          _column_71,
+          _column_72,
+          _column_73,
+          _column_74,
+          _column_75,
+          _column_76,
+          _column_77,
+          _column_78,
+          _column_79,
+          _column_80,
+          _column_81,
+          _column_82,
+          _column_83,
+          _column_84,
+          _column_85,
+          _column_86,
+          _column_87,
+          _column_88,
+          _column_89,
+          _column_90,
+          _column_91,
+          _column_92,
+          _column_93,
+          _column_94,
+          _column_95,
+          _column_96,
+          _column_97,
+          _column_98,
+          _column_99,
+          _column_100,
+          _column_101,
+          _column_102,
+          _column_103,
+          _column_104,
+          _column_105,
+          _column_106,
+          _column_107,
+          _column_108,
+          _column_109,
+          _column_110,
+          _column_111,
+          _column_112,
+          _column_113,
+          _column_114,
+          _column_115,
+          _column_116,
+          _column_124,
+          _column_125,
+          _column_126,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape2 entries = Shape2(
+      source: i0.VersionedTable(
+        entityName: 'entries',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_117,
+          _column_118,
+          _column_119,
+          _column_120,
+          _column_121,
+          _column_5,
+          _column_4,
+          _column_122,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape3 weights = Shape3(
+      source: i0.VersionedTable(
+        entityName: 'weights',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_118,
+          _column_120,
+          _column_123,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape7 settings = Shape7(
+      source: i0.VersionedTable(
+        entityName: 'settings',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_127,
+          _column_128,
+          _column_129,
+          _column_130,
+          _column_131,
+          _column_132,
+          _column_133,
+          _column_134,
+          _column_135,
+          _column_136,
+          _column_137,
+          _column_138,
+          _column_139,
+          _column_140,
+          _column_141,
+          _column_142,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+}
+
+class Shape7 extends i0.VersionedTable {
+  Shape7({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get themeMode =>
+      columnsByName['theme_mode']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get longDateFormat =>
+      columnsByName['long_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entryUnit =>
+      columnsByName['entry_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get foodUnit =>
+      columnsByName['food_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get diarySummary =>
+      columnsByName['diary_summary']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get targetWeight =>
+      columnsByName['target_weight']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<bool> get systemColors =>
+      columnsByName['system_colors']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get curveLines =>
+      columnsByName['curve_lines']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get showOthers =>
+      columnsByName['show_others']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get favoriteNew =>
+      columnsByName['favorite_new']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get selectEntryOnSubmit =>
+      columnsByName['select_entry_on_submit']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get notifications =>
+      columnsByName['notifications']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<int> get dailyCalories =>
+      columnsByName['daily_calories']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyProtein =>
+      columnsByName['daily_protein']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyFat =>
+      columnsByName['daily_fat']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyCarb =>
+      columnsByName['daily_carb']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_127(String aliasedName) =>
+    i1.GeneratedColumn<String>('theme_mode', aliasedName, false,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_128(String aliasedName) =>
+    i1.GeneratedColumn<String>('long_date_format', aliasedName, false,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_129(String aliasedName) =>
+    i1.GeneratedColumn<String>('entry_unit', aliasedName, false,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_130(String aliasedName) =>
+    i1.GeneratedColumn<String>('food_unit', aliasedName, false,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_131(String aliasedName) =>
+    i1.GeneratedColumn<String>('diary_summary', aliasedName, false,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<double> _column_132(String aliasedName) =>
+    i1.GeneratedColumn<double>('target_weight', aliasedName, true,
+        type: i1.DriftSqlType.double);
+i1.GeneratedColumn<bool> _column_133(String aliasedName) =>
+    i1.GeneratedColumn<bool>('system_colors', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("system_colors" IN (0, 1))'));
+i1.GeneratedColumn<bool> _column_134(String aliasedName) =>
+    i1.GeneratedColumn<bool>('curve_lines', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("curve_lines" IN (0, 1))'));
+i1.GeneratedColumn<bool> _column_135(String aliasedName) =>
+    i1.GeneratedColumn<bool>('show_others', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("show_others" IN (0, 1))'));
+i1.GeneratedColumn<bool> _column_136(String aliasedName) =>
+    i1.GeneratedColumn<bool>('favorite_new', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("favorite_new" IN (0, 1))'));
+i1.GeneratedColumn<bool> _column_137(String aliasedName) =>
+    i1.GeneratedColumn<bool>('select_entry_on_submit', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("select_entry_on_submit" IN (0, 1))'));
+i1.GeneratedColumn<bool> _column_138(String aliasedName) =>
+    i1.GeneratedColumn<bool>('notifications', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("notifications" IN (0, 1))'));
+i1.GeneratedColumn<int> _column_139(String aliasedName) =>
+    i1.GeneratedColumn<int>('daily_calories', aliasedName, true,
+        type: i1.DriftSqlType.int);
+i1.GeneratedColumn<int> _column_140(String aliasedName) =>
+    i1.GeneratedColumn<int>('daily_protein', aliasedName, true,
+        type: i1.DriftSqlType.int);
+i1.GeneratedColumn<int> _column_141(String aliasedName) =>
+    i1.GeneratedColumn<int>('daily_fat', aliasedName, true,
+        type: i1.DriftSqlType.int);
+i1.GeneratedColumn<int> _column_142(String aliasedName) =>
+    i1.GeneratedColumn<int>('daily_carb', aliasedName, true,
+        type: i1.DriftSqlType.int);
+
+final class Schema15 extends i0.VersionedSchema {
+  Schema15({required super.database}) : super(version: 15);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    foods,
+    entries,
+    weights,
+    settings,
+  ];
+  late final Shape6 foods = Shape6(
+      source: i0.VersionedTable(
+        entityName: 'foods',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_1,
+          _column_2,
+          _column_3,
+          _column_4,
+          _column_5,
+          _column_6,
+          _column_7,
+          _column_8,
+          _column_9,
+          _column_10,
+          _column_11,
+          _column_12,
+          _column_13,
+          _column_14,
+          _column_15,
+          _column_16,
+          _column_17,
+          _column_18,
+          _column_19,
+          _column_20,
+          _column_21,
+          _column_22,
+          _column_23,
+          _column_24,
+          _column_25,
+          _column_26,
+          _column_27,
+          _column_28,
+          _column_29,
+          _column_30,
+          _column_31,
+          _column_32,
+          _column_33,
+          _column_34,
+          _column_35,
+          _column_36,
+          _column_37,
+          _column_38,
+          _column_39,
+          _column_40,
+          _column_41,
+          _column_42,
+          _column_43,
+          _column_44,
+          _column_45,
+          _column_46,
+          _column_47,
+          _column_48,
+          _column_49,
+          _column_50,
+          _column_51,
+          _column_52,
+          _column_53,
+          _column_54,
+          _column_55,
+          _column_56,
+          _column_57,
+          _column_58,
+          _column_59,
+          _column_60,
+          _column_61,
+          _column_62,
+          _column_63,
+          _column_64,
+          _column_65,
+          _column_66,
+          _column_67,
+          _column_68,
+          _column_69,
+          _column_70,
+          _column_71,
+          _column_72,
+          _column_73,
+          _column_74,
+          _column_75,
+          _column_76,
+          _column_77,
+          _column_78,
+          _column_79,
+          _column_80,
+          _column_81,
+          _column_82,
+          _column_83,
+          _column_84,
+          _column_85,
+          _column_86,
+          _column_87,
+          _column_88,
+          _column_89,
+          _column_90,
+          _column_91,
+          _column_92,
+          _column_93,
+          _column_94,
+          _column_95,
+          _column_96,
+          _column_97,
+          _column_98,
+          _column_99,
+          _column_100,
+          _column_101,
+          _column_102,
+          _column_103,
+          _column_104,
+          _column_105,
+          _column_106,
+          _column_107,
+          _column_108,
+          _column_109,
+          _column_110,
+          _column_111,
+          _column_112,
+          _column_113,
+          _column_114,
+          _column_115,
+          _column_116,
+          _column_124,
+          _column_125,
+          _column_126,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape2 entries = Shape2(
+      source: i0.VersionedTable(
+        entityName: 'entries',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_117,
+          _column_118,
+          _column_119,
+          _column_120,
+          _column_121,
+          _column_5,
+          _column_4,
+          _column_122,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape3 weights = Shape3(
+      source: i0.VersionedTable(
+        entityName: 'weights',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_118,
+          _column_120,
+          _column_123,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape8 settings = Shape8(
+      source: i0.VersionedTable(
+        entityName: 'settings',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_127,
+          _column_128,
+          _column_143,
+          _column_129,
+          _column_130,
+          _column_131,
+          _column_132,
+          _column_133,
+          _column_134,
+          _column_135,
+          _column_136,
+          _column_137,
+          _column_138,
+          _column_139,
+          _column_140,
+          _column_141,
+          _column_142,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+}
+
+class Shape8 extends i0.VersionedTable {
+  Shape8({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get themeMode =>
+      columnsByName['theme_mode']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get longDateFormat =>
+      columnsByName['long_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get shortDateFormat =>
+      columnsByName['short_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entryUnit =>
+      columnsByName['entry_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get foodUnit =>
+      columnsByName['food_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get diarySummary =>
+      columnsByName['diary_summary']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get targetWeight =>
+      columnsByName['target_weight']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<bool> get systemColors =>
+      columnsByName['system_colors']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get curveLines =>
+      columnsByName['curve_lines']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get showOthers =>
+      columnsByName['show_others']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get favoriteNew =>
+      columnsByName['favorite_new']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get selectEntryOnSubmit =>
+      columnsByName['select_entry_on_submit']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get notifications =>
+      columnsByName['notifications']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<int> get dailyCalories =>
+      columnsByName['daily_calories']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyProtein =>
+      columnsByName['daily_protein']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyFat =>
+      columnsByName['daily_fat']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyCarb =>
+      columnsByName['daily_carb']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_143(String aliasedName) =>
+    i1.GeneratedColumn<String>('short_date_format', aliasedName, false,
+        type: i1.DriftSqlType.string);
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema3 schema) from1To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
@@ -3294,6 +3847,8 @@ i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema11 schema) from10To11,
   required Future<void> Function(i1.Migrator m, Schema12 schema) from11To12,
   required Future<void> Function(i1.Migrator m, Schema13 schema) from12To13,
+  required Future<void> Function(i1.Migrator m, Schema14 schema) from13To14,
+  required Future<void> Function(i1.Migrator m, Schema15 schema) from14To15,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -3352,6 +3907,16 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from12To13(migrator, schema);
         return 13;
+      case 13:
+        final schema = Schema14(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from13To14(migrator, schema);
+        return 14;
+      case 14:
+        final schema = Schema15(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from14To15(migrator, schema);
+        return 15;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -3370,6 +3935,8 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema11 schema) from10To11,
   required Future<void> Function(i1.Migrator m, Schema12 schema) from11To12,
   required Future<void> Function(i1.Migrator m, Schema13 schema) from12To13,
+  required Future<void> Function(i1.Migrator m, Schema14 schema) from13To14,
+  required Future<void> Function(i1.Migrator m, Schema15 schema) from14To15,
 }) =>
     i0.VersionedSchema.stepByStepHelper(
         step: migrationSteps(
@@ -3384,4 +3951,6 @@ i1.OnUpgrade stepByStep({
       from10To11: from10To11,
       from11To12: from11To12,
       from12To13: from12To13,
+      from13To14: from13To14,
+      from14To15: from14To15,
     ));

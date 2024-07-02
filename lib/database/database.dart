@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/database/foods.dart';
 import 'package:fit_book/database/schema_versions.dart';
 import 'package:fit_book/database/weights.dart';
+import 'package:fit_book/settings/settings.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -16,7 +19,7 @@ import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Foods, Entries, Weights])
+@DriftDatabase(tables: [Foods, Entries, Weights, Settings])
 class AppDatabase extends _$AppDatabase {
   final bool testing;
 
@@ -24,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration {
@@ -40,9 +43,22 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(foods, foods.servingSize);
         }
 
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setInt('dailyCalories', 2200);
-        prefs.setInt('dailyProtein', 100);
+        await (settings.insertOne(
+          SettingsCompanion.insert(
+            longDateFormat: "dd/MM/yy",
+            shortDateFormat: 'd/M/yy',
+            entryUnit: 'serving',
+            foodUnit: 'grams',
+            themeMode: material.ThemeMode.system.toString(),
+            curveLines: false,
+            diarySummary: DiarySummary.division.toString(),
+            favoriteNew: false,
+            notifications: false,
+            selectEntryOnSubmit: false,
+            showOthers: false,
+            systemColors: false,
+          ),
+        ));
       },
       onUpgrade: stepByStep(
         from1To3: (m, schema) async {
@@ -97,6 +113,88 @@ class AppDatabase extends _$AppDatabase {
           await m
               .addColumn(schema.foods, schema.foods.servingSize)
               .catchError((_) {});
+        },
+        from13To14: (Migrator m, Schema14 schema) async {
+          await m.createTable(schema.settings);
+        },
+        from14To15: (Migrator m, Schema15 schema) async {
+          await m.addColumn(schema.settings, schema.settings.shortDateFormat);
+          final prefs = await SharedPreferences.getInstance();
+          material.ThemeMode themeMode = material.ThemeMode.system;
+          String longDateFormat = 'dd/MM/yy';
+          String shortDateFormat = 'd/M/yy';
+          String entryUnit = 'serving';
+          String foodUnit = 'grams';
+          DiarySummary diarySummary = DiarySummary.division;
+
+          bool systemColors = false;
+          bool curveLines = false;
+          bool showOthers = false;
+          bool favoriteNew = false;
+          bool selectEntryOnSubmit = false;
+          bool notifications = false;
+
+          int? dailyCalories;
+          int? dailyProtein;
+          int? dailyFat;
+          int? dailyCarbs;
+          double? targetWeight;
+
+          longDateFormat = prefs.getString('longDateFormat') ?? "dd/MM/yy";
+          shortDateFormat = prefs.getString('shortDateFormat') ?? "d/M/yy";
+          entryUnit = prefs.getString('entryUnit') ?? 'serving';
+          foodUnit = prefs.getString('foodUnit') ?? 'grams';
+
+          final theme = prefs.getString('themeMode');
+          if (theme == "ThemeMode.system")
+            themeMode = material.ThemeMode.system;
+          else if (theme == "ThemeMode.light")
+            themeMode = material.ThemeMode.light;
+          else if (theme == "ThemeMode.dark")
+            themeMode = material.ThemeMode.dark;
+
+          final summary = prefs.getString('diarySummary');
+          if (summary == DiarySummary.both.toString())
+            diarySummary = DiarySummary.both;
+          else if (summary == DiarySummary.division.toString())
+            diarySummary = DiarySummary.division;
+          else if (summary == DiarySummary.remaining.toString())
+            diarySummary = DiarySummary.remaining;
+
+          systemColors = prefs.getBool("systemColors") ?? false;
+          favoriteNew = prefs.getBool("favoriteNew") ?? false;
+          curveLines = prefs.getBool("curveLines") ?? true;
+          showOthers = prefs.getBool("showOthers") ?? false;
+          selectEntryOnSubmit = prefs.getBool("selectEntryOnSubmit") ?? false;
+          notifications = prefs.getBool('notifications') ?? false;
+
+          dailyCalories = prefs.getInt('dailyCalories');
+          dailyProtein = prefs.getInt('dailyProtein');
+          dailyFat = prefs.getInt('dailyFat');
+          dailyCarbs = prefs.getInt('dailyCarbs');
+          targetWeight = prefs.getDouble('targetWeight');
+
+          await (settings.insertOne(
+            SettingsCompanion.insert(
+              longDateFormat: longDateFormat,
+              shortDateFormat: shortDateFormat,
+              entryUnit: entryUnit,
+              foodUnit: foodUnit,
+              themeMode: themeMode.toString(),
+              curveLines: curveLines,
+              diarySummary: diarySummary.toString(),
+              favoriteNew: favoriteNew,
+              notifications: notifications,
+              selectEntryOnSubmit: selectEntryOnSubmit,
+              showOthers: showOthers,
+              systemColors: systemColors,
+              dailyCalories: Value(dailyCalories),
+              dailyCarb: Value(dailyCarbs),
+              dailyFat: Value(dailyFat),
+              dailyProtein: Value(dailyProtein),
+              targetWeight: Value(targetWeight),
+            ),
+          ));
         },
       ),
     );

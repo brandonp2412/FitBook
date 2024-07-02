@@ -1,19 +1,19 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/food/edit_food_page.dart';
-import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/main.dart' as app;
 import 'package:fit_book/settings/settings_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weights_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 List<FoodsCompanion> foods = [
   FoodsCompanion.insert(
@@ -211,8 +211,24 @@ const screenshotFood = "Chicken sushi";
 
 Future<void> appWrapper() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final settingsState = SettingsState(prefs);
+  await (app.db.settings.insertOne(
+    SettingsCompanion.insert(
+      longDateFormat: "dd/MM/yy",
+      shortDateFormat: 'd/M/yy',
+      entryUnit: 'serving',
+      foodUnit: 'grams',
+      themeMode: ThemeMode.system.toString(),
+      curveLines: false,
+      diarySummary: DiarySummary.division.toString(),
+      favoriteNew: false,
+      notifications: false,
+      selectEntryOnSubmit: false,
+      showOthers: false,
+      systemColors: false,
+    ),
+  ));
+  final settings = await (app.db.settings.select()).getSingle();
+  final settingsState = SettingsState(settings);
   settingsState.setTheme(ThemeMode.dark);
   runApp(app.appProviders(settingsState));
 }

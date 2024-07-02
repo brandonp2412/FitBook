@@ -14,7 +14,8 @@ class WeightsPage extends StatefulWidget {
   createState() => WeightsPageState();
 }
 
-class WeightsPageState extends State<WeightsPage> {
+class WeightsPageState extends State<WeightsPage>
+    with AutomaticKeepAliveClientMixin {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final TextEditingController searchController = TextEditingController();
@@ -49,6 +50,7 @@ class WeightsPageState extends State<WeightsPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return NavigatorPopHandler(
       onPop: () {
         if (navigatorKey.currentState!.canPop() == false) return;
@@ -175,4 +177,7 @@ class WeightsPageState extends State<WeightsPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

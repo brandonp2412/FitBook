@@ -7,15 +7,14 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'mock_tests.dart';
 
 void main() async {
   testWidgets('EditEntries', (WidgetTester tester) async {
     await mockTests();
-    final prefs = await SharedPreferences.getInstance();
-    final settingsState = SettingsState(prefs);
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
 
     final richId = await (db.foods.insertOne(
       FoodsCompanion.insert(

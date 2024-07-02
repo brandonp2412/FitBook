@@ -5856,17 +5856,863 @@ class WeightsCompanion extends UpdateCompanion<Weight> {
   }
 }
 
+class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _themeModeMeta =
+      const VerificationMeta('themeMode');
+  @override
+  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
+      'theme_mode', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _longDateFormatMeta =
+      const VerificationMeta('longDateFormat');
+  @override
+  late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
+      'long_date_format', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _shortDateFormatMeta =
+      const VerificationMeta('shortDateFormat');
+  @override
+  late final GeneratedColumn<String> shortDateFormat = GeneratedColumn<String>(
+      'short_date_format', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _entryUnitMeta =
+      const VerificationMeta('entryUnit');
+  @override
+  late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
+      'entry_unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _foodUnitMeta =
+      const VerificationMeta('foodUnit');
+  @override
+  late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
+      'food_unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _diarySummaryMeta =
+      const VerificationMeta('diarySummary');
+  @override
+  late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
+      'diary_summary', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _targetWeightMeta =
+      const VerificationMeta('targetWeight');
+  @override
+  late final GeneratedColumn<double> targetWeight = GeneratedColumn<double>(
+      'target_weight', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _systemColorsMeta =
+      const VerificationMeta('systemColors');
+  @override
+  late final GeneratedColumn<bool> systemColors = GeneratedColumn<bool>(
+      'system_colors', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("system_colors" IN (0, 1))'));
+  static const VerificationMeta _curveLinesMeta =
+      const VerificationMeta('curveLines');
+  @override
+  late final GeneratedColumn<bool> curveLines = GeneratedColumn<bool>(
+      'curve_lines', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("curve_lines" IN (0, 1))'));
+  static const VerificationMeta _showOthersMeta =
+      const VerificationMeta('showOthers');
+  @override
+  late final GeneratedColumn<bool> showOthers = GeneratedColumn<bool>(
+      'show_others', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_others" IN (0, 1))'));
+  static const VerificationMeta _favoriteNewMeta =
+      const VerificationMeta('favoriteNew');
+  @override
+  late final GeneratedColumn<bool> favoriteNew = GeneratedColumn<bool>(
+      'favorite_new', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("favorite_new" IN (0, 1))'));
+  static const VerificationMeta _selectEntryOnSubmitMeta =
+      const VerificationMeta('selectEntryOnSubmit');
+  @override
+  late final GeneratedColumn<bool> selectEntryOnSubmit = GeneratedColumn<bool>(
+      'select_entry_on_submit', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("select_entry_on_submit" IN (0, 1))'));
+  static const VerificationMeta _notificationsMeta =
+      const VerificationMeta('notifications');
+  @override
+  late final GeneratedColumn<bool> notifications = GeneratedColumn<bool>(
+      'notifications', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("notifications" IN (0, 1))'));
+  static const VerificationMeta _dailyCaloriesMeta =
+      const VerificationMeta('dailyCalories');
+  @override
+  late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
+      'daily_calories', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _dailyProteinMeta =
+      const VerificationMeta('dailyProtein');
+  @override
+  late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
+      'daily_protein', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _dailyFatMeta =
+      const VerificationMeta('dailyFat');
+  @override
+  late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
+      'daily_fat', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _dailyCarbMeta =
+      const VerificationMeta('dailyCarb');
+  @override
+  late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
+      'daily_carb', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        themeMode,
+        longDateFormat,
+        shortDateFormat,
+        entryUnit,
+        foodUnit,
+        diarySummary,
+        targetWeight,
+        systemColors,
+        curveLines,
+        showOthers,
+        favoriteNew,
+        selectEntryOnSubmit,
+        notifications,
+        dailyCalories,
+        dailyProtein,
+        dailyFat,
+        dailyCarb
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'settings';
+  @override
+  VerificationContext validateIntegrity(Insertable<Setting> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('theme_mode')) {
+      context.handle(_themeModeMeta,
+          themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta));
+    } else if (isInserting) {
+      context.missing(_themeModeMeta);
+    }
+    if (data.containsKey('long_date_format')) {
+      context.handle(
+          _longDateFormatMeta,
+          longDateFormat.isAcceptableOrUnknown(
+              data['long_date_format']!, _longDateFormatMeta));
+    } else if (isInserting) {
+      context.missing(_longDateFormatMeta);
+    }
+    if (data.containsKey('short_date_format')) {
+      context.handle(
+          _shortDateFormatMeta,
+          shortDateFormat.isAcceptableOrUnknown(
+              data['short_date_format']!, _shortDateFormatMeta));
+    } else if (isInserting) {
+      context.missing(_shortDateFormatMeta);
+    }
+    if (data.containsKey('entry_unit')) {
+      context.handle(_entryUnitMeta,
+          entryUnit.isAcceptableOrUnknown(data['entry_unit']!, _entryUnitMeta));
+    } else if (isInserting) {
+      context.missing(_entryUnitMeta);
+    }
+    if (data.containsKey('food_unit')) {
+      context.handle(_foodUnitMeta,
+          foodUnit.isAcceptableOrUnknown(data['food_unit']!, _foodUnitMeta));
+    } else if (isInserting) {
+      context.missing(_foodUnitMeta);
+    }
+    if (data.containsKey('diary_summary')) {
+      context.handle(
+          _diarySummaryMeta,
+          diarySummary.isAcceptableOrUnknown(
+              data['diary_summary']!, _diarySummaryMeta));
+    } else if (isInserting) {
+      context.missing(_diarySummaryMeta);
+    }
+    if (data.containsKey('target_weight')) {
+      context.handle(
+          _targetWeightMeta,
+          targetWeight.isAcceptableOrUnknown(
+              data['target_weight']!, _targetWeightMeta));
+    }
+    if (data.containsKey('system_colors')) {
+      context.handle(
+          _systemColorsMeta,
+          systemColors.isAcceptableOrUnknown(
+              data['system_colors']!, _systemColorsMeta));
+    } else if (isInserting) {
+      context.missing(_systemColorsMeta);
+    }
+    if (data.containsKey('curve_lines')) {
+      context.handle(
+          _curveLinesMeta,
+          curveLines.isAcceptableOrUnknown(
+              data['curve_lines']!, _curveLinesMeta));
+    } else if (isInserting) {
+      context.missing(_curveLinesMeta);
+    }
+    if (data.containsKey('show_others')) {
+      context.handle(
+          _showOthersMeta,
+          showOthers.isAcceptableOrUnknown(
+              data['show_others']!, _showOthersMeta));
+    } else if (isInserting) {
+      context.missing(_showOthersMeta);
+    }
+    if (data.containsKey('favorite_new')) {
+      context.handle(
+          _favoriteNewMeta,
+          favoriteNew.isAcceptableOrUnknown(
+              data['favorite_new']!, _favoriteNewMeta));
+    } else if (isInserting) {
+      context.missing(_favoriteNewMeta);
+    }
+    if (data.containsKey('select_entry_on_submit')) {
+      context.handle(
+          _selectEntryOnSubmitMeta,
+          selectEntryOnSubmit.isAcceptableOrUnknown(
+              data['select_entry_on_submit']!, _selectEntryOnSubmitMeta));
+    } else if (isInserting) {
+      context.missing(_selectEntryOnSubmitMeta);
+    }
+    if (data.containsKey('notifications')) {
+      context.handle(
+          _notificationsMeta,
+          notifications.isAcceptableOrUnknown(
+              data['notifications']!, _notificationsMeta));
+    } else if (isInserting) {
+      context.missing(_notificationsMeta);
+    }
+    if (data.containsKey('daily_calories')) {
+      context.handle(
+          _dailyCaloriesMeta,
+          dailyCalories.isAcceptableOrUnknown(
+              data['daily_calories']!, _dailyCaloriesMeta));
+    }
+    if (data.containsKey('daily_protein')) {
+      context.handle(
+          _dailyProteinMeta,
+          dailyProtein.isAcceptableOrUnknown(
+              data['daily_protein']!, _dailyProteinMeta));
+    }
+    if (data.containsKey('daily_fat')) {
+      context.handle(_dailyFatMeta,
+          dailyFat.isAcceptableOrUnknown(data['daily_fat']!, _dailyFatMeta));
+    }
+    if (data.containsKey('daily_carb')) {
+      context.handle(_dailyCarbMeta,
+          dailyCarb.isAcceptableOrUnknown(data['daily_carb']!, _dailyCarbMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Setting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Setting(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      themeMode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
+      longDateFormat: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
+      shortDateFormat: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}short_date_format'])!,
+      entryUnit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_unit'])!,
+      foodUnit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}food_unit'])!,
+      diarySummary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}diary_summary'])!,
+      targetWeight: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}target_weight']),
+      systemColors: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}system_colors'])!,
+      curveLines: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}curve_lines'])!,
+      showOthers: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}show_others'])!,
+      favoriteNew: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}favorite_new'])!,
+      selectEntryOnSubmit: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}select_entry_on_submit'])!,
+      notifications: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}notifications'])!,
+      dailyCalories: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_calories']),
+      dailyProtein: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_protein']),
+      dailyFat: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_fat']),
+      dailyCarb: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_carb']),
+    );
+  }
+
+  @override
+  $SettingsTable createAlias(String alias) {
+    return $SettingsTable(attachedDatabase, alias);
+  }
+}
+
+class Setting extends DataClass implements Insertable<Setting> {
+  final int id;
+  final String themeMode;
+  final String longDateFormat;
+  final String shortDateFormat;
+  final String entryUnit;
+  final String foodUnit;
+  final String diarySummary;
+  final double? targetWeight;
+  final bool systemColors;
+  final bool curveLines;
+  final bool showOthers;
+  final bool favoriteNew;
+  final bool selectEntryOnSubmit;
+  final bool notifications;
+  final int? dailyCalories;
+  final int? dailyProtein;
+  final int? dailyFat;
+  final int? dailyCarb;
+  const Setting(
+      {required this.id,
+      required this.themeMode,
+      required this.longDateFormat,
+      required this.shortDateFormat,
+      required this.entryUnit,
+      required this.foodUnit,
+      required this.diarySummary,
+      this.targetWeight,
+      required this.systemColors,
+      required this.curveLines,
+      required this.showOthers,
+      required this.favoriteNew,
+      required this.selectEntryOnSubmit,
+      required this.notifications,
+      this.dailyCalories,
+      this.dailyProtein,
+      this.dailyFat,
+      this.dailyCarb});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['theme_mode'] = Variable<String>(themeMode);
+    map['long_date_format'] = Variable<String>(longDateFormat);
+    map['short_date_format'] = Variable<String>(shortDateFormat);
+    map['entry_unit'] = Variable<String>(entryUnit);
+    map['food_unit'] = Variable<String>(foodUnit);
+    map['diary_summary'] = Variable<String>(diarySummary);
+    if (!nullToAbsent || targetWeight != null) {
+      map['target_weight'] = Variable<double>(targetWeight);
+    }
+    map['system_colors'] = Variable<bool>(systemColors);
+    map['curve_lines'] = Variable<bool>(curveLines);
+    map['show_others'] = Variable<bool>(showOthers);
+    map['favorite_new'] = Variable<bool>(favoriteNew);
+    map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
+    map['notifications'] = Variable<bool>(notifications);
+    if (!nullToAbsent || dailyCalories != null) {
+      map['daily_calories'] = Variable<int>(dailyCalories);
+    }
+    if (!nullToAbsent || dailyProtein != null) {
+      map['daily_protein'] = Variable<int>(dailyProtein);
+    }
+    if (!nullToAbsent || dailyFat != null) {
+      map['daily_fat'] = Variable<int>(dailyFat);
+    }
+    if (!nullToAbsent || dailyCarb != null) {
+      map['daily_carb'] = Variable<int>(dailyCarb);
+    }
+    return map;
+  }
+
+  SettingsCompanion toCompanion(bool nullToAbsent) {
+    return SettingsCompanion(
+      id: Value(id),
+      themeMode: Value(themeMode),
+      longDateFormat: Value(longDateFormat),
+      shortDateFormat: Value(shortDateFormat),
+      entryUnit: Value(entryUnit),
+      foodUnit: Value(foodUnit),
+      diarySummary: Value(diarySummary),
+      targetWeight: targetWeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetWeight),
+      systemColors: Value(systemColors),
+      curveLines: Value(curveLines),
+      showOthers: Value(showOthers),
+      favoriteNew: Value(favoriteNew),
+      selectEntryOnSubmit: Value(selectEntryOnSubmit),
+      notifications: Value(notifications),
+      dailyCalories: dailyCalories == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyCalories),
+      dailyProtein: dailyProtein == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyProtein),
+      dailyFat: dailyFat == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyFat),
+      dailyCarb: dailyCarb == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyCarb),
+    );
+  }
+
+  factory Setting.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Setting(
+      id: serializer.fromJson<int>(json['id']),
+      themeMode: serializer.fromJson<String>(json['themeMode']),
+      longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
+      shortDateFormat: serializer.fromJson<String>(json['shortDateFormat']),
+      entryUnit: serializer.fromJson<String>(json['entryUnit']),
+      foodUnit: serializer.fromJson<String>(json['foodUnit']),
+      diarySummary: serializer.fromJson<String>(json['diarySummary']),
+      targetWeight: serializer.fromJson<double?>(json['targetWeight']),
+      systemColors: serializer.fromJson<bool>(json['systemColors']),
+      curveLines: serializer.fromJson<bool>(json['curveLines']),
+      showOthers: serializer.fromJson<bool>(json['showOthers']),
+      favoriteNew: serializer.fromJson<bool>(json['favoriteNew']),
+      selectEntryOnSubmit:
+          serializer.fromJson<bool>(json['selectEntryOnSubmit']),
+      notifications: serializer.fromJson<bool>(json['notifications']),
+      dailyCalories: serializer.fromJson<int?>(json['dailyCalories']),
+      dailyProtein: serializer.fromJson<int?>(json['dailyProtein']),
+      dailyFat: serializer.fromJson<int?>(json['dailyFat']),
+      dailyCarb: serializer.fromJson<int?>(json['dailyCarb']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'themeMode': serializer.toJson<String>(themeMode),
+      'longDateFormat': serializer.toJson<String>(longDateFormat),
+      'shortDateFormat': serializer.toJson<String>(shortDateFormat),
+      'entryUnit': serializer.toJson<String>(entryUnit),
+      'foodUnit': serializer.toJson<String>(foodUnit),
+      'diarySummary': serializer.toJson<String>(diarySummary),
+      'targetWeight': serializer.toJson<double?>(targetWeight),
+      'systemColors': serializer.toJson<bool>(systemColors),
+      'curveLines': serializer.toJson<bool>(curveLines),
+      'showOthers': serializer.toJson<bool>(showOthers),
+      'favoriteNew': serializer.toJson<bool>(favoriteNew),
+      'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
+      'notifications': serializer.toJson<bool>(notifications),
+      'dailyCalories': serializer.toJson<int?>(dailyCalories),
+      'dailyProtein': serializer.toJson<int?>(dailyProtein),
+      'dailyFat': serializer.toJson<int?>(dailyFat),
+      'dailyCarb': serializer.toJson<int?>(dailyCarb),
+    };
+  }
+
+  Setting copyWith(
+          {int? id,
+          String? themeMode,
+          String? longDateFormat,
+          String? shortDateFormat,
+          String? entryUnit,
+          String? foodUnit,
+          String? diarySummary,
+          Value<double?> targetWeight = const Value.absent(),
+          bool? systemColors,
+          bool? curveLines,
+          bool? showOthers,
+          bool? favoriteNew,
+          bool? selectEntryOnSubmit,
+          bool? notifications,
+          Value<int?> dailyCalories = const Value.absent(),
+          Value<int?> dailyProtein = const Value.absent(),
+          Value<int?> dailyFat = const Value.absent(),
+          Value<int?> dailyCarb = const Value.absent()}) =>
+      Setting(
+        id: id ?? this.id,
+        themeMode: themeMode ?? this.themeMode,
+        longDateFormat: longDateFormat ?? this.longDateFormat,
+        shortDateFormat: shortDateFormat ?? this.shortDateFormat,
+        entryUnit: entryUnit ?? this.entryUnit,
+        foodUnit: foodUnit ?? this.foodUnit,
+        diarySummary: diarySummary ?? this.diarySummary,
+        targetWeight:
+            targetWeight.present ? targetWeight.value : this.targetWeight,
+        systemColors: systemColors ?? this.systemColors,
+        curveLines: curveLines ?? this.curveLines,
+        showOthers: showOthers ?? this.showOthers,
+        favoriteNew: favoriteNew ?? this.favoriteNew,
+        selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
+        notifications: notifications ?? this.notifications,
+        dailyCalories:
+            dailyCalories.present ? dailyCalories.value : this.dailyCalories,
+        dailyProtein:
+            dailyProtein.present ? dailyProtein.value : this.dailyProtein,
+        dailyFat: dailyFat.present ? dailyFat.value : this.dailyFat,
+        dailyCarb: dailyCarb.present ? dailyCarb.value : this.dailyCarb,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Setting(')
+          ..write('id: $id, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('longDateFormat: $longDateFormat, ')
+          ..write('shortDateFormat: $shortDateFormat, ')
+          ..write('entryUnit: $entryUnit, ')
+          ..write('foodUnit: $foodUnit, ')
+          ..write('diarySummary: $diarySummary, ')
+          ..write('targetWeight: $targetWeight, ')
+          ..write('systemColors: $systemColors, ')
+          ..write('curveLines: $curveLines, ')
+          ..write('showOthers: $showOthers, ')
+          ..write('favoriteNew: $favoriteNew, ')
+          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
+          ..write('notifications: $notifications, ')
+          ..write('dailyCalories: $dailyCalories, ')
+          ..write('dailyProtein: $dailyProtein, ')
+          ..write('dailyFat: $dailyFat, ')
+          ..write('dailyCarb: $dailyCarb')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      themeMode,
+      longDateFormat,
+      shortDateFormat,
+      entryUnit,
+      foodUnit,
+      diarySummary,
+      targetWeight,
+      systemColors,
+      curveLines,
+      showOthers,
+      favoriteNew,
+      selectEntryOnSubmit,
+      notifications,
+      dailyCalories,
+      dailyProtein,
+      dailyFat,
+      dailyCarb);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Setting &&
+          other.id == this.id &&
+          other.themeMode == this.themeMode &&
+          other.longDateFormat == this.longDateFormat &&
+          other.shortDateFormat == this.shortDateFormat &&
+          other.entryUnit == this.entryUnit &&
+          other.foodUnit == this.foodUnit &&
+          other.diarySummary == this.diarySummary &&
+          other.targetWeight == this.targetWeight &&
+          other.systemColors == this.systemColors &&
+          other.curveLines == this.curveLines &&
+          other.showOthers == this.showOthers &&
+          other.favoriteNew == this.favoriteNew &&
+          other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
+          other.notifications == this.notifications &&
+          other.dailyCalories == this.dailyCalories &&
+          other.dailyProtein == this.dailyProtein &&
+          other.dailyFat == this.dailyFat &&
+          other.dailyCarb == this.dailyCarb);
+}
+
+class SettingsCompanion extends UpdateCompanion<Setting> {
+  final Value<int> id;
+  final Value<String> themeMode;
+  final Value<String> longDateFormat;
+  final Value<String> shortDateFormat;
+  final Value<String> entryUnit;
+  final Value<String> foodUnit;
+  final Value<String> diarySummary;
+  final Value<double?> targetWeight;
+  final Value<bool> systemColors;
+  final Value<bool> curveLines;
+  final Value<bool> showOthers;
+  final Value<bool> favoriteNew;
+  final Value<bool> selectEntryOnSubmit;
+  final Value<bool> notifications;
+  final Value<int?> dailyCalories;
+  final Value<int?> dailyProtein;
+  final Value<int?> dailyFat;
+  final Value<int?> dailyCarb;
+  const SettingsCompanion({
+    this.id = const Value.absent(),
+    this.themeMode = const Value.absent(),
+    this.longDateFormat = const Value.absent(),
+    this.shortDateFormat = const Value.absent(),
+    this.entryUnit = const Value.absent(),
+    this.foodUnit = const Value.absent(),
+    this.diarySummary = const Value.absent(),
+    this.targetWeight = const Value.absent(),
+    this.systemColors = const Value.absent(),
+    this.curveLines = const Value.absent(),
+    this.showOthers = const Value.absent(),
+    this.favoriteNew = const Value.absent(),
+    this.selectEntryOnSubmit = const Value.absent(),
+    this.notifications = const Value.absent(),
+    this.dailyCalories = const Value.absent(),
+    this.dailyProtein = const Value.absent(),
+    this.dailyFat = const Value.absent(),
+    this.dailyCarb = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    this.id = const Value.absent(),
+    required String themeMode,
+    required String longDateFormat,
+    required String shortDateFormat,
+    required String entryUnit,
+    required String foodUnit,
+    required String diarySummary,
+    this.targetWeight = const Value.absent(),
+    required bool systemColors,
+    required bool curveLines,
+    required bool showOthers,
+    required bool favoriteNew,
+    required bool selectEntryOnSubmit,
+    required bool notifications,
+    this.dailyCalories = const Value.absent(),
+    this.dailyProtein = const Value.absent(),
+    this.dailyFat = const Value.absent(),
+    this.dailyCarb = const Value.absent(),
+  })  : themeMode = Value(themeMode),
+        longDateFormat = Value(longDateFormat),
+        shortDateFormat = Value(shortDateFormat),
+        entryUnit = Value(entryUnit),
+        foodUnit = Value(foodUnit),
+        diarySummary = Value(diarySummary),
+        systemColors = Value(systemColors),
+        curveLines = Value(curveLines),
+        showOthers = Value(showOthers),
+        favoriteNew = Value(favoriteNew),
+        selectEntryOnSubmit = Value(selectEntryOnSubmit),
+        notifications = Value(notifications);
+  static Insertable<Setting> custom({
+    Expression<int>? id,
+    Expression<String>? themeMode,
+    Expression<String>? longDateFormat,
+    Expression<String>? shortDateFormat,
+    Expression<String>? entryUnit,
+    Expression<String>? foodUnit,
+    Expression<String>? diarySummary,
+    Expression<double>? targetWeight,
+    Expression<bool>? systemColors,
+    Expression<bool>? curveLines,
+    Expression<bool>? showOthers,
+    Expression<bool>? favoriteNew,
+    Expression<bool>? selectEntryOnSubmit,
+    Expression<bool>? notifications,
+    Expression<int>? dailyCalories,
+    Expression<int>? dailyProtein,
+    Expression<int>? dailyFat,
+    Expression<int>? dailyCarb,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (themeMode != null) 'theme_mode': themeMode,
+      if (longDateFormat != null) 'long_date_format': longDateFormat,
+      if (shortDateFormat != null) 'short_date_format': shortDateFormat,
+      if (entryUnit != null) 'entry_unit': entryUnit,
+      if (foodUnit != null) 'food_unit': foodUnit,
+      if (diarySummary != null) 'diary_summary': diarySummary,
+      if (targetWeight != null) 'target_weight': targetWeight,
+      if (systemColors != null) 'system_colors': systemColors,
+      if (curveLines != null) 'curve_lines': curveLines,
+      if (showOthers != null) 'show_others': showOthers,
+      if (favoriteNew != null) 'favorite_new': favoriteNew,
+      if (selectEntryOnSubmit != null)
+        'select_entry_on_submit': selectEntryOnSubmit,
+      if (notifications != null) 'notifications': notifications,
+      if (dailyCalories != null) 'daily_calories': dailyCalories,
+      if (dailyProtein != null) 'daily_protein': dailyProtein,
+      if (dailyFat != null) 'daily_fat': dailyFat,
+      if (dailyCarb != null) 'daily_carb': dailyCarb,
+    });
+  }
+
+  SettingsCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? themeMode,
+      Value<String>? longDateFormat,
+      Value<String>? shortDateFormat,
+      Value<String>? entryUnit,
+      Value<String>? foodUnit,
+      Value<String>? diarySummary,
+      Value<double?>? targetWeight,
+      Value<bool>? systemColors,
+      Value<bool>? curveLines,
+      Value<bool>? showOthers,
+      Value<bool>? favoriteNew,
+      Value<bool>? selectEntryOnSubmit,
+      Value<bool>? notifications,
+      Value<int?>? dailyCalories,
+      Value<int?>? dailyProtein,
+      Value<int?>? dailyFat,
+      Value<int?>? dailyCarb}) {
+    return SettingsCompanion(
+      id: id ?? this.id,
+      themeMode: themeMode ?? this.themeMode,
+      longDateFormat: longDateFormat ?? this.longDateFormat,
+      shortDateFormat: shortDateFormat ?? this.shortDateFormat,
+      entryUnit: entryUnit ?? this.entryUnit,
+      foodUnit: foodUnit ?? this.foodUnit,
+      diarySummary: diarySummary ?? this.diarySummary,
+      targetWeight: targetWeight ?? this.targetWeight,
+      systemColors: systemColors ?? this.systemColors,
+      curveLines: curveLines ?? this.curveLines,
+      showOthers: showOthers ?? this.showOthers,
+      favoriteNew: favoriteNew ?? this.favoriteNew,
+      selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
+      notifications: notifications ?? this.notifications,
+      dailyCalories: dailyCalories ?? this.dailyCalories,
+      dailyProtein: dailyProtein ?? this.dailyProtein,
+      dailyFat: dailyFat ?? this.dailyFat,
+      dailyCarb: dailyCarb ?? this.dailyCarb,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (themeMode.present) {
+      map['theme_mode'] = Variable<String>(themeMode.value);
+    }
+    if (longDateFormat.present) {
+      map['long_date_format'] = Variable<String>(longDateFormat.value);
+    }
+    if (shortDateFormat.present) {
+      map['short_date_format'] = Variable<String>(shortDateFormat.value);
+    }
+    if (entryUnit.present) {
+      map['entry_unit'] = Variable<String>(entryUnit.value);
+    }
+    if (foodUnit.present) {
+      map['food_unit'] = Variable<String>(foodUnit.value);
+    }
+    if (diarySummary.present) {
+      map['diary_summary'] = Variable<String>(diarySummary.value);
+    }
+    if (targetWeight.present) {
+      map['target_weight'] = Variable<double>(targetWeight.value);
+    }
+    if (systemColors.present) {
+      map['system_colors'] = Variable<bool>(systemColors.value);
+    }
+    if (curveLines.present) {
+      map['curve_lines'] = Variable<bool>(curveLines.value);
+    }
+    if (showOthers.present) {
+      map['show_others'] = Variable<bool>(showOthers.value);
+    }
+    if (favoriteNew.present) {
+      map['favorite_new'] = Variable<bool>(favoriteNew.value);
+    }
+    if (selectEntryOnSubmit.present) {
+      map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit.value);
+    }
+    if (notifications.present) {
+      map['notifications'] = Variable<bool>(notifications.value);
+    }
+    if (dailyCalories.present) {
+      map['daily_calories'] = Variable<int>(dailyCalories.value);
+    }
+    if (dailyProtein.present) {
+      map['daily_protein'] = Variable<int>(dailyProtein.value);
+    }
+    if (dailyFat.present) {
+      map['daily_fat'] = Variable<int>(dailyFat.value);
+    }
+    if (dailyCarb.present) {
+      map['daily_carb'] = Variable<int>(dailyCarb.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('id: $id, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('longDateFormat: $longDateFormat, ')
+          ..write('shortDateFormat: $shortDateFormat, ')
+          ..write('entryUnit: $entryUnit, ')
+          ..write('foodUnit: $foodUnit, ')
+          ..write('diarySummary: $diarySummary, ')
+          ..write('targetWeight: $targetWeight, ')
+          ..write('systemColors: $systemColors, ')
+          ..write('curveLines: $curveLines, ')
+          ..write('showOthers: $showOthers, ')
+          ..write('favoriteNew: $favoriteNew, ')
+          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
+          ..write('notifications: $notifications, ')
+          ..write('dailyCalories: $dailyCalories, ')
+          ..write('dailyProtein: $dailyProtein, ')
+          ..write('dailyFat: $dailyFat, ')
+          ..write('dailyCarb: $dailyCarb')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
   late final $FoodsTable foods = $FoodsTable(this);
   late final $EntriesTable entries = $EntriesTable(this);
   late final $WeightsTable weights = $WeightsTable(this);
+  late final $SettingsTable settings = $SettingsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [foods, entries, weights];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [foods, entries, weights, settings];
 }
 
 typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
@@ -8201,6 +9047,349 @@ class $$WeightsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+typedef $$SettingsTableInsertCompanionBuilder = SettingsCompanion Function({
+  Value<int> id,
+  required String themeMode,
+  required String longDateFormat,
+  required String shortDateFormat,
+  required String entryUnit,
+  required String foodUnit,
+  required String diarySummary,
+  Value<double?> targetWeight,
+  required bool systemColors,
+  required bool curveLines,
+  required bool showOthers,
+  required bool favoriteNew,
+  required bool selectEntryOnSubmit,
+  required bool notifications,
+  Value<int?> dailyCalories,
+  Value<int?> dailyProtein,
+  Value<int?> dailyFat,
+  Value<int?> dailyCarb,
+});
+typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
+  Value<int> id,
+  Value<String> themeMode,
+  Value<String> longDateFormat,
+  Value<String> shortDateFormat,
+  Value<String> entryUnit,
+  Value<String> foodUnit,
+  Value<String> diarySummary,
+  Value<double?> targetWeight,
+  Value<bool> systemColors,
+  Value<bool> curveLines,
+  Value<bool> showOthers,
+  Value<bool> favoriteNew,
+  Value<bool> selectEntryOnSubmit,
+  Value<bool> notifications,
+  Value<int?> dailyCalories,
+  Value<int?> dailyProtein,
+  Value<int?> dailyFat,
+  Value<int?> dailyCarb,
+});
+
+class $$SettingsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SettingsTable,
+    Setting,
+    $$SettingsTableFilterComposer,
+    $$SettingsTableOrderingComposer,
+    $$SettingsTableProcessedTableManager,
+    $$SettingsTableInsertCompanionBuilder,
+    $$SettingsTableUpdateCompanionBuilder> {
+  $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$SettingsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$SettingsTableOrderingComposer(ComposerState(db, table)),
+          getChildManagerBuilder: (p) =>
+              $$SettingsTableProcessedTableManager(p),
+          getUpdateCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            Value<String> themeMode = const Value.absent(),
+            Value<String> longDateFormat = const Value.absent(),
+            Value<String> shortDateFormat = const Value.absent(),
+            Value<String> entryUnit = const Value.absent(),
+            Value<String> foodUnit = const Value.absent(),
+            Value<String> diarySummary = const Value.absent(),
+            Value<double?> targetWeight = const Value.absent(),
+            Value<bool> systemColors = const Value.absent(),
+            Value<bool> curveLines = const Value.absent(),
+            Value<bool> showOthers = const Value.absent(),
+            Value<bool> favoriteNew = const Value.absent(),
+            Value<bool> selectEntryOnSubmit = const Value.absent(),
+            Value<bool> notifications = const Value.absent(),
+            Value<int?> dailyCalories = const Value.absent(),
+            Value<int?> dailyProtein = const Value.absent(),
+            Value<int?> dailyFat = const Value.absent(),
+            Value<int?> dailyCarb = const Value.absent(),
+          }) =>
+              SettingsCompanion(
+            id: id,
+            themeMode: themeMode,
+            longDateFormat: longDateFormat,
+            shortDateFormat: shortDateFormat,
+            entryUnit: entryUnit,
+            foodUnit: foodUnit,
+            diarySummary: diarySummary,
+            targetWeight: targetWeight,
+            systemColors: systemColors,
+            curveLines: curveLines,
+            showOthers: showOthers,
+            favoriteNew: favoriteNew,
+            selectEntryOnSubmit: selectEntryOnSubmit,
+            notifications: notifications,
+            dailyCalories: dailyCalories,
+            dailyProtein: dailyProtein,
+            dailyFat: dailyFat,
+            dailyCarb: dailyCarb,
+          ),
+          getInsertCompanionBuilder: ({
+            Value<int> id = const Value.absent(),
+            required String themeMode,
+            required String longDateFormat,
+            required String shortDateFormat,
+            required String entryUnit,
+            required String foodUnit,
+            required String diarySummary,
+            Value<double?> targetWeight = const Value.absent(),
+            required bool systemColors,
+            required bool curveLines,
+            required bool showOthers,
+            required bool favoriteNew,
+            required bool selectEntryOnSubmit,
+            required bool notifications,
+            Value<int?> dailyCalories = const Value.absent(),
+            Value<int?> dailyProtein = const Value.absent(),
+            Value<int?> dailyFat = const Value.absent(),
+            Value<int?> dailyCarb = const Value.absent(),
+          }) =>
+              SettingsCompanion.insert(
+            id: id,
+            themeMode: themeMode,
+            longDateFormat: longDateFormat,
+            shortDateFormat: shortDateFormat,
+            entryUnit: entryUnit,
+            foodUnit: foodUnit,
+            diarySummary: diarySummary,
+            targetWeight: targetWeight,
+            systemColors: systemColors,
+            curveLines: curveLines,
+            showOthers: showOthers,
+            favoriteNew: favoriteNew,
+            selectEntryOnSubmit: selectEntryOnSubmit,
+            notifications: notifications,
+            dailyCalories: dailyCalories,
+            dailyProtein: dailyProtein,
+            dailyFat: dailyFat,
+            dailyCarb: dailyCarb,
+          ),
+        ));
+}
+
+class $$SettingsTableProcessedTableManager extends ProcessedTableManager<
+    _$AppDatabase,
+    $SettingsTable,
+    Setting,
+    $$SettingsTableFilterComposer,
+    $$SettingsTableOrderingComposer,
+    $$SettingsTableProcessedTableManager,
+    $$SettingsTableInsertCompanionBuilder,
+    $$SettingsTableUpdateCompanionBuilder> {
+  $$SettingsTableProcessedTableManager(super.$state);
+}
+
+class $$SettingsTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get themeMode => $state.composableBuilder(
+      column: $state.table.themeMode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get longDateFormat => $state.composableBuilder(
+      column: $state.table.longDateFormat,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get shortDateFormat => $state.composableBuilder(
+      column: $state.table.shortDateFormat,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get entryUnit => $state.composableBuilder(
+      column: $state.table.entryUnit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get foodUnit => $state.composableBuilder(
+      column: $state.table.foodUnit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get diarySummary => $state.composableBuilder(
+      column: $state.table.diarySummary,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get targetWeight => $state.composableBuilder(
+      column: $state.table.targetWeight,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get systemColors => $state.composableBuilder(
+      column: $state.table.systemColors,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get curveLines => $state.composableBuilder(
+      column: $state.table.curveLines,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get showOthers => $state.composableBuilder(
+      column: $state.table.showOthers,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get favoriteNew => $state.composableBuilder(
+      column: $state.table.favoriteNew,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get selectEntryOnSubmit => $state.composableBuilder(
+      column: $state.table.selectEntryOnSubmit,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get notifications => $state.composableBuilder(
+      column: $state.table.notifications,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get dailyCalories => $state.composableBuilder(
+      column: $state.table.dailyCalories,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get dailyProtein => $state.composableBuilder(
+      column: $state.table.dailyProtein,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get dailyFat => $state.composableBuilder(
+      column: $state.table.dailyFat,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get dailyCarb => $state.composableBuilder(
+      column: $state.table.dailyCarb,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+}
+
+class $$SettingsTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get themeMode => $state.composableBuilder(
+      column: $state.table.themeMode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get longDateFormat => $state.composableBuilder(
+      column: $state.table.longDateFormat,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get shortDateFormat => $state.composableBuilder(
+      column: $state.table.shortDateFormat,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get entryUnit => $state.composableBuilder(
+      column: $state.table.entryUnit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get foodUnit => $state.composableBuilder(
+      column: $state.table.foodUnit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get diarySummary => $state.composableBuilder(
+      column: $state.table.diarySummary,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get targetWeight => $state.composableBuilder(
+      column: $state.table.targetWeight,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get systemColors => $state.composableBuilder(
+      column: $state.table.systemColors,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get curveLines => $state.composableBuilder(
+      column: $state.table.curveLines,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get showOthers => $state.composableBuilder(
+      column: $state.table.showOthers,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get favoriteNew => $state.composableBuilder(
+      column: $state.table.favoriteNew,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get selectEntryOnSubmit => $state.composableBuilder(
+      column: $state.table.selectEntryOnSubmit,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get notifications => $state.composableBuilder(
+      column: $state.table.notifications,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get dailyCalories => $state.composableBuilder(
+      column: $state.table.dailyCalories,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get dailyProtein => $state.composableBuilder(
+      column: $state.table.dailyProtein,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get dailyFat => $state.composableBuilder(
+      column: $state.table.dailyFat,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get dailyCarb => $state.composableBuilder(
+      column: $state.table.dailyCarb,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
 class _$AppDatabaseManager {
   final _$AppDatabase _db;
   _$AppDatabaseManager(this._db);
@@ -8210,4 +9399,6 @@ class _$AppDatabaseManager {
       $$EntriesTableTableManager(_db, _db.entries);
   $$WeightsTableTableManager get weights =>
       $$WeightsTableTableManager(_db, _db.weights);
+  $$SettingsTableTableManager get settings =>
+      $$SettingsTableTableManager(_db, _db.settings);
 }
