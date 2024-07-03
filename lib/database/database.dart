@@ -27,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 15;
+  int get schemaVersion => 16;
 
   @override
   MigrationStrategy get migration {
@@ -195,6 +195,18 @@ class AppDatabase extends _$AppDatabase {
               targetWeight: Value(targetWeight),
             ),
           ));
+        },
+        from15To16: (Migrator m, Schema16 schema) async {
+          await (schema.foods.update()
+                ..where((u) => const CustomExpression("serving_unit is null")))
+              .write(
+            const RawValuesInsertable({"serving_unit": Variable("grams")}),
+          );
+          await (schema.foods.update()
+                ..where((u) => const CustomExpression("serving_size is null")))
+              .write(
+            const RawValuesInsertable({"serving_size": Variable(100)}),
+          );
         },
       ),
     );
