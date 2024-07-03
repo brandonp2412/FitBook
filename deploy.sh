@@ -45,6 +45,7 @@ apk=$PWD/build/app/outputs/flutter-apk
 mv $apk/app-release.apk $apk/fitbook.apk
 
 cd $HOME/fitbook
+git remote remove temp || true
 git remote add temp $tmpdir
 git fetch temp
 git merge temp/main
