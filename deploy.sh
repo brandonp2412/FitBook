@@ -48,6 +48,7 @@ cd $HOME/fitbook
 git remote remove temp || true
 git remote add temp $tmpdir
 git fetch temp
+rm $HOME/fitbook/fastlane/metadata/android/en-US/changelogs/$changelog_number.txt
 git merge temp/main
 git push
 
