@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
+import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart' as material;
@@ -36,54 +37,78 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   late Stream<List<PartialFood>> stream;
 
   final TextEditingController searchController = TextEditingController();
+  final TextEditingController servingSizeGtController = TextEditingController();
+  final TextEditingController servingSizeLtController = TextEditingController();
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String search = '';
   int limit = 100;
 
+  String? _foodGroup;
+  String? _servingUnit;
+
   @override
   void initState() {
     super.initState();
-    _setStream();
+    setStream();
   }
 
-  void _setStream() {
-    stream = (db.foods.selectOnly()
-          ..addColumns([
-            db.foods.id,
-            db.foods.name,
-            db.foods.calories,
-            db.foods.favorite,
-            db.foods.servingSize,
-            db.foods.servingUnit,
-          ])
-          ..where(db.foods.name.contains(search.toLowerCase()))
-          ..orderBy([
-            OrderingTerm(
-              expression: db.foods.favorite,
-              mode: OrderingMode.desc,
-            ),
-            OrderingTerm(
-              expression: db.foods.name,
-              mode: OrderingMode.asc,
-            ),
-          ])
-          ..limit(limit))
-        .watch()
-        .map(
-          (results) => results
-              .map(
-                (result) => PartialFood(
-                  id: result.read(db.foods.id)!,
-                  name: result.read(db.foods.name)!,
-                  calories: result.read(db.foods.calories),
-                  favorite: result.read(db.foods.favorite),
-                  servingSize: result.read(db.foods.servingSize),
-                  servingUnit: result.read(db.foods.servingUnit),
-                ),
-              )
-              .toList(),
+  void setStream() {
+    var query = (db.foods.selectOnly()
+      ..addColumns([
+        db.foods.id,
+        db.foods.name,
+        db.foods.calories,
+        db.foods.favorite,
+        db.foods.servingSize,
+        db.foods.servingUnit,
+      ])
+      ..where(db.foods.name.contains(search.toLowerCase()))
+      ..orderBy([
+        OrderingTerm(
+          expression: db.foods.favorite,
+          mode: OrderingMode.desc,
+        ),
+        OrderingTerm(
+          expression: db.foods.name,
+          mode: OrderingMode.asc,
+        ),
+      ])
+      ..limit(limit));
+
+    if (_foodGroup != null)
+      query = query..where(db.foods.foodGroup.equals(_foodGroup!));
+    if (_servingUnit != null)
+      query = query..where(db.foods.servingUnit.equals(_servingUnit!));
+    if (servingSizeGtController.text.isNotEmpty)
+      query = query
+        ..where(
+          db.foods.servingSize
+              .isBiggerThanValue(double.parse(servingSizeGtController.text)),
         );
+    if (servingSizeLtController.text.isNotEmpty)
+      query = query
+        ..where(
+          db.foods.servingSize
+              .isSmallerThanValue(double.parse(servingSizeLtController.text)),
+        );
+
+    setState(() {
+      stream = query.watch().map(
+            (results) => results
+                .map(
+                  (result) => PartialFood(
+                    id: result.read(db.foods.id)!,
+                    name: result.read(db.foods.name)!,
+                    calories: result.read(db.foods.calories),
+                    favorite: result.read(db.foods.favorite),
+                    servingSize: result.read(db.foods.servingSize),
+                    servingUnit: result.read(db.foods.servingUnit),
+                  ),
+                )
+                .toList(),
+          );
+    });
   }
 
   @override
@@ -121,8 +146,24 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                   setState(() {
                     search = value;
                   });
-                  _setStream();
+                  setStream();
                 },
+                filter: FoodFilters(
+                  foodGroup: _foodGroup,
+                  servingUnit: _servingUnit,
+                  servingSizeGtController: servingSizeGtController,
+                  servingSizeLtController: servingSizeLtController,
+                  onChange: ({
+                    foodGroup,
+                    servingUnit,
+                  }) {
+                    setState(() {
+                      _foodGroup = foodGroup;
+                      _servingUnit = servingUnit;
+                    });
+                    setStream();
+                  },
+                ),
                 onClear: () => setState(() {
                   selected.clear();
                 }),
@@ -198,7 +239,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                   setState(() {
                     limit += 10;
                   });
-                  _setStream();
+                  setStream();
                 },
               ),
             ],

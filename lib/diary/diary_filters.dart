@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryFilters extends StatefulWidget {
-  const DiaryFilters({super.key});
+  const DiaryFilters({
+    super.key,
+  });
 
   @override
   createState() => _DiaryFiltersState();
@@ -24,12 +26,12 @@ class _DiaryFiltersState extends State<DiaryFilters> {
 
   @override
   Widget build(BuildContext context) {
-    final entriesState = context.watch<EntriesState>();
+    final state = context.watch<EntriesState>();
 
     return Badge.count(
-      count: entriesState.filterCount,
+      count: state.filterCount,
       backgroundColor: Theme.of(context).colorScheme.primary,
-      isLabelVisible: entriesState.filterCount > 0,
+      isLabelVisible: state.filterCount > 0,
       child: PopupMenuButton(
         icon: const Icon(Icons.filter_list),
         itemBuilder: (popupContext) => [
@@ -41,7 +43,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   decoration: const InputDecoration(
                     labelText: 'Food group',
                   ),
-                  value: entriesState.foodGroup,
+                  value: state.foodGroup,
                   items: snapshot.data
                       ?.map(
                         (result) => DropdownMenuItem(
@@ -53,7 +55,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                       )
                       .toList(),
                   onChanged: (value) {
-                    entriesState.foodGroup = value;
+                    state.foodGroup = value;
                     Navigator.pop(popupContext);
                   },
                 );
@@ -65,16 +67,15 @@ class _DiaryFiltersState extends State<DiaryFilters> {
               title: const Text('Start date'),
               subtitle: Selector<SettingsState, String>(
                 selector: (p0, p1) => p1.shortDateFormat,
-                builder: (context, shortDateFormat, child) =>
-                    entriesState.startDate != null
-                        ? Text(
-                            DateFormat(shortDateFormat)
-                                .format(entriesState.startDate!),
-                          )
-                        : Text(shortDateFormat),
+                builder: (context, shortDateFormat, child) => state.startDate !=
+                        null
+                    ? Text(
+                        DateFormat(shortDateFormat).format(state.startDate!),
+                      )
+                    : Text(shortDateFormat),
               ),
               onLongPress: () {
-                entriesState.startDate = null;
+                state.startDate = null;
                 Navigator.pop(popupContext);
               },
               leading: const Icon(Icons.calendar_today),
@@ -82,13 +83,12 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                 Navigator.pop(popupContext);
                 final DateTime? pickedDate = await showDatePicker(
                   context: popupContext,
-                  initialDate: entriesState.startDate,
+                  initialDate: state.startDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                 );
 
-                if (pickedDate != null)
-                  entriesState.startDate = pickedDate.toLocal();
+                if (pickedDate != null) state.startDate = pickedDate.toLocal();
               },
             ),
           ),
@@ -98,15 +98,14 @@ class _DiaryFiltersState extends State<DiaryFilters> {
               subtitle: Selector<SettingsState, String>(
                 selector: (p0, p1) => p1.shortDateFormat,
                 builder: (context, shortDateFormat, child) =>
-                    entriesState.endDate != null
+                    state.endDate != null
                         ? Text(
-                            DateFormat(shortDateFormat)
-                                .format(entriesState.endDate!),
+                            DateFormat(shortDateFormat).format(state.endDate!),
                           )
                         : Text(shortDateFormat),
               ),
               onLongPress: () {
-                entriesState.endDate = null;
+                state.endDate = null;
                 Navigator.pop(popupContext);
               },
               leading: const Icon(Icons.calendar_today),
@@ -114,22 +113,21 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                 Navigator.pop(popupContext);
                 final DateTime? pickedDate = await showDatePicker(
                   context: popupContext,
-                  initialDate: entriesState.endDate,
+                  initialDate: state.endDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                 );
 
-                if (pickedDate != null)
-                  entriesState.endDate = pickedDate.toLocal();
+                if (pickedDate != null) state.endDate = pickedDate.toLocal();
               },
             ),
           ),
           PopupMenuItem(
             child: ListTile(
               leading: const Icon(Icons.clear_all),
-              title: Text("Clear (${entriesState.filterCount})"),
+              title: Text("Clear (${state.filterCount})"),
               onTap: () {
-                entriesState.clear();
+                state.clear();
                 Navigator.pop(popupContext);
               },
             ),
