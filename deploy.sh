@@ -2,6 +2,10 @@
 
 set -ex
 
+tmpdir=$(mktemp -d)
+git clone . $tmpdir
+cd $tmpdir
+
 IFS='+.' read -r major minor patch build_number <<< "$(yq -r .version pubspec.yaml)"
 new_patch=$((patch + 1))
 new_build_number=$((build_number + 1))
@@ -60,3 +64,8 @@ ssh macbook "
   ./macos.sh || true
   ./ios.sh
 "
+
+cd $HOME/fitbook
+git remote add temp $tmpdir
+git fetch temp
+git merge temp/main
