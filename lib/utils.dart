@@ -125,12 +125,13 @@ void selectAll(TextEditingController controller) {
 
 bool shouldNotify(
   double lastWeight,
-  double secondLastWeight,
+  double? secondLastWeight,
   double goalWeight,
 ) {
   Random random = Random();
   int chance = random.nextInt(100);
 
+  if (secondLastWeight == null) return false;
   bool trending = (secondLastWeight > lastWeight && lastWeight > goalWeight) ||
       (secondLastWeight < lastWeight && lastWeight < goalWeight);
 

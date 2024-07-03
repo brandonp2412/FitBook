@@ -387,16 +387,9 @@ void main() {
           navigateTo(
             context: context,
             page: EditWeightPage(
-              lastWeight: Weight(
-                id: 1,
-                unit: 'kg',
-                amount: 60,
-                created: DateTime.now().subtract(const Duration(days: 1)),
-              ),
-              weight: Weight(
+              weight: WeightsCompanion.insert(
                 amount: 0,
                 created: DateTime.now(),
-                id: -1,
                 unit: 'kg',
               ),
             ),

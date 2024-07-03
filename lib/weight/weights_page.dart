@@ -112,8 +112,7 @@ class WeightsPageState extends State<WeightsPage>
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditWeightPage(
-                        weight: weight,
-                        lastWeight: weights.first,
+                        weight: weight.toCompanion(false),
                       ),
                     ),
                   );
@@ -158,16 +157,20 @@ class WeightsPageState extends State<WeightsPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final weights = await stream.first;
-          final defaultWeight = Weight(
+          var weight = WeightsCompanion.insert(
             amount: 0.0,
             created: DateTime.now(),
-            id: -1,
             unit: 'kg',
           );
+          if (weights.firstOrNull != null)
+            weight = weight.copyWith(
+              amount: Value(weights.first.amount),
+              unit: Value(weights.first.unit),
+            );
+
           final editRoute = MaterialPageRoute(
             builder: (context) => EditWeightPage(
-              weight: defaultWeight,
-              lastWeight: weights.firstOrNull ?? defaultWeight,
+              weight: weight,
             ),
           );
           navigatorKey.currentState!.push(editRoute);
