@@ -19,9 +19,9 @@ echo "$changelog" > $HOME/fitbook/fastlane/metadata/android/en-US/changelogs/$ch
 echo "$changelog" > fastlane/metadata/en-AU/release_notes.txt
 echo "$changelog" > fastlane/metadata/en-US/release_notes.txt
 
+./flutter/bin/flutter test
 dart analyze lib
 dart format --set-exit-if-changed lib
-./flutter/bin/flutter test
 ./migrate.sh
 ./screenshots.sh "phoneScreenshots"
 ./screenshots.sh "sevenInchScreenshots"
