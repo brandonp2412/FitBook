@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
+import 'package:fit_book/food/edit_foods_page.dart';
 import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
@@ -184,15 +185,11 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                 }),
                 selected: selected,
                 onEdit: () async {
-                  final food = foods.firstWhere(
-                    (element) => element.id == selected.first,
-                  );
-
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditFoodPage(
-                        id: food.id,
+                      builder: (context) => EditFoodsPage(
+                        ids: selected.toList(),
                       ),
                     ),
                   );
