@@ -15,6 +15,7 @@ new_version="$major.$minor.$new_patch"
 
 nvim "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 changelog=$(cat "fastlane/metadata/android/en-US/changelogs/$changelog_number.txt")
+echo "$changelog" > $HOME/fitbook/fastlane/metadata/android/en-US/changelogs/$changelog_number.txt 
 echo "$changelog" > fastlane/metadata/en-AU/release_notes.txt
 echo "$changelog" > fastlane/metadata/en-US/release_notes.txt
 
