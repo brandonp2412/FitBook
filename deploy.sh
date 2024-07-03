@@ -4,6 +4,7 @@ set -ex
 
 tmpdir=$(mktemp -d)
 git clone . $tmpdir
+ln -s $PWD/android/key.properties $tmpdir/android
 cd $tmpdir
 
 IFS='+.' read -r major minor patch build_number <<< "$(yq -r .version pubspec.yaml)"
