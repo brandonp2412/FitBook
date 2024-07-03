@@ -40,11 +40,16 @@ flutter build appbundle
 mkdir -p build/native_assets/linux
 flutter build linux
 
-apk=build/app/outputs/flutter-apk
+apk=$PWD/build/app/outputs/flutter-apk
 (cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
 mv $apk/app-release.apk $apk/fitbook.apk
 
+cd $HOME/fitbook
+git remote add temp $tmpdir
+git fetch temp
+git merge temp/main
 git push
+
 gh release create "$new_version" --notes "$changelog"  \
   $apk/app-*-release.apk \
   $apk/pipeline/linux/x64/release/bundle/fitbook-linux.zip \
@@ -64,8 +69,3 @@ ssh macbook "
   ./macos.sh || true
   ./ios.sh
 "
-
-cd $HOME/fitbook
-git remote add temp $tmpdir
-git fetch temp
-git merge temp/main
