@@ -3,7 +3,7 @@
 set -ex
 
 tmpdir=$(mktemp -d)
-git clone . $tmpdir
+git clone --recurse-submodules . $tmpdir
 cd $tmpdir
 
 IFS='+.' read -r major minor patch build_number <<< "$(yq -r .version pubspec.yaml)"
