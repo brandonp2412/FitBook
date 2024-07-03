@@ -63,7 +63,6 @@ class _EntryListState extends State<EntryList> {
                 previous.entry.created,
                 entryFood.entry.created,
               );
-          final isToday = isSameDay(entry.created, DateTime.now());
           final suffix = entry.unit == 'serving' && entry.quantity > 1
               ? " x${entry.quantity.toInt()}"
               : "";
@@ -86,9 +85,6 @@ class _EntryListState extends State<EntryList> {
                 title: Text("$foodName$suffix"),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),
-                  style: isToday
-                      ? const TextStyle(fontWeight: FontWeight.bold)
-                      : null,
                 ),
                 trailing: Text(
                   "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
