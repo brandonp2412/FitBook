@@ -2,11 +2,6 @@
 
 set -ex
 
-tmpdir=$(mktemp -d)
-git clone . $tmpdir
-ln -s $PWD/android/key.properties $tmpdir/android
-cd $tmpdir
-
 IFS='+.' read -r major minor patch build_number <<< "$(yq -r .version pubspec.yaml)"
 new_patch=$((patch + 1))
 new_build_number=$((build_number + 1))
@@ -44,12 +39,6 @@ apk=$PWD/build/app/outputs/flutter-apk
 (cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
 mv $apk/app-release.apk $apk/fitbook.apk
 
-cd $HOME/fitbook
-git remote remove temp || true
-git remote add temp $tmpdir
-git fetch temp
-rm $HOME/fitbook/fastlane/metadata/android/en-US/changelogs/$changelog_number.txt
-git merge temp/main
 git push
 
 gh release create "$new_version" --notes "$changelog"  \
