@@ -3,7 +3,7 @@
 set -ex
 
 tmpdir=$(mktemp -d)
-git clone --recurse-submodules . $tmpdir
+git clone . $tmpdir
 cd $tmpdir
 
 IFS='+.' read -r major minor patch build_number <<< "$(yq -r .version pubspec.yaml)"
@@ -19,7 +19,7 @@ echo "$changelog" > $HOME/fitbook/fastlane/metadata/android/en-US/changelogs/$ch
 echo "$changelog" > fastlane/metadata/en-AU/release_notes.txt
 echo "$changelog" > fastlane/metadata/en-US/release_notes.txt
 
-./flutter/bin/flutter test
+flutter test
 dart analyze lib
 dart format --set-exit-if-changed lib
 ./migrate.sh
@@ -35,11 +35,11 @@ last_commit=$(git log -1 --pretty=%B | head -n 1)
 git commit --amend -m "$last_commit - $new_version 🚀 
 $rest"
 
-./flutter/bin/flutter build apk --split-per-abi
-./flutter/bin/flutter build apk
-./flutter/bin/flutter build appbundle
+flutter build apk --split-per-abi
+flutter build apk
+flutter build appbundle
 mkdir -p build/native_assets/linux
-./flutter/bin/flutter build linux
+flutter build linux
 
 apk=build/app/outputs/flutter-apk
 (cd $apk/pipeline/linux/x64/release/bundle && zip -r fitbook-linux.zip .)
