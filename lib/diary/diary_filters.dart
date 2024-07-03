@@ -34,6 +34,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
       isLabelVisible: state.filterCount > 0,
       child: PopupMenuButton(
         icon: const Icon(Icons.filter_list),
+        tooltip: 'Show filters',
         itemBuilder: (popupContext) => [
           PopupMenuItem(
             child: StreamBuilder(

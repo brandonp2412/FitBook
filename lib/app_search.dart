@@ -104,6 +104,7 @@ class _AppSearchState extends State<AppSearch> {
             isLabelVisible: widget.selected.isNotEmpty,
             child: PopupMenuButton(
               icon: const Icon(Icons.more_vert),
+              tooltip: 'Show menu',
               itemBuilder: (context) => [
                 PopupMenuItem(
                   child: ListTile(
