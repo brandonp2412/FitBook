@@ -145,7 +145,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 decoration: InputDecoration(labelText: 'Weight ($unit)'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,
-                autofocus: widget.weight.id == -1,
+                autofocus: !widget.weight.id.present,
                 onTap: () => selectAll(valueController),
                 onFieldSubmitted: (value) => _save(),
               ),
