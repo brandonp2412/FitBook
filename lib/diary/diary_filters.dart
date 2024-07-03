@@ -2,15 +2,12 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryFilters extends StatefulWidget {
-  final BuildContext dialogContext;
-
-  const DiaryFilters({super.key, required this.dialogContext});
+  const DiaryFilters({super.key});
 
   @override
   createState() => _DiaryFiltersState();
@@ -28,14 +25,16 @@ class _DiaryFiltersState extends State<DiaryFilters> {
   @override
   Widget build(BuildContext context) {
     final entriesState = context.watch<EntriesState>();
-    final settings = context.watch<SettingsState>();
 
-    return AlertDialog(
-      title: const Text("Filter"),
-      content: SingleChildScrollView(
-        child: material.Column(
-          children: [
-            StreamBuilder(
+    return Badge.count(
+      count: entriesState.filterCount,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      isLabelVisible: entriesState.filterCount > 0,
+      child: PopupMenuButton(
+        icon: const Icon(Icons.filter_list),
+        itemBuilder: (popupContext) => [
+          PopupMenuItem(
+            child: StreamBuilder(
               stream: groupStream,
               builder: (context, snapshot) {
                 return DropdownButtonFormField(
@@ -55,24 +54,34 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                       .toList(),
                   onChanged: (value) {
                     entriesState.foodGroup = value;
+                    Navigator.pop(popupContext);
                   },
                 );
               },
             ),
-            const SizedBox(height: 8),
-            ListTile(
+          ),
+          PopupMenuItem(
+            child: ListTile(
               title: const Text('Start date'),
-              subtitle: entriesState.startDate != null
-                  ? Text(
-                      DateFormat(settings.shortDateFormat)
-                          .format(entriesState.startDate!),
-                    )
-                  : null,
-              onLongPress: () => entriesState.startDate = null,
-              trailing: const Icon(Icons.calendar_today),
+              subtitle: Selector<SettingsState, String>(
+                selector: (p0, p1) => p1.shortDateFormat,
+                builder: (context, shortDateFormat, child) =>
+                    entriesState.startDate != null
+                        ? Text(
+                            DateFormat(shortDateFormat)
+                                .format(entriesState.startDate!),
+                          )
+                        : Text(shortDateFormat),
+              ),
+              onLongPress: () {
+                entriesState.startDate = null;
+                Navigator.pop(popupContext);
+              },
+              leading: const Icon(Icons.calendar_today),
               onTap: () async {
+                Navigator.pop(popupContext);
                 final DateTime? pickedDate = await showDatePicker(
-                  context: context,
+                  context: popupContext,
                   initialDate: entriesState.startDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
@@ -82,19 +91,29 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   entriesState.startDate = pickedDate.toLocal();
               },
             ),
-            ListTile(
+          ),
+          PopupMenuItem(
+            child: ListTile(
               title: const Text('Stop date'),
-              subtitle: entriesState.endDate != null
-                  ? Text(
-                      DateFormat(settings.shortDateFormat)
-                          .format(entriesState.endDate!),
-                    )
-                  : null,
-              onLongPress: () => entriesState.endDate = null,
-              trailing: const Icon(Icons.calendar_today),
+              subtitle: Selector<SettingsState, String>(
+                selector: (p0, p1) => p1.shortDateFormat,
+                builder: (context, shortDateFormat, child) =>
+                    entriesState.endDate != null
+                        ? Text(
+                            DateFormat(shortDateFormat)
+                                .format(entriesState.endDate!),
+                          )
+                        : Text(shortDateFormat),
+              ),
+              onLongPress: () {
+                entriesState.endDate = null;
+                Navigator.pop(popupContext);
+              },
+              leading: const Icon(Icons.calendar_today),
               onTap: () async {
+                Navigator.pop(popupContext);
                 final DateTime? pickedDate = await showDatePicker(
-                  context: context,
+                  context: popupContext,
                   initialDate: entriesState.endDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
@@ -104,25 +123,19 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   entriesState.endDate = pickedDate.toLocal();
               },
             ),
-          ],
-        ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              leading: const Icon(Icons.clear_all),
+              title: Text("Clear (${entriesState.filterCount})"),
+              onTap: () {
+                entriesState.clear();
+                Navigator.pop(popupContext);
+              },
+            ),
+          ),
+        ],
       ),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actions: <Widget>[
-        TextButton(
-          child: const Text('Clear'),
-          onPressed: () {
-            entriesState.clear();
-            Navigator.pop(context);
-          },
-        ),
-        TextButton(
-          child: const Text('OK'),
-          onPressed: () async {
-            Navigator.pop(context);
-          },
-        ),
-      ],
     );
   }
 }

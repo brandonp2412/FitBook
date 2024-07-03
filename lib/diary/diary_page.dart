@@ -138,15 +138,7 @@ class DiaryPageState extends State<DiaryPage> {
             children: [
               AppSearch(
                 controller: searchController,
-                filterCount: entriesState.filterCount == 0
-                    ? null
-                    : entriesState.filterCount,
-                showFilter: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => DiaryFilters(dialogContext: context),
-                  );
-                },
+                filter: const DiaryFilters(),
                 onChange: (value) {
                   entriesState.search = value;
                 },

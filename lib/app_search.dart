@@ -13,8 +13,7 @@ class AppSearch extends StatefulWidget {
     required this.onSelect,
     this.onRefresh,
     required this.onFavorite,
-    this.showFilter,
-    this.filterCount,
+    this.filter,
     this.controller,
   });
 
@@ -26,8 +25,7 @@ class AppSearch extends StatefulWidget {
   final Function onSelect;
   final Function onFavorite;
   final Function? onRefresh;
-  final Function? showFilter;
-  final int? filterCount;
+  final Widget? filter;
   final TextEditingController? controller;
 
   @override
@@ -66,18 +64,7 @@ class _AppSearchState extends State<AppSearch> {
                     ),
                   ),
         trailing: [
-          if (widget.showFilter != null && widget.selected.isEmpty)
-            Badge.count(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              isLabelVisible: widget.filterCount != null,
-              count: widget.filterCount ?? 0,
-              child: IconButton(
-                onPressed: () {
-                  widget.showFilter!();
-                },
-                icon: const Icon(Icons.filter_list_rounded),
-              ),
-            ),
+          if (widget.filter != null && widget.selected.isEmpty) widget.filter!,
           if (widget.selected.isNotEmpty)
             IconButton(
               tooltip: 'Delete',
