@@ -158,6 +158,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                     servingUnit,
                   }) {
                     setState(() {
+                      limit = 100;
                       _foodGroup = foodGroup;
                       _servingUnit = servingUnit;
                     });
