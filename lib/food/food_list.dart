@@ -73,7 +73,7 @@ class _FoodListState extends State<FoodList> {
                   "${food.calories?.toStringAsFixed(0)} kcal",
                 ),
                 trailing: Text(
-                  "${food.servingSize ?? "100"} $shortUnit",
+                  "${food.servingSize?.toInt() ?? "100"} $shortUnit",
                   style: const TextStyle(fontSize: 16),
                 ),
                 selected: widget.selected.contains(food.id),
