@@ -1,1 +1,3 @@
-Include settings in database backups
+- Add multi-editor for foods
+- Add filters to foods
+- Fix auto-filling of weights
