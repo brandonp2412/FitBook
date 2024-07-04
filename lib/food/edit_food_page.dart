@@ -581,7 +581,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   context: context,
                   builder: (BuildContext dialogContext) {
                     return AlertDialog(
-                      title: const Text('Confirm Delete'),
+                      title: const Text('Confirm delete'),
                       content: Text(
                         'Are you sure you want to delete ${nameController.text}?',
                       ),

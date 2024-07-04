@@ -12,7 +12,7 @@ import 'mock_tests.dart';
 
 void main() async {
   testWidgets(
-    'WeightsPage CRUD',
+    'WeightsPage list',
     (WidgetTester tester) async {
       await mockTests();
       final settings = await (db.settings.select()).getSingle();
@@ -55,31 +55,144 @@ void main() async {
       expect(find.textContaining('70'), findsOne);
       expect(find.textContaining('80'), findsOne);
 
-      await tester.tap(find.byTooltip('Add'));
+      await db.close();
+    },
+  );
+
+  testWidgets(
+    'WeightsPage update',
+    (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
+
+      await (db.weights.insertAll(
+        [
+          WeightsCompanion.insert(
+            created: DateTime.now(),
+            unit: 'kg',
+            amount: 60,
+          ),
+        ],
+      ));
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => settingsState),
+            ChangeNotifierProvider(create: (context) => EntriesState()),
+          ],
+          child: const MaterialApp(
+            home: WeightsPage(),
+          ),
+        ),
+      );
       await tester.pumpAndSettle();
-      expect(find.text('Add weight'), findsOne);
-      await tester.enterText(find.text('0.0'), '85');
+
+      expect(find.textContaining('60'), findsOne);
+      await tester.tap(find.text('60.0 kg'));
+      await tester.pumpAndSettle();
+      expect(find.text('Edit weight'), findsOne);
+
+      await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
       await tester.tap(find.byTooltip('Save'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('85.0'), findsOne);
-
-      await tester.tap(find.text('85.0 kg'));
-      await tester.pumpAndSettle();
-      await tester.enterText(find.text('85.0').first, '86');
-      await tester.tap(find.byTooltip('Save'));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('86.0'), findsOne);
-
-      await tester.longPress(find.text('86.0 kg'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byTooltip('Delete'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Delete'));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('86.0'), findsNothing);
+      expect(find.text('61.0 kg'), findsOne);
 
       await db.close();
     },
-    skip: true,
+  );
+
+  testWidgets(
+    'WeightsPage delete',
+    (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
+
+      await (db.weights.insertAll(
+        [
+          WeightsCompanion.insert(
+            created: DateTime.now(),
+            unit: 'kg',
+            amount: 60,
+          ),
+          WeightsCompanion.insert(
+            created: DateTime.now().subtract(const Duration(days: 1)),
+            unit: 'kg',
+            amount: 70,
+          ),
+          WeightsCompanion.insert(
+            created: DateTime.now().subtract(const Duration(days: 2)),
+            unit: 'kg',
+            amount: 80,
+          ),
+        ],
+      ));
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => settingsState),
+            ChangeNotifierProvider(create: (context) => EntriesState()),
+          ],
+          child: const MaterialApp(
+            home: WeightsPage(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('60'), findsOne);
+      await tester.longPress(find.text('60.0 kg'));
+      await tester.pump();
+      await tester.tap(find.text('70.0 kg'));
+      await tester.tap(find.text('80.0 kg'));
+      await tester.tap(find.byTooltip('Delete'));
+      await tester.pump();
+      expect(find.textContaining('Are you sure'), findsOne);
+      await tester.tap(find.text('Delete'));
+
+      await tester.pumpAndSettle();
+      expect(find.text('No weights found'), findsOne);
+
+      await db.close();
+    },
+  );
+
+  testWidgets(
+    'WeightsPage create',
+    (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => settingsState),
+            ChangeNotifierProvider(create: (context) => EntriesState()),
+          ],
+          child: const MaterialApp(
+            home: WeightsPage(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('No weights found'), findsOne);
+      await tester.tap(find.byTooltip('Add'));
+      await tester.pumpAndSettle();
+      expect(find.text('Add weight'), findsOne);
+      await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
+      await tester.tap(find.byTooltip('Save'));
+      await tester.pumpAndSettle();
+      expect(find.text('Add weight'), findsNothing);
+
+      final weight = await (db.weights.select()).getSingle();
+      expect(weight.amount, equals(61));
+
+      await db.close();
+    },
   );
 }

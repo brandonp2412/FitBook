@@ -123,7 +123,7 @@ class WeightsPageState extends State<WeightsPage>
               ),
               if (snapshot.data?.isEmpty == true)
                 const ListTile(
-                  title: Text("No weights today."),
+                  title: Text("No weights found"),
                   subtitle: Text(
                     "Tap the plus button to start logging your weight.",
                   ),
@@ -154,29 +154,36 @@ class WeightsPageState extends State<WeightsPage>
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final weights = await stream.first;
-          var weight = WeightsCompanion.insert(
-            amount: 0.0,
-            created: DateTime.now(),
-            unit: 'kg',
-          );
-          if (weights.firstOrNull != null)
-            weight = weight.copyWith(
-              amount: Value(weights.first.amount),
-              unit: Value(weights.first.unit),
-            );
+      floatingActionButton: StreamBuilder(
+        stream: stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) throw Exception(snapshot.error);
 
-          final editRoute = MaterialPageRoute(
-            builder: (context) => EditWeightPage(
-              weight: weight,
-            ),
+          return FloatingActionButton(
+            onPressed: () async {
+              var weight = WeightsCompanion.insert(
+                amount: 0.0,
+                created: DateTime.now(),
+                unit: 'kg',
+              );
+              if (snapshot.data?.firstOrNull != null)
+                weight = weight.copyWith(
+                  amount: Value(snapshot.data!.firstOrNull!.amount),
+                  unit: Value(snapshot.data!.firstOrNull!.unit),
+                );
+
+              navigatorKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (context) => EditWeightPage(
+                    weight: weight,
+                  ),
+                ),
+              );
+            },
+            tooltip: 'Add',
+            child: const Icon(Icons.add),
           );
-          navigatorKey.currentState!.push(editRoute);
         },
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
       ),
     );
   }

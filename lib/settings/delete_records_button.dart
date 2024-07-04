@@ -28,7 +28,7 @@ class DeleteRecordsButton extends StatelessWidget {
                       context: sheetContext,
                       builder: (BuildContext dialogContext) {
                         return AlertDialog(
-                          title: const Text('Confirm Delete'),
+                          title: const Text('Confirm delete'),
                           content: const Text(
                             'Are you sure you want to delete all entries? This action is not reversible.',
                           ),
@@ -63,7 +63,7 @@ class DeleteRecordsButton extends StatelessWidget {
                       context: sheetContext,
                       builder: (BuildContext dialogContext) {
                         return AlertDialog(
-                          title: const Text('Confirm Delete'),
+                          title: const Text('Confirm delete'),
                           content: const Text(
                             'Are you sure you want to delete all food & entries? This action is not reversible.',
                           ),
@@ -99,7 +99,7 @@ class DeleteRecordsButton extends StatelessWidget {
                       context: sheetContext,
                       builder: (BuildContext dialogContext) {
                         return AlertDialog(
-                          title: const Text('Confirm Delete'),
+                          title: const Text('Confirm delete'),
                           content: const Text(
                             'Are you sure you want to delete all weights? This action is not reversible.',
                           ),
