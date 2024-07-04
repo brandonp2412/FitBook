@@ -27,7 +27,9 @@ yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 git add pubspec.yaml
 git add fastlane/metadata
 last_commit=$(git log -1 --pretty=%B | head -n 1)
-git commit -m "$new_version 🚀"
+git commit -m "$new_version 🚀
+
+$changelog"
 
 flutter build apk --split-per-abi
 flutter build apk
