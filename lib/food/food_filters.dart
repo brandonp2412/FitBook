@@ -65,6 +65,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 return DropdownButtonFormField(
                   decoration: const InputDecoration(
                     labelText: 'Food group',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                   ),
                   value: widget.foodGroup,
                   items: snapshot.data
@@ -91,7 +92,10 @@ class _FoodFiltersState extends State<FoodFilters> {
           PopupMenuItem(
             child: DropdownButtonFormField<String>(
               value: widget.servingUnit,
-              decoration: const InputDecoration(labelText: 'Serving unit'),
+              decoration: const InputDecoration(
+                labelText: 'Serving unit',
+                floatingLabelBehavior: FloatingLabelBehavior.auto,
+              ),
               items: units.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

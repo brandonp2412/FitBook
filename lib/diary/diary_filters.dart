@@ -43,6 +43,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                 return DropdownButtonFormField(
                   decoration: const InputDecoration(
                     labelText: 'Food group',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
                   ),
                   value: state.foodGroup,
                   items: snapshot.data
