@@ -174,26 +174,26 @@ class AppDatabase extends _$AppDatabase {
           dailyCarbs = prefs.getInt('dailyCarbs');
           targetWeight = prefs.getDouble('targetWeight');
 
-          await (settings.insertOne(
-            SettingsCompanion.insert(
-              longDateFormat: longDateFormat,
-              shortDateFormat: shortDateFormat,
-              entryUnit: entryUnit,
-              foodUnit: foodUnit,
-              themeMode: themeMode.toString(),
-              curveLines: curveLines,
-              diarySummary: diarySummary.toString(),
-              favoriteNew: favoriteNew,
-              notifications: notifications,
-              selectEntryOnSubmit: selectEntryOnSubmit,
-              showOthers: showOthers,
-              systemColors: systemColors,
-              dailyCalories: Value(dailyCalories),
-              dailyCarb: Value(dailyCarbs),
-              dailyFat: Value(dailyFat),
-              dailyProtein: Value(dailyProtein),
-              targetWeight: Value(targetWeight),
-            ),
+          await (schema.settings.insertOne(
+            RawValuesInsertable({
+              "long_date_format": Variable(longDateFormat),
+              "short_date_format": Variable(shortDateFormat),
+              "entry_unit": Variable(entryUnit),
+              "food_unit": Variable(foodUnit),
+              "theme_mode": Variable(themeMode.toString()),
+              "curve_lines": Variable(curveLines),
+              "diary_summary": Variable(diarySummary.toString()),
+              "favorite_new": Variable(favoriteNew),
+              "notifications": Variable(notifications),
+              "select_entry_on_submit": Variable(selectEntryOnSubmit),
+              "show_others": Variable(showOthers),
+              "system_colors": Variable(systemColors),
+              "daily_calories": Variable(dailyCalories),
+              "daily_carb": Variable(dailyCarbs),
+              "daily_fat": Variable(dailyFat),
+              "daily_protein": Variable(dailyProtein),
+              "target_weight": Variable(targetWeight),
+            }),
           ));
         },
         from15To16: (Migrator m, Schema16 schema) async {
