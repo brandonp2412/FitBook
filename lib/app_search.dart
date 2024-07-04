@@ -11,7 +11,6 @@ class AppSearch extends StatefulWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onSelect,
-    this.onRefresh,
     required this.onFavorite,
     this.filter,
     this.controller,
@@ -24,7 +23,6 @@ class AppSearch extends StatefulWidget {
   final Function onDelete;
   final Function onSelect;
   final Function onFavorite;
-  final Function? onRefresh;
   final Widget? filter;
   final TextEditingController? controller;
 
@@ -58,6 +56,7 @@ class _AppSearchState extends State<AppSearch> {
                       widget.onChange('');
                     },
                     icon: const Icon(Icons.arrow_back),
+                    tooltip: 'Clear',
                     padding: const EdgeInsets.only(
                       left: 16.0,
                       right: 8.0,
@@ -74,7 +73,7 @@ class _AppSearchState extends State<AppSearch> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Confirm Delete'),
+                      title: const Text('Confirm delete'),
                       content: Text(
                         'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
                       ),
