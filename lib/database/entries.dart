@@ -2,6 +2,8 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/foods.dart';
 
+// coverage:ignore-file
+
 class Entries extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get food => integer().references(Foods, #id)();
