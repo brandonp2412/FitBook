@@ -27,6 +27,7 @@ mockTests() async {
       selectEntryOnSubmit: false,
       showOthers: false,
       systemColors: false,
+      showImages: const Value(false),
     ),
   ));
 }
