@@ -1,1 +1,1 @@
-Multi-edit foods
+Add support for OpenFoodFacts & images
