@@ -735,6 +735,24 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   late final GeneratedColumn<double> servingSize = GeneratedColumn<double>(
       'serving_size', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _smallImageMeta =
+      const VerificationMeta('smallImage');
+  @override
+  late final GeneratedColumn<String> smallImage = GeneratedColumn<String>(
+      'small_image', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _bigImageMeta =
+      const VerificationMeta('bigImage');
+  @override
+  late final GeneratedColumn<String> bigImage = GeneratedColumn<String>(
+      'big_image', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _imageFileMeta =
+      const VerificationMeta('imageFile');
+  @override
+  late final GeneratedColumn<String> imageFile = GeneratedColumn<String>(
+      'image_file', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -856,7 +874,10 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
         u200calorieWeightG,
         favorite,
         servingUnit,
-        servingSize
+        servingSize,
+        smallImage,
+        bigImage,
+        imageFile
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1532,6 +1553,20 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           servingSize.isAcceptableOrUnknown(
               data['serving_size']!, _servingSizeMeta));
     }
+    if (data.containsKey('small_image')) {
+      context.handle(
+          _smallImageMeta,
+          smallImage.isAcceptableOrUnknown(
+              data['small_image']!, _smallImageMeta));
+    }
+    if (data.containsKey('big_image')) {
+      context.handle(_bigImageMeta,
+          bigImage.isAcceptableOrUnknown(data['big_image']!, _bigImageMeta));
+    }
+    if (data.containsKey('image_file')) {
+      context.handle(_imageFileMeta,
+          imageFile.isAcceptableOrUnknown(data['image_file']!, _imageFileMeta));
+    }
     return context;
   }
 
@@ -1798,6 +1833,12 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
           .read(DriftSqlType.string, data['${effectivePrefix}serving_unit']),
       servingSize: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}serving_size']),
+      smallImage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}small_image']),
+      bigImage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}big_image']),
+      imageFile: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}image_file']),
     );
   }
 
@@ -1928,6 +1969,9 @@ class Food extends DataClass implements Insertable<Food> {
   final bool? favorite;
   final String? servingUnit;
   final double? servingSize;
+  final String? smallImage;
+  final String? bigImage;
+  final String? imageFile;
   const Food(
       {required this.id,
       required this.name,
@@ -2048,7 +2092,10 @@ class Food extends DataClass implements Insertable<Food> {
       this.u200calorieWeightG,
       this.favorite,
       this.servingUnit,
-      this.servingSize});
+      this.servingSize,
+      this.smallImage,
+      this.bigImage,
+      this.imageFile});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2414,6 +2461,15 @@ class Food extends DataClass implements Insertable<Food> {
     if (!nullToAbsent || servingSize != null) {
       map['serving_size'] = Variable<double>(servingSize);
     }
+    if (!nullToAbsent || smallImage != null) {
+      map['small_image'] = Variable<String>(smallImage);
+    }
+    if (!nullToAbsent || bigImage != null) {
+      map['big_image'] = Variable<String>(bigImage);
+    }
+    if (!nullToAbsent || imageFile != null) {
+      map['image_file'] = Variable<String>(imageFile);
+    }
     return map;
   }
 
@@ -2776,6 +2832,15 @@ class Food extends DataClass implements Insertable<Food> {
       servingSize: servingSize == null && nullToAbsent
           ? const Value.absent()
           : Value(servingSize),
+      smallImage: smallImage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(smallImage),
+      bigImage: bigImage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bigImage),
+      imageFile: imageFile == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageFile),
     );
   }
 
@@ -2922,6 +2987,9 @@ class Food extends DataClass implements Insertable<Food> {
       favorite: serializer.fromJson<bool?>(json['favorite']),
       servingUnit: serializer.fromJson<String?>(json['servingUnit']),
       servingSize: serializer.fromJson<double?>(json['servingSize']),
+      smallImage: serializer.fromJson<String?>(json['smallImage']),
+      bigImage: serializer.fromJson<String?>(json['bigImage']),
+      imageFile: serializer.fromJson<String?>(json['imageFile']),
     );
   }
   @override
@@ -3054,6 +3122,9 @@ class Food extends DataClass implements Insertable<Food> {
       'favorite': serializer.toJson<bool?>(favorite),
       'servingUnit': serializer.toJson<String?>(servingUnit),
       'servingSize': serializer.toJson<double?>(servingSize),
+      'smallImage': serializer.toJson<String?>(smallImage),
+      'bigImage': serializer.toJson<String?>(bigImage),
+      'imageFile': serializer.toJson<String?>(imageFile),
     };
   }
 
@@ -3179,7 +3250,10 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> u200calorieWeightG = const Value.absent(),
           Value<bool?> favorite = const Value.absent(),
           Value<String?> servingUnit = const Value.absent(),
-          Value<double?> servingSize = const Value.absent()}) =>
+          Value<double?> servingSize = const Value.absent(),
+          Value<String?> smallImage = const Value.absent(),
+          Value<String?> bigImage = const Value.absent(),
+          Value<String?> imageFile = const Value.absent()}) =>
       Food(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -3399,6 +3473,9 @@ class Food extends DataClass implements Insertable<Food> {
         favorite: favorite.present ? favorite.value : this.favorite,
         servingUnit: servingUnit.present ? servingUnit.value : this.servingUnit,
         servingSize: servingSize.present ? servingSize.value : this.servingSize,
+        smallImage: smallImage.present ? smallImage.value : this.smallImage,
+        bigImage: bigImage.present ? bigImage.value : this.bigImage,
+        imageFile: imageFile.present ? imageFile.value : this.imageFile,
       );
   @override
   String toString() {
@@ -3524,7 +3601,10 @@ class Food extends DataClass implements Insertable<Food> {
           ..write('u200calorieWeightG: $u200calorieWeightG, ')
           ..write('favorite: $favorite, ')
           ..write('servingUnit: $servingUnit, ')
-          ..write('servingSize: $servingSize')
+          ..write('servingSize: $servingSize, ')
+          ..write('smallImage: $smallImage, ')
+          ..write('bigImage: $bigImage, ')
+          ..write('imageFile: $imageFile')
           ..write(')'))
         .toString();
   }
@@ -3650,7 +3730,10 @@ class Food extends DataClass implements Insertable<Food> {
         u200calorieWeightG,
         favorite,
         servingUnit,
-        servingSize
+        servingSize,
+        smallImage,
+        bigImage,
+        imageFile
       ]);
   @override
   bool operator ==(Object other) =>
@@ -3778,7 +3861,10 @@ class Food extends DataClass implements Insertable<Food> {
           other.u200calorieWeightG == this.u200calorieWeightG &&
           other.favorite == this.favorite &&
           other.servingUnit == this.servingUnit &&
-          other.servingSize == this.servingSize);
+          other.servingSize == this.servingSize &&
+          other.smallImage == this.smallImage &&
+          other.bigImage == this.bigImage &&
+          other.imageFile == this.imageFile);
 }
 
 class FoodsCompanion extends UpdateCompanion<Food> {
@@ -3902,6 +3988,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<bool?> favorite;
   final Value<String?> servingUnit;
   final Value<double?> servingSize;
+  final Value<String?> smallImage;
+  final Value<String?> bigImage;
+  final Value<String?> imageFile;
   const FoodsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -4023,6 +4112,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.favorite = const Value.absent(),
     this.servingUnit = const Value.absent(),
     this.servingSize = const Value.absent(),
+    this.smallImage = const Value.absent(),
+    this.bigImage = const Value.absent(),
+    this.imageFile = const Value.absent(),
   });
   FoodsCompanion.insert({
     this.id = const Value.absent(),
@@ -4145,6 +4237,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.favorite = const Value.absent(),
     this.servingUnit = const Value.absent(),
     this.servingSize = const Value.absent(),
+    this.smallImage = const Value.absent(),
+    this.bigImage = const Value.absent(),
+    this.imageFile = const Value.absent(),
   }) : name = Value(name);
   static Insertable<Food> custom({
     Expression<int>? id,
@@ -4267,6 +4362,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<bool>? favorite,
     Expression<String>? servingUnit,
     Expression<double>? servingSize,
+    Expression<String>? smallImage,
+    Expression<String>? bigImage,
+    Expression<String>? imageFile,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -4410,6 +4508,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       if (favorite != null) 'favorite': favorite,
       if (servingUnit != null) 'serving_unit': servingUnit,
       if (servingSize != null) 'serving_size': servingSize,
+      if (smallImage != null) 'small_image': smallImage,
+      if (bigImage != null) 'big_image': bigImage,
+      if (imageFile != null) 'image_file': imageFile,
     });
   }
 
@@ -4533,7 +4634,10 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<double?>? u200calorieWeightG,
       Value<bool?>? favorite,
       Value<String?>? servingUnit,
-      Value<double?>? servingSize}) {
+      Value<double?>? servingSize,
+      Value<String?>? smallImage,
+      Value<String?>? bigImage,
+      Value<String?>? imageFile}) {
     return FoodsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -4661,6 +4765,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       favorite: favorite ?? this.favorite,
       servingUnit: servingUnit ?? this.servingUnit,
       servingSize: servingSize ?? this.servingSize,
+      smallImage: smallImage ?? this.smallImage,
+      bigImage: bigImage ?? this.bigImage,
+      imageFile: imageFile ?? this.imageFile,
     );
   }
 
@@ -5045,6 +5152,15 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     if (servingSize.present) {
       map['serving_size'] = Variable<double>(servingSize.value);
     }
+    if (smallImage.present) {
+      map['small_image'] = Variable<String>(smallImage.value);
+    }
+    if (bigImage.present) {
+      map['big_image'] = Variable<String>(bigImage.value);
+    }
+    if (imageFile.present) {
+      map['image_file'] = Variable<String>(imageFile.value);
+    }
     return map;
   }
 
@@ -5172,7 +5288,10 @@ class FoodsCompanion extends UpdateCompanion<Food> {
           ..write('u200calorieWeightG: $u200calorieWeightG, ')
           ..write('favorite: $favorite, ')
           ..write('servingUnit: $servingUnit, ')
-          ..write('servingSize: $servingSize')
+          ..write('servingSize: $servingSize, ')
+          ..write('smallImage: $smallImage, ')
+          ..write('bigImage: $bigImage, ')
+          ..write('imageFile: $imageFile')
           ..write(')'))
         .toString();
   }
@@ -5939,6 +6058,16 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("show_others" IN (0, 1))'));
+  static const VerificationMeta _showImagesMeta =
+      const VerificationMeta('showImages');
+  @override
+  late final GeneratedColumn<bool> showImages = GeneratedColumn<bool>(
+      'show_images', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("show_images" IN (0, 1))'),
+      defaultValue: const Constant(true));
   static const VerificationMeta _favoriteNewMeta =
       const VerificationMeta('favoriteNew');
   @override
@@ -6003,6 +6132,7 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         systemColors,
         curveLines,
         showOthers,
+        showImages,
         favoriteNew,
         selectEntryOnSubmit,
         notifications,
@@ -6096,6 +6226,12 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_showOthersMeta);
     }
+    if (data.containsKey('show_images')) {
+      context.handle(
+          _showImagesMeta,
+          showImages.isAcceptableOrUnknown(
+              data['show_images']!, _showImagesMeta));
+    }
     if (data.containsKey('favorite_new')) {
       context.handle(
           _favoriteNewMeta,
@@ -6171,6 +6307,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.bool, data['${effectivePrefix}curve_lines'])!,
       showOthers: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}show_others'])!,
+      showImages: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}show_images'])!,
       favoriteNew: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}favorite_new'])!,
       selectEntryOnSubmit: attachedDatabase.typeMapping.read(
@@ -6206,6 +6344,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool systemColors;
   final bool curveLines;
   final bool showOthers;
+  final bool showImages;
   final bool favoriteNew;
   final bool selectEntryOnSubmit;
   final bool notifications;
@@ -6225,6 +6364,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.systemColors,
       required this.curveLines,
       required this.showOthers,
+      required this.showImages,
       required this.favoriteNew,
       required this.selectEntryOnSubmit,
       required this.notifications,
@@ -6248,6 +6388,7 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['system_colors'] = Variable<bool>(systemColors);
     map['curve_lines'] = Variable<bool>(curveLines);
     map['show_others'] = Variable<bool>(showOthers);
+    map['show_images'] = Variable<bool>(showImages);
     map['favorite_new'] = Variable<bool>(favoriteNew);
     map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
     map['notifications'] = Variable<bool>(notifications);
@@ -6281,6 +6422,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       systemColors: Value(systemColors),
       curveLines: Value(curveLines),
       showOthers: Value(showOthers),
+      showImages: Value(showImages),
       favoriteNew: Value(favoriteNew),
       selectEntryOnSubmit: Value(selectEntryOnSubmit),
       notifications: Value(notifications),
@@ -6314,6 +6456,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       systemColors: serializer.fromJson<bool>(json['systemColors']),
       curveLines: serializer.fromJson<bool>(json['curveLines']),
       showOthers: serializer.fromJson<bool>(json['showOthers']),
+      showImages: serializer.fromJson<bool>(json['showImages']),
       favoriteNew: serializer.fromJson<bool>(json['favoriteNew']),
       selectEntryOnSubmit:
           serializer.fromJson<bool>(json['selectEntryOnSubmit']),
@@ -6339,6 +6482,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       'systemColors': serializer.toJson<bool>(systemColors),
       'curveLines': serializer.toJson<bool>(curveLines),
       'showOthers': serializer.toJson<bool>(showOthers),
+      'showImages': serializer.toJson<bool>(showImages),
       'favoriteNew': serializer.toJson<bool>(favoriteNew),
       'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
       'notifications': serializer.toJson<bool>(notifications),
@@ -6361,6 +6505,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           bool? systemColors,
           bool? curveLines,
           bool? showOthers,
+          bool? showImages,
           bool? favoriteNew,
           bool? selectEntryOnSubmit,
           bool? notifications,
@@ -6381,6 +6526,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         systemColors: systemColors ?? this.systemColors,
         curveLines: curveLines ?? this.curveLines,
         showOthers: showOthers ?? this.showOthers,
+        showImages: showImages ?? this.showImages,
         favoriteNew: favoriteNew ?? this.favoriteNew,
         selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
         notifications: notifications ?? this.notifications,
@@ -6405,6 +6551,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('systemColors: $systemColors, ')
           ..write('curveLines: $curveLines, ')
           ..write('showOthers: $showOthers, ')
+          ..write('showImages: $showImages, ')
           ..write('favoriteNew: $favoriteNew, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('notifications: $notifications, ')
@@ -6429,6 +6576,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       systemColors,
       curveLines,
       showOthers,
+      showImages,
       favoriteNew,
       selectEntryOnSubmit,
       notifications,
@@ -6451,6 +6599,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.systemColors == this.systemColors &&
           other.curveLines == this.curveLines &&
           other.showOthers == this.showOthers &&
+          other.showImages == this.showImages &&
           other.favoriteNew == this.favoriteNew &&
           other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
           other.notifications == this.notifications &&
@@ -6472,6 +6621,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> systemColors;
   final Value<bool> curveLines;
   final Value<bool> showOthers;
+  final Value<bool> showImages;
   final Value<bool> favoriteNew;
   final Value<bool> selectEntryOnSubmit;
   final Value<bool> notifications;
@@ -6491,6 +6641,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.systemColors = const Value.absent(),
     this.curveLines = const Value.absent(),
     this.showOthers = const Value.absent(),
+    this.showImages = const Value.absent(),
     this.favoriteNew = const Value.absent(),
     this.selectEntryOnSubmit = const Value.absent(),
     this.notifications = const Value.absent(),
@@ -6511,6 +6662,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     required bool systemColors,
     required bool curveLines,
     required bool showOthers,
+    this.showImages = const Value.absent(),
     required bool favoriteNew,
     required bool selectEntryOnSubmit,
     required bool notifications,
@@ -6542,6 +6694,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? systemColors,
     Expression<bool>? curveLines,
     Expression<bool>? showOthers,
+    Expression<bool>? showImages,
     Expression<bool>? favoriteNew,
     Expression<bool>? selectEntryOnSubmit,
     Expression<bool>? notifications,
@@ -6562,6 +6715,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (systemColors != null) 'system_colors': systemColors,
       if (curveLines != null) 'curve_lines': curveLines,
       if (showOthers != null) 'show_others': showOthers,
+      if (showImages != null) 'show_images': showImages,
       if (favoriteNew != null) 'favorite_new': favoriteNew,
       if (selectEntryOnSubmit != null)
         'select_entry_on_submit': selectEntryOnSubmit,
@@ -6585,6 +6739,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<bool>? systemColors,
       Value<bool>? curveLines,
       Value<bool>? showOthers,
+      Value<bool>? showImages,
       Value<bool>? favoriteNew,
       Value<bool>? selectEntryOnSubmit,
       Value<bool>? notifications,
@@ -6604,6 +6759,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       systemColors: systemColors ?? this.systemColors,
       curveLines: curveLines ?? this.curveLines,
       showOthers: showOthers ?? this.showOthers,
+      showImages: showImages ?? this.showImages,
       favoriteNew: favoriteNew ?? this.favoriteNew,
       selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
       notifications: notifications ?? this.notifications,
@@ -6650,6 +6806,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (showOthers.present) {
       map['show_others'] = Variable<bool>(showOthers.value);
     }
+    if (showImages.present) {
+      map['show_images'] = Variable<bool>(showImages.value);
+    }
     if (favoriteNew.present) {
       map['favorite_new'] = Variable<bool>(favoriteNew.value);
     }
@@ -6688,6 +6847,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('systemColors: $systemColors, ')
           ..write('curveLines: $curveLines, ')
           ..write('showOthers: $showOthers, ')
+          ..write('showImages: $showImages, ')
           ..write('favoriteNew: $favoriteNew, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('notifications: $notifications, ')
@@ -6836,6 +6996,9 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<bool?> favorite,
   Value<String?> servingUnit,
   Value<double?> servingSize,
+  Value<String?> smallImage,
+  Value<String?> bigImage,
+  Value<String?> imageFile,
 });
 typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<int> id,
@@ -6958,6 +7121,9 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<bool?> favorite,
   Value<String?> servingUnit,
   Value<double?> servingSize,
+  Value<String?> smallImage,
+  Value<String?> bigImage,
+  Value<String?> imageFile,
 });
 
 class $$FoodsTableTableManager extends RootTableManager<
@@ -7101,6 +7267,9 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<bool?> favorite = const Value.absent(),
             Value<String?> servingUnit = const Value.absent(),
             Value<double?> servingSize = const Value.absent(),
+            Value<String?> smallImage = const Value.absent(),
+            Value<String?> bigImage = const Value.absent(),
+            Value<String?> imageFile = const Value.absent(),
           }) =>
               FoodsCompanion(
             id: id,
@@ -7223,6 +7392,9 @@ class $$FoodsTableTableManager extends RootTableManager<
             favorite: favorite,
             servingUnit: servingUnit,
             servingSize: servingSize,
+            smallImage: smallImage,
+            bigImage: bigImage,
+            imageFile: imageFile,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
@@ -7347,6 +7519,9 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<bool?> favorite = const Value.absent(),
             Value<String?> servingUnit = const Value.absent(),
             Value<double?> servingSize = const Value.absent(),
+            Value<String?> smallImage = const Value.absent(),
+            Value<String?> bigImage = const Value.absent(),
+            Value<String?> imageFile = const Value.absent(),
           }) =>
               FoodsCompanion.insert(
             id: id,
@@ -7469,6 +7644,9 @@ class $$FoodsTableTableManager extends RootTableManager<
             favorite: favorite,
             servingUnit: servingUnit,
             servingSize: servingSize,
+            smallImage: smallImage,
+            bigImage: bigImage,
+            imageFile: imageFile,
           ),
         ));
 }
@@ -8090,6 +8268,21 @@ class $$FoodsTableFilterComposer
 
   ColumnFilters<double> get servingSize => $state.composableBuilder(
       column: $state.table.servingSize,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get smallImage => $state.composableBuilder(
+      column: $state.table.smallImage,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get bigImage => $state.composableBuilder(
+      column: $state.table.bigImage,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get imageFile => $state.composableBuilder(
+      column: $state.table.imageFile,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -8715,6 +8908,21 @@ class $$FoodsTableOrderingComposer
       column: $state.table.servingSize,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get smallImage => $state.composableBuilder(
+      column: $state.table.smallImage,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get bigImage => $state.composableBuilder(
+      column: $state.table.bigImage,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get imageFile => $state.composableBuilder(
+      column: $state.table.imageFile,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
 typedef $$EntriesTableInsertCompanionBuilder = EntriesCompanion Function({
@@ -9059,6 +9267,7 @@ typedef $$SettingsTableInsertCompanionBuilder = SettingsCompanion Function({
   required bool systemColors,
   required bool curveLines,
   required bool showOthers,
+  Value<bool> showImages,
   required bool favoriteNew,
   required bool selectEntryOnSubmit,
   required bool notifications,
@@ -9079,6 +9288,7 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> systemColors,
   Value<bool> curveLines,
   Value<bool> showOthers,
+  Value<bool> showImages,
   Value<bool> favoriteNew,
   Value<bool> selectEntryOnSubmit,
   Value<bool> notifications,
@@ -9119,6 +9329,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> systemColors = const Value.absent(),
             Value<bool> curveLines = const Value.absent(),
             Value<bool> showOthers = const Value.absent(),
+            Value<bool> showImages = const Value.absent(),
             Value<bool> favoriteNew = const Value.absent(),
             Value<bool> selectEntryOnSubmit = const Value.absent(),
             Value<bool> notifications = const Value.absent(),
@@ -9139,6 +9350,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             systemColors: systemColors,
             curveLines: curveLines,
             showOthers: showOthers,
+            showImages: showImages,
             favoriteNew: favoriteNew,
             selectEntryOnSubmit: selectEntryOnSubmit,
             notifications: notifications,
@@ -9159,6 +9371,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             required bool systemColors,
             required bool curveLines,
             required bool showOthers,
+            Value<bool> showImages = const Value.absent(),
             required bool favoriteNew,
             required bool selectEntryOnSubmit,
             required bool notifications,
@@ -9179,6 +9392,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             systemColors: systemColors,
             curveLines: curveLines,
             showOthers: showOthers,
+            showImages: showImages,
             favoriteNew: favoriteNew,
             selectEntryOnSubmit: selectEntryOnSubmit,
             notifications: notifications,
@@ -9257,6 +9471,11 @@ class $$SettingsTableFilterComposer
 
   ColumnFilters<bool> get showOthers => $state.composableBuilder(
       column: $state.table.showOthers,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get showImages => $state.composableBuilder(
+      column: $state.table.showImages,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -9351,6 +9570,11 @@ class $$SettingsTableOrderingComposer
 
   ColumnOrderings<bool> get showOthers => $state.composableBuilder(
       column: $state.table.showOthers,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get showImages => $state.composableBuilder(
+      column: $state.table.showImages,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

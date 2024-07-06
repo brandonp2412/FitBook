@@ -17,6 +17,7 @@ class Settings extends Table {
   BoolColumn get systemColors => boolean()();
   BoolColumn get curveLines => boolean()();
   BoolColumn get showOthers => boolean()();
+  BoolColumn get showImages => boolean().withDefault(const Constant(true))();
   BoolColumn get favoriteNew => boolean()();
   BoolColumn get selectEntryOnSubmit => boolean()();
   BoolColumn get notifications => boolean()();

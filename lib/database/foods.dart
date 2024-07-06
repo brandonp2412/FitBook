@@ -145,4 +145,7 @@ class Foods extends Table {
   BoolColumn get favorite => boolean().nullable()();
   TextColumn get servingUnit => text().nullable()();
   RealColumn get servingSize => real().nullable()();
+  TextColumn get smallImage => text().nullable()();
+  TextColumn get bigImage => text().nullable()();
+  TextColumn get imageFile => text().nullable()();
 }

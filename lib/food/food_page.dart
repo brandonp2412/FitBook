@@ -23,9 +23,13 @@ class PartialFood {
   final bool? favorite;
   final double? servingSize;
   final String? servingUnit;
+  final String? imageFile;
+  final String? smallImage;
 
   PartialFood({
+    required this.imageFile,
     required this.id,
+    required this.smallImage,
     required this.name,
     required this.calories,
     required this.favorite,
@@ -63,6 +67,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         db.foods.favorite,
         db.foods.servingSize,
         db.foods.servingUnit,
+        db.foods.smallImage,
+        db.foods.imageFile,
       ])
       ..where(db.foods.name.contains(search.toLowerCase()))
       ..orderBy([
@@ -105,6 +111,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                     favorite: result.read(db.foods.favorite),
                     servingSize: result.read(db.foods.servingSize),
                     servingUnit: result.read(db.foods.servingUnit),
+                    imageFile: result.read(db.foods.imageFile),
+                    smallImage: result.read(db.foods.smallImage),
                   ),
                 )
                 .toList(),

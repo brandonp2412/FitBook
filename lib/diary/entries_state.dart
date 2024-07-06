@@ -67,7 +67,12 @@ class EntriesState extends ChangeNotifier {
     var query = (db.entries
         .selectOnly()
         .join([innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))])
-      ..addColumns([...db.entries.$columns, db.foods.name])
+      ..addColumns([
+        ...db.entries.$columns,
+        db.foods.name,
+        db.foods.imageFile,
+        db.foods.smallImage,
+      ])
       ..where(db.foods.name.contains(search.toLowerCase()))
       ..orderBy([
         OrderingTerm(
@@ -86,7 +91,7 @@ class EntriesState extends ChangeNotifier {
 
     _stream = query.watch().map(
           (results) => results.map((result) {
-            return (
+            return EntryWithFood(
               entry: Entry(
                 id: result.read(db.entries.id)!,
                 food: result.read(db.entries.food)!,
@@ -99,6 +104,8 @@ class EntriesState extends ChangeNotifier {
                 carbG: result.read(db.entries.carbG),
               ),
               foodName: result.read(db.foods.name)!,
+              imageFile: result.read(db.foods.imageFile),
+              smallImage: result.read(db.foods.smallImage),
             );
           }).toList(),
         );

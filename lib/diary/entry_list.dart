@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/diary/edit_entry_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -67,6 +69,14 @@ class _EntryListState extends State<EntryList> {
               ? " x${entry.quantity.toInt()}"
               : "";
 
+          Widget? image;
+          if (settings.showImages) {
+            if (entryFood.imageFile != null)
+              image = Image.file(File(entryFood.imageFile!));
+            else if (entryFood.smallImage != null)
+              image = Image.network(entryFood.smallImage!);
+          }
+
           return Column(
             children: [
               if (showDivider)
@@ -82,6 +92,7 @@ class _EntryListState extends State<EntryList> {
                   ],
                 ),
               ListTile(
+                leading: image,
                 title: Text("$foodName$suffix"),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),

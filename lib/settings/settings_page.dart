@@ -9,10 +9,10 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:path/path.dart' as p;
 
 class SettingsLine {
   final String key;
@@ -309,14 +309,26 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
-        key: 'notifications',
+        key: 'images',
         widget: ListTile(
-          leading: const Icon(Icons.notifications_outlined),
-          title: const Text('Notifications'),
-          onTap: () => settings.setNotifications(!settings.notifications),
+          leading: const Icon(Icons.image),
+          title: const Text('Show images'),
+          onTap: () => settings.setShowImages(!settings.showImages),
           trailing: Switch(
-            value: settings.notifications,
-            onChanged: (value) => settings.setNotifications(value),
+            value: settings.showImages,
+            onChanged: (value) => settings.setShowImages(value),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'favorite new foods',
+        widget: ListTile(
+          leading: const Icon(Icons.favorite_outline),
+          title: const Text('Favorite new foods'),
+          onTap: () => settings.setFavoriteNew(!settings.favoriteNew),
+          trailing: Switch(
+            value: settings.favoriteNew,
+            onChanged: (value) => settings.setFavoriteNew(value),
           ),
         ),
       ),
@@ -334,14 +346,14 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
-        key: 'favorite new foods',
+        key: 'notifications',
         widget: ListTile(
-          leading: const Icon(Icons.favorite_outline),
-          title: const Text('Favorite new foods'),
-          onTap: () => settings.setFavoriteNew(!settings.favoriteNew),
+          leading: const Icon(Icons.notifications_outlined),
+          title: const Text('Notifications'),
+          onTap: () => settings.setNotifications(!settings.notifications),
           trailing: Switch(
-            value: settings.favoriteNew,
-            onChanged: (value) => settings.setFavoriteNew(value),
+            value: settings.notifications,
+            onChanged: (value) => settings.setNotifications(value),
           ),
         ),
       ),

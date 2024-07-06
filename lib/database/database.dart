@@ -27,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration {
@@ -57,6 +57,7 @@ class AppDatabase extends _$AppDatabase {
             selectEntryOnSubmit: false,
             showOthers: false,
             systemColors: false,
+            showImages: const Value(true),
           ),
         ));
       },
@@ -207,6 +208,12 @@ class AppDatabase extends _$AppDatabase {
               .write(
             const RawValuesInsertable({"serving_size": Variable(100)}),
           );
+        },
+        from16To17: (Migrator m, Schema17 schema) async {
+          await m.addColumn(schema.foods, schema.foods.smallImage);
+          await m.addColumn(schema.foods, schema.foods.bigImage);
+          await m.addColumn(schema.foods, schema.foods.imageFile);
+          await m.addColumn(schema.settings, schema.settings.showImages);
         },
       ),
     );

@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +24,12 @@ class EditFoodPage extends StatefulWidget {
 class _EditFoodPageState extends State<EditFoodPage> {
   late SettingsState settings;
   late String servingUnit;
+  String? imageFile;
 
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
+  final smallImageController = TextEditingController();
+  final bigImageController = TextEditingController();
   final caloriesController = TextEditingController(text: "0");
   final kilojoulesController = TextEditingController(text: "0");
   final fatGController = TextEditingController(text: "0");
@@ -156,6 +163,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
       setState(() {
         servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
+        smallImageController.text = food.smallImage ?? '';
+        bigImageController.text = food.bigImage ?? '';
+        imageFile = food.imageFile;
         foodGroupController.text = food.foodGroup ?? '';
         caloriesController.text = food.calories?.toString() ?? '';
         kilojoulesController.text = food.calories == null
@@ -296,6 +306,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   void dispose() {
     super.dispose();
+    smallImageController.dispose();
+    bigImageController.dispose();
     netCarbsGController.dispose();
     waterGController.dispose();
     omega3sMgController.dispose();
@@ -414,10 +426,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
     u200calorieWeightGController.dispose();
   }
 
-  Future<void> _save() async {
+  Future<void> save() async {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameController.text,
+      smallImage: Value(smallImageController.text),
+      bigImage: Value(bigImageController.text),
+      imageFile: Value(imageFile),
       foodGroup: Value(foodGroupController.text),
       calories: Value(double.tryParse(caloriesController.text)),
       fatG: Value(double.tryParse(fatGController.text)),
@@ -618,8 +633,26 @@ class _EditFoodPageState extends State<EditFoodPage> {
               controller: nameController,
               autofocus: widget.id == null,
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Name',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () async {
+                    Food food = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SearchOpenFoodFacts(),
+                      ),
+                    );
+                    if (!context.mounted) return;
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(id: food.id),
+                      ),
+                    );
+                  },
+                ),
               ),
               onSubmitted: (_) => selectAll(caloriesController),
               textInputAction: TextInputAction.next,
@@ -712,6 +745,32 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 });
               },
             ),
+            if (settings.showImages) ...[
+              const SizedBox(height: 8),
+              TextButton.icon(
+                icon: const Icon(Icons.image),
+                label: const Text('Set image'),
+                onPressed: () async {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(type: FileType.image);
+                  final path = result?.files.single.path;
+                  if (path == null) return;
+                  setState(() {
+                    imageFile = path;
+                  });
+                },
+              ),
+            ],
+            if (imageFile != null && settings.showImages)
+              Image.file(File(imageFile!)),
+            if (imageFile != null && settings.showImages)
+              TextButton.icon(
+                icon: const Icon(Icons.delete),
+                label: const Text("Remove image"),
+                onPressed: () => setState(() {
+                  imageFile = null;
+                }),
+              ),
             ListTile(
               title: const Text('Show other fields'),
               onTap: () => settings.setShowOthers(!settings.showOthers),
@@ -721,6 +780,20 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
             ),
             if (settings.showOthers) ...[
+              if (settings.showImages) ...[
+                TextField(
+                  controller: bigImageController,
+                  decoration: const InputDecoration(
+                    labelText: 'Big image URL',
+                  ),
+                ),
+                TextField(
+                  controller: smallImageController,
+                  decoration: const InputDecoration(
+                    labelText: 'Small image URL',
+                  ),
+                ),
+              ],
               TextField(
                 controller: foodGroupController,
                 decoration: const InputDecoration(
@@ -1596,7 +1669,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _save,
+        onPressed: save,
         tooltip: 'Save',
         child: const Icon(Icons.save),
       ),

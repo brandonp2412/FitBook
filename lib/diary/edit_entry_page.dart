@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
   }
 
-  Future<List<String>> _search(String term) async {
+  Future<List<String>> searchDrift(String term) async {
     return await (db.foods.selectOnly()
           ..where(db.foods.name.contains(term.toLowerCase()))
           ..limit(30)
@@ -195,7 +196,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     }
   }
 
-  void _recalc() {
+  void recalc() {
     final food = selectedFood!;
     final quantity = double.parse(quantityController.text);
     final entry = calculateEntry(
@@ -272,7 +273,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               optionsMaxHeight: 300,
               optionsBuilder: (textEditingValue) {
                 if (textEditingValue.text.isEmpty) return [];
-                return _search(textEditingValue.text);
+                return searchDrift(textEditingValue.text);
               },
               onSelected: (option) async {
                 final food = await (db.foods.select()
@@ -300,7 +301,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   unit = lastEntry.unit;
                 });
 
-                _recalc();
+                recalc();
                 quantityNode.requestFocus();
                 selectAll(quantityController);
               },
@@ -312,8 +313,27 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ) {
                 nameController = textEditingController;
                 return TextFormField(
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Name',
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () async {
+                        Food food = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SearchOpenFoodFacts(
+                              terms: textEditingController.text,
+                            ),
+                          ),
+                        );
+                        setState(() {
+                          selectedFood = food;
+                        });
+                        nameController?.text = food.name;
+                        recalc();
+                        quantityNode.requestFocus();
+                        selectAll(quantityController);
+                      },
+                    ),
                   ),
                   autofocus: widget.id == null,
                   controller: textEditingController,
@@ -342,7 +362,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 extentOffset: quantityController.text.length,
               ),
               onChanged: (value) {
-                _recalc();
+                recalc();
               },
               textInputAction: TextInputAction.next,
               onSubmitted: (value) {
@@ -370,7 +390,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 setState(() {
                   unit = newValue!;
                 });
-                _recalc();
+                recalc();
               },
             ),
             Row(

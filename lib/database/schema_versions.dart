@@ -4042,6 +4042,529 @@ final class Schema16 extends i0.VersionedSchema {
       alias: null);
 }
 
+final class Schema17 extends i0.VersionedSchema {
+  Schema17({required super.database}) : super(version: 17);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    foods,
+    entries,
+    weights,
+    settings,
+  ];
+  late final Shape9 foods = Shape9(
+      source: i0.VersionedTable(
+        entityName: 'foods',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_1,
+          _column_2,
+          _column_3,
+          _column_4,
+          _column_5,
+          _column_6,
+          _column_7,
+          _column_8,
+          _column_9,
+          _column_10,
+          _column_11,
+          _column_12,
+          _column_13,
+          _column_14,
+          _column_15,
+          _column_16,
+          _column_17,
+          _column_18,
+          _column_19,
+          _column_20,
+          _column_21,
+          _column_22,
+          _column_23,
+          _column_24,
+          _column_25,
+          _column_26,
+          _column_27,
+          _column_28,
+          _column_29,
+          _column_30,
+          _column_31,
+          _column_32,
+          _column_33,
+          _column_34,
+          _column_35,
+          _column_36,
+          _column_37,
+          _column_38,
+          _column_39,
+          _column_40,
+          _column_41,
+          _column_42,
+          _column_43,
+          _column_44,
+          _column_45,
+          _column_46,
+          _column_47,
+          _column_48,
+          _column_49,
+          _column_50,
+          _column_51,
+          _column_52,
+          _column_53,
+          _column_54,
+          _column_55,
+          _column_56,
+          _column_57,
+          _column_58,
+          _column_59,
+          _column_60,
+          _column_61,
+          _column_62,
+          _column_63,
+          _column_64,
+          _column_65,
+          _column_66,
+          _column_67,
+          _column_68,
+          _column_69,
+          _column_70,
+          _column_71,
+          _column_72,
+          _column_73,
+          _column_74,
+          _column_75,
+          _column_76,
+          _column_77,
+          _column_78,
+          _column_79,
+          _column_80,
+          _column_81,
+          _column_82,
+          _column_83,
+          _column_84,
+          _column_85,
+          _column_86,
+          _column_87,
+          _column_88,
+          _column_89,
+          _column_90,
+          _column_91,
+          _column_92,
+          _column_93,
+          _column_94,
+          _column_95,
+          _column_96,
+          _column_97,
+          _column_98,
+          _column_99,
+          _column_100,
+          _column_101,
+          _column_102,
+          _column_103,
+          _column_104,
+          _column_105,
+          _column_106,
+          _column_107,
+          _column_108,
+          _column_109,
+          _column_110,
+          _column_111,
+          _column_112,
+          _column_113,
+          _column_114,
+          _column_115,
+          _column_116,
+          _column_124,
+          _column_125,
+          _column_126,
+          _column_144,
+          _column_145,
+          _column_146,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape2 entries = Shape2(
+      source: i0.VersionedTable(
+        entityName: 'entries',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_117,
+          _column_118,
+          _column_119,
+          _column_120,
+          _column_121,
+          _column_5,
+          _column_4,
+          _column_122,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape3 weights = Shape3(
+      source: i0.VersionedTable(
+        entityName: 'weights',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_118,
+          _column_120,
+          _column_123,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+  late final Shape10 settings = Shape10(
+      source: i0.VersionedTable(
+        entityName: 'settings',
+        withoutRowId: false,
+        isStrict: false,
+        tableConstraints: [],
+        columns: [
+          _column_0,
+          _column_127,
+          _column_128,
+          _column_143,
+          _column_129,
+          _column_130,
+          _column_131,
+          _column_132,
+          _column_133,
+          _column_134,
+          _column_135,
+          _column_147,
+          _column_136,
+          _column_137,
+          _column_138,
+          _column_139,
+          _column_140,
+          _column_141,
+          _column_142,
+        ],
+        attachedDatabase: database,
+      ),
+      alias: null);
+}
+
+class Shape9 extends i0.VersionedTable {
+  Shape9({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get name =>
+      columnsByName['name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get foodGroup =>
+      columnsByName['food_group']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get calories =>
+      columnsByName['calories']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fatG =>
+      columnsByName['fat_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get proteinG =>
+      columnsByName['protein_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get carbohydrateG =>
+      columnsByName['carbohydrate_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get sugarsG =>
+      columnsByName['sugars_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fiberG =>
+      columnsByName['fiber_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get cholesterolMg =>
+      columnsByName['cholesterol_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get saturatedFatsG =>
+      columnsByName['saturated_fats_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get calciumMg =>
+      columnsByName['calcium_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get ironFeMg =>
+      columnsByName['iron_fe_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get potassiumKMg =>
+      columnsByName['potassium_k_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get magnesiumMg =>
+      columnsByName['magnesium_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminAIuIu =>
+      columnsByName['vitamin_a_iu_iu']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminARaeMcg =>
+      columnsByName['vitamin_a_rae_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminCMg =>
+      columnsByName['vitamin_c_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminB12Mcg =>
+      columnsByName['vitamin_b_12_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminDMcg =>
+      columnsByName['vitamin_d_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminEAlphaTocopherolMg =>
+      columnsByName['vitamin_e_alpha_tocopherol_mg']!
+          as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get addedSugarG =>
+      columnsByName['added_sugar_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get netCarbsG =>
+      columnsByName['net_carbs_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get waterG =>
+      columnsByName['water_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get omega3sMg =>
+      columnsByName['omega_3s_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get omega6sMg =>
+      columnsByName['omega_6s_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get pralScore =>
+      columnsByName['pral_score']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get transFattyAcidsG =>
+      columnsByName['trans_fatty_acids_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get solubleFiberG =>
+      columnsByName['soluble_fiber_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get insolubleFiberG =>
+      columnsByName['insoluble_fiber_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get sucroseG =>
+      columnsByName['sucrose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get glucoseDextroseG =>
+      columnsByName['glucose_dextrose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fructoseG =>
+      columnsByName['fructose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get lactoseG =>
+      columnsByName['lactose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get maltoseG =>
+      columnsByName['maltose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get galactoseG =>
+      columnsByName['galactose_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get starchG =>
+      columnsByName['starch_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get totalSugarAlcoholsG =>
+      columnsByName['total_sugar_alcohols_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get phosphorusPMg =>
+      columnsByName['phosphorus_p_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get sodiumMg =>
+      columnsByName['sodium_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get zincZnMg =>
+      columnsByName['zinc_zn_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get copperCuMg =>
+      columnsByName['copper_cu_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get manganeseMg =>
+      columnsByName['manganese_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get seleniumSeMcg =>
+      columnsByName['selenium_se_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fluorideFMcg =>
+      columnsByName['fluoride_f_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get molybdenumMcg =>
+      columnsByName['molybdenum_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get chlorineMg =>
+      columnsByName['chlorine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get thiaminB1Mg =>
+      columnsByName['thiamin_b1_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get riboflavinB2Mg =>
+      columnsByName['riboflavin_b2_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get niacinB3Mg =>
+      columnsByName['niacin_b3_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get pantothenicAcidB5Mg =>
+      columnsByName['pantothenic_acid_b5_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminB6Mg =>
+      columnsByName['vitamin_b6_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get biotinB7Mcg =>
+      columnsByName['biotin_b7_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get folateB9Mcg =>
+      columnsByName['folate_b9_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get folicAcidMcg =>
+      columnsByName['folic_acid_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get foodFolateMcg =>
+      columnsByName['food_folate_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get folateDfeMcg =>
+      columnsByName['folate_dfe_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get cholineMg =>
+      columnsByName['choline_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get betaineMg =>
+      columnsByName['betaine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get retinolMcg =>
+      columnsByName['retinol_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get caroteneBetaMcg =>
+      columnsByName['carotene_beta_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get caroteneAlphaMcg =>
+      columnsByName['carotene_alpha_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get lycopeneMcg =>
+      columnsByName['lycopene_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get luteinZeaxanthinMcg =>
+      columnsByName['lutein_zeaxanthin_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminD2ErgocalciferolMcg =>
+      columnsByName['vitamin_d2_ergocalciferol_mcg']!
+          as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminD3CholecalciferolMcg =>
+      columnsByName['vitamin_d3_cholecalciferol_mcg']!
+          as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminDIuIu =>
+      columnsByName['vitamin_d_iu_iu']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get vitaminKMcg =>
+      columnsByName['vitamin_k_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get dihydrophylloquinoneMcg =>
+      columnsByName['dihydrophylloquinone_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get menaquinone4Mcg =>
+      columnsByName['menaquinone_4_mcg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fattyAcidsTotalMonounsaturatedMg =>
+      columnsByName['fatty_acids_total_monounsaturated_mg']!
+          as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get fattyAcidsTotalPolyunsaturatedMg =>
+      columnsByName['fatty_acids_total_polyunsaturated_mg']!
+          as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get u183N3CCCAlaMg =>
+      columnsByName['_18_3_n_3_c_c_c_ala_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get u205N3EpaMg =>
+      columnsByName['_20_5_n_3_epa_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get u225N3DpaMg =>
+      columnsByName['_22_5_n_3_dpa_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get u226N3DhaMg =>
+      columnsByName['_22_6_n_3_dha_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get tryptophanMg =>
+      columnsByName['tryptophan_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get threonineMg =>
+      columnsByName['threonine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get isoleucineMg =>
+      columnsByName['isoleucine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get leucineMg =>
+      columnsByName['leucine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get lysineMg =>
+      columnsByName['lysine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get methionineMg =>
+      columnsByName['methionine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get cystineMg =>
+      columnsByName['cystine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get phenylalanineMg =>
+      columnsByName['phenylalanine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get tyrosineMg =>
+      columnsByName['tyrosine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get valineMg =>
+      columnsByName['valine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get arginineMg =>
+      columnsByName['arginine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get histidineMg =>
+      columnsByName['histidine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get alanineMg =>
+      columnsByName['alanine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get asparticAcidMg =>
+      columnsByName['aspartic_acid_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get glutamicAcidMg =>
+      columnsByName['glutamic_acid_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get glycineMg =>
+      columnsByName['glycine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get prolineMg =>
+      columnsByName['proline_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get serineMg =>
+      columnsByName['serine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get hydroxyprolineMg =>
+      columnsByName['hydroxyproline_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get alcoholG =>
+      columnsByName['alcohol_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get caffeineMg =>
+      columnsByName['caffeine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get theobromineMg =>
+      columnsByName['theobromine_mg']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<double> get servingWeight1G =>
+      columnsByName['serving_weight_1_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription1G =>
+      columnsByName['serving_description_1_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight2G =>
+      columnsByName['serving_weight_2_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription2G =>
+      columnsByName['serving_description_2_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight3G =>
+      columnsByName['serving_weight_3_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription3G =>
+      columnsByName['serving_description_3_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight4G =>
+      columnsByName['serving_weight_4_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription4G =>
+      columnsByName['serving_description_4_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight5G =>
+      columnsByName['serving_weight_5_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription5G =>
+      columnsByName['serving_description_5_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight6G =>
+      columnsByName['serving_weight_6_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription6G =>
+      columnsByName['serving_description_6_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight7G =>
+      columnsByName['serving_weight_7_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription7G =>
+      columnsByName['serving_description_7_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight8G =>
+      columnsByName['serving_weight_8_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription8G =>
+      columnsByName['serving_description_8_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingWeight9G =>
+      columnsByName['serving_weight_9_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get servingDescription9G =>
+      columnsByName['serving_description_9_g']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get u200calorieWeightG =>
+      columnsByName['_200_calorie_weight_g']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<bool> get favorite =>
+      columnsByName['favorite']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<String> get servingUnit =>
+      columnsByName['serving_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get servingSize =>
+      columnsByName['serving_size']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get smallImage =>
+      columnsByName['small_image']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get bigImage =>
+      columnsByName['big_image']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get imageFile =>
+      columnsByName['image_file']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_144(String aliasedName) =>
+    i1.GeneratedColumn<String>('small_image', aliasedName, true,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_145(String aliasedName) =>
+    i1.GeneratedColumn<String>('big_image', aliasedName, true,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_146(String aliasedName) =>
+    i1.GeneratedColumn<String>('image_file', aliasedName, true,
+        type: i1.DriftSqlType.string);
+
+class Shape10 extends i0.VersionedTable {
+  Shape10({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get themeMode =>
+      columnsByName['theme_mode']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get longDateFormat =>
+      columnsByName['long_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get shortDateFormat =>
+      columnsByName['short_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entryUnit =>
+      columnsByName['entry_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get foodUnit =>
+      columnsByName['food_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get diarySummary =>
+      columnsByName['diary_summary']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<double> get targetWeight =>
+      columnsByName['target_weight']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<bool> get systemColors =>
+      columnsByName['system_colors']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get curveLines =>
+      columnsByName['curve_lines']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get showOthers =>
+      columnsByName['show_others']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get showImages =>
+      columnsByName['show_images']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get favoriteNew =>
+      columnsByName['favorite_new']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get selectEntryOnSubmit =>
+      columnsByName['select_entry_on_submit']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get notifications =>
+      columnsByName['notifications']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<int> get dailyCalories =>
+      columnsByName['daily_calories']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyProtein =>
+      columnsByName['daily_protein']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyFat =>
+      columnsByName['daily_fat']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyCarb =>
+      columnsByName['daily_carb']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<bool> _column_147(String aliasedName) =>
+    i1.GeneratedColumn<bool>('show_images', aliasedName, false,
+        type: i1.DriftSqlType.bool,
+        defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
+            'CHECK ("show_images" IN (0, 1))'),
+        defaultValue: const Constant(true));
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema3 schema) from1To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
@@ -4057,6 +4580,7 @@ i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema14 schema) from13To14,
   required Future<void> Function(i1.Migrator m, Schema15 schema) from14To15,
   required Future<void> Function(i1.Migrator m, Schema16 schema) from15To16,
+  required Future<void> Function(i1.Migrator m, Schema17 schema) from16To17,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -4130,6 +4654,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from15To16(migrator, schema);
         return 16;
+      case 16:
+        final schema = Schema17(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from16To17(migrator, schema);
+        return 17;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -4151,6 +4680,7 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema14 schema) from13To14,
   required Future<void> Function(i1.Migrator m, Schema15 schema) from14To15,
   required Future<void> Function(i1.Migrator m, Schema16 schema) from15To16,
+  required Future<void> Function(i1.Migrator m, Schema17 schema) from16To17,
 }) =>
     i0.VersionedSchema.stepByStepHelper(
         step: migrationSteps(
@@ -4168,4 +4698,5 @@ i1.OnUpgrade stepByStep({
       from13To14: from13To14,
       from14To15: from14To15,
       from15To16: from15To16,
+      from16To17: from16To17,
     ));

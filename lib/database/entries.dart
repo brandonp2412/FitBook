@@ -16,7 +16,16 @@ class Entries extends Table {
   RealColumn get carbG => real().nullable()();
 }
 
-typedef EntryWithFood = ({
-  Entry entry,
-  String foodName,
-});
+class EntryWithFood {
+  final Entry entry;
+  final String foodName;
+  final String? imageFile;
+  final String? smallImage;
+
+  EntryWithFood({
+    required this.entry,
+    required this.foodName,
+    required this.imageFile,
+    required this.smallImage,
+  });
+}

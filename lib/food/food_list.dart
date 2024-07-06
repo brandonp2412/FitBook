@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/food_page.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FoodList extends StatefulWidget {
   const FoodList({
@@ -57,6 +61,16 @@ class _FoodListState extends State<FoodList> {
 
           final shortUnit = getShortUnit(food.servingUnit ?? 'grams');
 
+          final settings = context.watch<SettingsState>();
+
+          Widget? image;
+          if (settings.showImages) {
+            if (food.imageFile != null)
+              image = Image.file(File(food.imageFile!));
+            else if (food.smallImage != null)
+              image = Image.network(food.smallImage!);
+          }
+
           return material.Column(
             children: [
               if (showDivider)
@@ -76,6 +90,7 @@ class _FoodListState extends State<FoodList> {
                   "${food.servingSize?.toInt() ?? "100"} $shortUnit",
                   style: const TextStyle(fontSize: 16),
                 ),
+                leading: image,
                 selected: widget.selected.contains(food.id),
                 onLongPress: () => widget.onSelect(food.id),
                 onTap: () {

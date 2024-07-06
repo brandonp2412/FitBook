@@ -18,6 +18,7 @@ class SettingsState extends ChangeNotifier {
   bool favoriteNew = false;
   bool selectEntryOnSubmit = false;
   bool notifications = false;
+  bool showImages = true;
 
   int? dailyCalories;
   int? dailyProtein;
@@ -45,6 +46,7 @@ class SettingsState extends ChangeNotifier {
     favoriteNew = settings.favoriteNew;
     curveLines = settings.curveLines;
     showOthers = settings.showOthers;
+    showImages = settings.showImages;
     selectEntryOnSubmit = settings.selectEntryOnSubmit;
     notifications = settings.notifications;
 
@@ -85,6 +87,12 @@ class SettingsState extends ChangeNotifier {
     selectEntryOnSubmit = value;
     (db.settings.update())
         .write(SettingsCompanion(selectEntryOnSubmit: Value(value)));
+    notifyListeners();
+  }
+
+  void setShowImages(bool value) {
+    showImages = value;
+    (db.settings.update()).write(SettingsCompanion(showImages: Value(value)));
     notifyListeners();
   }
 
