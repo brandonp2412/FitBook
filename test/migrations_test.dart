@@ -23,8 +23,6 @@ void main() {
     final currentVersion =
         AppDatabase(executor: NativeDatabase.memory()).schemaVersion;
 
-    await verifier.migrateAndValidate(db, currentVersion);
-
     for (int from = 1; from <= currentVersion; from++) {
       if (from == 2) continue;
 
