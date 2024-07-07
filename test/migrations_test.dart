@@ -34,5 +34,9 @@ void main() {
         await db.close();
       }
     }
+
+    final connection = await verifier.startAt(currentVersion);
+    db = AppDatabase(executor: connection);
+    await verifier.migrateAndValidate(db, currentVersion);
   });
 }
