@@ -71,9 +71,9 @@ class _EntryListState extends State<EntryList> {
 
           Widget? image;
           if (settings.showImages) {
-            if (entryFood.imageFile != null)
+            if (entryFood.imageFile?.isNotEmpty == true)
               image = Image.file(File(entryFood.imageFile!));
-            else if (entryFood.smallImage != null)
+            else if (entryFood.smallImage?.isNotEmpty == true)
               image = Image.network(entryFood.smallImage!);
           }
 

@@ -65,9 +65,9 @@ class _FoodListState extends State<FoodList> {
 
           Widget? image;
           if (settings.showImages) {
-            if (food.imageFile != null)
+            if (food.imageFile?.isNotEmpty == true)
               image = Image.file(File(food.imageFile!));
-            else if (food.smallImage != null)
+            else if (food.smallImage?.isNotEmpty == true)
               image = Image.network(food.smallImage!);
           }
 
