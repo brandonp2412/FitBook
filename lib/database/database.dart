@@ -42,6 +42,8 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(foods, foods.servingUnit);
           await m.addColumn(foods, foods.servingSize);
           await m.addColumn(foods, foods.imageFile);
+          await m.addColumn(foods, foods.smallImage);
+          await m.addColumn(foods, foods.bigImage);
         }
 
         await (settings.insertOne(
