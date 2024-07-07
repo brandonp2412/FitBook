@@ -10,7 +10,6 @@ mockTests() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   db = AppDatabase(
     executor: NativeDatabase.memory(),
-    testing: true,
   );
   await (db.settings.insertOnConflictUpdate(
     SettingsCompanion.insert(

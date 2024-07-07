@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:fit_book/constants.dart';
@@ -8,6 +10,7 @@ import 'package:fit_book/database/foods.dart';
 import 'package:fit_book/database/schema_versions.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
+import 'package:fit_book/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
@@ -21,10 +24,7 @@ part 'database.g.dart';
 
 @DriftDatabase(tables: [Foods, Entries, Weights, Settings])
 class AppDatabase extends _$AppDatabase {
-  final bool testing;
-
-  AppDatabase({QueryExecutor? executor, this.testing = false})
-      : super(executor ?? _openConnection());
+  AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
 
   @override
   int get schemaVersion => 18;
@@ -35,16 +35,24 @@ class AppDatabase extends _$AppDatabase {
       onCreate: (Migrator m) async {
         await m.createAll();
 
-        // Real devices use our mock database assets/fitbook.sqlite
-        // So any migrations touching foods needs to be repeated here.
-        if (!testing) {
-          await m.addColumn(foods, foods.favorite);
-          await m.addColumn(foods, foods.servingUnit);
-          await m.addColumn(foods, foods.servingSize);
-          await m.addColumn(foods, foods.imageFile);
-          await m.addColumn(foods, foods.smallImage);
-          await m.addColumn(foods, foods.bigImage);
+        final blob = await rootBundle.load('assets/my-food-data.zip');
+        final archive = ZipDecoder().decodeBytes(
+          blob.buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes),
+        );
+        List<int> bytes = archive.first.content;
+        final json = utf8.decode(bytes);
+        List<dynamic> rows = jsonDecode(json);
+        List<Insertable<Food>> insertables = [];
+
+        for (final row in rows) {
+          Map<String, Expression<Object>> map = {};
+          for (var entry in row.entries) {
+            map[entry.key] = Variable(entry.value);
+          }
+          insertables.add(RawValuesInsertable<Food>(map));
         }
+
+        await db.foods.insertAll(insertables);
 
         await (settings.insertOne(
           SettingsCompanion.insert(
@@ -240,13 +248,6 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
-
-    if (!await file.exists()) {
-      final blob = await rootBundle.load('assets/fitbook.sqlite');
-      await file.writeAsBytes(
-        blob.buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes),
-      );
-    }
 
     if (Platform.isAndroid) {
       await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();

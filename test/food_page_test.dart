@@ -16,6 +16,7 @@ void main() async {
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
+    await db.foods.deleteAll();
     await (db.foods.insertAll(
       [
         FoodsCompanion.insert(name: 'Chicken', calories: const Value(300)),
