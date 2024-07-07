@@ -27,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration {
@@ -41,6 +41,7 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(foods, foods.favorite);
           await m.addColumn(foods, foods.servingUnit);
           await m.addColumn(foods, foods.servingSize);
+          await m.addColumn(foods, foods.imageFile);
         }
 
         await (settings.insertOne(
@@ -214,6 +215,12 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(schema.foods, schema.foods.bigImage);
           await m.addColumn(schema.foods, schema.foods.imageFile);
           await m.addColumn(schema.settings, schema.settings.showImages);
+        },
+        from17To18: (Migrator m, Schema18 schema) async {
+          // Accidentally missed this in onCreate again
+          await m.addColumn(schema.foods, schema.foods.smallImage);
+          await m.addColumn(schema.foods, schema.foods.bigImage);
+          await m.addColumn(schema.foods, schema.foods.imageFile);
         },
       ),
     );
