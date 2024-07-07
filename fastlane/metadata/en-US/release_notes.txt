@@ -1,3 +1,2 @@
-Fix error screen for fresh installs
-
-Sorry everybody!
+- Fix broken images
+- Greatly reduce app size
