@@ -219,10 +219,17 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(schema.settings, schema.settings.showImages);
         },
         from17To18: (Migrator m, Schema18 schema) async {
-          // Accidentally missed this in onCreate again
-          await m.addColumn(schema.foods, schema.foods.smallImage);
-          await m.addColumn(schema.foods, schema.foods.bigImage);
-          await m.addColumn(schema.foods, schema.foods.imageFile);
+          // Because I forgot to add these statements in onCreate at version 17
+          // we need to do it again to fix people who installed the app at 17.
+          await m
+              .addColumn(schema.foods, schema.foods.smallImage)
+              .catchError((_) {});
+          await m
+              .addColumn(schema.foods, schema.foods.bigImage)
+              .catchError((_) {});
+          await m
+              .addColumn(schema.foods, schema.foods.imageFile)
+              .catchError((_) {});
         },
       ),
     );
