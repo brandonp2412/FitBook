@@ -1,2 +1,2 @@
-- Fix broken images
-- Greatly reduce app size
+- Improve searcing for open food facts
+- Update highlighting date for weights
