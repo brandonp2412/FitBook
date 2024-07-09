@@ -65,9 +65,15 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             .join(', ');
         oldCalories = results
             .map((result) => result.read(db.entries.kCalories))
+            .map(
+              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
+            )
             .join(', ');
         oldProtein = results
             .map((result) => result.read(db.entries.proteinG))
+            .map(
+              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
+            )
             .join(', ');
         oldKj = results
             .map((result) => result.read(db.entries.kCalories))
