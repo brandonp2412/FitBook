@@ -24,19 +24,32 @@ class WeightList extends StatefulWidget {
   State<WeightList> createState() => _WeightListState();
 }
 
-class _WeightListState extends State<WeightList> {
+class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   final ScrollController scrollController = ScrollController();
+  var now = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     scrollController.addListener(_scrollListener);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    super.dispose();
     scrollController.removeListener(_scrollListener);
+    WidgetsBinding.instance.removeObserver(this);
+
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed)
+      setState(() {
+        now = DateTime.now();
+      });
   }
 
   void _scrollListener() {
@@ -55,7 +68,7 @@ class _WeightListState extends State<WeightList> {
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {
           final weight = widget.weights[index];
-          final isToday = isSameDay(weight.created, DateTime.now());
+          final isToday = isSameDay(weight.created, now);
 
           return Column(
             children: [
