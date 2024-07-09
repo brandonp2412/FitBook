@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -20,8 +21,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   late final debouncedSearch = debounce(search);
   final searchController = TextEditingController();
 
-  List<Product> products = [];
+  List<Product>? products;
   bool searching = false;
+  bool cards = true;
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         ),
       );
       setState(() {
-        products = search.products ?? [];
+        products = search.products;
       });
     } finally {
       setState(() {
@@ -74,6 +76,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             child: SearchBar(
               hintText: "Search...",
               onSubmitted: (value) => search(value),
+              onChanged: (value) => setState(() {}),
               padding: WidgetStateProperty.all(
                 const EdgeInsets.only(right: 8.0),
               ),
@@ -88,56 +91,76 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       onPressed: () {
                         searchController.text = '';
                         setState(() {
-                          products = [];
+                          products = null;
                           searching = false;
                         });
                       },
-                      icon: const Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.clear),
                       tooltip: 'Clear',
                       padding: const EdgeInsets.only(
                         left: 16.0,
                         right: 8.0,
                       ),
                     ),
+              trailing: [
+                cards
+                    ? IconButton(
+                        icon: const Icon(Icons.list),
+                        onPressed: () {
+                          setState(() {
+                            cards = false;
+                          });
+                        },
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.crop_portrait),
+                        onPressed: () {
+                          setState(() {
+                            cards = true;
+                          });
+                        },
+                      ),
+              ],
             ),
           ),
           Builder(
             builder: (context) {
-              if (searching) return const CircularProgressIndicator();
+              if (searching)
+                return const material.Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                );
+              if (products?.isEmpty == true)
+                return const ListTile(title: Text("No products found"));
+
+              if (cards)
+                return Expanded(
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: products!.map((product) {
+                        final kj = product.nutriments?.getComputedKJ(
+                          PerSize.oneHundredGrams,
+                        );
+                        final calories = (kj ?? 0) / 4.184;
+                        return factCard(product, calories, context);
+                      }).toList(),
+                    ),
+                  ),
+                );
               return Expanded(
                 child: ListView.builder(
-                  itemCount: products.length,
+                  itemCount: products!.length,
                   itemBuilder: (context, index) {
-                    final product = products[index];
+                    final product = products![index];
                     final kj = product.nutriments?.getComputedKJ(
                       PerSize.oneHundredGrams,
                     );
                     final calories = (kj ?? 0) / 4.184;
 
-                    return ListTile(
-                      title: Text(product.productName ?? ""),
-                      subtitle: Text("${calories.toStringAsFixed(2)} kcal"),
-                      trailing: product.imageFrontSmallUrl != null
-                          ? Image.network(product.imageFrontSmallUrl!)
-                          : null,
-                      onTap: () async {
-                        var companion = mapOpenFoodFacts(product);
-                        final settings = context.read<SettingsState>();
-                        if (settings.favoriteNew)
-                          companion =
-                              companion.copyWith(favorite: const Value(true));
-
-                        final id = await db.foods.insertOne(companion);
-                        final food = await (db.foods.select()
-                              ..where((u) => u.id.equals(id)))
-                            .getSingle();
-                        if (context.mounted)
-                          Navigator.pop(
-                            context,
-                            food,
-                          );
-                      },
-                    );
+                    return factTile(product, calories, context);
                   },
                 ),
               );
@@ -145,6 +168,85 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           ),
         ],
       ),
+    );
+  }
+
+  tap(Product product) async {
+    var companion = mapOpenFoodFacts(product);
+    final settings = context.read<SettingsState>();
+    if (settings.favoriteNew)
+      companion = companion.copyWith(favorite: const Value(true));
+
+    final id = await db.foods.insertOne(companion);
+    final food =
+        await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
+    if (mounted)
+      Navigator.pop(
+        context,
+        food,
+      );
+  }
+
+  Widget factCard(
+    Product product,
+    double calories,
+    BuildContext context,
+  ) {
+    String brand = product.brands?.split(',').first ?? '';
+    String title =
+        product.productName != null ? "${product.productName} - " : '';
+
+    return GestureDetector(
+      onTap: () => tap(product),
+      child: Card(
+        child: material.SizedBox(
+          width: 165,
+          child: material.Column(
+            children: [
+              if (product.imageFrontUrl?.isNotEmpty == true)
+                CachedNetworkImage(
+                  imageUrl: product.imageFrontUrl!,
+                  placeholder: (context, url) => const SizedBox(
+                    height: 80,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ),
+              material.Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: material.Column(
+                  children: [
+                    Text(
+                      '$title$brand ${product.quantity}',
+                    ),
+                    Text("${calories.toStringAsFixed(2)} kcal"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ListTile factTile(
+    Product product,
+    double calories,
+    material.BuildContext context,
+  ) {
+    return ListTile(
+      title: Text(product.productName ?? ""),
+      subtitle: Text("${calories.toStringAsFixed(2)} kcal"),
+      trailing: product.imageFrontSmallUrl != null
+          ? CachedNetworkImage(
+              imageUrl: product.imageFrontUrl!,
+              placeholder: (context, url) => const SizedBox(
+                height: 100,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            )
+          : null,
+      onTap: () => tap(product),
     );
   }
 }
