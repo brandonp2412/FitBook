@@ -149,6 +149,9 @@ List<String> foodFields = [
   'serving_description_9_g',
   '_200_calorie_weight_g',
   'favorite',
+  'servingUnit',
+  'servingSize',
+  'created',
 ];
 
 List<String> positiveReinforcements = [

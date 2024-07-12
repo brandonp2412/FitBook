@@ -177,7 +177,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     if (settings.favoriteNew)
       companion = companion.copyWith(favorite: const Value(true));
 
-    final id = await db.foods.insertOne(companion);
+    final id = await db.foods
+        .insertOne(companion.copyWith(created: Value(DateTime.now())));
     final food =
         await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
     if (mounted)

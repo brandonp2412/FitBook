@@ -37,6 +37,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
     foodId ??= await (db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Quick-add',
+        created: Value(DateTime.now()),
       ),
     ));
 

@@ -75,6 +75,7 @@ class ExportData extends StatelessWidget {
                     final List<List<dynamic>> csvData = [
                       foodFields,
                     ];
+
                     for (var food in foods) {
                       csvData.add([
                         food.id,
@@ -197,6 +198,7 @@ class ExportData extends StatelessWidget {
                         food.favorite,
                         food.servingUnit,
                         food.servingSize,
+                        food.created.toIso8601String(),
                       ]);
                     }
                     final csv = const ListToCsvConverter(eol: '\n')

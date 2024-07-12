@@ -77,8 +77,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           mode: OrderingMode.desc,
         ),
         OrderingTerm(
-          expression: db.foods.name,
-          mode: OrderingMode.asc,
+          expression: db.foods.created,
+          mode: OrderingMode.desc,
         ),
       ])
       ..limit(limit));

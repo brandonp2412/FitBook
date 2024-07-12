@@ -106,6 +106,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           favorite: Value(settings.favoriteNew),
           servingSize: Value(double.tryParse(quantity.text)),
           servingUnit: Value(unit),
+          created: Value(DateTime.now()),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))

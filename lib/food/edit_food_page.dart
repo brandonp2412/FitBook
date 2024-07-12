@@ -562,6 +562,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
           Value(double.tryParse(u200calorieWeightGController.text)),
       servingUnit: Value(servingUnit),
       servingSize: Value(double.tryParse(servingSizeController.text)),
+      created: Value(DateTime.now()),
     );
 
     if (widget.id != null)

@@ -8,6 +8,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/entries_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -283,6 +284,9 @@ class _ImportDataState extends State<ImportData> {
             servingSize: Value(
               row[119] is String ? double.tryParse(row[119]) : row[119],
             ),
+            created: Value(
+              row[120] is String ? DateTime.tryParse(row[120]) : row[120],
+            ),
           ),
         );
       }
@@ -296,7 +300,18 @@ class _ImportDataState extends State<ImportData> {
           (_) => false,
         );
     } catch (error) {
-      print(error);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Failed to import data"),
+          action: SnackBarAction(
+            label: 'Copy error',
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: error.toString()));
+            },
+          ),
+        ),
+      );
     } finally {
       if (mounted)
         setState(() {
