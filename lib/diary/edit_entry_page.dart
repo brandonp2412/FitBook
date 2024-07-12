@@ -20,12 +20,12 @@ class EditEntryPage extends StatefulWidget {
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
-  final quantityController = TextEditingController(text: "1");
-  final caloriesController = TextEditingController(text: "0");
-  final kilojoulesController = TextEditingController(text: "0");
-  final proteinController = TextEditingController(text: "0");
-  final carbController = TextEditingController(text: "0");
-  final fatController = TextEditingController(text: "0");
+  final quantity = TextEditingController(text: "1");
+  final calories = TextEditingController(text: "0");
+  final kilojoules = TextEditingController(text: "0");
+  final protein = TextEditingController(text: "0");
+  final carb = TextEditingController(text: "0");
+  final fat = TextEditingController(text: "0");
   final quantityNode = FocusNode();
 
   late var settings = context.read<SettingsState>();
@@ -46,7 +46,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
         .then(
       (entry) async {
         setState(() {
-          quantityController.text = entry.quantity.toString();
+          quantity.text = entry.quantity.toString();
           created = entry.created;
           unit = entry.unit;
         });
@@ -59,11 +59,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
         setState(() {
           nameController?.text = food.name;
           selectedFood = food;
-          caloriesController.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
-          proteinController.text = entry.proteinG?.toStringAsFixed(2) ?? "0";
-          carbController.text = entry.carbG?.toStringAsFixed(2) ?? "0";
-          fatController.text = entry.fatG?.toStringAsFixed(2) ?? "0";
-          kilojoulesController.text = entry.kCalories == null
+          calories.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
+          protein.text = entry.proteinG?.toStringAsFixed(2) ?? "0";
+          carb.text = entry.carbG?.toStringAsFixed(2) ?? "0";
+          fat.text = entry.fatG?.toStringAsFixed(2) ?? "0";
+          kilojoules.text = entry.kCalories == null
               ? ''
               : (food.calories! * 4.184).toStringAsFixed(2);
         });
@@ -99,12 +99,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
           name: nameController!.text,
-          calories: Value(double.tryParse(caloriesController.text)),
-          proteinG: Value(double.tryParse(proteinController.text)),
-          carbohydrateG: Value(double.tryParse(carbController.text)),
-          fatG: Value(double.tryParse(fatController.text)),
+          calories: Value(double.tryParse(calories.text)),
+          proteinG: Value(double.tryParse(protein.text)),
+          carbohydrateG: Value(double.tryParse(carb.text)),
+          fatG: Value(double.tryParse(fat.text)),
           favorite: Value(settings.favoriteNew),
-          servingSize: Value(double.tryParse(quantityController.text)),
+          servingSize: Value(double.tryParse(quantity.text)),
           servingUnit: Value(unit),
         ),
       ));
@@ -119,10 +119,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ..where((u) => u.id.equals(selectedFood?.id ?? -1)))
           .write(
         FoodsCompanion(
-          proteinG: Value(double.tryParse(proteinController.text)),
-          calories: Value(double.tryParse(caloriesController.text)),
-          carbohydrateG: Value(double.tryParse(carbController.text)),
-          fatG: Value(double.tryParse(fatController.text)),
+          proteinG: Value(double.tryParse(protein.text)),
+          calories: Value(double.tryParse(calories.text)),
+          carbohydrateG: Value(double.tryParse(carb.text)),
+          fatG: Value(double.tryParse(fat.text)),
         ),
       );
       final food = await (db.foods.select()
@@ -138,10 +138,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Future<void> _save() async {
     if (foodDirty) await _saveFood();
     final food = selectedFood!;
-    final quantity = double.parse(quantityController.text);
     final entry = calculateEntry(
       food: food,
-      quantity: quantity,
+      quantity: double.parse(quantity.text),
       unit: unit,
     ).copyWith(
       created: Value(created),
@@ -198,23 +197,21 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   void recalc() {
     final food = selectedFood!;
-    final quantity = double.parse(quantityController.text);
     final entry = calculateEntry(
       food: food,
-      quantity: quantity,
+      quantity: double.parse(quantity.text),
       unit: unit,
     ).copyWith(
       created: Value(created),
     );
 
     setState(() {
-      caloriesController.text =
-          entry.kCalories.value?.toStringAsFixed(2) ?? "0";
-      proteinController.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
-      kilojoulesController.text =
+      calories.text = entry.kCalories.value?.toStringAsFixed(2) ?? "0";
+      protein.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
+      kilojoules.text =
           ((entry.kCalories.value ?? 0) * 4.184).toStringAsFixed(2);
-      carbController.text = entry.carbG.value?.toStringAsFixed(2) ?? "0";
-      fatController.text = entry.fatG.value?.toStringAsFixed(2) ?? "0";
+      carb.text = entry.carbG.value?.toStringAsFixed(2) ?? "0";
+      fat.text = entry.fatG.value?.toStringAsFixed(2) ?? "0";
     });
   }
 
@@ -297,13 +294,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   foodDirty = false;
                   selectedFood = food;
                   if (lastEntry == null) return;
-                  quantityController.text = lastEntry.quantity.toString();
+                  quantity.text = lastEntry.quantity.toString();
                   unit = lastEntry.unit;
                 });
 
                 recalc();
                 quantityNode.requestFocus();
-                selectAll(quantityController);
+                selectAll(quantity);
               },
               fieldViewBuilder: (
                 BuildContext context,
@@ -331,7 +328,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                         nameController?.text = food.name;
                         recalc();
                         quantityNode.requestFocus();
-                        selectAll(quantityController);
+                        selectAll(quantity);
                       },
                     ),
                   ),
@@ -353,13 +350,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
             ),
             TextField(
-              controller: quantityController,
+              controller: quantity,
               focusNode: quantityNode,
               decoration: const InputDecoration(label: Text("Quantity")),
               keyboardType: TextInputType.number,
-              onTap: () => quantityController.selection = TextSelection(
+              onTap: () => quantity.selection = TextSelection(
                 baseOffset: 0,
-                extentOffset: quantityController.text.length,
+                extentOffset: quantity.text.length,
               ),
               onChanged: (value) {
                 recalc();
@@ -397,23 +394,23 @@ class _EditEntryPageState extends State<EditEntryPage> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: caloriesController,
+                    controller: calories,
                     decoration: const InputDecoration(
                       labelText: 'Calories',
                     ),
-                    onTap: () => selectAll(caloriesController),
+                    onTap: () => selectAll(calories),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
                       setState(() {
                         foodDirty = true;
-                        kilojoulesController.text =
+                        kilojoules.text =
                             ((double.tryParse(value) ?? 0) * 4.184)
                                 .toStringAsFixed(2);
                       });
                     },
                     onSubmitted: (value) {
-                      selectAll(kilojoulesController);
+                      selectAll(kilojoules);
                     },
                     textInputAction: TextInputAction.next,
                   ),
@@ -422,7 +419,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   const SizedBox(width: 16.0),
                   Expanded(
                     child: TextField(
-                      controller: kilojoulesController,
+                      controller: kilojoules,
                       decoration: const InputDecoration(
                         labelText: 'Kilojoules',
                       ),
@@ -431,12 +428,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       onChanged: (value) {
                         setState(() {
                           foodDirty = true;
-                          caloriesController.text =
+                          calories.text =
                               ((double.tryParse(value) ?? 0) / 4.184)
                                   .toStringAsFixed(2);
                         });
                       },
-                      onTap: () => selectAll(kilojoulesController),
+                      onSubmitted: (value) => selectAll(protein),
+                      onTap: () => selectAll(kilojoules),
                       textInputAction: TextInputAction.next,
                     ),
                   ),
@@ -444,11 +442,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ],
             ),
             TextField(
-              controller: proteinController,
+              controller: protein,
               decoration: const InputDecoration(
                 labelText: 'Protein',
               ),
-              onTap: () => selectAll(proteinController),
+              onTap: () => selectAll(protein),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
@@ -456,15 +454,15 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   foodDirty = true;
                 });
               },
-              onSubmitted: (value) => selectAll(carbController),
+              onSubmitted: (value) => selectAll(carb),
               textInputAction: TextInputAction.next,
             ),
             TextField(
-              controller: carbController,
+              controller: carb,
               decoration: const InputDecoration(
                 labelText: 'Carbs',
               ),
-              onTap: () => selectAll(carbController),
+              onTap: () => selectAll(carb),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
@@ -473,14 +471,14 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 });
               },
               textInputAction: TextInputAction.next,
-              onSubmitted: (value) => selectAll(fatController),
+              onSubmitted: (value) => selectAll(fat),
             ),
             TextField(
-              controller: fatController,
+              controller: fat,
               decoration: const InputDecoration(
                 labelText: 'Fat',
               ),
-              onTap: () => selectAll(fatController),
+              onTap: () => selectAll(fat),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
