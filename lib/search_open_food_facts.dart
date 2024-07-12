@@ -21,7 +21,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   late final debouncedSearch = debounce(search);
   final searchController = TextEditingController();
 
-  List<Product>? products;
+  List<Product> products = [];
   bool searching = false;
   bool cards = true;
 
@@ -35,9 +35,11 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   Future<void> search(String term) async {
+    if (term.isEmpty) return;
     setState(() {
       searching = true;
     });
+
     try {
       final packageInfo = await PackageInfo.fromPlatform();
       OpenFoodAPIConfiguration.userAgent = UserAgent(
@@ -54,7 +56,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         ),
       );
       setState(() {
-        products = search.products;
+        products = search.products ?? [];
       });
     } finally {
       setState(() {
@@ -91,7 +93,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       onPressed: () {
                         searchController.text = '';
                         setState(() {
-                          products = null;
+                          products = [];
                           searching = false;
                         });
                       },
@@ -130,7 +132,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                   padding: EdgeInsets.all(8.0),
                   child: CircularProgressIndicator(),
                 );
-              if (products?.isEmpty == true)
+              if (products.isEmpty == true)
                 return const ListTile(title: Text("No products found"));
 
               if (cards)
@@ -140,7 +142,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       alignment: WrapAlignment.center,
                       spacing: 8.0,
                       runSpacing: 8.0,
-                      children: products!.map((product) {
+                      children: products.map((product) {
                         final kj = product.nutriments?.getComputedKJ(
                           PerSize.oneHundredGrams,
                         );
@@ -152,9 +154,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 );
               return Expanded(
                 child: ListView.builder(
-                  itemCount: products!.length,
+                  itemCount: products.length,
                   itemBuilder: (context, index) {
-                    final product = products![index];
+                    final product = products[index];
                     final kj = product.nutriments?.getComputedKJ(
                       PerSize.oneHundredGrams,
                     );
