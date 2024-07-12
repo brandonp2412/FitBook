@@ -198,7 +198,7 @@ class ExportData extends StatelessWidget {
                         food.favorite,
                         food.servingUnit,
                         food.servingSize,
-                        food.created.toIso8601String(),
+                        food.created?.toIso8601String() ?? "",
                       ]);
                     }
                     final csv = const ListToCsvConverter(eol: '\n')
