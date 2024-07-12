@@ -1,2 +1,4 @@
-- Improve searcing for open food facts
-- Update highlighting date for weights
+- Add loader to exporting
+- Show recently added foods first
+- Select all protein after submitting kilojoules
+- Round old calories & protein in multi-edit entries
