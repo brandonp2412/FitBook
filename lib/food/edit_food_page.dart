@@ -4,6 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -589,6 +590,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
           widget.id != null ? 'Edit food' : 'Add food',
         ),
         actions: [
+          if (widget.id == null)
+            ScanBarcode(
+              onScan: (food) {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditFoodPage(id: food.id),
+                  ),
+                );
+              },
+            ),
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),

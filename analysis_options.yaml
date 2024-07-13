@@ -1,7 +1,10 @@
+analyzer:
+  errors:
+    argument_type_not_assignable_to_error_handler: ignore
+    invalid_return_type_for_catch_error: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
     curly_braces_in_flow_control_structures: false
     require_trailing_commas: true
-

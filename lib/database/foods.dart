@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 // coverage:ignore-file
 
 class Foods extends Table {
+  TextColumn get barcode => text().nullable()();
   RealColumn get addedSugarG => real().nullable()();
   RealColumn get alanineMg => real().nullable()();
   RealColumn get alcoholG => real().nullable()();

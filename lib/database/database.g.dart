@@ -8,6 +8,12 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FoodsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _barcodeMeta =
+      const VerificationMeta('barcode');
+  @override
+  late final GeneratedColumn<String> barcode = GeneratedColumn<String>(
+      'barcode', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _addedSugarGMeta =
       const VerificationMeta('addedSugarG');
   @override
@@ -761,6 +767,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       type: DriftSqlType.double, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
+        barcode,
         addedSugarG,
         alanineMg,
         alcoholG,
@@ -896,6 +903,10 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('barcode')) {
+      context.handle(_barcodeMeta,
+          barcode.isAcceptableOrUnknown(data['barcode']!, _barcodeMeta));
+    }
     if (data.containsKey('added_sugar_g')) {
       context.handle(
           _addedSugarGMeta,
@@ -1587,6 +1598,8 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   Food map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Food(
+      barcode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}barcode']),
       addedSugarG: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}added_sugar_g']),
       alanineMg: attachedDatabase.typeMapping
@@ -1862,6 +1875,7 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
 }
 
 class Food extends DataClass implements Insertable<Food> {
+  final String? barcode;
   final double? addedSugarG;
   final double? alanineMg;
   final double? alcoholG;
@@ -1987,7 +2001,8 @@ class Food extends DataClass implements Insertable<Food> {
   final double? waterG;
   final double? zincZnMg;
   const Food(
-      {this.addedSugarG,
+      {this.barcode,
+      this.addedSugarG,
       this.alanineMg,
       this.alcoholG,
       this.arginineMg,
@@ -2114,6 +2129,9 @@ class Food extends DataClass implements Insertable<Food> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (!nullToAbsent || barcode != null) {
+      map['barcode'] = Variable<String>(barcode);
+    }
     if (!nullToAbsent || addedSugarG != null) {
       map['added_sugar_g'] = Variable<double>(addedSugarG);
     }
@@ -2493,6 +2511,9 @@ class Food extends DataClass implements Insertable<Food> {
 
   FoodsCompanion toCompanion(bool nullToAbsent) {
     return FoodsCompanion(
+      barcode: barcode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(barcode),
       addedSugarG: addedSugarG == null && nullToAbsent
           ? const Value.absent()
           : Value(addedSugarG),
@@ -2869,6 +2890,7 @@ class Food extends DataClass implements Insertable<Food> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Food(
+      barcode: serializer.fromJson<String?>(json['barcode']),
       addedSugarG: serializer.fromJson<double?>(json['addedSugarG']),
       alanineMg: serializer.fromJson<double?>(json['alanineMg']),
       alcoholG: serializer.fromJson<double?>(json['alcoholG']),
@@ -3018,6 +3040,7 @@ class Food extends DataClass implements Insertable<Food> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'barcode': serializer.toJson<String?>(barcode),
       'addedSugarG': serializer.toJson<double?>(addedSugarG),
       'alanineMg': serializer.toJson<double?>(alanineMg),
       'alcoholG': serializer.toJson<double?>(alcoholG),
@@ -3152,7 +3175,8 @@ class Food extends DataClass implements Insertable<Food> {
   }
 
   Food copyWith(
-          {Value<double?> addedSugarG = const Value.absent(),
+          {Value<String?> barcode = const Value.absent(),
+          Value<double?> addedSugarG = const Value.absent(),
           Value<double?> alanineMg = const Value.absent(),
           Value<double?> alcoholG = const Value.absent(),
           Value<double?> arginineMg = const Value.absent(),
@@ -3279,6 +3303,7 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> waterG = const Value.absent(),
           Value<double?> zincZnMg = const Value.absent()}) =>
       Food(
+        barcode: barcode.present ? barcode.value : this.barcode,
         addedSugarG: addedSugarG.present ? addedSugarG.value : this.addedSugarG,
         alanineMg: alanineMg.present ? alanineMg.value : this.alanineMg,
         alcoholG: alcoholG.present ? alcoholG.value : this.alcoholG,
@@ -3505,6 +3530,7 @@ class Food extends DataClass implements Insertable<Food> {
   @override
   String toString() {
     return (StringBuffer('Food(')
+          ..write('barcode: $barcode, ')
           ..write('addedSugarG: $addedSugarG, ')
           ..write('alanineMg: $alanineMg, ')
           ..write('alcoholG: $alcoholG, ')
@@ -3637,6 +3663,7 @@ class Food extends DataClass implements Insertable<Food> {
 
   @override
   int get hashCode => Object.hashAll([
+        barcode,
         addedSugarG,
         alanineMg,
         alcoholG,
@@ -3766,6 +3793,7 @@ class Food extends DataClass implements Insertable<Food> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Food &&
+          other.barcode == this.barcode &&
           other.addedSugarG == this.addedSugarG &&
           other.alanineMg == this.alanineMg &&
           other.alcoholG == this.alcoholG &&
@@ -3896,6 +3924,7 @@ class Food extends DataClass implements Insertable<Food> {
 }
 
 class FoodsCompanion extends UpdateCompanion<Food> {
+  final Value<String?> barcode;
   final Value<double?> addedSugarG;
   final Value<double?> alanineMg;
   final Value<double?> alcoholG;
@@ -4021,6 +4050,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   final Value<double?> waterG;
   final Value<double?> zincZnMg;
   const FoodsCompanion({
+    this.barcode = const Value.absent(),
     this.addedSugarG = const Value.absent(),
     this.alanineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
@@ -4147,6 +4177,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.zincZnMg = const Value.absent(),
   });
   FoodsCompanion.insert({
+    this.barcode = const Value.absent(),
     this.addedSugarG = const Value.absent(),
     this.alanineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
@@ -4273,6 +4304,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.zincZnMg = const Value.absent(),
   }) : name = Value(name);
   static Insertable<Food> custom({
+    Expression<String>? barcode,
     Expression<double>? addedSugarG,
     Expression<double>? alanineMg,
     Expression<double>? alcoholG,
@@ -4399,6 +4431,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     Expression<double>? zincZnMg,
   }) {
     return RawValuesInsertable({
+      if (barcode != null) 'barcode': barcode,
       if (addedSugarG != null) 'added_sugar_g': addedSugarG,
       if (alanineMg != null) 'alanine_mg': alanineMg,
       if (alcoholG != null) 'alcohol_g': alcoholG,
@@ -4548,7 +4581,8 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   }
 
   FoodsCompanion copyWith(
-      {Value<double?>? addedSugarG,
+      {Value<String?>? barcode,
+      Value<double?>? addedSugarG,
       Value<double?>? alanineMg,
       Value<double?>? alcoholG,
       Value<double?>? arginineMg,
@@ -4673,6 +4707,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
       Value<double?>? waterG,
       Value<double?>? zincZnMg}) {
     return FoodsCompanion(
+      barcode: barcode ?? this.barcode,
       addedSugarG: addedSugarG ?? this.addedSugarG,
       alanineMg: alanineMg ?? this.alanineMg,
       alcoholG: alcoholG ?? this.alcoholG,
@@ -4809,6 +4844,9 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (barcode.present) {
+      map['barcode'] = Variable<String>(barcode.value);
+    }
     if (addedSugarG.present) {
       map['added_sugar_g'] = Variable<double>(addedSugarG.value);
     }
@@ -5205,6 +5243,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   @override
   String toString() {
     return (StringBuffer('FoodsCompanion(')
+          ..write('barcode: $barcode, ')
           ..write('addedSugarG: $addedSugarG, ')
           ..write('alanineMg: $alanineMg, ')
           ..write('alcoholG: $alcoholG, ')
@@ -6915,6 +6954,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 }
 
 typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
+  Value<String?> barcode,
   Value<double?> addedSugarG,
   Value<double?> alanineMg,
   Value<double?> alcoholG,
@@ -7041,6 +7081,7 @@ typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
   Value<double?> zincZnMg,
 });
 typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
+  Value<String?> barcode,
   Value<double?> addedSugarG,
   Value<double?> alanineMg,
   Value<double?> alcoholG,
@@ -7186,6 +7227,7 @@ class $$FoodsTableTableManager extends RootTableManager<
               $$FoodsTableOrderingComposer(ComposerState(db, table)),
           getChildManagerBuilder: (p) => $$FoodsTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
+            Value<String?> barcode = const Value.absent(),
             Value<double?> addedSugarG = const Value.absent(),
             Value<double?> alanineMg = const Value.absent(),
             Value<double?> alcoholG = const Value.absent(),
@@ -7314,6 +7356,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> zincZnMg = const Value.absent(),
           }) =>
               FoodsCompanion(
+            barcode: barcode,
             addedSugarG: addedSugarG,
             alanineMg: alanineMg,
             alcoholG: alcoholG,
@@ -7440,6 +7483,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             zincZnMg: zincZnMg,
           ),
           getInsertCompanionBuilder: ({
+            Value<String?> barcode = const Value.absent(),
             Value<double?> addedSugarG = const Value.absent(),
             Value<double?> alanineMg = const Value.absent(),
             Value<double?> alcoholG = const Value.absent(),
@@ -7568,6 +7612,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             Value<double?> zincZnMg = const Value.absent(),
           }) =>
               FoodsCompanion.insert(
+            barcode: barcode,
             addedSugarG: addedSugarG,
             alanineMg: alanineMg,
             alcoholG: alcoholG,
@@ -7711,6 +7756,11 @@ class $$FoodsTableProcessedTableManager extends ProcessedTableManager<
 class $$FoodsTableFilterComposer
     extends FilterComposer<_$AppDatabase, $FoodsTable> {
   $$FoodsTableFilterComposer(super.$state);
+  ColumnFilters<String> get barcode => $state.composableBuilder(
+      column: $state.table.barcode,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<double> get addedSugarG => $state.composableBuilder(
       column: $state.table.addedSugarG,
       builder: (column, joinBuilders) =>
@@ -8353,6 +8403,11 @@ class $$FoodsTableFilterComposer
 class $$FoodsTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $FoodsTable> {
   $$FoodsTableOrderingComposer(super.$state);
+  ColumnOrderings<String> get barcode => $state.composableBuilder(
+      column: $state.table.barcode,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<double> get addedSugarG => $state.composableBuilder(
       column: $state.table.addedSugarG,
       builder: (column, joinBuilders) =>

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/scan_barcode.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -65,11 +66,53 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     }
   }
 
+  Widget productsBuilder(BuildContext context) {
+    if (searching)
+      return const material.Padding(
+        padding: EdgeInsets.all(8.0),
+        child: CircularProgressIndicator(),
+      );
+    if (products.isEmpty == true)
+      return const ListTile(title: Text("No products found"));
+
+    if (cards)
+      return Expanded(
+        child: SingleChildScrollView(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: products.map((product) {
+              final kj = product.nutriments?.getComputedKJ(
+                PerSize.oneHundredGrams,
+              );
+              final calories = (kj ?? 0) / 4.184;
+              return factCard(product, calories, context);
+            }).toList(),
+          ),
+        ),
+      );
+    return Expanded(
+      child: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          final kj = product.nutriments?.getComputedKJ(
+            PerSize.oneHundredGrams,
+          );
+          final calories = (kj ?? 0) / 4.184;
+
+          return factTile(product, calories, context);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search OpenFoodFacts"),
+        title: const Text("Search open food facts"),
       ),
       body: material.Column(
         children: [
@@ -105,6 +148,11 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       ),
                     ),
               trailing: [
+                ScanBarcode(
+                  onScan: (food) {
+                    Navigator.of(context).pop(food);
+                  },
+                ),
                 cards
                     ? IconButton(
                         icon: const Icon(Icons.list),
@@ -126,47 +174,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             ),
           ),
           Builder(
-            builder: (context) {
-              if (searching)
-                return const material.Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                );
-              if (products.isEmpty == true)
-                return const ListTile(title: Text("No products found"));
-
-              if (cards)
-                return Expanded(
-                  child: SingleChildScrollView(
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: products.map((product) {
-                        final kj = product.nutriments?.getComputedKJ(
-                          PerSize.oneHundredGrams,
-                        );
-                        final calories = (kj ?? 0) / 4.184;
-                        return factCard(product, calories, context);
-                      }).toList(),
-                    ),
-                  ),
-                );
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    final kj = product.nutriments?.getComputedKJ(
-                      PerSize.oneHundredGrams,
-                    );
-                    final calories = (kj ?? 0) / 4.184;
-
-                    return factTile(product, calories, context);
-                  },
-                ),
-              );
-            },
+            builder: productsBuilder,
           ),
         ],
       ),
@@ -177,7 +185,11 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     var companion = mapOpenFoodFacts(product);
     final settings = context.read<SettingsState>();
     if (settings.favoriteNew)
-      companion = companion.copyWith(favorite: const Value(true));
+      companion = companion.copyWith(
+        favorite: const Value(true),
+        created: Value(DateTime.now()),
+        barcode: Value(product.barcode),
+      );
 
     final id = await db.foods
         .insertOne(companion.copyWith(created: Value(DateTime.now())));
@@ -219,7 +231,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 child: material.Column(
                   children: [
                     Text(
-                      '$title$brand ${product.quantity}',
+                      '$title$brand ${product.quantity ?? ''}',
                     ),
                     Text("${calories.toStringAsFixed(2)} kcal"),
                   ],

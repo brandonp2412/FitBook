@@ -1,12 +1,13 @@
-import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:drift/drift.dart';
 
 import '../database/database.dart';
 
@@ -226,6 +227,18 @@ class _EditEntryPageState extends State<EditEntryPage> {
           widget.id == null ? 'Add entry' : 'Edit entry',
         ),
         actions: [
+          if (widget.id == null)
+            ScanBarcode(
+              onScan: (food) {
+                setState(() {
+                  selectedFood = food;
+                  nameController?.text = food.name;
+                });
+                recalc();
+                quantityNode.requestFocus();
+                selectAll(quantity);
+              },
+            ),
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
