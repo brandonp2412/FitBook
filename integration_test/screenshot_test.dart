@@ -426,9 +426,7 @@ void main() {
         navigateToPage: (context) async {
           navigateTo(
             context: context,
-            page: const EditEntryPage(
-              id: 1,
-            ),
+            page: const EditEntryPage(id: null),
           );
         },
         tabBarState: TabBarState.diary,
