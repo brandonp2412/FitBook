@@ -1,2 +1,1 @@
-- Hide barcode scanner on linux & macos
-- Add camera usage description for ios
+- Swap out nonfree library
