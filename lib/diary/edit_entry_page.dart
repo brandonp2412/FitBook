@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -227,7 +229,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           widget.id == null ? 'Add entry' : 'Edit entry',
         ),
         actions: [
-          if (widget.id == null)
+          if (widget.id == null && !Platform.isMacOS && !Platform.isLinux)
             ScanBarcode(
               onScan: (food) {
                 setState(() {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:drift/drift.dart';
@@ -148,11 +150,12 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       ),
                     ),
               trailing: [
-                ScanBarcode(
-                  onScan: (food) {
-                    Navigator.of(context).pop(food);
-                  },
-                ),
+                if (!Platform.isMacOS && !Platform.isLinux)
+                  ScanBarcode(
+                    onScan: (food) {
+                      Navigator.of(context).pop(food);
+                    },
+                  ),
                 cards
                     ? IconButton(
                         icon: const Icon(Icons.list),
