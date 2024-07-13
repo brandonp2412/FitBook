@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  barcode_scan2:
+    dependency: "direct main"
+    description:
+      name: barcode_scan2
+      sha256: c1be395802e55f4b54f43a0cf3ece197dc8cc11683a57ea5580a16cc22ba6944
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -350,14 +358,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_barcode_scanner:
-    dependency: transitive
-    description:
-      name: flutter_barcode_scanner
-      sha256: a4ba37daf9933f451a5e812c753ddd045d6354e4a3280342d895b07fecaab3fa
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -696,7 +696,7 @@ packages:
     source: hosted
     version: "2.2.1"
   permission_handler:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: permission_handler
       sha256: "18bf33f7fefbd812f37e72091a15575e72d5318854877e0e4035a24ac1113ecb"
@@ -783,6 +783,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.2"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   provider:
     dependency: "direct main"
     description:
@@ -911,14 +919,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  simple_barcode_scanner:
-    dependency: "direct main"
-    description:
-      name: simple_barcode_scanner
-      sha256: e14c0b302ffe76f0b61004aa47c36365b5d884fcd745494309e21042667902d3
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1188,14 +1188,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
-  webview_windows:
-    dependency: transitive
-    description:
-      name: webview_windows
-      sha256: "7572089e5d6fe09e790093c499fcb6d76a552250187dbcb89790987b1fb723db"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   win32:
     dependency: transitive
     description:

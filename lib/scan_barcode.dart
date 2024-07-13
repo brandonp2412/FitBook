@@ -1,3 +1,4 @@
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -5,8 +6,8 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 import 'database/database.dart';
 
@@ -22,14 +23,12 @@ class _ScanBarcodeState extends State<ScanBarcode> {
   bool searching = false;
 
   scan() async {
-    var barcode = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SimpleBarcodeScannerPage(),
-      ),
-    );
-    if (barcode is! String) return;
-    if (barcode == '-1') return;
+    final status = await Permission.camera.request();
+    if (!status.isGranted) return;
+
+    final scan = await BarcodeScanner.scan();
+    final barcode = scan.rawContent;
+    if (barcode.isEmpty) return;
 
     var food = await (db.foods.select()
           ..where((tbl) => tbl.barcode.equals(barcode))

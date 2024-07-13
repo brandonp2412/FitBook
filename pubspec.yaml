@@ -27,7 +27,8 @@ dependencies:
   openfoodfacts: ^3.11.0
   archive: ^3.6.1
   cached_network_image: ^3.3.1
-  simple_barcode_scanner: ^0.1.1
+  barcode_scan2: ^4.3.2
+  permission_handler: ^11.3.1
 dev_dependencies:
   integration_test:
     sdk: flutter
