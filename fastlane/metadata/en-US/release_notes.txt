@@ -1,1 +1,2 @@
-Add barcode scanning
+- Hide barcode scanner on linux & macos
+- Add camera usage description for ios
