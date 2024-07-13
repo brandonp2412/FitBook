@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Barcode scanning foods</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -47,8 +49,8 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-	   <string>fetch</string>
-	   <string>remote-notification</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Requested by 3rd party API</string>
