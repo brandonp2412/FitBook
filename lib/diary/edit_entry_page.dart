@@ -229,7 +229,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           widget.id == null ? 'Add entry' : 'Edit entry',
         ),
         actions: [
-          if (widget.id == null && !Platform.isMacOS && !Platform.isLinux)
+          if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
             ScanBarcode(
               onScan: (food) {
                 setState(() {

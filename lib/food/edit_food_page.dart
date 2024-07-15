@@ -590,7 +590,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
           widget.id != null ? 'Edit food' : 'Add food',
         ),
         actions: [
-          if (widget.id == null && !Platform.isMacOS && !Platform.isLinux)
+          if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
             ScanBarcode(
               onScan: (food) {
                 Navigator.of(context).pop();

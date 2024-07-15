@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fit_book/scan_barcode.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
@@ -150,7 +150,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       ),
                     ),
               trailing: [
-                if (!Platform.isMacOS && !Platform.isLinux)
+                if (Platform.isAndroid || Platform.isIOS)
                   ScanBarcode(
                     onScan: (food) {
                       Navigator.of(context).pop(food);
