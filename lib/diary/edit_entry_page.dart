@@ -23,6 +23,7 @@ class EditEntryPage extends StatefulWidget {
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
+  final barcode = TextEditingController();
   final quantity = TextEditingController(text: "1");
   final calories = TextEditingController(text: "0");
   final kilojoules = TextEditingController(text: "0");
@@ -60,6 +61,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
         if (food == null) return;
 
         setState(() {
+          barcode.text = food.barcode ?? '';
           nameController?.text = food.name;
           selectedFood = food;
           calories.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
@@ -97,7 +99,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     super.dispose();
   }
 
-  Future<void> _saveFood() async {
+  Future<void> saveFood() async {
     if (selectedFood?.name != nameController?.text) {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
@@ -110,6 +112,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           servingSize: Value(double.tryParse(quantity.text)),
           servingUnit: Value(unit),
           created: Value(DateTime.now()),
+          barcode: Value(barcode.text),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
@@ -139,8 +142,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
     }
   }
 
-  Future<void> _save() async {
-    if (foodDirty) await _saveFood();
+  Future<void> save() async {
+    if (foodDirty) await saveFood();
     final food = selectedFood!;
     final entry = calculateEntry(
       food: food,
@@ -162,7 +165,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     Navigator.pop(context);
   }
 
-  Future<void> _selectDate() async {
+  Future<void> selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: created,
@@ -171,11 +174,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     if (pickedDate != null) {
-      _selectTime(pickedDate);
+      selectTime(pickedDate);
     }
   }
 
-  Future<void> _selectTime(DateTime pickedDate) async {
+  Future<void> selectTime(DateTime pickedDate) async {
     if (!settings.longDateFormat.contains('h:mm'))
       return setState(() {
         created = pickedDate;
@@ -210,6 +213,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     setState(() {
+      barcode.text = food.barcode ?? '';
       calories.text = entry.kCalories.value?.toStringAsFixed(2) ?? "0";
       protein.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
       kilojoules.text =
@@ -231,7 +235,17 @@ class _EditEntryPageState extends State<EditEntryPage> {
         actions: [
           if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
             ScanBarcode(
-              onScan: (food) {
+              onBarcode: (value) {
+                setState(() {
+                  barcode.text = value;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Barcode not found. Save to insert."),
+                  ),
+                );
+              },
+              onFood: (food) {
                 setState(() {
                   selectedFood = food;
                   nameController?.text = food.name;
@@ -380,7 +394,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
               textInputAction: TextInputAction.next,
               onSubmitted: (value) {
-                if (selectedFood != null) _save();
+                if (selectedFood != null) save();
               },
             ),
             DropdownButtonFormField<String>(
@@ -503,20 +517,24 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   foodDirty = true;
                 });
               },
-              onSubmitted: (value) => _save(),
+              onSubmitted: (value) => save(),
+            ),
+            TextField(
+              controller: barcode,
+              decoration: const InputDecoration(labelText: 'Barcode'),
             ),
             ListTile(
               title: const Text('Created Date'),
               subtitle:
                   Text(DateFormat(settings.longDateFormat).format(created)),
               trailing: const Icon(Icons.calendar_today),
-              onTap: () => _selectDate(),
+              onTap: () => selectDate(),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _save,
+        onPressed: save,
         tooltip: 'Save',
         child: const Icon(Icons.save),
       ),

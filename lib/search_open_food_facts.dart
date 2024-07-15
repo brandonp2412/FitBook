@@ -152,7 +152,13 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               trailing: [
                 if (Platform.isAndroid || Platform.isIOS)
                   ScanBarcode(
-                    onScan: (food) {
+                    onBarcode: (_) =>
+                        ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Barcode not found."),
+                      ),
+                    ),
+                    onFood: (food) {
                       Navigator.of(context).pop(food);
                     },
                   ),

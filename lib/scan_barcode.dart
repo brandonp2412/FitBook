@@ -12,8 +12,9 @@ import 'package:provider/provider.dart';
 import 'database/database.dart';
 
 class ScanBarcode extends StatefulWidget {
-  final Function(Food) onScan;
-  const ScanBarcode({super.key, required this.onScan});
+  final Function(Food) onFood;
+  final Function(String) onBarcode;
+  const ScanBarcode({super.key, required this.onFood, required this.onBarcode});
 
   @override
   createState() => _ScanBarcodeState();
@@ -34,7 +35,7 @@ class _ScanBarcodeState extends State<ScanBarcode> {
           ..where((tbl) => tbl.barcode.equals(barcode))
           ..limit(1))
         .getSingleOrNull();
-    if (food != null) return widget.onScan(food);
+    if (food != null) return widget.onFood(food);
 
     setState(() {
       searching = true;
@@ -53,10 +54,12 @@ class _ScanBarcodeState extends State<ScanBarcode> {
       ),
     ).catchError(() => const SearchResult());
 
-    if (search.products == null || search.products!.isEmpty)
-      return setState(() {
+    if (search.products == null || search.products!.isEmpty) {
+      setState(() {
         searching = false;
       });
+      return widget.onBarcode(barcode);
+    }
 
     var companion = mapOpenFoodFacts(search.products!.first);
     if (mounted) {
@@ -72,7 +75,7 @@ class _ScanBarcodeState extends State<ScanBarcode> {
       companion.copyWith(created: Value(DateTime.now())),
     );
     food = await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
-    widget.onScan(food);
+    widget.onFood(food);
 
     setState(() {
       searching = false;

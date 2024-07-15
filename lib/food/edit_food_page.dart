@@ -27,6 +27,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   late String servingUnit;
   String? imageFile;
 
+  final barcodeController = TextEditingController();
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final smallImageController = TextEditingController();
@@ -162,6 +163,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         .getSingle()
         .then((food) {
       setState(() {
+        barcodeController.text = food.barcode ?? '';
         servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
         smallImageController.text = food.smallImage ?? '';
@@ -431,6 +433,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameController.text,
+      barcode: Value(barcodeController.text),
       smallImage: Value(smallImageController.text),
       bigImage: Value(bigImageController.text),
       imageFile: Value(imageFile),
@@ -592,7 +595,17 @@ class _EditFoodPageState extends State<EditFoodPage> {
         actions: [
           if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
             ScanBarcode(
-              onScan: (food) {
+              onBarcode: (value) {
+                setState(() {
+                  barcodeController.text = value;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Barcode not found. Save to insert."),
+                  ),
+                );
+              },
+              onFood: (food) {
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
@@ -792,6 +805,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   imageFile = null;
                 }),
               ),
+            TextField(
+              controller: barcodeController,
+              decoration: const InputDecoration(
+                labelText: 'Barcode',
+              ),
+            ),
             ListTile(
               title: const Text('Show other fields'),
               onTap: () => settings.setShowOthers(!settings.showOthers),
