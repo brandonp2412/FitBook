@@ -157,6 +157,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
     super.initState();
     settings = context.read<SettingsState>();
     servingUnit = settings.foodUnit;
+    if (servingUnit == 'serving')
+      servingSizeController.text = '1';
+    else if (servingUnit == 'grams') servingSizeController.text = '100';
+
     if (widget.id == null) return;
 
     (db.foods.select()..where((u) => u.id.equals(widget.id!)))
@@ -301,7 +305,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         servingDescription9GController.text = food.servingDescription9G ?? '';
         u200calorieWeightGController.text =
             food.u200calorieWeightG?.toString() ?? '';
-        servingSizeController.text = food.servingSize?.toString() ?? '100';
+        servingSizeController.text = food.servingSize?.toString() ?? '';
       });
     });
   }
