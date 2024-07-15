@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -9,7 +10,6 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:drift/drift.dart';
 
 import '../database/database.dart';
 
@@ -331,13 +331,14 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () async {
-                        Food food = await Navigator.of(context).push(
+                        Food? food = await Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => SearchOpenFoodFacts(
                               terms: textEditingController.text,
                             ),
                           ),
                         );
+                        if (food == null) return;
                         setState(() {
                           selectedFood = food;
                         });
