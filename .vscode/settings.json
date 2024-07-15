@@ -15,8 +15,8 @@
   },
   "dart.flutterSdkPath": "flutter/bin",
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always"
-  }
+  "editor.codeActionsOnSave": [
+    "source.fixAll",
+    "source.organizeImports"
+  ]
 }
