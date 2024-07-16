@@ -1,1 +1,5 @@
-- Swap out nonfree library
+- Add login for OpenFoodFacts
+- Use per serving if the settings says to
+- Change default serving size based on unit
+- Allow adding new food barcodes
+- Only show barcode scanner on mobile
