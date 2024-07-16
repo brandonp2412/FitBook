@@ -647,39 +647,6 @@ class Settings extends Table with TableInfo {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   Settings(this.attachedDatabase, [this._alias]);
-  late final GeneratedColumn<bool> curveLines = GeneratedColumn<bool>(
-      'curve_lines', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("curve_lines" IN (0, 1))'));
-  late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
-      'daily_calories', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
-      'daily_carb', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
-      'daily_fat', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
-      'daily_protein', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
-      'diary_summary', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
-      'entry_unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<bool> favoriteNew = GeneratedColumn<bool>(
-      'favorite_new', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("favorite_new" IN (0, 1))'));
-  late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
-      'food_unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
@@ -687,24 +654,45 @@ class Settings extends Table with TableInfo {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
+      'theme_mode', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
       'long_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<bool> notifications = GeneratedColumn<bool>(
-      'notifications', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("notifications" IN (0, 1))'));
-  late final GeneratedColumn<bool> selectEntryOnSubmit = GeneratedColumn<bool>(
-      'select_entry_on_submit', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("select_entry_on_submit" IN (0, 1))'));
   late final GeneratedColumn<String> shortDateFormat = GeneratedColumn<String>(
       'short_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
+      'entry_unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
+      'food_unit', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
+      'diary_summary', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<double> targetWeight = GeneratedColumn<double>(
+      'target_weight', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  late final GeneratedColumn<bool> systemColors = GeneratedColumn<bool>(
+      'system_colors', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("system_colors" IN (0, 1))'));
+  late final GeneratedColumn<bool> curveLines = GeneratedColumn<bool>(
+      'curve_lines', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("curve_lines" IN (0, 1))'));
+  late final GeneratedColumn<bool> showOthers = GeneratedColumn<bool>(
+      'show_others', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_others" IN (0, 1))'));
   late final GeneratedColumn<bool> showImages = GeneratedColumn<bool>(
       'show_images', aliasedName, false,
       type: DriftSqlType.bool,
@@ -712,53 +700,57 @@ class Settings extends Table with TableInfo {
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("show_images" IN (0, 1))'),
       defaultValue: const Constant(true));
-  late final GeneratedColumn<bool> showOthers = GeneratedColumn<bool>(
-      'show_others', aliasedName, false,
+  late final GeneratedColumn<bool> favoriteNew = GeneratedColumn<bool>(
+      'favorite_new', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("show_others" IN (0, 1))'));
-  late final GeneratedColumn<bool> systemColors = GeneratedColumn<bool>(
-      'system_colors', aliasedName, false,
+          'CHECK ("favorite_new" IN (0, 1))'));
+  late final GeneratedColumn<bool> selectEntryOnSubmit = GeneratedColumn<bool>(
+      'select_entry_on_submit', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("system_colors" IN (0, 1))'));
-  late final GeneratedColumn<double> targetWeight = GeneratedColumn<double>(
-      'target_weight', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
-      'theme_mode', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<String> offLogin = GeneratedColumn<String>(
-      'off_login', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  late final GeneratedColumn<String> offPassword = GeneratedColumn<String>(
-      'off_password', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+          'CHECK ("select_entry_on_submit" IN (0, 1))'));
+  late final GeneratedColumn<bool> notifications = GeneratedColumn<bool>(
+      'notifications', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("notifications" IN (0, 1))'));
+  late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
+      'daily_calories', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
+      'daily_protein', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
+      'daily_fat', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
+      'daily_carb', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
-        curveLines,
-        dailyCalories,
-        dailyCarb,
-        dailyFat,
-        dailyProtein,
-        diarySummary,
-        entryUnit,
-        favoriteNew,
-        foodUnit,
         id,
-        longDateFormat,
-        notifications,
-        selectEntryOnSubmit,
-        shortDateFormat,
-        showImages,
-        showOthers,
-        systemColors,
-        targetWeight,
         themeMode,
-        offLogin,
-        offPassword
+        longDateFormat,
+        shortDateFormat,
+        entryUnit,
+        foodUnit,
+        diarySummary,
+        targetWeight,
+        systemColors,
+        curveLines,
+        showOthers,
+        showImages,
+        favoriteNew,
+        selectEntryOnSubmit,
+        notifications,
+        dailyCalories,
+        dailyProtein,
+        dailyFat,
+        dailyCarb
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;

@@ -5428,34 +5428,32 @@ final class Schema20 extends i0.VersionedSchema {
         attachedDatabase: database,
       ),
       alias: null);
-  late final Shape13 settings = Shape13(
+  late final Shape10 settings = Shape10(
       source: i0.VersionedTable(
         entityName: 'settings',
         withoutRowId: false,
         isStrict: false,
         tableConstraints: [],
         columns: [
-          _column_134,
-          _column_139,
-          _column_142,
-          _column_141,
-          _column_140,
-          _column_131,
-          _column_129,
-          _column_136,
-          _column_130,
           _column_0,
-          _column_128,
-          _column_138,
-          _column_137,
-          _column_143,
-          _column_147,
-          _column_135,
-          _column_133,
-          _column_132,
           _column_127,
-          _column_150,
-          _column_151,
+          _column_128,
+          _column_143,
+          _column_129,
+          _column_130,
+          _column_131,
+          _column_132,
+          _column_133,
+          _column_134,
+          _column_135,
+          _column_147,
+          _column_136,
+          _column_137,
+          _column_138,
+          _column_139,
+          _column_140,
+          _column_141,
+          _column_142,
         ],
         attachedDatabase: database,
       ),
@@ -5725,59 +5723,6 @@ i1.GeneratedColumn<String> _column_149(String aliasedName) =>
     i1.GeneratedColumn<String>('barcode', aliasedName, true,
         type: i1.DriftSqlType.string);
 
-class Shape13 extends i0.VersionedTable {
-  Shape13({required super.source, required super.alias}) : super.aliased();
-  i1.GeneratedColumn<bool> get curveLines =>
-      columnsByName['curve_lines']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<int> get dailyCalories =>
-      columnsByName['daily_calories']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<int> get dailyCarb =>
-      columnsByName['daily_carb']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<int> get dailyFat =>
-      columnsByName['daily_fat']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<int> get dailyProtein =>
-      columnsByName['daily_protein']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<String> get diarySummary =>
-      columnsByName['diary_summary']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get entryUnit =>
-      columnsByName['entry_unit']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<bool> get favoriteNew =>
-      columnsByName['favorite_new']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<String> get foodUnit =>
-      columnsByName['food_unit']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<int> get id =>
-      columnsByName['id']! as i1.GeneratedColumn<int>;
-  i1.GeneratedColumn<String> get longDateFormat =>
-      columnsByName['long_date_format']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<bool> get notifications =>
-      columnsByName['notifications']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<bool> get selectEntryOnSubmit =>
-      columnsByName['select_entry_on_submit']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<String> get shortDateFormat =>
-      columnsByName['short_date_format']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<bool> get showImages =>
-      columnsByName['show_images']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<bool> get showOthers =>
-      columnsByName['show_others']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<bool> get systemColors =>
-      columnsByName['system_colors']! as i1.GeneratedColumn<bool>;
-  i1.GeneratedColumn<double> get targetWeight =>
-      columnsByName['target_weight']! as i1.GeneratedColumn<double>;
-  i1.GeneratedColumn<String> get themeMode =>
-      columnsByName['theme_mode']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get offLogin =>
-      columnsByName['off_login']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get offPassword =>
-      columnsByName['off_password']! as i1.GeneratedColumn<String>;
-}
-
-i1.GeneratedColumn<String> _column_150(String aliasedName) =>
-    i1.GeneratedColumn<String>('off_login', aliasedName, true,
-        type: i1.DriftSqlType.string);
-i1.GeneratedColumn<String> _column_151(String aliasedName) =>
-    i1.GeneratedColumn<String>('off_password', aliasedName, true,
-        type: i1.DriftSqlType.string);
-
 final class Schema21 extends i0.VersionedSchema {
   Schema21({required super.database}) : super(version: 21);
   @override
@@ -5992,6 +5937,58 @@ final class Schema21 extends i0.VersionedSchema {
       alias: null);
 }
 
+class Shape13 extends i0.VersionedTable {
+  Shape13({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<bool> get curveLines =>
+      columnsByName['curve_lines']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<int> get dailyCalories =>
+      columnsByName['daily_calories']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyCarb =>
+      columnsByName['daily_carb']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyFat =>
+      columnsByName['daily_fat']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get dailyProtein =>
+      columnsByName['daily_protein']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get diarySummary =>
+      columnsByName['diary_summary']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entryUnit =>
+      columnsByName['entry_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<bool> get favoriteNew =>
+      columnsByName['favorite_new']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<String> get foodUnit =>
+      columnsByName['food_unit']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get longDateFormat =>
+      columnsByName['long_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<bool> get notifications =>
+      columnsByName['notifications']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get selectEntryOnSubmit =>
+      columnsByName['select_entry_on_submit']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<String> get shortDateFormat =>
+      columnsByName['short_date_format']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<bool> get showImages =>
+      columnsByName['show_images']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get showOthers =>
+      columnsByName['show_others']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<bool> get systemColors =>
+      columnsByName['system_colors']! as i1.GeneratedColumn<bool>;
+  i1.GeneratedColumn<double> get targetWeight =>
+      columnsByName['target_weight']! as i1.GeneratedColumn<double>;
+  i1.GeneratedColumn<String> get themeMode =>
+      columnsByName['theme_mode']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get offLogin =>
+      columnsByName['off_login']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get offPassword =>
+      columnsByName['off_password']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_150(String aliasedName) =>
+    i1.GeneratedColumn<String>('off_login', aliasedName, true,
+        type: i1.DriftSqlType.string);
+i1.GeneratedColumn<String> _column_151(String aliasedName) =>
+    i1.GeneratedColumn<String>('off_password', aliasedName, true,
+        type: i1.DriftSqlType.string);
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema3 schema) from1To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
