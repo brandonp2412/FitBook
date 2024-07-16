@@ -23,7 +23,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   final caloriesController = TextEditingController();
   final kilojoulesController = TextEditingController();
   final proteinController = TextEditingController();
-  late var settings = context.read<SettingsState>();
+  late var settings = context.read<SettingsState>().value;
 
   bool newFood = false;
 
@@ -186,7 +186,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>().value;
 
     return Scaffold(
       appBar: AppBar(

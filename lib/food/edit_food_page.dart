@@ -23,7 +23,7 @@ class EditFoodPage extends StatefulWidget {
 }
 
 class _EditFoodPageState extends State<EditFoodPage> {
-  late SettingsState settings;
+  late Setting settings;
   late String servingUnit;
   String? imageFile;
 
@@ -155,7 +155,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   void initState() {
     super.initState();
-    settings = context.read<SettingsState>();
+    settings = context.read<SettingsState>().value;
     servingUnit = settings.foodUnit;
     if (servingUnit == 'serving')
       servingSizeController.text = '1';
@@ -589,7 +589,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>().value;
 
     return Scaffold(
       appBar: AppBar(
@@ -817,10 +817,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ),
             ListTile(
               title: const Text('Show other fields'),
-              onTap: () => settings.setShowOthers(!settings.showOthers),
+              onTap: () => db.settings.update().write(
+                    SettingsCompanion(showOthers: Value(!settings.showOthers)),
+                  ),
               trailing: Switch(
                 value: settings.showOthers,
-                onChanged: (value) => settings.setShowOthers(value),
+                onChanged: (value) => db.settings.update().write(
+                      SettingsCompanion(showOthers: Value(value)),
+                    ),
               ),
             ),
             if (settings.showOthers) ...[

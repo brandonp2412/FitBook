@@ -230,7 +230,6 @@ Future<void> appWrapper() async {
   ));
   final settings = await (app.db.settings.select()).getSingle();
   final settingsState = SettingsState(settings);
-  settingsState.setTheme(ThemeMode.dark);
   runApp(app.appProviders(settingsState));
 }
 

@@ -68,7 +68,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
             child: ListTile(
               title: const Text('Start date'),
               subtitle: Selector<SettingsState, String>(
-                selector: (p0, p1) => p1.shortDateFormat,
+                selector: (p0, settings) => settings.value.shortDateFormat,
                 builder: (context, shortDateFormat, child) => state.startDate !=
                         null
                     ? Text(
@@ -98,7 +98,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
             child: ListTile(
               title: const Text('Stop date'),
               subtitle: Selector<SettingsState, String>(
-                selector: (p0, p1) => p1.shortDateFormat,
+                selector: (p0, settings) => settings.value.shortDateFormat,
                 builder: (context, shortDateFormat, child) =>
                     state.endDate != null
                         ? Text(

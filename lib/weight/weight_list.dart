@@ -60,7 +60,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsState>();
+    final settings = context.watch<SettingsState>().value;
 
     return Expanded(
       child: ListView.builder(

@@ -32,7 +32,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final fat = TextEditingController(text: "0");
   final quantityNode = FocusNode();
 
-  late var settings = context.read<SettingsState>();
+  late var settings = context.read<SettingsState>().value;
   late var unit = settings.entryUnit;
 
   DateTime created = DateTime.now();
@@ -225,7 +225,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>().value;
 
     return Scaffold(
       appBar: AppBar(

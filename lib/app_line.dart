@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -39,7 +40,7 @@ class _AppLineState extends State<AppLine> {
   final limit = 11;
 
   late Stream<List<GraphData>> graphStream;
-  late SettingsState settings = context.read<SettingsState>();
+  late Setting settings = context.read<SettingsState>().value;
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -199,7 +200,7 @@ class _AppLineState extends State<AppLine> {
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>().value;
 
     double goal = 0;
 
@@ -217,7 +218,7 @@ class _AppLineState extends State<AppLine> {
         goal = (settings.dailyFat ?? 0).toDouble();
         break;
       case AppMetric.carbs:
-        goal = (settings.dailyCarbs ?? 0).toDouble();
+        goal = (settings.dailyCarb ?? 0).toDouble();
         break;
     }
 

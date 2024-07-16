@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
-import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/diary/diary_filters.dart';
@@ -49,7 +48,7 @@ class DiaryPageState extends State<DiaryPage> {
   }
 
   Scaffold _diaryPage() {
-    final settings = context.watch<SettingsState>();
+    final settings = context.watch<SettingsState>().value;
     entriesState = context.watch<EntriesState>();
 
     return Scaffold(
@@ -78,7 +77,7 @@ class DiaryPageState extends State<DiaryPage> {
           String carb = "";
 
           switch (settings.diarySummary) {
-            case DiarySummary.remaining:
+            case 'DiarySummary.remaining':
               cals =
                   "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
               protein =
@@ -86,18 +85,18 @@ class DiaryPageState extends State<DiaryPage> {
               fat =
                   "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
               carb =
-                  "${((settings.dailyCarbs ?? 0) - totalCarb).toStringAsFixed(0)} g";
+                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} g";
               break;
-            case DiarySummary.division:
+            case 'DiarySummary.division':
               cals =
                   "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
               protein =
                   "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
               fat = "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
               carb =
-                  "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarbs} g";
+                  "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarb} g";
               break;
-            case DiarySummary.both:
+            case 'DiarySummary.both':
               cals =
                   "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${settings.dailyCalories} kcal)";
               protein =
@@ -105,9 +104,9 @@ class DiaryPageState extends State<DiaryPage> {
               fat =
                   "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} (${settings.dailyFat} g)";
               carb =
-                  "${((settings.dailyCarbs ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarbs} g)";
+                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarb} g)";
               break;
-            case DiarySummary.none:
+            case 'DiarySummary.none':
               break;
           }
 
@@ -127,7 +126,7 @@ class DiaryPageState extends State<DiaryPage> {
                 fat,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
-            if (settings.dailyCarbs != null)
+            if (settings.dailyCarb != null)
               Text(
                 carb,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),

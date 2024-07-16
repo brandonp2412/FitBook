@@ -60,7 +60,7 @@ class _ScanBarcodeState extends State<ScanBarcode> {
       return widget.onBarcode(barcode);
 
     if (!mounted) return;
-    final settings = context.read<SettingsState>();
+    final settings = context.read<SettingsState>().value;
     var companion = mapOpenFoodFacts(search.products!.first, settings.foodUnit);
     companion = companion.copyWith(
       favorite: Value(settings.favoriteNew),

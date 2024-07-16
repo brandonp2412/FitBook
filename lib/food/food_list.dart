@@ -61,7 +61,7 @@ class _FoodListState extends State<FoodList> {
 
           final shortUnit = getShortUnit(food.servingUnit ?? 'grams');
 
-          final settings = context.watch<SettingsState>();
+          final settings = context.watch<SettingsState>().value;
 
           Widget? image;
           if (settings.showImages) {

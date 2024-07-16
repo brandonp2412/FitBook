@@ -34,7 +34,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsState>();
+    final settings = context.watch<SettingsState>().value;
 
     final defaultTheme = ColorScheme.fromSeed(seedColor: Colors.blue);
     final defaultDark = ColorScheme.fromSeed(
@@ -62,7 +62,8 @@ class App extends StatelessWidget {
             floatingLabelBehavior: FloatingLabelBehavior.always,
           ),
         ),
-        themeMode: settings.themeMode,
+        themeMode: ThemeMode.values
+            .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
         home: const HomePage(),
       ),
     );

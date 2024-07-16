@@ -50,7 +50,7 @@ class GraphPageState extends State<GraphPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final settings = context.watch<SettingsState>();
+    final settings = context.watch<SettingsState>().value;
 
     return Scaffold(
       body: Padding(

@@ -110,8 +110,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   @override
   Widget build(BuildContext context) {
-    final foodUnit =
-        context.select<SettingsState, String>((settings) => settings.foodUnit);
+    final foodUnit = context
+        .select<SettingsState, String>((settings) => settings.value.foodUnit);
 
     return Scaffold(
       appBar: AppBar(
@@ -192,7 +192,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   tap(Product product) async {
-    final settings = context.read<SettingsState>();
+    final settings = context.read<SettingsState>().value;
     var companion = mapOpenFoodFacts(product, settings.foodUnit);
     if (settings.favoriteNew)
       companion = companion.copyWith(

@@ -49,7 +49,7 @@ class _EntryListState extends State<EntryList> {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.watch<SettingsState>();
+    final settings = context.watch<SettingsState>().value;
 
     return Expanded(
       child: ListView.builder(

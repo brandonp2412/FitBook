@@ -53,7 +53,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
   }
 
   Future<void> _selectTime(DateTime pickedDate) async {
-    final settings = context.read<SettingsState>();
+    final settings = context.read<SettingsState>().value;
     if (!settings.longDateFormat.contains('h:mm'))
       return setState(() {
         created = pickedDate;
@@ -98,7 +98,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         ),
       );
 
-    final settings = context.read<SettingsState>();
+    final settings = context.read<SettingsState>().value;
     if (settings.targetWeight == null) return;
     final show = shouldNotify(
       amount,
@@ -179,7 +179,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
               ListTile(
                 title: const Text('Created Date'),
                 subtitle: Selector<SettingsState, String>(
-                  selector: (p0, p1) => p1.longDateFormat,
+                  selector: (p0, settings) => settings.value.longDateFormat,
                   builder: (context, longDateFormat, child) =>
                       Text(DateFormat(longDateFormat).format(created)),
                 ),

@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:fit_book/about_page.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/export_data.dart';
 import 'package:fit_book/settings/import_data.dart';
@@ -35,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final fatController = TextEditingController();
   final carbsController = TextEditingController();
   final targetWeightController = TextEditingController();
-  late SettingsState settings;
+  late Setting settings;
 
   final List<String> shortFormats = [
     'd/M/yy',
@@ -68,43 +71,46 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    settings = context.read<SettingsState>();
+    settings = context.read<SettingsState>().value;
     caloriesController.text = settings.dailyCalories?.toString() ?? "";
     proteinController.text = settings.dailyProtein?.toString() ?? "";
     fatController.text = settings.dailyFat?.toString() ?? "";
-    carbsController.text = settings.dailyCarbs?.toString() ?? "";
+    carbsController.text = settings.dailyCarb?.toString() ?? "";
     targetWeightController.text = settings.targetWeight?.toString() ?? "";
   }
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>();
+    settings = context.watch<SettingsState>().value;
+
     List<SettingsLine> children = [
       SettingsLine(
         key: 'theme',
         widget: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: DropdownButtonFormField(
-            value: settings.themeMode,
+            value: settings.themeMode.toString(),
             decoration: const InputDecoration(
               labelStyle: TextStyle(),
               labelText: 'Theme',
             ),
-            items: const [
+            items: [
               DropdownMenuItem(
-                value: ThemeMode.system,
-                child: Text("System"),
+                value: ThemeMode.system.toString(),
+                child: const Text("System"),
               ),
               DropdownMenuItem(
-                value: ThemeMode.dark,
-                child: Text("Dark"),
+                value: ThemeMode.dark.toString(),
+                child: const Text("Dark"),
               ),
               DropdownMenuItem(
-                value: ThemeMode.light,
-                child: Text("Light"),
+                value: ThemeMode.light.toString(),
+                child: const Text("Light"),
               ),
             ],
-            onChanged: (value) => settings.setTheme(value!),
+            onChanged: (value) => db.settings
+                .update()
+                .write(SettingsCompanion(themeMode: Value(value.toString()))),
           ),
         ),
       ),
@@ -120,9 +126,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text(value),
               );
             }).toList(),
-            onChanged: (newValue) {
-              settings.setLong(newValue!);
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(longDateFormat: Value(value!)),
+                ),
             decoration: InputDecoration(
               labelText: 'Long date format ($_longExample)',
             ),
@@ -141,9 +147,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text(value),
               );
             }).toList(),
-            onChanged: (newValue) {
-              settings.setShort(newValue!);
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(shortDateFormat: Value(value!)),
+                ),
             decoration: InputDecoration(
               labelText: 'Short date format ($_shortExample)',
             ),
@@ -163,9 +169,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text(value),
               );
             }).toList(),
-            onChanged: (String? newValue) {
-              settings.setEntryUnit(newValue!);
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(entryUnit: Value(value!)),
+                ),
           ),
         ),
       ),
@@ -182,9 +188,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text(value),
               );
             }).toList(),
-            onChanged: (String? newValue) {
-              settings.setFoodUnit(newValue!);
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(foodUnit: Value(value!)),
+                ),
           ),
         ),
       ),
@@ -198,25 +204,27 @@ class _SettingsPageState extends State<SettingsPage> {
               labelStyle: TextStyle(),
               labelText: 'Diary summary',
             ),
-            items: const [
+            items: [
               DropdownMenuItem(
-                value: DiarySummary.division,
-                child: Text("Division - current / total"),
+                value: DiarySummary.division.toString(),
+                child: const Text("Division - current / total"),
               ),
               DropdownMenuItem(
-                value: DiarySummary.remaining,
-                child: Text("Remaining"),
+                value: DiarySummary.remaining.toString(),
+                child: const Text("Remaining"),
               ),
               DropdownMenuItem(
-                value: DiarySummary.both,
-                child: Text("Both - remaining (total)"),
+                value: DiarySummary.both.toString(),
+                child: const Text("Both - remaining (total)"),
               ),
               DropdownMenuItem(
-                value: DiarySummary.none,
-                child: Text("None"),
+                value: DiarySummary.none.toString(),
+                child: const Text("None"),
               ),
             ],
-            onChanged: (value) => settings.setDiarySummary(value!),
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(diarySummary: Value(value.toString())),
+                ),
           ),
         ),
       ),
@@ -226,9 +234,9 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
             controller: caloriesController,
-            onChanged: (newValue) {
-              settings.setDailyCalories(int.tryParse(newValue));
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(dailyCalories: Value(int.parse(value))),
+                ),
             onTap: () => caloriesController.selection = TextSelection(
               baseOffset: 0,
               extentOffset: caloriesController.text.length,
@@ -246,9 +254,9 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
             controller: proteinController,
-            onChanged: (newValue) {
-              settings.setDailyProtein(int.tryParse(newValue));
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(dailyProtein: Value(int.parse(value))),
+                ),
             onTap: () => selectAll(proteinController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -263,9 +271,9 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
             controller: fatController,
-            onChanged: (newValue) {
-              settings.setDailyFat(int.tryParse(newValue));
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(dailyFat: Value(int.tryParse(value)!)),
+                ),
             onTap: () => selectAll(fatController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -280,9 +288,9 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
             controller: carbsController,
-            onChanged: (newValue) {
-              settings.setDailyCarbs(int.tryParse(newValue));
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(dailyCarb: Value(int.tryParse(value))),
+                ),
             onTap: () => selectAll(carbsController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -297,9 +305,11 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: TextField(
             controller: targetWeightController,
-            onChanged: (newValue) {
-              settings.setTargetWeight(double.tryParse(newValue));
-            },
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    targetWeight: Value(double.tryParse(value)),
+                  ),
+                ),
             onTap: () => selectAll(targetWeightController),
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -313,10 +323,14 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.image),
           title: const Text('Show images'),
-          onTap: () => settings.setShowImages(!settings.showImages),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(showImages: Value(!settings.showImages)),
+              ),
           trailing: Switch(
             value: settings.showImages,
-            onChanged: (value) => settings.setShowImages(value),
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(showImages: Value(value)),
+                ),
           ),
         ),
       ),
@@ -325,10 +339,14 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.favorite_outline),
           title: const Text('Favorite new foods'),
-          onTap: () => settings.setFavoriteNew(!settings.favoriteNew),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(favoriteNew: Value(!settings.favoriteNew)),
+              ),
           trailing: Switch(
             value: settings.favoriteNew,
-            onChanged: (value) => settings.setFavoriteNew(value),
+            onChanged: (value) => db.settings
+                .update()
+                .write(SettingsCompanion(favoriteNew: Value(value))),
           ),
         ),
       ),
@@ -337,11 +355,18 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.check),
           title: const Text('Select entry on submit'),
-          onTap: () =>
-              settings.setSelectEntryOnSubmit(!settings.selectEntryOnSubmit),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(
+                  selectEntryOnSubmit: Value(!settings.selectEntryOnSubmit),
+                ),
+              ),
           trailing: Switch(
             value: settings.selectEntryOnSubmit,
-            onChanged: (value) => settings.setSelectEntryOnSubmit(value),
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    selectEntryOnSubmit: Value(value),
+                  ),
+                ),
           ),
         ),
       ),
@@ -350,10 +375,16 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.notifications_outlined),
           title: const Text('Notifications'),
-          onTap: () => settings.setNotifications(!settings.notifications),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(
+                  notifications: Value(!settings.notifications),
+                ),
+              ),
           trailing: Switch(
             value: settings.notifications,
-            onChanged: (value) => settings.setNotifications(value),
+            onChanged: (value) => db.settings
+                .update()
+                .write(SettingsCompanion(notifications: Value(value))),
           ),
         ),
       ),
@@ -362,10 +393,14 @@ class _SettingsPageState extends State<SettingsPage> {
         widget: ListTile(
           leading: const Icon(Icons.color_lens_outlined),
           title: const Text('System color scheme'),
-          onTap: () => settings.setSystem(!settings.systemColors),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(systemColors: Value(!settings.systemColors)),
+              ),
           trailing: Switch(
             value: settings.systemColors,
-            onChanged: (value) => settings.setSystem(value),
+            onChanged: (value) => db.settings
+                .update()
+                .write(SettingsCompanion(systemColors: Value(value))),
           ),
         ),
       ),
