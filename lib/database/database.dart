@@ -27,7 +27,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 20;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration {
@@ -255,6 +255,11 @@ class AppDatabase extends _$AppDatabase {
         // 1.0.60
         from19To20: (Migrator m, Schema20 schema) async {
           await m.addColumn(schema.foods, schema.foods.barcode);
+        },
+        // 1.0.63
+        from20To21: (Migrator m, Schema21 schema) async {
+          await m.addColumn(schema.settings, schema.settings.offLogin);
+          await m.addColumn(schema.settings, schema.settings.offPassword);
         },
       ),
     );

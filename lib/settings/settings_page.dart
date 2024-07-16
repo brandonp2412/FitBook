@@ -8,6 +8,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/export_data.dart';
 import 'package:fit_book/settings/import_data.dart';
+import 'package:fit_book/settings/open_food_facts_login.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -403,6 +404,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 .write(SettingsCompanion(systemColors: Value(value))),
           ),
         ),
+      ),
+      SettingsLine(
+        key: 'open food facts',
+        widget: const OpenFoodFactsLogin(),
       ),
       SettingsLine(
         key: 'share database',

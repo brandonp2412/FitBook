@@ -5,7 +5,6 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -40,13 +39,8 @@ class _ScanBarcodeState extends State<ScanBarcode> {
     setState(() {
       searching = true;
     });
-    final packageInfo = await PackageInfo.fromPlatform();
-    OpenFoodAPIConfiguration.userAgent = UserAgent(
-      name:
-          '${packageInfo.appName}/${packageInfo.version} (brandon@presley.nz)',
-    );
     SearchResult search = await OpenFoodAPIClient.searchProducts(
-      const User(userId: '', password: ''),
+      null,
       ProductSearchQueryConfiguration(
         parametersList: [BarcodeParameter(barcode)],
         version: ProductQueryVersion.v3,

@@ -778,8 +778,8 @@ class Settings extends Table with TableInfo {
   }
 }
 
-class DatabaseAtV20 extends GeneratedDatabase {
-  DatabaseAtV20(QueryExecutor e) : super(e);
+class DatabaseAtV21 extends GeneratedDatabase {
+  DatabaseAtV21(QueryExecutor e) : super(e);
   late final Foods foods = Foods(this);
   late final Entries entries = Entries(this);
   late final Weights weights = Weights(this);
@@ -791,5 +791,5 @@ class DatabaseAtV20 extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [foods, entries, weights, settings];
   @override
-  int get schemaVersion => 20;
+  int get schemaVersion => 21;
 }

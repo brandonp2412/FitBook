@@ -8,8 +8,8 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class SearchOpenFoodFacts extends StatefulWidget {
@@ -43,13 +43,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     });
 
     try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      OpenFoodAPIConfiguration.userAgent = UserAgent(
-        name:
-            '${packageInfo.appName}/${packageInfo.version} (brandon@presley.nz)',
-      );
       final search = await OpenFoodAPIClient.searchProducts(
-        const User(userId: '', password: ''),
+        null,
         ProductSearchQueryConfiguration(
           parametersList: [
             SearchTerms(terms: [term]),
@@ -154,11 +149,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 if (Platform.isAndroid || Platform.isIOS)
                   ScanBarcode(
                     onBarcode: (_) =>
-                        ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Barcode not found."),
-                      ),
-                    ),
+                        Fluttertoast.showToast(msg: 'Barcode not found'),
                     onFood: (food) {
                       Navigator.of(context).pop(food);
                     },
