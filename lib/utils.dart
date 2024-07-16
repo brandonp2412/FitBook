@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:drift/drift.dart';
@@ -153,68 +152,21 @@ bool shouldNotify(
   return true;
 }
 
-typedef Debounceable<S, T> = Future<S?> Function(T parameter);
-
-/// Returns a new function that is a debounced version of the given function.
-///
-/// This means that the original function will be called only after no calls
-/// have been made for the given Duration.
-Debounceable<S, T> debounce<S, T>(Debounceable<S?, T> function) {
-  _DebounceTimer? debounceTimer;
-
-  return (T parameter) async {
-    if (debounceTimer != null && !debounceTimer!.isCompleted) {
-      debounceTimer!.cancel();
-    }
-    debounceTimer = _DebounceTimer();
-    try {
-      await debounceTimer!.future;
-    } catch (error) {
-      if (error is _CancelException) {
-        return null;
-      }
-      rethrow;
-    }
-    return function(parameter);
-  };
-}
-
-// A wrapper around Timer used for debouncing.
-class _DebounceTimer {
-  _DebounceTimer() {
-    _timer = Timer(const Duration(milliseconds: 500), _onComplete);
+FoodsCompanion mapOpenFoodFacts(Product product, String foodUnit) {
+  var perSize = PerSize.oneHundredGrams;
+  var servingSize = 100.0;
+  if (foodUnit == 'serving') {
+    servingSize = product.servingQuantity ?? 1;
+    perSize = PerSize.serving;
   }
 
-  late final Timer _timer;
-  final Completer<void> _completer = Completer<void>();
-
-  void _onComplete() {
-    _completer.complete();
-  }
-
-  Future<void> get future => _completer.future;
-
-  bool get isCompleted => _completer.isCompleted;
-
-  void cancel() {
-    _timer.cancel();
-    _completer.completeError(const _CancelException());
-  }
-}
-
-// An exception indicating that the timer was canceled.
-class _CancelException implements Exception {
-  const _CancelException();
-}
-
-FoodsCompanion mapOpenFoodFacts(Product product) {
   final kj = product.nutriments?.getComputedKJ(
-    PerSize.oneHundredGrams,
+    perSize,
   );
 
   return FoodsCompanion.insert(
     name: product.productName ?? "",
-    servingSize: const Value(100),
+    servingSize: Value(servingSize),
     servingUnit: const Value('grams'),
     calories: Value((kj ?? 0) / 4.184),
     smallImage: Value(product.imageFrontSmallUrl),
@@ -222,247 +174,247 @@ FoodsCompanion mapOpenFoodFacts(Product product) {
     proteinG: Value(
       product.nutriments?.getValue(
         Nutrient.proteins,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     fatG: Value(
       product.nutriments?.getValue(
         Nutrient.fat,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     carbohydrateG: Value(
       product.nutriments?.getValue(
         Nutrient.carbohydrates,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     sugarsG: Value(
       product.nutriments?.getValue(
         Nutrient.sugars,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     fiberG: Value(
       product.nutriments?.getValue(
         Nutrient.fiber,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     cholesterolMg: Value(
       product.nutriments?.getValue(
         Nutrient.cholesterol,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     saturatedFatsG: Value(
       product.nutriments?.getValue(
         Nutrient.saturatedFat,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     calciumMg: Value(
       product.nutriments?.getValue(
         Nutrient.calcium,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     ironFeMg: Value(
       product.nutriments?.getValue(
         Nutrient.iron,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     potassiumKMg: Value(
       product.nutriments?.getValue(
         Nutrient.potassium,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     magnesiumMg: Value(
       product.nutriments?.getValue(
         Nutrient.magnesium,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminAIuIu: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminA,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminCMg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminC,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminB12Mcg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminB12,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminDMcg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminD,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminEAlphaTocopherolMg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminE,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     addedSugarG: Value(
       product.nutriments?.getValue(
         Nutrient.addedSugars,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     omega3sMg: Value(
       product.nutriments?.getValue(
         Nutrient.omega3,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     omega6sMg: Value(
       product.nutriments?.getValue(
         Nutrient.omega6,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     transFattyAcidsG: Value(
       product.nutriments?.getValue(
         Nutrient.transFat,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     solubleFiberG: Value(
       product.nutriments?.getValue(
         Nutrient.fiber,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     phosphorusPMg: Value(
       product.nutriments?.getValue(
         Nutrient.phosphorus,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     sodiumMg: Value(
       product.nutriments?.getValue(
         Nutrient.sodium,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     zincZnMg: Value(
       product.nutriments?.getValue(
         Nutrient.zinc,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     copperCuMg: Value(
       product.nutriments?.getValue(
         Nutrient.copper,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     manganeseMg: Value(
       product.nutriments?.getValue(
         Nutrient.manganese,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     seleniumSeMcg: Value(
       product.nutriments?.getValue(
         Nutrient.selenium,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     fluorideFMcg: Value(
       product.nutriments?.getValue(
         Nutrient.fluoride,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     thiaminB1Mg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminB1,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     riboflavinB2Mg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminB2,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     pantothenicAcidB5Mg: Value(
       product.nutriments?.getValue(
         Nutrient.pantothenicAcid,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminB6Mg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminB6,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     biotinB7Mcg: Value(
       product.nutriments?.getValue(
         Nutrient.biotin,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     folateB9Mcg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminB9,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     caroteneBetaMcg: Value(
       product.nutriments?.getValue(
         Nutrient.betaCarotene,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminDIuIu: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminD,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     vitaminKMcg: Value(
       product.nutriments?.getValue(
         Nutrient.vitaminK,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     fattyAcidsTotalMonounsaturatedMg: Value(
       product.nutriments?.getValue(
         Nutrient.monounsaturatedFat,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     fattyAcidsTotalPolyunsaturatedMg: Value(
       product.nutriments?.getValue(
         Nutrient.polyunsaturatedFat,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     alcoholG: Value(
       product.nutriments?.getValue(
         Nutrient.alcohol,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
     caffeineMg: Value(
       product.nutriments?.getValue(
         Nutrient.caffeine,
-        PerSize.oneHundredGrams,
+        perSize,
       ),
     ),
   );

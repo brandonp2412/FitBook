@@ -40,7 +40,6 @@ class _ScanBarcodeState extends State<ScanBarcode> {
     setState(() {
       searching = true;
     });
-
     final packageInfo = await PackageInfo.fromPlatform();
     OpenFoodAPIConfiguration.userAgent = UserAgent(
       name:
@@ -53,33 +52,27 @@ class _ScanBarcodeState extends State<ScanBarcode> {
         version: ProductQueryVersion.v3,
       ),
     ).catchError(() => const SearchResult());
+    setState(() {
+      searching = false;
+    });
 
-    if (search.products == null || search.products!.isEmpty) {
-      setState(() {
-        searching = false;
-      });
+    if (search.products == null || search.products!.isEmpty)
       return widget.onBarcode(barcode);
-    }
 
-    var companion = mapOpenFoodFacts(search.products!.first);
-    if (mounted) {
-      final settings = context.read<SettingsState>();
-      companion = companion.copyWith(
-        favorite: Value(settings.favoriteNew),
-        created: Value(DateTime.now()),
-        barcode: Value(barcode),
-      );
-    }
+    if (!mounted) return;
+    final settings = context.read<SettingsState>();
+    var companion = mapOpenFoodFacts(search.products!.first, settings.foodUnit);
+    companion = companion.copyWith(
+      favorite: Value(settings.favoriteNew),
+      created: Value(DateTime.now()),
+      barcode: Value(barcode),
+    );
 
     final id = await db.foods.insertOne(
       companion.copyWith(created: Value(DateTime.now())),
     );
     food = await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
     widget.onFood(food);
-
-    setState(() {
-      searching = false;
-    });
   }
 
   @override

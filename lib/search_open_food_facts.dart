@@ -21,7 +21,6 @@ class SearchOpenFoodFacts extends StatefulWidget {
 }
 
 class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
-  late final debouncedSearch = debounce(search);
   final searchController = TextEditingController();
 
   List<Product> products = [];
@@ -68,7 +67,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     }
   }
 
-  Widget productsBuilder(BuildContext context) {
+  Widget productsBuilder(BuildContext context, String foodUnit) {
     if (searching)
       return const material.Padding(
         padding: EdgeInsets.all(8.0),
@@ -76,6 +75,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       );
     if (products.isEmpty == true)
       return const ListTile(title: Text("No products found"));
+
+    PerSize perSize = PerSize.oneHundredGrams;
+    if (foodUnit == 'serving') perSize = PerSize.serving;
 
     if (cards)
       return Expanded(
@@ -85,9 +87,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             spacing: 8.0,
             runSpacing: 8.0,
             children: products.map((product) {
-              final kj = product.nutriments?.getComputedKJ(
-                PerSize.oneHundredGrams,
-              );
+              final kj = product.nutriments?.getComputedKJ(perSize);
               final calories = (kj ?? 0) / 4.184;
               return factCard(product, calories, context);
             }).toList(),
@@ -99,9 +99,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
-          final kj = product.nutriments?.getComputedKJ(
-            PerSize.oneHundredGrams,
-          );
+          final kj = product.nutriments?.getComputedKJ(perSize);
           final calories = (kj ?? 0) / 4.184;
 
           return factTile(product, calories, context);
@@ -112,6 +110,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   @override
   Widget build(BuildContext context) {
+    final foodUnit =
+        context.select<SettingsState, String>((settings) => settings.foodUnit);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Search open food facts"),
@@ -183,7 +184,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             ),
           ),
           Builder(
-            builder: productsBuilder,
+            builder: (context) => productsBuilder(context, foodUnit),
           ),
         ],
       ),
@@ -191,12 +192,11 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   tap(Product product) async {
-    var companion = mapOpenFoodFacts(product);
     final settings = context.read<SettingsState>();
+    var companion = mapOpenFoodFacts(product, settings.foodUnit);
     if (settings.favoriteNew)
       companion = companion.copyWith(
         favorite: const Value(true),
-        created: Value(DateTime.now()),
         barcode: Value(product.barcode),
       );
 
@@ -204,11 +204,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         .insertOne(companion.copyWith(created: Value(DateTime.now())));
     final food =
         await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
-    if (mounted)
-      Navigator.pop(
-        context,
-        food,
-      );
+    if (mounted) Navigator.of(context).pop(food);
   }
 
   Widget factCard(
