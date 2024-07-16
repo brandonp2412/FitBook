@@ -10,9 +10,18 @@ new_flutter_version="$major.$minor.$new_patch+$new_build_number"
 new_version="$major.$minor.$new_patch"
 
 changelog_file="fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
-git --no-pager log --pretty=format:'%s' "$(git describe --tags --abbrev=0)"..HEAD |
-  awk '{print "- "$0}' >$changelog_file
+if ! [ -f $changelog_file ]; then
+  git --no-pager log --pretty=format:'%s' "$(git describe --tags --abbrev=0)"..HEAD |
+    awk '{print "- "$0}' >$changelog_file
+fi
+
 nvim "$changelog_file"
+
+if ! [ -f "$changelog_file" ]; then
+  echo "No changelog was specified."
+  exit 0
+fi
+
 changelog=$(cat "$changelog_file")
 echo "$changelog" >"$changelog_file"
 echo "$changelog" >fastlane/metadata/en-AU/release_notes.txt
