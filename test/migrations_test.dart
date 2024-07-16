@@ -30,7 +30,10 @@ void main() {
         if (to == 2) continue;
         final connection = await verifier.startAt(from);
         db = AppDatabase(executor: connection);
-        await verifier.migrateAndValidate(db, to);
+        await verifier.migrateAndValidate(db, to).catchError((error) {
+          print('Failed from=$from,to=$to');
+          throw Exception(error);
+        });
         await db.close();
       }
     }
