@@ -13,7 +13,16 @@ import 'database/database.dart';
 class ScanBarcode extends StatefulWidget {
   final Function(Food) onFood;
   final Function(String) onBarcode;
-  const ScanBarcode({super.key, required this.onFood, required this.onBarcode});
+  final bool? text;
+  final String? value;
+
+  const ScanBarcode({
+    super.key,
+    required this.onFood,
+    required this.onBarcode,
+    this.text,
+    this.value,
+  });
 
   @override
   createState() => _ScanBarcodeState();
@@ -74,9 +83,19 @@ class _ScanBarcodeState extends State<ScanBarcode> {
     if (searching) {
       return const Padding(
         padding: EdgeInsets.all(8.0),
-        child: CircularProgressIndicator(),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       );
-    } else {
+    } else if (widget.text == true)
+      return TextButton.icon(
+        label: widget.value != null
+            ? Text(widget.value ?? '')
+            : const Text("Scan barcode"),
+        onPressed: scan,
+        icon: const Icon(Icons.barcode_reader),
+      );
+    else {
       return IconButton(
         icon: const Icon(Icons.barcode_reader),
         onPressed: scan,

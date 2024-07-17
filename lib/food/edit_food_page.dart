@@ -27,8 +27,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
   late String servingUnit;
   String? imageFile;
+  String? barcode;
 
-  final barcodeController = TextEditingController();
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final smallImageController = TextEditingController();
@@ -168,7 +168,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         .getSingle()
         .then((food) {
       setState(() {
-        barcodeController.text = food.barcode ?? '';
+        barcode = food.barcode ?? '';
         servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
         smallImageController.text = food.smallImage ?? '';
@@ -438,7 +438,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameController.text,
-      barcode: Value(barcodeController.text),
+      barcode: Value(barcode),
       smallImage: Value(smallImageController.text),
       bigImage: Value(bigImageController.text),
       imageFile: Value(imageFile),
@@ -598,26 +598,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
           widget.id != null ? 'Edit food' : 'Add food',
         ),
         actions: [
-          if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
-            ScanBarcode(
-              onBarcode: (value) {
-                setState(() {
-                  barcodeController.text = value;
-                });
-                Fluttertoast.showToast(
-                  msg: "Barcode not found. Save to insert.",
-                );
-              },
-              onFood: (food) {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditFoodPage(id: food.id),
-                  ),
-                );
-              },
-            ),
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
@@ -661,7 +641,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
           children: [
             TextField(
               controller: nameController,
-              autofocus: widget.id == null,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelText: 'Name',
@@ -687,57 +666,75 @@ class _EditFoodPageState extends State<EditFoodPage> {
               onSubmitted: (_) => selectAll(caloriesController),
               textInputAction: TextInputAction.next,
             ),
-            TextField(
-              controller: caloriesController,
-              decoration: const InputDecoration(
-                labelText: 'Calories (kcal)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                kilojoulesController.text =
-                    (double.parse(value) * 4.184).toStringAsFixed(2);
-              },
-              onTap: () => selectAll(caloriesController),
-              onSubmitted: (_) => selectAll(kilojoulesController),
-              textInputAction: TextInputAction.next,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: caloriesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Calories (kcal)',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      kilojoulesController.text =
+                          (double.parse(value) * 4.184).toStringAsFixed(2);
+                    },
+                    onTap: () => selectAll(caloriesController),
+                    onSubmitted: (_) => selectAll(kilojoulesController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: kilojoulesController,
+                    decoration: const InputDecoration(
+                      labelText: 'Kilojoules (kj)',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      caloriesController.text =
+                          (double.parse(value) / 4.184).toStringAsFixed(2);
+                    },
+                    onSubmitted: (_) => selectAll(proteinGController),
+                    onTap: () => selectAll(kilojoulesController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              controller: kilojoulesController,
-              decoration: const InputDecoration(
-                labelText: 'Kilojoules (kj)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                caloriesController.text =
-                    (double.parse(value) / 4.184).toStringAsFixed(2);
-              },
-              onSubmitted: (_) => selectAll(proteinGController),
-              onTap: () => selectAll(kilojoulesController),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: proteinGController,
-              decoration: const InputDecoration(
-                labelText: 'Protein (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => selectAll(carbohydrateGController),
-              onTap: () => selectAll(proteinGController),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: carbohydrateGController,
-              decoration: const InputDecoration(
-                labelText: 'Carbohydrate (g)',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => selectAll(fatGController),
-              onTap: () => selectAll(carbohydrateGController),
-              textInputAction: TextInputAction.next,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: proteinGController,
+                    decoration: const InputDecoration(
+                      labelText: 'Protein (g)',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onSubmitted: (_) => selectAll(carbohydrateGController),
+                    onTap: () => selectAll(proteinGController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: carbohydrateGController,
+                    decoration: const InputDecoration(
+                      labelText: 'Carbohydrate (g)',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onSubmitted: (_) => selectAll(fatGController),
+                    onTap: () => selectAll(carbohydrateGController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ],
             ),
             TextField(
               controller: fatGController,
@@ -750,31 +747,64 @@ class _EditFoodPageState extends State<EditFoodPage> {
               onTap: () => selectAll(fatGController),
               textInputAction: TextInputAction.next,
             ),
-            TextField(
-              controller: servingSizeController,
-              decoration: const InputDecoration(
-                labelText: 'Serving size',
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: servingSizeController,
+                    decoration: const InputDecoration(
+                      labelText: 'Serving size',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onTap: () => selectAll(servingSizeController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: servingUnit,
+                    decoration:
+                        const InputDecoration(labelText: 'Serving unit'),
+                    items: units.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        servingUnit = newValue!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            if (Platform.isAndroid || Platform.isIOS)
+              ScanBarcode(
+                text: true,
+                value: barcode,
+                onBarcode: (value) {
+                  setState(() {
+                    barcode = value;
+                  });
+                  Fluttertoast.showToast(
+                    msg: "Barcode not found. Save to insert.",
+                  );
+                },
+                onFood: (food) {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditFoodPage(id: food.id),
+                    ),
+                  );
+                },
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onTap: () => selectAll(servingSizeController),
-              textInputAction: TextInputAction.next,
-            ),
-            DropdownButtonFormField<String>(
-              value: servingUnit,
-              decoration: const InputDecoration(labelText: 'Serving unit'),
-              items: units.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  servingUnit = newValue!;
-                });
-              },
-            ),
             if (settings.showImages) ...[
               const SizedBox(height: 8),
               TextButton.icon(
@@ -808,12 +838,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   imageFile = null;
                 }),
               ),
-            TextField(
-              controller: barcodeController,
-              decoration: const InputDecoration(
-                labelText: 'Barcode',
-              ),
-            ),
             ListTile(
               title: const Text('Show other fields'),
               onTap: () => db.settings.update().write(
