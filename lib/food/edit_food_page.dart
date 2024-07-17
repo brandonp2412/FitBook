@@ -647,11 +647,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () async {
-                    Food food = await Navigator.of(context).push(
+                    Food? food = await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const SearchOpenFoodFacts(),
+                        builder: (context) => SearchOpenFoodFacts(
+                          terms: nameController.text,
+                        ),
                       ),
                     );
+                    if (food == null) return;
+
                     if (!context.mounted) return;
                     Navigator.pop(context);
                     Navigator.push(
@@ -782,7 +786,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            ListTile(
+              title: const Text('Show other fields'),
+              onTap: () => db.settings.update().write(
+                    SettingsCompanion(showOthers: Value(!settings.showOthers)),
+                  ),
+              trailing: Switch(
+                value: settings.showOthers,
+                onChanged: (value) => db.settings.update().write(
+                      SettingsCompanion(showOthers: Value(value)),
+                    ),
+              ),
+            ),
             if (Platform.isAndroid || Platform.isIOS)
               ScanBarcode(
                 text: true,
@@ -838,18 +853,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   imageFile = null;
                 }),
               ),
-            ListTile(
-              title: const Text('Show other fields'),
-              onTap: () => db.settings.update().write(
-                    SettingsCompanion(showOthers: Value(!settings.showOthers)),
-                  ),
-              trailing: Switch(
-                value: settings.showOthers,
-                onChanged: (value) => db.settings.update().write(
-                      SettingsCompanion(showOthers: Value(value)),
-                    ),
-              ),
-            ),
             if (settings.showOthers) ...[
               if (settings.showImages) ...[
                 TextField(
