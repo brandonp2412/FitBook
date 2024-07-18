@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/diary/diary_page.dart';
-import 'package:fit_book/diary/edit_entry_page.dart';
+import 'package:fit_book/entry/edit_entry_page.dart';
+import 'package:fit_book/entry/entry_page.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
@@ -10,7 +10,7 @@ import 'package:fit_book/main.dart' as app;
 import 'package:fit_book/settings/settings_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
-import 'package:fit_book/weight/weights_page.dart';
+import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -205,7 +205,7 @@ List<WeightsCompanion> weights = [
   ),
 ];
 
-enum TabBarState { diary, graph, foods, weights }
+enum TabBarState { entry, graph, foods, weights }
 
 const screenshotFood = "Chicken sushi";
 
@@ -235,8 +235,8 @@ Future<void> appWrapper() async {
 
 BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
   switch (tabBarState) {
-    case TabBarState.diary:
-      return (tester.state(find.byType(DiaryPage)) as DiaryPageState)
+    case TabBarState.entry:
+      return (tester.state(find.byType(EntryPage)) as EntryPageState)
           .navigatorKey
           .currentContext!;
     case TabBarState.graph:
@@ -248,7 +248,7 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
     case null:
       break;
     case TabBarState.weights:
-      return (tester.state(find.byType(WeightsPage)) as WeightsPageState)
+      return (tester.state(find.byType(WeightPage)) as WeightPageState)
           .navigatorKey
           .currentContext!;
   }
@@ -312,7 +312,7 @@ void main() {
         binding: binding,
         tester: tester,
         screenshotName: '1_en-US',
-        tabBarState: TabBarState.diary,
+        tabBarState: TabBarState.entry,
       ),
     );
 
@@ -340,7 +340,7 @@ void main() {
           context: context,
           page: const SettingsPage(),
         ),
-        tabBarState: TabBarState.diary,
+        tabBarState: TabBarState.entry,
       ),
     );
 
@@ -369,7 +369,7 @@ void main() {
         navigateToPage: (context) async {
           navigateTo(
             context: context,
-            page: const WeightsPage(),
+            page: const WeightPage(),
           );
         },
         tabBarState: TabBarState.weights,
@@ -428,7 +428,7 @@ void main() {
             page: const EditEntryPage(id: null),
           );
         },
-        tabBarState: TabBarState.diary,
+        tabBarState: TabBarState.entry,
       ),
     );
   });

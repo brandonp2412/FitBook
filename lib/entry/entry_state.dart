@@ -4,7 +4,7 @@ import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 
-class EntriesState extends ChangeNotifier {
+class EntryState extends ChangeNotifier {
   late Stream<List<EntryWithFood>> _stream;
 
   int _limit = 100;
@@ -13,7 +13,7 @@ class EntriesState extends ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
 
-  EntriesState() {
+  EntryState() {
     setStream();
   }
 

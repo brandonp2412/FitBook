@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/diary/edit_entry_page.dart';
-import 'package:fit_book/diary/entries_state.dart';
+import 'package:fit_book/entry/edit_entry_page.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntriesState()),
+          ChangeNotifierProvider(create: (context) => EntryState()),
         ],
         child: MaterialApp(
           home: EditEntryPage(
@@ -98,7 +98,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntriesState()),
+          ChangeNotifierProvider(create: (context) => EntryState()),
         ],
         child: MaterialApp(
           home: EditEntryPage(

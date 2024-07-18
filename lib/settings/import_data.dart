@@ -5,7 +5,7 @@ import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/diary/entries_state.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -321,7 +321,7 @@ class _ImportDataState extends State<ImportData> {
   }
 
   _importDatabase(BuildContext context) async {
-    final entriesState = context.read<EntriesState>();
+    final entriesState = context.read<EntryState>();
     Navigator.pop(context);
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;

@@ -1,12 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/diary/diary_page.dart';
-import 'package:fit_book/diary/entries_state.dart';
+import 'package:fit_book/entry/entry_page.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:fit_book/weight/weights_page.dart';
+import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -36,7 +36,7 @@ Future<void> main() async {
 Widget appProviders(SettingsState settingsState) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsState),
-        ChangeNotifierProvider(create: (context) => EntriesState()),
+        ChangeNotifierProvider(create: (context) => EntryState()),
       ],
       child: const App(),
     );
@@ -93,10 +93,10 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
           body: TabBarView(
             children: [
-              DiaryPage(),
+              EntryPage(),
               GraphPage(),
               FoodPage(),
-              WeightsPage(),
+              WeightPage(),
             ],
           ),
           bottomNavigationBar: TabBar(

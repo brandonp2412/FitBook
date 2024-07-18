@@ -2,11 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/entries.dart';
-import 'package:fit_book/diary/diary_filters.dart';
-import 'package:fit_book/diary/edit_entries_page.dart';
-import 'package:fit_book/diary/edit_entry_page.dart';
-import 'package:fit_book/diary/entries_state.dart';
-import 'package:fit_book/diary/entry_list.dart';
+import 'package:fit_book/entry/edit_entries_page.dart';
+import 'package:fit_book/entry/edit_entry_page.dart';
+import 'package:fit_book/entry/entry_filters.dart';
+import 'package:fit_book/entry/entry_list.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -14,18 +14,18 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DiaryPage extends StatefulWidget {
-  const DiaryPage({super.key});
+class EntryPage extends StatefulWidget {
+  const EntryPage({super.key});
 
   @override
-  createState() => DiaryPageState();
+  createState() => EntryPageState();
 }
 
-class DiaryPageState extends State<DiaryPage> {
+class EntryPageState extends State<EntryPage> {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  late var entriesState = context.read<EntriesState>();
+  late var entriesState = context.read<EntryState>();
   late final TextEditingController searchController =
       TextEditingController(text: entriesState.search);
 
@@ -49,7 +49,7 @@ class DiaryPageState extends State<DiaryPage> {
 
   Scaffold _diaryPage() {
     final settings = context.watch<SettingsState>().value;
-    entriesState = context.watch<EntriesState>();
+    entriesState = context.watch<EntryState>();
 
     return Scaffold(
       body: StreamBuilder(
@@ -137,7 +137,7 @@ class DiaryPageState extends State<DiaryPage> {
             children: [
               AppSearch(
                 controller: searchController,
-                filter: const DiaryFilters(),
+                filter: const EntryFilters(),
                 onChange: (value) {
                   entriesState.search = value;
                 },

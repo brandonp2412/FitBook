@@ -1,21 +1,21 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/diary/entries_state.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class DiaryFilters extends StatefulWidget {
-  const DiaryFilters({
+class EntryFilters extends StatefulWidget {
+  const EntryFilters({
     super.key,
   });
 
   @override
-  createState() => _DiaryFiltersState();
+  createState() => _EntryFiltersState();
 }
 
-class _DiaryFiltersState extends State<DiaryFilters> {
+class _EntryFiltersState extends State<EntryFilters> {
   late final groupStream = (db.foods.selectOnly(distinct: true)
         ..orderBy([
           OrderingTerm(expression: db.foods.foodGroup),
@@ -26,7 +26,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<EntriesState>();
+    final state = context.watch<EntryState>();
 
     return Badge.count(
       count: state.filterCount,

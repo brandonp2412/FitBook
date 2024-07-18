@@ -7,14 +7,14 @@ import 'package:fit_book/weight/weight_list.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
-class WeightsPage extends StatefulWidget {
-  const WeightsPage({super.key});
+class WeightPage extends StatefulWidget {
+  const WeightPage({super.key});
 
   @override
-  createState() => WeightsPageState();
+  createState() => WeightPageState();
 }
 
-class WeightsPageState extends State<WeightsPage>
+class WeightPageState extends State<WeightPage>
     with AutomaticKeepAliveClientMixin {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
