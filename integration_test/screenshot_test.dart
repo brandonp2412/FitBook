@@ -295,7 +295,7 @@ void main() {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
-    app.db = AppDatabase();
+    app.db = AppDatabase(dontLog: true);
     await app.db.entries.deleteAll();
     await app.db.foods.deleteAll();
     await app.db.weights.deleteAll();
