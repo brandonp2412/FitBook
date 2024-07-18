@@ -54,23 +54,7 @@ class AppDatabase extends _$AppDatabase {
 
         await db.foods.insertAll(insertables);
 
-        await (settings.insertOne(
-          SettingsCompanion.insert(
-            longDateFormat: "dd/MM/yy",
-            shortDateFormat: 'd/M/yy',
-            entryUnit: 'serving',
-            foodUnit: 'grams',
-            themeMode: material.ThemeMode.system.toString(),
-            curveLines: false,
-            diarySummary: DiarySummary.division.toString(),
-            favoriteNew: false,
-            notifications: false,
-            selectEntryOnSubmit: false,
-            showOthers: false,
-            systemColors: false,
-            showImages: const Value(true),
-          ),
-        ));
+        await settings.insertOne(defaultSettings);
       },
       onUpgrade: stepByStep(
         from1To3: (m, schema) async {

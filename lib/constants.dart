@@ -1,3 +1,7 @@
+import 'package:drift/drift.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:flutter/material.dart';
+
 enum AppMetric {
   calories,
   protein,
@@ -166,3 +170,19 @@ List<String> positiveReinforcements = [
   'Superb! You are doing an outstanding job.',
   'Incredible! Your progress is noticeable.',
 ];
+
+final defaultSettings = SettingsCompanion.insert(
+  longDateFormat: "dd/MM/yy",
+  shortDateFormat: 'd/M/yy',
+  entryUnit: 'serving',
+  foodUnit: 'grams',
+  themeMode: ThemeMode.system.toString(),
+  curveLines: false,
+  diarySummary: DiarySummary.division.toString(),
+  favoriteNew: false,
+  notifications: false,
+  selectEntryOnSubmit: false,
+  showOthers: false,
+  systemColors: false,
+  showImages: const Value(true),
+);
