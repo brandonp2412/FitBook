@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:drift/drift.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -9,7 +10,6 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -24,7 +24,6 @@ class EditEntryPage extends StatefulWidget {
 }
 
 class _EditEntryPageState extends State<EditEntryPage> {
-  final barcode = TextEditingController();
   final quantity = TextEditingController(text: "1");
   final calories = TextEditingController(text: "0");
   final kilojoules = TextEditingController(text: "0");
@@ -40,6 +39,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
   bool foodDirty = false;
   Food? selectedFood;
   TextEditingController? nameController;
+  String? barcode;
+  String? imageFile;
 
   @override
   void initState() {
@@ -62,7 +63,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
         if (food == null) return;
 
         setState(() {
-          barcode.text = food.barcode ?? '';
+          imageFile = food.imageFile;
+          barcode = food.barcode;
           nameController?.text = food.name;
           selectedFood = food;
           calories.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
@@ -113,7 +115,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
           servingSize: Value(double.tryParse(quantity.text)),
           servingUnit: Value(unit),
           created: Value(DateTime.now()),
-          barcode: Value(barcode.text),
+          barcode: Value(barcode),
+          imageFile: Value(imageFile),
         ),
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
@@ -131,6 +134,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           calories: Value(double.tryParse(calories.text)),
           carbohydrateG: Value(double.tryParse(carb.text)),
           fatG: Value(double.tryParse(fat.text)),
+          imageFile: Value(imageFile),
         ),
       );
       final food = await (db.foods.select()
@@ -214,7 +218,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     setState(() {
-      barcode.text = food.barcode ?? '';
+      barcode = food.barcode ?? '';
       calories.text = entry.kCalories.value?.toStringAsFixed(2) ?? "0";
       protein.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
       kilojoules.text =
@@ -234,26 +238,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
           widget.id == null ? 'Add entry' : 'Edit entry',
         ),
         actions: [
-          if (widget.id == null && (Platform.isAndroid || Platform.isIOS))
-            ScanBarcode(
-              onBarcode: (value) {
-                setState(() {
-                  barcode.text = value;
-                });
-                Fluttertoast.showToast(
-                  msg: "Barcode not found. Save to insert.",
-                );
-              },
-              onFood: (food) {
-                setState(() {
-                  selectedFood = food;
-                  nameController?.text = food.name;
-                });
-                recalc();
-                quantityNode.requestFocus();
-                selectAll(quantity);
-              },
-            ),
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
@@ -379,46 +363,55 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 );
               },
             ),
-            TextField(
-              controller: quantity,
-              focusNode: quantityNode,
-              decoration: const InputDecoration(label: Text("Quantity")),
-              keyboardType: TextInputType.number,
-              onTap: () => quantity.selection = TextSelection(
-                baseOffset: 0,
-                extentOffset: quantity.text.length,
-              ),
-              onChanged: (value) {
-                recalc();
-              },
-              textInputAction: TextInputAction.next,
-              onSubmitted: (value) {
-                if (selectedFood != null) save();
-              },
-            ),
-            DropdownButtonFormField<String>(
-              value: unit,
-              decoration: const InputDecoration(labelText: 'Unit'),
-              items: units.map((String value) {
-                if (value == 'serving' && selectedFood != null)
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      "serving (${(selectedFood?.servingSize ?? 100)} ${selectedFood?.servingUnit ?? settings.foodUnit})",
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: quantity,
+                    focusNode: quantityNode,
+                    decoration: const InputDecoration(label: Text("Quantity")),
+                    keyboardType: TextInputType.number,
+                    onTap: () => quantity.selection = TextSelection(
+                      baseOffset: 0,
+                      extentOffset: quantity.text.length,
                     ),
-                  );
-                else
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  unit = newValue!;
-                });
-                recalc();
-              },
+                    onChanged: (value) {
+                      recalc();
+                    },
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (value) {
+                      if (selectedFood != null) save();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: unit,
+                    decoration: const InputDecoration(labelText: 'Unit'),
+                    items: units.map((String value) {
+                      if (value == 'serving' && selectedFood != null)
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            "serving (${(selectedFood?.servingSize ?? 100)} ${selectedFood?.servingUnit ?? settings.foodUnit})",
+                          ),
+                        );
+                      else
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        unit = newValue!;
+                      });
+                      recalc();
+                    },
+                  ),
+                ),
+              ],
             ),
             Row(
               children: [
@@ -471,37 +464,46 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ],
               ],
             ),
-            TextField(
-              controller: protein,
-              decoration: const InputDecoration(
-                labelText: 'Protein',
-              ),
-              onTap: () => selectAll(protein),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                setState(() {
-                  foodDirty = true;
-                });
-              },
-              onSubmitted: (value) => selectAll(carb),
-              textInputAction: TextInputAction.next,
-            ),
-            TextField(
-              controller: carb,
-              decoration: const InputDecoration(
-                labelText: 'Carbs',
-              ),
-              onTap: () => selectAll(carb),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                setState(() {
-                  foodDirty = true;
-                });
-              },
-              textInputAction: TextInputAction.next,
-              onSubmitted: (value) => selectAll(fat),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: protein,
+                    decoration: const InputDecoration(
+                      labelText: 'Protein',
+                    ),
+                    onTap: () => selectAll(protein),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        foodDirty = true;
+                      });
+                    },
+                    onSubmitted: (value) => selectAll(carb),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: carb,
+                    decoration: const InputDecoration(
+                      labelText: 'Carbs',
+                    ),
+                    onTap: () => selectAll(carb),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        foodDirty = true;
+                      });
+                    },
+                    textInputAction: TextInputAction.next,
+                    onSubmitted: (value) => selectAll(fat),
+                  ),
+                ),
+              ],
             ),
             TextField(
               controller: fat,
@@ -518,17 +520,62 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
               onSubmitted: (value) => save(),
             ),
-            TextField(
-              controller: barcode,
-              decoration: const InputDecoration(labelText: 'Barcode'),
-            ),
-            ListTile(
-              title: const Text('Created Date'),
-              subtitle:
-                  Text(DateFormat(settings.longDateFormat).format(created)),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () => selectDate(),
-            ),
+            if (imageFile?.isNotEmpty == true && settings.showImages) ...[
+              const SizedBox(height: 8),
+              Image.file(
+                File(imageFile!),
+                errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                  onPressed: () {},
+                  label: const Text('Image error'),
+                  icon: const Icon(Icons.error),
+                ),
+              ),
+            ],
+            if (Platform.isAndroid || Platform.isIOS)
+              ScanBarcode(
+                text: true,
+                value: barcode,
+                onBarcode: (value) {
+                  setState(() {
+                    barcode = value;
+                  });
+                  Fluttertoast.showToast(
+                    msg: "Barcode not found. Save to insert.",
+                  );
+                },
+                onFood: (food) {
+                  setState(() {
+                    selectedFood = food;
+                  });
+                },
+              ),
+            if (settings.showImages) ...[
+              const SizedBox(height: 8),
+              TextButton.icon(
+                icon: const Icon(Icons.image),
+                label: const Text('Set image'),
+                onPressed: () async {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    type: FileType.image,
+                    allowMultiple: false,
+                  );
+                  final path = result?.files.single.path;
+                  if (path == null) return;
+                  setState(() {
+                    imageFile = path;
+                  });
+                },
+              ),
+            ],
+            if (imageFile != null && settings.showImages)
+              TextButton.icon(
+                icon: const Icon(Icons.delete),
+                label: const Text("Remove image"),
+                onPressed: () => setState(() {
+                  imageFile = null;
+                }),
+              ),
           ],
         ),
       ),

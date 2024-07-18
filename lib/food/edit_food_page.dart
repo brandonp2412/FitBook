@@ -798,6 +798,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     ),
               ),
             ),
+            if (imageFile?.isNotEmpty == true && settings.showImages)
+              Image.file(
+                File(imageFile!),
+                errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                  onPressed: () {},
+                  label: const Text('Image error'),
+                  icon: const Icon(Icons.error),
+                ),
+              ),
             if (Platform.isAndroid || Platform.isIOS)
               ScanBarcode(
                 text: true,
@@ -836,15 +845,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 },
               ),
             ],
-            if (imageFile?.isNotEmpty == true && settings.showImages)
-              Image.file(
-                File(imageFile!),
-                errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                  onPressed: () {},
-                  label: const Text('Image error'),
-                  icon: const Icon(Icons.error),
-                ),
-              ),
             if (imageFile != null && settings.showImages)
               TextButton.icon(
                 icon: const Icon(Icons.delete),
