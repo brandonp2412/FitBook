@@ -1,5 +1,5 @@
-- Add login for OpenFoodFacts
-- Use per serving if the settings says to
-- Change default serving size based on unit
-- Allow adding new food barcodes
-- Only show barcode scanner on mobile
+- Add images to diary entries
+- Fix padding on graphs page
+- Add delete database button
+- Pass name to open foods fact search from foods page
+- Make food edit page more compact
