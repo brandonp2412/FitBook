@@ -246,7 +246,7 @@ class _AppLineState extends State<AppLine> {
         return material.Column(
           children: [
             SizedBox(
-              height: 400,
+              height: 350,
               child: Padding(
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: LineChart(

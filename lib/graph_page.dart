@@ -54,7 +54,7 @@ class GraphPageState extends State<GraphPage>
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: ListView(
           children: [
             DropdownButtonFormField(
