@@ -13,7 +13,6 @@
     "**/Thumbs.db": true,
     "flutter/": true
   },
-  "dart.flutterSdkPath": "flutter/bin",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": [
     "source.fixAll",
