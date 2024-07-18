@@ -24,7 +24,8 @@ part 'database.g.dart';
 
 @DriftDatabase(tables: [Foods, Entries, Weights, Settings])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
+  AppDatabase({QueryExecutor? executor, bool? dontLog})
+      : super(executor ?? _openConnection(dontLog));
 
   @override
   int get schemaVersion => 21;
@@ -250,7 +251,7 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-LazyDatabase _openConnection() {
+LazyDatabase _openConnection(bool? dontLog) {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
@@ -266,9 +267,12 @@ LazyDatabase _openConnection() {
     // Explicitly tell it about the correct temporary directory.
     sqlite3.tempDirectory = cachebase;
 
+    var logStatements = kDebugMode ? true : false;
+    if (dontLog == true) logStatements = false;
+
     return NativeDatabase.createInBackground(
       file,
-      logStatements: kDebugMode ? true : false,
+      logStatements: logStatements,
     );
   });
 }
