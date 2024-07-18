@@ -3,6 +3,7 @@ import 'package:drift/native.dart';
 import 'package:drift_dev/api/migrations.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +32,7 @@ void main() {
         final connection = await verifier.startAt(from);
         db = AppDatabase(executor: connection);
         await verifier.migrateAndValidate(db, to).catchError((error) {
-          print('Failed from=$from,to=$to');
+          debugPrint('Failed from=$from,to=$to');
           throw Exception(error);
         });
         await db.close();
