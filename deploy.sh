@@ -35,10 +35,10 @@ echo "$changelog" >fastlane/metadata/en-US/release_notes.txt
 flutter test
 dart analyze lib
 dart format --set-exit-if-changed lib
-./migrate.sh
-./screenshots.sh "phoneScreenshots"
-./screenshots.sh "sevenInchScreenshots"
-./screenshots.sh "tenInchScreenshots"
+./scripts/migrate.sh
+./scripts/screenshots.sh "phoneScreenshots"
+./scripts/screenshots.sh "sevenInchScreenshots"
+./scripts/screenshots.sh "tenInchScreenshots"
 
 yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 yq -yi ".msix_config.msix_version |= \"$new_msix_version\"" pubspec.yaml
@@ -88,6 +88,6 @@ ssh macbook "
   cd fitbook 
   git pull 
   security unlock-keychain -p $(pass macbook)
-  ./macos.sh || true
-  ./ios.sh
+  ./scripts/macos.sh || true
+  ./scripts/ios.sh
 "
