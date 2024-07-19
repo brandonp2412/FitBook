@@ -58,8 +58,10 @@ flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip -r fitbook-linux.zip .)
 
 docker start windows
-sshpass -p gates ssh windows "cd FitBook && \
-git pull && \
+cp -r . "$HOME"/windows/fitbook-source
+sshpass -p gates ssh windows "xcopy \\\\host.lan\\Data\\fitbook-source Fitbook /E /I /Y /H || echo copied && \
+cd FitBook && \
+flutter clean && \
 dart run msix:create && \
 move build\\windows\\x64\\runner\\Release\\fit_book.msix \\\\host.lan\\Data && \
 del /Q \\\\host.lan\\Data\\FitBook\\* && \
