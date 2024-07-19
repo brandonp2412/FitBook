@@ -12,7 +12,7 @@ apk=$PWD/build/app/outputs/flutter-apk
 
 IFS='+.' read -r msix_major msix_minor msix_patch msix_zero <<<"$(yq -r .msix_config.msix_version pubspec.yaml)"
 new_msix_patch=$((msix_patch + 1))
-new_msix_version="$msix_major.$msix_minor.$new_msix_patch+$msix_zero"
+new_msix_version="$msix_major.$msix_minor.$new_msix_patch.$msix_zero"
 
 changelog_file="fastlane/metadata/android/en-US/changelogs/$changelog_number.txt"
 if ! [ -f $changelog_file ]; then
