@@ -81,6 +81,7 @@ bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.a
 echo q | flutter run --release || true
 
 set +x
+# shellcheck disable=SC2029
 ssh macbook "
   set -e
   source .zprofile 
