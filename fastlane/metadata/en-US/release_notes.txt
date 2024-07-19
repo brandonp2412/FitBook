@@ -1,5 +1,1 @@
-- Add images to diary entries
-- Fix padding on graphs page
-- Add delete database button
-- Pass name to open foods fact search from foods page
-- Make food edit page more compact
+- Add windows to releases
