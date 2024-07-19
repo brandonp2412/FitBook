@@ -56,18 +56,16 @@ flutter build appbundle
 mkdir -p build/native_assets/linux
 flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip -r fitbook-linux.zip .)
+
 docker start windows
 sshpass -p gates ssh windows "cd FitBook && \
 git pull && \
-mkdir C:\\Users\\brandon\\FitBook\\assets || echo skipping && \
-copy assets\\ic_launcher.png C:\\Users\\brandon\\FitBook\\assets && \
 dart run msix:create && \
-rmdir /S /Q \\\\host.lan\\Data\\FitBook || echo skipping && \
-mkdir \\\\host.lan\\Data\\FitBook && \
 move build\\windows\\x64\\runner\\Release\\fit_book.msix \\\\host.lan\\Data && \
-xcopy build\\windows\\x64\\runner\\Release \\\\host.lan\\Data\\FitBook /s /e /h"
+del /Q \\\\host.lan\\Data\\FitBook\\* && \
+xcopy build\\windows\\x64\\runner\\Release \\\\host.lan\\Data\\FitBook /E /I /Y /H"
 sudo chown -R "$USER" "$HOME"/windows/FitBook
-(cd "$HOME"/windows/FitBook && zip -r fitbook-windows.zip .)
+(cd "$HOME"/windows/FitBook && zip -r "$HOME"/windows/fitbook-windows.zip .)
 
 git push
 gh release create "$new_version" --notes "$changelog" \
