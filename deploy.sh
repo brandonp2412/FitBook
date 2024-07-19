@@ -58,7 +58,7 @@ flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip -r fitbook-linux.zip .)
 
 docker start windows
-cp -r . "$HOME"/windows/fitbook-source
+cp -r . "$HOME"/windows/fitbook-source || true
 sshpass -p gates ssh windows "xcopy \\\\host.lan\\Data\\fitbook-source Fitbook /E /I /Y /H || echo copied && \
 cd FitBook && \
 flutter clean && \
