@@ -1,1 +1,1 @@
-- Add windows to releases
+- Include windows in deployments
