@@ -1,1 +1,1 @@
-- Fix msix versioning
+- Include windows in releases
