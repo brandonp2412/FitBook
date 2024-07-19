@@ -1,7 +1,7 @@
 name: fit_book
 description: Track your calories - Completely offline!
 publish_to: none
-version: 1.0.71+76
+version: 1.0.63+68
 environment:
   sdk: '>=3.3.3 <4.0.0'
 dependencies:
@@ -29,7 +29,6 @@ dependencies:
   cached_network_image: ^3.3.1
   barcode_scan2: ^4.3.2
   permission_handler: ^11.3.1
-  fluttertoast: ^8.2.6
 dev_dependencies:
   integration_test:
     sdk: flutter
@@ -63,10 +62,11 @@ flutter_launcher_icons:
     generate: true
     image_path: assets/ic_launcher.png
 msix_config:
+  msstore_appId: 9PJJVF8507G0
   display_name: FitBook - Calorie tracker
   publisher_display_name: Frisbee Software
-  identity_name: FrisbeeSoftware.FitBook-CalorieTracker
-  msix_version: 1.0.7.0
+  identity_name: FrisbeeSoftware.FitBook-Calorietracker
+  msix_version: 1.0.3.0
   logo_path: C:\Users\brandon\fitbook\assets\ic_launcher.png
   trim_logo: false
   publisher: CN=BB0811CB-EED5-441C-BE1B-D31F391F76DE
