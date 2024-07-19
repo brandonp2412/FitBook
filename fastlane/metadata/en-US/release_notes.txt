@@ -1,1 +1,1 @@
-- Include windows in deployments
+- Fix msix versioning
