@@ -12,6 +12,9 @@ jobs:
       - name: Configure the Microsoft Store CLI
         run: msstore reconfigure --tenantId ${{ secrets.MSSTORE_TENANT_ID }} --clientId ${{ secrets.MSSTORE_CLIENT_ID }} --clientSecret ${{ secrets.MSSTORE_CLIENT_SECRET }} --sellerId ${{ secrets.MSSTORE_SELLER_ID }}
 
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+
       - name: Create MSIX package
         run: msstore package .
 
