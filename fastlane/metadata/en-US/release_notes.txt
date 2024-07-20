@@ -1,1 +1,1 @@
-Fix workflow command for msstore
+Try fix windows workflow again
