@@ -1,1 +1,1 @@
-Include windows in releases
+Try auto deploying windows
