@@ -1,1 +1,1 @@
-Try auto deploying windows
+Auto deploy windows
