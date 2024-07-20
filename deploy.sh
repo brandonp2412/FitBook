@@ -32,13 +32,17 @@ echo "$changelog" >"$changelog_file"
 echo "$changelog" >fastlane/metadata/en-AU/release_notes.txt
 echo "$changelog" >fastlane/metadata/en-US/release_notes.txt
 
-flutter test
-dart analyze lib
-dart format --set-exit-if-changed lib
-./scripts/migrate.sh
-./scripts/screenshots.sh "phoneScreenshots"
-./scripts/screenshots.sh "sevenInchScreenshots"
-./scripts/screenshots.sh "tenInchScreenshots"
+if [[ $* == *-t* ]]; then
+  echo "Skipping tests..."
+else
+  flutter test
+  dart analyze lib
+  dart format --set-exit-if-changed lib
+  ./scripts/migrate.sh
+  ./scripts/screenshots.sh "phoneScreenshots"
+  ./scripts/screenshots.sh "sevenInchScreenshots"
+  ./scripts/screenshots.sh "tenInchScreenshots"
+fi
 
 yq -yi ".version |= \"$new_flutter_version\"" pubspec.yaml
 yq -yi ".msix_config.msix_version |= \"$new_msix_version\"" pubspec.yaml
@@ -49,6 +53,7 @@ git commit -m "$new_version 🚀
 $changelog"
 
 flutter build apk --split-per-abi
+adb -d install "$apk"/app-arm64-v8a-release.apk
 flutter build apk
 mv "$apk"/app-release.apk "$apk"/fitbook.apk
 flutter build appbundle
@@ -79,17 +84,25 @@ gh release create "$new_version" --notes "$changelog" \
   "$HOME"/windows/fitbook-windows.zip
 git pull
 
-bundle exec fastlane supply --aab build/app/outputs/bundle/release/app-release.aab
-echo q | flutter run --release || true
+if [[ $* == *-p* ]]; then
+  echo "Skipping Google play..."
+else
+  bundle exec fastlane supply --aab \
+    build/app/outputs/bundle/release/app-release.aab
+fi
 
-set +x
-# shellcheck disable=SC2029
-ssh macbook "
-  set -e
-  source .zprofile 
-  cd fitbook 
-  git pull 
-  security unlock-keychain -p $(pass macbook)
-  ./scripts/macos.sh || true
-  ./scripts/ios.sh
-"
+if [[ $* == *-m* ]]; then
+  echo "Skipping MacOS..."
+else
+  set +x
+  # shellcheck disable=SC2029
+  ssh macbook "
+    set -e
+    source .zprofile 
+    cd fitbook 
+    git pull 
+    security unlock-keychain -p $(pass macbook)
+    ./scripts/macos.sh || true
+    ./scripts/ios.sh
+  "
+fi
