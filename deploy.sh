@@ -70,8 +70,6 @@ del /Q $shared\\FitBook\\* || echo skipping && \
 xcopy $windows_release $shared\\FitBook /E /I /Y /H /Q"
 sudo chown -R "$USER" "$HOME"/windows/FitBook
 (cd "$HOME"/windows/FitBook && zip -r "$HOME"/windows/fitbook-windows.zip .)
-app_id=$(yq -r .msix_config.msstore_appId)
-sshpass -p gates ssh windows "msstore publish --appId $app_id FitBook\\build\\fit_book.msix" &
 
 git push
 gh release create "$new_version" --notes "$changelog" \

@@ -1,0 +1,22 @@
+name: Release to windows store
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: microsoft/setup-msstore-cli@v1
+      - name: Configure the Microsoft Store CLI
+        run: msstore reconfigure --tenantId $ --clientId $ --clientSecret $ --sellerId $
+
+      - name: Install Dart dependencies
+        run: flutter pub get
+
+      - name: Create MSIX package
+        run: msstore package .
+
+      - name: Publish MSIX to the Microsoft Store
+        run: msstore publish -v
