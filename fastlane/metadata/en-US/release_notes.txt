@@ -1,1 +1,1 @@
-Try fix windows workflow again
+Checkout repo and install flutter for windows
