@@ -1,1 +1,1 @@
-Checkout repo and install flutter for windows
+Fix logo path for windows msix
