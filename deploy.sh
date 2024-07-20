@@ -58,16 +58,20 @@ flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip -r fitbook-linux.zip .)
 
 docker start windows
-cp -r . "$HOME"/windows/fitbook-source || true
-sshpass -p gates ssh windows "xcopy \\\\host.lan\\Data\\fitbook-source Fitbook /E /I /Y /H || echo copied && \
+rsync -a --delete --exclude-from=.gitignore ./* .gitignore \
+  "$HOME/windows/fitbook-source"
+windows_release="build\\windows\\x64\\runner\\Release"
+shared="\\\\host.lan\\Data"
+sshpass -p gates ssh windows "xcopy $shared\\fitbook-source Fitbook /Q /E /I /Y /H && \
 cd FitBook && \
-flutter clean && \
 dart run msix:create && \
-move build\\windows\\x64\\runner\\Release\\fit_book.msix \\\\host.lan\\Data && \
-del /Q \\\\host.lan\\Data\\FitBook\\* && \
-xcopy build\\windows\\x64\\runner\\Release \\\\host.lan\\Data\\FitBook /E /I /Y /H"
+move $windows_release\\fit_book.msix build\\windows && \
+del /Q $shared\\FitBook\\* || echo skipping && \
+xcopy $windows_release $shared\\FitBook /E /I /Y /H /Q"
 sudo chown -R "$USER" "$HOME"/windows/FitBook
 (cd "$HOME"/windows/FitBook && zip -r "$HOME"/windows/fitbook-windows.zip .)
+app_id=$(yq -r .msix_config.msstore_appId)
+sshpass -p gates ssh windows "msstore publish --appId $app_id FitBook\\build\\fit_book.msix" &
 
 git push
 gh release create "$new_version" --notes "$changelog" \
