@@ -53,36 +53,37 @@ git commit -m "$new_version 🚀
 $changelog"
 
 flutter build apk --split-per-abi
-adb -d install "$apk"/app-arm64-v8a-release.apk
+adb -d install "$apk"/app-arm64-v8a-release.apk || true
 flutter build apk
-mv "$apk"/app-release.apk "$apk"/fitbook.apk
+project=$(basename "$PWD")
+mv "$apk"/app-release.apk "$apk/$project.apk"
 flutter build appbundle
 
 mkdir -p build/native_assets/linux
 flutter build linux
-(cd "$apk/pipeline/linux/x64/release/bundle" && zip -r fitbook-linux.zip .)
+(cd "$apk/pipeline/linux/x64/release/bundle" && zip -r "$project-linux.zip" .)
 
 docker start windows
 rsync -a --delete --exclude-from=.gitignore ./* .gitignore \
-  "$HOME/windows/fitbook-source"
-windows_release="build\\windows\\x64\\runner\\Release"
-shared="\\\\host.lan\\Data"
-sshpass -p gates ssh windows "xcopy $shared\\fitbook-source Fitbook /Q /E /I /Y /H && \
-cd FitBook && \
-dart run msix:create && \
-move $windows_release\\fit_book.msix build\\windows && \
-del /Q $shared\\FitBook\\* || echo skipping && \
-xcopy $windows_release $shared\\FitBook /E /I /Y /H /Q"
-sudo chown -R "$USER" "$HOME"/windows/FitBook
-(cd "$HOME"/windows/FitBook && zip -r "$HOME"/windows/fitbook-windows.zip .)
+  "$HOME/windows/$project-source"
+sshpass -p gates ssh windows 'powershell -Command "cp -r -Force //host.lan/Data/fitbook-source/* fitbook; cd fitbook; dart run msix:create; cp -r -Force build/windows/x64/runner/Release/* //host.lan/Data/fitbook"'
+sudo chown -R "$USER" "$HOME/windows/$project"
+mv "$HOME/windows/$project/$project.msix" "$HOME/windows/$project.msix"
+(cd "$HOME/windows/$project" && zip -r "$HOME/windows/$project-windows.zip" .)
 
 git push
 gh release create "$new_version" --notes "$changelog" \
   "$apk"/app-*-release.apk \
-  "$apk"/pipeline/linux/x64/release/bundle/fitbook-linux.zip \
-  "$apk"/fitbook.apk \
-  "$HOME"/windows/fitbook-windows.zip
+  "$apk/pipeline/linux/x64/release/bundle/$project-linux.zip" \
+  "$apk/$project.apk" \
+  "$HOME/windows/$project-windows.zip"
 git pull
+
+if [[ $* == *-w* ]]; then
+  echo "Skipping Windows store..."
+else
+  ./scripts/msstore.sh "$HOME/windows/$project.msix"
+fi
 
 if [[ $* == *-p* ]]; then
   echo "Skipping Google play..."
@@ -99,7 +100,7 @@ else
   ssh macbook "
     set -e
     source .zprofile 
-    cd fitbook 
+    cd $project 
     git pull 
     security unlock-keychain -p $(pass macbook)
     ./scripts/macos.sh || true
