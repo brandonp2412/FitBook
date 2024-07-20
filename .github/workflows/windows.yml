@@ -12,9 +12,6 @@ jobs:
       - name: Configure the Microsoft Store CLI
         run: msstore reconfigure --tenantId ${{ secrets.MSSTORE_TENANT_ID }} --clientId ${{ secrets.MSSTORE_CLIENT_ID }} --clientSecret ${{ secrets.MSSTORE_CLIENT_SECRET }} --sellerId ${{ secrets.MSSTORE_SELLER_ID }}
 
-      - name: Install Dart dependencies
-        run: flutter pub get
-
       - name: Create MSIX package
         run: msstore package .
 
