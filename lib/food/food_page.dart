@@ -16,30 +16,8 @@ class FoodPage extends StatefulWidget {
   createState() => FoodPageState();
 }
 
-class PartialFood {
-  final int id;
-  final String name;
-  final double? calories;
-  final bool? favorite;
-  final double? servingSize;
-  final String? servingUnit;
-  final String? imageFile;
-  final String? smallImage;
-
-  PartialFood({
-    required this.imageFile,
-    required this.id,
-    required this.smallImage,
-    required this.name,
-    required this.calories,
-    required this.favorite,
-    required this.servingSize,
-    required this.servingUnit,
-  });
-}
-
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
-  late Stream<List<PartialFood>> stream;
+  late Stream<List<FoodsCompanion>> stream;
 
   final TextEditingController searchController = TextEditingController();
   final TextEditingController servingSizeGtController = TextEditingController();
@@ -104,15 +82,15 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       stream = query.watch().map(
             (results) => results
                 .map(
-                  (result) => PartialFood(
-                    id: result.read(db.foods.id)!,
-                    name: result.read(db.foods.name)!,
-                    calories: result.read(db.foods.calories),
-                    favorite: result.read(db.foods.favorite),
-                    servingSize: result.read(db.foods.servingSize),
-                    servingUnit: result.read(db.foods.servingUnit),
-                    imageFile: result.read(db.foods.imageFile),
-                    smallImage: result.read(db.foods.smallImage),
+                  (result) => FoodsCompanion(
+                    id: Value(result.read(db.foods.id)!),
+                    name: Value(result.read(db.foods.name)!),
+                    calories: Value(result.read(db.foods.calories)),
+                    favorite: Value(result.read(db.foods.favorite)),
+                    servingSize: Value(result.read(db.foods.servingSize)),
+                    servingUnit: Value(result.read(db.foods.servingUnit)),
+                    imageFile: Value(result.read(db.foods.imageFile)),
+                    smallImage: Value(result.read(db.foods.smallImage)),
                   ),
                 )
                 .toList(),
@@ -188,7 +166,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                 },
                 onSelect: () => setState(() {
                   selected.addAll(
-                    foods.map((food) => food.id),
+                    foods.map((food) => food.id.value),
                   );
                 }),
                 selected: selected,

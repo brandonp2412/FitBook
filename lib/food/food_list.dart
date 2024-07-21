@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
-import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
@@ -17,7 +17,7 @@ class FoodList extends StatefulWidget {
     required this.onNext,
   });
 
-  final List<PartialFood> foods;
+  final List<FoodsCompanion> foods;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
@@ -57,18 +57,19 @@ class _FoodListState extends State<FoodList> {
           final food = widget.foods[index];
           final previous = index > 0 ? widget.foods[index - 1] : null;
           final showDivider = previous != null &&
-              (food.favorite ?? false) != (previous.favorite ?? false);
+              (food.favorite.value ?? false) !=
+                  (previous.favorite.value ?? false);
 
-          final shortUnit = getShortUnit(food.servingUnit ?? 'grams');
+          final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
 
           final settings = context.watch<SettingsState>().value;
 
           Widget? image;
           if (settings.showImages) {
-            if (food.imageFile?.isNotEmpty == true)
-              image = Image.file(File(food.imageFile!));
-            else if (food.smallImage?.isNotEmpty == true)
-              image = Image.network(food.smallImage!);
+            if (food.imageFile.value?.isNotEmpty == true)
+              image = Image.file(File(food.imageFile.value!));
+            else if (food.smallImage.value?.isNotEmpty == true)
+              image = Image.network(food.smallImage.value!);
           }
 
           return material.Column(
@@ -82,29 +83,29 @@ class _FoodListState extends State<FoodList> {
                   ],
                 ),
               ListTile(
-                title: Text(food.name),
+                title: Text(food.name.value),
                 subtitle: Text(
-                  "${food.calories?.toStringAsFixed(0) ?? 0} kcal",
+                  "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
                 ),
                 trailing: Text(
-                  "${food.servingSize?.toInt() ?? "100"} $shortUnit",
+                  "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
                   style: const TextStyle(fontSize: 16),
                 ),
                 leading: image,
-                selected: widget.selected.contains(food.id),
-                onLongPress: () => widget.onSelect(food.id),
+                selected: widget.selected.contains(food.id.value),
+                onLongPress: () => widget.onSelect(food.id.value),
                 onTap: () {
                   if (widget.selected.isEmpty)
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditFoodPage(
-                          id: food.id,
+                          id: food.id.value,
                         ),
                       ),
                     );
                   else
-                    widget.onSelect(food.id);
+                    widget.onSelect(food.id.value);
                 },
               ),
             ],
