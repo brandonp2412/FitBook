@@ -28,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? _openConnection(dontLog));
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 22;
 
   @override
   MigrationStrategy get migration {
@@ -245,6 +245,20 @@ class AppDatabase extends _$AppDatabase {
         from20To21: (Migrator m, Schema21 schema) async {
           await m.addColumn(schema.settings, schema.settings.offLogin);
           await m.addColumn(schema.settings, schema.settings.offPassword);
+        },
+        from21To22: (Migrator m, Schema22 schema) async {
+          await m.createIndex(
+            Index(
+              'Foods',
+              "CREATE INDEX IF NOT EXISTS foods_created ON foods(created);",
+            ),
+          );
+          await m.createIndex(
+            Index(
+              'Foods',
+              "CREATE INDEX IF NOT EXISTS foods_favorite ON foods(favorite);",
+            ),
+          );
         },
       ),
     );
