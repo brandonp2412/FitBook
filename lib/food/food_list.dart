@@ -84,7 +84,7 @@ class _FoodListState extends State<FoodList> {
               ListTile(
                 title: Text(food.name),
                 subtitle: Text(
-                  "${food.calories?.toStringAsFixed(0)} kcal",
+                  "${food.calories?.toStringAsFixed(0) ?? 0} kcal",
                 ),
                 trailing: Text(
                   "${food.servingSize?.toInt() ?? "100"} $shortUnit",
