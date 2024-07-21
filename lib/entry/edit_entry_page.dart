@@ -232,6 +232,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
 
+    final shortUnit =
+        getShortUnit(selectedFood?.servingUnit ?? settings.foodUnit);
+    final servingSize = selectedFood?.servingSize ?? 100;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -393,9 +397,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       if (value == 'serving' && selectedFood != null)
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(
-                            "serving (${(selectedFood?.servingSize ?? 100)} ${selectedFood?.servingUnit ?? settings.foodUnit})",
-                          ),
+                          child: Text("serving ($servingSize $shortUnit)"),
                         );
                       else
                         return DropdownMenuItem<String>(
