@@ -23,8 +23,9 @@ submission_response=$(curl -X POST "$api/v1.0/my/applications/$app_id/submission
 submission_id=$(echo "$submission_response" | jq -r .id)
 file_upload_url=$(echo "$submission_response" | jq -r .fileUploadUrl)
 
-if [ -z "$submission_id" ]; then
+if [ "$submission_id" = "null" ]; then
   echo "Submission failed to create"
+  $BROWSER "https://partner.microsoft.com/en-us/dashboard/products/9PJJVF8507G0/overview" &
   exit 1
 fi
 
