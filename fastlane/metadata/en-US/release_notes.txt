@@ -1,1 +1,6 @@
-Fix logo path for windows msix
+- Fix auto-deploying to windows store
+- Improve foods page performance
+- Add delete unused foods button
+- Fix saying `null kcal` on foods list
+- Show "Scan barcode" for empty strings
+- Use short form serving unit for entry
