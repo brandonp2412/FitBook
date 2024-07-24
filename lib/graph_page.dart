@@ -88,6 +88,7 @@ class GraphPageState extends State<GraphPage>
                 });
               },
             ),
+            const SizedBox(height: 8),
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Group by'),
               value: groupBy,
