@@ -97,15 +97,11 @@ fi
 if [[ $* == *-m* ]]; then
   echo "Skipping MacOS..."
 else
-  set +x
-  # shellcheck disable=SC2029
-  ssh macbook "
-    set -e
-    source .zprofile 
-    cd $project 
-    git pull 
-    security unlock-keychain -p $(pass macbook)
-    ./scripts/macos.sh || true
-    ./scripts/ios.sh
-  "
+  ssh macos "./fitbook/scripts/macos.sh" || true
+fi
+
+if [[ $* == *-i* ]]; then
+  echo "Skipping iOS..."
+else
+  ssh macos "./fitbook/scripts/ios.sh" || true
 fi

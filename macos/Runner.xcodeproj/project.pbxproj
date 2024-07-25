@@ -479,6 +479,8 @@
 			baseConfigurationReference = 6BDCEEE936E6E8734ECA6B8B /* Pods-RunnerTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: BRANDON ROSS PRESLEY (CN8336593W)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CN8336593W;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -495,6 +497,8 @@
 			baseConfigurationReference = E821586483B4B54837C059CB /* Pods-RunnerTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: BRANDON ROSS PRESLEY (CN8336593W)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CN8336593W;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -511,6 +515,8 @@
 			baseConfigurationReference = 759E4C4B6D46929F86EF1B0C /* Pods-RunnerTests.profile.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: BRANDON ROSS PRESLEY (CN8336593W)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CN8336593W;
 				GENERATE_INFOPLIST_FILE = YES;
