@@ -3,7 +3,7 @@
 set -ex
 
 source "$HOME/.zprofile"
-cd fitbook
+cd "$HOME/fitbook"
 git pull
 security unlock-keychain -p ''
 
