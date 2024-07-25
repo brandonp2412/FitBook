@@ -2,9 +2,32 @@
 
 set -ex
 
-fields="product_name,food_groups,energy-kcal_100g,fat_100g,proteins_100g,carbohydrates_100g,sugars_100g,fiber_100g,serving_size,serving_quantity,created_datetime"
+fields="product_name,food_groups,energy-kcal_100g,fat_100g,proteins_100g,carbohydrates_100g,sugars_100g,fiber_100g,serving_size,serving_quantity,code"
 csvcut -t -c "$fields" en.openfoodfacts.org.products.csv >foods.csv
-sed '1s/product_name/name/;1s/food_groups/foodGroup/;1s/energy-kcal_100g/calories/;1s/fat_100g/fatG/;1s/proteins_100g/proteinG/;1s/carbohydrates_100g/carbohydrateG/;1s/sugars_100g/sugarsG/;1s/carbohydrates_100g/carbohydrateG/;1s/sugars_100g/sugarsG/;1s/fiber_100g/fiberG/;1s/serving_size/servingUnit/;1s/serving_quantity/servingSize/;1s/created_datetime/created/;' \
-  -i foods.csv
-columns="name,foodGroup,calories,fatG,proteinG,carbohydrateG,sugarsG,fiberG,servingUnit,servingSize,created,id,cholesterolMg,saturatedFatsG,calciumMg,ironFeMg,potassiumKMg,magnesiumMg,vitaminAIuIu,vitaminARaeMcg,vitaminCMg,vitamin_b_12_mcg,vitaminDMcg,vitaminEAlphaTocopherolMg,addedSugarG,netCarbsG,waterG,omega_3s_mg,omega_6s_mg,pralScore,transFattyAcidsG,solubleFiberG,insolubleFiberG,sucroseG,glucoseDextroseG,fructoseG,lactoseG,maltoseG,galactoseG,starchG,totalSugarAlcoholsG,phosphorusPMg,sodiumMg,zincZnMg,copperCuMg,manganeseMg,seleniumSeMcg,fluorideFMcg,molybdenumMcg,chlorineMg,thiaminB1Mg,riboflavinB2Mg,niacinB3Mg,pantothenic_acid_b5_mg,vitaminB6Mg,biotinB7Mcg,folateB9Mcg,folicAcidMcg,foodFolateMcg,folateDfeMcg,cholineMg,betaineMg,retinolMcg,caroteneBetaMcg,caroteneAlphaMcg,lycopeneMcg,luteinZeaxanthinMcg,vitaminD2ErgocalciferolMcg,vitaminD3CholecalciferolMcg,vitaminDIuIu,vitaminKMcg,dihydrophylloquinoneMcg,menaquinone_4_mcg,fattyAcidsTotalMonounsaturatedMg,fattyAcidsTotalPolyunsaturatedMg,_18_3_n_3_c_c_c_ala_mg,_20_5_n_3_epa_mg,_22_5_n_3_dpa_mg,_22_6_n_3_dha_mg,tryptophanMg,threonineMg,isoleucineMg,leucineMg,lysineMg,methionineMg,cystineMg,phenylalanineMg,tyrosineMg,valineMg,arginineMg,histidineMg,alanineMg,asparticAcidMg,glutamicAcidMg,glycineMg,prolineMg,serineMg,hydroxyprolineMg,alcoholG,caffeineMg,theobromineMg,serving_weight_1_g,serving_description_1_g,serving_weight_2_g,serving_description_2_g,serving_weight_3_g,serving_description_3_g,serving_weight_4_g,serving_description_4_g,serving_weight_5_g,serving_description_5_g,serving_weight_6_g,serving_description_6_g,serving_weight_7_g,serving_description_7_g,serving_weight_8_g,serving_description_8_g,serving_weight_9_g,serving_description_9_g,_200_calorie_weight_g,favorite"
-csvstack foods.csv <<<"$columns" >off-foods.csv
+sqlite3 "CREATE TEMP TABLE foods_import(
+  name TEXT,
+  food_group TEXT,
+  calories REAL,
+  fat_g REAL,
+  protein_g REAL,
+  carbohydrate_g REAL,
+  sugars_g REAL,
+  fiber_g REAL,
+  serving_size REAL,
+  serving_unit TEXT,
+  barcode TEXT
+);
+.mode csv;
+.import ./foods.csv foods_import;
+DELETE FROM foods_import WHERE calories = '';
+DELETE FROM foods_import WHERE name = '';
+UPDATE foods_import SET fat_g = null WHERE fat_g = '';
+UPDATE foods_import SET protein_g = null WHERE protein_g = '';
+UPDATE foods_import SET carbohydrate_g = null WHERE carbohydrate_g = '';
+UPDATE foods_import SET sugars_g = null WHERE sugars_g = '';
+UPDATE foods_import SET fiber_g = null WHERE fiber_g = '';
+UPDATE foods_import SET serving_size = null WHERE serving_size = '';
+INSERT INTO foods(name,food_group,calories,fat_g,protein_g,
+  carbohydrate_g,sugars_g,fiber_g,serving_unit,serving_size,barcode)
+  SELECT * FROM foods_import;
+"
