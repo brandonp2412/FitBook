@@ -17,7 +17,7 @@ class FoodPage extends StatefulWidget {
 }
 
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
-  late Stream<List<FoodsCompanion>> stream;
+  late Stream<List<TypedResult>> stream;
 
   final TextEditingController searchController = TextEditingController();
   final TextEditingController servingSizeGtController = TextEditingController();
@@ -48,7 +48,6 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         db.foods.smallImage,
         db.foods.imageFile,
       ])
-      ..where(db.foods.name.contains(search.toLowerCase()))
       ..orderBy([
         OrderingTerm(
           expression: db.foods.favorite,
@@ -61,6 +60,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       ])
       ..limit(limit));
 
+    if (search.isNotEmpty)
+      query = query..where(db.foods.name.contains(search.toLowerCase()));
     if (_foodGroup != null)
       query = query..where(db.foods.foodGroup.equals(_foodGroup!));
     if (_servingUnit != null)
@@ -79,24 +80,24 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         );
 
     setState(() {
-      stream = query.watch().map(
-            (results) => results
-                .map(
-                  (result) => FoodsCompanion(
-                    id: Value(result.read(db.foods.id)!),
-                    name: Value(result.read(db.foods.name)!),
-                    calories: Value(result.read(db.foods.calories)),
-                    favorite: Value(result.read(db.foods.favorite)),
-                    servingSize: Value(result.read(db.foods.servingSize)),
-                    servingUnit: Value(result.read(db.foods.servingUnit)),
-                    imageFile: Value(result.read(db.foods.imageFile)),
-                    smallImage: Value(result.read(db.foods.smallImage)),
-                  ),
-                )
-                .toList(),
-          );
+      stream = query.watch();
     });
   }
+
+  List<FoodsCompanion> resultsToCompanions(List<TypedResult> results) => results
+      .map(
+        (result) => FoodsCompanion(
+          id: Value(result.read(db.foods.id)!),
+          name: Value(result.read(db.foods.name)!),
+          calories: Value(result.read(db.foods.calories)),
+          favorite: Value(result.read(db.foods.favorite)),
+          servingSize: Value(result.read(db.foods.servingSize)),
+          servingUnit: Value(result.read(db.foods.servingUnit)),
+          imageFile: Value(result.read(db.foods.imageFile)),
+          smallImage: Value(result.read(db.foods.smallImage)),
+        ),
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +123,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       body: StreamBuilder(
         stream: stream,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
-          final foods = snapshot.data ?? [];
+          if (snapshot.hasError) throw snapshot.error!;
+          final foods = resultsToCompanions(snapshot.data ?? []);
 
           return material.Column(
             children: [
