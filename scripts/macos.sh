@@ -21,4 +21,4 @@ INSTALLER_CERT_NAME=$(keychain list-certificates |
 xcrun productsign --sign "$INSTALLER_CERT_NAME" build/macos/unsigned.pkg "$PACKAGE_NAME"
 rm -f build/macos/unsigned.pkg
 
-fastlane deliver --silent --pkg build/macos/FitBook.pkg
+fastlane deliver --pkg build/macos/FitBook.pkg
