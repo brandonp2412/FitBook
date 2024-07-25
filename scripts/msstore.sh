@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 client_id=$(yq -r .clientId "$HOME/.config/msstore.yml")
 client_secret=$(yq -r .clientSecret "$HOME/.config/msstore.yml")
