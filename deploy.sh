@@ -68,10 +68,11 @@ flutter build linux
 docker start windows
 rsync -a --delete --exclude-from=.gitignore --exclude flutter ./* .gitignore \
   "$HOME/windows/$project-source"
-ssh windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
+ssh -o 'ConnectionAttempts 10' windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
 sudo chown -R "$USER" "$HOME/windows/$project"
 mv "$HOME/windows/$project/fit_book.msix" "$HOME/windows/$project.msix"
 (cd "$HOME/windows/$project" && zip --quiet -r "$HOME/windows/$project-windows.zip" .)
+docker stop windows
 
 git push
 gh release create "$new_version" --notes "$changelog" \
@@ -97,7 +98,16 @@ fi
 if [[ $* == *-m* ]]; then
   echo "Skipping MacOS..."
 else
-  ssh macos "./fitbook/scripts/macos.sh" || true
+  # shellcheck disable=SC2029
+  ssh macbook "
+    set -e
+    source .zprofile
+    cd $project
+    git pull
+    security unlock-keychain -p $(pass macbook)
+    ./scripts/macos.sh || true
+    ./scripts/ios.sh
+  "
 fi
 
 if [[ $* == *-i* ]]; then

@@ -2,11 +2,6 @@
 
 set -ex
 
-source "$HOME/.zprofile"
-cd "$HOME/fitbook"
-git pull
-security unlock-keychain -p ''
-
 flutter build macos --release
 APP_NAME="build/macos/Build/Products/Release/FitBook.app"
 PACKAGE_NAME=build/macos/FitBook.pkg
