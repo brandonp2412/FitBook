@@ -22,13 +22,36 @@ import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 part 'database.g.dart';
 
+LazyDatabase _openConnection(bool? dontLog) {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
+
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+    }
+
+    // Make sqlite3 pick a more suitable location for temporary files - the
+    // one from the system may be inaccessible due to sandboxing.
+    final cachebase = (await getTemporaryDirectory()).path;
+    // We can't access /tmp on Android, which sqlite3 would try by default.
+    // Explicitly tell it about the correct temporary directory.
+    sqlite3.tempDirectory = cachebase;
+
+    var logStatements = kDebugMode ? true : false;
+    if (dontLog == true) logStatements = false;
+
+    return NativeDatabase.createInBackground(
+      file,
+      logStatements: logStatements,
+    );
+  });
+}
+
 @DriftDatabase(tables: [Foods, Entries, Weights, Settings])
 class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor, bool? dontLog})
       : super(executor ?? _openConnection(dontLog));
-
-  @override
-  int get schemaVersion => 22;
 
   @override
   MigrationStrategy get migration {
@@ -260,33 +283,25 @@ class AppDatabase extends _$AppDatabase {
             ),
           );
         },
+        from22To23: (Migrator m, Schema23 schema) async {
+          await m.addColumn(
+            schema.settings,
+            schema.settings.positiveReinforcement,
+          );
+          await m.addColumn(schema.settings, schema.settings.reminders);
+          final result = await (schema.settings.select()).getSingle();
+          final positive = result.read<bool>('notifications');
+          await schema.settings.update().write(
+                RawValuesInsertable(
+                  {'positive_reinforcement': Variable(positive)},
+                ),
+              );
+          await m.alterTable(TableMigration(schema.settings));
+        },
       ),
     );
   }
-}
 
-LazyDatabase _openConnection(bool? dontLog) {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
-
-    if (Platform.isAndroid) {
-      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-    }
-
-    // Make sqlite3 pick a more suitable location for temporary files - the
-    // one from the system may be inaccessible due to sandboxing.
-    final cachebase = (await getTemporaryDirectory()).path;
-    // We can't access /tmp on Android, which sqlite3 would try by default.
-    // Explicitly tell it about the correct temporary directory.
-    sqlite3.tempDirectory = cachebase;
-
-    var logStatements = kDebugMode ? true : false;
-    if (dontLog == true) logStatements = false;
-
-    return NativeDatabase.createInBackground(
-      file,
-      logStatements: logStatements,
-    );
-  });
+  @override
+  int get schemaVersion => 23;
 }

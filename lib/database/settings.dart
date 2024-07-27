@@ -14,7 +14,9 @@ class Settings extends Table {
   TextColumn get foodUnit => text()();
   IntColumn get id => integer().autoIncrement()();
   TextColumn get longDateFormat => text()();
-  BoolColumn get notifications => boolean()();
+  BoolColumn get positiveReinforcement =>
+      boolean().withDefault(const Constant(true))();
+  BoolColumn get reminders => boolean().withDefault(const Constant(false))();
   BoolColumn get selectEntryOnSubmit => boolean()();
   TextColumn get shortDateFormat => text()();
   BoolColumn get showImages => boolean().withDefault(const Constant(true))();

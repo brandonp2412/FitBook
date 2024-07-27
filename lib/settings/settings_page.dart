@@ -5,6 +5,7 @@ import 'package:fit_book/about_page.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/export_data.dart';
 import 'package:fit_book/settings/import_data.dart';
@@ -78,6 +79,14 @@ class _SettingsPageState extends State<SettingsPage> {
     fatController.text = settings.dailyFat?.toString() ?? "";
     carbsController.text = settings.dailyCarb?.toString() ?? "";
     targetWeightController.text = settings.targetWeight?.toString() ?? "";
+  }
+
+  void setReminders(bool value) {
+    db.settings.update().write(SettingsCompanion(reminders: Value(value)));
+    if (value)
+      setupReminders();
+    else
+      cancelReminders();
   }
 
   @override
@@ -372,20 +381,32 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       SettingsLine(
-        key: 'notifications',
+        key: 'positive reinforcement',
         widget: ListTile(
-          leading: const Icon(Icons.notifications_outlined),
-          title: const Text('Notifications'),
+          leading: const Icon(Icons.sentiment_very_satisfied),
+          title: const Text('Positive reinforcement'),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
-                  notifications: Value(!settings.notifications),
+                  positiveReinforcement: Value(!settings.positiveReinforcement),
                 ),
               ),
           trailing: Switch(
-            value: settings.notifications,
+            value: settings.positiveReinforcement,
             onChanged: (value) => db.settings
                 .update()
-                .write(SettingsCompanion(notifications: Value(value))),
+                .write(SettingsCompanion(positiveReinforcement: Value(value))),
+          ),
+        ),
+      ),
+      SettingsLine(
+        key: 'reminders',
+        widget: ListTile(
+          leading: const Icon(Icons.notifications),
+          title: const Text('Reminders'),
+          onTap: () => setReminders(!settings.reminders),
+          trailing: Switch(
+            value: settings.reminders,
+            onChanged: (value) => setReminders(value),
           ),
         ),
       ),

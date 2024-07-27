@@ -29,6 +29,8 @@ dependencies:
   cached_network_image: ^3.3.1
   barcode_scan2: ^4.3.2
   permission_handler: ^11.3.1
+  flutter_local_notifications: ^17.2.1+2
+  workmanager: ^0.5.2
 dev_dependencies:
   integration_test:
     sdk: flutter

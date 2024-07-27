@@ -6133,15 +6133,26 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
       'long_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _notificationsMeta =
-      const VerificationMeta('notifications');
+  static const VerificationMeta _positiveReinforcementMeta =
+      const VerificationMeta('positiveReinforcement');
   @override
-  late final GeneratedColumn<bool> notifications = GeneratedColumn<bool>(
-      'notifications', aliasedName, false,
+  late final GeneratedColumn<bool> positiveReinforcement =
+      GeneratedColumn<bool>('positive_reinforcement', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintIsAlways(
+              'CHECK ("positive_reinforcement" IN (0, 1))'),
+          defaultValue: const Constant(true));
+  static const VerificationMeta _remindersMeta =
+      const VerificationMeta('reminders');
+  @override
+  late final GeneratedColumn<bool> reminders = GeneratedColumn<bool>(
+      'reminders', aliasedName, false,
       type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("notifications" IN (0, 1))'));
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("reminders" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _selectEntryOnSubmitMeta =
       const VerificationMeta('selectEntryOnSubmit');
   @override
@@ -6222,7 +6233,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         foodUnit,
         id,
         longDateFormat,
-        notifications,
+        positiveReinforcement,
+        reminders,
         selectEntryOnSubmit,
         shortDateFormat,
         showImages,
@@ -6310,13 +6322,15 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_longDateFormatMeta);
     }
-    if (data.containsKey('notifications')) {
+    if (data.containsKey('positive_reinforcement')) {
       context.handle(
-          _notificationsMeta,
-          notifications.isAcceptableOrUnknown(
-              data['notifications']!, _notificationsMeta));
-    } else if (isInserting) {
-      context.missing(_notificationsMeta);
+          _positiveReinforcementMeta,
+          positiveReinforcement.isAcceptableOrUnknown(
+              data['positive_reinforcement']!, _positiveReinforcementMeta));
+    }
+    if (data.containsKey('reminders')) {
+      context.handle(_remindersMeta,
+          reminders.isAcceptableOrUnknown(data['reminders']!, _remindersMeta));
     }
     if (data.containsKey('select_entry_on_submit')) {
       context.handle(
@@ -6409,8 +6423,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       longDateFormat: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
-      notifications: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}notifications'])!,
+      positiveReinforcement: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}positive_reinforcement'])!,
+      reminders: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}reminders'])!,
       selectEntryOnSubmit: attachedDatabase.typeMapping.read(
           DriftSqlType.bool, data['${effectivePrefix}select_entry_on_submit'])!,
       shortDateFormat: attachedDatabase.typeMapping.read(
@@ -6450,7 +6466,8 @@ class Setting extends DataClass implements Insertable<Setting> {
   final String foodUnit;
   final int id;
   final String longDateFormat;
-  final bool notifications;
+  final bool positiveReinforcement;
+  final bool reminders;
   final bool selectEntryOnSubmit;
   final String shortDateFormat;
   final bool showImages;
@@ -6472,7 +6489,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.foodUnit,
       required this.id,
       required this.longDateFormat,
-      required this.notifications,
+      required this.positiveReinforcement,
+      required this.reminders,
       required this.selectEntryOnSubmit,
       required this.shortDateFormat,
       required this.showImages,
@@ -6504,7 +6522,8 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['food_unit'] = Variable<String>(foodUnit);
     map['id'] = Variable<int>(id);
     map['long_date_format'] = Variable<String>(longDateFormat);
-    map['notifications'] = Variable<bool>(notifications);
+    map['positive_reinforcement'] = Variable<bool>(positiveReinforcement);
+    map['reminders'] = Variable<bool>(reminders);
     map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
     map['short_date_format'] = Variable<String>(shortDateFormat);
     map['show_images'] = Variable<bool>(showImages);
@@ -6544,7 +6563,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       foodUnit: Value(foodUnit),
       id: Value(id),
       longDateFormat: Value(longDateFormat),
-      notifications: Value(notifications),
+      positiveReinforcement: Value(positiveReinforcement),
+      reminders: Value(reminders),
       selectEntryOnSubmit: Value(selectEntryOnSubmit),
       shortDateFormat: Value(shortDateFormat),
       showImages: Value(showImages),
@@ -6578,7 +6598,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       foodUnit: serializer.fromJson<String>(json['foodUnit']),
       id: serializer.fromJson<int>(json['id']),
       longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
-      notifications: serializer.fromJson<bool>(json['notifications']),
+      positiveReinforcement:
+          serializer.fromJson<bool>(json['positiveReinforcement']),
+      reminders: serializer.fromJson<bool>(json['reminders']),
       selectEntryOnSubmit:
           serializer.fromJson<bool>(json['selectEntryOnSubmit']),
       shortDateFormat: serializer.fromJson<String>(json['shortDateFormat']),
@@ -6606,7 +6628,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       'foodUnit': serializer.toJson<String>(foodUnit),
       'id': serializer.toJson<int>(id),
       'longDateFormat': serializer.toJson<String>(longDateFormat),
-      'notifications': serializer.toJson<bool>(notifications),
+      'positiveReinforcement': serializer.toJson<bool>(positiveReinforcement),
+      'reminders': serializer.toJson<bool>(reminders),
       'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
       'shortDateFormat': serializer.toJson<String>(shortDateFormat),
       'showImages': serializer.toJson<bool>(showImages),
@@ -6631,7 +6654,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           String? foodUnit,
           int? id,
           String? longDateFormat,
-          bool? notifications,
+          bool? positiveReinforcement,
+          bool? reminders,
           bool? selectEntryOnSubmit,
           String? shortDateFormat,
           bool? showImages,
@@ -6655,7 +6679,9 @@ class Setting extends DataClass implements Insertable<Setting> {
         foodUnit: foodUnit ?? this.foodUnit,
         id: id ?? this.id,
         longDateFormat: longDateFormat ?? this.longDateFormat,
-        notifications: notifications ?? this.notifications,
+        positiveReinforcement:
+            positiveReinforcement ?? this.positiveReinforcement,
+        reminders: reminders ?? this.reminders,
         selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
         shortDateFormat: shortDateFormat ?? this.shortDateFormat,
         showImages: showImages ?? this.showImages,
@@ -6681,7 +6707,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
           ..write('longDateFormat: $longDateFormat, ')
-          ..write('notifications: $notifications, ')
+          ..write('positiveReinforcement: $positiveReinforcement, ')
+          ..write('reminders: $reminders, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('shortDateFormat: $shortDateFormat, ')
           ..write('showImages: $showImages, ')
@@ -6708,7 +6735,8 @@ class Setting extends DataClass implements Insertable<Setting> {
         foodUnit,
         id,
         longDateFormat,
-        notifications,
+        positiveReinforcement,
+        reminders,
         selectEntryOnSubmit,
         shortDateFormat,
         showImages,
@@ -6734,7 +6762,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.foodUnit == this.foodUnit &&
           other.id == this.id &&
           other.longDateFormat == this.longDateFormat &&
-          other.notifications == this.notifications &&
+          other.positiveReinforcement == this.positiveReinforcement &&
+          other.reminders == this.reminders &&
           other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
           other.shortDateFormat == this.shortDateFormat &&
           other.showImages == this.showImages &&
@@ -6758,7 +6787,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<String> foodUnit;
   final Value<int> id;
   final Value<String> longDateFormat;
-  final Value<bool> notifications;
+  final Value<bool> positiveReinforcement;
+  final Value<bool> reminders;
   final Value<bool> selectEntryOnSubmit;
   final Value<String> shortDateFormat;
   final Value<bool> showImages;
@@ -6780,7 +6810,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.foodUnit = const Value.absent(),
     this.id = const Value.absent(),
     this.longDateFormat = const Value.absent(),
-    this.notifications = const Value.absent(),
+    this.positiveReinforcement = const Value.absent(),
+    this.reminders = const Value.absent(),
     this.selectEntryOnSubmit = const Value.absent(),
     this.shortDateFormat = const Value.absent(),
     this.showImages = const Value.absent(),
@@ -6803,7 +6834,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     required String foodUnit,
     this.id = const Value.absent(),
     required String longDateFormat,
-    required bool notifications,
+    this.positiveReinforcement = const Value.absent(),
+    this.reminders = const Value.absent(),
     required bool selectEntryOnSubmit,
     required String shortDateFormat,
     this.showImages = const Value.absent(),
@@ -6819,7 +6851,6 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
         favoriteNew = Value(favoriteNew),
         foodUnit = Value(foodUnit),
         longDateFormat = Value(longDateFormat),
-        notifications = Value(notifications),
         selectEntryOnSubmit = Value(selectEntryOnSubmit),
         shortDateFormat = Value(shortDateFormat),
         showOthers = Value(showOthers),
@@ -6837,7 +6868,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<String>? foodUnit,
     Expression<int>? id,
     Expression<String>? longDateFormat,
-    Expression<bool>? notifications,
+    Expression<bool>? positiveReinforcement,
+    Expression<bool>? reminders,
     Expression<bool>? selectEntryOnSubmit,
     Expression<String>? shortDateFormat,
     Expression<bool>? showImages,
@@ -6860,7 +6892,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (foodUnit != null) 'food_unit': foodUnit,
       if (id != null) 'id': id,
       if (longDateFormat != null) 'long_date_format': longDateFormat,
-      if (notifications != null) 'notifications': notifications,
+      if (positiveReinforcement != null)
+        'positive_reinforcement': positiveReinforcement,
+      if (reminders != null) 'reminders': reminders,
       if (selectEntryOnSubmit != null)
         'select_entry_on_submit': selectEntryOnSubmit,
       if (shortDateFormat != null) 'short_date_format': shortDateFormat,
@@ -6886,7 +6920,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<String>? foodUnit,
       Value<int>? id,
       Value<String>? longDateFormat,
-      Value<bool>? notifications,
+      Value<bool>? positiveReinforcement,
+      Value<bool>? reminders,
       Value<bool>? selectEntryOnSubmit,
       Value<String>? shortDateFormat,
       Value<bool>? showImages,
@@ -6908,7 +6943,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       foodUnit: foodUnit ?? this.foodUnit,
       id: id ?? this.id,
       longDateFormat: longDateFormat ?? this.longDateFormat,
-      notifications: notifications ?? this.notifications,
+      positiveReinforcement:
+          positiveReinforcement ?? this.positiveReinforcement,
+      reminders: reminders ?? this.reminders,
       selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
       shortDateFormat: shortDateFormat ?? this.shortDateFormat,
       showImages: showImages ?? this.showImages,
@@ -6957,8 +6994,12 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (longDateFormat.present) {
       map['long_date_format'] = Variable<String>(longDateFormat.value);
     }
-    if (notifications.present) {
-      map['notifications'] = Variable<bool>(notifications.value);
+    if (positiveReinforcement.present) {
+      map['positive_reinforcement'] =
+          Variable<bool>(positiveReinforcement.value);
+    }
+    if (reminders.present) {
+      map['reminders'] = Variable<bool>(reminders.value);
     }
     if (selectEntryOnSubmit.present) {
       map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit.value);
@@ -7004,7 +7045,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
           ..write('longDateFormat: $longDateFormat, ')
-          ..write('notifications: $notifications, ')
+          ..write('positiveReinforcement: $positiveReinforcement, ')
+          ..write('reminders: $reminders, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('shortDateFormat: $shortDateFormat, ')
           ..write('showImages: $showImages, ')
@@ -9458,7 +9500,8 @@ typedef $$SettingsTableInsertCompanionBuilder = SettingsCompanion Function({
   required String foodUnit,
   Value<int> id,
   required String longDateFormat,
-  required bool notifications,
+  Value<bool> positiveReinforcement,
+  Value<bool> reminders,
   required bool selectEntryOnSubmit,
   required String shortDateFormat,
   Value<bool> showImages,
@@ -9481,7 +9524,8 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<String> foodUnit,
   Value<int> id,
   Value<String> longDateFormat,
-  Value<bool> notifications,
+  Value<bool> positiveReinforcement,
+  Value<bool> reminders,
   Value<bool> selectEntryOnSubmit,
   Value<String> shortDateFormat,
   Value<bool> showImages,
@@ -9524,7 +9568,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<String> foodUnit = const Value.absent(),
             Value<int> id = const Value.absent(),
             Value<String> longDateFormat = const Value.absent(),
-            Value<bool> notifications = const Value.absent(),
+            Value<bool> positiveReinforcement = const Value.absent(),
+            Value<bool> reminders = const Value.absent(),
             Value<bool> selectEntryOnSubmit = const Value.absent(),
             Value<String> shortDateFormat = const Value.absent(),
             Value<bool> showImages = const Value.absent(),
@@ -9547,7 +9592,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             foodUnit: foodUnit,
             id: id,
             longDateFormat: longDateFormat,
-            notifications: notifications,
+            positiveReinforcement: positiveReinforcement,
+            reminders: reminders,
             selectEntryOnSubmit: selectEntryOnSubmit,
             shortDateFormat: shortDateFormat,
             showImages: showImages,
@@ -9570,7 +9616,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             required String foodUnit,
             Value<int> id = const Value.absent(),
             required String longDateFormat,
-            required bool notifications,
+            Value<bool> positiveReinforcement = const Value.absent(),
+            Value<bool> reminders = const Value.absent(),
             required bool selectEntryOnSubmit,
             required String shortDateFormat,
             Value<bool> showImages = const Value.absent(),
@@ -9593,7 +9640,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             foodUnit: foodUnit,
             id: id,
             longDateFormat: longDateFormat,
-            notifications: notifications,
+            positiveReinforcement: positiveReinforcement,
+            reminders: reminders,
             selectEntryOnSubmit: selectEntryOnSubmit,
             shortDateFormat: shortDateFormat,
             showImages: showImages,
@@ -9677,8 +9725,13 @@ class $$SettingsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<bool> get notifications => $state.composableBuilder(
-      column: $state.table.notifications,
+  ColumnFilters<bool> get positiveReinforcement => $state.composableBuilder(
+      column: $state.table.positiveReinforcement,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get reminders => $state.composableBuilder(
+      column: $state.table.reminders,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
@@ -9786,8 +9839,13 @@ class $$SettingsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<bool> get notifications => $state.composableBuilder(
-      column: $state.table.notifications,
+  ColumnOrderings<bool> get positiveReinforcement => $state.composableBuilder(
+      column: $state.table.positiveReinforcement,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get reminders => $state.composableBuilder(
+      column: $state.table.reminders,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 

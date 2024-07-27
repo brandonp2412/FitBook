@@ -5,6 +5,7 @@ import 'package:fit_book/entry/entry_page.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ Future<void> main() async {
 
   final settings = await (db.settings.select()).getSingle();
   final settingsState = SettingsState(settings);
+
+  if (settings.reminders)
+    setupReminders();
+  else
+    cancelReminders();
 
   final packageInfo = await PackageInfo.fromPlatform();
   OpenFoodAPIConfiguration.userAgent = UserAgent(
