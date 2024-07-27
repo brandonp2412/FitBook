@@ -37,7 +37,7 @@ echo "$changelog" >fastlane/metadata/en-US/release_notes.txt
 if [[ $* == *-t* ]]; then
   echo "Skipping tests..."
 else
-  flutter test
+  ./flutter/bin/flutter test
   dart analyze lib
   dart format --set-exit-if-changed lib
   ./scripts/migrate.sh
@@ -54,15 +54,15 @@ git commit -m "$new_version 🚀
 
 $changelog"
 
-flutter build apk --split-per-abi
+./flutter/bin/flutter build apk --split-per-abi
 adb -d install "$apk"/app-arm64-v8a-release.apk || true
-flutter build apk
+./flutter/bin/flutter build apk
 project=$(basename "$PWD")
 mv "$apk"/app-release.apk "$apk/$project.apk"
-flutter build appbundle
+./flutter/bin/flutter build appbundle
 
 mkdir -p build/native_assets/linux
-flutter build linux
+./flutter/bin/flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip --quiet -r "$project-linux.zip" .)
 
 docker start windows
