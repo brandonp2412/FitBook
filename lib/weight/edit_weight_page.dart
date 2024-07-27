@@ -8,7 +8,6 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -111,7 +110,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     final message =
         positiveReinforcements[random.nextInt(positiveReinforcements.length)];
 
-    Fluttertoast.showToast(msg: message);
+    toast(context, message);
   }
 
   @override

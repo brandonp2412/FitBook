@@ -9,7 +9,6 @@ import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -815,9 +814,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   setState(() {
                     barcode = value;
                   });
-                  Fluttertoast.showToast(
-                    msg: "Barcode not found. Save to insert.",
-                  );
+                  toast(context, 'Barcode not found. Save to insert.');
                 },
                 onFood: (food) {
                   Navigator.of(context).pop();

@@ -8,7 +8,6 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:provider/provider.dart';
 
@@ -148,8 +147,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               trailing: [
                 if (Platform.isAndroid || Platform.isIOS)
                   ScanBarcode(
-                    onBarcode: (_) =>
-                        Fluttertoast.showToast(msg: 'Barcode not found'),
+                    onBarcode: (_) => toast(context, 'Barcode not found'),
                     onFood: (food) {
                       Navigator.of(context).pop(food);
                     },

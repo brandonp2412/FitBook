@@ -2,9 +2,9 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:provider/provider.dart';
 
@@ -99,9 +99,10 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
                           userId: login.text,
                           password: password.text,
                         );
-                        Fluttertoast.showToast(msg: 'Logged in');
+                        if (context.mounted) toast(context, 'Logged in');
                       } else {
-                        Fluttertoast.showToast(msg: status!.statusVerbose);
+                        if (context.mounted)
+                          toast(context, status!.statusVerbose);
                       }
 
                       if (context.mounted) Navigator.of(context).pop();
