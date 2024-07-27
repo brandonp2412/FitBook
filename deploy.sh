@@ -91,7 +91,7 @@ fi
 if [[ $* == *-p* ]]; then
   echo "Skipping Google play..."
 else
-  bundle exec fastlane supply --silent --aab \
+  bundle exec fastlane supply --aab \
     build/app/outputs/bundle/release/app-release.aab || true
 fi
 
