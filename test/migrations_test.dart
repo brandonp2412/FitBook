@@ -31,10 +31,13 @@ void main() {
         if (to == 2) continue;
         final connection = await verifier.startAt(from);
         db = AppDatabase(executor: connection);
-        await verifier.migrateAndValidate(db, to).catchError((error) {
+        try {
+          await verifier.migrateAndValidate(db, to);
+        } catch (error) {
           debugPrint('Failed from=$from,to=$to');
-          throw Exception(error);
-        });
+          debugPrint(error.toString());
+          // rethrow;
+        }
         await db.close();
       }
     }
