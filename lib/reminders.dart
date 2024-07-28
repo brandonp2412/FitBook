@@ -18,11 +18,11 @@ void setupReminders() {
     Workmanager().registerPeriodicTask(
       "reminders",
       "reminders",
-      frequency: const Duration(minutes: 15),
+      frequency: const Duration(hours: 4),
     );
   } else {
     timer = Timer.periodic(
-      const Duration(hours: 1),
+      const Duration(hours: 4),
       (timer) => doDesktopReminders(),
     );
   }
@@ -98,7 +98,6 @@ void cancelReminders() {
   'vm:entry-point',
 )
 void doMobileReminders() {
-  print('[MobileReminders] Executing workmanager...');
   Workmanager().executeTask((task, inputData) async {
     const darwinSettings = DarwinInitializationSettings();
     const androidSettings =
@@ -108,13 +107,10 @@ void doMobileReminders() {
       android: androidSettings,
     );
     final plugin = FlutterLocalNotificationsPlugin();
-    print('[MobileReminders] Initializing notifications plugin...');
     await plugin.initialize(initSettings);
 
-    print('[MobileReminders] Initializing database...');
     final db = AppDatabase();
 
-    print('[MobileReminders] Selecting entries...');
     final entries = await (db.entries.select()
           ..where(
             (u) => const CustomExpression(
@@ -124,18 +120,14 @@ void doMobileReminders() {
         .get();
     final now = DateTime.now();
     final hour = now.hour;
-    print('[MobileReminders] now=$now,hour=$hour...');
 
     bool isBreakfast(int value) => value >= 6 && value < 12;
     bool isLunch(int value) => value >= 12 && value < 16;
     bool isDinner(int value) => value >= 16 && value < 22;
-    bool isSameDay(DateTime a, DateTime b) =>
-        a.year == b.year && a.month == b.month && a.day == b.day;
 
     if (isBreakfast(hour)) {
-      final entered = entries.where((entry) => isBreakfast(entry.created.hour));
-      print('[MobileReminders] entered=$entered...');
-      if (entered.isNotEmpty) return Future.value(true);
+      final brekkie = entries.where((entry) => isBreakfast(entry.created.hour));
+      if (brekkie.isNotEmpty) return Future.value(true);
 
       await plugin.show(
         1,
@@ -150,9 +142,8 @@ void doMobileReminders() {
         ),
       );
     } else if (isLunch(hour)) {
-      final entered = entries.where((entry) => isLunch(entry.created.hour));
-      print('[MobileReminders] entered=$entered...');
-      if (entered.isNotEmpty) return Future.value(true);
+      final lunch = entries.where((entry) => isLunch(entry.created.hour));
+      if (lunch.isNotEmpty) return Future.value(true);
 
       await plugin.show(
         2,
@@ -167,9 +158,8 @@ void doMobileReminders() {
         ),
       );
     } else if (isDinner(hour)) {
-      final entered = entries.where((entry) => isDinner(entry.created.hour));
-      print('[MobileReminders] entered=$entered...');
-      if (entered.isNotEmpty) return Future.value(true);
+      final dins = entries.where((entry) => isDinner(entry.created.hour));
+      if (dins.isNotEmpty) return Future.value(true);
 
       await plugin.show(
         3,
