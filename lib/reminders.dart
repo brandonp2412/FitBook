@@ -3,18 +3,16 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:workmanager/workmanager.dart';
 
 Timer? timer;
 
 void setupReminders() {
   if (Platform.isAndroid || Platform.isIOS) {
-    Workmanager().initialize(
-      doMobileReminders,
-      isInDebugMode: kDebugMode,
-    );
+    Permission.notification.request();
+    Workmanager().initialize(doMobileReminders);
     Workmanager().registerPeriodicTask(
       "reminders",
       "reminders",
