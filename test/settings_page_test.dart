@@ -28,24 +28,87 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('System'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Light'));
-    await tester.pumpAndSettle();
-    expect(find.text('Light'), findsOne);
+    expect(find.text('Appearance'), findsOne);
+    expect(find.text('Data'), findsOne);
+    expect(find.text('Diary'), findsOne);
+    expect(find.text('Food'), findsOne);
+    expect(find.text('Weight'), findsOne);
 
-    await tester.enterText(find.bySemanticsLabel('Daily calories'), '3000');
-    await tester.pumpAndSettle();
-    expect(find.text('3000'), findsOne);
+    await db.close();
+  });
 
-    await tester.enterText(find.bySemanticsLabel('Daily protein'), '200');
-    await tester.pumpAndSettle();
-    expect(find.text('200'), findsOne);
+  testWidgets('SettingsPage search', (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
 
-    await tester.enterText(find.bySemanticsLabel('Search...'), 'data');
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => EntryState()),
+        ],
+        child: const MaterialApp(
+          home: SettingsPage(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.bySemanticsLabel('Search...'), 'Weight');
+    await tester.pumpAndSettle();
+    expect(find.text('Weight'), findsOne);
+    expect(find.text('Appearance'), findsNothing);
+
+    await db.close();
+  });
+
+  testWidgets('SettingsPage navigates', (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => EntryState()),
+        ],
+        child: const MaterialApp(
+          home: SettingsPage(),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Appearance'));
+    await tester.pumpAndSettle();
+    expect(find.text('Theme'), findsOne);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Data'));
     await tester.pumpAndSettle();
     expect(find.text('Export data'), findsOne);
-    expect(find.text('Theme'), findsNothing);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Diary'));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel('Daily calories'), findsOne);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Food'));
+    await tester.pumpAndSettle();
+    expect(find.text('Food unit'), findsOne);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Weight'));
+    await tester.pumpAndSettle();
+    expect(find.text('Target weight'), findsOne);
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
 
     await db.close();
   });
