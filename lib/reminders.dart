@@ -93,10 +93,12 @@ void cancelReminders() {
     timer?.cancel();
 }
 
+/// This is used by WorkManager so you can't reference any external variables.
 @pragma(
   'vm:entry-point',
 )
 void doMobileReminders() {
+  print('[MobileReminders] Executing workmanager...');
   Workmanager().executeTask((task, inputData) async {
     const darwinSettings = DarwinInitializationSettings();
     const androidSettings =
@@ -106,10 +108,13 @@ void doMobileReminders() {
       android: androidSettings,
     );
     final plugin = FlutterLocalNotificationsPlugin();
+    print('[MobileReminders] Initializing notifications plugin...');
     await plugin.initialize(initSettings);
 
+    print('[MobileReminders] Initializing database...');
     final db = AppDatabase();
 
+    print('[MobileReminders] Selecting entries...');
     final entries = await (db.entries.select()
           ..where(
             (u) => const CustomExpression(
@@ -119,57 +124,65 @@ void doMobileReminders() {
         .get();
     final now = DateTime.now();
     final hour = now.hour;
+    print('[MobileReminders] now=$now,hour=$hour...');
 
-    if (hour >= 6 && hour < 12) {
-      final entered = entries
-          .where((entry) => entry.created.hour >= 6 && entry.created.hour < 12);
-      if (entered.isEmpty)
-        await plugin.show(
-          1,
-          "Don't forget to log breakfast",
-          null,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'breakfast-reminders',
-              'Breakfast reminders',
-              channelDescription: 'Reminders to log breakfast',
-            ),
+    bool isBreakfast(int value) => value >= 6 && value < 12;
+    bool isLunch(int value) => value >= 12 && value < 16;
+    bool isDinner(int value) => value >= 16 && value < 22;
+    bool isSameDay(DateTime a, DateTime b) =>
+        a.year == b.year && a.month == b.month && a.day == b.day;
+
+    if (isBreakfast(hour)) {
+      final entered = entries.where((entry) => isBreakfast(entry.created.hour));
+      print('[MobileReminders] entered=$entered...');
+      if (entered.isNotEmpty) return Future.value(true);
+
+      await plugin.show(
+        1,
+        "Don't forget to log breakfast",
+        null,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'breakfast-reminders',
+            'Breakfast reminders',
+            channelDescription: 'Reminders to log breakfast',
           ),
-        );
-    } else if (hour >= 12 && hour < 16) {
-      final entered = entries.where(
-        (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
+        ),
       );
-      if (entered.isEmpty)
-        await plugin.show(
-          2,
-          "Don't forget to log lunch",
-          null,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'lunch-reminders',
-              'Lunch reminders',
-              channelDescription: 'Reminders to log lunch',
-            ),
+    } else if (isLunch(hour)) {
+      final entered = entries.where((entry) => isLunch(entry.created.hour));
+      print('[MobileReminders] entered=$entered...');
+      if (entered.isNotEmpty) return Future.value(true);
+
+      await plugin.show(
+        2,
+        "Don't forget to log lunch",
+        null,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'lunch-reminders',
+            'Lunch reminders',
+            channelDescription: 'Reminders to log lunch',
           ),
-        );
-    } else if (hour >= 16 && hour < 22) {
-      final entered = entries.where(
-        (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
+        ),
       );
-      if (entered.isEmpty)
-        await plugin.show(
-          3,
-          "Don't forget to log dinner",
-          null,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'dinner-reminders',
-              'Dinner reminders',
-              channelDescription: 'Reminders to log dinner',
-            ),
+    } else if (isDinner(hour)) {
+      final entered = entries.where((entry) => isDinner(entry.created.hour));
+      print('[MobileReminders] entered=$entered...');
+      if (entered.isNotEmpty) return Future.value(true);
+
+      await plugin.show(
+        3,
+        "Don't forget to log dinner",
+        null,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'dinner-reminders',
+            'Dinner reminders',
+            channelDescription: 'Reminders to log dinner',
           ),
-        );
+        ),
+      );
     }
 
     return Future.value(true);
