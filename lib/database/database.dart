@@ -289,13 +289,17 @@ class AppDatabase extends _$AppDatabase {
             schema.settings.positiveReinforcement,
           );
           await m.addColumn(schema.settings, schema.settings.reminders);
-          final result = await (schema.settings.select()).getSingle();
-          final positive = result.read<bool>('notifications');
-          await schema.settings.update().write(
-                RawValuesInsertable(
-                  {'positive_reinforcement': Variable(positive)},
-                ),
-              );
+
+          final result = await (schema.settings.select()).getSingleOrNull();
+          if (result != null) {
+            final positive = result.read<bool>('notifications');
+            await schema.settings.update().write(
+                  RawValuesInsertable(
+                    {'positive_reinforcement': Variable(positive)},
+                  ),
+                );
+          }
+
           await m.alterTable(TableMigration(schema.settings));
         },
       ),
