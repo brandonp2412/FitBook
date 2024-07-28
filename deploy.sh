@@ -68,7 +68,8 @@ mkdir -p build/native_assets/linux
 docker start windows
 rsync -a --delete --exclude-from=.gitignore --exclude flutter ./* .gitignore \
   "$HOME/windows/$project-source"
-ssh -o 'ConnectionAttempts 10' windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
+while ! ssh windows exit; do sleep 1; done
+ssh windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
 sudo chown -R "$USER" "$HOME/windows/$project"
 mv "$HOME/windows/$project/fit_book.msix" "$HOME/windows/$project.msix"
 (cd "$HOME/windows/$project" && zip --quiet -r "$HOME/windows/$project-windows.zip" .)
