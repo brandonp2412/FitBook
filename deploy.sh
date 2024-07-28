@@ -110,9 +110,3 @@ else
     ./scripts/ios.sh
   "
 fi
-
-if [[ $* == *-i* ]]; then
-  echo "Skipping iOS..."
-else
-  ssh macos "./fitbook/scripts/ios.sh" || true
-fi
