@@ -99,14 +99,13 @@ fi
 if [[ $* == *-m* ]]; then
   echo "Skipping MacOS..."
 else
+  set +x
+  rsync -a --exclude-from=.gitignore ./* .gitignore \
+    --exclude=flutter macos:~/fitbook
   # shellcheck disable=SC2029
-  ssh macbook "
-    set -e
-    source .zprofile
-    cd $project
-    git pull
-    security unlock-keychain -p $(pass macbook)
-    ./scripts/macos.sh || true
-    ./scripts/ios.sh
+  ssh macos "
+    security unlock-keychain -p '$(pass macbook)'
+    cd fitbook
+    ./scripts/macos.sh
   "
 fi
