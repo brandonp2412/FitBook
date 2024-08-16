@@ -83,9 +83,14 @@ class AppDatabase extends _$AppDatabase {
       onUpgrade: stepByStep(
         from1To3: (m, schema) async {
           await m.create(schema.entries);
-          await m.alterTable(TableMigration(schema.foods));
+          await m.drop(schema.foods);
+          await m.create(schema.foods);
         },
         from3To4: (m, schema) async {
+          await m.addColumn(schema.entries, schema.entries.kCalories);
+          await m.addColumn(schema.entries, schema.entries.proteinG);
+          await m.addColumn(schema.entries, schema.entries.carbG);
+          await m.addColumn(schema.entries, schema.entries.fatG);
           await m.alterTable(TableMigration(schema.entries));
         },
         from4To5: (m, schema) async {},

@@ -36,7 +36,7 @@ void main() {
         } catch (error) {
           debugPrint('Failed from=$from,to=$to');
           debugPrint(error.toString());
-          // rethrow;
+          rethrow;
         }
         await db.close();
       }
