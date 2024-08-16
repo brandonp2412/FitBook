@@ -3527,6 +3527,285 @@ class Food extends DataClass implements Insertable<Food> {
         waterG: waterG.present ? waterG.value : this.waterG,
         zincZnMg: zincZnMg.present ? zincZnMg.value : this.zincZnMg,
       );
+  Food copyWithCompanion(FoodsCompanion data) {
+    return Food(
+      barcode: data.barcode.present ? data.barcode.value : this.barcode,
+      addedSugarG:
+          data.addedSugarG.present ? data.addedSugarG.value : this.addedSugarG,
+      alanineMg: data.alanineMg.present ? data.alanineMg.value : this.alanineMg,
+      alcoholG: data.alcoholG.present ? data.alcoholG.value : this.alcoholG,
+      arginineMg:
+          data.arginineMg.present ? data.arginineMg.value : this.arginineMg,
+      asparticAcidMg: data.asparticAcidMg.present
+          ? data.asparticAcidMg.value
+          : this.asparticAcidMg,
+      betaineMg: data.betaineMg.present ? data.betaineMg.value : this.betaineMg,
+      bigImage: data.bigImage.present ? data.bigImage.value : this.bigImage,
+      biotinB7Mcg:
+          data.biotinB7Mcg.present ? data.biotinB7Mcg.value : this.biotinB7Mcg,
+      caffeineMg:
+          data.caffeineMg.present ? data.caffeineMg.value : this.caffeineMg,
+      calciumMg: data.calciumMg.present ? data.calciumMg.value : this.calciumMg,
+      calories: data.calories.present ? data.calories.value : this.calories,
+      carbohydrateG: data.carbohydrateG.present
+          ? data.carbohydrateG.value
+          : this.carbohydrateG,
+      caroteneAlphaMcg: data.caroteneAlphaMcg.present
+          ? data.caroteneAlphaMcg.value
+          : this.caroteneAlphaMcg,
+      caroteneBetaMcg: data.caroteneBetaMcg.present
+          ? data.caroteneBetaMcg.value
+          : this.caroteneBetaMcg,
+      chlorineMg:
+          data.chlorineMg.present ? data.chlorineMg.value : this.chlorineMg,
+      cholesterolMg: data.cholesterolMg.present
+          ? data.cholesterolMg.value
+          : this.cholesterolMg,
+      cholineMg: data.cholineMg.present ? data.cholineMg.value : this.cholineMg,
+      copperCuMg:
+          data.copperCuMg.present ? data.copperCuMg.value : this.copperCuMg,
+      created: data.created.present ? data.created.value : this.created,
+      cystineMg: data.cystineMg.present ? data.cystineMg.value : this.cystineMg,
+      dihydrophylloquinoneMcg: data.dihydrophylloquinoneMcg.present
+          ? data.dihydrophylloquinoneMcg.value
+          : this.dihydrophylloquinoneMcg,
+      fatG: data.fatG.present ? data.fatG.value : this.fatG,
+      fattyAcidsTotalMonounsaturatedMg:
+          data.fattyAcidsTotalMonounsaturatedMg.present
+              ? data.fattyAcidsTotalMonounsaturatedMg.value
+              : this.fattyAcidsTotalMonounsaturatedMg,
+      fattyAcidsTotalPolyunsaturatedMg:
+          data.fattyAcidsTotalPolyunsaturatedMg.present
+              ? data.fattyAcidsTotalPolyunsaturatedMg.value
+              : this.fattyAcidsTotalPolyunsaturatedMg,
+      favorite: data.favorite.present ? data.favorite.value : this.favorite,
+      fiberG: data.fiberG.present ? data.fiberG.value : this.fiberG,
+      fluorideFMcg: data.fluorideFMcg.present
+          ? data.fluorideFMcg.value
+          : this.fluorideFMcg,
+      folateB9Mcg:
+          data.folateB9Mcg.present ? data.folateB9Mcg.value : this.folateB9Mcg,
+      folateDfeMcg: data.folateDfeMcg.present
+          ? data.folateDfeMcg.value
+          : this.folateDfeMcg,
+      folicAcidMcg: data.folicAcidMcg.present
+          ? data.folicAcidMcg.value
+          : this.folicAcidMcg,
+      foodFolateMcg: data.foodFolateMcg.present
+          ? data.foodFolateMcg.value
+          : this.foodFolateMcg,
+      foodGroup: data.foodGroup.present ? data.foodGroup.value : this.foodGroup,
+      fructoseG: data.fructoseG.present ? data.fructoseG.value : this.fructoseG,
+      galactoseG:
+          data.galactoseG.present ? data.galactoseG.value : this.galactoseG,
+      glucoseDextroseG: data.glucoseDextroseG.present
+          ? data.glucoseDextroseG.value
+          : this.glucoseDextroseG,
+      glutamicAcidMg: data.glutamicAcidMg.present
+          ? data.glutamicAcidMg.value
+          : this.glutamicAcidMg,
+      glycineMg: data.glycineMg.present ? data.glycineMg.value : this.glycineMg,
+      histidineMg:
+          data.histidineMg.present ? data.histidineMg.value : this.histidineMg,
+      hydroxyprolineMg: data.hydroxyprolineMg.present
+          ? data.hydroxyprolineMg.value
+          : this.hydroxyprolineMg,
+      id: data.id.present ? data.id.value : this.id,
+      imageFile: data.imageFile.present ? data.imageFile.value : this.imageFile,
+      insolubleFiberG: data.insolubleFiberG.present
+          ? data.insolubleFiberG.value
+          : this.insolubleFiberG,
+      ironFeMg: data.ironFeMg.present ? data.ironFeMg.value : this.ironFeMg,
+      isoleucineMg: data.isoleucineMg.present
+          ? data.isoleucineMg.value
+          : this.isoleucineMg,
+      lactoseG: data.lactoseG.present ? data.lactoseG.value : this.lactoseG,
+      leucineMg: data.leucineMg.present ? data.leucineMg.value : this.leucineMg,
+      luteinZeaxanthinMcg: data.luteinZeaxanthinMcg.present
+          ? data.luteinZeaxanthinMcg.value
+          : this.luteinZeaxanthinMcg,
+      lycopeneMcg:
+          data.lycopeneMcg.present ? data.lycopeneMcg.value : this.lycopeneMcg,
+      lysineMg: data.lysineMg.present ? data.lysineMg.value : this.lysineMg,
+      magnesiumMg:
+          data.magnesiumMg.present ? data.magnesiumMg.value : this.magnesiumMg,
+      maltoseG: data.maltoseG.present ? data.maltoseG.value : this.maltoseG,
+      manganeseMg:
+          data.manganeseMg.present ? data.manganeseMg.value : this.manganeseMg,
+      menaquinone4Mcg: data.menaquinone4Mcg.present
+          ? data.menaquinone4Mcg.value
+          : this.menaquinone4Mcg,
+      methionineMg: data.methionineMg.present
+          ? data.methionineMg.value
+          : this.methionineMg,
+      molybdenumMcg: data.molybdenumMcg.present
+          ? data.molybdenumMcg.value
+          : this.molybdenumMcg,
+      name: data.name.present ? data.name.value : this.name,
+      netCarbsG: data.netCarbsG.present ? data.netCarbsG.value : this.netCarbsG,
+      niacinB3Mg:
+          data.niacinB3Mg.present ? data.niacinB3Mg.value : this.niacinB3Mg,
+      omega3sMg: data.omega3sMg.present ? data.omega3sMg.value : this.omega3sMg,
+      omega6sMg: data.omega6sMg.present ? data.omega6sMg.value : this.omega6sMg,
+      pantothenicAcidB5Mg: data.pantothenicAcidB5Mg.present
+          ? data.pantothenicAcidB5Mg.value
+          : this.pantothenicAcidB5Mg,
+      phenylalanineMg: data.phenylalanineMg.present
+          ? data.phenylalanineMg.value
+          : this.phenylalanineMg,
+      phosphorusPMg: data.phosphorusPMg.present
+          ? data.phosphorusPMg.value
+          : this.phosphorusPMg,
+      potassiumKMg: data.potassiumKMg.present
+          ? data.potassiumKMg.value
+          : this.potassiumKMg,
+      pralScore: data.pralScore.present ? data.pralScore.value : this.pralScore,
+      prolineMg: data.prolineMg.present ? data.prolineMg.value : this.prolineMg,
+      proteinG: data.proteinG.present ? data.proteinG.value : this.proteinG,
+      retinolMcg:
+          data.retinolMcg.present ? data.retinolMcg.value : this.retinolMcg,
+      riboflavinB2Mg: data.riboflavinB2Mg.present
+          ? data.riboflavinB2Mg.value
+          : this.riboflavinB2Mg,
+      saturatedFatsG: data.saturatedFatsG.present
+          ? data.saturatedFatsG.value
+          : this.saturatedFatsG,
+      seleniumSeMcg: data.seleniumSeMcg.present
+          ? data.seleniumSeMcg.value
+          : this.seleniumSeMcg,
+      serineMg: data.serineMg.present ? data.serineMg.value : this.serineMg,
+      servingDescription1G: data.servingDescription1G.present
+          ? data.servingDescription1G.value
+          : this.servingDescription1G,
+      servingDescription2G: data.servingDescription2G.present
+          ? data.servingDescription2G.value
+          : this.servingDescription2G,
+      servingDescription3G: data.servingDescription3G.present
+          ? data.servingDescription3G.value
+          : this.servingDescription3G,
+      servingDescription4G: data.servingDescription4G.present
+          ? data.servingDescription4G.value
+          : this.servingDescription4G,
+      servingDescription5G: data.servingDescription5G.present
+          ? data.servingDescription5G.value
+          : this.servingDescription5G,
+      servingDescription6G: data.servingDescription6G.present
+          ? data.servingDescription6G.value
+          : this.servingDescription6G,
+      servingDescription7G: data.servingDescription7G.present
+          ? data.servingDescription7G.value
+          : this.servingDescription7G,
+      servingDescription8G: data.servingDescription8G.present
+          ? data.servingDescription8G.value
+          : this.servingDescription8G,
+      servingDescription9G: data.servingDescription9G.present
+          ? data.servingDescription9G.value
+          : this.servingDescription9G,
+      servingSize:
+          data.servingSize.present ? data.servingSize.value : this.servingSize,
+      servingUnit:
+          data.servingUnit.present ? data.servingUnit.value : this.servingUnit,
+      servingWeight1G: data.servingWeight1G.present
+          ? data.servingWeight1G.value
+          : this.servingWeight1G,
+      servingWeight2G: data.servingWeight2G.present
+          ? data.servingWeight2G.value
+          : this.servingWeight2G,
+      servingWeight3G: data.servingWeight3G.present
+          ? data.servingWeight3G.value
+          : this.servingWeight3G,
+      servingWeight4G: data.servingWeight4G.present
+          ? data.servingWeight4G.value
+          : this.servingWeight4G,
+      servingWeight5G: data.servingWeight5G.present
+          ? data.servingWeight5G.value
+          : this.servingWeight5G,
+      servingWeight6G: data.servingWeight6G.present
+          ? data.servingWeight6G.value
+          : this.servingWeight6G,
+      servingWeight7G: data.servingWeight7G.present
+          ? data.servingWeight7G.value
+          : this.servingWeight7G,
+      servingWeight8G: data.servingWeight8G.present
+          ? data.servingWeight8G.value
+          : this.servingWeight8G,
+      servingWeight9G: data.servingWeight9G.present
+          ? data.servingWeight9G.value
+          : this.servingWeight9G,
+      smallImage:
+          data.smallImage.present ? data.smallImage.value : this.smallImage,
+      sodiumMg: data.sodiumMg.present ? data.sodiumMg.value : this.sodiumMg,
+      solubleFiberG: data.solubleFiberG.present
+          ? data.solubleFiberG.value
+          : this.solubleFiberG,
+      starchG: data.starchG.present ? data.starchG.value : this.starchG,
+      sucroseG: data.sucroseG.present ? data.sucroseG.value : this.sucroseG,
+      sugarsG: data.sugarsG.present ? data.sugarsG.value : this.sugarsG,
+      theobromineMg: data.theobromineMg.present
+          ? data.theobromineMg.value
+          : this.theobromineMg,
+      thiaminB1Mg:
+          data.thiaminB1Mg.present ? data.thiaminB1Mg.value : this.thiaminB1Mg,
+      threonineMg:
+          data.threonineMg.present ? data.threonineMg.value : this.threonineMg,
+      totalSugarAlcoholsG: data.totalSugarAlcoholsG.present
+          ? data.totalSugarAlcoholsG.value
+          : this.totalSugarAlcoholsG,
+      transFattyAcidsG: data.transFattyAcidsG.present
+          ? data.transFattyAcidsG.value
+          : this.transFattyAcidsG,
+      tryptophanMg: data.tryptophanMg.present
+          ? data.tryptophanMg.value
+          : this.tryptophanMg,
+      tyrosineMg:
+          data.tyrosineMg.present ? data.tyrosineMg.value : this.tyrosineMg,
+      u183N3CCCAlaMg: data.u183N3CCCAlaMg.present
+          ? data.u183N3CCCAlaMg.value
+          : this.u183N3CCCAlaMg,
+      u200calorieWeightG: data.u200calorieWeightG.present
+          ? data.u200calorieWeightG.value
+          : this.u200calorieWeightG,
+      u205N3EpaMg:
+          data.u205N3EpaMg.present ? data.u205N3EpaMg.value : this.u205N3EpaMg,
+      u225N3DpaMg:
+          data.u225N3DpaMg.present ? data.u225N3DpaMg.value : this.u225N3DpaMg,
+      u226N3DhaMg:
+          data.u226N3DhaMg.present ? data.u226N3DhaMg.value : this.u226N3DhaMg,
+      valineMg: data.valineMg.present ? data.valineMg.value : this.valineMg,
+      vitaminAIuIu: data.vitaminAIuIu.present
+          ? data.vitaminAIuIu.value
+          : this.vitaminAIuIu,
+      vitaminARaeMcg: data.vitaminARaeMcg.present
+          ? data.vitaminARaeMcg.value
+          : this.vitaminARaeMcg,
+      vitaminB12Mcg: data.vitaminB12Mcg.present
+          ? data.vitaminB12Mcg.value
+          : this.vitaminB12Mcg,
+      vitaminB6Mg:
+          data.vitaminB6Mg.present ? data.vitaminB6Mg.value : this.vitaminB6Mg,
+      vitaminCMg:
+          data.vitaminCMg.present ? data.vitaminCMg.value : this.vitaminCMg,
+      vitaminD2ErgocalciferolMcg: data.vitaminD2ErgocalciferolMcg.present
+          ? data.vitaminD2ErgocalciferolMcg.value
+          : this.vitaminD2ErgocalciferolMcg,
+      vitaminD3CholecalciferolMcg: data.vitaminD3CholecalciferolMcg.present
+          ? data.vitaminD3CholecalciferolMcg.value
+          : this.vitaminD3CholecalciferolMcg,
+      vitaminDIuIu: data.vitaminDIuIu.present
+          ? data.vitaminDIuIu.value
+          : this.vitaminDIuIu,
+      vitaminDMcg:
+          data.vitaminDMcg.present ? data.vitaminDMcg.value : this.vitaminDMcg,
+      vitaminEAlphaTocopherolMg: data.vitaminEAlphaTocopherolMg.present
+          ? data.vitaminEAlphaTocopherolMg.value
+          : this.vitaminEAlphaTocopherolMg,
+      vitaminKMcg:
+          data.vitaminKMcg.present ? data.vitaminKMcg.value : this.vitaminKMcg,
+      waterG: data.waterG.present ? data.waterG.value : this.waterG,
+      zincZnMg: data.zincZnMg.present ? data.zincZnMg.value : this.zincZnMg,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Food(')
@@ -5642,6 +5921,20 @@ class Entry extends DataClass implements Insertable<Entry> {
         fatG: fatG.present ? fatG.value : this.fatG,
         carbG: carbG.present ? carbG.value : this.carbG,
       );
+  Entry copyWithCompanion(EntriesCompanion data) {
+    return Entry(
+      id: data.id.present ? data.id.value : this.id,
+      food: data.food.present ? data.food.value : this.food,
+      created: data.created.present ? data.created.value : this.created,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      kCalories: data.kCalories.present ? data.kCalories.value : this.kCalories,
+      proteinG: data.proteinG.present ? data.proteinG.value : this.proteinG,
+      fatG: data.fatG.present ? data.fatG.value : this.fatG,
+      carbG: data.carbG.present ? data.carbG.value : this.carbG,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Entry(')
@@ -5954,6 +6247,15 @@ class Weight extends DataClass implements Insertable<Weight> {
         unit: unit ?? this.unit,
         amount: amount ?? this.amount,
       );
+  Weight copyWithCompanion(WeightsCompanion data) {
+    return Weight(
+      id: data.id.present ? data.id.value : this.id,
+      created: data.created.present ? data.created.value : this.created,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      amount: data.amount.present ? data.amount.value : this.amount,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Weight(')
@@ -6693,6 +6995,56 @@ class Setting extends DataClass implements Insertable<Setting> {
         offLogin: offLogin.present ? offLogin.value : this.offLogin,
         offPassword: offPassword.present ? offPassword.value : this.offPassword,
       );
+  Setting copyWithCompanion(SettingsCompanion data) {
+    return Setting(
+      curveLines:
+          data.curveLines.present ? data.curveLines.value : this.curveLines,
+      dailyCalories: data.dailyCalories.present
+          ? data.dailyCalories.value
+          : this.dailyCalories,
+      dailyCarb: data.dailyCarb.present ? data.dailyCarb.value : this.dailyCarb,
+      dailyFat: data.dailyFat.present ? data.dailyFat.value : this.dailyFat,
+      dailyProtein: data.dailyProtein.present
+          ? data.dailyProtein.value
+          : this.dailyProtein,
+      diarySummary: data.diarySummary.present
+          ? data.diarySummary.value
+          : this.diarySummary,
+      entryUnit: data.entryUnit.present ? data.entryUnit.value : this.entryUnit,
+      favoriteNew:
+          data.favoriteNew.present ? data.favoriteNew.value : this.favoriteNew,
+      foodUnit: data.foodUnit.present ? data.foodUnit.value : this.foodUnit,
+      id: data.id.present ? data.id.value : this.id,
+      longDateFormat: data.longDateFormat.present
+          ? data.longDateFormat.value
+          : this.longDateFormat,
+      positiveReinforcement: data.positiveReinforcement.present
+          ? data.positiveReinforcement.value
+          : this.positiveReinforcement,
+      reminders: data.reminders.present ? data.reminders.value : this.reminders,
+      selectEntryOnSubmit: data.selectEntryOnSubmit.present
+          ? data.selectEntryOnSubmit.value
+          : this.selectEntryOnSubmit,
+      shortDateFormat: data.shortDateFormat.present
+          ? data.shortDateFormat.value
+          : this.shortDateFormat,
+      showImages:
+          data.showImages.present ? data.showImages.value : this.showImages,
+      showOthers:
+          data.showOthers.present ? data.showOthers.value : this.showOthers,
+      systemColors: data.systemColors.present
+          ? data.systemColors.value
+          : this.systemColors,
+      targetWeight: data.targetWeight.present
+          ? data.targetWeight.value
+          : this.targetWeight,
+      themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
+      offLogin: data.offLogin.present ? data.offLogin.value : this.offLogin,
+      offPassword:
+          data.offPassword.present ? data.offPassword.value : this.offPassword,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Setting(')
@@ -7063,7 +7415,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
-  _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $FoodsTable foods = $FoodsTable(this);
   late final $EntriesTable entries = $EntriesTable(this);
   late final $WeightsTable weights = $WeightsTable(this);
@@ -7076,7 +7428,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       [foods, entries, weights, settings];
 }
 
-typedef $$FoodsTableInsertCompanionBuilder = FoodsCompanion Function({
+typedef $$FoodsTableCreateCompanionBuilder = FoodsCompanion Function({
   Value<String?> barcode,
   Value<double?> addedSugarG,
   Value<double?> alanineMg,
@@ -7337,8 +7689,7 @@ class $$FoodsTableTableManager extends RootTableManager<
     Food,
     $$FoodsTableFilterComposer,
     $$FoodsTableOrderingComposer,
-    $$FoodsTableProcessedTableManager,
-    $$FoodsTableInsertCompanionBuilder,
+    $$FoodsTableCreateCompanionBuilder,
     $$FoodsTableUpdateCompanionBuilder> {
   $$FoodsTableTableManager(_$AppDatabase db, $FoodsTable table)
       : super(TableManagerState(
@@ -7348,8 +7699,7 @@ class $$FoodsTableTableManager extends RootTableManager<
               $$FoodsTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$FoodsTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) => $$FoodsTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<String?> barcode = const Value.absent(),
             Value<double?> addedSugarG = const Value.absent(),
             Value<double?> alanineMg = const Value.absent(),
@@ -7605,7 +7955,7 @@ class $$FoodsTableTableManager extends RootTableManager<
             waterG: waterG,
             zincZnMg: zincZnMg,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<String?> barcode = const Value.absent(),
             Value<double?> addedSugarG = const Value.absent(),
             Value<double?> alanineMg = const Value.absent(),
@@ -7862,18 +8212,6 @@ class $$FoodsTableTableManager extends RootTableManager<
             zincZnMg: zincZnMg,
           ),
         ));
-}
-
-class $$FoodsTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $FoodsTable,
-    Food,
-    $$FoodsTableFilterComposer,
-    $$FoodsTableOrderingComposer,
-    $$FoodsTableProcessedTableManager,
-    $$FoodsTableInsertCompanionBuilder,
-    $$FoodsTableUpdateCompanionBuilder> {
-  $$FoodsTableProcessedTableManager(super.$state);
 }
 
 class $$FoodsTableFilterComposer
@@ -9158,7 +9496,7 @@ class $$FoodsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$EntriesTableInsertCompanionBuilder = EntriesCompanion Function({
+typedef $$EntriesTableCreateCompanionBuilder = EntriesCompanion Function({
   Value<int> id,
   required int food,
   required DateTime created,
@@ -9187,8 +9525,7 @@ class $$EntriesTableTableManager extends RootTableManager<
     Entry,
     $$EntriesTableFilterComposer,
     $$EntriesTableOrderingComposer,
-    $$EntriesTableProcessedTableManager,
-    $$EntriesTableInsertCompanionBuilder,
+    $$EntriesTableCreateCompanionBuilder,
     $$EntriesTableUpdateCompanionBuilder> {
   $$EntriesTableTableManager(_$AppDatabase db, $EntriesTable table)
       : super(TableManagerState(
@@ -9198,8 +9535,7 @@ class $$EntriesTableTableManager extends RootTableManager<
               $$EntriesTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$EntriesTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) => $$EntriesTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> food = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
@@ -9221,7 +9557,7 @@ class $$EntriesTableTableManager extends RootTableManager<
             fatG: fatG,
             carbG: carbG,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required int food,
             required DateTime created,
@@ -9244,18 +9580,6 @@ class $$EntriesTableTableManager extends RootTableManager<
             carbG: carbG,
           ),
         ));
-}
-
-class $$EntriesTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $EntriesTable,
-    Entry,
-    $$EntriesTableFilterComposer,
-    $$EntriesTableOrderingComposer,
-    $$EntriesTableProcessedTableManager,
-    $$EntriesTableInsertCompanionBuilder,
-    $$EntriesTableUpdateCompanionBuilder> {
-  $$EntriesTableProcessedTableManager(super.$state);
 }
 
 class $$EntriesTableFilterComposer
@@ -9370,7 +9694,7 @@ class $$EntriesTableOrderingComposer
   }
 }
 
-typedef $$WeightsTableInsertCompanionBuilder = WeightsCompanion Function({
+typedef $$WeightsTableCreateCompanionBuilder = WeightsCompanion Function({
   Value<int> id,
   required DateTime created,
   required String unit,
@@ -9389,8 +9713,7 @@ class $$WeightsTableTableManager extends RootTableManager<
     Weight,
     $$WeightsTableFilterComposer,
     $$WeightsTableOrderingComposer,
-    $$WeightsTableProcessedTableManager,
-    $$WeightsTableInsertCompanionBuilder,
+    $$WeightsTableCreateCompanionBuilder,
     $$WeightsTableUpdateCompanionBuilder> {
   $$WeightsTableTableManager(_$AppDatabase db, $WeightsTable table)
       : super(TableManagerState(
@@ -9400,8 +9723,7 @@ class $$WeightsTableTableManager extends RootTableManager<
               $$WeightsTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$WeightsTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) => $$WeightsTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
             Value<String> unit = const Value.absent(),
@@ -9413,7 +9735,7 @@ class $$WeightsTableTableManager extends RootTableManager<
             unit: unit,
             amount: amount,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required DateTime created,
             required String unit,
@@ -9426,18 +9748,6 @@ class $$WeightsTableTableManager extends RootTableManager<
             amount: amount,
           ),
         ));
-}
-
-class $$WeightsTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $WeightsTable,
-    Weight,
-    $$WeightsTableFilterComposer,
-    $$WeightsTableOrderingComposer,
-    $$WeightsTableProcessedTableManager,
-    $$WeightsTableInsertCompanionBuilder,
-    $$WeightsTableUpdateCompanionBuilder> {
-  $$WeightsTableProcessedTableManager(super.$state);
 }
 
 class $$WeightsTableFilterComposer
@@ -9488,7 +9798,7 @@ class $$WeightsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$SettingsTableInsertCompanionBuilder = SettingsCompanion Function({
+typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   required bool curveLines,
   Value<int?> dailyCalories,
   Value<int?> dailyCarb,
@@ -9543,8 +9853,7 @@ class $$SettingsTableTableManager extends RootTableManager<
     Setting,
     $$SettingsTableFilterComposer,
     $$SettingsTableOrderingComposer,
-    $$SettingsTableProcessedTableManager,
-    $$SettingsTableInsertCompanionBuilder,
+    $$SettingsTableCreateCompanionBuilder,
     $$SettingsTableUpdateCompanionBuilder> {
   $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
       : super(TableManagerState(
@@ -9554,9 +9863,7 @@ class $$SettingsTableTableManager extends RootTableManager<
               $$SettingsTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$SettingsTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$SettingsTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<bool> curveLines = const Value.absent(),
             Value<int?> dailyCalories = const Value.absent(),
             Value<int?> dailyCarb = const Value.absent(),
@@ -9604,7 +9911,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             offLogin: offLogin,
             offPassword: offPassword,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             required bool curveLines,
             Value<int?> dailyCalories = const Value.absent(),
             Value<int?> dailyCarb = const Value.absent(),
@@ -9653,18 +9960,6 @@ class $$SettingsTableTableManager extends RootTableManager<
             offPassword: offPassword,
           ),
         ));
-}
-
-class $$SettingsTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $SettingsTable,
-    Setting,
-    $$SettingsTableFilterComposer,
-    $$SettingsTableOrderingComposer,
-    $$SettingsTableProcessedTableManager,
-    $$SettingsTableInsertCompanionBuilder,
-    $$SettingsTableUpdateCompanionBuilder> {
-  $$SettingsTableProcessedTableManager(super.$state);
 }
 
 class $$SettingsTableFilterComposer
@@ -9895,9 +10190,9 @@ class $$SettingsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class _$AppDatabaseManager {
+class $AppDatabaseManager {
   final _$AppDatabase _db;
-  _$AppDatabaseManager(this._db);
+  $AppDatabaseManager(this._db);
   $$FoodsTableTableManager get foods =>
       $$FoodsTableTableManager(_db, _db.foods);
   $$EntriesTableTableManager get entries =>

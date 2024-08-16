@@ -9,6 +9,7 @@ import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -34,7 +35,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   late var settings = context.read<SettingsState>().value;
   late var unit = settings.entryUnit;
 
-  DateTime created = DateTime.now();
+  DateTime? created;
   bool foodDirty = false;
   Food? selectedFood;
   TextEditingController? nameController;
@@ -146,6 +147,43 @@ class _EditEntryPageState extends State<EditEntryPage> {
     }
   }
 
+  Future<void> pickDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: created,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      pickTime(pickedDate);
+    }
+  }
+
+  Future<void> pickTime(DateTime pickedDate) async {
+    if (!settings.longDateFormat.contains('h:mm'))
+      return setState(() {
+        created = pickedDate;
+      });
+
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(created ?? DateTime.now()),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        created = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+      });
+    }
+  }
+
   Future<void> save() async {
     if (foodDirty) await saveFood();
     final food = selectedFood!;
@@ -154,7 +192,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       quantity: double.parse(quantity.text),
       unit: unit,
     ).copyWith(
-      created: Value(created),
+      created: Value(created ?? DateTime.now()),
     );
 
     if (widget.id == null)
@@ -190,7 +228,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(created),
+      initialTime: TimeOfDay.fromDateTime(created ?? DateTime.now()),
     );
 
     if (pickedTime != null) {
@@ -213,7 +251,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       quantity: double.parse(quantity.text),
       unit: unit,
     ).copyWith(
-      created: Value(created),
+      created: Value(created ?? DateTime.now()),
     );
 
     setState(() {
@@ -520,6 +558,15 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 });
               },
               onSubmitted: (value) => save(),
+            ),
+            ListTile(
+              title: const Text('Created date'),
+              subtitle: Text(
+                DateFormat(settings.longDateFormat)
+                    .format(created ?? DateTime.now()),
+              ),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: () => pickDate(),
             ),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 8),

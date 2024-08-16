@@ -129,7 +129,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
     if (mounted) Navigator.pop(context);
   }
 
-  Future<void> _selectDate() async {
+  Future<void> pickDate() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: created,
@@ -138,11 +138,11 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
     );
 
     if (pickedDate != null) {
-      _selectTime(pickedDate);
+      pickTime(pickedDate);
     }
   }
 
-  Future<void> _selectTime(DateTime pickedDate) async {
+  Future<void> pickTime(DateTime pickedDate) async {
     if (!settings.longDateFormat.contains('h:mm'))
       return setState(() {
         created = pickedDate;
@@ -375,7 +375,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                     .format(created ?? DateTime.now()),
               ),
               trailing: const Icon(Icons.calendar_today),
-              onTap: () => _selectDate(),
+              onTap: () => pickDate(),
             ),
           ],
         ),
