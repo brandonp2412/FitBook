@@ -1,2 +1,2 @@
-- Change settings page
-- Add reminders & rename notifications
+- Add missing date picker for diary
+- Update flutter to 3.24.0
