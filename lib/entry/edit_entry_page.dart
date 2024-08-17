@@ -586,6 +586,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 onBarcode: (value) {
                   setState(() {
                     barcode = value;
+                    foodDirty = true;
                   });
                   toast(context, 'Barcode not found. Save to insert.');
                 },
@@ -610,6 +611,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   if (path == null) return;
                   setState(() {
                     imageFile = path;
+                    foodDirty = true;
                   });
                 },
               ),
@@ -620,6 +622,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 label: const Text("Remove image"),
                 onPressed: () => setState(() {
                   imageFile = null;
+                  foodDirty = true;
                 }),
               ),
           ],
