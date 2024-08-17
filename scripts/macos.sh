@@ -18,4 +18,4 @@ rm -f build/macos/unsigned.pkg
 
 fastlane deliver --pkg build/macos/FitBook.pkg
 flutter build ipa
-flutter deliver --ipa build/ios/ipa/fit_book.ipa
+fastlane deliver --ipa build/ios/ipa/fit_book.ipa
