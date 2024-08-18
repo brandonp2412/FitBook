@@ -41,6 +41,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   TextEditingController? nameController;
   String? barcode;
   String? imageFile;
+  final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
   @override
   void initState() {
@@ -67,13 +68,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
           barcode = food.barcode;
           nameController?.text = food.name;
           selectedFood = food;
-          calories.text = entry.kCalories?.toStringAsFixed(2) ?? "0";
-          protein.text = entry.proteinG?.toStringAsFixed(2) ?? "0";
-          carb.text = entry.carbG?.toStringAsFixed(2) ?? "0";
-          fat.text = entry.fatG?.toStringAsFixed(2) ?? "0";
+          calories.text = formatter.format(entry.kCalories);
+          protein.text = formatter.format(entry.proteinG);
+          carb.text = formatter.format(entry.carbG);
+          fat.text = formatter.format(entry.fatG);
           kilojoules.text = entry.kCalories == null
               ? ''
-              : (food.calories! * 4.184).toStringAsFixed(2);
+              : formatter.format(food.calories! * 4.184);
         });
       },
     );
@@ -107,12 +108,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
           name: nameController!.text,
-          calories: Value(double.tryParse(calories.text)),
-          proteinG: Value(double.tryParse(protein.text)),
-          carbohydrateG: Value(double.tryParse(carb.text)),
-          fatG: Value(double.tryParse(fat.text)),
+          calories: Value(formatter.tryParse(calories.text)?.toDouble()),
+          proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
+          carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
+          fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
           favorite: Value(settings.favoriteNew),
-          servingSize: Value(double.tryParse(quantity.text)),
+          servingSize: Value(formatter.tryParse(quantity.text)?.toDouble()),
           servingUnit: Value(unit),
           created: Value(DateTime.now()),
           barcode: Value(barcode),
@@ -130,10 +131,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ..where((u) => u.id.equals(selectedFood?.id ?? -1)))
           .write(
         FoodsCompanion(
-          proteinG: Value(double.tryParse(protein.text)),
-          calories: Value(double.tryParse(calories.text)),
-          carbohydrateG: Value(double.tryParse(carb.text)),
-          fatG: Value(double.tryParse(fat.text)),
+          calories: Value(formatter.tryParse(calories.text)?.toDouble()),
+          proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
+          carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
+          fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
           imageFile: Value(imageFile),
         ),
       );
@@ -189,7 +190,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     final food = selectedFood!;
     final entry = calculateEntry(
       food: food,
-      quantity: double.parse(quantity.text),
+      quantity: formatter.parse(quantity.text).toDouble(),
       unit: unit,
     ).copyWith(
       created: Value(created ?? DateTime.now()),
@@ -248,7 +249,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     final food = selectedFood!;
     final entry = calculateEntry(
       food: food,
-      quantity: double.parse(quantity.text),
+      quantity: formatter.parse(quantity.text).toDouble(),
       unit: unit,
     ).copyWith(
       created: Value(created ?? DateTime.now()),
@@ -256,12 +257,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
     setState(() {
       barcode = food.barcode ?? '';
-      calories.text = entry.kCalories.value?.toStringAsFixed(2) ?? "0";
-      protein.text = entry.proteinG.value?.toStringAsFixed(2) ?? "0";
-      kilojoules.text =
-          ((entry.kCalories.value ?? 0) * 4.184).toStringAsFixed(2);
-      carb.text = entry.carbG.value?.toStringAsFixed(2) ?? "0";
-      fat.text = entry.fatG.value?.toStringAsFixed(2) ?? "0";
+      calories.text = formatter.format(entry.kCalories.value);
+      protein.text = formatter.format(entry.proteinG.value);
+      kilojoules.text = formatter.format((entry.kCalories.value ?? 0) * 4.184);
+      carb.text = formatter.format(entry.carbG.value);
+      fat.text = formatter.format(entry.fatG.value);
     });
   }
 
@@ -467,8 +467,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       setState(() {
                         foodDirty = true;
                         kilojoules.text =
-                            ((double.tryParse(value) ?? 0) * 4.184)
-                                .toStringAsFixed(2);
+                            formatter.format(formatter.parse(value) * 4.184);
                       });
                     },
                     onSubmitted: (value) {
@@ -491,8 +490,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                         setState(() {
                           foodDirty = true;
                           calories.text =
-                              ((double.tryParse(value) ?? 0) / 4.184)
-                                  .toStringAsFixed(2);
+                              formatter.format(formatter.parse(value) / 4.184);
                         });
                       },
                       onSubmitted: (value) => selectAll(protein),
