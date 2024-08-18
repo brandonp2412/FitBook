@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('DiaryPage CRUD', (WidgetTester tester) async {
+  testWidgets('EntryPage CRUD', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);

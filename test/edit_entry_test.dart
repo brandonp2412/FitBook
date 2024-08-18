@@ -29,6 +29,10 @@ void main() async {
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
+        kCalories: const Value(0),
+        proteinG: const Value(0),
+        carbG: const Value(0),
+        fatG: const Value(0),
       ),
     ));
 
@@ -54,19 +58,19 @@ void main() async {
     await tester.tap(find.text('cups'));
     await tester.pump();
     var calories = findTextWidget(find.text('Calories'));
-    expect(calories.controller!.text, equals('250.00'));
+    expect(calories.controller!.text, equals('250'));
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
     await tester.pump();
     await tester.tap(find.text('tablespoons'));
     await tester.pump();
-    expect(calories.controller!.text, equals('15.00'));
+    expect(calories.controller!.text, equals('15'));
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
     await tester.pump();
     await tester.tap(find.text('teaspoons'));
     await tester.pump();
-    expect(calories.controller!.text, equals('5.00'));
+    expect(calories.controller!.text, equals('5'));
 
     await db.close();
   });
@@ -89,8 +93,10 @@ void main() async {
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
-        kCalories: const Value(600),
-        proteinG: const Value(40),
+        kCalories: const Value(0),
+        proteinG: const Value(0),
+        carbG: const Value(0),
+        fatG: const Value(0),
       ),
     ));
 
