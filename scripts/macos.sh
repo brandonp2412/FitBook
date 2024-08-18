@@ -1,7 +1,8 @@
 #!/bin/sh
 
+source $HOME/.zprofile
+
 set -ex
-export PATH=/Users/brandon/flutter/bin:$PATH
 
 flutter build macos --release
 APP_NAME="build/macos/Build/Products/Release/FitBook.app"

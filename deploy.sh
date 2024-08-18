@@ -103,9 +103,5 @@ else
   rsync -a --exclude-from=.gitignore ./* .gitignore \
     --exclude=flutter macos:~/fitbook
   # shellcheck disable=SC2029
-  ssh macos "
-    security unlock-keychain -p '$(pass macbook)'
-    cd fitbook
-    ./scripts/macos.sh
-  "
+  ssh macos "security unlock-keychain -p '$(pass macbook)' && cd fitbook && ./scripts/macos.sh"
 fi
