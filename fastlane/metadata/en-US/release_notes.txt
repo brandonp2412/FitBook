@@ -1,2 +1,2 @@
-- Add missing date picker for diary
-- Update flutter to 3.24.0
+- Use thousands separators in diary entries
+- Fix images not saving from entries
