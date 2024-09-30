@@ -9,6 +9,7 @@ import 'package:fit_book/entry/entry_list.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/shared/widgets/open_container_fab.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -26,8 +27,7 @@ class EntryPageState extends State<EntryPage> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   late var entriesState = context.read<EntryState>();
-  late final TextEditingController searchController =
-      TextEditingController(text: entriesState.search);
+  late final TextEditingController searchController = TextEditingController(text: entriesState.search);
 
   @override
   Widget build(BuildContext context) {
@@ -78,33 +78,22 @@ class EntryPageState extends State<EntryPage> {
 
           switch (settings.diarySummary) {
             case 'DiarySummary.remaining':
-              cals =
-                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
-              protein =
-                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} g";
-              fat =
-                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
-              carb =
-                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} g";
+              cals = "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
+              protein = "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} g";
+              fat = "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
+              carb = "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} g";
               break;
             case 'DiarySummary.division':
-              cals =
-                  "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
-              protein =
-                  "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
+              cals = "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
+              protein = "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
               fat = "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
-              carb =
-                  "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarb} g";
+              carb = "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarb} g";
               break;
             case 'DiarySummary.both':
-              cals =
-                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${settings.dailyCalories} kcal)";
-              protein =
-                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} (${settings.dailyProtein} g)";
-              fat =
-                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} (${settings.dailyFat} g)";
-              carb =
-                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarb} g)";
+              cals = "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${settings.dailyCalories} kcal)";
+              protein = "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} (${settings.dailyProtein} g)";
+              fat = "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} (${settings.dailyFat} g)";
+              carb = "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarb} g)";
               break;
             case 'DiarySummary.none':
               break;
@@ -149,9 +138,7 @@ class EntryPageState extends State<EntryPage> {
                   setState(() {
                     selected.clear();
                   });
-                  await (db.delete(db.entries)
-                        ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                      .go();
+                  await (db.delete(db.entries)..where((tbl) => tbl.id.isIn(selectedCopy))).go();
                 },
                 onSelect: () => setState(() {
                   selected.addAll(
@@ -164,11 +151,8 @@ class EntryPageState extends State<EntryPage> {
                         ..addColumns([db.entries.id, db.entries.food])
                         ..where(db.entries.id.isIn(selected)))
                       .get();
-                  final foodIds =
-                      entries.map((entry) => entry.read(db.entries.food)!);
-                  await (db.foods.update()
-                        ..where((tbl) => tbl.id.isIn(foodIds)))
-                      .write(const FoodsCompanion(favorite: Value(true)));
+                  final foodIds = entries.map((entry) => entry.read(db.entries.food)!);
+                  await (db.foods.update()..where((tbl) => tbl.id.isIn(foodIds))).write(const FoodsCompanion(favorite: Value(true)));
                   setState(() {
                     selected.clear();
                   });
@@ -219,16 +203,8 @@ class EntryPageState extends State<EntryPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          navigatorKey.currentState!.push(
-            MaterialPageRoute(
-              builder: (context) => const EditEntryPage(),
-            ),
-          );
-        },
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
+      floatingActionButton: OpenContainerFAB(
+        onTap: () => const EditEntryPage(),
       ),
     );
   }
