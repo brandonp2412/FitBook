@@ -7,6 +7,7 @@ import 'package:fit_book/settings/data_settings.dart';
 import 'package:fit_book/settings/diary_settings.dart';
 import 'package:fit_book/settings/food_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/tab_settings.dart';
 import 'package:fit_book/settings/weight_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -143,6 +144,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const FoodSettings(),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.tab_sharp),
+                title: const Text('Tabs'),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const TabSettings(),
                   ),
                 ),
               ),

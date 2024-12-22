@@ -93,37 +93,53 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    final tabsSetting = context
+        .select<SettingsState, String>((settings) => settings.value.tabs);
+    final tabs = tabsSetting.split(',');
+
+    return SafeArea(
       child: DefaultTabController(
-        length: 4,
+        length: tabs.length,
         child: Scaffold(
           body: TabBarView(
-            children: [
-              DiaryPage(),
-              GraphPage(),
-              FoodPage(),
-              WeightPage(),
-            ],
+            children: tabs.map((tab) {
+              if (tab == 'DiaryPage')
+                return const DiaryPage();
+              else if (tab == 'GraphPage')
+                return const GraphPage();
+              else if (tab == 'FoodPage')
+                return const FoodPage();
+              else if (tab == 'WeightPage')
+                return const WeightPage();
+              else
+                return ErrorWidget('Invalid tab settings.');
+            }).toList(),
           ),
           bottomNavigationBar: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.date_range),
-                text: "Diary",
-              ),
-              Tab(
-                icon: Icon(Icons.insights),
-                text: "Graph",
-              ),
-              Tab(
-                icon: Icon(Icons.restaurant),
-                text: "Food",
-              ),
-              Tab(
-                icon: Icon(Icons.scale),
-                text: "Weight",
-              ),
-            ],
+            tabs: tabs.map((tab) {
+              if (tab == 'DiaryPage')
+                return const Tab(
+                  icon: Icon(Icons.date_range),
+                  text: "Diary",
+                );
+              else if (tab == 'GraphPage')
+                return const Tab(
+                  icon: Icon(Icons.insights),
+                  text: "Graph",
+                );
+              else if (tab == 'FoodPage')
+                return const Tab(
+                  icon: Icon(Icons.restaurant),
+                  text: "Food",
+                );
+              else if (tab == 'WeightPage')
+                return const Tab(
+                  icon: Icon(Icons.scale),
+                  text: "Weight",
+                );
+              else
+                return ErrorWidget('Invalid tab settings.');
+            }).toList(),
           ),
         ),
       ),

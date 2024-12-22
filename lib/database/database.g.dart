@@ -6435,6 +6435,18 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
       'long_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _offLoginMeta =
+      const VerificationMeta('offLogin');
+  @override
+  late final GeneratedColumn<String> offLogin = GeneratedColumn<String>(
+      'off_login', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _offPasswordMeta =
+      const VerificationMeta('offPassword');
+  @override
+  late final GeneratedColumn<String> offPassword = GeneratedColumn<String>(
+      'off_password', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _positiveReinforcementMeta =
       const VerificationMeta('positiveReinforcement');
   @override
@@ -6510,18 +6522,13 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
       'theme_mode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _offLoginMeta =
-      const VerificationMeta('offLogin');
+  static const VerificationMeta _tabsMeta = const VerificationMeta('tabs');
   @override
-  late final GeneratedColumn<String> offLogin = GeneratedColumn<String>(
-      'off_login', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _offPasswordMeta =
-      const VerificationMeta('offPassword');
-  @override
-  late final GeneratedColumn<String> offPassword = GeneratedColumn<String>(
-      'off_password', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+  late final GeneratedColumn<String> tabs = GeneratedColumn<String>(
+      'tabs', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"));
   @override
   List<GeneratedColumn> get $columns => [
         curveLines,
@@ -6535,6 +6542,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         foodUnit,
         id,
         longDateFormat,
+        offLogin,
+        offPassword,
         positiveReinforcement,
         reminders,
         selectEntryOnSubmit,
@@ -6544,8 +6553,7 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         systemColors,
         targetWeight,
         themeMode,
-        offLogin,
-        offPassword
+        tabs
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -6624,6 +6632,16 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_longDateFormatMeta);
     }
+    if (data.containsKey('off_login')) {
+      context.handle(_offLoginMeta,
+          offLogin.isAcceptableOrUnknown(data['off_login']!, _offLoginMeta));
+    }
+    if (data.containsKey('off_password')) {
+      context.handle(
+          _offPasswordMeta,
+          offPassword.isAcceptableOrUnknown(
+              data['off_password']!, _offPasswordMeta));
+    }
     if (data.containsKey('positive_reinforcement')) {
       context.handle(
           _positiveReinforcementMeta,
@@ -6684,15 +6702,9 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_themeModeMeta);
     }
-    if (data.containsKey('off_login')) {
-      context.handle(_offLoginMeta,
-          offLogin.isAcceptableOrUnknown(data['off_login']!, _offLoginMeta));
-    }
-    if (data.containsKey('off_password')) {
+    if (data.containsKey('tabs')) {
       context.handle(
-          _offPasswordMeta,
-          offPassword.isAcceptableOrUnknown(
-              data['off_password']!, _offPasswordMeta));
+          _tabsMeta, tabs.isAcceptableOrUnknown(data['tabs']!, _tabsMeta));
     }
     return context;
   }
@@ -6725,6 +6737,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       longDateFormat: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
+      offLogin: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}off_login']),
+      offPassword: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}off_password']),
       positiveReinforcement: attachedDatabase.typeMapping.read(
           DriftSqlType.bool, data['${effectivePrefix}positive_reinforcement'])!,
       reminders: attachedDatabase.typeMapping
@@ -6743,10 +6759,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.double, data['${effectivePrefix}target_weight']),
       themeMode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
-      offLogin: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}off_login']),
-      offPassword: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}off_password']),
+      tabs: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tabs'])!,
     );
   }
 
@@ -6768,6 +6782,8 @@ class Setting extends DataClass implements Insertable<Setting> {
   final String foodUnit;
   final int id;
   final String longDateFormat;
+  final String? offLogin;
+  final String? offPassword;
   final bool positiveReinforcement;
   final bool reminders;
   final bool selectEntryOnSubmit;
@@ -6777,8 +6793,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool systemColors;
   final double? targetWeight;
   final String themeMode;
-  final String? offLogin;
-  final String? offPassword;
+  final String tabs;
   const Setting(
       {required this.curveLines,
       this.dailyCalories,
@@ -6791,6 +6806,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.foodUnit,
       required this.id,
       required this.longDateFormat,
+      this.offLogin,
+      this.offPassword,
       required this.positiveReinforcement,
       required this.reminders,
       required this.selectEntryOnSubmit,
@@ -6800,8 +6817,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.systemColors,
       this.targetWeight,
       required this.themeMode,
-      this.offLogin,
-      this.offPassword});
+      required this.tabs});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -6824,6 +6840,12 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['food_unit'] = Variable<String>(foodUnit);
     map['id'] = Variable<int>(id);
     map['long_date_format'] = Variable<String>(longDateFormat);
+    if (!nullToAbsent || offLogin != null) {
+      map['off_login'] = Variable<String>(offLogin);
+    }
+    if (!nullToAbsent || offPassword != null) {
+      map['off_password'] = Variable<String>(offPassword);
+    }
     map['positive_reinforcement'] = Variable<bool>(positiveReinforcement);
     map['reminders'] = Variable<bool>(reminders);
     map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
@@ -6835,12 +6857,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       map['target_weight'] = Variable<double>(targetWeight);
     }
     map['theme_mode'] = Variable<String>(themeMode);
-    if (!nullToAbsent || offLogin != null) {
-      map['off_login'] = Variable<String>(offLogin);
-    }
-    if (!nullToAbsent || offPassword != null) {
-      map['off_password'] = Variable<String>(offPassword);
-    }
+    map['tabs'] = Variable<String>(tabs);
     return map;
   }
 
@@ -6865,6 +6882,12 @@ class Setting extends DataClass implements Insertable<Setting> {
       foodUnit: Value(foodUnit),
       id: Value(id),
       longDateFormat: Value(longDateFormat),
+      offLogin: offLogin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(offLogin),
+      offPassword: offPassword == null && nullToAbsent
+          ? const Value.absent()
+          : Value(offPassword),
       positiveReinforcement: Value(positiveReinforcement),
       reminders: Value(reminders),
       selectEntryOnSubmit: Value(selectEntryOnSubmit),
@@ -6876,12 +6899,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ? const Value.absent()
           : Value(targetWeight),
       themeMode: Value(themeMode),
-      offLogin: offLogin == null && nullToAbsent
-          ? const Value.absent()
-          : Value(offLogin),
-      offPassword: offPassword == null && nullToAbsent
-          ? const Value.absent()
-          : Value(offPassword),
+      tabs: Value(tabs),
     );
   }
 
@@ -6900,6 +6918,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       foodUnit: serializer.fromJson<String>(json['foodUnit']),
       id: serializer.fromJson<int>(json['id']),
       longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
+      offLogin: serializer.fromJson<String?>(json['offLogin']),
+      offPassword: serializer.fromJson<String?>(json['offPassword']),
       positiveReinforcement:
           serializer.fromJson<bool>(json['positiveReinforcement']),
       reminders: serializer.fromJson<bool>(json['reminders']),
@@ -6911,8 +6931,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       systemColors: serializer.fromJson<bool>(json['systemColors']),
       targetWeight: serializer.fromJson<double?>(json['targetWeight']),
       themeMode: serializer.fromJson<String>(json['themeMode']),
-      offLogin: serializer.fromJson<String?>(json['offLogin']),
-      offPassword: serializer.fromJson<String?>(json['offPassword']),
+      tabs: serializer.fromJson<String>(json['tabs']),
     );
   }
   @override
@@ -6930,6 +6949,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       'foodUnit': serializer.toJson<String>(foodUnit),
       'id': serializer.toJson<int>(id),
       'longDateFormat': serializer.toJson<String>(longDateFormat),
+      'offLogin': serializer.toJson<String?>(offLogin),
+      'offPassword': serializer.toJson<String?>(offPassword),
       'positiveReinforcement': serializer.toJson<bool>(positiveReinforcement),
       'reminders': serializer.toJson<bool>(reminders),
       'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
@@ -6939,8 +6960,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       'systemColors': serializer.toJson<bool>(systemColors),
       'targetWeight': serializer.toJson<double?>(targetWeight),
       'themeMode': serializer.toJson<String>(themeMode),
-      'offLogin': serializer.toJson<String?>(offLogin),
-      'offPassword': serializer.toJson<String?>(offPassword),
+      'tabs': serializer.toJson<String>(tabs),
     };
   }
 
@@ -6956,6 +6976,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           String? foodUnit,
           int? id,
           String? longDateFormat,
+          Value<String?> offLogin = const Value.absent(),
+          Value<String?> offPassword = const Value.absent(),
           bool? positiveReinforcement,
           bool? reminders,
           bool? selectEntryOnSubmit,
@@ -6965,8 +6987,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           bool? systemColors,
           Value<double?> targetWeight = const Value.absent(),
           String? themeMode,
-          Value<String?> offLogin = const Value.absent(),
-          Value<String?> offPassword = const Value.absent()}) =>
+          String? tabs}) =>
       Setting(
         curveLines: curveLines ?? this.curveLines,
         dailyCalories:
@@ -6981,6 +7002,8 @@ class Setting extends DataClass implements Insertable<Setting> {
         foodUnit: foodUnit ?? this.foodUnit,
         id: id ?? this.id,
         longDateFormat: longDateFormat ?? this.longDateFormat,
+        offLogin: offLogin.present ? offLogin.value : this.offLogin,
+        offPassword: offPassword.present ? offPassword.value : this.offPassword,
         positiveReinforcement:
             positiveReinforcement ?? this.positiveReinforcement,
         reminders: reminders ?? this.reminders,
@@ -6992,8 +7015,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         targetWeight:
             targetWeight.present ? targetWeight.value : this.targetWeight,
         themeMode: themeMode ?? this.themeMode,
-        offLogin: offLogin.present ? offLogin.value : this.offLogin,
-        offPassword: offPassword.present ? offPassword.value : this.offPassword,
+        tabs: tabs ?? this.tabs,
       );
   Setting copyWithCompanion(SettingsCompanion data) {
     return Setting(
@@ -7018,6 +7040,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       longDateFormat: data.longDateFormat.present
           ? data.longDateFormat.value
           : this.longDateFormat,
+      offLogin: data.offLogin.present ? data.offLogin.value : this.offLogin,
+      offPassword:
+          data.offPassword.present ? data.offPassword.value : this.offPassword,
       positiveReinforcement: data.positiveReinforcement.present
           ? data.positiveReinforcement.value
           : this.positiveReinforcement,
@@ -7039,9 +7064,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ? data.targetWeight.value
           : this.targetWeight,
       themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
-      offLogin: data.offLogin.present ? data.offLogin.value : this.offLogin,
-      offPassword:
-          data.offPassword.present ? data.offPassword.value : this.offPassword,
+      tabs: data.tabs.present ? data.tabs.value : this.tabs,
     );
   }
 
@@ -7059,6 +7082,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
           ..write('longDateFormat: $longDateFormat, ')
+          ..write('offLogin: $offLogin, ')
+          ..write('offPassword: $offPassword, ')
           ..write('positiveReinforcement: $positiveReinforcement, ')
           ..write('reminders: $reminders, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
@@ -7068,8 +7093,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('systemColors: $systemColors, ')
           ..write('targetWeight: $targetWeight, ')
           ..write('themeMode: $themeMode, ')
-          ..write('offLogin: $offLogin, ')
-          ..write('offPassword: $offPassword')
+          ..write('tabs: $tabs')
           ..write(')'))
         .toString();
   }
@@ -7087,6 +7111,8 @@ class Setting extends DataClass implements Insertable<Setting> {
         foodUnit,
         id,
         longDateFormat,
+        offLogin,
+        offPassword,
         positiveReinforcement,
         reminders,
         selectEntryOnSubmit,
@@ -7096,8 +7122,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         systemColors,
         targetWeight,
         themeMode,
-        offLogin,
-        offPassword
+        tabs
       ]);
   @override
   bool operator ==(Object other) =>
@@ -7114,6 +7139,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.foodUnit == this.foodUnit &&
           other.id == this.id &&
           other.longDateFormat == this.longDateFormat &&
+          other.offLogin == this.offLogin &&
+          other.offPassword == this.offPassword &&
           other.positiveReinforcement == this.positiveReinforcement &&
           other.reminders == this.reminders &&
           other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
@@ -7123,8 +7150,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.systemColors == this.systemColors &&
           other.targetWeight == this.targetWeight &&
           other.themeMode == this.themeMode &&
-          other.offLogin == this.offLogin &&
-          other.offPassword == this.offPassword);
+          other.tabs == this.tabs);
 }
 
 class SettingsCompanion extends UpdateCompanion<Setting> {
@@ -7139,6 +7165,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<String> foodUnit;
   final Value<int> id;
   final Value<String> longDateFormat;
+  final Value<String?> offLogin;
+  final Value<String?> offPassword;
   final Value<bool> positiveReinforcement;
   final Value<bool> reminders;
   final Value<bool> selectEntryOnSubmit;
@@ -7148,8 +7176,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> systemColors;
   final Value<double?> targetWeight;
   final Value<String> themeMode;
-  final Value<String?> offLogin;
-  final Value<String?> offPassword;
+  final Value<String> tabs;
   const SettingsCompanion({
     this.curveLines = const Value.absent(),
     this.dailyCalories = const Value.absent(),
@@ -7162,6 +7189,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.foodUnit = const Value.absent(),
     this.id = const Value.absent(),
     this.longDateFormat = const Value.absent(),
+    this.offLogin = const Value.absent(),
+    this.offPassword = const Value.absent(),
     this.positiveReinforcement = const Value.absent(),
     this.reminders = const Value.absent(),
     this.selectEntryOnSubmit = const Value.absent(),
@@ -7171,8 +7200,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.systemColors = const Value.absent(),
     this.targetWeight = const Value.absent(),
     this.themeMode = const Value.absent(),
-    this.offLogin = const Value.absent(),
-    this.offPassword = const Value.absent(),
+    this.tabs = const Value.absent(),
   });
   SettingsCompanion.insert({
     required bool curveLines,
@@ -7186,6 +7214,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     required String foodUnit,
     this.id = const Value.absent(),
     required String longDateFormat,
+    this.offLogin = const Value.absent(),
+    this.offPassword = const Value.absent(),
     this.positiveReinforcement = const Value.absent(),
     this.reminders = const Value.absent(),
     required bool selectEntryOnSubmit,
@@ -7195,8 +7225,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     required bool systemColors,
     this.targetWeight = const Value.absent(),
     required String themeMode,
-    this.offLogin = const Value.absent(),
-    this.offPassword = const Value.absent(),
+    this.tabs = const Value.absent(),
   })  : curveLines = Value(curveLines),
         diarySummary = Value(diarySummary),
         entryUnit = Value(entryUnit),
@@ -7220,6 +7249,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<String>? foodUnit,
     Expression<int>? id,
     Expression<String>? longDateFormat,
+    Expression<String>? offLogin,
+    Expression<String>? offPassword,
     Expression<bool>? positiveReinforcement,
     Expression<bool>? reminders,
     Expression<bool>? selectEntryOnSubmit,
@@ -7229,8 +7260,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? systemColors,
     Expression<double>? targetWeight,
     Expression<String>? themeMode,
-    Expression<String>? offLogin,
-    Expression<String>? offPassword,
+    Expression<String>? tabs,
   }) {
     return RawValuesInsertable({
       if (curveLines != null) 'curve_lines': curveLines,
@@ -7244,6 +7274,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (foodUnit != null) 'food_unit': foodUnit,
       if (id != null) 'id': id,
       if (longDateFormat != null) 'long_date_format': longDateFormat,
+      if (offLogin != null) 'off_login': offLogin,
+      if (offPassword != null) 'off_password': offPassword,
       if (positiveReinforcement != null)
         'positive_reinforcement': positiveReinforcement,
       if (reminders != null) 'reminders': reminders,
@@ -7255,8 +7287,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (systemColors != null) 'system_colors': systemColors,
       if (targetWeight != null) 'target_weight': targetWeight,
       if (themeMode != null) 'theme_mode': themeMode,
-      if (offLogin != null) 'off_login': offLogin,
-      if (offPassword != null) 'off_password': offPassword,
+      if (tabs != null) 'tabs': tabs,
     });
   }
 
@@ -7272,6 +7303,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<String>? foodUnit,
       Value<int>? id,
       Value<String>? longDateFormat,
+      Value<String?>? offLogin,
+      Value<String?>? offPassword,
       Value<bool>? positiveReinforcement,
       Value<bool>? reminders,
       Value<bool>? selectEntryOnSubmit,
@@ -7281,8 +7314,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<bool>? systemColors,
       Value<double?>? targetWeight,
       Value<String>? themeMode,
-      Value<String?>? offLogin,
-      Value<String?>? offPassword}) {
+      Value<String>? tabs}) {
     return SettingsCompanion(
       curveLines: curveLines ?? this.curveLines,
       dailyCalories: dailyCalories ?? this.dailyCalories,
@@ -7295,6 +7327,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       foodUnit: foodUnit ?? this.foodUnit,
       id: id ?? this.id,
       longDateFormat: longDateFormat ?? this.longDateFormat,
+      offLogin: offLogin ?? this.offLogin,
+      offPassword: offPassword ?? this.offPassword,
       positiveReinforcement:
           positiveReinforcement ?? this.positiveReinforcement,
       reminders: reminders ?? this.reminders,
@@ -7305,8 +7339,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       systemColors: systemColors ?? this.systemColors,
       targetWeight: targetWeight ?? this.targetWeight,
       themeMode: themeMode ?? this.themeMode,
-      offLogin: offLogin ?? this.offLogin,
-      offPassword: offPassword ?? this.offPassword,
+      tabs: tabs ?? this.tabs,
     );
   }
 
@@ -7346,6 +7379,12 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (longDateFormat.present) {
       map['long_date_format'] = Variable<String>(longDateFormat.value);
     }
+    if (offLogin.present) {
+      map['off_login'] = Variable<String>(offLogin.value);
+    }
+    if (offPassword.present) {
+      map['off_password'] = Variable<String>(offPassword.value);
+    }
     if (positiveReinforcement.present) {
       map['positive_reinforcement'] =
           Variable<bool>(positiveReinforcement.value);
@@ -7374,11 +7413,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (themeMode.present) {
       map['theme_mode'] = Variable<String>(themeMode.value);
     }
-    if (offLogin.present) {
-      map['off_login'] = Variable<String>(offLogin.value);
-    }
-    if (offPassword.present) {
-      map['off_password'] = Variable<String>(offPassword.value);
+    if (tabs.present) {
+      map['tabs'] = Variable<String>(tabs.value);
     }
     return map;
   }
@@ -7397,6 +7433,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
           ..write('longDateFormat: $longDateFormat, ')
+          ..write('offLogin: $offLogin, ')
+          ..write('offPassword: $offPassword, ')
           ..write('positiveReinforcement: $positiveReinforcement, ')
           ..write('reminders: $reminders, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
@@ -7406,8 +7444,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('systemColors: $systemColors, ')
           ..write('targetWeight: $targetWeight, ')
           ..write('themeMode: $themeMode, ')
-          ..write('offLogin: $offLogin, ')
-          ..write('offPassword: $offPassword')
+          ..write('tabs: $tabs')
           ..write(')'))
         .toString();
   }
@@ -9810,6 +9847,8 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   required String foodUnit,
   Value<int> id,
   required String longDateFormat,
+  Value<String?> offLogin,
+  Value<String?> offPassword,
   Value<bool> positiveReinforcement,
   Value<bool> reminders,
   required bool selectEntryOnSubmit,
@@ -9819,8 +9858,7 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   required bool systemColors,
   Value<double?> targetWeight,
   required String themeMode,
-  Value<String?> offLogin,
-  Value<String?> offPassword,
+  Value<String> tabs,
 });
 typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> curveLines,
@@ -9834,6 +9872,8 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<String> foodUnit,
   Value<int> id,
   Value<String> longDateFormat,
+  Value<String?> offLogin,
+  Value<String?> offPassword,
   Value<bool> positiveReinforcement,
   Value<bool> reminders,
   Value<bool> selectEntryOnSubmit,
@@ -9843,8 +9883,7 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> systemColors,
   Value<double?> targetWeight,
   Value<String> themeMode,
-  Value<String?> offLogin,
-  Value<String?> offPassword,
+  Value<String> tabs,
 });
 
 class $$SettingsTableTableManager extends RootTableManager<
@@ -9875,6 +9914,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<String> foodUnit = const Value.absent(),
             Value<int> id = const Value.absent(),
             Value<String> longDateFormat = const Value.absent(),
+            Value<String?> offLogin = const Value.absent(),
+            Value<String?> offPassword = const Value.absent(),
             Value<bool> positiveReinforcement = const Value.absent(),
             Value<bool> reminders = const Value.absent(),
             Value<bool> selectEntryOnSubmit = const Value.absent(),
@@ -9884,8 +9925,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> systemColors = const Value.absent(),
             Value<double?> targetWeight = const Value.absent(),
             Value<String> themeMode = const Value.absent(),
-            Value<String?> offLogin = const Value.absent(),
-            Value<String?> offPassword = const Value.absent(),
+            Value<String> tabs = const Value.absent(),
           }) =>
               SettingsCompanion(
             curveLines: curveLines,
@@ -9899,6 +9939,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             foodUnit: foodUnit,
             id: id,
             longDateFormat: longDateFormat,
+            offLogin: offLogin,
+            offPassword: offPassword,
             positiveReinforcement: positiveReinforcement,
             reminders: reminders,
             selectEntryOnSubmit: selectEntryOnSubmit,
@@ -9908,8 +9950,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             systemColors: systemColors,
             targetWeight: targetWeight,
             themeMode: themeMode,
-            offLogin: offLogin,
-            offPassword: offPassword,
+            tabs: tabs,
           ),
           createCompanionCallback: ({
             required bool curveLines,
@@ -9923,6 +9964,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             required String foodUnit,
             Value<int> id = const Value.absent(),
             required String longDateFormat,
+            Value<String?> offLogin = const Value.absent(),
+            Value<String?> offPassword = const Value.absent(),
             Value<bool> positiveReinforcement = const Value.absent(),
             Value<bool> reminders = const Value.absent(),
             required bool selectEntryOnSubmit,
@@ -9932,8 +9975,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             required bool systemColors,
             Value<double?> targetWeight = const Value.absent(),
             required String themeMode,
-            Value<String?> offLogin = const Value.absent(),
-            Value<String?> offPassword = const Value.absent(),
+            Value<String> tabs = const Value.absent(),
           }) =>
               SettingsCompanion.insert(
             curveLines: curveLines,
@@ -9947,6 +9989,8 @@ class $$SettingsTableTableManager extends RootTableManager<
             foodUnit: foodUnit,
             id: id,
             longDateFormat: longDateFormat,
+            offLogin: offLogin,
+            offPassword: offPassword,
             positiveReinforcement: positiveReinforcement,
             reminders: reminders,
             selectEntryOnSubmit: selectEntryOnSubmit,
@@ -9956,8 +10000,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             systemColors: systemColors,
             targetWeight: targetWeight,
             themeMode: themeMode,
-            offLogin: offLogin,
-            offPassword: offPassword,
+            tabs: tabs,
           ),
         ));
 }
@@ -10020,6 +10063,16 @@ class $$SettingsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<String> get offLogin => $state.composableBuilder(
+      column: $state.table.offLogin,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get offPassword => $state.composableBuilder(
+      column: $state.table.offPassword,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<bool> get positiveReinforcement => $state.composableBuilder(
       column: $state.table.positiveReinforcement,
       builder: (column, joinBuilders) =>
@@ -10065,13 +10118,8 @@ class $$SettingsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
-  ColumnFilters<String> get offLogin => $state.composableBuilder(
-      column: $state.table.offLogin,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get offPassword => $state.composableBuilder(
-      column: $state.table.offPassword,
+  ColumnFilters<String> get tabs => $state.composableBuilder(
+      column: $state.table.tabs,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -10134,6 +10182,16 @@ class $$SettingsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
+  ColumnOrderings<String> get offLogin => $state.composableBuilder(
+      column: $state.table.offLogin,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get offPassword => $state.composableBuilder(
+      column: $state.table.offPassword,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<bool> get positiveReinforcement => $state.composableBuilder(
       column: $state.table.positiveReinforcement,
       builder: (column, joinBuilders) =>
@@ -10179,13 +10237,8 @@ class $$SettingsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<String> get offLogin => $state.composableBuilder(
-      column: $state.table.offLogin,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get offPassword => $state.composableBuilder(
-      column: $state.table.offPassword,
+  ColumnOrderings<String> get tabs => $state.composableBuilder(
+      column: $state.table.tabs,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

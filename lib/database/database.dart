@@ -307,10 +307,13 @@ class AppDatabase extends _$AppDatabase {
 
           await m.alterTable(TableMigration(schema.settings));
         },
+        from23To24: (Migrator m, Schema24 schema) async {
+          await m.addColumn(schema.settings, schema.settings.tabs);
+        },
       ),
     );
   }
 
   @override
-  int get schemaVersion => 23;
+  int get schemaVersion => 24;
 }

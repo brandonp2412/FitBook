@@ -26,4 +26,7 @@ class Settings extends Table {
   BoolColumn get systemColors => boolean()();
   RealColumn get targetWeight => real().nullable()();
   TextColumn get themeMode => text()();
+  TextColumn get tabs => text().withDefault(
+        const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"),
+      )();
 }
