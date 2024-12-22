@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_page.dart';
+import 'package:fit_book/entry/diary_page.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
@@ -99,7 +99,7 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
           body: TabBarView(
             children: [
-              EntryPage(),
+              DiaryPage(),
               GraphPage(),
               FoodPage(),
               WeightPage(),

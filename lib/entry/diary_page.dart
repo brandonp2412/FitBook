@@ -14,14 +14,14 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EntryPage extends StatefulWidget {
-  const EntryPage({super.key});
+class DiaryPage extends StatefulWidget {
+  const DiaryPage({super.key});
 
   @override
-  createState() => EntryPageState();
+  createState() => DiaryPageState();
 }
 
-class EntryPageState extends State<EntryPage> {
+class DiaryPageState extends State<DiaryPage> {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/entry/diary_page.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
-import 'package:fit_book/entry/entry_page.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
@@ -237,7 +237,7 @@ Future<void> appWrapper() async {
 BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
   switch (tabBarState) {
     case TabBarState.entry:
-      return (tester.state(find.byType(EntryPage)) as EntryPageState)
+      return (tester.state(find.byType(DiaryPage)) as DiaryPageState)
           .navigatorKey
           .currentContext!;
     case TabBarState.graph:

@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_page.dart';
+import 'package:fit_book/entry/diary_page.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -67,7 +67,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => EntryState()),
         ],
         child: const MaterialApp(
-          home: EntryPage(),
+          home: DiaryPage(),
         ),
       ),
     );
