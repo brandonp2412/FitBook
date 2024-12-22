@@ -14,6 +14,8 @@ class Settings extends Table {
   TextColumn get foodUnit => text()();
   IntColumn get id => integer().autoIncrement()();
   TextColumn get longDateFormat => text()();
+  TextColumn get offLogin => text().nullable()();
+  TextColumn get offPassword => text().nullable()();
   BoolColumn get positiveReinforcement =>
       boolean().withDefault(const Constant(true))();
   BoolColumn get reminders => boolean().withDefault(const Constant(false))();
@@ -24,6 +26,4 @@ class Settings extends Table {
   BoolColumn get systemColors => boolean()();
   RealColumn get targetWeight => real().nullable()();
   TextColumn get themeMode => text()();
-  TextColumn get offLogin => text().nullable()();
-  TextColumn get offPassword => text().nullable()();
 }
