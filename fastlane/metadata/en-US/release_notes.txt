@@ -1,1 +1,1 @@
-- Add tabs settings
+- Upgrade android deps + flutter
