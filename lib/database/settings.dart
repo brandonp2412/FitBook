@@ -13,6 +13,8 @@ class Settings extends Table {
   BoolColumn get favoriteNew => boolean()();
   TextColumn get foodUnit => text()();
   IntColumn get id => integer().autoIncrement()();
+  TextColumn get lastGraph =>
+      text().withDefault(const Constant('AppMetric.calories'))();
   TextColumn get longDateFormat => text()();
   TextColumn get offLogin => text().nullable()();
   TextColumn get offPassword => text().nullable()();
@@ -24,9 +26,9 @@ class Settings extends Table {
   BoolColumn get showImages => boolean().withDefault(const Constant(true))();
   BoolColumn get showOthers => boolean()();
   BoolColumn get systemColors => boolean()();
-  RealColumn get targetWeight => real().nullable()();
-  TextColumn get themeMode => text()();
   TextColumn get tabs => text().withDefault(
         const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"),
       )();
+  RealColumn get targetWeight => real().nullable()();
+  TextColumn get themeMode => text()();
 }

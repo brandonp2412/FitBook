@@ -6429,6 +6429,14 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _lastGraphMeta =
+      const VerificationMeta('lastGraph');
+  @override
+  late final GeneratedColumn<String> lastGraph = GeneratedColumn<String>(
+      'last_graph', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('AppMetric.calories'));
   static const VerificationMeta _longDateFormatMeta =
       const VerificationMeta('longDateFormat');
   @override
@@ -6510,6 +6518,13 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("system_colors" IN (0, 1))'));
+  static const VerificationMeta _tabsMeta = const VerificationMeta('tabs');
+  @override
+  late final GeneratedColumn<String> tabs = GeneratedColumn<String>(
+      'tabs', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"));
   static const VerificationMeta _targetWeightMeta =
       const VerificationMeta('targetWeight');
   @override
@@ -6522,13 +6537,6 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
       'theme_mode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _tabsMeta = const VerificationMeta('tabs');
-  @override
-  late final GeneratedColumn<String> tabs = GeneratedColumn<String>(
-      'tabs', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"));
   @override
   List<GeneratedColumn> get $columns => [
         curveLines,
@@ -6541,6 +6549,7 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         favoriteNew,
         foodUnit,
         id,
+        lastGraph,
         longDateFormat,
         offLogin,
         offPassword,
@@ -6551,9 +6560,9 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         showImages,
         showOthers,
         systemColors,
+        tabs,
         targetWeight,
-        themeMode,
-        tabs
+        themeMode
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -6624,6 +6633,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
+    if (data.containsKey('last_graph')) {
+      context.handle(_lastGraphMeta,
+          lastGraph.isAcceptableOrUnknown(data['last_graph']!, _lastGraphMeta));
+    }
     if (data.containsKey('long_date_format')) {
       context.handle(
           _longDateFormatMeta,
@@ -6690,6 +6703,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_systemColorsMeta);
     }
+    if (data.containsKey('tabs')) {
+      context.handle(
+          _tabsMeta, tabs.isAcceptableOrUnknown(data['tabs']!, _tabsMeta));
+    }
     if (data.containsKey('target_weight')) {
       context.handle(
           _targetWeightMeta,
@@ -6701,10 +6718,6 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta));
     } else if (isInserting) {
       context.missing(_themeModeMeta);
-    }
-    if (data.containsKey('tabs')) {
-      context.handle(
-          _tabsMeta, tabs.isAcceptableOrUnknown(data['tabs']!, _tabsMeta));
     }
     return context;
   }
@@ -6735,6 +6748,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.string, data['${effectivePrefix}food_unit'])!,
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      lastGraph: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_graph'])!,
       longDateFormat: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
       offLogin: attachedDatabase.typeMapping
@@ -6755,12 +6770,12 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.bool, data['${effectivePrefix}show_others'])!,
       systemColors: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}system_colors'])!,
+      tabs: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tabs'])!,
       targetWeight: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}target_weight']),
       themeMode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
-      tabs: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tabs'])!,
     );
   }
 
@@ -6781,6 +6796,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool favoriteNew;
   final String foodUnit;
   final int id;
+  final String lastGraph;
   final String longDateFormat;
   final String? offLogin;
   final String? offPassword;
@@ -6791,9 +6807,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool showImages;
   final bool showOthers;
   final bool systemColors;
+  final String tabs;
   final double? targetWeight;
   final String themeMode;
-  final String tabs;
   const Setting(
       {required this.curveLines,
       this.dailyCalories,
@@ -6805,6 +6821,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.favoriteNew,
       required this.foodUnit,
       required this.id,
+      required this.lastGraph,
       required this.longDateFormat,
       this.offLogin,
       this.offPassword,
@@ -6815,9 +6832,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.showImages,
       required this.showOthers,
       required this.systemColors,
+      required this.tabs,
       this.targetWeight,
-      required this.themeMode,
-      required this.tabs});
+      required this.themeMode});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -6839,6 +6856,7 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['favorite_new'] = Variable<bool>(favoriteNew);
     map['food_unit'] = Variable<String>(foodUnit);
     map['id'] = Variable<int>(id);
+    map['last_graph'] = Variable<String>(lastGraph);
     map['long_date_format'] = Variable<String>(longDateFormat);
     if (!nullToAbsent || offLogin != null) {
       map['off_login'] = Variable<String>(offLogin);
@@ -6853,11 +6871,11 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['show_images'] = Variable<bool>(showImages);
     map['show_others'] = Variable<bool>(showOthers);
     map['system_colors'] = Variable<bool>(systemColors);
+    map['tabs'] = Variable<String>(tabs);
     if (!nullToAbsent || targetWeight != null) {
       map['target_weight'] = Variable<double>(targetWeight);
     }
     map['theme_mode'] = Variable<String>(themeMode);
-    map['tabs'] = Variable<String>(tabs);
     return map;
   }
 
@@ -6881,6 +6899,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       favoriteNew: Value(favoriteNew),
       foodUnit: Value(foodUnit),
       id: Value(id),
+      lastGraph: Value(lastGraph),
       longDateFormat: Value(longDateFormat),
       offLogin: offLogin == null && nullToAbsent
           ? const Value.absent()
@@ -6895,11 +6914,11 @@ class Setting extends DataClass implements Insertable<Setting> {
       showImages: Value(showImages),
       showOthers: Value(showOthers),
       systemColors: Value(systemColors),
+      tabs: Value(tabs),
       targetWeight: targetWeight == null && nullToAbsent
           ? const Value.absent()
           : Value(targetWeight),
       themeMode: Value(themeMode),
-      tabs: Value(tabs),
     );
   }
 
@@ -6917,6 +6936,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       favoriteNew: serializer.fromJson<bool>(json['favoriteNew']),
       foodUnit: serializer.fromJson<String>(json['foodUnit']),
       id: serializer.fromJson<int>(json['id']),
+      lastGraph: serializer.fromJson<String>(json['lastGraph']),
       longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
       offLogin: serializer.fromJson<String?>(json['offLogin']),
       offPassword: serializer.fromJson<String?>(json['offPassword']),
@@ -6929,9 +6949,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       showImages: serializer.fromJson<bool>(json['showImages']),
       showOthers: serializer.fromJson<bool>(json['showOthers']),
       systemColors: serializer.fromJson<bool>(json['systemColors']),
+      tabs: serializer.fromJson<String>(json['tabs']),
       targetWeight: serializer.fromJson<double?>(json['targetWeight']),
       themeMode: serializer.fromJson<String>(json['themeMode']),
-      tabs: serializer.fromJson<String>(json['tabs']),
     );
   }
   @override
@@ -6948,6 +6968,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       'favoriteNew': serializer.toJson<bool>(favoriteNew),
       'foodUnit': serializer.toJson<String>(foodUnit),
       'id': serializer.toJson<int>(id),
+      'lastGraph': serializer.toJson<String>(lastGraph),
       'longDateFormat': serializer.toJson<String>(longDateFormat),
       'offLogin': serializer.toJson<String?>(offLogin),
       'offPassword': serializer.toJson<String?>(offPassword),
@@ -6958,9 +6979,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       'showImages': serializer.toJson<bool>(showImages),
       'showOthers': serializer.toJson<bool>(showOthers),
       'systemColors': serializer.toJson<bool>(systemColors),
+      'tabs': serializer.toJson<String>(tabs),
       'targetWeight': serializer.toJson<double?>(targetWeight),
       'themeMode': serializer.toJson<String>(themeMode),
-      'tabs': serializer.toJson<String>(tabs),
     };
   }
 
@@ -6975,6 +6996,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           bool? favoriteNew,
           String? foodUnit,
           int? id,
+          String? lastGraph,
           String? longDateFormat,
           Value<String?> offLogin = const Value.absent(),
           Value<String?> offPassword = const Value.absent(),
@@ -6985,9 +7007,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           bool? showImages,
           bool? showOthers,
           bool? systemColors,
+          String? tabs,
           Value<double?> targetWeight = const Value.absent(),
-          String? themeMode,
-          String? tabs}) =>
+          String? themeMode}) =>
       Setting(
         curveLines: curveLines ?? this.curveLines,
         dailyCalories:
@@ -7001,6 +7023,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         favoriteNew: favoriteNew ?? this.favoriteNew,
         foodUnit: foodUnit ?? this.foodUnit,
         id: id ?? this.id,
+        lastGraph: lastGraph ?? this.lastGraph,
         longDateFormat: longDateFormat ?? this.longDateFormat,
         offLogin: offLogin.present ? offLogin.value : this.offLogin,
         offPassword: offPassword.present ? offPassword.value : this.offPassword,
@@ -7012,10 +7035,10 @@ class Setting extends DataClass implements Insertable<Setting> {
         showImages: showImages ?? this.showImages,
         showOthers: showOthers ?? this.showOthers,
         systemColors: systemColors ?? this.systemColors,
+        tabs: tabs ?? this.tabs,
         targetWeight:
             targetWeight.present ? targetWeight.value : this.targetWeight,
         themeMode: themeMode ?? this.themeMode,
-        tabs: tabs ?? this.tabs,
       );
   Setting copyWithCompanion(SettingsCompanion data) {
     return Setting(
@@ -7037,6 +7060,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           data.favoriteNew.present ? data.favoriteNew.value : this.favoriteNew,
       foodUnit: data.foodUnit.present ? data.foodUnit.value : this.foodUnit,
       id: data.id.present ? data.id.value : this.id,
+      lastGraph: data.lastGraph.present ? data.lastGraph.value : this.lastGraph,
       longDateFormat: data.longDateFormat.present
           ? data.longDateFormat.value
           : this.longDateFormat,
@@ -7060,11 +7084,11 @@ class Setting extends DataClass implements Insertable<Setting> {
       systemColors: data.systemColors.present
           ? data.systemColors.value
           : this.systemColors,
+      tabs: data.tabs.present ? data.tabs.value : this.tabs,
       targetWeight: data.targetWeight.present
           ? data.targetWeight.value
           : this.targetWeight,
       themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
-      tabs: data.tabs.present ? data.tabs.value : this.tabs,
     );
   }
 
@@ -7081,6 +7105,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('favoriteNew: $favoriteNew, ')
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
+          ..write('lastGraph: $lastGraph, ')
           ..write('longDateFormat: $longDateFormat, ')
           ..write('offLogin: $offLogin, ')
           ..write('offPassword: $offPassword, ')
@@ -7091,9 +7116,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('showImages: $showImages, ')
           ..write('showOthers: $showOthers, ')
           ..write('systemColors: $systemColors, ')
+          ..write('tabs: $tabs, ')
           ..write('targetWeight: $targetWeight, ')
-          ..write('themeMode: $themeMode, ')
-          ..write('tabs: $tabs')
+          ..write('themeMode: $themeMode')
           ..write(')'))
         .toString();
   }
@@ -7110,6 +7135,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         favoriteNew,
         foodUnit,
         id,
+        lastGraph,
         longDateFormat,
         offLogin,
         offPassword,
@@ -7120,9 +7146,9 @@ class Setting extends DataClass implements Insertable<Setting> {
         showImages,
         showOthers,
         systemColors,
+        tabs,
         targetWeight,
-        themeMode,
-        tabs
+        themeMode
       ]);
   @override
   bool operator ==(Object other) =>
@@ -7138,6 +7164,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.favoriteNew == this.favoriteNew &&
           other.foodUnit == this.foodUnit &&
           other.id == this.id &&
+          other.lastGraph == this.lastGraph &&
           other.longDateFormat == this.longDateFormat &&
           other.offLogin == this.offLogin &&
           other.offPassword == this.offPassword &&
@@ -7148,9 +7175,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.showImages == this.showImages &&
           other.showOthers == this.showOthers &&
           other.systemColors == this.systemColors &&
+          other.tabs == this.tabs &&
           other.targetWeight == this.targetWeight &&
-          other.themeMode == this.themeMode &&
-          other.tabs == this.tabs);
+          other.themeMode == this.themeMode);
 }
 
 class SettingsCompanion extends UpdateCompanion<Setting> {
@@ -7164,6 +7191,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> favoriteNew;
   final Value<String> foodUnit;
   final Value<int> id;
+  final Value<String> lastGraph;
   final Value<String> longDateFormat;
   final Value<String?> offLogin;
   final Value<String?> offPassword;
@@ -7174,9 +7202,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> showImages;
   final Value<bool> showOthers;
   final Value<bool> systemColors;
+  final Value<String> tabs;
   final Value<double?> targetWeight;
   final Value<String> themeMode;
-  final Value<String> tabs;
   const SettingsCompanion({
     this.curveLines = const Value.absent(),
     this.dailyCalories = const Value.absent(),
@@ -7188,6 +7216,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.favoriteNew = const Value.absent(),
     this.foodUnit = const Value.absent(),
     this.id = const Value.absent(),
+    this.lastGraph = const Value.absent(),
     this.longDateFormat = const Value.absent(),
     this.offLogin = const Value.absent(),
     this.offPassword = const Value.absent(),
@@ -7198,9 +7227,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.showImages = const Value.absent(),
     this.showOthers = const Value.absent(),
     this.systemColors = const Value.absent(),
+    this.tabs = const Value.absent(),
     this.targetWeight = const Value.absent(),
     this.themeMode = const Value.absent(),
-    this.tabs = const Value.absent(),
   });
   SettingsCompanion.insert({
     required bool curveLines,
@@ -7213,6 +7242,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     required bool favoriteNew,
     required String foodUnit,
     this.id = const Value.absent(),
+    this.lastGraph = const Value.absent(),
     required String longDateFormat,
     this.offLogin = const Value.absent(),
     this.offPassword = const Value.absent(),
@@ -7223,9 +7253,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.showImages = const Value.absent(),
     required bool showOthers,
     required bool systemColors,
+    this.tabs = const Value.absent(),
     this.targetWeight = const Value.absent(),
     required String themeMode,
-    this.tabs = const Value.absent(),
   })  : curveLines = Value(curveLines),
         diarySummary = Value(diarySummary),
         entryUnit = Value(entryUnit),
@@ -7248,6 +7278,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? favoriteNew,
     Expression<String>? foodUnit,
     Expression<int>? id,
+    Expression<String>? lastGraph,
     Expression<String>? longDateFormat,
     Expression<String>? offLogin,
     Expression<String>? offPassword,
@@ -7258,9 +7289,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? showImages,
     Expression<bool>? showOthers,
     Expression<bool>? systemColors,
+    Expression<String>? tabs,
     Expression<double>? targetWeight,
     Expression<String>? themeMode,
-    Expression<String>? tabs,
   }) {
     return RawValuesInsertable({
       if (curveLines != null) 'curve_lines': curveLines,
@@ -7273,6 +7304,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (favoriteNew != null) 'favorite_new': favoriteNew,
       if (foodUnit != null) 'food_unit': foodUnit,
       if (id != null) 'id': id,
+      if (lastGraph != null) 'last_graph': lastGraph,
       if (longDateFormat != null) 'long_date_format': longDateFormat,
       if (offLogin != null) 'off_login': offLogin,
       if (offPassword != null) 'off_password': offPassword,
@@ -7285,9 +7317,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (showImages != null) 'show_images': showImages,
       if (showOthers != null) 'show_others': showOthers,
       if (systemColors != null) 'system_colors': systemColors,
+      if (tabs != null) 'tabs': tabs,
       if (targetWeight != null) 'target_weight': targetWeight,
       if (themeMode != null) 'theme_mode': themeMode,
-      if (tabs != null) 'tabs': tabs,
     });
   }
 
@@ -7302,6 +7334,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<bool>? favoriteNew,
       Value<String>? foodUnit,
       Value<int>? id,
+      Value<String>? lastGraph,
       Value<String>? longDateFormat,
       Value<String?>? offLogin,
       Value<String?>? offPassword,
@@ -7312,9 +7345,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<bool>? showImages,
       Value<bool>? showOthers,
       Value<bool>? systemColors,
+      Value<String>? tabs,
       Value<double?>? targetWeight,
-      Value<String>? themeMode,
-      Value<String>? tabs}) {
+      Value<String>? themeMode}) {
     return SettingsCompanion(
       curveLines: curveLines ?? this.curveLines,
       dailyCalories: dailyCalories ?? this.dailyCalories,
@@ -7326,6 +7359,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       favoriteNew: favoriteNew ?? this.favoriteNew,
       foodUnit: foodUnit ?? this.foodUnit,
       id: id ?? this.id,
+      lastGraph: lastGraph ?? this.lastGraph,
       longDateFormat: longDateFormat ?? this.longDateFormat,
       offLogin: offLogin ?? this.offLogin,
       offPassword: offPassword ?? this.offPassword,
@@ -7337,9 +7371,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       showImages: showImages ?? this.showImages,
       showOthers: showOthers ?? this.showOthers,
       systemColors: systemColors ?? this.systemColors,
+      tabs: tabs ?? this.tabs,
       targetWeight: targetWeight ?? this.targetWeight,
       themeMode: themeMode ?? this.themeMode,
-      tabs: tabs ?? this.tabs,
     );
   }
 
@@ -7376,6 +7410,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
+    if (lastGraph.present) {
+      map['last_graph'] = Variable<String>(lastGraph.value);
+    }
     if (longDateFormat.present) {
       map['long_date_format'] = Variable<String>(longDateFormat.value);
     }
@@ -7407,14 +7444,14 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (systemColors.present) {
       map['system_colors'] = Variable<bool>(systemColors.value);
     }
+    if (tabs.present) {
+      map['tabs'] = Variable<String>(tabs.value);
+    }
     if (targetWeight.present) {
       map['target_weight'] = Variable<double>(targetWeight.value);
     }
     if (themeMode.present) {
       map['theme_mode'] = Variable<String>(themeMode.value);
-    }
-    if (tabs.present) {
-      map['tabs'] = Variable<String>(tabs.value);
     }
     return map;
   }
@@ -7432,6 +7469,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('favoriteNew: $favoriteNew, ')
           ..write('foodUnit: $foodUnit, ')
           ..write('id: $id, ')
+          ..write('lastGraph: $lastGraph, ')
           ..write('longDateFormat: $longDateFormat, ')
           ..write('offLogin: $offLogin, ')
           ..write('offPassword: $offPassword, ')
@@ -7442,9 +7480,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('showImages: $showImages, ')
           ..write('showOthers: $showOthers, ')
           ..write('systemColors: $systemColors, ')
+          ..write('tabs: $tabs, ')
           ..write('targetWeight: $targetWeight, ')
-          ..write('themeMode: $themeMode, ')
-          ..write('tabs: $tabs')
+          ..write('themeMode: $themeMode')
           ..write(')'))
         .toString();
   }
@@ -9846,6 +9884,7 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   required bool favoriteNew,
   required String foodUnit,
   Value<int> id,
+  Value<String> lastGraph,
   required String longDateFormat,
   Value<String?> offLogin,
   Value<String?> offPassword,
@@ -9856,9 +9895,9 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   Value<bool> showImages,
   required bool showOthers,
   required bool systemColors,
+  Value<String> tabs,
   Value<double?> targetWeight,
   required String themeMode,
-  Value<String> tabs,
 });
 typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> curveLines,
@@ -9871,6 +9910,7 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> favoriteNew,
   Value<String> foodUnit,
   Value<int> id,
+  Value<String> lastGraph,
   Value<String> longDateFormat,
   Value<String?> offLogin,
   Value<String?> offPassword,
@@ -9881,9 +9921,9 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> showImages,
   Value<bool> showOthers,
   Value<bool> systemColors,
+  Value<String> tabs,
   Value<double?> targetWeight,
   Value<String> themeMode,
-  Value<String> tabs,
 });
 
 class $$SettingsTableTableManager extends RootTableManager<
@@ -9913,6 +9953,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> favoriteNew = const Value.absent(),
             Value<String> foodUnit = const Value.absent(),
             Value<int> id = const Value.absent(),
+            Value<String> lastGraph = const Value.absent(),
             Value<String> longDateFormat = const Value.absent(),
             Value<String?> offLogin = const Value.absent(),
             Value<String?> offPassword = const Value.absent(),
@@ -9923,9 +9964,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> showImages = const Value.absent(),
             Value<bool> showOthers = const Value.absent(),
             Value<bool> systemColors = const Value.absent(),
+            Value<String> tabs = const Value.absent(),
             Value<double?> targetWeight = const Value.absent(),
             Value<String> themeMode = const Value.absent(),
-            Value<String> tabs = const Value.absent(),
           }) =>
               SettingsCompanion(
             curveLines: curveLines,
@@ -9938,6 +9979,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             favoriteNew: favoriteNew,
             foodUnit: foodUnit,
             id: id,
+            lastGraph: lastGraph,
             longDateFormat: longDateFormat,
             offLogin: offLogin,
             offPassword: offPassword,
@@ -9948,9 +9990,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             showImages: showImages,
             showOthers: showOthers,
             systemColors: systemColors,
+            tabs: tabs,
             targetWeight: targetWeight,
             themeMode: themeMode,
-            tabs: tabs,
           ),
           createCompanionCallback: ({
             required bool curveLines,
@@ -9963,6 +10005,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             required bool favoriteNew,
             required String foodUnit,
             Value<int> id = const Value.absent(),
+            Value<String> lastGraph = const Value.absent(),
             required String longDateFormat,
             Value<String?> offLogin = const Value.absent(),
             Value<String?> offPassword = const Value.absent(),
@@ -9973,9 +10016,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> showImages = const Value.absent(),
             required bool showOthers,
             required bool systemColors,
+            Value<String> tabs = const Value.absent(),
             Value<double?> targetWeight = const Value.absent(),
             required String themeMode,
-            Value<String> tabs = const Value.absent(),
           }) =>
               SettingsCompanion.insert(
             curveLines: curveLines,
@@ -9988,6 +10031,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             favoriteNew: favoriteNew,
             foodUnit: foodUnit,
             id: id,
+            lastGraph: lastGraph,
             longDateFormat: longDateFormat,
             offLogin: offLogin,
             offPassword: offPassword,
@@ -9998,9 +10042,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             showImages: showImages,
             showOthers: showOthers,
             systemColors: systemColors,
+            tabs: tabs,
             targetWeight: targetWeight,
             themeMode: themeMode,
-            tabs: tabs,
           ),
         ));
 }
@@ -10058,6 +10102,11 @@ class $$SettingsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<String> get lastGraph => $state.composableBuilder(
+      column: $state.table.lastGraph,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<String> get longDateFormat => $state.composableBuilder(
       column: $state.table.longDateFormat,
       builder: (column, joinBuilders) =>
@@ -10108,6 +10157,11 @@ class $$SettingsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<String> get tabs => $state.composableBuilder(
+      column: $state.table.tabs,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<double> get targetWeight => $state.composableBuilder(
       column: $state.table.targetWeight,
       builder: (column, joinBuilders) =>
@@ -10115,11 +10169,6 @@ class $$SettingsTableFilterComposer
 
   ColumnFilters<String> get themeMode => $state.composableBuilder(
       column: $state.table.themeMode,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get tabs => $state.composableBuilder(
-      column: $state.table.tabs,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
@@ -10177,6 +10226,11 @@ class $$SettingsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
+  ColumnOrderings<String> get lastGraph => $state.composableBuilder(
+      column: $state.table.lastGraph,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<String> get longDateFormat => $state.composableBuilder(
       column: $state.table.longDateFormat,
       builder: (column, joinBuilders) =>
@@ -10227,6 +10281,11 @@ class $$SettingsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
+  ColumnOrderings<String> get tabs => $state.composableBuilder(
+      column: $state.table.tabs,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<double> get targetWeight => $state.composableBuilder(
       column: $state.table.targetWeight,
       builder: (column, joinBuilders) =>
@@ -10234,11 +10293,6 @@ class $$SettingsTableOrderingComposer
 
   ColumnOrderings<String> get themeMode => $state.composableBuilder(
       column: $state.table.themeMode,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get tabs => $state.composableBuilder(
-      column: $state.table.tabs,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }

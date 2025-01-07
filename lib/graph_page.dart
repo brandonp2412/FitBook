@@ -1,5 +1,8 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/database/database.dart';
+import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,33 +22,20 @@ class GraphPageState extends State<GraphPage>
   DateTime? startDate;
   DateTime? endDate;
 
-  Future<void> _selectEnd() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: endDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
+  @override
+  void initState() {
+    super.initState();
+    final settings = context.read<SettingsState>();
+    if (settings.value.lastGraph == 'AppMetric.calories') return;
 
-    if (pickedDate != null)
-      setState(() {
-        endDate = pickedDate.toLocal();
-      });
+    setState(() {
+      metric = AppMetric.values
+          .firstWhere((m) => m.toString() == settings.value.lastGraph);
+    });
   }
 
-  Future<void> _selectStart() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: startDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (pickedDate != null)
-      setState(() {
-        startDate = pickedDate.toLocal();
-      });
-  }
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +76,11 @@ class GraphPageState extends State<GraphPage>
                 setState(() {
                   metric = value!;
                 });
+                db.settings.update().write(
+                      SettingsCompanion(
+                        lastGraph: Value(metric.toString()),
+                      ),
+                    );
               },
             ),
             const SizedBox(height: 8),
@@ -169,6 +164,31 @@ class GraphPageState extends State<GraphPage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  Future<void> _selectEnd() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: endDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null)
+      setState(() {
+        endDate = pickedDate.toLocal();
+      });
+  }
+
+  Future<void> _selectStart() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: startDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null)
+      setState(() {
+        startDate = pickedDate.toLocal();
+      });
+  }
 }
