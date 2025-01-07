@@ -16,7 +16,6 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
@@ -150,7 +149,6 @@ class AppDatabase extends _$AppDatabase {
         // 1.0.51
         from14To15: (Migrator m, Schema15 schema) async {
           await m.addColumn(schema.settings, schema.settings.shortDateFormat);
-          final prefs = await SharedPreferences.getInstance();
           material.ThemeMode themeMode = material.ThemeMode.system;
           String longDateFormat = 'dd/MM/yy';
           String shortDateFormat = 'd/M/yy';
@@ -170,40 +168,6 @@ class AppDatabase extends _$AppDatabase {
           int? dailyFat;
           int? dailyCarbs;
           double? targetWeight;
-
-          longDateFormat = prefs.getString('longDateFormat') ?? "dd/MM/yy";
-          shortDateFormat = prefs.getString('shortDateFormat') ?? "d/M/yy";
-          entryUnit = prefs.getString('entryUnit') ?? 'serving';
-          foodUnit = prefs.getString('foodUnit') ?? 'grams';
-
-          final theme = prefs.getString('themeMode');
-          if (theme == "ThemeMode.system")
-            themeMode = material.ThemeMode.system;
-          else if (theme == "ThemeMode.light")
-            themeMode = material.ThemeMode.light;
-          else if (theme == "ThemeMode.dark")
-            themeMode = material.ThemeMode.dark;
-
-          final summary = prefs.getString('diarySummary');
-          if (summary == DiarySummary.both.toString())
-            diarySummary = DiarySummary.both;
-          else if (summary == DiarySummary.division.toString())
-            diarySummary = DiarySummary.division;
-          else if (summary == DiarySummary.remaining.toString())
-            diarySummary = DiarySummary.remaining;
-
-          systemColors = prefs.getBool("systemColors") ?? false;
-          favoriteNew = prefs.getBool("favoriteNew") ?? false;
-          curveLines = prefs.getBool("curveLines") ?? true;
-          showOthers = prefs.getBool("showOthers") ?? false;
-          selectEntryOnSubmit = prefs.getBool("selectEntryOnSubmit") ?? false;
-          notifications = prefs.getBool('notifications') ?? false;
-
-          dailyCalories = prefs.getInt('dailyCalories');
-          dailyProtein = prefs.getInt('dailyProtein');
-          dailyFat = prefs.getInt('dailyFat');
-          dailyCarbs = prefs.getInt('dailyCarbs');
-          targetWeight = prefs.getDouble('targetWeight');
 
           await (schema.settings.insertOne(
             RawValuesInsertable({

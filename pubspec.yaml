@@ -3,7 +3,7 @@ description: Track your calories - Completely offline!
 publish_to: none
 version: 1.0.84+91
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: ">=3.3.3 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -15,7 +15,6 @@ dependencies:
   provider: ^6.1.2
   dynamic_color: ^1.7.0
   file_picker: ^8.0.3
-  shared_preferences: ^2.2.3
   fl_chart: ^0.68.0
   intl: ^0.19.0
   csv: ^6.0.0
@@ -54,8 +53,8 @@ flutter_launcher_icons:
   web:
     generate: true
     image_path: assets/ic_launcher.png
-    background_color: '#hexcode'
-    theme_color: '#hexcode'
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
   windows:
     generate: true
     image_path: assets/ic_launcher.png

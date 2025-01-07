@@ -5,7 +5,6 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // The generated directory from before.
 import 'generated_migrations/schema.dart';
@@ -19,7 +18,6 @@ void main() {
 
   test('upgrade from all versions', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences.setMockInitialValues({});
     driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
     final currentVersion =
         AppDatabase(executor: NativeDatabase.memory()).schemaVersion;
