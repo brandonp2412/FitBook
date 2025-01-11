@@ -45,120 +45,123 @@ class GraphPageState extends State<GraphPage>
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: ListView(
-          children: [
-            DropdownButtonFormField(
-              decoration: const InputDecoration(labelText: 'Metric'),
-              value: metric,
-              items: const [
-                DropdownMenuItem(
-                  value: AppMetric.calories,
-                  child: Text("Calories"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.protein,
-                  child: Text("Protein"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.fat,
-                  child: Text("Fat"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.carbs,
-                  child: Text("Carbs"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.bodyWeight,
-                  child: Text("Body weight"),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  metric = value!;
-                });
-                db.settings.update().write(
-                      SettingsCompanion(
-                        lastGraph: Value(metric.toString()),
-                      ),
-                    );
-              },
-            ),
-            const SizedBox(height: 8),
-            DropdownButtonFormField(
-              decoration: const InputDecoration(labelText: 'Group by'),
-              value: groupBy,
-              items: const [
-                DropdownMenuItem(
-                  value: Period.day,
-                  child: Text("Day"),
-                ),
-                DropdownMenuItem(
-                  value: Period.week,
-                  child: Text("Week"),
-                ),
-                DropdownMenuItem(
-                  value: Period.month,
-                  child: Text("Month"),
-                ),
-                DropdownMenuItem(
-                  value: Period.year,
-                  child: Text("Year"),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  groupBy = value!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Start date'),
-                    subtitle: startDate != null
-                        ? Text(
-                            DateFormat(settings.shortDateFormat)
-                                .format(startDate!),
-                          )
-                        : Text(
-                            settings.shortDateFormat,
-                          ),
-                    onLongPress: () => setState(() {
-                      startDate = null;
-                    }),
-                    trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectStart(),
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              DropdownButtonFormField(
+                decoration: const InputDecoration(labelText: 'Metric'),
+                value: metric,
+                items: const [
+                  DropdownMenuItem(
+                    value: AppMetric.calories,
+                    child: Text("Calories"),
                   ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Stop date'),
-                    subtitle: endDate != null
-                        ? Text(
-                            DateFormat(settings.shortDateFormat)
-                                .format(endDate!),
-                          )
-                        : Text(settings.shortDateFormat),
-                    onLongPress: () => setState(() {
-                      endDate = null;
-                    }),
-                    trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectEnd(),
+                  DropdownMenuItem(
+                    value: AppMetric.protein,
+                    child: Text("Protein"),
                   ),
-                ),
-              ],
-            ),
-            AppLine(
-              metric: metric,
-              groupBy: groupBy,
-              startDate: startDate,
-              endDate: endDate,
-            ),
-          ],
+                  DropdownMenuItem(
+                    value: AppMetric.fat,
+                    child: Text("Fat"),
+                  ),
+                  DropdownMenuItem(
+                    value: AppMetric.carbs,
+                    child: Text("Carbs"),
+                  ),
+                  DropdownMenuItem(
+                    value: AppMetric.bodyWeight,
+                    child: Text("Body weight"),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    metric = value!;
+                  });
+                  db.settings.update().write(
+                        SettingsCompanion(
+                          lastGraph: Value(metric.toString()),
+                        ),
+                      );
+                },
+              ),
+              const SizedBox(height: 8),
+              DropdownButtonFormField(
+                decoration: const InputDecoration(labelText: 'Group by'),
+                value: groupBy,
+                items: const [
+                  DropdownMenuItem(
+                    value: Period.day,
+                    child: Text("Day"),
+                  ),
+                  DropdownMenuItem(
+                    value: Period.week,
+                    child: Text("Week"),
+                  ),
+                  DropdownMenuItem(
+                    value: Period.month,
+                    child: Text("Month"),
+                  ),
+                  DropdownMenuItem(
+                    value: Period.year,
+                    child: Text("Year"),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    groupBy = value!;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('Start date'),
+                      subtitle: startDate != null
+                          ? Text(
+                              DateFormat(settings.shortDateFormat)
+                                  .format(startDate!),
+                            )
+                          : Text(
+                              settings.shortDateFormat,
+                            ),
+                      onLongPress: () => setState(() {
+                        startDate = null;
+                      }),
+                      trailing: const Icon(Icons.calendar_today),
+                      onTap: () => _selectStart(),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('Stop date'),
+                      subtitle: endDate != null
+                          ? Text(
+                              DateFormat(settings.shortDateFormat)
+                                  .format(endDate!),
+                            )
+                          : Text(settings.shortDateFormat),
+                      onLongPress: () => setState(() {
+                        endDate = null;
+                      }),
+                      trailing: const Icon(Icons.calendar_today),
+                      onTap: () => _selectEnd(),
+                    ),
+                  ),
+                ],
+              ),
+              AppLine(
+                metric: metric,
+                groupBy: groupBy,
+                startDate: startDate,
+                endDate: endDate,
+              ),
+            ],
+          ),
         ),
       ),
     );
