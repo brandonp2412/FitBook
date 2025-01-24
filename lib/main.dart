@@ -9,6 +9,7 @@ import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -97,49 +98,59 @@ class HomePage extends StatelessWidget {
         .select<SettingsState, String>((settings) => settings.value.tabs);
     final tabs = tabsSetting.split(',');
 
-    return SafeArea(
-      child: DefaultTabController(
-        length: tabs.length,
-        child: Scaffold(
-          body: TabBarView(
-            children: tabs.map((tab) {
-              if (tab == 'DiaryPage')
-                return const DiaryPage();
-              else if (tab == 'GraphPage')
-                return const GraphPage();
-              else if (tab == 'FoodPage')
-                return const FoodPage();
-              else if (tab == 'WeightPage')
-                return const WeightPage();
-              else
-                return ErrorWidget('Invalid tab settings.');
-            }).toList(),
-          ),
-          bottomNavigationBar: TabBar(
-            tabs: tabs.map((tab) {
-              if (tab == 'DiaryPage')
-                return const Tab(
-                  icon: Icon(Icons.date_range),
-                  text: "Diary",
-                );
-              else if (tab == 'GraphPage')
-                return const Tab(
-                  icon: Icon(Icons.insights),
-                  text: "Graph",
-                );
-              else if (tab == 'FoodPage')
-                return const Tab(
-                  icon: Icon(Icons.restaurant),
-                  text: "Food",
-                );
-              else if (tab == 'WeightPage')
-                return const Tab(
-                  icon: Icon(Icons.scale),
-                  text: "Weight",
-                );
-              else
-                return ErrorWidget('Invalid tab settings.');
-            }).toList(),
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).colorScheme.surface,
+        statusBarColor: Theme.of(context).colorScheme.surface,
+        statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+      ),
+      child: SafeArea(
+        child: DefaultTabController(
+          length: tabs.length,
+          child: Scaffold(
+            body: TabBarView(
+              children: tabs.map((tab) {
+                if (tab == 'DiaryPage')
+                  return const DiaryPage();
+                else if (tab == 'GraphPage')
+                  return const GraphPage();
+                else if (tab == 'FoodPage')
+                  return const FoodPage();
+                else if (tab == 'WeightPage')
+                  return const WeightPage();
+                else
+                  return ErrorWidget('Invalid tab settings.');
+              }).toList(),
+            ),
+            bottomNavigationBar: TabBar(
+              dividerColor: Colors.transparent,
+              tabs: tabs.map((tab) {
+                if (tab == 'DiaryPage')
+                  return const Tab(
+                    icon: Icon(Icons.date_range),
+                    text: "Diary",
+                  );
+                else if (tab == 'GraphPage')
+                  return const Tab(
+                    icon: Icon(Icons.insights),
+                    text: "Graph",
+                  );
+                else if (tab == 'FoodPage')
+                  return const Tab(
+                    icon: Icon(Icons.restaurant),
+                    text: "Food",
+                  );
+                else if (tab == 'WeightPage')
+                  return const Tab(
+                    icon: Icon(Icons.scale),
+                    text: "Weight",
+                  );
+                else
+                  return ErrorWidget('Invalid tab settings.');
+              }).toList(),
+            ),
           ),
         ),
       ),
