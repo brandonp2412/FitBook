@@ -44,12 +44,13 @@ class GraphPageState extends State<GraphPage>
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Center(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              DropdownButtonFormField(
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField(
                 decoration: const InputDecoration(labelText: 'Metric'),
                 value: metric,
                 items: const [
@@ -85,8 +86,11 @@ class GraphPageState extends State<GraphPage>
                       );
                 },
               ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField(
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField(
                 decoration: const InputDecoration(labelText: 'Group by'),
                 value: groupBy,
                 items: const [
@@ -113,55 +117,55 @@ class GraphPageState extends State<GraphPage>
                   });
                 },
               ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('Start date'),
-                      subtitle: startDate != null
-                          ? Text(
-                              DateFormat(settings.shortDateFormat)
-                                  .format(startDate!),
-                            )
-                          : Text(
-                              settings.shortDateFormat,
-                            ),
-                      onLongPress: () => setState(() {
-                        startDate = null;
-                      }),
-                      trailing: const Icon(Icons.calendar_today),
-                      onTap: () => _selectStart(),
-                    ),
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    title: const Text('Start date'),
+                    subtitle: startDate != null
+                        ? Text(
+                            DateFormat(settings.shortDateFormat)
+                                .format(startDate!),
+                          )
+                        : Text(
+                            settings.shortDateFormat,
+                          ),
+                    onLongPress: () => setState(() {
+                      startDate = null;
+                    }),
+                    trailing: const Icon(Icons.calendar_today),
+                    onTap: () => _selectStart(),
                   ),
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('Stop date'),
-                      subtitle: endDate != null
-                          ? Text(
-                              DateFormat(settings.shortDateFormat)
-                                  .format(endDate!),
-                            )
-                          : Text(settings.shortDateFormat),
-                      onLongPress: () => setState(() {
-                        endDate = null;
-                      }),
-                      trailing: const Icon(Icons.calendar_today),
-                      onTap: () => _selectEnd(),
-                    ),
+                ),
+                Expanded(
+                  child: ListTile(
+                    title: const Text('Stop date'),
+                    subtitle: endDate != null
+                        ? Text(
+                            DateFormat(settings.shortDateFormat)
+                                .format(endDate!),
+                          )
+                        : Text(settings.shortDateFormat),
+                    onLongPress: () => setState(() {
+                      endDate = null;
+                    }),
+                    trailing: const Icon(Icons.calendar_today),
+                    onTap: () => _selectEnd(),
                   ),
-                ],
-              ),
-              AppLine(
-                metric: metric,
-                groupBy: groupBy,
-                startDate: startDate,
-                endDate: endDate,
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+            AppLine(
+              metric: metric,
+              groupBy: groupBy,
+              startDate: startDate,
+              endDate: endDate,
+            ),
+          ],
         ),
       ),
     );
