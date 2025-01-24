@@ -234,6 +234,11 @@ class _AppLineState extends State<AppLine> {
           );
         if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
 
+        List<Color> gradientColors = [
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.surface,
+        ];
+
         final rows = snapshot.data!.reversed.toList();
         List<FlSpot> spots = [];
         var average = 0.0;
@@ -299,8 +304,20 @@ class _AppLineState extends State<AppLine> {
                         color: Theme.of(context).colorScheme.primary,
                         barWidth: 3,
                         isStrokeCapRound: true,
+                        dotData: const FlDotData(
+                          show: false,
+                        ),
+                        belowBarData: BarAreaData(
+                          show: true,
+                          gradient: LinearGradient(
+                            colors: gradientColors
+                                .map((color) => color.withValues(alpha: 0.3))
+                                .toList(),
+                          ),
+                        ),
                       ),
                     ],
+                    gridData: const FlGridData(show: false),
                   ),
                 ),
               ),
