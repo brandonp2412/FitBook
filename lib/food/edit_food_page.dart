@@ -9,6 +9,7 @@ import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -27,6 +28,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   late String servingUnit;
   String? imageFile;
   String? barcode;
+  final formatter = NumberFormat('#,##0.00');
 
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
@@ -177,7 +179,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         caloriesController.text = food.calories?.toString() ?? '';
         kilojoulesController.text = food.calories == null
             ? ''
-            : (food.calories! * 4.184).toStringAsFixed(2);
+            : formatter.format(food.calories! * 4.184);
         fatGController.text = food.fatG?.toString() ?? '';
         proteinGController.text = food.proteinG?.toString() ?? '';
         carbohydrateGController.text = food.carbohydrateG?.toString() ?? '';
@@ -699,7 +701,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
                       caloriesController.text =
-                          (double.parse(value) / 4.184).toStringAsFixed(2);
+                          (double.parse(value.replaceAll(r',', '')) / 4.184)
+                              .toStringAsFixed(2);
                     },
                     onSubmitted: (_) => selectAll(proteinGController),
                     onTap: () => selectAll(kilojoulesController),
