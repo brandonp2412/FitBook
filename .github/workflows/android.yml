@@ -1,0 +1,123 @@
+name: Android Release
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+jobs:
+  android-build:
+    name: Android Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3.12.0
+        with:
+          distribution: "oracle"
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.1"
+          channel: "stable"
+      - name: Install Dependencies
+        run: flutter pub get
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=keystore.jks" >> android/key.properties
+      - name: Build APK
+        run: flutter build apk --release
+      - name: Build App Bundle
+        run: flutter build appbundle
+      - name: Create Android Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab"
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.TOKEN }}
+      - name: Deploy to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: com.yourpackage.name
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
+
+  # ios-macos-build:
+  #   name: iOS and macOS Build & Deploy
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: "3.27.1"
+  #         channel: "stable"
+  #     - name: Install Dependencies
+  #       run: flutter pub get
+  #     - name: Build IPA
+  #       run: flutter build ipa --no-codesign
+  #     - name: Compress Archives
+  #       run: |
+  #         cd build
+  #         tar -czf ios_build.tar.gz ios
+  #     - name: Create iOS Release
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: "build/ios_build.tar.gz"
+  #         tag: ${{ github.ref_name }}
+  #         token: ${{ secrets.TOKEN }}
+  #         allowUpdates: true
+  #     - name: Deploy to App Store
+  #       uses: apple-actions/upload-testflight-build@v1
+  #       with:
+  #         app-path: build/ios/ipa/app.ipa
+  #         apple-id: ${{ secrets.APPLE_ID }}
+  #         app-specific-id: ${{ secrets.APP_SPECIFIC_ID }}
+  #         key-id: ${{ secrets.APPLE_KEY_ID }}
+  #         issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
+  #         key-content: ${{ secrets.APPLE_PRIVATE_KEY }}
+
+  windows-build:
+    name: Windows Build & Deploy
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.1"
+          channel: "stable"
+      - name: Install Dependencies
+        run: flutter pub get
+      - name: Build Windows
+        run: flutter build windows
+      - name: Create Windows Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/windows/runner/Release/*"
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.TOKEN }}
+          allowUpdates: true
+      - name: Configure Store Credentials
+        uses: microsoft/store-submission@v1
+        with:
+          command: configure
+          type: win32
+          seller-id: ${{ secrets.MSSTORE_SELLER_ID }}
+          product-id: ${{ secrets.MSSTORE_PRODUCT_ID }}
+          tenant-id: ${{ secrets.MSSTORE_TENANT_ID }}
+          client-id: ${{ secrets.MSSTORE_CLIENT_ID }}
+          client-secret: ${{ secrets.MSSTORE_CLIENT_SECRET }}
+      - name: Update Draft Submission
+        uses: microsoft/store-submission@v1
+        with:
+          command: update
+          product-update: '{"packages":[{"packageUrl":"https://cdn.contoso.us/prod/5.10.1.4420/ContosoIgniteInstallerFull.msi","languages":["en"],"architectures":["X64"],"isSilentInstall":true}]}'
+      - name: Publish Submission
+        uses: microsoft/store-submission@v1
+        with:
+          command: publish
