@@ -1,1 +1,5 @@
-- Remember last graph picked
+- Add thousands separator to kj in edit food
+- Change padding in graph page
+- Increase search padding
+- Add gradient under graphs
+- Use app theme for status bar & system nav
