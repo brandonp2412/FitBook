@@ -1,5 +1,11 @@
 - Add thousands separator to kj in edit food
 - Change padding in graph page
 - Increase search padding
-- Add gradient under graphs
+- Make graphs sexy
 - Use app theme for status bar & system nav
+- Set signing to use local for testing
+- Update for macos
+- Update podfile.lock
+- Update podfile lock
+- Update pubspec.lock
+- Center graphs page
