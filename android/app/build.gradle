@@ -80,6 +80,12 @@ android {
            signingConfig signingConfigs.release
        }
    }
+   
+   packagingOptions {
+        jniLibs {
+            keepDebugSymbols += '**/*.so'
+        }
+   }
 }
 
 ext.abiCodes = ["x86_64": 1, "armeabi-v7a": 2, "arm64-v8a": 3]
