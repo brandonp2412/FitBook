@@ -100,8 +100,9 @@ if [[ $* == *-m* ]]; then
   echo "Skipping MacOS..."
 else
   set +x
+  ip=$(arp | grep "$MACBOOK_MAC" | cut -d ' ' -f 1)
   rsync -a --exclude-from=.gitignore ./* .gitignore \
-    --exclude=flutter macos:~/fitbook
+    --exclude=flutter "$ip":~/fitbook
   # shellcheck disable=SC2029
-  ssh macos "security unlock-keychain -p '$(pass macbook)' && cd fitbook && ./scripts/macos.sh"
+  ssh "$ip" "security unlock-keychain -p '$(pass macbook)' && cd fitbook && ./scripts/macos.sh"
 fi
