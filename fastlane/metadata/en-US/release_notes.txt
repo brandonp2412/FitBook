@@ -1,1 +1,1 @@
-- Disable signing block for AGP
+Try fix f-droid
