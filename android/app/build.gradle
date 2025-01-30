@@ -81,10 +81,9 @@ android {
        }
    }
    
-   packagingOptions {
-        jniLibs {
-            keepDebugSymbols += '**/*.so'
-        }
+   dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
    }
 }
 
