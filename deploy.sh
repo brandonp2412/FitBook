@@ -65,22 +65,22 @@ mkdir -p build/native_assets/linux
 ./flutter/bin/flutter build linux
 (cd "$apk/pipeline/linux/x64/release/bundle" && zip --quiet -r "$project-linux.zip" .)
 
-docker start windows
-rsync -a --delete --exclude-from=.gitignore --exclude flutter ./* .gitignore \
-  "$HOME/windows/$project-source"
-while ! ssh windows exit; do sleep 1; done
-ssh windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
-sudo chown -R "$USER" "$HOME/windows/$project"
-mv "$HOME/windows/$project/fit_book.msix" "$HOME/windows/$project.msix"
-(cd "$HOME/windows/$project" && zip --quiet -r "$HOME/windows/$project-windows.zip" .)
-docker stop windows
+#docker start windows
+#rsync -a --delete --exclude-from=.gitignore --exclude flutter ./* .gitignore \
+#  "$HOME/windows/$project-source"
+#while ! ssh windows exit; do sleep 1; done
+#ssh windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
+#sudo chown -R "$USER" "$HOME/windows/$project"
+#mv "$HOME/windows/$project/fit_book.msix" "$HOME/windows/$project.msix"
+#(cd "$HOME/windows/$project" && zip --quiet -r "$HOME/windows/$project-windows.zip" .)
+#docker stop windows
 
 git push
 gh release create "$new_version" --notes "$changelog" \
   "$apk"/app-*-release.apk \
   "$apk/pipeline/linux/x64/release/bundle/$project-linux.zip" \
-  "$apk/$project.apk" \
-  "$HOME/windows/$project-windows.zip"
+  "$apk/$project.apk" #\
+#  "$HOME/windows/$project-windows.zip"
 git pull
 
 if [[ $* == *-w* ]]; then
