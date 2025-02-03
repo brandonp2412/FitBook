@@ -218,7 +218,7 @@ Future<void> appWrapper() async {
       shortDateFormat: 'd/M/yy',
       entryUnit: 'serving',
       foodUnit: 'grams',
-      themeMode: ThemeMode.system.toString(),
+      themeMode: ThemeMode.dark.toString(),
       curveLines: false,
       diarySummary: DiarySummary.division.toString(),
       favoriteNew: false,
