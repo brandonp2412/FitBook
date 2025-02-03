@@ -159,6 +159,7 @@ class GraphPageState extends State<GraphPage>
                 ),
               ],
             ),
+            const SizedBox(height: 8),
             AppLine(
               metric: metric,
               groupBy: groupBy,
