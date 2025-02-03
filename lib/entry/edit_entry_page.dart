@@ -590,7 +590,17 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 },
                 onFood: (food) {
                   setState(() {
+                    imageFile = food.imageFile;
+                    barcode = food.barcode;
+                    nameController?.text = food.name;
                     selectedFood = food;
+                    protein.text = formatter.format(food.proteinG);
+                    carb.text = formatter.format(food.carbohydrateG);
+                    fat.text = formatter.format(food.fatG);
+                    kilojoules.text = food.calories == null
+                        ? ''
+                        : formatter.format(food.calories! * 4.184);
+                    calories.text = formatter.format(food.calories);
                   });
                 },
               ),
