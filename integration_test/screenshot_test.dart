@@ -179,6 +179,22 @@ List<EntriesCompanion> entries = [
     kCalories: const Value(343),
     proteinG: const Value(80),
   ),
+  EntriesCompanion.insert(
+    food: 4,
+    created: DateTime.now().subtract(const Duration(days: 3)),
+    quantity: 250,
+    unit: 'grams',
+    kCalories: const Value(343),
+    proteinG: const Value(80),
+  ),
+  EntriesCompanion.insert(
+    food: 4,
+    created: DateTime.now().subtract(const Duration(days: 4)),
+    quantity: 250,
+    unit: 'grams',
+    kCalories: const Value(5000),
+    proteinG: const Value(80),
+  ),
 ];
 
 List<WeightsCompanion> weights = [
