@@ -31,7 +31,8 @@ class WeightPageState extends State<WeightPage>
 
   void _setStream() {
     final where = CustomExpression<bool>(
-      "CAST(amount AS TEXT) LIKE '%$search%'",
+      """CAST(amount AS TEXT) LIKE '%$search%' 
+        OR strftime('%Y-%m-%d %H:%M:%S', datetime(created, 'unixepoch')) LIKE '%$search%'""",
     );
 
     setState(() {
