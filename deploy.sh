@@ -57,36 +57,35 @@ $changelog"
 ./flutter/bin/flutter build apk --split-per-abi
 adb -d install "$apk"/app-arm64-v8a-release.apk || true
 ./flutter/bin/flutter build apk
-project=$(basename "$PWD")
-mv "$apk"/app-release.apk "$apk/$project.apk"
+mv "$apk"/app-release.apk "$apk/fitbook.apk"
 ./flutter/bin/flutter build appbundle
 
 mkdir -p build/native_assets/linux
 ./flutter/bin/flutter build linux
-(cd "$apk/pipeline/linux/x64/release/bundle" && zip --quiet -r "$project-linux.zip" .)
+(cd "$apk/pipeline/linux/x64/release/bundle" && zip --quiet -r "fitbook-linux.zip" .)
 
 docker start windows
 rsync -a --delete --exclude-from=.gitignore --exclude flutter ./* .gitignore \
-  "$HOME/windows/$project-source"
+  "$HOME/windows/fitbook-source"
 while ! ssh windows exit; do sleep 1; done
 ssh windows 'Powershell -ExecutionPolicy bypass -File //host.lan/Data/build-fitbook.ps1'
-sudo chown -R "$USER" "$HOME/windows/$project"
-mv "$HOME/windows/$project/fit_book.msix" "$HOME/windows/$project.msix"
-(cd "$HOME/windows/$project" && zip --quiet -r "$HOME/windows/$project-windows.zip" .)
+sudo chown -R "$USER" "$HOME/windows/fitbook"
+mv "$HOME/windows/fitbook/fit_book.msix" "$HOME/windows/fitbook.msix"
+(cd "$HOME/windows/fitbook" && zip --quiet -r "$HOME/windows/fitbook-windows.zip" .)
 docker stop windows
 
 git push
 gh release create "$new_version" --notes "$changelog" \
   "$apk"/app-*-release.apk \
-  "$apk/pipeline/linux/x64/release/bundle/$project-linux.zip" \
-  "$apk/$project.apk" \
-  "$HOME/windows/$project-windows.zip"
+  "$apk/pipeline/linux/x64/release/bundle/fitbook-linux.zip" \
+  "$apk/fitbook.apk" \
+  "$HOME/windows/fitbook-windows.zip"
 git pull
 
 if [[ $* == *-w* ]]; then
   echo "Skipping Windows store..."
 else
-  ./scripts/msstore.sh "$HOME/windows/$project.msix" || true
+  ./scripts/msstore.sh "$HOME/windows/fitbook.msix" || true
 fi
 
 if [[ $* == *-p* ]]; then
