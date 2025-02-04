@@ -242,161 +242,164 @@ class _AppLineState extends State<AppLine> {
         final rows = snapshot.data!.reversed.toList();
         List<FlSpot> spots = [];
         var average = 0.0;
-        for (final row in rows) {
-          final days = row.created.difference(rows.first.created).inDays;
-          spots.add(FlSpot(days.toDouble(), row.value));
-          average += row.value;
+        for (var index = 0; index < rows.length; index++) {
+          spots.add(FlSpot(index.toDouble(), rows[index].value));
+          average += rows[index].value;
         }
         average /= spots.length;
 
-        return material.SingleChildScrollView(
-          child: material.Column(
-            children: [
-              material.Column(
-                children: [
-                  SizedBox(
-                    height: 300,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 32.0, top: 16.0),
-                      child: LineChart(
-                        LineChartData(
-                          extraLinesData: ExtraLinesData(
-                            horizontalLines: [
-                              if (goal > 0)
-                                HorizontalLine(
-                                  y: goal.toDouble(),
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
-                                ),
-                              if (average > 0)
-                                HorizontalLine(
-                                  y: average,
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                ),
-                            ],
+        return material.Column(
+          children: [
+            SizedBox(
+              height: 300,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 32.0, top: 16.0),
+                child: LineChart(
+                  LineChartData(
+                    extraLinesData: ExtraLinesData(
+                      horizontalLines: [
+                        if (goal > 0)
+                          HorizontalLine(
+                            y: goal.toDouble(),
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
-                          titlesData: const FlTitlesData(
-                            topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 45,
-                              ),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: false,
-                              ),
-                            ),
-                          ),
-                          lineTouchData: LineTouchData(
-                            touchTooltipData:
-                                _tooltipData(context, rows, rows.first.unit),
-                          ),
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: spots,
-                              isCurved: settings.curveLines,
-                              color: Theme.of(context).colorScheme.primary,
-                              barWidth: 3,
-                              isStrokeCapRound: true,
-                              dotData: const FlDotData(
-                                show: false,
-                              ),
-                              belowBarData: BarAreaData(
-                                show: true,
-                                gradient: LinearGradient(
-                                  colors: gradientColors
-                                      .map(
-                                        (color) => color.withValues(alpha: 0.3),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                            ),
-                          ],
-                          gridData: const FlGridData(show: false),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  material.Padding(
-                    padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          DateFormat(settings.shortDateFormat)
-                              .format(rows.first.created),
-                        ),
-                        if (rows.length > 2)
-                          Text(
-                            DateFormat(settings.shortDateFormat).format(
-                              rows[rows.length ~/ 2].created,
-                            ), // middle date
-                          ),
-                        if (rows.length > 1)
-                          Text(
-                            DateFormat(settings.shortDateFormat)
-                                .format(rows.last.created), // last date
+                        if (average > 0)
+                          HorizontalLine(
+                            y: average,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                       ],
                     ),
+                    titlesData: FlTitlesData(
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      leftTitles: const AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 45,
+                        ),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 27,
+                          interval: 1,
+                          getTitlesWidget: (value, meta) =>
+                              _bottomTitleWidgets(value, meta, rows),
+                        ),
+                      ),
+                    ),
+                    lineTouchData: LineTouchData(
+                      touchTooltipData:
+                          _tooltipData(context, rows, rows.first.unit),
+                    ),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: spots,
+                        isCurved: settings.curveLines,
+                        color: Theme.of(context).colorScheme.primary,
+                        barWidth: 3,
+                        isStrokeCapRound: true,
+                        dotData: const FlDotData(
+                          show: false,
+                        ),
+                        belowBarData: BarAreaData(
+                          show: true,
+                          gradient: LinearGradient(
+                            colors: gradientColors
+                                .map((color) => color.withValues(alpha: 0.3))
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                    gridData: const FlGridData(show: false),
                   ),
-                ],
+                ),
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              Row(
-                children: [
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    title: const Text("Average"),
+                    subtitle: Text(
+                      "${formatter.format(average)} ${rows.first.unit}",
+                    ),
+                    leading: Radio(
+                      value: 1,
+                      groupValue: 1,
+                      onChanged: (value) {},
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Theme.of(context).colorScheme.tertiary,
+                      ),
+                    ),
+                  ),
+                ),
+                if (goal > 0)
                   Expanded(
                     child: ListTile(
-                      title: const Text("Average"),
+                      title: const Text("Goal"),
                       subtitle: Text(
-                        "${formatter.format(average)} ${rows.first.unit}",
+                        "${formatter.format(goal)} ${rows.first.unit}",
                       ),
                       leading: Radio(
                         value: 1,
                         groupValue: 1,
                         onChanged: (value) {},
                         fillColor: WidgetStateProperty.resolveWith(
-                          (states) => Theme.of(context).colorScheme.tertiary,
+                          (states) => Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
                   ),
-                  if (goal > 0)
-                    Expanded(
-                      child: ListTile(
-                        title: const Text("Goal"),
-                        subtitle: Text(
-                          "${formatter.format(goal)} ${rows.first.unit}",
-                        ),
-                        leading: Radio(
-                          value: 1,
-                          groupValue: 1,
-                          onChanged: (value) {},
-                          fillColor: WidgetStateProperty.resolveWith(
-                            (states) => Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         );
       },
+    );
+  }
+
+  Widget _bottomTitleWidgets(
+    double value,
+    TitleMeta meta,
+    List<GraphData> rows,
+  ) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double labelWidth = 100;
+    int labelCount = (screenWidth / labelWidth).floor();
+
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    );
+    Widget text;
+
+    List<int> indices = List.generate(labelCount, (index) {
+      return ((rows.length - 1) * index / (labelCount - 1)).round();
+    });
+
+    if (indices.contains(value.toInt())) {
+      DateTime createdDate = rows[value.toInt()].created;
+      text = Text(
+        DateFormat(settings.shortDateFormat).format(createdDate),
+        style: style,
+      );
+    } else {
+      text = const Text('', style: style);
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
     );
   }
 
