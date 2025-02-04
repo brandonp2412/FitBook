@@ -48,48 +48,45 @@ class GraphPageState extends State<GraphPage>
         child: ListView(
           shrinkWrap: true,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButtonFormField(
-                decoration: const InputDecoration(labelText: 'Metric'),
-                value: metric,
-                items: const [
-                  DropdownMenuItem(
-                    value: AppMetric.calories,
-                    child: Text("Calories"),
-                  ),
-                  DropdownMenuItem(
-                    value: AppMetric.protein,
-                    child: Text("Protein"),
-                  ),
-                  DropdownMenuItem(
-                    value: AppMetric.fat,
-                    child: Text("Fat"),
-                  ),
-                  DropdownMenuItem(
-                    value: AppMetric.carbs,
-                    child: Text("Carbs"),
-                  ),
-                  DropdownMenuItem(
-                    value: AppMetric.bodyWeight,
-                    child: Text("Body weight"),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    metric = value!;
-                  });
-                  db.settings.update().write(
-                        SettingsCompanion(
-                          lastGraph: Value(metric.toString()),
-                        ),
-                      );
-                },
-              ),
+            DropdownButtonFormField(
+              decoration: const InputDecoration(labelText: 'Metric'),
+              value: metric,
+              items: const [
+                DropdownMenuItem(
+                  value: AppMetric.calories,
+                  child: Text("Calories"),
+                ),
+                DropdownMenuItem(
+                  value: AppMetric.protein,
+                  child: Text("Protein"),
+                ),
+                DropdownMenuItem(
+                  value: AppMetric.fat,
+                  child: Text("Fat"),
+                ),
+                DropdownMenuItem(
+                  value: AppMetric.carbs,
+                  child: Text("Carbs"),
+                ),
+                DropdownMenuItem(
+                  value: AppMetric.bodyWeight,
+                  child: Text("Body weight"),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  metric = value!;
+                });
+                db.settings.update().write(
+                      SettingsCompanion(
+                        lastGraph: Value(metric.toString()),
+                      ),
+                    );
+              },
             ),
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: DropdownButtonFormField(
                 decoration: const InputDecoration(labelText: 'Group by'),
                 value: groupBy,
