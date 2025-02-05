@@ -32,7 +32,7 @@ class DiaryPageState extends State<DiaryPage> {
   @override
   Widget build(BuildContext context) {
     return NavigatorPopHandler(
-      onPop: () {
+      onPopWithResult: (result) {
         if (navigatorKey.currentState!.canPop() == false) return;
         if (navigatorKey.currentState?.focusNode.hasFocus == false) return;
         navigatorKey.currentState!.pop();

@@ -7758,22 +7758,1353 @@ typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
   Value<double?> zincZnMg,
 });
 
+final class $$FoodsTableReferences
+    extends BaseReferences<_$AppDatabase, $FoodsTable, Food> {
+  $$FoodsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$EntriesTable, List<Entry>> _entriesRefsTable(
+          _$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.entries,
+          aliasName: $_aliasNameGenerator(db.foods.id, db.entries.food));
+
+  $$EntriesTableProcessedTableManager get entriesRefs {
+    final manager = $$EntriesTableTableManager($_db, $_db.entries)
+        .filter((f) => f.food.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_entriesRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$FoodsTableFilterComposer extends Composer<_$AppDatabase, $FoodsTable> {
+  $$FoodsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get barcode => $composableBuilder(
+      column: $table.barcode, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get addedSugarG => $composableBuilder(
+      column: $table.addedSugarG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get alanineMg => $composableBuilder(
+      column: $table.alanineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get alcoholG => $composableBuilder(
+      column: $table.alcoholG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get arginineMg => $composableBuilder(
+      column: $table.arginineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get asparticAcidMg => $composableBuilder(
+      column: $table.asparticAcidMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get betaineMg => $composableBuilder(
+      column: $table.betaineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get bigImage => $composableBuilder(
+      column: $table.bigImage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get biotinB7Mcg => $composableBuilder(
+      column: $table.biotinB7Mcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get caffeineMg => $composableBuilder(
+      column: $table.caffeineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get calciumMg => $composableBuilder(
+      column: $table.calciumMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get calories => $composableBuilder(
+      column: $table.calories, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get carbohydrateG => $composableBuilder(
+      column: $table.carbohydrateG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get caroteneAlphaMcg => $composableBuilder(
+      column: $table.caroteneAlphaMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get caroteneBetaMcg => $composableBuilder(
+      column: $table.caroteneBetaMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get chlorineMg => $composableBuilder(
+      column: $table.chlorineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get cholesterolMg => $composableBuilder(
+      column: $table.cholesterolMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get cholineMg => $composableBuilder(
+      column: $table.cholineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get copperCuMg => $composableBuilder(
+      column: $table.copperCuMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get cystineMg => $composableBuilder(
+      column: $table.cystineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get dihydrophylloquinoneMcg => $composableBuilder(
+      column: $table.dihydrophylloquinoneMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fatG => $composableBuilder(
+      column: $table.fatG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fattyAcidsTotalMonounsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalMonounsaturatedMg,
+          builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fattyAcidsTotalPolyunsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalPolyunsaturatedMg,
+          builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get favorite => $composableBuilder(
+      column: $table.favorite, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fiberG => $composableBuilder(
+      column: $table.fiberG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fluorideFMcg => $composableBuilder(
+      column: $table.fluorideFMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get folateB9Mcg => $composableBuilder(
+      column: $table.folateB9Mcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get folateDfeMcg => $composableBuilder(
+      column: $table.folateDfeMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get folicAcidMcg => $composableBuilder(
+      column: $table.folicAcidMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get foodFolateMcg => $composableBuilder(
+      column: $table.foodFolateMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get foodGroup => $composableBuilder(
+      column: $table.foodGroup, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fructoseG => $composableBuilder(
+      column: $table.fructoseG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get galactoseG => $composableBuilder(
+      column: $table.galactoseG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get glucoseDextroseG => $composableBuilder(
+      column: $table.glucoseDextroseG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get glutamicAcidMg => $composableBuilder(
+      column: $table.glutamicAcidMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get glycineMg => $composableBuilder(
+      column: $table.glycineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get histidineMg => $composableBuilder(
+      column: $table.histidineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get hydroxyprolineMg => $composableBuilder(
+      column: $table.hydroxyprolineMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get imageFile => $composableBuilder(
+      column: $table.imageFile, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get insolubleFiberG => $composableBuilder(
+      column: $table.insolubleFiberG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get ironFeMg => $composableBuilder(
+      column: $table.ironFeMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get isoleucineMg => $composableBuilder(
+      column: $table.isoleucineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get lactoseG => $composableBuilder(
+      column: $table.lactoseG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get leucineMg => $composableBuilder(
+      column: $table.leucineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get luteinZeaxanthinMcg => $composableBuilder(
+      column: $table.luteinZeaxanthinMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get lycopeneMcg => $composableBuilder(
+      column: $table.lycopeneMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get lysineMg => $composableBuilder(
+      column: $table.lysineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get magnesiumMg => $composableBuilder(
+      column: $table.magnesiumMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get maltoseG => $composableBuilder(
+      column: $table.maltoseG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get manganeseMg => $composableBuilder(
+      column: $table.manganeseMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get menaquinone4Mcg => $composableBuilder(
+      column: $table.menaquinone4Mcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get methionineMg => $composableBuilder(
+      column: $table.methionineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get molybdenumMcg => $composableBuilder(
+      column: $table.molybdenumMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get netCarbsG => $composableBuilder(
+      column: $table.netCarbsG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get niacinB3Mg => $composableBuilder(
+      column: $table.niacinB3Mg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get omega3sMg => $composableBuilder(
+      column: $table.omega3sMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get omega6sMg => $composableBuilder(
+      column: $table.omega6sMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get pantothenicAcidB5Mg => $composableBuilder(
+      column: $table.pantothenicAcidB5Mg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get phenylalanineMg => $composableBuilder(
+      column: $table.phenylalanineMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get phosphorusPMg => $composableBuilder(
+      column: $table.phosphorusPMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get potassiumKMg => $composableBuilder(
+      column: $table.potassiumKMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get pralScore => $composableBuilder(
+      column: $table.pralScore, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get prolineMg => $composableBuilder(
+      column: $table.prolineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get proteinG => $composableBuilder(
+      column: $table.proteinG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get retinolMcg => $composableBuilder(
+      column: $table.retinolMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get riboflavinB2Mg => $composableBuilder(
+      column: $table.riboflavinB2Mg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get saturatedFatsG => $composableBuilder(
+      column: $table.saturatedFatsG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get seleniumSeMcg => $composableBuilder(
+      column: $table.seleniumSeMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get serineMg => $composableBuilder(
+      column: $table.serineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription1G => $composableBuilder(
+      column: $table.servingDescription1G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription2G => $composableBuilder(
+      column: $table.servingDescription2G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription3G => $composableBuilder(
+      column: $table.servingDescription3G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription4G => $composableBuilder(
+      column: $table.servingDescription4G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription5G => $composableBuilder(
+      column: $table.servingDescription5G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription6G => $composableBuilder(
+      column: $table.servingDescription6G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription7G => $composableBuilder(
+      column: $table.servingDescription7G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription8G => $composableBuilder(
+      column: $table.servingDescription8G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingDescription9G => $composableBuilder(
+      column: $table.servingDescription9G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingSize => $composableBuilder(
+      column: $table.servingSize, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get servingUnit => $composableBuilder(
+      column: $table.servingUnit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight1G => $composableBuilder(
+      column: $table.servingWeight1G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight2G => $composableBuilder(
+      column: $table.servingWeight2G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight3G => $composableBuilder(
+      column: $table.servingWeight3G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight4G => $composableBuilder(
+      column: $table.servingWeight4G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight5G => $composableBuilder(
+      column: $table.servingWeight5G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight6G => $composableBuilder(
+      column: $table.servingWeight6G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight7G => $composableBuilder(
+      column: $table.servingWeight7G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight8G => $composableBuilder(
+      column: $table.servingWeight8G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get servingWeight9G => $composableBuilder(
+      column: $table.servingWeight9G,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get smallImage => $composableBuilder(
+      column: $table.smallImage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get sodiumMg => $composableBuilder(
+      column: $table.sodiumMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get solubleFiberG => $composableBuilder(
+      column: $table.solubleFiberG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get starchG => $composableBuilder(
+      column: $table.starchG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get sucroseG => $composableBuilder(
+      column: $table.sucroseG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get sugarsG => $composableBuilder(
+      column: $table.sugarsG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get theobromineMg => $composableBuilder(
+      column: $table.theobromineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get thiaminB1Mg => $composableBuilder(
+      column: $table.thiaminB1Mg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get threonineMg => $composableBuilder(
+      column: $table.threonineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get totalSugarAlcoholsG => $composableBuilder(
+      column: $table.totalSugarAlcoholsG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get transFattyAcidsG => $composableBuilder(
+      column: $table.transFattyAcidsG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get tryptophanMg => $composableBuilder(
+      column: $table.tryptophanMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get tyrosineMg => $composableBuilder(
+      column: $table.tyrosineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get u183N3CCCAlaMg => $composableBuilder(
+      column: $table.u183N3CCCAlaMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get u200calorieWeightG => $composableBuilder(
+      column: $table.u200calorieWeightG,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get u205N3EpaMg => $composableBuilder(
+      column: $table.u205N3EpaMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get u225N3DpaMg => $composableBuilder(
+      column: $table.u225N3DpaMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get u226N3DhaMg => $composableBuilder(
+      column: $table.u226N3DhaMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get valineMg => $composableBuilder(
+      column: $table.valineMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminAIuIu => $composableBuilder(
+      column: $table.vitaminAIuIu, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminARaeMcg => $composableBuilder(
+      column: $table.vitaminARaeMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminB12Mcg => $composableBuilder(
+      column: $table.vitaminB12Mcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminB6Mg => $composableBuilder(
+      column: $table.vitaminB6Mg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminCMg => $composableBuilder(
+      column: $table.vitaminCMg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
+      column: $table.vitaminD2ErgocalciferolMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
+      column: $table.vitaminD3CholecalciferolMcg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminDIuIu => $composableBuilder(
+      column: $table.vitaminDIuIu, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminDMcg => $composableBuilder(
+      column: $table.vitaminDMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
+      column: $table.vitaminEAlphaTocopherolMg,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get vitaminKMcg => $composableBuilder(
+      column: $table.vitaminKMcg, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get waterG => $composableBuilder(
+      column: $table.waterG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get zincZnMg => $composableBuilder(
+      column: $table.zincZnMg, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> entriesRefs(
+      Expression<bool> Function($$EntriesTableFilterComposer f) f) {
+    final $$EntriesTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.entries,
+        getReferencedColumn: (t) => t.food,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$EntriesTableFilterComposer(
+              $db: $db,
+              $table: $db.entries,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$FoodsTableOrderingComposer
+    extends Composer<_$AppDatabase, $FoodsTable> {
+  $$FoodsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get barcode => $composableBuilder(
+      column: $table.barcode, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get addedSugarG => $composableBuilder(
+      column: $table.addedSugarG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get alanineMg => $composableBuilder(
+      column: $table.alanineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get alcoholG => $composableBuilder(
+      column: $table.alcoholG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get arginineMg => $composableBuilder(
+      column: $table.arginineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get asparticAcidMg => $composableBuilder(
+      column: $table.asparticAcidMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get betaineMg => $composableBuilder(
+      column: $table.betaineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get bigImage => $composableBuilder(
+      column: $table.bigImage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get biotinB7Mcg => $composableBuilder(
+      column: $table.biotinB7Mcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get caffeineMg => $composableBuilder(
+      column: $table.caffeineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get calciumMg => $composableBuilder(
+      column: $table.calciumMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get calories => $composableBuilder(
+      column: $table.calories, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get carbohydrateG => $composableBuilder(
+      column: $table.carbohydrateG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get caroteneAlphaMcg => $composableBuilder(
+      column: $table.caroteneAlphaMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get caroteneBetaMcg => $composableBuilder(
+      column: $table.caroteneBetaMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get chlorineMg => $composableBuilder(
+      column: $table.chlorineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get cholesterolMg => $composableBuilder(
+      column: $table.cholesterolMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get cholineMg => $composableBuilder(
+      column: $table.cholineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get copperCuMg => $composableBuilder(
+      column: $table.copperCuMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get cystineMg => $composableBuilder(
+      column: $table.cystineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get dihydrophylloquinoneMcg => $composableBuilder(
+      column: $table.dihydrophylloquinoneMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fatG => $composableBuilder(
+      column: $table.fatG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fattyAcidsTotalMonounsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalMonounsaturatedMg,
+          builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fattyAcidsTotalPolyunsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalPolyunsaturatedMg,
+          builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get favorite => $composableBuilder(
+      column: $table.favorite, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fiberG => $composableBuilder(
+      column: $table.fiberG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fluorideFMcg => $composableBuilder(
+      column: $table.fluorideFMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get folateB9Mcg => $composableBuilder(
+      column: $table.folateB9Mcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get folateDfeMcg => $composableBuilder(
+      column: $table.folateDfeMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get folicAcidMcg => $composableBuilder(
+      column: $table.folicAcidMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get foodFolateMcg => $composableBuilder(
+      column: $table.foodFolateMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get foodGroup => $composableBuilder(
+      column: $table.foodGroup, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fructoseG => $composableBuilder(
+      column: $table.fructoseG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get galactoseG => $composableBuilder(
+      column: $table.galactoseG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get glucoseDextroseG => $composableBuilder(
+      column: $table.glucoseDextroseG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get glutamicAcidMg => $composableBuilder(
+      column: $table.glutamicAcidMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get glycineMg => $composableBuilder(
+      column: $table.glycineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get histidineMg => $composableBuilder(
+      column: $table.histidineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get hydroxyprolineMg => $composableBuilder(
+      column: $table.hydroxyprolineMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get imageFile => $composableBuilder(
+      column: $table.imageFile, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get insolubleFiberG => $composableBuilder(
+      column: $table.insolubleFiberG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get ironFeMg => $composableBuilder(
+      column: $table.ironFeMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get isoleucineMg => $composableBuilder(
+      column: $table.isoleucineMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get lactoseG => $composableBuilder(
+      column: $table.lactoseG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get leucineMg => $composableBuilder(
+      column: $table.leucineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get luteinZeaxanthinMcg => $composableBuilder(
+      column: $table.luteinZeaxanthinMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get lycopeneMcg => $composableBuilder(
+      column: $table.lycopeneMcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get lysineMg => $composableBuilder(
+      column: $table.lysineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get magnesiumMg => $composableBuilder(
+      column: $table.magnesiumMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get maltoseG => $composableBuilder(
+      column: $table.maltoseG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get manganeseMg => $composableBuilder(
+      column: $table.manganeseMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get menaquinone4Mcg => $composableBuilder(
+      column: $table.menaquinone4Mcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get methionineMg => $composableBuilder(
+      column: $table.methionineMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get molybdenumMcg => $composableBuilder(
+      column: $table.molybdenumMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get netCarbsG => $composableBuilder(
+      column: $table.netCarbsG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get niacinB3Mg => $composableBuilder(
+      column: $table.niacinB3Mg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get omega3sMg => $composableBuilder(
+      column: $table.omega3sMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get omega6sMg => $composableBuilder(
+      column: $table.omega6sMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get pantothenicAcidB5Mg => $composableBuilder(
+      column: $table.pantothenicAcidB5Mg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get phenylalanineMg => $composableBuilder(
+      column: $table.phenylalanineMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get phosphorusPMg => $composableBuilder(
+      column: $table.phosphorusPMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get potassiumKMg => $composableBuilder(
+      column: $table.potassiumKMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get pralScore => $composableBuilder(
+      column: $table.pralScore, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get prolineMg => $composableBuilder(
+      column: $table.prolineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get proteinG => $composableBuilder(
+      column: $table.proteinG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get retinolMcg => $composableBuilder(
+      column: $table.retinolMcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get riboflavinB2Mg => $composableBuilder(
+      column: $table.riboflavinB2Mg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get saturatedFatsG => $composableBuilder(
+      column: $table.saturatedFatsG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get seleniumSeMcg => $composableBuilder(
+      column: $table.seleniumSeMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get serineMg => $composableBuilder(
+      column: $table.serineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription1G => $composableBuilder(
+      column: $table.servingDescription1G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription2G => $composableBuilder(
+      column: $table.servingDescription2G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription3G => $composableBuilder(
+      column: $table.servingDescription3G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription4G => $composableBuilder(
+      column: $table.servingDescription4G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription5G => $composableBuilder(
+      column: $table.servingDescription5G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription6G => $composableBuilder(
+      column: $table.servingDescription6G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription7G => $composableBuilder(
+      column: $table.servingDescription7G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription8G => $composableBuilder(
+      column: $table.servingDescription8G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingDescription9G => $composableBuilder(
+      column: $table.servingDescription9G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingSize => $composableBuilder(
+      column: $table.servingSize, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get servingUnit => $composableBuilder(
+      column: $table.servingUnit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight1G => $composableBuilder(
+      column: $table.servingWeight1G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight2G => $composableBuilder(
+      column: $table.servingWeight2G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight3G => $composableBuilder(
+      column: $table.servingWeight3G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight4G => $composableBuilder(
+      column: $table.servingWeight4G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight5G => $composableBuilder(
+      column: $table.servingWeight5G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight6G => $composableBuilder(
+      column: $table.servingWeight6G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight7G => $composableBuilder(
+      column: $table.servingWeight7G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight8G => $composableBuilder(
+      column: $table.servingWeight8G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get servingWeight9G => $composableBuilder(
+      column: $table.servingWeight9G,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get smallImage => $composableBuilder(
+      column: $table.smallImage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get sodiumMg => $composableBuilder(
+      column: $table.sodiumMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get solubleFiberG => $composableBuilder(
+      column: $table.solubleFiberG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get starchG => $composableBuilder(
+      column: $table.starchG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get sucroseG => $composableBuilder(
+      column: $table.sucroseG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get sugarsG => $composableBuilder(
+      column: $table.sugarsG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get theobromineMg => $composableBuilder(
+      column: $table.theobromineMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get thiaminB1Mg => $composableBuilder(
+      column: $table.thiaminB1Mg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get threonineMg => $composableBuilder(
+      column: $table.threonineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get totalSugarAlcoholsG => $composableBuilder(
+      column: $table.totalSugarAlcoholsG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get transFattyAcidsG => $composableBuilder(
+      column: $table.transFattyAcidsG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get tryptophanMg => $composableBuilder(
+      column: $table.tryptophanMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get tyrosineMg => $composableBuilder(
+      column: $table.tyrosineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get u183N3CCCAlaMg => $composableBuilder(
+      column: $table.u183N3CCCAlaMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get u200calorieWeightG => $composableBuilder(
+      column: $table.u200calorieWeightG,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get u205N3EpaMg => $composableBuilder(
+      column: $table.u205N3EpaMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get u225N3DpaMg => $composableBuilder(
+      column: $table.u225N3DpaMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get u226N3DhaMg => $composableBuilder(
+      column: $table.u226N3DhaMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get valineMg => $composableBuilder(
+      column: $table.valineMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminAIuIu => $composableBuilder(
+      column: $table.vitaminAIuIu,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminARaeMcg => $composableBuilder(
+      column: $table.vitaminARaeMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminB12Mcg => $composableBuilder(
+      column: $table.vitaminB12Mcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminB6Mg => $composableBuilder(
+      column: $table.vitaminB6Mg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminCMg => $composableBuilder(
+      column: $table.vitaminCMg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
+      column: $table.vitaminD2ErgocalciferolMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
+      column: $table.vitaminD3CholecalciferolMcg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminDIuIu => $composableBuilder(
+      column: $table.vitaminDIuIu,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminDMcg => $composableBuilder(
+      column: $table.vitaminDMcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
+      column: $table.vitaminEAlphaTocopherolMg,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get vitaminKMcg => $composableBuilder(
+      column: $table.vitaminKMcg, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get waterG => $composableBuilder(
+      column: $table.waterG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get zincZnMg => $composableBuilder(
+      column: $table.zincZnMg, builder: (column) => ColumnOrderings(column));
+}
+
+class $$FoodsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FoodsTable> {
+  $$FoodsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get barcode =>
+      $composableBuilder(column: $table.barcode, builder: (column) => column);
+
+  GeneratedColumn<double> get addedSugarG => $composableBuilder(
+      column: $table.addedSugarG, builder: (column) => column);
+
+  GeneratedColumn<double> get alanineMg =>
+      $composableBuilder(column: $table.alanineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get alcoholG =>
+      $composableBuilder(column: $table.alcoholG, builder: (column) => column);
+
+  GeneratedColumn<double> get arginineMg => $composableBuilder(
+      column: $table.arginineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get asparticAcidMg => $composableBuilder(
+      column: $table.asparticAcidMg, builder: (column) => column);
+
+  GeneratedColumn<double> get betaineMg =>
+      $composableBuilder(column: $table.betaineMg, builder: (column) => column);
+
+  GeneratedColumn<String> get bigImage =>
+      $composableBuilder(column: $table.bigImage, builder: (column) => column);
+
+  GeneratedColumn<double> get biotinB7Mcg => $composableBuilder(
+      column: $table.biotinB7Mcg, builder: (column) => column);
+
+  GeneratedColumn<double> get caffeineMg => $composableBuilder(
+      column: $table.caffeineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get calciumMg =>
+      $composableBuilder(column: $table.calciumMg, builder: (column) => column);
+
+  GeneratedColumn<double> get calories =>
+      $composableBuilder(column: $table.calories, builder: (column) => column);
+
+  GeneratedColumn<double> get carbohydrateG => $composableBuilder(
+      column: $table.carbohydrateG, builder: (column) => column);
+
+  GeneratedColumn<double> get caroteneAlphaMcg => $composableBuilder(
+      column: $table.caroteneAlphaMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get caroteneBetaMcg => $composableBuilder(
+      column: $table.caroteneBetaMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get chlorineMg => $composableBuilder(
+      column: $table.chlorineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get cholesterolMg => $composableBuilder(
+      column: $table.cholesterolMg, builder: (column) => column);
+
+  GeneratedColumn<double> get cholineMg =>
+      $composableBuilder(column: $table.cholineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get copperCuMg => $composableBuilder(
+      column: $table.copperCuMg, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get created =>
+      $composableBuilder(column: $table.created, builder: (column) => column);
+
+  GeneratedColumn<double> get cystineMg =>
+      $composableBuilder(column: $table.cystineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get dihydrophylloquinoneMcg => $composableBuilder(
+      column: $table.dihydrophylloquinoneMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get fatG =>
+      $composableBuilder(column: $table.fatG, builder: (column) => column);
+
+  GeneratedColumn<double> get fattyAcidsTotalMonounsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalMonounsaturatedMg,
+          builder: (column) => column);
+
+  GeneratedColumn<double> get fattyAcidsTotalPolyunsaturatedMg =>
+      $composableBuilder(
+          column: $table.fattyAcidsTotalPolyunsaturatedMg,
+          builder: (column) => column);
+
+  GeneratedColumn<bool> get favorite =>
+      $composableBuilder(column: $table.favorite, builder: (column) => column);
+
+  GeneratedColumn<double> get fiberG =>
+      $composableBuilder(column: $table.fiberG, builder: (column) => column);
+
+  GeneratedColumn<double> get fluorideFMcg => $composableBuilder(
+      column: $table.fluorideFMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get folateB9Mcg => $composableBuilder(
+      column: $table.folateB9Mcg, builder: (column) => column);
+
+  GeneratedColumn<double> get folateDfeMcg => $composableBuilder(
+      column: $table.folateDfeMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get folicAcidMcg => $composableBuilder(
+      column: $table.folicAcidMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get foodFolateMcg => $composableBuilder(
+      column: $table.foodFolateMcg, builder: (column) => column);
+
+  GeneratedColumn<String> get foodGroup =>
+      $composableBuilder(column: $table.foodGroup, builder: (column) => column);
+
+  GeneratedColumn<double> get fructoseG =>
+      $composableBuilder(column: $table.fructoseG, builder: (column) => column);
+
+  GeneratedColumn<double> get galactoseG => $composableBuilder(
+      column: $table.galactoseG, builder: (column) => column);
+
+  GeneratedColumn<double> get glucoseDextroseG => $composableBuilder(
+      column: $table.glucoseDextroseG, builder: (column) => column);
+
+  GeneratedColumn<double> get glutamicAcidMg => $composableBuilder(
+      column: $table.glutamicAcidMg, builder: (column) => column);
+
+  GeneratedColumn<double> get glycineMg =>
+      $composableBuilder(column: $table.glycineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get histidineMg => $composableBuilder(
+      column: $table.histidineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get hydroxyprolineMg => $composableBuilder(
+      column: $table.hydroxyprolineMg, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get imageFile =>
+      $composableBuilder(column: $table.imageFile, builder: (column) => column);
+
+  GeneratedColumn<double> get insolubleFiberG => $composableBuilder(
+      column: $table.insolubleFiberG, builder: (column) => column);
+
+  GeneratedColumn<double> get ironFeMg =>
+      $composableBuilder(column: $table.ironFeMg, builder: (column) => column);
+
+  GeneratedColumn<double> get isoleucineMg => $composableBuilder(
+      column: $table.isoleucineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get lactoseG =>
+      $composableBuilder(column: $table.lactoseG, builder: (column) => column);
+
+  GeneratedColumn<double> get leucineMg =>
+      $composableBuilder(column: $table.leucineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get luteinZeaxanthinMcg => $composableBuilder(
+      column: $table.luteinZeaxanthinMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get lycopeneMcg => $composableBuilder(
+      column: $table.lycopeneMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get lysineMg =>
+      $composableBuilder(column: $table.lysineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get magnesiumMg => $composableBuilder(
+      column: $table.magnesiumMg, builder: (column) => column);
+
+  GeneratedColumn<double> get maltoseG =>
+      $composableBuilder(column: $table.maltoseG, builder: (column) => column);
+
+  GeneratedColumn<double> get manganeseMg => $composableBuilder(
+      column: $table.manganeseMg, builder: (column) => column);
+
+  GeneratedColumn<double> get menaquinone4Mcg => $composableBuilder(
+      column: $table.menaquinone4Mcg, builder: (column) => column);
+
+  GeneratedColumn<double> get methionineMg => $composableBuilder(
+      column: $table.methionineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get molybdenumMcg => $composableBuilder(
+      column: $table.molybdenumMcg, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get netCarbsG =>
+      $composableBuilder(column: $table.netCarbsG, builder: (column) => column);
+
+  GeneratedColumn<double> get niacinB3Mg => $composableBuilder(
+      column: $table.niacinB3Mg, builder: (column) => column);
+
+  GeneratedColumn<double> get omega3sMg =>
+      $composableBuilder(column: $table.omega3sMg, builder: (column) => column);
+
+  GeneratedColumn<double> get omega6sMg =>
+      $composableBuilder(column: $table.omega6sMg, builder: (column) => column);
+
+  GeneratedColumn<double> get pantothenicAcidB5Mg => $composableBuilder(
+      column: $table.pantothenicAcidB5Mg, builder: (column) => column);
+
+  GeneratedColumn<double> get phenylalanineMg => $composableBuilder(
+      column: $table.phenylalanineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get phosphorusPMg => $composableBuilder(
+      column: $table.phosphorusPMg, builder: (column) => column);
+
+  GeneratedColumn<double> get potassiumKMg => $composableBuilder(
+      column: $table.potassiumKMg, builder: (column) => column);
+
+  GeneratedColumn<double> get pralScore =>
+      $composableBuilder(column: $table.pralScore, builder: (column) => column);
+
+  GeneratedColumn<double> get prolineMg =>
+      $composableBuilder(column: $table.prolineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get proteinG =>
+      $composableBuilder(column: $table.proteinG, builder: (column) => column);
+
+  GeneratedColumn<double> get retinolMcg => $composableBuilder(
+      column: $table.retinolMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get riboflavinB2Mg => $composableBuilder(
+      column: $table.riboflavinB2Mg, builder: (column) => column);
+
+  GeneratedColumn<double> get saturatedFatsG => $composableBuilder(
+      column: $table.saturatedFatsG, builder: (column) => column);
+
+  GeneratedColumn<double> get seleniumSeMcg => $composableBuilder(
+      column: $table.seleniumSeMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get serineMg =>
+      $composableBuilder(column: $table.serineMg, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription1G => $composableBuilder(
+      column: $table.servingDescription1G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription2G => $composableBuilder(
+      column: $table.servingDescription2G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription3G => $composableBuilder(
+      column: $table.servingDescription3G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription4G => $composableBuilder(
+      column: $table.servingDescription4G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription5G => $composableBuilder(
+      column: $table.servingDescription5G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription6G => $composableBuilder(
+      column: $table.servingDescription6G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription7G => $composableBuilder(
+      column: $table.servingDescription7G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription8G => $composableBuilder(
+      column: $table.servingDescription8G, builder: (column) => column);
+
+  GeneratedColumn<String> get servingDescription9G => $composableBuilder(
+      column: $table.servingDescription9G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingSize => $composableBuilder(
+      column: $table.servingSize, builder: (column) => column);
+
+  GeneratedColumn<String> get servingUnit => $composableBuilder(
+      column: $table.servingUnit, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight1G => $composableBuilder(
+      column: $table.servingWeight1G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight2G => $composableBuilder(
+      column: $table.servingWeight2G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight3G => $composableBuilder(
+      column: $table.servingWeight3G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight4G => $composableBuilder(
+      column: $table.servingWeight4G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight5G => $composableBuilder(
+      column: $table.servingWeight5G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight6G => $composableBuilder(
+      column: $table.servingWeight6G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight7G => $composableBuilder(
+      column: $table.servingWeight7G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight8G => $composableBuilder(
+      column: $table.servingWeight8G, builder: (column) => column);
+
+  GeneratedColumn<double> get servingWeight9G => $composableBuilder(
+      column: $table.servingWeight9G, builder: (column) => column);
+
+  GeneratedColumn<String> get smallImage => $composableBuilder(
+      column: $table.smallImage, builder: (column) => column);
+
+  GeneratedColumn<double> get sodiumMg =>
+      $composableBuilder(column: $table.sodiumMg, builder: (column) => column);
+
+  GeneratedColumn<double> get solubleFiberG => $composableBuilder(
+      column: $table.solubleFiberG, builder: (column) => column);
+
+  GeneratedColumn<double> get starchG =>
+      $composableBuilder(column: $table.starchG, builder: (column) => column);
+
+  GeneratedColumn<double> get sucroseG =>
+      $composableBuilder(column: $table.sucroseG, builder: (column) => column);
+
+  GeneratedColumn<double> get sugarsG =>
+      $composableBuilder(column: $table.sugarsG, builder: (column) => column);
+
+  GeneratedColumn<double> get theobromineMg => $composableBuilder(
+      column: $table.theobromineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get thiaminB1Mg => $composableBuilder(
+      column: $table.thiaminB1Mg, builder: (column) => column);
+
+  GeneratedColumn<double> get threonineMg => $composableBuilder(
+      column: $table.threonineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get totalSugarAlcoholsG => $composableBuilder(
+      column: $table.totalSugarAlcoholsG, builder: (column) => column);
+
+  GeneratedColumn<double> get transFattyAcidsG => $composableBuilder(
+      column: $table.transFattyAcidsG, builder: (column) => column);
+
+  GeneratedColumn<double> get tryptophanMg => $composableBuilder(
+      column: $table.tryptophanMg, builder: (column) => column);
+
+  GeneratedColumn<double> get tyrosineMg => $composableBuilder(
+      column: $table.tyrosineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get u183N3CCCAlaMg => $composableBuilder(
+      column: $table.u183N3CCCAlaMg, builder: (column) => column);
+
+  GeneratedColumn<double> get u200calorieWeightG => $composableBuilder(
+      column: $table.u200calorieWeightG, builder: (column) => column);
+
+  GeneratedColumn<double> get u205N3EpaMg => $composableBuilder(
+      column: $table.u205N3EpaMg, builder: (column) => column);
+
+  GeneratedColumn<double> get u225N3DpaMg => $composableBuilder(
+      column: $table.u225N3DpaMg, builder: (column) => column);
+
+  GeneratedColumn<double> get u226N3DhaMg => $composableBuilder(
+      column: $table.u226N3DhaMg, builder: (column) => column);
+
+  GeneratedColumn<double> get valineMg =>
+      $composableBuilder(column: $table.valineMg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminAIuIu => $composableBuilder(
+      column: $table.vitaminAIuIu, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminARaeMcg => $composableBuilder(
+      column: $table.vitaminARaeMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminB12Mcg => $composableBuilder(
+      column: $table.vitaminB12Mcg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminB6Mg => $composableBuilder(
+      column: $table.vitaminB6Mg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminCMg => $composableBuilder(
+      column: $table.vitaminCMg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
+      column: $table.vitaminD2ErgocalciferolMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
+      column: $table.vitaminD3CholecalciferolMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminDIuIu => $composableBuilder(
+      column: $table.vitaminDIuIu, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminDMcg => $composableBuilder(
+      column: $table.vitaminDMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
+      column: $table.vitaminEAlphaTocopherolMg, builder: (column) => column);
+
+  GeneratedColumn<double> get vitaminKMcg => $composableBuilder(
+      column: $table.vitaminKMcg, builder: (column) => column);
+
+  GeneratedColumn<double> get waterG =>
+      $composableBuilder(column: $table.waterG, builder: (column) => column);
+
+  GeneratedColumn<double> get zincZnMg =>
+      $composableBuilder(column: $table.zincZnMg, builder: (column) => column);
+
+  Expression<T> entriesRefs<T extends Object>(
+      Expression<T> Function($$EntriesTableAnnotationComposer a) f) {
+    final $$EntriesTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.entries,
+        getReferencedColumn: (t) => t.food,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$EntriesTableAnnotationComposer(
+              $db: $db,
+              $table: $db.entries,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
 class $$FoodsTableTableManager extends RootTableManager<
     _$AppDatabase,
     $FoodsTable,
     Food,
     $$FoodsTableFilterComposer,
     $$FoodsTableOrderingComposer,
+    $$FoodsTableAnnotationComposer,
     $$FoodsTableCreateCompanionBuilder,
-    $$FoodsTableUpdateCompanionBuilder> {
+    $$FoodsTableUpdateCompanionBuilder,
+    (Food, $$FoodsTableReferences),
+    Food,
+    PrefetchHooks Function({bool entriesRefs})> {
   $$FoodsTableTableManager(_$AppDatabase db, $FoodsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$FoodsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$FoodsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$FoodsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FoodsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FoodsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String?> barcode = const Value.absent(),
             Value<double?> addedSugarG = const Value.absent(),
@@ -8286,1291 +9617,47 @@ class $$FoodsTableTableManager extends RootTableManager<
             waterG: waterG,
             zincZnMg: zincZnMg,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) =>
+                  (e.readTable(table), $$FoodsTableReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: ({entriesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (entriesRefs) db.entries],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (entriesRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$FoodsTableReferences._entriesRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$FoodsTableReferences(db, table, p0).entriesRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) =>
+                                referencedItems.where((e) => e.food == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
-class $$FoodsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $FoodsTable> {
-  $$FoodsTableFilterComposer(super.$state);
-  ColumnFilters<String> get barcode => $state.composableBuilder(
-      column: $state.table.barcode,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get addedSugarG => $state.composableBuilder(
-      column: $state.table.addedSugarG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get alanineMg => $state.composableBuilder(
-      column: $state.table.alanineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get alcoholG => $state.composableBuilder(
-      column: $state.table.alcoholG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get arginineMg => $state.composableBuilder(
-      column: $state.table.arginineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get asparticAcidMg => $state.composableBuilder(
-      column: $state.table.asparticAcidMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get betaineMg => $state.composableBuilder(
-      column: $state.table.betaineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get bigImage => $state.composableBuilder(
-      column: $state.table.bigImage,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get biotinB7Mcg => $state.composableBuilder(
-      column: $state.table.biotinB7Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get caffeineMg => $state.composableBuilder(
-      column: $state.table.caffeineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get calciumMg => $state.composableBuilder(
-      column: $state.table.calciumMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get calories => $state.composableBuilder(
-      column: $state.table.calories,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get carbohydrateG => $state.composableBuilder(
-      column: $state.table.carbohydrateG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get caroteneAlphaMcg => $state.composableBuilder(
-      column: $state.table.caroteneAlphaMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get caroteneBetaMcg => $state.composableBuilder(
-      column: $state.table.caroteneBetaMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get chlorineMg => $state.composableBuilder(
-      column: $state.table.chlorineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get cholesterolMg => $state.composableBuilder(
-      column: $state.table.cholesterolMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get cholineMg => $state.composableBuilder(
-      column: $state.table.cholineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get copperCuMg => $state.composableBuilder(
-      column: $state.table.copperCuMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get cystineMg => $state.composableBuilder(
-      column: $state.table.cystineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get dihydrophylloquinoneMcg => $state.composableBuilder(
-      column: $state.table.dihydrophylloquinoneMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fatG => $state.composableBuilder(
-      column: $state.table.fatG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fattyAcidsTotalMonounsaturatedMg =>
-      $state.composableBuilder(
-          column: $state.table.fattyAcidsTotalMonounsaturatedMg,
-          builder: (column, joinBuilders) =>
-              ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fattyAcidsTotalPolyunsaturatedMg =>
-      $state.composableBuilder(
-          column: $state.table.fattyAcidsTotalPolyunsaturatedMg,
-          builder: (column, joinBuilders) =>
-              ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get favorite => $state.composableBuilder(
-      column: $state.table.favorite,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fiberG => $state.composableBuilder(
-      column: $state.table.fiberG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fluorideFMcg => $state.composableBuilder(
-      column: $state.table.fluorideFMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get folateB9Mcg => $state.composableBuilder(
-      column: $state.table.folateB9Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get folateDfeMcg => $state.composableBuilder(
-      column: $state.table.folateDfeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get folicAcidMcg => $state.composableBuilder(
-      column: $state.table.folicAcidMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get foodFolateMcg => $state.composableBuilder(
-      column: $state.table.foodFolateMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get foodGroup => $state.composableBuilder(
-      column: $state.table.foodGroup,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fructoseG => $state.composableBuilder(
-      column: $state.table.fructoseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get galactoseG => $state.composableBuilder(
-      column: $state.table.galactoseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get glucoseDextroseG => $state.composableBuilder(
-      column: $state.table.glucoseDextroseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get glutamicAcidMg => $state.composableBuilder(
-      column: $state.table.glutamicAcidMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get glycineMg => $state.composableBuilder(
-      column: $state.table.glycineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get histidineMg => $state.composableBuilder(
-      column: $state.table.histidineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get hydroxyprolineMg => $state.composableBuilder(
-      column: $state.table.hydroxyprolineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get imageFile => $state.composableBuilder(
-      column: $state.table.imageFile,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get insolubleFiberG => $state.composableBuilder(
-      column: $state.table.insolubleFiberG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get ironFeMg => $state.composableBuilder(
-      column: $state.table.ironFeMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get isoleucineMg => $state.composableBuilder(
-      column: $state.table.isoleucineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get lactoseG => $state.composableBuilder(
-      column: $state.table.lactoseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get leucineMg => $state.composableBuilder(
-      column: $state.table.leucineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get luteinZeaxanthinMcg => $state.composableBuilder(
-      column: $state.table.luteinZeaxanthinMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get lycopeneMcg => $state.composableBuilder(
-      column: $state.table.lycopeneMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get lysineMg => $state.composableBuilder(
-      column: $state.table.lysineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get magnesiumMg => $state.composableBuilder(
-      column: $state.table.magnesiumMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get maltoseG => $state.composableBuilder(
-      column: $state.table.maltoseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get manganeseMg => $state.composableBuilder(
-      column: $state.table.manganeseMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get menaquinone4Mcg => $state.composableBuilder(
-      column: $state.table.menaquinone4Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get methionineMg => $state.composableBuilder(
-      column: $state.table.methionineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get molybdenumMcg => $state.composableBuilder(
-      column: $state.table.molybdenumMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get netCarbsG => $state.composableBuilder(
-      column: $state.table.netCarbsG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get niacinB3Mg => $state.composableBuilder(
-      column: $state.table.niacinB3Mg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get omega3sMg => $state.composableBuilder(
-      column: $state.table.omega3sMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get omega6sMg => $state.composableBuilder(
-      column: $state.table.omega6sMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get pantothenicAcidB5Mg => $state.composableBuilder(
-      column: $state.table.pantothenicAcidB5Mg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get phenylalanineMg => $state.composableBuilder(
-      column: $state.table.phenylalanineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get phosphorusPMg => $state.composableBuilder(
-      column: $state.table.phosphorusPMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get potassiumKMg => $state.composableBuilder(
-      column: $state.table.potassiumKMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get pralScore => $state.composableBuilder(
-      column: $state.table.pralScore,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get prolineMg => $state.composableBuilder(
-      column: $state.table.prolineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get proteinG => $state.composableBuilder(
-      column: $state.table.proteinG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get retinolMcg => $state.composableBuilder(
-      column: $state.table.retinolMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get riboflavinB2Mg => $state.composableBuilder(
-      column: $state.table.riboflavinB2Mg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get saturatedFatsG => $state.composableBuilder(
-      column: $state.table.saturatedFatsG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get seleniumSeMcg => $state.composableBuilder(
-      column: $state.table.seleniumSeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get serineMg => $state.composableBuilder(
-      column: $state.table.serineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription1G => $state.composableBuilder(
-      column: $state.table.servingDescription1G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription2G => $state.composableBuilder(
-      column: $state.table.servingDescription2G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription3G => $state.composableBuilder(
-      column: $state.table.servingDescription3G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription4G => $state.composableBuilder(
-      column: $state.table.servingDescription4G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription5G => $state.composableBuilder(
-      column: $state.table.servingDescription5G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription6G => $state.composableBuilder(
-      column: $state.table.servingDescription6G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription7G => $state.composableBuilder(
-      column: $state.table.servingDescription7G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription8G => $state.composableBuilder(
-      column: $state.table.servingDescription8G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingDescription9G => $state.composableBuilder(
-      column: $state.table.servingDescription9G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingSize => $state.composableBuilder(
-      column: $state.table.servingSize,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get servingUnit => $state.composableBuilder(
-      column: $state.table.servingUnit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight1G => $state.composableBuilder(
-      column: $state.table.servingWeight1G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight2G => $state.composableBuilder(
-      column: $state.table.servingWeight2G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight3G => $state.composableBuilder(
-      column: $state.table.servingWeight3G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight4G => $state.composableBuilder(
-      column: $state.table.servingWeight4G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight5G => $state.composableBuilder(
-      column: $state.table.servingWeight5G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight6G => $state.composableBuilder(
-      column: $state.table.servingWeight6G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight7G => $state.composableBuilder(
-      column: $state.table.servingWeight7G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight8G => $state.composableBuilder(
-      column: $state.table.servingWeight8G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get servingWeight9G => $state.composableBuilder(
-      column: $state.table.servingWeight9G,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get smallImage => $state.composableBuilder(
-      column: $state.table.smallImage,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get sodiumMg => $state.composableBuilder(
-      column: $state.table.sodiumMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get solubleFiberG => $state.composableBuilder(
-      column: $state.table.solubleFiberG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get starchG => $state.composableBuilder(
-      column: $state.table.starchG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get sucroseG => $state.composableBuilder(
-      column: $state.table.sucroseG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get sugarsG => $state.composableBuilder(
-      column: $state.table.sugarsG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get theobromineMg => $state.composableBuilder(
-      column: $state.table.theobromineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get thiaminB1Mg => $state.composableBuilder(
-      column: $state.table.thiaminB1Mg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get threonineMg => $state.composableBuilder(
-      column: $state.table.threonineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get totalSugarAlcoholsG => $state.composableBuilder(
-      column: $state.table.totalSugarAlcoholsG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get transFattyAcidsG => $state.composableBuilder(
-      column: $state.table.transFattyAcidsG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get tryptophanMg => $state.composableBuilder(
-      column: $state.table.tryptophanMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get tyrosineMg => $state.composableBuilder(
-      column: $state.table.tyrosineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get u183N3CCCAlaMg => $state.composableBuilder(
-      column: $state.table.u183N3CCCAlaMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get u200calorieWeightG => $state.composableBuilder(
-      column: $state.table.u200calorieWeightG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get u205N3EpaMg => $state.composableBuilder(
-      column: $state.table.u205N3EpaMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get u225N3DpaMg => $state.composableBuilder(
-      column: $state.table.u225N3DpaMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get u226N3DhaMg => $state.composableBuilder(
-      column: $state.table.u226N3DhaMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get valineMg => $state.composableBuilder(
-      column: $state.table.valineMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminAIuIu => $state.composableBuilder(
-      column: $state.table.vitaminAIuIu,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminARaeMcg => $state.composableBuilder(
-      column: $state.table.vitaminARaeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminB12Mcg => $state.composableBuilder(
-      column: $state.table.vitaminB12Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminB6Mg => $state.composableBuilder(
-      column: $state.table.vitaminB6Mg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminCMg => $state.composableBuilder(
-      column: $state.table.vitaminCMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminD2ErgocalciferolMcg =>
-      $state.composableBuilder(
-          column: $state.table.vitaminD2ErgocalciferolMcg,
-          builder: (column, joinBuilders) =>
-              ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminD3CholecalciferolMcg => $state
-      .composableBuilder(
-          column: $state.table.vitaminD3CholecalciferolMcg,
-          builder: (column, joinBuilders) =>
-              ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminDIuIu => $state.composableBuilder(
-      column: $state.table.vitaminDIuIu,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminDMcg => $state.composableBuilder(
-      column: $state.table.vitaminDMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminEAlphaTocopherolMg =>
-      $state.composableBuilder(
-          column: $state.table.vitaminEAlphaTocopherolMg,
-          builder: (column, joinBuilders) =>
-              ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get vitaminKMcg => $state.composableBuilder(
-      column: $state.table.vitaminKMcg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get waterG => $state.composableBuilder(
-      column: $state.table.waterG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get zincZnMg => $state.composableBuilder(
-      column: $state.table.zincZnMg,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ComposableFilter entriesRefs(
-      ComposableFilter Function($$EntriesTableFilterComposer f) f) {
-    final $$EntriesTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.entries,
-        getReferencedColumn: (t) => t.food,
-        builder: (joinBuilder, parentComposers) => $$EntriesTableFilterComposer(
-            ComposerState(
-                $state.db, $state.db.entries, joinBuilder, parentComposers)));
-    return f(composer);
-  }
-}
-
-class $$FoodsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $FoodsTable> {
-  $$FoodsTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get barcode => $state.composableBuilder(
-      column: $state.table.barcode,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get addedSugarG => $state.composableBuilder(
-      column: $state.table.addedSugarG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get alanineMg => $state.composableBuilder(
-      column: $state.table.alanineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get alcoholG => $state.composableBuilder(
-      column: $state.table.alcoholG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get arginineMg => $state.composableBuilder(
-      column: $state.table.arginineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get asparticAcidMg => $state.composableBuilder(
-      column: $state.table.asparticAcidMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get betaineMg => $state.composableBuilder(
-      column: $state.table.betaineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get bigImage => $state.composableBuilder(
-      column: $state.table.bigImage,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get biotinB7Mcg => $state.composableBuilder(
-      column: $state.table.biotinB7Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get caffeineMg => $state.composableBuilder(
-      column: $state.table.caffeineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get calciumMg => $state.composableBuilder(
-      column: $state.table.calciumMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get calories => $state.composableBuilder(
-      column: $state.table.calories,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get carbohydrateG => $state.composableBuilder(
-      column: $state.table.carbohydrateG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get caroteneAlphaMcg => $state.composableBuilder(
-      column: $state.table.caroteneAlphaMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get caroteneBetaMcg => $state.composableBuilder(
-      column: $state.table.caroteneBetaMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get chlorineMg => $state.composableBuilder(
-      column: $state.table.chlorineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get cholesterolMg => $state.composableBuilder(
-      column: $state.table.cholesterolMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get cholineMg => $state.composableBuilder(
-      column: $state.table.cholineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get copperCuMg => $state.composableBuilder(
-      column: $state.table.copperCuMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get cystineMg => $state.composableBuilder(
-      column: $state.table.cystineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get dihydrophylloquinoneMcg =>
-      $state.composableBuilder(
-          column: $state.table.dihydrophylloquinoneMcg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fatG => $state.composableBuilder(
-      column: $state.table.fatG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fattyAcidsTotalMonounsaturatedMg =>
-      $state.composableBuilder(
-          column: $state.table.fattyAcidsTotalMonounsaturatedMg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fattyAcidsTotalPolyunsaturatedMg =>
-      $state.composableBuilder(
-          column: $state.table.fattyAcidsTotalPolyunsaturatedMg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get favorite => $state.composableBuilder(
-      column: $state.table.favorite,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fiberG => $state.composableBuilder(
-      column: $state.table.fiberG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fluorideFMcg => $state.composableBuilder(
-      column: $state.table.fluorideFMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get folateB9Mcg => $state.composableBuilder(
-      column: $state.table.folateB9Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get folateDfeMcg => $state.composableBuilder(
-      column: $state.table.folateDfeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get folicAcidMcg => $state.composableBuilder(
-      column: $state.table.folicAcidMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get foodFolateMcg => $state.composableBuilder(
-      column: $state.table.foodFolateMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get foodGroup => $state.composableBuilder(
-      column: $state.table.foodGroup,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fructoseG => $state.composableBuilder(
-      column: $state.table.fructoseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get galactoseG => $state.composableBuilder(
-      column: $state.table.galactoseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get glucoseDextroseG => $state.composableBuilder(
-      column: $state.table.glucoseDextroseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get glutamicAcidMg => $state.composableBuilder(
-      column: $state.table.glutamicAcidMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get glycineMg => $state.composableBuilder(
-      column: $state.table.glycineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get histidineMg => $state.composableBuilder(
-      column: $state.table.histidineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get hydroxyprolineMg => $state.composableBuilder(
-      column: $state.table.hydroxyprolineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get imageFile => $state.composableBuilder(
-      column: $state.table.imageFile,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get insolubleFiberG => $state.composableBuilder(
-      column: $state.table.insolubleFiberG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get ironFeMg => $state.composableBuilder(
-      column: $state.table.ironFeMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get isoleucineMg => $state.composableBuilder(
-      column: $state.table.isoleucineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get lactoseG => $state.composableBuilder(
-      column: $state.table.lactoseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get leucineMg => $state.composableBuilder(
-      column: $state.table.leucineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get luteinZeaxanthinMcg => $state.composableBuilder(
-      column: $state.table.luteinZeaxanthinMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get lycopeneMcg => $state.composableBuilder(
-      column: $state.table.lycopeneMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get lysineMg => $state.composableBuilder(
-      column: $state.table.lysineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get magnesiumMg => $state.composableBuilder(
-      column: $state.table.magnesiumMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get maltoseG => $state.composableBuilder(
-      column: $state.table.maltoseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get manganeseMg => $state.composableBuilder(
-      column: $state.table.manganeseMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get menaquinone4Mcg => $state.composableBuilder(
-      column: $state.table.menaquinone4Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get methionineMg => $state.composableBuilder(
-      column: $state.table.methionineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get molybdenumMcg => $state.composableBuilder(
-      column: $state.table.molybdenumMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get netCarbsG => $state.composableBuilder(
-      column: $state.table.netCarbsG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get niacinB3Mg => $state.composableBuilder(
-      column: $state.table.niacinB3Mg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get omega3sMg => $state.composableBuilder(
-      column: $state.table.omega3sMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get omega6sMg => $state.composableBuilder(
-      column: $state.table.omega6sMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get pantothenicAcidB5Mg => $state.composableBuilder(
-      column: $state.table.pantothenicAcidB5Mg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get phenylalanineMg => $state.composableBuilder(
-      column: $state.table.phenylalanineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get phosphorusPMg => $state.composableBuilder(
-      column: $state.table.phosphorusPMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get potassiumKMg => $state.composableBuilder(
-      column: $state.table.potassiumKMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get pralScore => $state.composableBuilder(
-      column: $state.table.pralScore,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get prolineMg => $state.composableBuilder(
-      column: $state.table.prolineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get proteinG => $state.composableBuilder(
-      column: $state.table.proteinG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get retinolMcg => $state.composableBuilder(
-      column: $state.table.retinolMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get riboflavinB2Mg => $state.composableBuilder(
-      column: $state.table.riboflavinB2Mg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get saturatedFatsG => $state.composableBuilder(
-      column: $state.table.saturatedFatsG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get seleniumSeMcg => $state.composableBuilder(
-      column: $state.table.seleniumSeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get serineMg => $state.composableBuilder(
-      column: $state.table.serineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription1G => $state.composableBuilder(
-      column: $state.table.servingDescription1G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription2G => $state.composableBuilder(
-      column: $state.table.servingDescription2G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription3G => $state.composableBuilder(
-      column: $state.table.servingDescription3G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription4G => $state.composableBuilder(
-      column: $state.table.servingDescription4G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription5G => $state.composableBuilder(
-      column: $state.table.servingDescription5G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription6G => $state.composableBuilder(
-      column: $state.table.servingDescription6G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription7G => $state.composableBuilder(
-      column: $state.table.servingDescription7G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription8G => $state.composableBuilder(
-      column: $state.table.servingDescription8G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingDescription9G => $state.composableBuilder(
-      column: $state.table.servingDescription9G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingSize => $state.composableBuilder(
-      column: $state.table.servingSize,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get servingUnit => $state.composableBuilder(
-      column: $state.table.servingUnit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight1G => $state.composableBuilder(
-      column: $state.table.servingWeight1G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight2G => $state.composableBuilder(
-      column: $state.table.servingWeight2G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight3G => $state.composableBuilder(
-      column: $state.table.servingWeight3G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight4G => $state.composableBuilder(
-      column: $state.table.servingWeight4G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight5G => $state.composableBuilder(
-      column: $state.table.servingWeight5G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight6G => $state.composableBuilder(
-      column: $state.table.servingWeight6G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight7G => $state.composableBuilder(
-      column: $state.table.servingWeight7G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight8G => $state.composableBuilder(
-      column: $state.table.servingWeight8G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get servingWeight9G => $state.composableBuilder(
-      column: $state.table.servingWeight9G,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get smallImage => $state.composableBuilder(
-      column: $state.table.smallImage,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get sodiumMg => $state.composableBuilder(
-      column: $state.table.sodiumMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get solubleFiberG => $state.composableBuilder(
-      column: $state.table.solubleFiberG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get starchG => $state.composableBuilder(
-      column: $state.table.starchG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get sucroseG => $state.composableBuilder(
-      column: $state.table.sucroseG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get sugarsG => $state.composableBuilder(
-      column: $state.table.sugarsG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get theobromineMg => $state.composableBuilder(
-      column: $state.table.theobromineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get thiaminB1Mg => $state.composableBuilder(
-      column: $state.table.thiaminB1Mg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get threonineMg => $state.composableBuilder(
-      column: $state.table.threonineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get totalSugarAlcoholsG => $state.composableBuilder(
-      column: $state.table.totalSugarAlcoholsG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get transFattyAcidsG => $state.composableBuilder(
-      column: $state.table.transFattyAcidsG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get tryptophanMg => $state.composableBuilder(
-      column: $state.table.tryptophanMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get tyrosineMg => $state.composableBuilder(
-      column: $state.table.tyrosineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get u183N3CCCAlaMg => $state.composableBuilder(
-      column: $state.table.u183N3CCCAlaMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get u200calorieWeightG => $state.composableBuilder(
-      column: $state.table.u200calorieWeightG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get u205N3EpaMg => $state.composableBuilder(
-      column: $state.table.u205N3EpaMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get u225N3DpaMg => $state.composableBuilder(
-      column: $state.table.u225N3DpaMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get u226N3DhaMg => $state.composableBuilder(
-      column: $state.table.u226N3DhaMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get valineMg => $state.composableBuilder(
-      column: $state.table.valineMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminAIuIu => $state.composableBuilder(
-      column: $state.table.vitaminAIuIu,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminARaeMcg => $state.composableBuilder(
-      column: $state.table.vitaminARaeMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminB12Mcg => $state.composableBuilder(
-      column: $state.table.vitaminB12Mcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminB6Mg => $state.composableBuilder(
-      column: $state.table.vitaminB6Mg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminCMg => $state.composableBuilder(
-      column: $state.table.vitaminCMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminD2ErgocalciferolMcg =>
-      $state.composableBuilder(
-          column: $state.table.vitaminD2ErgocalciferolMcg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminD3CholecalciferolMcg =>
-      $state.composableBuilder(
-          column: $state.table.vitaminD3CholecalciferolMcg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminDIuIu => $state.composableBuilder(
-      column: $state.table.vitaminDIuIu,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminDMcg => $state.composableBuilder(
-      column: $state.table.vitaminDMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminEAlphaTocopherolMg => $state
-      .composableBuilder(
-          column: $state.table.vitaminEAlphaTocopherolMg,
-          builder: (column, joinBuilders) =>
-              ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get vitaminKMcg => $state.composableBuilder(
-      column: $state.table.vitaminKMcg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get waterG => $state.composableBuilder(
-      column: $state.table.waterG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get zincZnMg => $state.composableBuilder(
-      column: $state.table.zincZnMg,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
+typedef $$FoodsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $FoodsTable,
+    Food,
+    $$FoodsTableFilterComposer,
+    $$FoodsTableOrderingComposer,
+    $$FoodsTableAnnotationComposer,
+    $$FoodsTableCreateCompanionBuilder,
+    $$FoodsTableUpdateCompanionBuilder,
+    (Food, $$FoodsTableReferences),
+    Food,
+    PrefetchHooks Function({bool entriesRefs})>;
 typedef $$EntriesTableCreateCompanionBuilder = EntriesCompanion Function({
   Value<int> id,
   required int food,
@@ -9594,22 +9681,209 @@ typedef $$EntriesTableUpdateCompanionBuilder = EntriesCompanion Function({
   Value<double?> carbG,
 });
 
+final class $$EntriesTableReferences
+    extends BaseReferences<_$AppDatabase, $EntriesTable, Entry> {
+  $$EntriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $FoodsTable _foodTable(_$AppDatabase db) =>
+      db.foods.createAlias($_aliasNameGenerator(db.entries.food, db.foods.id));
+
+  $$FoodsTableProcessedTableManager get food {
+    final $_column = $_itemColumn<int>('food')!;
+
+    final manager = $$FoodsTableTableManager($_db, $_db.foods)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_foodTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$EntriesTableFilterComposer
+    extends Composer<_$AppDatabase, $EntriesTable> {
+  $$EntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+      column: $table.quantity, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get kCalories => $composableBuilder(
+      column: $table.kCalories, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get proteinG => $composableBuilder(
+      column: $table.proteinG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get fatG => $composableBuilder(
+      column: $table.fatG, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get carbG => $composableBuilder(
+      column: $table.carbG, builder: (column) => ColumnFilters(column));
+
+  $$FoodsTableFilterComposer get food {
+    final $$FoodsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.food,
+        referencedTable: $db.foods,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FoodsTableFilterComposer(
+              $db: $db,
+              $table: $db.foods,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$EntriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $EntriesTable> {
+  $$EntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+      column: $table.quantity, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get kCalories => $composableBuilder(
+      column: $table.kCalories, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get proteinG => $composableBuilder(
+      column: $table.proteinG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get fatG => $composableBuilder(
+      column: $table.fatG, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get carbG => $composableBuilder(
+      column: $table.carbG, builder: (column) => ColumnOrderings(column));
+
+  $$FoodsTableOrderingComposer get food {
+    final $$FoodsTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.food,
+        referencedTable: $db.foods,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FoodsTableOrderingComposer(
+              $db: $db,
+              $table: $db.foods,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$EntriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EntriesTable> {
+  $$EntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get created =>
+      $composableBuilder(column: $table.created, builder: (column) => column);
+
+  GeneratedColumn<double> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<double> get kCalories =>
+      $composableBuilder(column: $table.kCalories, builder: (column) => column);
+
+  GeneratedColumn<double> get proteinG =>
+      $composableBuilder(column: $table.proteinG, builder: (column) => column);
+
+  GeneratedColumn<double> get fatG =>
+      $composableBuilder(column: $table.fatG, builder: (column) => column);
+
+  GeneratedColumn<double> get carbG =>
+      $composableBuilder(column: $table.carbG, builder: (column) => column);
+
+  $$FoodsTableAnnotationComposer get food {
+    final $$FoodsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.food,
+        referencedTable: $db.foods,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$FoodsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.foods,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
 class $$EntriesTableTableManager extends RootTableManager<
     _$AppDatabase,
     $EntriesTable,
     Entry,
     $$EntriesTableFilterComposer,
     $$EntriesTableOrderingComposer,
+    $$EntriesTableAnnotationComposer,
     $$EntriesTableCreateCompanionBuilder,
-    $$EntriesTableUpdateCompanionBuilder> {
+    $$EntriesTableUpdateCompanionBuilder,
+    (Entry, $$EntriesTableReferences),
+    Entry,
+    PrefetchHooks Function({bool food})> {
   $$EntriesTableTableManager(_$AppDatabase db, $EntriesTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$EntriesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$EntriesTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$EntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EntriesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> food = const Value.absent(),
@@ -9654,121 +9928,59 @@ class $$EntriesTableTableManager extends RootTableManager<
             fatG: fatG,
             carbG: carbG,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) =>
+                  (e.readTable(table), $$EntriesTableReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: ({food = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (food) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.food,
+                    referencedTable: $$EntriesTableReferences._foodTable(db),
+                    referencedColumn:
+                        $$EntriesTableReferences._foodTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
-class $$EntriesTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $EntriesTable> {
-  $$EntriesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get quantity => $state.composableBuilder(
-      column: $state.table.quantity,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get unit => $state.composableBuilder(
-      column: $state.table.unit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get kCalories => $state.composableBuilder(
-      column: $state.table.kCalories,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get proteinG => $state.composableBuilder(
-      column: $state.table.proteinG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get fatG => $state.composableBuilder(
-      column: $state.table.fatG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get carbG => $state.composableBuilder(
-      column: $state.table.carbG,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  $$FoodsTableFilterComposer get food {
-    final $$FoodsTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.food,
-        referencedTable: $state.db.foods,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$FoodsTableFilterComposer(
-            ComposerState(
-                $state.db, $state.db.foods, joinBuilder, parentComposers)));
-    return composer;
-  }
-}
-
-class $$EntriesTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $EntriesTable> {
-  $$EntriesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get quantity => $state.composableBuilder(
-      column: $state.table.quantity,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get unit => $state.composableBuilder(
-      column: $state.table.unit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get kCalories => $state.composableBuilder(
-      column: $state.table.kCalories,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get proteinG => $state.composableBuilder(
-      column: $state.table.proteinG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get fatG => $state.composableBuilder(
-      column: $state.table.fatG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get carbG => $state.composableBuilder(
-      column: $state.table.carbG,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  $$FoodsTableOrderingComposer get food {
-    final $$FoodsTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.food,
-        referencedTable: $state.db.foods,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$FoodsTableOrderingComposer(
-            ComposerState(
-                $state.db, $state.db.foods, joinBuilder, parentComposers)));
-    return composer;
-  }
-}
-
+typedef $$EntriesTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $EntriesTable,
+    Entry,
+    $$EntriesTableFilterComposer,
+    $$EntriesTableOrderingComposer,
+    $$EntriesTableAnnotationComposer,
+    $$EntriesTableCreateCompanionBuilder,
+    $$EntriesTableUpdateCompanionBuilder,
+    (Entry, $$EntriesTableReferences),
+    Entry,
+    PrefetchHooks Function({bool food})>;
 typedef $$WeightsTableCreateCompanionBuilder = WeightsCompanion Function({
   Value<int> id,
   required DateTime created,
@@ -9782,22 +9994,94 @@ typedef $$WeightsTableUpdateCompanionBuilder = WeightsCompanion Function({
   Value<double> amount,
 });
 
+class $$WeightsTableFilterComposer
+    extends Composer<_$AppDatabase, $WeightsTable> {
+  $$WeightsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get amount => $composableBuilder(
+      column: $table.amount, builder: (column) => ColumnFilters(column));
+}
+
+class $$WeightsTableOrderingComposer
+    extends Composer<_$AppDatabase, $WeightsTable> {
+  $$WeightsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get created => $composableBuilder(
+      column: $table.created, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+      column: $table.unit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get amount => $composableBuilder(
+      column: $table.amount, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WeightsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WeightsTable> {
+  $$WeightsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get created =>
+      $composableBuilder(column: $table.created, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<double> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+}
+
 class $$WeightsTableTableManager extends RootTableManager<
     _$AppDatabase,
     $WeightsTable,
     Weight,
     $$WeightsTableFilterComposer,
     $$WeightsTableOrderingComposer,
+    $$WeightsTableAnnotationComposer,
     $$WeightsTableCreateCompanionBuilder,
-    $$WeightsTableUpdateCompanionBuilder> {
+    $$WeightsTableUpdateCompanionBuilder,
+    (Weight, BaseReferences<_$AppDatabase, $WeightsTable, Weight>),
+    Weight,
+    PrefetchHooks Function()> {
   $$WeightsTableTableManager(_$AppDatabase db, $WeightsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$WeightsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$WeightsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$WeightsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WeightsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WeightsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<DateTime> created = const Value.absent(),
@@ -9822,57 +10106,25 @@ class $$WeightsTableTableManager extends RootTableManager<
             unit: unit,
             amount: amount,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
         ));
 }
 
-class $$WeightsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $WeightsTable> {
-  $$WeightsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get unit => $state.composableBuilder(
-      column: $state.table.unit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get amount => $state.composableBuilder(
-      column: $state.table.amount,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$WeightsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $WeightsTable> {
-  $$WeightsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<DateTime> get created => $state.composableBuilder(
-      column: $state.table.created,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get unit => $state.composableBuilder(
-      column: $state.table.unit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get amount => $state.composableBuilder(
-      column: $state.table.amount,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
+typedef $$WeightsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $WeightsTable,
+    Weight,
+    $$WeightsTableFilterComposer,
+    $$WeightsTableOrderingComposer,
+    $$WeightsTableAnnotationComposer,
+    $$WeightsTableCreateCompanionBuilder,
+    $$WeightsTableUpdateCompanionBuilder,
+    (Weight, BaseReferences<_$AppDatabase, $WeightsTable, Weight>),
+    Weight,
+    PrefetchHooks Function()>;
 typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   required bool curveLines,
   Value<int?> dailyCalories,
@@ -9926,22 +10178,287 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<String> themeMode,
 });
 
+class $$SettingsTableFilterComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<bool> get curveLines => $composableBuilder(
+      column: $table.curveLines, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dailyCalories => $composableBuilder(
+      column: $table.dailyCalories, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dailyCarb => $composableBuilder(
+      column: $table.dailyCarb, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dailyFat => $composableBuilder(
+      column: $table.dailyFat, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dailyProtein => $composableBuilder(
+      column: $table.dailyProtein, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get diarySummary => $composableBuilder(
+      column: $table.diarySummary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get entryUnit => $composableBuilder(
+      column: $table.entryUnit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get favoriteNew => $composableBuilder(
+      column: $table.favoriteNew, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get foodUnit => $composableBuilder(
+      column: $table.foodUnit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lastGraph => $composableBuilder(
+      column: $table.lastGraph, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get longDateFormat => $composableBuilder(
+      column: $table.longDateFormat,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get offLogin => $composableBuilder(
+      column: $table.offLogin, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get offPassword => $composableBuilder(
+      column: $table.offPassword, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get positiveReinforcement => $composableBuilder(
+      column: $table.positiveReinforcement,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get reminders => $composableBuilder(
+      column: $table.reminders, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get selectEntryOnSubmit => $composableBuilder(
+      column: $table.selectEntryOnSubmit,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get shortDateFormat => $composableBuilder(
+      column: $table.shortDateFormat,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showImages => $composableBuilder(
+      column: $table.showImages, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showOthers => $composableBuilder(
+      column: $table.showOthers, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get systemColors => $composableBuilder(
+      column: $table.systemColors, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tabs => $composableBuilder(
+      column: $table.tabs, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get targetWeight => $composableBuilder(
+      column: $table.targetWeight, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get themeMode => $composableBuilder(
+      column: $table.themeMode, builder: (column) => ColumnFilters(column));
+}
+
+class $$SettingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<bool> get curveLines => $composableBuilder(
+      column: $table.curveLines, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dailyCalories => $composableBuilder(
+      column: $table.dailyCalories,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dailyCarb => $composableBuilder(
+      column: $table.dailyCarb, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dailyFat => $composableBuilder(
+      column: $table.dailyFat, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dailyProtein => $composableBuilder(
+      column: $table.dailyProtein,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get diarySummary => $composableBuilder(
+      column: $table.diarySummary,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get entryUnit => $composableBuilder(
+      column: $table.entryUnit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get favoriteNew => $composableBuilder(
+      column: $table.favoriteNew, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get foodUnit => $composableBuilder(
+      column: $table.foodUnit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lastGraph => $composableBuilder(
+      column: $table.lastGraph, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get longDateFormat => $composableBuilder(
+      column: $table.longDateFormat,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get offLogin => $composableBuilder(
+      column: $table.offLogin, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get offPassword => $composableBuilder(
+      column: $table.offPassword, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get positiveReinforcement => $composableBuilder(
+      column: $table.positiveReinforcement,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get reminders => $composableBuilder(
+      column: $table.reminders, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get selectEntryOnSubmit => $composableBuilder(
+      column: $table.selectEntryOnSubmit,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get shortDateFormat => $composableBuilder(
+      column: $table.shortDateFormat,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showImages => $composableBuilder(
+      column: $table.showImages, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showOthers => $composableBuilder(
+      column: $table.showOthers, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get systemColors => $composableBuilder(
+      column: $table.systemColors,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tabs => $composableBuilder(
+      column: $table.tabs, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get targetWeight => $composableBuilder(
+      column: $table.targetWeight,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get themeMode => $composableBuilder(
+      column: $table.themeMode, builder: (column) => ColumnOrderings(column));
+}
+
+class $$SettingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SettingsTable> {
+  $$SettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<bool> get curveLines => $composableBuilder(
+      column: $table.curveLines, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyCalories => $composableBuilder(
+      column: $table.dailyCalories, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyCarb =>
+      $composableBuilder(column: $table.dailyCarb, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyFat =>
+      $composableBuilder(column: $table.dailyFat, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyProtein => $composableBuilder(
+      column: $table.dailyProtein, builder: (column) => column);
+
+  GeneratedColumn<String> get diarySummary => $composableBuilder(
+      column: $table.diarySummary, builder: (column) => column);
+
+  GeneratedColumn<String> get entryUnit =>
+      $composableBuilder(column: $table.entryUnit, builder: (column) => column);
+
+  GeneratedColumn<bool> get favoriteNew => $composableBuilder(
+      column: $table.favoriteNew, builder: (column) => column);
+
+  GeneratedColumn<String> get foodUnit =>
+      $composableBuilder(column: $table.foodUnit, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get lastGraph =>
+      $composableBuilder(column: $table.lastGraph, builder: (column) => column);
+
+  GeneratedColumn<String> get longDateFormat => $composableBuilder(
+      column: $table.longDateFormat, builder: (column) => column);
+
+  GeneratedColumn<String> get offLogin =>
+      $composableBuilder(column: $table.offLogin, builder: (column) => column);
+
+  GeneratedColumn<String> get offPassword => $composableBuilder(
+      column: $table.offPassword, builder: (column) => column);
+
+  GeneratedColumn<bool> get positiveReinforcement => $composableBuilder(
+      column: $table.positiveReinforcement, builder: (column) => column);
+
+  GeneratedColumn<bool> get reminders =>
+      $composableBuilder(column: $table.reminders, builder: (column) => column);
+
+  GeneratedColumn<bool> get selectEntryOnSubmit => $composableBuilder(
+      column: $table.selectEntryOnSubmit, builder: (column) => column);
+
+  GeneratedColumn<String> get shortDateFormat => $composableBuilder(
+      column: $table.shortDateFormat, builder: (column) => column);
+
+  GeneratedColumn<bool> get showImages => $composableBuilder(
+      column: $table.showImages, builder: (column) => column);
+
+  GeneratedColumn<bool> get showOthers => $composableBuilder(
+      column: $table.showOthers, builder: (column) => column);
+
+  GeneratedColumn<bool> get systemColors => $composableBuilder(
+      column: $table.systemColors, builder: (column) => column);
+
+  GeneratedColumn<String> get tabs =>
+      $composableBuilder(column: $table.tabs, builder: (column) => column);
+
+  GeneratedColumn<double> get targetWeight => $composableBuilder(
+      column: $table.targetWeight, builder: (column) => column);
+
+  GeneratedColumn<String> get themeMode =>
+      $composableBuilder(column: $table.themeMode, builder: (column) => column);
+}
+
 class $$SettingsTableTableManager extends RootTableManager<
     _$AppDatabase,
     $SettingsTable,
     Setting,
     $$SettingsTableFilterComposer,
     $$SettingsTableOrderingComposer,
+    $$SettingsTableAnnotationComposer,
     $$SettingsTableCreateCompanionBuilder,
-    $$SettingsTableUpdateCompanionBuilder> {
+    $$SettingsTableUpdateCompanionBuilder,
+    (Setting, BaseReferences<_$AppDatabase, $SettingsTable, Setting>),
+    Setting,
+    PrefetchHooks Function()> {
   $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$SettingsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$SettingsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$SettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SettingsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<bool> curveLines = const Value.absent(),
             Value<int?> dailyCalories = const Value.absent(),
@@ -10046,256 +10563,25 @@ class $$SettingsTableTableManager extends RootTableManager<
             targetWeight: targetWeight,
             themeMode: themeMode,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
         ));
 }
 
-class $$SettingsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableFilterComposer(super.$state);
-  ColumnFilters<bool> get curveLines => $state.composableBuilder(
-      column: $state.table.curveLines,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get dailyCalories => $state.composableBuilder(
-      column: $state.table.dailyCalories,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get dailyCarb => $state.composableBuilder(
-      column: $state.table.dailyCarb,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get dailyFat => $state.composableBuilder(
-      column: $state.table.dailyFat,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get dailyProtein => $state.composableBuilder(
-      column: $state.table.dailyProtein,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get diarySummary => $state.composableBuilder(
-      column: $state.table.diarySummary,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get entryUnit => $state.composableBuilder(
-      column: $state.table.entryUnit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get favoriteNew => $state.composableBuilder(
-      column: $state.table.favoriteNew,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get foodUnit => $state.composableBuilder(
-      column: $state.table.foodUnit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get lastGraph => $state.composableBuilder(
-      column: $state.table.lastGraph,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get longDateFormat => $state.composableBuilder(
-      column: $state.table.longDateFormat,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get offLogin => $state.composableBuilder(
-      column: $state.table.offLogin,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get offPassword => $state.composableBuilder(
-      column: $state.table.offPassword,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get positiveReinforcement => $state.composableBuilder(
-      column: $state.table.positiveReinforcement,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get reminders => $state.composableBuilder(
-      column: $state.table.reminders,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get selectEntryOnSubmit => $state.composableBuilder(
-      column: $state.table.selectEntryOnSubmit,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get shortDateFormat => $state.composableBuilder(
-      column: $state.table.shortDateFormat,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get showImages => $state.composableBuilder(
-      column: $state.table.showImages,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get showOthers => $state.composableBuilder(
-      column: $state.table.showOthers,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get systemColors => $state.composableBuilder(
-      column: $state.table.systemColors,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get tabs => $state.composableBuilder(
-      column: $state.table.tabs,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get targetWeight => $state.composableBuilder(
-      column: $state.table.targetWeight,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get themeMode => $state.composableBuilder(
-      column: $state.table.themeMode,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$SettingsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableOrderingComposer(super.$state);
-  ColumnOrderings<bool> get curveLines => $state.composableBuilder(
-      column: $state.table.curveLines,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get dailyCalories => $state.composableBuilder(
-      column: $state.table.dailyCalories,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get dailyCarb => $state.composableBuilder(
-      column: $state.table.dailyCarb,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get dailyFat => $state.composableBuilder(
-      column: $state.table.dailyFat,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get dailyProtein => $state.composableBuilder(
-      column: $state.table.dailyProtein,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get diarySummary => $state.composableBuilder(
-      column: $state.table.diarySummary,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get entryUnit => $state.composableBuilder(
-      column: $state.table.entryUnit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get favoriteNew => $state.composableBuilder(
-      column: $state.table.favoriteNew,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get foodUnit => $state.composableBuilder(
-      column: $state.table.foodUnit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get lastGraph => $state.composableBuilder(
-      column: $state.table.lastGraph,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get longDateFormat => $state.composableBuilder(
-      column: $state.table.longDateFormat,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get offLogin => $state.composableBuilder(
-      column: $state.table.offLogin,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get offPassword => $state.composableBuilder(
-      column: $state.table.offPassword,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get positiveReinforcement => $state.composableBuilder(
-      column: $state.table.positiveReinforcement,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get reminders => $state.composableBuilder(
-      column: $state.table.reminders,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get selectEntryOnSubmit => $state.composableBuilder(
-      column: $state.table.selectEntryOnSubmit,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get shortDateFormat => $state.composableBuilder(
-      column: $state.table.shortDateFormat,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get showImages => $state.composableBuilder(
-      column: $state.table.showImages,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get showOthers => $state.composableBuilder(
-      column: $state.table.showOthers,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get systemColors => $state.composableBuilder(
-      column: $state.table.systemColors,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get tabs => $state.composableBuilder(
-      column: $state.table.tabs,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get targetWeight => $state.composableBuilder(
-      column: $state.table.targetWeight,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get themeMode => $state.composableBuilder(
-      column: $state.table.themeMode,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
+typedef $$SettingsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $SettingsTable,
+    Setting,
+    $$SettingsTableFilterComposer,
+    $$SettingsTableOrderingComposer,
+    $$SettingsTableAnnotationComposer,
+    $$SettingsTableCreateCompanionBuilder,
+    $$SettingsTableUpdateCompanionBuilder,
+    (Setting, BaseReferences<_$AppDatabase, $SettingsTable, Setting>),
+    Setting,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

@@ -103,7 +103,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return NavigatorPopHandler(
-      onPop: () {
+      onPopWithResult: (result) {
         if (navigatorKey.currentState!.canPop() == false) return;
         if (navigatorKey.currentState?.focusNode.hasFocus == false) return;
         navigatorKey.currentState!.pop();

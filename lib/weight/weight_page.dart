@@ -53,7 +53,7 @@ class WeightPageState extends State<WeightPage>
   Widget build(BuildContext context) {
     super.build(context);
     return NavigatorPopHandler(
-      onPop: () {
+      onPopWithResult: (value) {
         if (navigatorKey.currentState!.canPop() == false) return;
         if (navigatorKey.currentState?.focusNode.hasFocus == false) return;
         navigatorKey.currentState!.pop();

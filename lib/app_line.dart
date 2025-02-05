@@ -398,7 +398,7 @@ class _AppLineState extends State<AppLine> {
     }
 
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: text,
     );
   }
