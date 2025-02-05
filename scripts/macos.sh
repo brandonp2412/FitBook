@@ -7,9 +7,9 @@ export PATH="$FLUTTER_ROOT/bin:$PATH"
 
 set -ex
 
-cd macos
-pod install
-cd ..
+flutter build ipa
+/usr/local/bin/fastlane deliver --ipa build/ios/ipa/fit_book.ipa
+
 flutter build macos --release
 APP_NAME="build/macos/Build/Products/Release/FitBook.app"
 PACKAGE_NAME=build/macos/FitBook.pkg
@@ -25,9 +25,3 @@ xcrun productsign --sign "$INSTALLER_CERT_NAME" build/macos/unsigned.pkg "$PACKA
 rm -f build/macos/unsigned.pkg
 
 /usr/local/bin/fastlane deliver --pkg build/macos/FitBook.pkg
-
-cd ios
-pod install
-cd ..
-flutter build ipa
-/usr/local/bin/fastlane deliver --ipa build/ios/ipa/fit_book.ipa
