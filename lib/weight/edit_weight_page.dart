@@ -54,7 +54,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   Future<void> _selectTime(DateTime pickedDate) async {
     final settings = context.read<SettingsState>().value;
-    if (!settings.longDateFormat.contains('h:mm'))
+    if (!settings.longDateFormat.contains('h:mm') &&
+        !settings.longDateFormat.contains('H:mm'))
       return setState(() {
         created = pickedDate;
       });

@@ -143,7 +143,8 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   }
 
   Future<void> pickTime(DateTime pickedDate) async {
-    if (!settings.longDateFormat.contains('h:mm'))
+    if (!settings.longDateFormat.contains('h:mm') &&
+        !settings.longDateFormat.contains('H:mm'))
       return setState(() {
         created = pickedDate;
       });
