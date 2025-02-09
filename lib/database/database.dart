@@ -311,7 +311,8 @@ class AppDatabase extends _$AppDatabase {
     from25To26: (m, schema) async {
       await m.addColumn(schema.entries, schema.entries.sodiumG);
       await m.addColumn(schema.entries, schema.entries.fiberG);
-    }, from26To27: (Migrator m, Schema27 schema) async {  
+    },
+    from26To27: (Migrator m, Schema27 schema) async {
       await m.addColumn(schema.settings, schema.settings.automaticBackups);
       await m.addColumn(schema.settings, schema.settings.backupPath);
     },
