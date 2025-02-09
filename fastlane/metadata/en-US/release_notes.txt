@@ -1,5 +1,2 @@
-- Allow time picking for 24/h clocks
-- Customize launch background for dark theme
-- Allow searching for dates
-- Fix padding inconsistency on graph page
-- Revert to equidistant data points on graphs
+- Add automatic backups
+- Fix overlapping tab nav with system nav
