@@ -30,13 +30,14 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_local_notifications: ^18.0.1
   workmanager: ^0.5.2
+  drift_dev: ^2.24.0
+  test: ^1.25.8
 dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  drift_dev: ^2.15.0
   build_runner: ^2.4.8
   flutter_launcher_icons: ^0.14.3
   msix: ^3.16.7

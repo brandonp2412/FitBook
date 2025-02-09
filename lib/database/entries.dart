@@ -14,6 +14,8 @@ class Entries extends Table {
   RealColumn get proteinG => real().nullable()();
   RealColumn get fatG => real().nullable()();
   RealColumn get carbG => real().nullable()();
+  RealColumn get sodiumG => real().nullable()();
+  RealColumn get fiberG => real().nullable()();
 }
 
 class EntryWithFood {
