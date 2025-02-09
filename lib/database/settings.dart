@@ -26,9 +26,12 @@ class Settings extends Table {
   BoolColumn get showImages => boolean().withDefault(const Constant(true))();
   BoolColumn get showOthers => boolean()();
   BoolColumn get systemColors => boolean()();
+  BoolColumn get automaticBackups =>
+      boolean().withDefault(const Constant(false))();
   TextColumn get tabs => text().withDefault(
         const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"),
       )();
   RealColumn get targetWeight => real().nullable()();
   TextColumn get themeMode => text()();
+  TextColumn get backupPath => text().nullable()();
 }

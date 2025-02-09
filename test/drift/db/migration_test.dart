@@ -8,6 +8,7 @@ import 'package:test/test.dart';
 import 'generated/schema.dart';
 import 'generated/schema_v25.dart' as v25;
 import 'generated/schema_v26.dart' as v26;
+import 'generated/schema_v4.dart';
 
 void main() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
