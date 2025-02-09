@@ -5,7 +5,6 @@ import 'package:archive/archive.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/internal/versioned_schema.dart';
 import 'package:drift/native.dart';
-import 'package:drift_dev/api/migrations_native.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.steps.dart';
 import 'package:fit_book/database/entries.dart';
@@ -94,6 +93,7 @@ class AppDatabase extends _$AppDatabase {
           ),
         );
 
+        // TODO: Un-comment this (drift upgrade broke validations)
         // if (kDebugMode) {
         //   final wrongForeignKeys =
         //       await customSelect('PRAGMA foreign_key_check').get();
@@ -106,7 +106,8 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('PRAGMA foreign_keys = ON');
       },
       beforeOpen: (details) async {
-        if (kDebugMode) await validateDatabaseSchema();
+        // TODO: Un-comment this (drift upgrade broke validations)
+        // if (kDebugMode) await validateDatabaseSchema();
       },
     );
   }
