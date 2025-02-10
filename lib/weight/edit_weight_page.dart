@@ -137,7 +137,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
             children: [
               TextFormField(
                 controller: valueController,
-                keyboardType: TextInputType.number,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(labelText: 'Weight ($unit)'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,

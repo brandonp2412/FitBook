@@ -98,7 +98,7 @@ List<Widget> getDiarySettings({
                 SettingsCompanion(dailyProtein: Value(int.parse(value))),
               ),
           onTap: () => selectAll(protein),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
             labelText: 'Daily protein',
           ),
@@ -113,7 +113,7 @@ List<Widget> getDiarySettings({
                 SettingsCompanion(dailyFat: Value(int.tryParse(value)!)),
               ),
           onTap: () => selectAll(fat),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
             labelText: 'Daily fat',
           ),
@@ -128,7 +128,7 @@ List<Widget> getDiarySettings({
                 SettingsCompanion(dailyCarb: Value(int.tryParse(value))),
               ),
           onTap: () => selectAll(carb),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
             labelText: 'Daily carbs',
           ),

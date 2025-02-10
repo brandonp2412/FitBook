@@ -23,7 +23,7 @@ List<Widget> getWeightSettings({
                 ),
               ),
           onTap: () => selectAll(targetWeight),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
             labelText: 'Target weight',
           ),

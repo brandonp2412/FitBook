@@ -412,7 +412,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     controller: quantity,
                     focusNode: quantityNode,
                     decoration: const InputDecoration(label: Text("Quantity")),
-                    keyboardType: TextInputType.number,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     onTap: () => quantity.selection = TextSelection(
                       baseOffset: 0,
                       extentOffset: quantity.text.length,

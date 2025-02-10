@@ -285,7 +285,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                 label: const Text("Quantity"),
                 hintText: oldQuantities,
               ),
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               onTap: () => quantityController.selection = TextSelection(
                 baseOffset: 0,
                 extentOffset: quantityController.text.length,
