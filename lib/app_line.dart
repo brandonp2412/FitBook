@@ -251,7 +251,7 @@ class _AppLineState extends State<AppLine> {
         return material.Column(
           children: [
             SizedBox(
-              height: 300,
+              height: MediaQuery.of(context).size.height * 0.45,
               child: Padding(
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: LineChart(
