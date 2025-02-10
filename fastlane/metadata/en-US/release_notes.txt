@@ -1,5 +1,4 @@
+- Fix graph height on tablets
+- Make lines curve by default
+- Make launcher background color consistent
 - Fix automatic backups
-- Scale graph height
-- Copy dark theme surface for app icon
-- Set goal in screenshots
-- Curve lines by default
