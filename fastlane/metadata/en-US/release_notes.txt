@@ -1,2 +1,5 @@
-- Add automatic backups
-- Fix overlapping tab nav with system nav
+- Fix automatic backups
+- Scale graph height
+- Copy dark theme surface for app icon
+- Set goal in screenshots
+- Curve lines by default
