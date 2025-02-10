@@ -1,5 +1,5 @@
 Remove-Item -Path fitbook/* -Recurse -Force
-cp -r -Force //host.lan/Data/fitbook-source/* fitbook
+robocopy //host.lan/Data/fitbook-source fitbook /E /Z /R:3 /NFL /NDL /NP
 cd fitbook
 dart run msix:create
-cp -r -Force build/windows/x64/runner/Release/* //host.lan/Data/fitbook
+robocopy build/windows/x64/runner/Release //host.lan/Data/fitbook /E /Z /R:3 /NFL /NDL /NP
