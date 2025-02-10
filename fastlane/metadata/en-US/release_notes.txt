@@ -1,3 +1,4 @@
+- Update screenshots
 - Fix graph height on tablets
 - Make lines curve by default
 - Make launcher background color consistent
