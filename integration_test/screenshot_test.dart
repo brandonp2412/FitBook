@@ -235,7 +235,7 @@ Future<void> appWrapper() async {
       entryUnit: 'serving',
       foodUnit: 'grams',
       themeMode: ThemeMode.dark.toString(),
-      curveLines: false,
+      dailyCalories: Value(2000),
       diarySummary: DiarySummary.division.toString(),
       favoriteNew: false,
       positiveReinforcement: const Value(false),

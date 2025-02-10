@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 // coverage:ignore-file
 
 class Settings extends Table {
-  BoolColumn get curveLines => boolean()();
+  BoolColumn get curveLines => boolean().withDefault(const Constant(true))();
   IntColumn get dailyCalories => integer().nullable()();
   IntColumn get dailyCarb => integer().nullable()();
   IntColumn get dailyFat => integer().nullable()();

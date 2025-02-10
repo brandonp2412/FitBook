@@ -19,7 +19,6 @@ mockTests() async {
       entryUnit: 'serving',
       foodUnit: 'grams',
       themeMode: ThemeMode.system.toString(),
-      curveLines: false,
       diarySummary: DiarySummary.division.toString(),
       favoriteNew: false,
       positiveReinforcement: const Value(false),
