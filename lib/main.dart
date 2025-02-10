@@ -66,7 +66,6 @@ class App extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) => MaterialApp(
         title: 'FitBook',
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
           fontFamily: 'Manrope',
