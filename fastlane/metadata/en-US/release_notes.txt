@@ -1,5 +1,3 @@
-- Update screenshots
-- Fix graph height on tablets
-- Make lines curve by default
-- Make launcher background color consistent
-- Fix automatic backups
+- Add unit conversions when adding weights
+- Add slider for graph limit
+- Add missing decimals on iOS keyboards
