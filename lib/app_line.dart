@@ -38,7 +38,7 @@ class AppLine extends StatefulWidget {
 class _AppLineState extends State<AppLine> {
   final formatter = NumberFormat('#,##0.00');
 
-  late Stream<List<GraphData>> graphStream;
+  late Stream<List<GraphData>> stream;
   late Setting settings = context.read<SettingsState>().value;
 
   @override
@@ -87,7 +87,7 @@ class _AppLineState extends State<AppLine> {
     }
 
     if (widget.metric == AppMetric.bodyWeight)
-      graphStream = (db.weights.selectOnly()
+      stream = (db.weights.selectOnly()
             ..orderBy([
               OrderingTerm(
                 expression: db.weights.created,
@@ -124,7 +124,7 @@ class _AppLineState extends State<AppLine> {
                 .toList(),
           );
     else
-      graphStream = (db.entries.selectOnly()
+      stream = (db.entries.selectOnly()
             ..addColumns([
               db.entries.created,
               cals,
@@ -222,7 +222,7 @@ class _AppLineState extends State<AppLine> {
     }
 
     return StreamBuilder(
-      stream: graphStream,
+      stream: stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
         if (snapshot.data?.isEmpty == true)
