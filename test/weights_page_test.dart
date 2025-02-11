@@ -90,14 +90,14 @@ void main() async {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('60'), findsOne);
-      await tester.tap(find.text('60.0 kg'));
+      await tester.tap(find.text('60.00 kg'));
       await tester.pumpAndSettle();
       expect(find.text('Edit weight'), findsOne);
 
       await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
       await tester.tap(find.byTooltip('Save'));
       await tester.pumpAndSettle();
-      expect(find.text('61.0 kg'), findsOne);
+      expect(find.text('61.00 kg'), findsOne);
 
       await db.close();
     },
@@ -144,10 +144,10 @@ void main() async {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('60'), findsOne);
-      await tester.longPress(find.text('60.0 kg'));
+      await tester.longPress(find.textContaining('60'));
       await tester.pump();
-      await tester.tap(find.text('70.0 kg'));
-      await tester.tap(find.text('80.0 kg'));
+      await tester.tap(find.textContaining('70'));
+      await tester.tap(find.textContaining('80'));
       await tester.tap(find.byTooltip('Delete'));
       await tester.pump();
       expect(find.textContaining('Are you sure'), findsOne);
