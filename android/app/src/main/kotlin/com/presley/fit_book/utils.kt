@@ -43,7 +43,12 @@ fun openDb(context: Context): SQLiteDatabase? {
     Log.d("auto backup", "dbFolder=$dbFolder")
     val dbFile = File(dbFolder, "fitbook.sqlite")
     if (!dbFile.exists()) return null
-    return SQLiteDatabase.openDatabase(dbFile.absolutePath, null, 0)
+    try {
+        return SQLiteDatabase.openDatabase(dbFile.absolutePath, null, 0)
+    } catch (error: Exception) {
+        Log.e("utils@opendb:", error.toString())
+        return null
+    }
 }
 
 fun getSettings(context: Context): Pair<Boolean, String?> {
@@ -62,8 +67,7 @@ fun getSettings(context: Context): Pair<Boolean, String?> {
         cursor.close()
         db.close()
         return Pair(automaticBackups, backupPath)
-    }
-    catch (e: Exception) {
+    } catch (e: Exception) {
         return Pair(false, null)
     }
 }
