@@ -37,7 +37,7 @@ class AppLine extends StatefulWidget {
 
 class _AppLineState extends State<AppLine> {
   final formatter = NumberFormat('#,##0.00');
-  final limit = 11;
+  final limit = 30;
 
   late Stream<List<GraphData>> graphStream;
   late Setting settings = context.read<SettingsState>().value;
