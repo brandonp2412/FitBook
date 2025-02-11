@@ -5,6 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/internal/migrations.dart';
 import 'schema_v4.dart' as v4;
 import 'schema_v5.dart' as v5;
+import 'schema_v29.dart' as v29;
 import 'schema_v1.dart' as v1;
 import 'schema_v12.dart' as v12;
 import 'schema_v10.dart' as v10;
@@ -39,6 +40,8 @@ class GeneratedHelper implements SchemaInstantiationHelper {
         return v4.DatabaseAtV4(db);
       case 5:
         return v5.DatabaseAtV5(db);
+      case 29:
+        return v29.DatabaseAtV29(db);
       case 1:
         return v1.DatabaseAtV1(db);
       case 12:
@@ -121,6 +124,7 @@ class GeneratedHelper implements SchemaInstantiationHelper {
     25,
     26,
     27,
-    28
+    28,
+    29
   ];
 }

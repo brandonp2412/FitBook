@@ -32,6 +32,7 @@ class Settings extends Table {
         const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"),
       )();
   RealColumn get targetWeight => real().nullable()();
+  IntColumn get limit => integer().withDefault(const Constant(30))();
   TextColumn get themeMode => text()();
   TextColumn get backupPath => text().nullable()();
 }

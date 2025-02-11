@@ -37,7 +37,6 @@ class AppLine extends StatefulWidget {
 
 class _AppLineState extends State<AppLine> {
   final formatter = NumberFormat('#,##0.00');
-  final limit = 30;
 
   late Stream<List<GraphData>> graphStream;
   late Setting settings = context.read<SettingsState>().value;
@@ -111,7 +110,7 @@ class _AppLineState extends State<AppLine> {
                 widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
               ),
             )
-            ..limit(limit))
+            ..limit(settings.limit))
           .watch()
           .map(
             (results) => results
@@ -150,7 +149,7 @@ class _AppLineState extends State<AppLine> {
               ),
             )
             ..groupBy([createdCol])
-            ..limit(limit))
+            ..limit(settings.limit))
           .watch()
           .map((results) {
         return results.map((result) {
@@ -251,7 +250,7 @@ class _AppLineState extends State<AppLine> {
         return material.Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: MediaQuery.of(context).size.height * 0.35,
               child: Padding(
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: LineChart(

@@ -4,6 +4,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -153,6 +154,33 @@ class GraphPageState extends State<GraphPage>
                     trailing: const Icon(Icons.calendar_today),
                     onTap: () => _selectEnd(),
                   ),
+                ),
+              ],
+            ),
+            material.Column(
+              children: [
+                material.Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    "Limit (${settings.limit})",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                Slider(
+                  value: settings.limit.toDouble(),
+                  inactiveColor: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.24),
+                  min: 10,
+                  max: 100,
+                  onChanged: (value) {
+                    db.settings.update().write(
+                          SettingsCompanion(
+                            limit: Value(value.toInt()),
+                          ),
+                        );
+                  },
                 ),
               ],
             ),
