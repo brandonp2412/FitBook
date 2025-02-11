@@ -74,7 +74,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             children: [
               ListTile(
                 title: Text(
-                  "${weight.amount} ${weight.unit}",
+                  "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
                 ),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(weight.created),

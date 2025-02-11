@@ -322,8 +322,11 @@ class AppDatabase extends _$AppDatabase {
     from28To29: (Migrator m, Schema29 schema) async {
       await m.addColumn(schema.settings, schema.settings.limit);
     },
+    from29To30: (Migrator m, Schema30 schema) async {
+      await m.addColumn(schema.settings, schema.settings.convertWeight);
+    },
   );
 
   @override
-  int get schemaVersion => 29;
+  int get schemaVersion => 30;
 }

@@ -35,4 +35,5 @@ class Settings extends Table {
   IntColumn get limit => integer().withDefault(const Constant(30))();
   TextColumn get themeMode => text()();
   TextColumn get backupPath => text().nullable()();
+  TextColumn get convertWeight => text().nullable()();
 }

@@ -28,15 +28,37 @@ class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
 
   String unit = 'kg';
+  String convertTo = 'kg';
   DateTime created = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    valueController.text = widget.weight.amount.value.toString();
-    unit = widget.weight.unit.value;
     selectAll(valueController);
     created = widget.weight.created.value;
+    final settings = context.read<SettingsState>().value;
+    if (settings.convertWeight != null && !widget.weight.id.present)
+      setState(() {
+        convertTo = settings.convertWeight!;
+        valueController.text = widget.weight.amount.value.toStringAsFixed(2);
+
+        if (convertTo == 'kg') {
+          valueController.text =
+              (widget.weight.amount.value * 2.20462262185).toStringAsFixed(2);
+          unit = 'lb';
+        }
+
+        if (convertTo == 'lb') {
+          valueController.text =
+              (widget.weight.amount.value / 2.20462262185).toStringAsFixed(2);
+          unit = 'kg';
+        }
+      });
+    else
+      setState(() {
+        unit = widget.weight.unit.value;
+        valueController.text = widget.weight.amount.value.toStringAsFixed(2);
+      });
   }
 
   Future<void> _selectDate() async {
@@ -78,9 +100,18 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
   }
 
-  _save() async {
+  save() async {
     Navigator.of(context).pop();
-    final amount = double.parse(valueController.text);
+    var amount = double.parse(valueController.text);
+    if (unit == 'kg' && convertTo == 'lb') {
+      amount *= 2.20462262185;
+      unit = 'lb';
+    }
+    if (unit == 'lb' && convertTo == 'kg') {
+      amount /= 2.20462262185;
+      unit = 'kg';
+    }
+
     if (widget.weight.id.present)
       (db.weights.update()..where((u) => u.id.equals(widget.weight.id.value)))
           .write(
@@ -144,12 +175,12 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     value!.isEmpty ? 'Please enter weight' : null,
                 autofocus: !widget.weight.id.present,
                 onTap: () => selectAll(valueController),
-                onFieldSubmitted: (value) => _save(),
+                onFieldSubmitted: (value) => save(),
               ),
               TextFormField(
                 controller: TextEditingController(
                   text:
-                      "${widget.weight.amount.value} ${widget.weight.unit.value}",
+                      "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
                 ),
                 decoration: const InputDecoration(labelText: 'Last weight'),
                 enabled: false,
@@ -162,6 +193,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     : const Icon(Icons.square_foot),
                 onTap: () => setState(() {
                   unit = unit == 'kg' ? 'lb' : 'kg';
+                  convertTo = unit;
                 }),
                 trailing: Switch(
                   value: unit == 'kg',
@@ -170,7 +202,41 @@ class _EditWeightPageState extends State<EditWeightPage> {
                       unit = 'kg';
                     else
                       unit = 'lb';
+                    convertTo = unit;
                   }),
+                ),
+              ),
+              ListTile(
+                title: convertTo == unit
+                    ? Text("Keep unit as $unit")
+                    : Text("Convert to $convertTo"),
+                leading: const Icon(Icons.conveyor_belt),
+                onTap: () {
+                  setState(() {
+                    convertTo = convertTo == 'kg' ? 'lb' : 'kg';
+                  });
+                  db.settings.update().write(
+                        SettingsCompanion(
+                          convertWeight: Value(convertTo),
+                        ),
+                      );
+                },
+                trailing: Switch(
+                  value: convertTo == 'kg',
+                  onChanged: (value) {
+                    setState(() {
+                      if (value)
+                        convertTo = 'kg';
+                      else
+                        convertTo = 'lb';
+                    });
+
+                    db.settings.update().write(
+                          SettingsCompanion(
+                            convertWeight: Value(convertTo),
+                          ),
+                        );
+                  },
                 ),
               ),
               ListTile(
@@ -188,7 +254,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _save,
+        onPressed: save,
         tooltip: "Save",
         child: const Icon(Icons.save),
       ),
