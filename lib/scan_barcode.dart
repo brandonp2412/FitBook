@@ -89,9 +89,7 @@ class _ScanBarcodeState extends State<ScanBarcode> {
       );
     } else if (widget.text == true)
       return TextButton.icon(
-        label: widget.value?.isNotEmpty == true
-            ? Text(widget.value!)
-            : const Text("Scan barcode"),
+        label: const Text("Scan barcode"),
         onPressed: scan,
         icon: const Icon(Icons.barcode_reader),
       );

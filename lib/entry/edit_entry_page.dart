@@ -31,6 +31,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
   final quantityNode = FocusNode();
+  final barcode = TextEditingController();
 
   late var settings = context.read<SettingsState>().value;
   late var unit = settings.entryUnit;
@@ -39,7 +40,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
   bool foodDirty = false;
   Food? selectedFood;
   TextEditingController? nameController;
-  String? barcode;
   String? imageFile;
   final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
@@ -65,7 +65,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
         setState(() {
           imageFile = food.imageFile;
-          barcode = food.barcode;
+          barcode.text = food.barcode ?? "";
           nameController?.text = food.name;
           selectedFood = food;
           calories.text = formatter.format(entry.kCalories);
@@ -116,7 +116,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           servingSize: Value(formatter.tryParse(quantity.text)?.toDouble()),
           servingUnit: Value(unit),
           created: Value(DateTime.now()),
-          barcode: Value(barcode),
+          barcode: Value(barcode.text),
           imageFile: Value(imageFile),
         ),
       ));
@@ -257,7 +257,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     setState(() {
-      barcode = food.barcode ?? '';
+      barcode.text = food.barcode ?? '';
       calories.text = formatter.format(entry.kCalories.value);
       protein.text = formatter.format(entry.proteinG.value);
       kilojoules.text = formatter.format((entry.kCalories.value ?? 0) * 4.184);
@@ -559,6 +559,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
               onSubmitted: (value) => save(),
             ),
+            if (Platform.isAndroid || Platform.isIOS)
+              TextField(
+                controller: barcode,
+                decoration: const InputDecoration(
+                  labelText: 'Barcode',
+                ),
+              ),
             ListTile(
               title: const Text('Created date'),
               subtitle: Text(
@@ -582,10 +589,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
             if (Platform.isAndroid || Platform.isIOS)
               ScanBarcode(
                 text: true,
-                value: barcode,
+                value: barcode.text,
                 onBarcode: (value) {
                   setState(() {
-                    barcode = value;
+                    barcode.text = value;
                     foodDirty = true;
                   });
                   toast(context, 'Barcode not found. Save to insert.');
@@ -593,7 +600,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 onFood: (food) {
                   setState(() {
                     imageFile = food.imageFile;
-                    barcode = food.barcode;
+                    barcode.text = food.barcode ?? "";
                     nameController?.text = food.name;
                     selectedFood = food;
                     protein.text = formatter.format(food.proteinG);

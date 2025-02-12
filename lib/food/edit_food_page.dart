@@ -27,9 +27,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
   late String servingUnit;
   String? imageFile;
-  String? barcode;
   final formatter = NumberFormat('#,##0.00');
 
+  final barcodeController = TextEditingController();
   final nameController = TextEditingController();
   final foodGroupController = TextEditingController();
   final smallImageController = TextEditingController();
@@ -169,7 +169,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         .getSingle()
         .then((food) {
       setState(() {
-        barcode = food.barcode ?? '';
+        barcodeController.text = food.barcode ?? "";
         servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
         smallImageController.text = food.smallImage ?? '';
@@ -439,7 +439,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameController.text,
-      barcode: Value(barcode),
+      barcode: Value(barcodeController.text),
       smallImage: Value(smallImageController.text),
       bigImage: Value(bigImageController.text),
       imageFile: Value(imageFile),
@@ -788,6 +788,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
+            if (Platform.isAndroid || Platform.isIOS)
+              TextField(
+                controller: barcodeController,
+                decoration: const InputDecoration(
+                  labelText: 'Barcode',
+                ),
+              ),
             ListTile(
               title: const Text('Show other fields'),
               onTap: () => db.settings.update().write(
@@ -800,23 +807,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     ),
               ),
             ),
-            if (imageFile?.isNotEmpty == true && settings.showImages)
-              Image.file(
-                File(imageFile!),
-                errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                  onPressed: () {},
-                  label: const Text('Image error'),
-                  icon: const Icon(Icons.error),
-                ),
-              ),
-            if (Platform.isAndroid || Platform.isIOS)
+            if (Platform.isIOS || Platform.isAndroid)
               ScanBarcode(
                 text: true,
-                value: barcode,
+                value: barcodeController.text,
                 onBarcode: (value) {
-                  setState(() {
-                    barcode = value;
-                  });
+                  barcodeController.text = value;
                   toast(context, 'Barcode not found. Save to insert.');
                 },
                 onFood: (food) {
@@ -828,6 +824,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     ),
                   );
                 },
+              ),
+            if (imageFile?.isNotEmpty == true && settings.showImages)
+              Image.file(
+                File(imageFile!),
+                errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                  onPressed: () {},
+                  label: const Text('Image error'),
+                  icon: const Icon(Icons.error),
+                ),
               ),
             if (settings.showImages) ...[
               const SizedBox(height: 8),
