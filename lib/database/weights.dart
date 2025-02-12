@@ -7,4 +7,5 @@ class Weights extends Table {
   DateTimeColumn get created => dateTime()();
   TextColumn get unit => text()();
   RealColumn get amount => real()();
+  TextColumn get image => text().nullable()();
 }

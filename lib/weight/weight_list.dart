@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -69,10 +71,22 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
         itemBuilder: (context, index) {
           final weight = widget.weights[index];
           final isToday = isSameDay(weight.created, now);
+          Widget? leading;
+
+          if (settings.showImages && weight.image?.isNotEmpty == true)
+            leading = Image.file(
+              File(weight.image!),
+              errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                onPressed: () {},
+                label: const Text('Image error'),
+                icon: const Icon(Icons.error),
+              ),
+            );
 
           return Column(
             children: [
               ListTile(
+                leading: leading,
                 title: Text(
                   "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
                 ),

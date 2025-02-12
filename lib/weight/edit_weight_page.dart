@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -29,6 +31,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   String unit = 'kg';
   String convertTo = 'kg';
+  String? image;
   DateTime created = DateTime.now();
 
   @override
@@ -38,6 +41,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     setState(() {
       unit = widget.weight.unit.value;
       created = widget.weight.created.value;
+      image = widget.weight.image.value;
     });
 
     if (widget.weight.id.present)
@@ -104,6 +108,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
           unit: Value(unit),
           amount: Value(amount),
           created: Value(created),
+          image: Value(image),
         ),
       );
     else
@@ -112,6 +117,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
           created: DateTime.now(),
           unit: unit,
           amount: amount,
+          image: Value(image),
         ),
       );
 
@@ -132,6 +138,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsState>().value;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.weight.id.present ? "Edit weight" : "Add weight"),
@@ -234,6 +242,39 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 trailing: const Icon(Icons.calendar_today),
                 onTap: () => _selectDate(),
               ),
+              if (image?.isNotEmpty == true && settings.showImages)
+                Image.file(
+                  File(image!),
+                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                    onPressed: () {},
+                    label: const Text('Image error'),
+                    icon: const Icon(Icons.error),
+                  ),
+                ),
+              if (settings.showImages) ...[
+                const SizedBox(height: 8),
+                TextButton.icon(
+                  icon: const Icon(Icons.image),
+                  label: const Text('Set image'),
+                  onPressed: () async {
+                    FilePickerResult? result = await FilePicker.platform
+                        .pickFiles(type: FileType.image);
+                    final path = result?.files.single.path;
+                    if (path == null) return;
+                    setState(() {
+                      image = path;
+                    });
+                  },
+                ),
+              ],
+              if (image != null && settings.showImages)
+                TextButton.icon(
+                  icon: const Icon(Icons.delete),
+                  label: const Text("Remove image"),
+                  onPressed: () => setState(() {
+                    image = null;
+                  }),
+                ),
             ],
           ),
         ),
