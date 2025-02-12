@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -69,7 +70,13 @@ class _FoodListState extends State<FoodList> {
             if (food.imageFile.value?.isNotEmpty == true)
               image = Image.file(File(food.imageFile.value!));
             else if (food.smallImage.value?.isNotEmpty == true)
-              image = Image.network(food.smallImage.value!);
+              image = material.SizedBox(
+                height: 80,
+                width: 50,
+                child: CachedNetworkImage(
+                  imageUrl: food.smallImage.value!,
+                ),
+              );
           }
 
           return material.Column(
