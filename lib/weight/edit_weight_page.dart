@@ -35,28 +35,13 @@ class _EditWeightPageState extends State<EditWeightPage> {
   void initState() {
     super.initState();
     selectAll(valueController);
-    created = widget.weight.created.value;
-    final settings = context.read<SettingsState>().value;
-    if (settings.convertWeight != null && !widget.weight.id.present)
-      setState(() {
-        convertTo = settings.convertWeight!;
-        valueController.text = widget.weight.amount.value.toStringAsFixed(2);
+    setState(() {
+      unit = widget.weight.unit.value;
+      created = widget.weight.created.value;
+    });
 
-        if (convertTo == 'kg') {
-          valueController.text =
-              (widget.weight.amount.value * 2.20462262185).toStringAsFixed(2);
-          unit = 'lb';
-        }
-
-        if (convertTo == 'lb') {
-          valueController.text =
-              (widget.weight.amount.value / 2.20462262185).toStringAsFixed(2);
-          unit = 'kg';
-        }
-      });
-    else
+    if (widget.weight.id.present)
       setState(() {
-        unit = widget.weight.unit.value;
         valueController.text = widget.weight.amount.value.toStringAsFixed(2);
       });
   }
