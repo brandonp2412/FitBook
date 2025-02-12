@@ -1,3 +1,4 @@
-- Add unit conversions when adding weights
-- Add slider for graph limit
-- Add missing decimals on iOS keyboards
+- Add manual editing of barcode
+- Zoop animation for checkboxes on select
+- Add images to weight
+- Cache images on food & diary
