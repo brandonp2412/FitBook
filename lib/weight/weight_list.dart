@@ -90,6 +90,14 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                 title: Text(
                   "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
                 ),
+                trailing: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: widget.selected.contains(weight.id) ? 1.0 : 0.0,
+                  child: Checkbox(
+                    value: widget.selected.contains(weight.id),
+                    onChanged: (_) => widget.onSelect(weight.id),
+                  ),
+                ),
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(weight.created),
                   style: isToday

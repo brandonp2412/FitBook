@@ -57,6 +57,7 @@ class _FoodListState extends State<FoodList> {
         itemBuilder: (context, index) {
           final food = widget.foods[index];
           final previous = index > 0 ? widget.foods[index - 1] : null;
+          final selected = widget.selected.contains(food.id.value);
           final showDivider = previous != null &&
               (food.favorite.value ?? false) !=
                   (previous.favorite.value ?? false);
@@ -94,12 +95,33 @@ class _FoodListState extends State<FoodList> {
                 subtitle: Text(
                   "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
                 ),
-                trailing: Text(
-                  "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
-                  style: const TextStyle(fontSize: 16),
+                trailing: Stack(
+                  children: [
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 0.0 : 1.0,
+                      child: Visibility(
+                        visible: !selected,
+                        child: Text(
+                          "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 1.0 : 0.0,
+                      child: Visibility(
+                        visible: selected,
+                        child: Checkbox(
+                          value: selected,
+                          onChanged: (_) => widget.onSelect(food.id.value),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 leading: image,
-                selected: widget.selected.contains(food.id.value),
                 onLongPress: () => widget.onSelect(food.id.value),
                 onTap: () {
                   if (widget.selected.isEmpty)

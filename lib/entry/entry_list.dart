@@ -61,6 +61,7 @@ class _EntryListState extends State<EntryList> {
           final foodName = entryFood.foodName;
           final entry = entryFood.entry;
           final previous = index > 0 ? widget.entryFoods[index - 1] : null;
+          final selected = widget.selected.contains(entry.id);
           final showDivider = previous != null &&
               !isSameDay(
                 previous.entry.created,
@@ -104,11 +105,33 @@ class _EntryListState extends State<EntryList> {
                 subtitle: Text(
                   DateFormat(settings.longDateFormat).format(entry.created),
                 ),
-                trailing: Text(
-                  "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
-                  style: const TextStyle(fontSize: 16),
+                trailing: Stack(
+                  children: [
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 0.0 : 1.0,
+                      child: Visibility(
+                        visible: !selected,
+                        child: Text(
+                          "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 1.0 : 0.0,
+                      child: Visibility(
+                        visible: selected,
+                        child: Checkbox(
+                          value: selected,
+                          onChanged: (_) => widget.onSelect(entry.id),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                selected: widget.selected.contains(entry.id),
+                selected: selected,
                 onLongPress: () => widget.onSelect(entry.id),
                 onTap: () {
                   if (widget.selected.isEmpty)
