@@ -23,6 +23,7 @@ class Settings extends Table {
   BoolColumn get reminders => boolean().withDefault(const Constant(false))();
   BoolColumn get selectEntryOnSubmit => boolean()();
   TextColumn get shortDateFormat => text()();
+  TextColumn get fields => text().nullable()();
   BoolColumn get showImages => boolean().withDefault(const Constant(true))();
   BoolColumn get showOthers => boolean()();
   BoolColumn get systemColors => boolean()();

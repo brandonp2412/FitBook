@@ -1,258 +1,138 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-part of 'database.dart';
-
+// dart format width=80
+// GENERATED CODE, DO NOT EDIT BY HAND.
 // ignore_for_file: type=lint
-class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
+import 'package:drift/drift.dart';
+
+class Foods extends Table with TableInfo<Foods, FoodsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $FoodsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _barcodeMeta =
-      const VerificationMeta('barcode');
-  @override
+  Foods(this.attachedDatabase, [this._alias]);
   late final GeneratedColumn<String> barcode = GeneratedColumn<String>(
       'barcode', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _addedSugarGMeta =
-      const VerificationMeta('addedSugarG');
-  @override
   late final GeneratedColumn<double> addedSugarG = GeneratedColumn<double>(
       'added_sugar_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _alanineMgMeta =
-      const VerificationMeta('alanineMg');
-  @override
   late final GeneratedColumn<double> alanineMg = GeneratedColumn<double>(
       'alanine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _alcoholGMeta =
-      const VerificationMeta('alcoholG');
-  @override
   late final GeneratedColumn<double> alcoholG = GeneratedColumn<double>(
       'alcohol_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _arginineMgMeta =
-      const VerificationMeta('arginineMg');
-  @override
   late final GeneratedColumn<double> arginineMg = GeneratedColumn<double>(
       'arginine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _asparticAcidMgMeta =
-      const VerificationMeta('asparticAcidMg');
-  @override
   late final GeneratedColumn<double> asparticAcidMg = GeneratedColumn<double>(
       'aspartic_acid_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _betaineMgMeta =
-      const VerificationMeta('betaineMg');
-  @override
   late final GeneratedColumn<double> betaineMg = GeneratedColumn<double>(
       'betaine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _bigImageMeta =
-      const VerificationMeta('bigImage');
-  @override
   late final GeneratedColumn<String> bigImage = GeneratedColumn<String>(
       'big_image', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _biotinB7McgMeta =
-      const VerificationMeta('biotinB7Mcg');
-  @override
   late final GeneratedColumn<double> biotinB7Mcg = GeneratedColumn<double>(
       'biotin_b7_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _caffeineMgMeta =
-      const VerificationMeta('caffeineMg');
-  @override
   late final GeneratedColumn<double> caffeineMg = GeneratedColumn<double>(
       'caffeine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _calciumMgMeta =
-      const VerificationMeta('calciumMg');
-  @override
   late final GeneratedColumn<double> calciumMg = GeneratedColumn<double>(
       'calcium_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _caloriesMeta =
-      const VerificationMeta('calories');
-  @override
   late final GeneratedColumn<double> calories = GeneratedColumn<double>(
       'calories', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _carbohydrateGMeta =
-      const VerificationMeta('carbohydrateG');
-  @override
   late final GeneratedColumn<double> carbohydrateG = GeneratedColumn<double>(
       'carbohydrate_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _caroteneAlphaMcgMeta =
-      const VerificationMeta('caroteneAlphaMcg');
-  @override
   late final GeneratedColumn<double> caroteneAlphaMcg = GeneratedColumn<double>(
       'carotene_alpha_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _caroteneBetaMcgMeta =
-      const VerificationMeta('caroteneBetaMcg');
-  @override
   late final GeneratedColumn<double> caroteneBetaMcg = GeneratedColumn<double>(
       'carotene_beta_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _chlorineMgMeta =
-      const VerificationMeta('chlorineMg');
-  @override
   late final GeneratedColumn<double> chlorineMg = GeneratedColumn<double>(
       'chlorine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _cholesterolMgMeta =
-      const VerificationMeta('cholesterolMg');
-  @override
   late final GeneratedColumn<double> cholesterolMg = GeneratedColumn<double>(
       'cholesterol_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _cholineMgMeta =
-      const VerificationMeta('cholineMg');
-  @override
   late final GeneratedColumn<double> cholineMg = GeneratedColumn<double>(
       'choline_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _copperCuMgMeta =
-      const VerificationMeta('copperCuMg');
-  @override
   late final GeneratedColumn<double> copperCuMg = GeneratedColumn<double>(
       'copper_cu_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _createdMeta =
-      const VerificationMeta('created');
-  @override
   late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
       'created', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _cystineMgMeta =
-      const VerificationMeta('cystineMg');
-  @override
   late final GeneratedColumn<double> cystineMg = GeneratedColumn<double>(
       'cystine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _dihydrophylloquinoneMcgMeta =
-      const VerificationMeta('dihydrophylloquinoneMcg');
-  @override
   late final GeneratedColumn<double> dihydrophylloquinoneMcg =
       GeneratedColumn<double>('dihydrophylloquinone_mcg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fatGMeta = const VerificationMeta('fatG');
-  @override
   late final GeneratedColumn<double> fatG = GeneratedColumn<double>(
       'fat_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fattyAcidsTotalMonounsaturatedMgMeta =
-      const VerificationMeta('fattyAcidsTotalMonounsaturatedMg');
-  @override
   late final GeneratedColumn<double> fattyAcidsTotalMonounsaturatedMg =
       GeneratedColumn<double>(
           'fatty_acids_total_monounsaturated_mg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fattyAcidsTotalPolyunsaturatedMgMeta =
-      const VerificationMeta('fattyAcidsTotalPolyunsaturatedMg');
-  @override
   late final GeneratedColumn<double> fattyAcidsTotalPolyunsaturatedMg =
       GeneratedColumn<double>(
           'fatty_acids_total_polyunsaturated_mg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _favoriteMeta =
-      const VerificationMeta('favorite');
-  @override
   late final GeneratedColumn<bool> favorite = GeneratedColumn<bool>(
       'favorite', aliasedName, true,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("favorite" IN (0, 1))'));
-  static const VerificationMeta _fiberGMeta = const VerificationMeta('fiberG');
-  @override
   late final GeneratedColumn<double> fiberG = GeneratedColumn<double>(
       'fiber_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fluorideFMcgMeta =
-      const VerificationMeta('fluorideFMcg');
-  @override
   late final GeneratedColumn<double> fluorideFMcg = GeneratedColumn<double>(
       'fluoride_f_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _folateB9McgMeta =
-      const VerificationMeta('folateB9Mcg');
-  @override
   late final GeneratedColumn<double> folateB9Mcg = GeneratedColumn<double>(
       'folate_b9_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _folateDfeMcgMeta =
-      const VerificationMeta('folateDfeMcg');
-  @override
   late final GeneratedColumn<double> folateDfeMcg = GeneratedColumn<double>(
       'folate_dfe_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _folicAcidMcgMeta =
-      const VerificationMeta('folicAcidMcg');
-  @override
   late final GeneratedColumn<double> folicAcidMcg = GeneratedColumn<double>(
       'folic_acid_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _foodFolateMcgMeta =
-      const VerificationMeta('foodFolateMcg');
-  @override
   late final GeneratedColumn<double> foodFolateMcg = GeneratedColumn<double>(
       'food_folate_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _foodGroupMeta =
-      const VerificationMeta('foodGroup');
-  @override
   late final GeneratedColumn<String> foodGroup = GeneratedColumn<String>(
       'food_group', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _fructoseGMeta =
-      const VerificationMeta('fructoseG');
-  @override
   late final GeneratedColumn<double> fructoseG = GeneratedColumn<double>(
       'fructose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _galactoseGMeta =
-      const VerificationMeta('galactoseG');
-  @override
   late final GeneratedColumn<double> galactoseG = GeneratedColumn<double>(
       'galactose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _glucoseDextroseGMeta =
-      const VerificationMeta('glucoseDextroseG');
-  @override
   late final GeneratedColumn<double> glucoseDextroseG = GeneratedColumn<double>(
       'glucose_dextrose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _glutamicAcidMgMeta =
-      const VerificationMeta('glutamicAcidMg');
-  @override
   late final GeneratedColumn<double> glutamicAcidMg = GeneratedColumn<double>(
       'glutamic_acid_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _glycineMgMeta =
-      const VerificationMeta('glycineMg');
-  @override
   late final GeneratedColumn<double> glycineMg = GeneratedColumn<double>(
       'glycine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _histidineMgMeta =
-      const VerificationMeta('histidineMg');
-  @override
   late final GeneratedColumn<double> histidineMg = GeneratedColumn<double>(
       'histidine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _hydroxyprolineMgMeta =
-      const VerificationMeta('hydroxyprolineMg');
-  @override
   late final GeneratedColumn<double> hydroxyprolineMg = GeneratedColumn<double>(
       'hydroxyproline_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
@@ -260,508 +140,258 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _imageFileMeta =
-      const VerificationMeta('imageFile');
-  @override
   late final GeneratedColumn<String> imageFile = GeneratedColumn<String>(
       'image_file', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _insolubleFiberGMeta =
-      const VerificationMeta('insolubleFiberG');
-  @override
   late final GeneratedColumn<double> insolubleFiberG = GeneratedColumn<double>(
       'insoluble_fiber_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _ironFeMgMeta =
-      const VerificationMeta('ironFeMg');
-  @override
   late final GeneratedColumn<double> ironFeMg = GeneratedColumn<double>(
       'iron_fe_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _isoleucineMgMeta =
-      const VerificationMeta('isoleucineMg');
-  @override
   late final GeneratedColumn<double> isoleucineMg = GeneratedColumn<double>(
       'isoleucine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _lactoseGMeta =
-      const VerificationMeta('lactoseG');
-  @override
   late final GeneratedColumn<double> lactoseG = GeneratedColumn<double>(
       'lactose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _leucineMgMeta =
-      const VerificationMeta('leucineMg');
-  @override
   late final GeneratedColumn<double> leucineMg = GeneratedColumn<double>(
       'leucine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _luteinZeaxanthinMcgMeta =
-      const VerificationMeta('luteinZeaxanthinMcg');
-  @override
   late final GeneratedColumn<double> luteinZeaxanthinMcg =
       GeneratedColumn<double>('lutein_zeaxanthin_mcg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _lycopeneMcgMeta =
-      const VerificationMeta('lycopeneMcg');
-  @override
   late final GeneratedColumn<double> lycopeneMcg = GeneratedColumn<double>(
       'lycopene_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _lysineMgMeta =
-      const VerificationMeta('lysineMg');
-  @override
   late final GeneratedColumn<double> lysineMg = GeneratedColumn<double>(
       'lysine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _magnesiumMgMeta =
-      const VerificationMeta('magnesiumMg');
-  @override
   late final GeneratedColumn<double> magnesiumMg = GeneratedColumn<double>(
       'magnesium_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _maltoseGMeta =
-      const VerificationMeta('maltoseG');
-  @override
   late final GeneratedColumn<double> maltoseG = GeneratedColumn<double>(
       'maltose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _manganeseMgMeta =
-      const VerificationMeta('manganeseMg');
-  @override
   late final GeneratedColumn<double> manganeseMg = GeneratedColumn<double>(
       'manganese_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _menaquinone4McgMeta =
-      const VerificationMeta('menaquinone4Mcg');
-  @override
   late final GeneratedColumn<double> menaquinone4Mcg = GeneratedColumn<double>(
       'menaquinone_4_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _methionineMgMeta =
-      const VerificationMeta('methionineMg');
-  @override
   late final GeneratedColumn<double> methionineMg = GeneratedColumn<double>(
       'methionine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _molybdenumMcgMeta =
-      const VerificationMeta('molybdenumMcg');
-  @override
   late final GeneratedColumn<double> molybdenumMcg = GeneratedColumn<double>(
       'molybdenum_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _netCarbsGMeta =
-      const VerificationMeta('netCarbsG');
-  @override
   late final GeneratedColumn<double> netCarbsG = GeneratedColumn<double>(
       'net_carbs_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _niacinB3MgMeta =
-      const VerificationMeta('niacinB3Mg');
-  @override
   late final GeneratedColumn<double> niacinB3Mg = GeneratedColumn<double>(
       'niacin_b3_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _omega3sMgMeta =
-      const VerificationMeta('omega3sMg');
-  @override
   late final GeneratedColumn<double> omega3sMg = GeneratedColumn<double>(
       'omega_3s_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _omega6sMgMeta =
-      const VerificationMeta('omega6sMg');
-  @override
   late final GeneratedColumn<double> omega6sMg = GeneratedColumn<double>(
       'omega_6s_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _pantothenicAcidB5MgMeta =
-      const VerificationMeta('pantothenicAcidB5Mg');
-  @override
   late final GeneratedColumn<double> pantothenicAcidB5Mg =
       GeneratedColumn<double>('pantothenic_acid_b5_mg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _phenylalanineMgMeta =
-      const VerificationMeta('phenylalanineMg');
-  @override
   late final GeneratedColumn<double> phenylalanineMg = GeneratedColumn<double>(
       'phenylalanine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _phosphorusPMgMeta =
-      const VerificationMeta('phosphorusPMg');
-  @override
   late final GeneratedColumn<double> phosphorusPMg = GeneratedColumn<double>(
       'phosphorus_p_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _potassiumKMgMeta =
-      const VerificationMeta('potassiumKMg');
-  @override
   late final GeneratedColumn<double> potassiumKMg = GeneratedColumn<double>(
       'potassium_k_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _pralScoreMeta =
-      const VerificationMeta('pralScore');
-  @override
   late final GeneratedColumn<double> pralScore = GeneratedColumn<double>(
       'pral_score', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _prolineMgMeta =
-      const VerificationMeta('prolineMg');
-  @override
   late final GeneratedColumn<double> prolineMg = GeneratedColumn<double>(
       'proline_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _proteinGMeta =
-      const VerificationMeta('proteinG');
-  @override
   late final GeneratedColumn<double> proteinG = GeneratedColumn<double>(
       'protein_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _retinolMcgMeta =
-      const VerificationMeta('retinolMcg');
-  @override
   late final GeneratedColumn<double> retinolMcg = GeneratedColumn<double>(
       'retinol_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _riboflavinB2MgMeta =
-      const VerificationMeta('riboflavinB2Mg');
-  @override
   late final GeneratedColumn<double> riboflavinB2Mg = GeneratedColumn<double>(
       'riboflavin_b2_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _saturatedFatsGMeta =
-      const VerificationMeta('saturatedFatsG');
-  @override
   late final GeneratedColumn<double> saturatedFatsG = GeneratedColumn<double>(
       'saturated_fats_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _seleniumSeMcgMeta =
-      const VerificationMeta('seleniumSeMcg');
-  @override
   late final GeneratedColumn<double> seleniumSeMcg = GeneratedColumn<double>(
       'selenium_se_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _serineMgMeta =
-      const VerificationMeta('serineMg');
-  @override
   late final GeneratedColumn<double> serineMg = GeneratedColumn<double>(
       'serine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription1GMeta =
-      const VerificationMeta('servingDescription1G');
-  @override
   late final GeneratedColumn<String> servingDescription1G =
       GeneratedColumn<String>('serving_description_1_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription2GMeta =
-      const VerificationMeta('servingDescription2G');
-  @override
   late final GeneratedColumn<String> servingDescription2G =
       GeneratedColumn<String>('serving_description_2_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription3GMeta =
-      const VerificationMeta('servingDescription3G');
-  @override
   late final GeneratedColumn<String> servingDescription3G =
       GeneratedColumn<String>('serving_description_3_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription4GMeta =
-      const VerificationMeta('servingDescription4G');
-  @override
   late final GeneratedColumn<String> servingDescription4G =
       GeneratedColumn<String>('serving_description_4_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription5GMeta =
-      const VerificationMeta('servingDescription5G');
-  @override
   late final GeneratedColumn<String> servingDescription5G =
       GeneratedColumn<String>('serving_description_5_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription6GMeta =
-      const VerificationMeta('servingDescription6G');
-  @override
   late final GeneratedColumn<String> servingDescription6G =
       GeneratedColumn<String>('serving_description_6_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription7GMeta =
-      const VerificationMeta('servingDescription7G');
-  @override
   late final GeneratedColumn<String> servingDescription7G =
       GeneratedColumn<String>('serving_description_7_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription8GMeta =
-      const VerificationMeta('servingDescription8G');
-  @override
   late final GeneratedColumn<String> servingDescription8G =
       GeneratedColumn<String>('serving_description_8_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingDescription9GMeta =
-      const VerificationMeta('servingDescription9G');
-  @override
   late final GeneratedColumn<String> servingDescription9G =
       GeneratedColumn<String>('serving_description_9_g', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingSizeMeta =
-      const VerificationMeta('servingSize');
-  @override
   late final GeneratedColumn<double> servingSize = GeneratedColumn<double>(
       'serving_size', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingUnitMeta =
-      const VerificationMeta('servingUnit');
-  @override
   late final GeneratedColumn<String> servingUnit = GeneratedColumn<String>(
       'serving_unit', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight1GMeta =
-      const VerificationMeta('servingWeight1G');
-  @override
   late final GeneratedColumn<double> servingWeight1G = GeneratedColumn<double>(
       'serving_weight_1_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight2GMeta =
-      const VerificationMeta('servingWeight2G');
-  @override
   late final GeneratedColumn<double> servingWeight2G = GeneratedColumn<double>(
       'serving_weight_2_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight3GMeta =
-      const VerificationMeta('servingWeight3G');
-  @override
   late final GeneratedColumn<double> servingWeight3G = GeneratedColumn<double>(
       'serving_weight_3_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight4GMeta =
-      const VerificationMeta('servingWeight4G');
-  @override
   late final GeneratedColumn<double> servingWeight4G = GeneratedColumn<double>(
       'serving_weight_4_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight5GMeta =
-      const VerificationMeta('servingWeight5G');
-  @override
   late final GeneratedColumn<double> servingWeight5G = GeneratedColumn<double>(
       'serving_weight_5_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight6GMeta =
-      const VerificationMeta('servingWeight6G');
-  @override
   late final GeneratedColumn<double> servingWeight6G = GeneratedColumn<double>(
       'serving_weight_6_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight7GMeta =
-      const VerificationMeta('servingWeight7G');
-  @override
   late final GeneratedColumn<double> servingWeight7G = GeneratedColumn<double>(
       'serving_weight_7_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight8GMeta =
-      const VerificationMeta('servingWeight8G');
-  @override
   late final GeneratedColumn<double> servingWeight8G = GeneratedColumn<double>(
       'serving_weight_8_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _servingWeight9GMeta =
-      const VerificationMeta('servingWeight9G');
-  @override
   late final GeneratedColumn<double> servingWeight9G = GeneratedColumn<double>(
       'serving_weight_9_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _smallImageMeta =
-      const VerificationMeta('smallImage');
-  @override
   late final GeneratedColumn<String> smallImage = GeneratedColumn<String>(
       'small_image', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _sodiumMgMeta =
-      const VerificationMeta('sodiumMg');
-  @override
   late final GeneratedColumn<double> sodiumMg = GeneratedColumn<double>(
       'sodium_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _solubleFiberGMeta =
-      const VerificationMeta('solubleFiberG');
-  @override
   late final GeneratedColumn<double> solubleFiberG = GeneratedColumn<double>(
       'soluble_fiber_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _starchGMeta =
-      const VerificationMeta('starchG');
-  @override
   late final GeneratedColumn<double> starchG = GeneratedColumn<double>(
       'starch_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _sucroseGMeta =
-      const VerificationMeta('sucroseG');
-  @override
   late final GeneratedColumn<double> sucroseG = GeneratedColumn<double>(
       'sucrose_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _sugarsGMeta =
-      const VerificationMeta('sugarsG');
-  @override
   late final GeneratedColumn<double> sugarsG = GeneratedColumn<double>(
       'sugars_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _theobromineMgMeta =
-      const VerificationMeta('theobromineMg');
-  @override
   late final GeneratedColumn<double> theobromineMg = GeneratedColumn<double>(
       'theobromine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _thiaminB1MgMeta =
-      const VerificationMeta('thiaminB1Mg');
-  @override
   late final GeneratedColumn<double> thiaminB1Mg = GeneratedColumn<double>(
       'thiamin_b1_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _threonineMgMeta =
-      const VerificationMeta('threonineMg');
-  @override
   late final GeneratedColumn<double> threonineMg = GeneratedColumn<double>(
       'threonine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _totalSugarAlcoholsGMeta =
-      const VerificationMeta('totalSugarAlcoholsG');
-  @override
   late final GeneratedColumn<double> totalSugarAlcoholsG =
       GeneratedColumn<double>('total_sugar_alcohols_g', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _transFattyAcidsGMeta =
-      const VerificationMeta('transFattyAcidsG');
-  @override
   late final GeneratedColumn<double> transFattyAcidsG = GeneratedColumn<double>(
       'trans_fatty_acids_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _tryptophanMgMeta =
-      const VerificationMeta('tryptophanMg');
-  @override
   late final GeneratedColumn<double> tryptophanMg = GeneratedColumn<double>(
       'tryptophan_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _tyrosineMgMeta =
-      const VerificationMeta('tyrosineMg');
-  @override
   late final GeneratedColumn<double> tyrosineMg = GeneratedColumn<double>(
       'tyrosine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _u183N3CCCAlaMgMeta =
-      const VerificationMeta('u183N3CCCAlaMg');
-  @override
   late final GeneratedColumn<double> u183N3CCCAlaMg = GeneratedColumn<double>(
       '_18_3_n_3_c_c_c_ala_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _u200calorieWeightGMeta =
-      const VerificationMeta('u200calorieWeightG');
-  @override
   late final GeneratedColumn<double> u200calorieWeightG =
       GeneratedColumn<double>('_200_calorie_weight_g', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _u205N3EpaMgMeta =
-      const VerificationMeta('u205N3EpaMg');
-  @override
   late final GeneratedColumn<double> u205N3EpaMg = GeneratedColumn<double>(
       '_20_5_n_3_epa_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _u225N3DpaMgMeta =
-      const VerificationMeta('u225N3DpaMg');
-  @override
   late final GeneratedColumn<double> u225N3DpaMg = GeneratedColumn<double>(
       '_22_5_n_3_dpa_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _u226N3DhaMgMeta =
-      const VerificationMeta('u226N3DhaMg');
-  @override
   late final GeneratedColumn<double> u226N3DhaMg = GeneratedColumn<double>(
       '_22_6_n_3_dha_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _valineMgMeta =
-      const VerificationMeta('valineMg');
-  @override
   late final GeneratedColumn<double> valineMg = GeneratedColumn<double>(
       'valine_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminAIuIuMeta =
-      const VerificationMeta('vitaminAIuIu');
-  @override
   late final GeneratedColumn<double> vitaminAIuIu = GeneratedColumn<double>(
       'vitamin_a_iu_iu', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminARaeMcgMeta =
-      const VerificationMeta('vitaminARaeMcg');
-  @override
   late final GeneratedColumn<double> vitaminARaeMcg = GeneratedColumn<double>(
       'vitamin_a_rae_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminB12McgMeta =
-      const VerificationMeta('vitaminB12Mcg');
-  @override
   late final GeneratedColumn<double> vitaminB12Mcg = GeneratedColumn<double>(
       'vitamin_b_12_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminB6MgMeta =
-      const VerificationMeta('vitaminB6Mg');
-  @override
   late final GeneratedColumn<double> vitaminB6Mg = GeneratedColumn<double>(
       'vitamin_b6_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminCMgMeta =
-      const VerificationMeta('vitaminCMg');
-  @override
   late final GeneratedColumn<double> vitaminCMg = GeneratedColumn<double>(
       'vitamin_c_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminD2ErgocalciferolMcgMeta =
-      const VerificationMeta('vitaminD2ErgocalciferolMcg');
-  @override
   late final GeneratedColumn<double> vitaminD2ErgocalciferolMcg =
       GeneratedColumn<double>(
           'vitamin_d2_ergocalciferol_mcg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminD3CholecalciferolMcgMeta =
-      const VerificationMeta('vitaminD3CholecalciferolMcg');
-  @override
   late final GeneratedColumn<double> vitaminD3CholecalciferolMcg =
       GeneratedColumn<double>(
           'vitamin_d3_cholecalciferol_mcg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminDIuIuMeta =
-      const VerificationMeta('vitaminDIuIu');
-  @override
   late final GeneratedColumn<double> vitaminDIuIu = GeneratedColumn<double>(
       'vitamin_d_iu_iu', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminDMcgMeta =
-      const VerificationMeta('vitaminDMcg');
-  @override
   late final GeneratedColumn<double> vitaminDMcg = GeneratedColumn<double>(
       'vitamin_d_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminEAlphaTocopherolMgMeta =
-      const VerificationMeta('vitaminEAlphaTocopherolMg');
-  @override
   late final GeneratedColumn<double> vitaminEAlphaTocopherolMg =
       GeneratedColumn<double>(
           'vitamin_e_alpha_tocopherol_mg', aliasedName, true,
           type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _vitaminKMcgMeta =
-      const VerificationMeta('vitaminKMcg');
-  @override
   late final GeneratedColumn<double> vitaminKMcg = GeneratedColumn<double>(
       'vitamin_k_mcg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _waterGMeta = const VerificationMeta('waterG');
-  @override
   late final GeneratedColumn<double> waterG = GeneratedColumn<double>(
       'water_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _zincZnMgMeta =
-      const VerificationMeta('zincZnMg');
-  @override
   late final GeneratedColumn<double> zincZnMg = GeneratedColumn<double>(
       'zinc_zn_mg', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
@@ -899,705 +529,11 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   String get actualTableName => $name;
   static const String $name = 'foods';
   @override
-  VerificationContext validateIntegrity(Insertable<Food> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('barcode')) {
-      context.handle(_barcodeMeta,
-          barcode.isAcceptableOrUnknown(data['barcode']!, _barcodeMeta));
-    }
-    if (data.containsKey('added_sugar_g')) {
-      context.handle(
-          _addedSugarGMeta,
-          addedSugarG.isAcceptableOrUnknown(
-              data['added_sugar_g']!, _addedSugarGMeta));
-    }
-    if (data.containsKey('alanine_mg')) {
-      context.handle(_alanineMgMeta,
-          alanineMg.isAcceptableOrUnknown(data['alanine_mg']!, _alanineMgMeta));
-    }
-    if (data.containsKey('alcohol_g')) {
-      context.handle(_alcoholGMeta,
-          alcoholG.isAcceptableOrUnknown(data['alcohol_g']!, _alcoholGMeta));
-    }
-    if (data.containsKey('arginine_mg')) {
-      context.handle(
-          _arginineMgMeta,
-          arginineMg.isAcceptableOrUnknown(
-              data['arginine_mg']!, _arginineMgMeta));
-    }
-    if (data.containsKey('aspartic_acid_mg')) {
-      context.handle(
-          _asparticAcidMgMeta,
-          asparticAcidMg.isAcceptableOrUnknown(
-              data['aspartic_acid_mg']!, _asparticAcidMgMeta));
-    }
-    if (data.containsKey('betaine_mg')) {
-      context.handle(_betaineMgMeta,
-          betaineMg.isAcceptableOrUnknown(data['betaine_mg']!, _betaineMgMeta));
-    }
-    if (data.containsKey('big_image')) {
-      context.handle(_bigImageMeta,
-          bigImage.isAcceptableOrUnknown(data['big_image']!, _bigImageMeta));
-    }
-    if (data.containsKey('biotin_b7_mcg')) {
-      context.handle(
-          _biotinB7McgMeta,
-          biotinB7Mcg.isAcceptableOrUnknown(
-              data['biotin_b7_mcg']!, _biotinB7McgMeta));
-    }
-    if (data.containsKey('caffeine_mg')) {
-      context.handle(
-          _caffeineMgMeta,
-          caffeineMg.isAcceptableOrUnknown(
-              data['caffeine_mg']!, _caffeineMgMeta));
-    }
-    if (data.containsKey('calcium_mg')) {
-      context.handle(_calciumMgMeta,
-          calciumMg.isAcceptableOrUnknown(data['calcium_mg']!, _calciumMgMeta));
-    }
-    if (data.containsKey('calories')) {
-      context.handle(_caloriesMeta,
-          calories.isAcceptableOrUnknown(data['calories']!, _caloriesMeta));
-    }
-    if (data.containsKey('carbohydrate_g')) {
-      context.handle(
-          _carbohydrateGMeta,
-          carbohydrateG.isAcceptableOrUnknown(
-              data['carbohydrate_g']!, _carbohydrateGMeta));
-    }
-    if (data.containsKey('carotene_alpha_mcg')) {
-      context.handle(
-          _caroteneAlphaMcgMeta,
-          caroteneAlphaMcg.isAcceptableOrUnknown(
-              data['carotene_alpha_mcg']!, _caroteneAlphaMcgMeta));
-    }
-    if (data.containsKey('carotene_beta_mcg')) {
-      context.handle(
-          _caroteneBetaMcgMeta,
-          caroteneBetaMcg.isAcceptableOrUnknown(
-              data['carotene_beta_mcg']!, _caroteneBetaMcgMeta));
-    }
-    if (data.containsKey('chlorine_mg')) {
-      context.handle(
-          _chlorineMgMeta,
-          chlorineMg.isAcceptableOrUnknown(
-              data['chlorine_mg']!, _chlorineMgMeta));
-    }
-    if (data.containsKey('cholesterol_mg')) {
-      context.handle(
-          _cholesterolMgMeta,
-          cholesterolMg.isAcceptableOrUnknown(
-              data['cholesterol_mg']!, _cholesterolMgMeta));
-    }
-    if (data.containsKey('choline_mg')) {
-      context.handle(_cholineMgMeta,
-          cholineMg.isAcceptableOrUnknown(data['choline_mg']!, _cholineMgMeta));
-    }
-    if (data.containsKey('copper_cu_mg')) {
-      context.handle(
-          _copperCuMgMeta,
-          copperCuMg.isAcceptableOrUnknown(
-              data['copper_cu_mg']!, _copperCuMgMeta));
-    }
-    if (data.containsKey('created')) {
-      context.handle(_createdMeta,
-          created.isAcceptableOrUnknown(data['created']!, _createdMeta));
-    }
-    if (data.containsKey('cystine_mg')) {
-      context.handle(_cystineMgMeta,
-          cystineMg.isAcceptableOrUnknown(data['cystine_mg']!, _cystineMgMeta));
-    }
-    if (data.containsKey('dihydrophylloquinone_mcg')) {
-      context.handle(
-          _dihydrophylloquinoneMcgMeta,
-          dihydrophylloquinoneMcg.isAcceptableOrUnknown(
-              data['dihydrophylloquinone_mcg']!, _dihydrophylloquinoneMcgMeta));
-    }
-    if (data.containsKey('fat_g')) {
-      context.handle(
-          _fatGMeta, fatG.isAcceptableOrUnknown(data['fat_g']!, _fatGMeta));
-    }
-    if (data.containsKey('fatty_acids_total_monounsaturated_mg')) {
-      context.handle(
-          _fattyAcidsTotalMonounsaturatedMgMeta,
-          fattyAcidsTotalMonounsaturatedMg.isAcceptableOrUnknown(
-              data['fatty_acids_total_monounsaturated_mg']!,
-              _fattyAcidsTotalMonounsaturatedMgMeta));
-    }
-    if (data.containsKey('fatty_acids_total_polyunsaturated_mg')) {
-      context.handle(
-          _fattyAcidsTotalPolyunsaturatedMgMeta,
-          fattyAcidsTotalPolyunsaturatedMg.isAcceptableOrUnknown(
-              data['fatty_acids_total_polyunsaturated_mg']!,
-              _fattyAcidsTotalPolyunsaturatedMgMeta));
-    }
-    if (data.containsKey('favorite')) {
-      context.handle(_favoriteMeta,
-          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
-    }
-    if (data.containsKey('fiber_g')) {
-      context.handle(_fiberGMeta,
-          fiberG.isAcceptableOrUnknown(data['fiber_g']!, _fiberGMeta));
-    }
-    if (data.containsKey('fluoride_f_mcg')) {
-      context.handle(
-          _fluorideFMcgMeta,
-          fluorideFMcg.isAcceptableOrUnknown(
-              data['fluoride_f_mcg']!, _fluorideFMcgMeta));
-    }
-    if (data.containsKey('folate_b9_mcg')) {
-      context.handle(
-          _folateB9McgMeta,
-          folateB9Mcg.isAcceptableOrUnknown(
-              data['folate_b9_mcg']!, _folateB9McgMeta));
-    }
-    if (data.containsKey('folate_dfe_mcg')) {
-      context.handle(
-          _folateDfeMcgMeta,
-          folateDfeMcg.isAcceptableOrUnknown(
-              data['folate_dfe_mcg']!, _folateDfeMcgMeta));
-    }
-    if (data.containsKey('folic_acid_mcg')) {
-      context.handle(
-          _folicAcidMcgMeta,
-          folicAcidMcg.isAcceptableOrUnknown(
-              data['folic_acid_mcg']!, _folicAcidMcgMeta));
-    }
-    if (data.containsKey('food_folate_mcg')) {
-      context.handle(
-          _foodFolateMcgMeta,
-          foodFolateMcg.isAcceptableOrUnknown(
-              data['food_folate_mcg']!, _foodFolateMcgMeta));
-    }
-    if (data.containsKey('food_group')) {
-      context.handle(_foodGroupMeta,
-          foodGroup.isAcceptableOrUnknown(data['food_group']!, _foodGroupMeta));
-    }
-    if (data.containsKey('fructose_g')) {
-      context.handle(_fructoseGMeta,
-          fructoseG.isAcceptableOrUnknown(data['fructose_g']!, _fructoseGMeta));
-    }
-    if (data.containsKey('galactose_g')) {
-      context.handle(
-          _galactoseGMeta,
-          galactoseG.isAcceptableOrUnknown(
-              data['galactose_g']!, _galactoseGMeta));
-    }
-    if (data.containsKey('glucose_dextrose_g')) {
-      context.handle(
-          _glucoseDextroseGMeta,
-          glucoseDextroseG.isAcceptableOrUnknown(
-              data['glucose_dextrose_g']!, _glucoseDextroseGMeta));
-    }
-    if (data.containsKey('glutamic_acid_mg')) {
-      context.handle(
-          _glutamicAcidMgMeta,
-          glutamicAcidMg.isAcceptableOrUnknown(
-              data['glutamic_acid_mg']!, _glutamicAcidMgMeta));
-    }
-    if (data.containsKey('glycine_mg')) {
-      context.handle(_glycineMgMeta,
-          glycineMg.isAcceptableOrUnknown(data['glycine_mg']!, _glycineMgMeta));
-    }
-    if (data.containsKey('histidine_mg')) {
-      context.handle(
-          _histidineMgMeta,
-          histidineMg.isAcceptableOrUnknown(
-              data['histidine_mg']!, _histidineMgMeta));
-    }
-    if (data.containsKey('hydroxyproline_mg')) {
-      context.handle(
-          _hydroxyprolineMgMeta,
-          hydroxyprolineMg.isAcceptableOrUnknown(
-              data['hydroxyproline_mg']!, _hydroxyprolineMgMeta));
-    }
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('image_file')) {
-      context.handle(_imageFileMeta,
-          imageFile.isAcceptableOrUnknown(data['image_file']!, _imageFileMeta));
-    }
-    if (data.containsKey('insoluble_fiber_g')) {
-      context.handle(
-          _insolubleFiberGMeta,
-          insolubleFiberG.isAcceptableOrUnknown(
-              data['insoluble_fiber_g']!, _insolubleFiberGMeta));
-    }
-    if (data.containsKey('iron_fe_mg')) {
-      context.handle(_ironFeMgMeta,
-          ironFeMg.isAcceptableOrUnknown(data['iron_fe_mg']!, _ironFeMgMeta));
-    }
-    if (data.containsKey('isoleucine_mg')) {
-      context.handle(
-          _isoleucineMgMeta,
-          isoleucineMg.isAcceptableOrUnknown(
-              data['isoleucine_mg']!, _isoleucineMgMeta));
-    }
-    if (data.containsKey('lactose_g')) {
-      context.handle(_lactoseGMeta,
-          lactoseG.isAcceptableOrUnknown(data['lactose_g']!, _lactoseGMeta));
-    }
-    if (data.containsKey('leucine_mg')) {
-      context.handle(_leucineMgMeta,
-          leucineMg.isAcceptableOrUnknown(data['leucine_mg']!, _leucineMgMeta));
-    }
-    if (data.containsKey('lutein_zeaxanthin_mcg')) {
-      context.handle(
-          _luteinZeaxanthinMcgMeta,
-          luteinZeaxanthinMcg.isAcceptableOrUnknown(
-              data['lutein_zeaxanthin_mcg']!, _luteinZeaxanthinMcgMeta));
-    }
-    if (data.containsKey('lycopene_mcg')) {
-      context.handle(
-          _lycopeneMcgMeta,
-          lycopeneMcg.isAcceptableOrUnknown(
-              data['lycopene_mcg']!, _lycopeneMcgMeta));
-    }
-    if (data.containsKey('lysine_mg')) {
-      context.handle(_lysineMgMeta,
-          lysineMg.isAcceptableOrUnknown(data['lysine_mg']!, _lysineMgMeta));
-    }
-    if (data.containsKey('magnesium_mg')) {
-      context.handle(
-          _magnesiumMgMeta,
-          magnesiumMg.isAcceptableOrUnknown(
-              data['magnesium_mg']!, _magnesiumMgMeta));
-    }
-    if (data.containsKey('maltose_g')) {
-      context.handle(_maltoseGMeta,
-          maltoseG.isAcceptableOrUnknown(data['maltose_g']!, _maltoseGMeta));
-    }
-    if (data.containsKey('manganese_mg')) {
-      context.handle(
-          _manganeseMgMeta,
-          manganeseMg.isAcceptableOrUnknown(
-              data['manganese_mg']!, _manganeseMgMeta));
-    }
-    if (data.containsKey('menaquinone_4_mcg')) {
-      context.handle(
-          _menaquinone4McgMeta,
-          menaquinone4Mcg.isAcceptableOrUnknown(
-              data['menaquinone_4_mcg']!, _menaquinone4McgMeta));
-    }
-    if (data.containsKey('methionine_mg')) {
-      context.handle(
-          _methionineMgMeta,
-          methionineMg.isAcceptableOrUnknown(
-              data['methionine_mg']!, _methionineMgMeta));
-    }
-    if (data.containsKey('molybdenum_mcg')) {
-      context.handle(
-          _molybdenumMcgMeta,
-          molybdenumMcg.isAcceptableOrUnknown(
-              data['molybdenum_mcg']!, _molybdenumMcgMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('net_carbs_g')) {
-      context.handle(
-          _netCarbsGMeta,
-          netCarbsG.isAcceptableOrUnknown(
-              data['net_carbs_g']!, _netCarbsGMeta));
-    }
-    if (data.containsKey('niacin_b3_mg')) {
-      context.handle(
-          _niacinB3MgMeta,
-          niacinB3Mg.isAcceptableOrUnknown(
-              data['niacin_b3_mg']!, _niacinB3MgMeta));
-    }
-    if (data.containsKey('omega_3s_mg')) {
-      context.handle(
-          _omega3sMgMeta,
-          omega3sMg.isAcceptableOrUnknown(
-              data['omega_3s_mg']!, _omega3sMgMeta));
-    }
-    if (data.containsKey('omega_6s_mg')) {
-      context.handle(
-          _omega6sMgMeta,
-          omega6sMg.isAcceptableOrUnknown(
-              data['omega_6s_mg']!, _omega6sMgMeta));
-    }
-    if (data.containsKey('pantothenic_acid_b5_mg')) {
-      context.handle(
-          _pantothenicAcidB5MgMeta,
-          pantothenicAcidB5Mg.isAcceptableOrUnknown(
-              data['pantothenic_acid_b5_mg']!, _pantothenicAcidB5MgMeta));
-    }
-    if (data.containsKey('phenylalanine_mg')) {
-      context.handle(
-          _phenylalanineMgMeta,
-          phenylalanineMg.isAcceptableOrUnknown(
-              data['phenylalanine_mg']!, _phenylalanineMgMeta));
-    }
-    if (data.containsKey('phosphorus_p_mg')) {
-      context.handle(
-          _phosphorusPMgMeta,
-          phosphorusPMg.isAcceptableOrUnknown(
-              data['phosphorus_p_mg']!, _phosphorusPMgMeta));
-    }
-    if (data.containsKey('potassium_k_mg')) {
-      context.handle(
-          _potassiumKMgMeta,
-          potassiumKMg.isAcceptableOrUnknown(
-              data['potassium_k_mg']!, _potassiumKMgMeta));
-    }
-    if (data.containsKey('pral_score')) {
-      context.handle(_pralScoreMeta,
-          pralScore.isAcceptableOrUnknown(data['pral_score']!, _pralScoreMeta));
-    }
-    if (data.containsKey('proline_mg')) {
-      context.handle(_prolineMgMeta,
-          prolineMg.isAcceptableOrUnknown(data['proline_mg']!, _prolineMgMeta));
-    }
-    if (data.containsKey('protein_g')) {
-      context.handle(_proteinGMeta,
-          proteinG.isAcceptableOrUnknown(data['protein_g']!, _proteinGMeta));
-    }
-    if (data.containsKey('retinol_mcg')) {
-      context.handle(
-          _retinolMcgMeta,
-          retinolMcg.isAcceptableOrUnknown(
-              data['retinol_mcg']!, _retinolMcgMeta));
-    }
-    if (data.containsKey('riboflavin_b2_mg')) {
-      context.handle(
-          _riboflavinB2MgMeta,
-          riboflavinB2Mg.isAcceptableOrUnknown(
-              data['riboflavin_b2_mg']!, _riboflavinB2MgMeta));
-    }
-    if (data.containsKey('saturated_fats_g')) {
-      context.handle(
-          _saturatedFatsGMeta,
-          saturatedFatsG.isAcceptableOrUnknown(
-              data['saturated_fats_g']!, _saturatedFatsGMeta));
-    }
-    if (data.containsKey('selenium_se_mcg')) {
-      context.handle(
-          _seleniumSeMcgMeta,
-          seleniumSeMcg.isAcceptableOrUnknown(
-              data['selenium_se_mcg']!, _seleniumSeMcgMeta));
-    }
-    if (data.containsKey('serine_mg')) {
-      context.handle(_serineMgMeta,
-          serineMg.isAcceptableOrUnknown(data['serine_mg']!, _serineMgMeta));
-    }
-    if (data.containsKey('serving_description_1_g')) {
-      context.handle(
-          _servingDescription1GMeta,
-          servingDescription1G.isAcceptableOrUnknown(
-              data['serving_description_1_g']!, _servingDescription1GMeta));
-    }
-    if (data.containsKey('serving_description_2_g')) {
-      context.handle(
-          _servingDescription2GMeta,
-          servingDescription2G.isAcceptableOrUnknown(
-              data['serving_description_2_g']!, _servingDescription2GMeta));
-    }
-    if (data.containsKey('serving_description_3_g')) {
-      context.handle(
-          _servingDescription3GMeta,
-          servingDescription3G.isAcceptableOrUnknown(
-              data['serving_description_3_g']!, _servingDescription3GMeta));
-    }
-    if (data.containsKey('serving_description_4_g')) {
-      context.handle(
-          _servingDescription4GMeta,
-          servingDescription4G.isAcceptableOrUnknown(
-              data['serving_description_4_g']!, _servingDescription4GMeta));
-    }
-    if (data.containsKey('serving_description_5_g')) {
-      context.handle(
-          _servingDescription5GMeta,
-          servingDescription5G.isAcceptableOrUnknown(
-              data['serving_description_5_g']!, _servingDescription5GMeta));
-    }
-    if (data.containsKey('serving_description_6_g')) {
-      context.handle(
-          _servingDescription6GMeta,
-          servingDescription6G.isAcceptableOrUnknown(
-              data['serving_description_6_g']!, _servingDescription6GMeta));
-    }
-    if (data.containsKey('serving_description_7_g')) {
-      context.handle(
-          _servingDescription7GMeta,
-          servingDescription7G.isAcceptableOrUnknown(
-              data['serving_description_7_g']!, _servingDescription7GMeta));
-    }
-    if (data.containsKey('serving_description_8_g')) {
-      context.handle(
-          _servingDescription8GMeta,
-          servingDescription8G.isAcceptableOrUnknown(
-              data['serving_description_8_g']!, _servingDescription8GMeta));
-    }
-    if (data.containsKey('serving_description_9_g')) {
-      context.handle(
-          _servingDescription9GMeta,
-          servingDescription9G.isAcceptableOrUnknown(
-              data['serving_description_9_g']!, _servingDescription9GMeta));
-    }
-    if (data.containsKey('serving_size')) {
-      context.handle(
-          _servingSizeMeta,
-          servingSize.isAcceptableOrUnknown(
-              data['serving_size']!, _servingSizeMeta));
-    }
-    if (data.containsKey('serving_unit')) {
-      context.handle(
-          _servingUnitMeta,
-          servingUnit.isAcceptableOrUnknown(
-              data['serving_unit']!, _servingUnitMeta));
-    }
-    if (data.containsKey('serving_weight_1_g')) {
-      context.handle(
-          _servingWeight1GMeta,
-          servingWeight1G.isAcceptableOrUnknown(
-              data['serving_weight_1_g']!, _servingWeight1GMeta));
-    }
-    if (data.containsKey('serving_weight_2_g')) {
-      context.handle(
-          _servingWeight2GMeta,
-          servingWeight2G.isAcceptableOrUnknown(
-              data['serving_weight_2_g']!, _servingWeight2GMeta));
-    }
-    if (data.containsKey('serving_weight_3_g')) {
-      context.handle(
-          _servingWeight3GMeta,
-          servingWeight3G.isAcceptableOrUnknown(
-              data['serving_weight_3_g']!, _servingWeight3GMeta));
-    }
-    if (data.containsKey('serving_weight_4_g')) {
-      context.handle(
-          _servingWeight4GMeta,
-          servingWeight4G.isAcceptableOrUnknown(
-              data['serving_weight_4_g']!, _servingWeight4GMeta));
-    }
-    if (data.containsKey('serving_weight_5_g')) {
-      context.handle(
-          _servingWeight5GMeta,
-          servingWeight5G.isAcceptableOrUnknown(
-              data['serving_weight_5_g']!, _servingWeight5GMeta));
-    }
-    if (data.containsKey('serving_weight_6_g')) {
-      context.handle(
-          _servingWeight6GMeta,
-          servingWeight6G.isAcceptableOrUnknown(
-              data['serving_weight_6_g']!, _servingWeight6GMeta));
-    }
-    if (data.containsKey('serving_weight_7_g')) {
-      context.handle(
-          _servingWeight7GMeta,
-          servingWeight7G.isAcceptableOrUnknown(
-              data['serving_weight_7_g']!, _servingWeight7GMeta));
-    }
-    if (data.containsKey('serving_weight_8_g')) {
-      context.handle(
-          _servingWeight8GMeta,
-          servingWeight8G.isAcceptableOrUnknown(
-              data['serving_weight_8_g']!, _servingWeight8GMeta));
-    }
-    if (data.containsKey('serving_weight_9_g')) {
-      context.handle(
-          _servingWeight9GMeta,
-          servingWeight9G.isAcceptableOrUnknown(
-              data['serving_weight_9_g']!, _servingWeight9GMeta));
-    }
-    if (data.containsKey('small_image')) {
-      context.handle(
-          _smallImageMeta,
-          smallImage.isAcceptableOrUnknown(
-              data['small_image']!, _smallImageMeta));
-    }
-    if (data.containsKey('sodium_mg')) {
-      context.handle(_sodiumMgMeta,
-          sodiumMg.isAcceptableOrUnknown(data['sodium_mg']!, _sodiumMgMeta));
-    }
-    if (data.containsKey('soluble_fiber_g')) {
-      context.handle(
-          _solubleFiberGMeta,
-          solubleFiberG.isAcceptableOrUnknown(
-              data['soluble_fiber_g']!, _solubleFiberGMeta));
-    }
-    if (data.containsKey('starch_g')) {
-      context.handle(_starchGMeta,
-          starchG.isAcceptableOrUnknown(data['starch_g']!, _starchGMeta));
-    }
-    if (data.containsKey('sucrose_g')) {
-      context.handle(_sucroseGMeta,
-          sucroseG.isAcceptableOrUnknown(data['sucrose_g']!, _sucroseGMeta));
-    }
-    if (data.containsKey('sugars_g')) {
-      context.handle(_sugarsGMeta,
-          sugarsG.isAcceptableOrUnknown(data['sugars_g']!, _sugarsGMeta));
-    }
-    if (data.containsKey('theobromine_mg')) {
-      context.handle(
-          _theobromineMgMeta,
-          theobromineMg.isAcceptableOrUnknown(
-              data['theobromine_mg']!, _theobromineMgMeta));
-    }
-    if (data.containsKey('thiamin_b1_mg')) {
-      context.handle(
-          _thiaminB1MgMeta,
-          thiaminB1Mg.isAcceptableOrUnknown(
-              data['thiamin_b1_mg']!, _thiaminB1MgMeta));
-    }
-    if (data.containsKey('threonine_mg')) {
-      context.handle(
-          _threonineMgMeta,
-          threonineMg.isAcceptableOrUnknown(
-              data['threonine_mg']!, _threonineMgMeta));
-    }
-    if (data.containsKey('total_sugar_alcohols_g')) {
-      context.handle(
-          _totalSugarAlcoholsGMeta,
-          totalSugarAlcoholsG.isAcceptableOrUnknown(
-              data['total_sugar_alcohols_g']!, _totalSugarAlcoholsGMeta));
-    }
-    if (data.containsKey('trans_fatty_acids_g')) {
-      context.handle(
-          _transFattyAcidsGMeta,
-          transFattyAcidsG.isAcceptableOrUnknown(
-              data['trans_fatty_acids_g']!, _transFattyAcidsGMeta));
-    }
-    if (data.containsKey('tryptophan_mg')) {
-      context.handle(
-          _tryptophanMgMeta,
-          tryptophanMg.isAcceptableOrUnknown(
-              data['tryptophan_mg']!, _tryptophanMgMeta));
-    }
-    if (data.containsKey('tyrosine_mg')) {
-      context.handle(
-          _tyrosineMgMeta,
-          tyrosineMg.isAcceptableOrUnknown(
-              data['tyrosine_mg']!, _tyrosineMgMeta));
-    }
-    if (data.containsKey('_18_3_n_3_c_c_c_ala_mg')) {
-      context.handle(
-          _u183N3CCCAlaMgMeta,
-          u183N3CCCAlaMg.isAcceptableOrUnknown(
-              data['_18_3_n_3_c_c_c_ala_mg']!, _u183N3CCCAlaMgMeta));
-    }
-    if (data.containsKey('_200_calorie_weight_g')) {
-      context.handle(
-          _u200calorieWeightGMeta,
-          u200calorieWeightG.isAcceptableOrUnknown(
-              data['_200_calorie_weight_g']!, _u200calorieWeightGMeta));
-    }
-    if (data.containsKey('_20_5_n_3_epa_mg')) {
-      context.handle(
-          _u205N3EpaMgMeta,
-          u205N3EpaMg.isAcceptableOrUnknown(
-              data['_20_5_n_3_epa_mg']!, _u205N3EpaMgMeta));
-    }
-    if (data.containsKey('_22_5_n_3_dpa_mg')) {
-      context.handle(
-          _u225N3DpaMgMeta,
-          u225N3DpaMg.isAcceptableOrUnknown(
-              data['_22_5_n_3_dpa_mg']!, _u225N3DpaMgMeta));
-    }
-    if (data.containsKey('_22_6_n_3_dha_mg')) {
-      context.handle(
-          _u226N3DhaMgMeta,
-          u226N3DhaMg.isAcceptableOrUnknown(
-              data['_22_6_n_3_dha_mg']!, _u226N3DhaMgMeta));
-    }
-    if (data.containsKey('valine_mg')) {
-      context.handle(_valineMgMeta,
-          valineMg.isAcceptableOrUnknown(data['valine_mg']!, _valineMgMeta));
-    }
-    if (data.containsKey('vitamin_a_iu_iu')) {
-      context.handle(
-          _vitaminAIuIuMeta,
-          vitaminAIuIu.isAcceptableOrUnknown(
-              data['vitamin_a_iu_iu']!, _vitaminAIuIuMeta));
-    }
-    if (data.containsKey('vitamin_a_rae_mcg')) {
-      context.handle(
-          _vitaminARaeMcgMeta,
-          vitaminARaeMcg.isAcceptableOrUnknown(
-              data['vitamin_a_rae_mcg']!, _vitaminARaeMcgMeta));
-    }
-    if (data.containsKey('vitamin_b_12_mcg')) {
-      context.handle(
-          _vitaminB12McgMeta,
-          vitaminB12Mcg.isAcceptableOrUnknown(
-              data['vitamin_b_12_mcg']!, _vitaminB12McgMeta));
-    }
-    if (data.containsKey('vitamin_b6_mg')) {
-      context.handle(
-          _vitaminB6MgMeta,
-          vitaminB6Mg.isAcceptableOrUnknown(
-              data['vitamin_b6_mg']!, _vitaminB6MgMeta));
-    }
-    if (data.containsKey('vitamin_c_mg')) {
-      context.handle(
-          _vitaminCMgMeta,
-          vitaminCMg.isAcceptableOrUnknown(
-              data['vitamin_c_mg']!, _vitaminCMgMeta));
-    }
-    if (data.containsKey('vitamin_d2_ergocalciferol_mcg')) {
-      context.handle(
-          _vitaminD2ErgocalciferolMcgMeta,
-          vitaminD2ErgocalciferolMcg.isAcceptableOrUnknown(
-              data['vitamin_d2_ergocalciferol_mcg']!,
-              _vitaminD2ErgocalciferolMcgMeta));
-    }
-    if (data.containsKey('vitamin_d3_cholecalciferol_mcg')) {
-      context.handle(
-          _vitaminD3CholecalciferolMcgMeta,
-          vitaminD3CholecalciferolMcg.isAcceptableOrUnknown(
-              data['vitamin_d3_cholecalciferol_mcg']!,
-              _vitaminD3CholecalciferolMcgMeta));
-    }
-    if (data.containsKey('vitamin_d_iu_iu')) {
-      context.handle(
-          _vitaminDIuIuMeta,
-          vitaminDIuIu.isAcceptableOrUnknown(
-              data['vitamin_d_iu_iu']!, _vitaminDIuIuMeta));
-    }
-    if (data.containsKey('vitamin_d_mcg')) {
-      context.handle(
-          _vitaminDMcgMeta,
-          vitaminDMcg.isAcceptableOrUnknown(
-              data['vitamin_d_mcg']!, _vitaminDMcgMeta));
-    }
-    if (data.containsKey('vitamin_e_alpha_tocopherol_mg')) {
-      context.handle(
-          _vitaminEAlphaTocopherolMgMeta,
-          vitaminEAlphaTocopherolMg.isAcceptableOrUnknown(
-              data['vitamin_e_alpha_tocopherol_mg']!,
-              _vitaminEAlphaTocopherolMgMeta));
-    }
-    if (data.containsKey('vitamin_k_mcg')) {
-      context.handle(
-          _vitaminKMcgMeta,
-          vitaminKMcg.isAcceptableOrUnknown(
-              data['vitamin_k_mcg']!, _vitaminKMcgMeta));
-    }
-    if (data.containsKey('water_g')) {
-      context.handle(_waterGMeta,
-          waterG.isAcceptableOrUnknown(data['water_g']!, _waterGMeta));
-    }
-    if (data.containsKey('zinc_zn_mg')) {
-      context.handle(_zincZnMgMeta,
-          zincZnMg.isAcceptableOrUnknown(data['zinc_zn_mg']!, _zincZnMgMeta));
-    }
-    return context;
-  }
-
-  @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Food map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FoodsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Food(
+    return FoodsData(
       barcode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}barcode']),
       addedSugarG: attachedDatabase.typeMapping
@@ -1869,12 +805,12 @@ class $FoodsTable extends Foods with TableInfo<$FoodsTable, Food> {
   }
 
   @override
-  $FoodsTable createAlias(String alias) {
-    return $FoodsTable(attachedDatabase, alias);
+  Foods createAlias(String alias) {
+    return Foods(attachedDatabase, alias);
   }
 }
 
-class Food extends DataClass implements Insertable<Food> {
+class FoodsData extends DataClass implements Insertable<FoodsData> {
   final String? barcode;
   final double? addedSugarG;
   final double? alanineMg;
@@ -2000,7 +936,7 @@ class Food extends DataClass implements Insertable<Food> {
   final double? vitaminKMcg;
   final double? waterG;
   final double? zincZnMg;
-  const Food(
+  const FoodsData(
       {this.barcode,
       this.addedSugarG,
       this.alanineMg,
@@ -2886,10 +1822,10 @@ class Food extends DataClass implements Insertable<Food> {
     );
   }
 
-  factory Food.fromJson(Map<String, dynamic> json,
+  factory FoodsData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Food(
+    return FoodsData(
       barcode: serializer.fromJson<String?>(json['barcode']),
       addedSugarG: serializer.fromJson<double?>(json['addedSugarG']),
       alanineMg: serializer.fromJson<double?>(json['alanineMg']),
@@ -3174,7 +2110,7 @@ class Food extends DataClass implements Insertable<Food> {
     };
   }
 
-  Food copyWith(
+  FoodsData copyWith(
           {Value<String?> barcode = const Value.absent(),
           Value<double?> addedSugarG = const Value.absent(),
           Value<double?> alanineMg = const Value.absent(),
@@ -3302,7 +2238,7 @@ class Food extends DataClass implements Insertable<Food> {
           Value<double?> vitaminKMcg = const Value.absent(),
           Value<double?> waterG = const Value.absent(),
           Value<double?> zincZnMg = const Value.absent()}) =>
-      Food(
+      FoodsData(
         barcode: barcode.present ? barcode.value : this.barcode,
         addedSugarG: addedSugarG.present ? addedSugarG.value : this.addedSugarG,
         alanineMg: alanineMg.present ? alanineMg.value : this.alanineMg,
@@ -3527,8 +2463,8 @@ class Food extends DataClass implements Insertable<Food> {
         waterG: waterG.present ? waterG.value : this.waterG,
         zincZnMg: zincZnMg.present ? zincZnMg.value : this.zincZnMg,
       );
-  Food copyWithCompanion(FoodsCompanion data) {
-    return Food(
+  FoodsData copyWithCompanion(FoodsCompanion data) {
+    return FoodsData(
       barcode: data.barcode.present ? data.barcode.value : this.barcode,
       addedSugarG:
           data.addedSugarG.present ? data.addedSugarG.value : this.addedSugarG,
@@ -3808,7 +2744,7 @@ class Food extends DataClass implements Insertable<Food> {
 
   @override
   String toString() {
-    return (StringBuffer('Food(')
+    return (StringBuffer('FoodsData(')
           ..write('barcode: $barcode, ')
           ..write('addedSugarG: $addedSugarG, ')
           ..write('alanineMg: $alanineMg, ')
@@ -4071,7 +3007,7 @@ class Food extends DataClass implements Insertable<Food> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Food &&
+      (other is FoodsData &&
           other.barcode == this.barcode &&
           other.addedSugarG == this.addedSugarG &&
           other.alanineMg == this.alanineMg &&
@@ -4202,7 +3138,7 @@ class Food extends DataClass implements Insertable<Food> {
           other.zincZnMg == this.zincZnMg);
 }
 
-class FoodsCompanion extends UpdateCompanion<Food> {
+class FoodsCompanion extends UpdateCompanion<FoodsData> {
   final Value<String?> barcode;
   final Value<double?> addedSugarG;
   final Value<double?> alanineMg;
@@ -4582,7 +3518,7 @@ class FoodsCompanion extends UpdateCompanion<Food> {
     this.waterG = const Value.absent(),
     this.zincZnMg = const Value.absent(),
   }) : name = Value(name);
-  static Insertable<Food> custom({
+  static Insertable<FoodsData> custom({
     Expression<String>? barcode,
     Expression<double>? addedSugarG,
     Expression<double>? alanineMg,
@@ -5654,13 +4590,11 @@ class FoodsCompanion extends UpdateCompanion<Food> {
   }
 }
 
-class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
+class Entries extends Table with TableInfo<Entries, EntriesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $EntriesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
+  Entries(this.attachedDatabase, [this._alias]);
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
@@ -5668,61 +4602,36 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _foodMeta = const VerificationMeta('food');
-  @override
   late final GeneratedColumn<int> food = GeneratedColumn<int>(
       'food', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES foods (id)'));
-  static const VerificationMeta _createdMeta =
-      const VerificationMeta('created');
-  @override
   late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
       'created', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _quantityMeta =
-      const VerificationMeta('quantity');
-  @override
   late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
       'quantity', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
-  @override
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
       'unit', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _kCaloriesMeta =
-      const VerificationMeta('kCalories');
-  @override
   late final GeneratedColumn<double> kCalories = GeneratedColumn<double>(
       'k_calories', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _proteinGMeta =
-      const VerificationMeta('proteinG');
-  @override
   late final GeneratedColumn<double> proteinG = GeneratedColumn<double>(
       'protein_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fatGMeta = const VerificationMeta('fatG');
-  @override
   late final GeneratedColumn<double> fatG = GeneratedColumn<double>(
       'fat_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _carbGMeta = const VerificationMeta('carbG');
-  @override
   late final GeneratedColumn<double> carbG = GeneratedColumn<double>(
       'carb_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _sodiumGMeta =
-      const VerificationMeta('sodiumG');
-  @override
   late final GeneratedColumn<double> sodiumG = GeneratedColumn<double>(
       'sodium_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _fiberGMeta = const VerificationMeta('fiberG');
-  @override
   late final GeneratedColumn<double> fiberG = GeneratedColumn<double>(
       'fiber_g', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
@@ -5746,70 +4655,11 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
   String get actualTableName => $name;
   static const String $name = 'entries';
   @override
-  VerificationContext validateIntegrity(Insertable<Entry> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('food')) {
-      context.handle(
-          _foodMeta, food.isAcceptableOrUnknown(data['food']!, _foodMeta));
-    } else if (isInserting) {
-      context.missing(_foodMeta);
-    }
-    if (data.containsKey('created')) {
-      context.handle(_createdMeta,
-          created.isAcceptableOrUnknown(data['created']!, _createdMeta));
-    } else if (isInserting) {
-      context.missing(_createdMeta);
-    }
-    if (data.containsKey('quantity')) {
-      context.handle(_quantityMeta,
-          quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta));
-    } else if (isInserting) {
-      context.missing(_quantityMeta);
-    }
-    if (data.containsKey('unit')) {
-      context.handle(
-          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
-    } else if (isInserting) {
-      context.missing(_unitMeta);
-    }
-    if (data.containsKey('k_calories')) {
-      context.handle(_kCaloriesMeta,
-          kCalories.isAcceptableOrUnknown(data['k_calories']!, _kCaloriesMeta));
-    }
-    if (data.containsKey('protein_g')) {
-      context.handle(_proteinGMeta,
-          proteinG.isAcceptableOrUnknown(data['protein_g']!, _proteinGMeta));
-    }
-    if (data.containsKey('fat_g')) {
-      context.handle(
-          _fatGMeta, fatG.isAcceptableOrUnknown(data['fat_g']!, _fatGMeta));
-    }
-    if (data.containsKey('carb_g')) {
-      context.handle(
-          _carbGMeta, carbG.isAcceptableOrUnknown(data['carb_g']!, _carbGMeta));
-    }
-    if (data.containsKey('sodium_g')) {
-      context.handle(_sodiumGMeta,
-          sodiumG.isAcceptableOrUnknown(data['sodium_g']!, _sodiumGMeta));
-    }
-    if (data.containsKey('fiber_g')) {
-      context.handle(_fiberGMeta,
-          fiberG.isAcceptableOrUnknown(data['fiber_g']!, _fiberGMeta));
-    }
-    return context;
-  }
-
-  @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Entry map(Map<String, dynamic> data, {String? tablePrefix}) {
+  EntriesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Entry(
+    return EntriesData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       food: attachedDatabase.typeMapping
@@ -5836,12 +4686,12 @@ class $EntriesTable extends Entries with TableInfo<$EntriesTable, Entry> {
   }
 
   @override
-  $EntriesTable createAlias(String alias) {
-    return $EntriesTable(attachedDatabase, alias);
+  Entries createAlias(String alias) {
+    return Entries(attachedDatabase, alias);
   }
 }
 
-class Entry extends DataClass implements Insertable<Entry> {
+class EntriesData extends DataClass implements Insertable<EntriesData> {
   final int id;
   final int food;
   final DateTime created;
@@ -5853,7 +4703,7 @@ class Entry extends DataClass implements Insertable<Entry> {
   final double? carbG;
   final double? sodiumG;
   final double? fiberG;
-  const Entry(
+  const EntriesData(
       {required this.id,
       required this.food,
       required this.created,
@@ -5918,10 +4768,10 @@ class Entry extends DataClass implements Insertable<Entry> {
     );
   }
 
-  factory Entry.fromJson(Map<String, dynamic> json,
+  factory EntriesData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Entry(
+    return EntriesData(
       id: serializer.fromJson<int>(json['id']),
       food: serializer.fromJson<int>(json['food']),
       created: serializer.fromJson<DateTime>(json['created']),
@@ -5953,7 +4803,7 @@ class Entry extends DataClass implements Insertable<Entry> {
     };
   }
 
-  Entry copyWith(
+  EntriesData copyWith(
           {int? id,
           int? food,
           DateTime? created,
@@ -5965,7 +4815,7 @@ class Entry extends DataClass implements Insertable<Entry> {
           Value<double?> carbG = const Value.absent(),
           Value<double?> sodiumG = const Value.absent(),
           Value<double?> fiberG = const Value.absent()}) =>
-      Entry(
+      EntriesData(
         id: id ?? this.id,
         food: food ?? this.food,
         created: created ?? this.created,
@@ -5978,8 +4828,8 @@ class Entry extends DataClass implements Insertable<Entry> {
         sodiumG: sodiumG.present ? sodiumG.value : this.sodiumG,
         fiberG: fiberG.present ? fiberG.value : this.fiberG,
       );
-  Entry copyWithCompanion(EntriesCompanion data) {
-    return Entry(
+  EntriesData copyWithCompanion(EntriesCompanion data) {
+    return EntriesData(
       id: data.id.present ? data.id.value : this.id,
       food: data.food.present ? data.food.value : this.food,
       created: data.created.present ? data.created.value : this.created,
@@ -5996,7 +4846,7 @@ class Entry extends DataClass implements Insertable<Entry> {
 
   @override
   String toString() {
-    return (StringBuffer('Entry(')
+    return (StringBuffer('EntriesData(')
           ..write('id: $id, ')
           ..write('food: $food, ')
           ..write('created: $created, ')
@@ -6018,7 +4868,7 @@ class Entry extends DataClass implements Insertable<Entry> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Entry &&
+      (other is EntriesData &&
           other.id == this.id &&
           other.food == this.food &&
           other.created == this.created &&
@@ -6032,7 +4882,7 @@ class Entry extends DataClass implements Insertable<Entry> {
           other.fiberG == this.fiberG);
 }
 
-class EntriesCompanion extends UpdateCompanion<Entry> {
+class EntriesCompanion extends UpdateCompanion<EntriesData> {
   final Value<int> id;
   final Value<int> food;
   final Value<DateTime> created;
@@ -6073,7 +4923,7 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
         created = Value(created),
         quantity = Value(quantity),
         unit = Value(unit);
-  static Insertable<Entry> custom({
+  static Insertable<EntriesData> custom({
     Expression<int>? id,
     Expression<int>? food,
     Expression<DateTime>? created,
@@ -6186,13 +5036,11 @@ class EntriesCompanion extends UpdateCompanion<Entry> {
   }
 }
 
-class $WeightsTable extends Weights with TableInfo<$WeightsTable, Weight> {
+class Weights extends Table with TableInfo<Weights, WeightsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WeightsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
+  Weights(this.attachedDatabase, [this._alias]);
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
@@ -6200,24 +5048,15 @@ class $WeightsTable extends Weights with TableInfo<$WeightsTable, Weight> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _createdMeta =
-      const VerificationMeta('created');
-  @override
   late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
       'created', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
-  @override
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
       'unit', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
-  @override
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
       'amount', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
-  static const VerificationMeta _imageMeta = const VerificationMeta('image');
-  @override
   late final GeneratedColumn<String> image = GeneratedColumn<String>(
       'image', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
@@ -6229,44 +5068,11 @@ class $WeightsTable extends Weights with TableInfo<$WeightsTable, Weight> {
   String get actualTableName => $name;
   static const String $name = 'weights';
   @override
-  VerificationContext validateIntegrity(Insertable<Weight> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created')) {
-      context.handle(_createdMeta,
-          created.isAcceptableOrUnknown(data['created']!, _createdMeta));
-    } else if (isInserting) {
-      context.missing(_createdMeta);
-    }
-    if (data.containsKey('unit')) {
-      context.handle(
-          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
-    } else if (isInserting) {
-      context.missing(_unitMeta);
-    }
-    if (data.containsKey('amount')) {
-      context.handle(_amountMeta,
-          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
-    } else if (isInserting) {
-      context.missing(_amountMeta);
-    }
-    if (data.containsKey('image')) {
-      context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
-    }
-    return context;
-  }
-
-  @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Weight map(Map<String, dynamic> data, {String? tablePrefix}) {
+  WeightsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Weight(
+    return WeightsData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       created: attachedDatabase.typeMapping
@@ -6281,18 +5087,18 @@ class $WeightsTable extends Weights with TableInfo<$WeightsTable, Weight> {
   }
 
   @override
-  $WeightsTable createAlias(String alias) {
-    return $WeightsTable(attachedDatabase, alias);
+  Weights createAlias(String alias) {
+    return Weights(attachedDatabase, alias);
   }
 }
 
-class Weight extends DataClass implements Insertable<Weight> {
+class WeightsData extends DataClass implements Insertable<WeightsData> {
   final int id;
   final DateTime created;
   final String unit;
   final double amount;
   final String? image;
-  const Weight(
+  const WeightsData(
       {required this.id,
       required this.created,
       required this.unit,
@@ -6322,10 +5128,10 @@ class Weight extends DataClass implements Insertable<Weight> {
     );
   }
 
-  factory Weight.fromJson(Map<String, dynamic> json,
+  factory WeightsData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Weight(
+    return WeightsData(
       id: serializer.fromJson<int>(json['id']),
       created: serializer.fromJson<DateTime>(json['created']),
       unit: serializer.fromJson<String>(json['unit']),
@@ -6345,21 +5151,21 @@ class Weight extends DataClass implements Insertable<Weight> {
     };
   }
 
-  Weight copyWith(
+  WeightsData copyWith(
           {int? id,
           DateTime? created,
           String? unit,
           double? amount,
           Value<String?> image = const Value.absent()}) =>
-      Weight(
+      WeightsData(
         id: id ?? this.id,
         created: created ?? this.created,
         unit: unit ?? this.unit,
         amount: amount ?? this.amount,
         image: image.present ? image.value : this.image,
       );
-  Weight copyWithCompanion(WeightsCompanion data) {
-    return Weight(
+  WeightsData copyWithCompanion(WeightsCompanion data) {
+    return WeightsData(
       id: data.id.present ? data.id.value : this.id,
       created: data.created.present ? data.created.value : this.created,
       unit: data.unit.present ? data.unit.value : this.unit,
@@ -6370,7 +5176,7 @@ class Weight extends DataClass implements Insertable<Weight> {
 
   @override
   String toString() {
-    return (StringBuffer('Weight(')
+    return (StringBuffer('WeightsData(')
           ..write('id: $id, ')
           ..write('created: $created, ')
           ..write('unit: $unit, ')
@@ -6385,7 +5191,7 @@ class Weight extends DataClass implements Insertable<Weight> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Weight &&
+      (other is WeightsData &&
           other.id == this.id &&
           other.created == this.created &&
           other.unit == this.unit &&
@@ -6393,7 +5199,7 @@ class Weight extends DataClass implements Insertable<Weight> {
           other.image == this.image);
 }
 
-class WeightsCompanion extends UpdateCompanion<Weight> {
+class WeightsCompanion extends UpdateCompanion<WeightsData> {
   final Value<int> id;
   final Value<DateTime> created;
   final Value<String> unit;
@@ -6415,7 +5221,7 @@ class WeightsCompanion extends UpdateCompanion<Weight> {
   })  : created = Value(created),
         unit = Value(unit),
         amount = Value(amount);
-  static Insertable<Weight> custom({
+  static Insertable<WeightsData> custom({
     Expression<int>? id,
     Expression<DateTime>? created,
     Expression<String>? unit,
@@ -6480,74 +5286,45 @@ class WeightsCompanion extends UpdateCompanion<Weight> {
   }
 }
 
-class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
+class Settings extends Table with TableInfo<Settings, SettingsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $SettingsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _curveLinesMeta =
-      const VerificationMeta('curveLines');
-  @override
+  Settings(this.attachedDatabase, [this._alias]);
   late final GeneratedColumn<bool> curveLines = GeneratedColumn<bool>(
       'curve_lines', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("curve_lines" IN (0, 1))'),
-      defaultValue: const Constant(true));
-  static const VerificationMeta _dailyCaloriesMeta =
-      const VerificationMeta('dailyCalories');
-  @override
+      defaultValue: const CustomExpression('1'));
   late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
       'daily_calories', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _dailyCarbMeta =
-      const VerificationMeta('dailyCarb');
-  @override
   late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
       'daily_carb', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _dailyFatMeta =
-      const VerificationMeta('dailyFat');
-  @override
   late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
       'daily_fat', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _dailyProteinMeta =
-      const VerificationMeta('dailyProtein');
-  @override
   late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
       'daily_protein', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  static const VerificationMeta _diarySummaryMeta =
-      const VerificationMeta('diarySummary');
-  @override
   late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
       'diary_summary', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _entryUnitMeta =
-      const VerificationMeta('entryUnit');
-  @override
   late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
       'entry_unit', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _favoriteNewMeta =
-      const VerificationMeta('favoriteNew');
-  @override
   late final GeneratedColumn<bool> favoriteNew = GeneratedColumn<bool>(
       'favorite_new', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("favorite_new" IN (0, 1))'));
-  static const VerificationMeta _foodUnitMeta =
-      const VerificationMeta('foodUnit');
-  @override
   late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
       'food_unit', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
@@ -6555,145 +5332,92 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _lastGraphMeta =
-      const VerificationMeta('lastGraph');
-  @override
   late final GeneratedColumn<String> lastGraph = GeneratedColumn<String>(
       'last_graph', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant('AppMetric.calories'));
-  static const VerificationMeta _longDateFormatMeta =
-      const VerificationMeta('longDateFormat');
-  @override
+      defaultValue: const CustomExpression('\'AppMetric.calories\''));
   late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
       'long_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _offLoginMeta =
-      const VerificationMeta('offLogin');
-  @override
   late final GeneratedColumn<String> offLogin = GeneratedColumn<String>(
       'off_login', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _offPasswordMeta =
-      const VerificationMeta('offPassword');
-  @override
   late final GeneratedColumn<String> offPassword = GeneratedColumn<String>(
       'off_password', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _positiveReinforcementMeta =
-      const VerificationMeta('positiveReinforcement');
-  @override
   late final GeneratedColumn<bool> positiveReinforcement =
       GeneratedColumn<bool>('positive_reinforcement', aliasedName, false,
           type: DriftSqlType.bool,
           requiredDuringInsert: false,
           defaultConstraints: GeneratedColumn.constraintIsAlways(
               'CHECK ("positive_reinforcement" IN (0, 1))'),
-          defaultValue: const Constant(true));
-  static const VerificationMeta _remindersMeta =
-      const VerificationMeta('reminders');
-  @override
+          defaultValue: const CustomExpression('1'));
   late final GeneratedColumn<bool> reminders = GeneratedColumn<bool>(
       'reminders', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("reminders" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  static const VerificationMeta _selectEntryOnSubmitMeta =
-      const VerificationMeta('selectEntryOnSubmit');
-  @override
+      defaultValue: const CustomExpression('0'));
   late final GeneratedColumn<bool> selectEntryOnSubmit = GeneratedColumn<bool>(
       'select_entry_on_submit', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("select_entry_on_submit" IN (0, 1))'));
-  static const VerificationMeta _shortDateFormatMeta =
-      const VerificationMeta('shortDateFormat');
-  @override
   late final GeneratedColumn<String> shortDateFormat = GeneratedColumn<String>(
       'short_date_format', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _fieldsMeta = const VerificationMeta('fields');
-  @override
   late final GeneratedColumn<String> fields = GeneratedColumn<String>(
       'fields', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _showImagesMeta =
-      const VerificationMeta('showImages');
-  @override
   late final GeneratedColumn<bool> showImages = GeneratedColumn<bool>(
       'show_images', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("show_images" IN (0, 1))'),
-      defaultValue: const Constant(true));
-  static const VerificationMeta _showOthersMeta =
-      const VerificationMeta('showOthers');
-  @override
+      defaultValue: const CustomExpression('1'));
   late final GeneratedColumn<bool> showOthers = GeneratedColumn<bool>(
       'show_others', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("show_others" IN (0, 1))'));
-  static const VerificationMeta _systemColorsMeta =
-      const VerificationMeta('systemColors');
-  @override
   late final GeneratedColumn<bool> systemColors = GeneratedColumn<bool>(
       'system_colors', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("system_colors" IN (0, 1))'));
-  static const VerificationMeta _automaticBackupsMeta =
-      const VerificationMeta('automaticBackups');
-  @override
   late final GeneratedColumn<bool> automaticBackups = GeneratedColumn<bool>(
       'automatic_backups', aliasedName, false,
       type: DriftSqlType.bool,
       requiredDuringInsert: false,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("automatic_backups" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  static const VerificationMeta _tabsMeta = const VerificationMeta('tabs');
-  @override
+      defaultValue: const CustomExpression('0'));
   late final GeneratedColumn<String> tabs = GeneratedColumn<String>(
       'tabs', aliasedName, false,
       type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultValue: const Constant("DiaryPage,GraphPage,FoodPage,WeightPage"));
-  static const VerificationMeta _targetWeightMeta =
-      const VerificationMeta('targetWeight');
-  @override
+      defaultValue: const CustomExpression(
+          '\'DiaryPage,GraphPage,FoodPage,WeightPage\''));
   late final GeneratedColumn<double> targetWeight = GeneratedColumn<double>(
       'target_weight', aliasedName, true,
       type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _limitMeta = const VerificationMeta('limit');
-  @override
   late final GeneratedColumn<int> limit = GeneratedColumn<int>(
       'limit', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultValue: const Constant(30));
-  static const VerificationMeta _themeModeMeta =
-      const VerificationMeta('themeMode');
-  @override
+      defaultValue: const CustomExpression('30'));
   late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
       'theme_mode', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _backupPathMeta =
-      const VerificationMeta('backupPath');
-  @override
   late final GeneratedColumn<String> backupPath = GeneratedColumn<String>(
       'backup_path', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _convertWeightMeta =
-      const VerificationMeta('convertWeight');
-  @override
   late final GeneratedColumn<String> convertWeight = GeneratedColumn<String>(
       'convert_weight', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
@@ -6735,188 +5459,11 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   String get actualTableName => $name;
   static const String $name = 'settings';
   @override
-  VerificationContext validateIntegrity(Insertable<Setting> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('curve_lines')) {
-      context.handle(
-          _curveLinesMeta,
-          curveLines.isAcceptableOrUnknown(
-              data['curve_lines']!, _curveLinesMeta));
-    }
-    if (data.containsKey('daily_calories')) {
-      context.handle(
-          _dailyCaloriesMeta,
-          dailyCalories.isAcceptableOrUnknown(
-              data['daily_calories']!, _dailyCaloriesMeta));
-    }
-    if (data.containsKey('daily_carb')) {
-      context.handle(_dailyCarbMeta,
-          dailyCarb.isAcceptableOrUnknown(data['daily_carb']!, _dailyCarbMeta));
-    }
-    if (data.containsKey('daily_fat')) {
-      context.handle(_dailyFatMeta,
-          dailyFat.isAcceptableOrUnknown(data['daily_fat']!, _dailyFatMeta));
-    }
-    if (data.containsKey('daily_protein')) {
-      context.handle(
-          _dailyProteinMeta,
-          dailyProtein.isAcceptableOrUnknown(
-              data['daily_protein']!, _dailyProteinMeta));
-    }
-    if (data.containsKey('diary_summary')) {
-      context.handle(
-          _diarySummaryMeta,
-          diarySummary.isAcceptableOrUnknown(
-              data['diary_summary']!, _diarySummaryMeta));
-    } else if (isInserting) {
-      context.missing(_diarySummaryMeta);
-    }
-    if (data.containsKey('entry_unit')) {
-      context.handle(_entryUnitMeta,
-          entryUnit.isAcceptableOrUnknown(data['entry_unit']!, _entryUnitMeta));
-    } else if (isInserting) {
-      context.missing(_entryUnitMeta);
-    }
-    if (data.containsKey('favorite_new')) {
-      context.handle(
-          _favoriteNewMeta,
-          favoriteNew.isAcceptableOrUnknown(
-              data['favorite_new']!, _favoriteNewMeta));
-    } else if (isInserting) {
-      context.missing(_favoriteNewMeta);
-    }
-    if (data.containsKey('food_unit')) {
-      context.handle(_foodUnitMeta,
-          foodUnit.isAcceptableOrUnknown(data['food_unit']!, _foodUnitMeta));
-    } else if (isInserting) {
-      context.missing(_foodUnitMeta);
-    }
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('last_graph')) {
-      context.handle(_lastGraphMeta,
-          lastGraph.isAcceptableOrUnknown(data['last_graph']!, _lastGraphMeta));
-    }
-    if (data.containsKey('long_date_format')) {
-      context.handle(
-          _longDateFormatMeta,
-          longDateFormat.isAcceptableOrUnknown(
-              data['long_date_format']!, _longDateFormatMeta));
-    } else if (isInserting) {
-      context.missing(_longDateFormatMeta);
-    }
-    if (data.containsKey('off_login')) {
-      context.handle(_offLoginMeta,
-          offLogin.isAcceptableOrUnknown(data['off_login']!, _offLoginMeta));
-    }
-    if (data.containsKey('off_password')) {
-      context.handle(
-          _offPasswordMeta,
-          offPassword.isAcceptableOrUnknown(
-              data['off_password']!, _offPasswordMeta));
-    }
-    if (data.containsKey('positive_reinforcement')) {
-      context.handle(
-          _positiveReinforcementMeta,
-          positiveReinforcement.isAcceptableOrUnknown(
-              data['positive_reinforcement']!, _positiveReinforcementMeta));
-    }
-    if (data.containsKey('reminders')) {
-      context.handle(_remindersMeta,
-          reminders.isAcceptableOrUnknown(data['reminders']!, _remindersMeta));
-    }
-    if (data.containsKey('select_entry_on_submit')) {
-      context.handle(
-          _selectEntryOnSubmitMeta,
-          selectEntryOnSubmit.isAcceptableOrUnknown(
-              data['select_entry_on_submit']!, _selectEntryOnSubmitMeta));
-    } else if (isInserting) {
-      context.missing(_selectEntryOnSubmitMeta);
-    }
-    if (data.containsKey('short_date_format')) {
-      context.handle(
-          _shortDateFormatMeta,
-          shortDateFormat.isAcceptableOrUnknown(
-              data['short_date_format']!, _shortDateFormatMeta));
-    } else if (isInserting) {
-      context.missing(_shortDateFormatMeta);
-    }
-    if (data.containsKey('fields')) {
-      context.handle(_fieldsMeta,
-          fields.isAcceptableOrUnknown(data['fields']!, _fieldsMeta));
-    }
-    if (data.containsKey('show_images')) {
-      context.handle(
-          _showImagesMeta,
-          showImages.isAcceptableOrUnknown(
-              data['show_images']!, _showImagesMeta));
-    }
-    if (data.containsKey('show_others')) {
-      context.handle(
-          _showOthersMeta,
-          showOthers.isAcceptableOrUnknown(
-              data['show_others']!, _showOthersMeta));
-    } else if (isInserting) {
-      context.missing(_showOthersMeta);
-    }
-    if (data.containsKey('system_colors')) {
-      context.handle(
-          _systemColorsMeta,
-          systemColors.isAcceptableOrUnknown(
-              data['system_colors']!, _systemColorsMeta));
-    } else if (isInserting) {
-      context.missing(_systemColorsMeta);
-    }
-    if (data.containsKey('automatic_backups')) {
-      context.handle(
-          _automaticBackupsMeta,
-          automaticBackups.isAcceptableOrUnknown(
-              data['automatic_backups']!, _automaticBackupsMeta));
-    }
-    if (data.containsKey('tabs')) {
-      context.handle(
-          _tabsMeta, tabs.isAcceptableOrUnknown(data['tabs']!, _tabsMeta));
-    }
-    if (data.containsKey('target_weight')) {
-      context.handle(
-          _targetWeightMeta,
-          targetWeight.isAcceptableOrUnknown(
-              data['target_weight']!, _targetWeightMeta));
-    }
-    if (data.containsKey('limit')) {
-      context.handle(
-          _limitMeta, limit.isAcceptableOrUnknown(data['limit']!, _limitMeta));
-    }
-    if (data.containsKey('theme_mode')) {
-      context.handle(_themeModeMeta,
-          themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta));
-    } else if (isInserting) {
-      context.missing(_themeModeMeta);
-    }
-    if (data.containsKey('backup_path')) {
-      context.handle(
-          _backupPathMeta,
-          backupPath.isAcceptableOrUnknown(
-              data['backup_path']!, _backupPathMeta));
-    }
-    if (data.containsKey('convert_weight')) {
-      context.handle(
-          _convertWeightMeta,
-          convertWeight.isAcceptableOrUnknown(
-              data['convert_weight']!, _convertWeightMeta));
-    }
-    return context;
-  }
-
-  @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Setting map(Map<String, dynamic> data, {String? tablePrefix}) {
+  SettingsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Setting(
+    return SettingsData(
       curveLines: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}curve_lines'])!,
       dailyCalories: attachedDatabase.typeMapping
@@ -6979,12 +5526,12 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   }
 
   @override
-  $SettingsTable createAlias(String alias) {
-    return $SettingsTable(attachedDatabase, alias);
+  Settings createAlias(String alias) {
+    return Settings(attachedDatabase, alias);
   }
 }
 
-class Setting extends DataClass implements Insertable<Setting> {
+class SettingsData extends DataClass implements Insertable<SettingsData> {
   final bool curveLines;
   final int? dailyCalories;
   final int? dailyCarb;
@@ -7014,7 +5561,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final String themeMode;
   final String? backupPath;
   final String? convertWeight;
-  const Setting(
+  const SettingsData(
       {required this.curveLines,
       this.dailyCalories,
       this.dailyCarb,
@@ -7152,10 +5699,10 @@ class Setting extends DataClass implements Insertable<Setting> {
     );
   }
 
-  factory Setting.fromJson(Map<String, dynamic> json,
+  factory SettingsData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Setting(
+    return SettingsData(
       curveLines: serializer.fromJson<bool>(json['curveLines']),
       dailyCalories: serializer.fromJson<int?>(json['dailyCalories']),
       dailyCarb: serializer.fromJson<int?>(json['dailyCarb']),
@@ -7225,7 +5772,7 @@ class Setting extends DataClass implements Insertable<Setting> {
     };
   }
 
-  Setting copyWith(
+  SettingsData copyWith(
           {bool? curveLines,
           Value<int?> dailyCalories = const Value.absent(),
           Value<int?> dailyCarb = const Value.absent(),
@@ -7255,7 +5802,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           String? themeMode,
           Value<String?> backupPath = const Value.absent(),
           Value<String?> convertWeight = const Value.absent()}) =>
-      Setting(
+      SettingsData(
         curveLines: curveLines ?? this.curveLines,
         dailyCalories:
             dailyCalories.present ? dailyCalories.value : this.dailyCalories,
@@ -7291,8 +5838,8 @@ class Setting extends DataClass implements Insertable<Setting> {
         convertWeight:
             convertWeight.present ? convertWeight.value : this.convertWeight,
       );
-  Setting copyWithCompanion(SettingsCompanion data) {
-    return Setting(
+  SettingsData copyWithCompanion(SettingsCompanion data) {
+    return SettingsData(
       curveLines:
           data.curveLines.present ? data.curveLines.value : this.curveLines,
       dailyCalories: data.dailyCalories.present
@@ -7355,7 +5902,7 @@ class Setting extends DataClass implements Insertable<Setting> {
 
   @override
   String toString() {
-    return (StringBuffer('Setting(')
+    return (StringBuffer('SettingsData(')
           ..write('curveLines: $curveLines, ')
           ..write('dailyCalories: $dailyCalories, ')
           ..write('dailyCarb: $dailyCarb, ')
@@ -7424,7 +5971,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Setting &&
+      (other is SettingsData &&
           other.curveLines == this.curveLines &&
           other.dailyCalories == this.dailyCalories &&
           other.dailyCarb == this.dailyCarb &&
@@ -7456,7 +6003,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.convertWeight == this.convertWeight);
 }
 
-class SettingsCompanion extends UpdateCompanion<Setting> {
+class SettingsCompanion extends UpdateCompanion<SettingsData> {
   final Value<bool> curveLines;
   final Value<int?> dailyCalories;
   final Value<int?> dailyCarb;
@@ -7557,7 +6104,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
         showOthers = Value(showOthers),
         systemColors = Value(systemColors),
         themeMode = Value(themeMode);
-  static Insertable<Setting> custom({
+  static Insertable<SettingsData> custom({
     Expression<bool>? curveLines,
     Expression<int>? dailyCalories,
     Expression<int>? dailyCarb,
@@ -7818,3233 +6365,18 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   }
 }
 
-abstract class _$AppDatabase extends GeneratedDatabase {
-  _$AppDatabase(QueryExecutor e) : super(e);
-  $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $FoodsTable foods = $FoodsTable(this);
-  late final $EntriesTable entries = $EntriesTable(this);
-  late final $WeightsTable weights = $WeightsTable(this);
-  late final $SettingsTable settings = $SettingsTable(this);
+class DatabaseAtV32 extends GeneratedDatabase {
+  DatabaseAtV32(QueryExecutor e) : super(e);
+  late final Foods foods = Foods(this);
+  late final Entries entries = Entries(this);
+  late final Weights weights = Weights(this);
+  late final Settings settings = Settings(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [foods, entries, weights, settings];
-}
-
-typedef $$FoodsTableCreateCompanionBuilder = FoodsCompanion Function({
-  Value<String?> barcode,
-  Value<double?> addedSugarG,
-  Value<double?> alanineMg,
-  Value<double?> alcoholG,
-  Value<double?> arginineMg,
-  Value<double?> asparticAcidMg,
-  Value<double?> betaineMg,
-  Value<String?> bigImage,
-  Value<double?> biotinB7Mcg,
-  Value<double?> caffeineMg,
-  Value<double?> calciumMg,
-  Value<double?> calories,
-  Value<double?> carbohydrateG,
-  Value<double?> caroteneAlphaMcg,
-  Value<double?> caroteneBetaMcg,
-  Value<double?> chlorineMg,
-  Value<double?> cholesterolMg,
-  Value<double?> cholineMg,
-  Value<double?> copperCuMg,
-  Value<DateTime?> created,
-  Value<double?> cystineMg,
-  Value<double?> dihydrophylloquinoneMcg,
-  Value<double?> fatG,
-  Value<double?> fattyAcidsTotalMonounsaturatedMg,
-  Value<double?> fattyAcidsTotalPolyunsaturatedMg,
-  Value<bool?> favorite,
-  Value<double?> fiberG,
-  Value<double?> fluorideFMcg,
-  Value<double?> folateB9Mcg,
-  Value<double?> folateDfeMcg,
-  Value<double?> folicAcidMcg,
-  Value<double?> foodFolateMcg,
-  Value<String?> foodGroup,
-  Value<double?> fructoseG,
-  Value<double?> galactoseG,
-  Value<double?> glucoseDextroseG,
-  Value<double?> glutamicAcidMg,
-  Value<double?> glycineMg,
-  Value<double?> histidineMg,
-  Value<double?> hydroxyprolineMg,
-  Value<int> id,
-  Value<String?> imageFile,
-  Value<double?> insolubleFiberG,
-  Value<double?> ironFeMg,
-  Value<double?> isoleucineMg,
-  Value<double?> lactoseG,
-  Value<double?> leucineMg,
-  Value<double?> luteinZeaxanthinMcg,
-  Value<double?> lycopeneMcg,
-  Value<double?> lysineMg,
-  Value<double?> magnesiumMg,
-  Value<double?> maltoseG,
-  Value<double?> manganeseMg,
-  Value<double?> menaquinone4Mcg,
-  Value<double?> methionineMg,
-  Value<double?> molybdenumMcg,
-  required String name,
-  Value<double?> netCarbsG,
-  Value<double?> niacinB3Mg,
-  Value<double?> omega3sMg,
-  Value<double?> omega6sMg,
-  Value<double?> pantothenicAcidB5Mg,
-  Value<double?> phenylalanineMg,
-  Value<double?> phosphorusPMg,
-  Value<double?> potassiumKMg,
-  Value<double?> pralScore,
-  Value<double?> prolineMg,
-  Value<double?> proteinG,
-  Value<double?> retinolMcg,
-  Value<double?> riboflavinB2Mg,
-  Value<double?> saturatedFatsG,
-  Value<double?> seleniumSeMcg,
-  Value<double?> serineMg,
-  Value<String?> servingDescription1G,
-  Value<String?> servingDescription2G,
-  Value<String?> servingDescription3G,
-  Value<String?> servingDescription4G,
-  Value<String?> servingDescription5G,
-  Value<String?> servingDescription6G,
-  Value<String?> servingDescription7G,
-  Value<String?> servingDescription8G,
-  Value<String?> servingDescription9G,
-  Value<double?> servingSize,
-  Value<String?> servingUnit,
-  Value<double?> servingWeight1G,
-  Value<double?> servingWeight2G,
-  Value<double?> servingWeight3G,
-  Value<double?> servingWeight4G,
-  Value<double?> servingWeight5G,
-  Value<double?> servingWeight6G,
-  Value<double?> servingWeight7G,
-  Value<double?> servingWeight8G,
-  Value<double?> servingWeight9G,
-  Value<String?> smallImage,
-  Value<double?> sodiumMg,
-  Value<double?> solubleFiberG,
-  Value<double?> starchG,
-  Value<double?> sucroseG,
-  Value<double?> sugarsG,
-  Value<double?> theobromineMg,
-  Value<double?> thiaminB1Mg,
-  Value<double?> threonineMg,
-  Value<double?> totalSugarAlcoholsG,
-  Value<double?> transFattyAcidsG,
-  Value<double?> tryptophanMg,
-  Value<double?> tyrosineMg,
-  Value<double?> u183N3CCCAlaMg,
-  Value<double?> u200calorieWeightG,
-  Value<double?> u205N3EpaMg,
-  Value<double?> u225N3DpaMg,
-  Value<double?> u226N3DhaMg,
-  Value<double?> valineMg,
-  Value<double?> vitaminAIuIu,
-  Value<double?> vitaminARaeMcg,
-  Value<double?> vitaminB12Mcg,
-  Value<double?> vitaminB6Mg,
-  Value<double?> vitaminCMg,
-  Value<double?> vitaminD2ErgocalciferolMcg,
-  Value<double?> vitaminD3CholecalciferolMcg,
-  Value<double?> vitaminDIuIu,
-  Value<double?> vitaminDMcg,
-  Value<double?> vitaminEAlphaTocopherolMg,
-  Value<double?> vitaminKMcg,
-  Value<double?> waterG,
-  Value<double?> zincZnMg,
-});
-typedef $$FoodsTableUpdateCompanionBuilder = FoodsCompanion Function({
-  Value<String?> barcode,
-  Value<double?> addedSugarG,
-  Value<double?> alanineMg,
-  Value<double?> alcoholG,
-  Value<double?> arginineMg,
-  Value<double?> asparticAcidMg,
-  Value<double?> betaineMg,
-  Value<String?> bigImage,
-  Value<double?> biotinB7Mcg,
-  Value<double?> caffeineMg,
-  Value<double?> calciumMg,
-  Value<double?> calories,
-  Value<double?> carbohydrateG,
-  Value<double?> caroteneAlphaMcg,
-  Value<double?> caroteneBetaMcg,
-  Value<double?> chlorineMg,
-  Value<double?> cholesterolMg,
-  Value<double?> cholineMg,
-  Value<double?> copperCuMg,
-  Value<DateTime?> created,
-  Value<double?> cystineMg,
-  Value<double?> dihydrophylloquinoneMcg,
-  Value<double?> fatG,
-  Value<double?> fattyAcidsTotalMonounsaturatedMg,
-  Value<double?> fattyAcidsTotalPolyunsaturatedMg,
-  Value<bool?> favorite,
-  Value<double?> fiberG,
-  Value<double?> fluorideFMcg,
-  Value<double?> folateB9Mcg,
-  Value<double?> folateDfeMcg,
-  Value<double?> folicAcidMcg,
-  Value<double?> foodFolateMcg,
-  Value<String?> foodGroup,
-  Value<double?> fructoseG,
-  Value<double?> galactoseG,
-  Value<double?> glucoseDextroseG,
-  Value<double?> glutamicAcidMg,
-  Value<double?> glycineMg,
-  Value<double?> histidineMg,
-  Value<double?> hydroxyprolineMg,
-  Value<int> id,
-  Value<String?> imageFile,
-  Value<double?> insolubleFiberG,
-  Value<double?> ironFeMg,
-  Value<double?> isoleucineMg,
-  Value<double?> lactoseG,
-  Value<double?> leucineMg,
-  Value<double?> luteinZeaxanthinMcg,
-  Value<double?> lycopeneMcg,
-  Value<double?> lysineMg,
-  Value<double?> magnesiumMg,
-  Value<double?> maltoseG,
-  Value<double?> manganeseMg,
-  Value<double?> menaquinone4Mcg,
-  Value<double?> methionineMg,
-  Value<double?> molybdenumMcg,
-  Value<String> name,
-  Value<double?> netCarbsG,
-  Value<double?> niacinB3Mg,
-  Value<double?> omega3sMg,
-  Value<double?> omega6sMg,
-  Value<double?> pantothenicAcidB5Mg,
-  Value<double?> phenylalanineMg,
-  Value<double?> phosphorusPMg,
-  Value<double?> potassiumKMg,
-  Value<double?> pralScore,
-  Value<double?> prolineMg,
-  Value<double?> proteinG,
-  Value<double?> retinolMcg,
-  Value<double?> riboflavinB2Mg,
-  Value<double?> saturatedFatsG,
-  Value<double?> seleniumSeMcg,
-  Value<double?> serineMg,
-  Value<String?> servingDescription1G,
-  Value<String?> servingDescription2G,
-  Value<String?> servingDescription3G,
-  Value<String?> servingDescription4G,
-  Value<String?> servingDescription5G,
-  Value<String?> servingDescription6G,
-  Value<String?> servingDescription7G,
-  Value<String?> servingDescription8G,
-  Value<String?> servingDescription9G,
-  Value<double?> servingSize,
-  Value<String?> servingUnit,
-  Value<double?> servingWeight1G,
-  Value<double?> servingWeight2G,
-  Value<double?> servingWeight3G,
-  Value<double?> servingWeight4G,
-  Value<double?> servingWeight5G,
-  Value<double?> servingWeight6G,
-  Value<double?> servingWeight7G,
-  Value<double?> servingWeight8G,
-  Value<double?> servingWeight9G,
-  Value<String?> smallImage,
-  Value<double?> sodiumMg,
-  Value<double?> solubleFiberG,
-  Value<double?> starchG,
-  Value<double?> sucroseG,
-  Value<double?> sugarsG,
-  Value<double?> theobromineMg,
-  Value<double?> thiaminB1Mg,
-  Value<double?> threonineMg,
-  Value<double?> totalSugarAlcoholsG,
-  Value<double?> transFattyAcidsG,
-  Value<double?> tryptophanMg,
-  Value<double?> tyrosineMg,
-  Value<double?> u183N3CCCAlaMg,
-  Value<double?> u200calorieWeightG,
-  Value<double?> u205N3EpaMg,
-  Value<double?> u225N3DpaMg,
-  Value<double?> u226N3DhaMg,
-  Value<double?> valineMg,
-  Value<double?> vitaminAIuIu,
-  Value<double?> vitaminARaeMcg,
-  Value<double?> vitaminB12Mcg,
-  Value<double?> vitaminB6Mg,
-  Value<double?> vitaminCMg,
-  Value<double?> vitaminD2ErgocalciferolMcg,
-  Value<double?> vitaminD3CholecalciferolMcg,
-  Value<double?> vitaminDIuIu,
-  Value<double?> vitaminDMcg,
-  Value<double?> vitaminEAlphaTocopherolMg,
-  Value<double?> vitaminKMcg,
-  Value<double?> waterG,
-  Value<double?> zincZnMg,
-});
-
-final class $$FoodsTableReferences
-    extends BaseReferences<_$AppDatabase, $FoodsTable, Food> {
-  $$FoodsTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static MultiTypedResultKey<$EntriesTable, List<Entry>> _entriesRefsTable(
-          _$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(db.entries,
-          aliasName: $_aliasNameGenerator(db.foods.id, db.entries.food));
-
-  $$EntriesTableProcessedTableManager get entriesRefs {
-    final manager = $$EntriesTableTableManager($_db, $_db.entries)
-        .filter((f) => f.food.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_entriesRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
-
-class $$FoodsTableFilterComposer extends Composer<_$AppDatabase, $FoodsTable> {
-  $$FoodsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get barcode => $composableBuilder(
-      column: $table.barcode, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get addedSugarG => $composableBuilder(
-      column: $table.addedSugarG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get alanineMg => $composableBuilder(
-      column: $table.alanineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get alcoholG => $composableBuilder(
-      column: $table.alcoholG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get arginineMg => $composableBuilder(
-      column: $table.arginineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get asparticAcidMg => $composableBuilder(
-      column: $table.asparticAcidMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get betaineMg => $composableBuilder(
-      column: $table.betaineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get bigImage => $composableBuilder(
-      column: $table.bigImage, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get biotinB7Mcg => $composableBuilder(
-      column: $table.biotinB7Mcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get caffeineMg => $composableBuilder(
-      column: $table.caffeineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get calciumMg => $composableBuilder(
-      column: $table.calciumMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get calories => $composableBuilder(
-      column: $table.calories, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get carbohydrateG => $composableBuilder(
-      column: $table.carbohydrateG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get caroteneAlphaMcg => $composableBuilder(
-      column: $table.caroteneAlphaMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get caroteneBetaMcg => $composableBuilder(
-      column: $table.caroteneBetaMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get chlorineMg => $composableBuilder(
-      column: $table.chlorineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get cholesterolMg => $composableBuilder(
-      column: $table.cholesterolMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get cholineMg => $composableBuilder(
-      column: $table.cholineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get copperCuMg => $composableBuilder(
-      column: $table.copperCuMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get cystineMg => $composableBuilder(
-      column: $table.cystineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get dihydrophylloquinoneMcg => $composableBuilder(
-      column: $table.dihydrophylloquinoneMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fatG => $composableBuilder(
-      column: $table.fatG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fattyAcidsTotalMonounsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalMonounsaturatedMg,
-          builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fattyAcidsTotalPolyunsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalPolyunsaturatedMg,
-          builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get favorite => $composableBuilder(
-      column: $table.favorite, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fiberG => $composableBuilder(
-      column: $table.fiberG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fluorideFMcg => $composableBuilder(
-      column: $table.fluorideFMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get folateB9Mcg => $composableBuilder(
-      column: $table.folateB9Mcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get folateDfeMcg => $composableBuilder(
-      column: $table.folateDfeMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get folicAcidMcg => $composableBuilder(
-      column: $table.folicAcidMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get foodFolateMcg => $composableBuilder(
-      column: $table.foodFolateMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get foodGroup => $composableBuilder(
-      column: $table.foodGroup, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fructoseG => $composableBuilder(
-      column: $table.fructoseG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get galactoseG => $composableBuilder(
-      column: $table.galactoseG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get glucoseDextroseG => $composableBuilder(
-      column: $table.glucoseDextroseG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get glutamicAcidMg => $composableBuilder(
-      column: $table.glutamicAcidMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get glycineMg => $composableBuilder(
-      column: $table.glycineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get histidineMg => $composableBuilder(
-      column: $table.histidineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get hydroxyprolineMg => $composableBuilder(
-      column: $table.hydroxyprolineMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get imageFile => $composableBuilder(
-      column: $table.imageFile, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get insolubleFiberG => $composableBuilder(
-      column: $table.insolubleFiberG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get ironFeMg => $composableBuilder(
-      column: $table.ironFeMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get isoleucineMg => $composableBuilder(
-      column: $table.isoleucineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get lactoseG => $composableBuilder(
-      column: $table.lactoseG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get leucineMg => $composableBuilder(
-      column: $table.leucineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get luteinZeaxanthinMcg => $composableBuilder(
-      column: $table.luteinZeaxanthinMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get lycopeneMcg => $composableBuilder(
-      column: $table.lycopeneMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get lysineMg => $composableBuilder(
-      column: $table.lysineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get magnesiumMg => $composableBuilder(
-      column: $table.magnesiumMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get maltoseG => $composableBuilder(
-      column: $table.maltoseG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get manganeseMg => $composableBuilder(
-      column: $table.manganeseMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get menaquinone4Mcg => $composableBuilder(
-      column: $table.menaquinone4Mcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get methionineMg => $composableBuilder(
-      column: $table.methionineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get molybdenumMcg => $composableBuilder(
-      column: $table.molybdenumMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get netCarbsG => $composableBuilder(
-      column: $table.netCarbsG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get niacinB3Mg => $composableBuilder(
-      column: $table.niacinB3Mg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get omega3sMg => $composableBuilder(
-      column: $table.omega3sMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get omega6sMg => $composableBuilder(
-      column: $table.omega6sMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get pantothenicAcidB5Mg => $composableBuilder(
-      column: $table.pantothenicAcidB5Mg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get phenylalanineMg => $composableBuilder(
-      column: $table.phenylalanineMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get phosphorusPMg => $composableBuilder(
-      column: $table.phosphorusPMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get potassiumKMg => $composableBuilder(
-      column: $table.potassiumKMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get pralScore => $composableBuilder(
-      column: $table.pralScore, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get prolineMg => $composableBuilder(
-      column: $table.prolineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get proteinG => $composableBuilder(
-      column: $table.proteinG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get retinolMcg => $composableBuilder(
-      column: $table.retinolMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get riboflavinB2Mg => $composableBuilder(
-      column: $table.riboflavinB2Mg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get saturatedFatsG => $composableBuilder(
-      column: $table.saturatedFatsG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get seleniumSeMcg => $composableBuilder(
-      column: $table.seleniumSeMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get serineMg => $composableBuilder(
-      column: $table.serineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription1G => $composableBuilder(
-      column: $table.servingDescription1G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription2G => $composableBuilder(
-      column: $table.servingDescription2G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription3G => $composableBuilder(
-      column: $table.servingDescription3G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription4G => $composableBuilder(
-      column: $table.servingDescription4G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription5G => $composableBuilder(
-      column: $table.servingDescription5G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription6G => $composableBuilder(
-      column: $table.servingDescription6G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription7G => $composableBuilder(
-      column: $table.servingDescription7G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription8G => $composableBuilder(
-      column: $table.servingDescription8G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingDescription9G => $composableBuilder(
-      column: $table.servingDescription9G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingSize => $composableBuilder(
-      column: $table.servingSize, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get servingUnit => $composableBuilder(
-      column: $table.servingUnit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight1G => $composableBuilder(
-      column: $table.servingWeight1G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight2G => $composableBuilder(
-      column: $table.servingWeight2G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight3G => $composableBuilder(
-      column: $table.servingWeight3G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight4G => $composableBuilder(
-      column: $table.servingWeight4G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight5G => $composableBuilder(
-      column: $table.servingWeight5G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight6G => $composableBuilder(
-      column: $table.servingWeight6G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight7G => $composableBuilder(
-      column: $table.servingWeight7G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight8G => $composableBuilder(
-      column: $table.servingWeight8G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get servingWeight9G => $composableBuilder(
-      column: $table.servingWeight9G,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get smallImage => $composableBuilder(
-      column: $table.smallImage, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get sodiumMg => $composableBuilder(
-      column: $table.sodiumMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get solubleFiberG => $composableBuilder(
-      column: $table.solubleFiberG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get starchG => $composableBuilder(
-      column: $table.starchG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get sucroseG => $composableBuilder(
-      column: $table.sucroseG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get sugarsG => $composableBuilder(
-      column: $table.sugarsG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get theobromineMg => $composableBuilder(
-      column: $table.theobromineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get thiaminB1Mg => $composableBuilder(
-      column: $table.thiaminB1Mg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get threonineMg => $composableBuilder(
-      column: $table.threonineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get totalSugarAlcoholsG => $composableBuilder(
-      column: $table.totalSugarAlcoholsG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get transFattyAcidsG => $composableBuilder(
-      column: $table.transFattyAcidsG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get tryptophanMg => $composableBuilder(
-      column: $table.tryptophanMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get tyrosineMg => $composableBuilder(
-      column: $table.tyrosineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get u183N3CCCAlaMg => $composableBuilder(
-      column: $table.u183N3CCCAlaMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get u200calorieWeightG => $composableBuilder(
-      column: $table.u200calorieWeightG,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get u205N3EpaMg => $composableBuilder(
-      column: $table.u205N3EpaMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get u225N3DpaMg => $composableBuilder(
-      column: $table.u225N3DpaMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get u226N3DhaMg => $composableBuilder(
-      column: $table.u226N3DhaMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get valineMg => $composableBuilder(
-      column: $table.valineMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminAIuIu => $composableBuilder(
-      column: $table.vitaminAIuIu, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminARaeMcg => $composableBuilder(
-      column: $table.vitaminARaeMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminB12Mcg => $composableBuilder(
-      column: $table.vitaminB12Mcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminB6Mg => $composableBuilder(
-      column: $table.vitaminB6Mg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminCMg => $composableBuilder(
-      column: $table.vitaminCMg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
-      column: $table.vitaminD2ErgocalciferolMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
-      column: $table.vitaminD3CholecalciferolMcg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminDIuIu => $composableBuilder(
-      column: $table.vitaminDIuIu, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminDMcg => $composableBuilder(
-      column: $table.vitaminDMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
-      column: $table.vitaminEAlphaTocopherolMg,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get vitaminKMcg => $composableBuilder(
-      column: $table.vitaminKMcg, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get waterG => $composableBuilder(
-      column: $table.waterG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get zincZnMg => $composableBuilder(
-      column: $table.zincZnMg, builder: (column) => ColumnFilters(column));
-
-  Expression<bool> entriesRefs(
-      Expression<bool> Function($$EntriesTableFilterComposer f) f) {
-    final $$EntriesTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.entries,
-        getReferencedColumn: (t) => t.food,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$EntriesTableFilterComposer(
-              $db: $db,
-              $table: $db.entries,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$FoodsTableOrderingComposer
-    extends Composer<_$AppDatabase, $FoodsTable> {
-  $$FoodsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get barcode => $composableBuilder(
-      column: $table.barcode, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get addedSugarG => $composableBuilder(
-      column: $table.addedSugarG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get alanineMg => $composableBuilder(
-      column: $table.alanineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get alcoholG => $composableBuilder(
-      column: $table.alcoholG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get arginineMg => $composableBuilder(
-      column: $table.arginineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get asparticAcidMg => $composableBuilder(
-      column: $table.asparticAcidMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get betaineMg => $composableBuilder(
-      column: $table.betaineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get bigImage => $composableBuilder(
-      column: $table.bigImage, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get biotinB7Mcg => $composableBuilder(
-      column: $table.biotinB7Mcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get caffeineMg => $composableBuilder(
-      column: $table.caffeineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get calciumMg => $composableBuilder(
-      column: $table.calciumMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get calories => $composableBuilder(
-      column: $table.calories, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get carbohydrateG => $composableBuilder(
-      column: $table.carbohydrateG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get caroteneAlphaMcg => $composableBuilder(
-      column: $table.caroteneAlphaMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get caroteneBetaMcg => $composableBuilder(
-      column: $table.caroteneBetaMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get chlorineMg => $composableBuilder(
-      column: $table.chlorineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get cholesterolMg => $composableBuilder(
-      column: $table.cholesterolMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get cholineMg => $composableBuilder(
-      column: $table.cholineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get copperCuMg => $composableBuilder(
-      column: $table.copperCuMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get cystineMg => $composableBuilder(
-      column: $table.cystineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get dihydrophylloquinoneMcg => $composableBuilder(
-      column: $table.dihydrophylloquinoneMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fatG => $composableBuilder(
-      column: $table.fatG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fattyAcidsTotalMonounsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalMonounsaturatedMg,
-          builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fattyAcidsTotalPolyunsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalPolyunsaturatedMg,
-          builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get favorite => $composableBuilder(
-      column: $table.favorite, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fiberG => $composableBuilder(
-      column: $table.fiberG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fluorideFMcg => $composableBuilder(
-      column: $table.fluorideFMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get folateB9Mcg => $composableBuilder(
-      column: $table.folateB9Mcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get folateDfeMcg => $composableBuilder(
-      column: $table.folateDfeMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get folicAcidMcg => $composableBuilder(
-      column: $table.folicAcidMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get foodFolateMcg => $composableBuilder(
-      column: $table.foodFolateMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get foodGroup => $composableBuilder(
-      column: $table.foodGroup, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fructoseG => $composableBuilder(
-      column: $table.fructoseG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get galactoseG => $composableBuilder(
-      column: $table.galactoseG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get glucoseDextroseG => $composableBuilder(
-      column: $table.glucoseDextroseG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get glutamicAcidMg => $composableBuilder(
-      column: $table.glutamicAcidMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get glycineMg => $composableBuilder(
-      column: $table.glycineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get histidineMg => $composableBuilder(
-      column: $table.histidineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get hydroxyprolineMg => $composableBuilder(
-      column: $table.hydroxyprolineMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get imageFile => $composableBuilder(
-      column: $table.imageFile, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get insolubleFiberG => $composableBuilder(
-      column: $table.insolubleFiberG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get ironFeMg => $composableBuilder(
-      column: $table.ironFeMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get isoleucineMg => $composableBuilder(
-      column: $table.isoleucineMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get lactoseG => $composableBuilder(
-      column: $table.lactoseG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get leucineMg => $composableBuilder(
-      column: $table.leucineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get luteinZeaxanthinMcg => $composableBuilder(
-      column: $table.luteinZeaxanthinMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get lycopeneMcg => $composableBuilder(
-      column: $table.lycopeneMcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get lysineMg => $composableBuilder(
-      column: $table.lysineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get magnesiumMg => $composableBuilder(
-      column: $table.magnesiumMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get maltoseG => $composableBuilder(
-      column: $table.maltoseG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get manganeseMg => $composableBuilder(
-      column: $table.manganeseMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get menaquinone4Mcg => $composableBuilder(
-      column: $table.menaquinone4Mcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get methionineMg => $composableBuilder(
-      column: $table.methionineMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get molybdenumMcg => $composableBuilder(
-      column: $table.molybdenumMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get netCarbsG => $composableBuilder(
-      column: $table.netCarbsG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get niacinB3Mg => $composableBuilder(
-      column: $table.niacinB3Mg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get omega3sMg => $composableBuilder(
-      column: $table.omega3sMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get omega6sMg => $composableBuilder(
-      column: $table.omega6sMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get pantothenicAcidB5Mg => $composableBuilder(
-      column: $table.pantothenicAcidB5Mg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get phenylalanineMg => $composableBuilder(
-      column: $table.phenylalanineMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get phosphorusPMg => $composableBuilder(
-      column: $table.phosphorusPMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get potassiumKMg => $composableBuilder(
-      column: $table.potassiumKMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get pralScore => $composableBuilder(
-      column: $table.pralScore, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get prolineMg => $composableBuilder(
-      column: $table.prolineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get proteinG => $composableBuilder(
-      column: $table.proteinG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get retinolMcg => $composableBuilder(
-      column: $table.retinolMcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get riboflavinB2Mg => $composableBuilder(
-      column: $table.riboflavinB2Mg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get saturatedFatsG => $composableBuilder(
-      column: $table.saturatedFatsG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get seleniumSeMcg => $composableBuilder(
-      column: $table.seleniumSeMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get serineMg => $composableBuilder(
-      column: $table.serineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription1G => $composableBuilder(
-      column: $table.servingDescription1G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription2G => $composableBuilder(
-      column: $table.servingDescription2G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription3G => $composableBuilder(
-      column: $table.servingDescription3G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription4G => $composableBuilder(
-      column: $table.servingDescription4G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription5G => $composableBuilder(
-      column: $table.servingDescription5G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription6G => $composableBuilder(
-      column: $table.servingDescription6G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription7G => $composableBuilder(
-      column: $table.servingDescription7G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription8G => $composableBuilder(
-      column: $table.servingDescription8G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingDescription9G => $composableBuilder(
-      column: $table.servingDescription9G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingSize => $composableBuilder(
-      column: $table.servingSize, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get servingUnit => $composableBuilder(
-      column: $table.servingUnit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight1G => $composableBuilder(
-      column: $table.servingWeight1G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight2G => $composableBuilder(
-      column: $table.servingWeight2G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight3G => $composableBuilder(
-      column: $table.servingWeight3G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight4G => $composableBuilder(
-      column: $table.servingWeight4G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight5G => $composableBuilder(
-      column: $table.servingWeight5G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight6G => $composableBuilder(
-      column: $table.servingWeight6G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight7G => $composableBuilder(
-      column: $table.servingWeight7G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight8G => $composableBuilder(
-      column: $table.servingWeight8G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get servingWeight9G => $composableBuilder(
-      column: $table.servingWeight9G,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get smallImage => $composableBuilder(
-      column: $table.smallImage, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get sodiumMg => $composableBuilder(
-      column: $table.sodiumMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get solubleFiberG => $composableBuilder(
-      column: $table.solubleFiberG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get starchG => $composableBuilder(
-      column: $table.starchG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get sucroseG => $composableBuilder(
-      column: $table.sucroseG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get sugarsG => $composableBuilder(
-      column: $table.sugarsG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get theobromineMg => $composableBuilder(
-      column: $table.theobromineMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get thiaminB1Mg => $composableBuilder(
-      column: $table.thiaminB1Mg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get threonineMg => $composableBuilder(
-      column: $table.threonineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get totalSugarAlcoholsG => $composableBuilder(
-      column: $table.totalSugarAlcoholsG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get transFattyAcidsG => $composableBuilder(
-      column: $table.transFattyAcidsG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get tryptophanMg => $composableBuilder(
-      column: $table.tryptophanMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get tyrosineMg => $composableBuilder(
-      column: $table.tyrosineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get u183N3CCCAlaMg => $composableBuilder(
-      column: $table.u183N3CCCAlaMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get u200calorieWeightG => $composableBuilder(
-      column: $table.u200calorieWeightG,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get u205N3EpaMg => $composableBuilder(
-      column: $table.u205N3EpaMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get u225N3DpaMg => $composableBuilder(
-      column: $table.u225N3DpaMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get u226N3DhaMg => $composableBuilder(
-      column: $table.u226N3DhaMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get valineMg => $composableBuilder(
-      column: $table.valineMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminAIuIu => $composableBuilder(
-      column: $table.vitaminAIuIu,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminARaeMcg => $composableBuilder(
-      column: $table.vitaminARaeMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminB12Mcg => $composableBuilder(
-      column: $table.vitaminB12Mcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminB6Mg => $composableBuilder(
-      column: $table.vitaminB6Mg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminCMg => $composableBuilder(
-      column: $table.vitaminCMg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
-      column: $table.vitaminD2ErgocalciferolMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
-      column: $table.vitaminD3CholecalciferolMcg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminDIuIu => $composableBuilder(
-      column: $table.vitaminDIuIu,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminDMcg => $composableBuilder(
-      column: $table.vitaminDMcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
-      column: $table.vitaminEAlphaTocopherolMg,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get vitaminKMcg => $composableBuilder(
-      column: $table.vitaminKMcg, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get waterG => $composableBuilder(
-      column: $table.waterG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get zincZnMg => $composableBuilder(
-      column: $table.zincZnMg, builder: (column) => ColumnOrderings(column));
-}
-
-class $$FoodsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FoodsTable> {
-  $$FoodsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get barcode =>
-      $composableBuilder(column: $table.barcode, builder: (column) => column);
-
-  GeneratedColumn<double> get addedSugarG => $composableBuilder(
-      column: $table.addedSugarG, builder: (column) => column);
-
-  GeneratedColumn<double> get alanineMg =>
-      $composableBuilder(column: $table.alanineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get alcoholG =>
-      $composableBuilder(column: $table.alcoholG, builder: (column) => column);
-
-  GeneratedColumn<double> get arginineMg => $composableBuilder(
-      column: $table.arginineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get asparticAcidMg => $composableBuilder(
-      column: $table.asparticAcidMg, builder: (column) => column);
-
-  GeneratedColumn<double> get betaineMg =>
-      $composableBuilder(column: $table.betaineMg, builder: (column) => column);
-
-  GeneratedColumn<String> get bigImage =>
-      $composableBuilder(column: $table.bigImage, builder: (column) => column);
-
-  GeneratedColumn<double> get biotinB7Mcg => $composableBuilder(
-      column: $table.biotinB7Mcg, builder: (column) => column);
-
-  GeneratedColumn<double> get caffeineMg => $composableBuilder(
-      column: $table.caffeineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get calciumMg =>
-      $composableBuilder(column: $table.calciumMg, builder: (column) => column);
-
-  GeneratedColumn<double> get calories =>
-      $composableBuilder(column: $table.calories, builder: (column) => column);
-
-  GeneratedColumn<double> get carbohydrateG => $composableBuilder(
-      column: $table.carbohydrateG, builder: (column) => column);
-
-  GeneratedColumn<double> get caroteneAlphaMcg => $composableBuilder(
-      column: $table.caroteneAlphaMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get caroteneBetaMcg => $composableBuilder(
-      column: $table.caroteneBetaMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get chlorineMg => $composableBuilder(
-      column: $table.chlorineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get cholesterolMg => $composableBuilder(
-      column: $table.cholesterolMg, builder: (column) => column);
-
-  GeneratedColumn<double> get cholineMg =>
-      $composableBuilder(column: $table.cholineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get copperCuMg => $composableBuilder(
-      column: $table.copperCuMg, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get created =>
-      $composableBuilder(column: $table.created, builder: (column) => column);
-
-  GeneratedColumn<double> get cystineMg =>
-      $composableBuilder(column: $table.cystineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get dihydrophylloquinoneMcg => $composableBuilder(
-      column: $table.dihydrophylloquinoneMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get fatG =>
-      $composableBuilder(column: $table.fatG, builder: (column) => column);
-
-  GeneratedColumn<double> get fattyAcidsTotalMonounsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalMonounsaturatedMg,
-          builder: (column) => column);
-
-  GeneratedColumn<double> get fattyAcidsTotalPolyunsaturatedMg =>
-      $composableBuilder(
-          column: $table.fattyAcidsTotalPolyunsaturatedMg,
-          builder: (column) => column);
-
-  GeneratedColumn<bool> get favorite =>
-      $composableBuilder(column: $table.favorite, builder: (column) => column);
-
-  GeneratedColumn<double> get fiberG =>
-      $composableBuilder(column: $table.fiberG, builder: (column) => column);
-
-  GeneratedColumn<double> get fluorideFMcg => $composableBuilder(
-      column: $table.fluorideFMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get folateB9Mcg => $composableBuilder(
-      column: $table.folateB9Mcg, builder: (column) => column);
-
-  GeneratedColumn<double> get folateDfeMcg => $composableBuilder(
-      column: $table.folateDfeMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get folicAcidMcg => $composableBuilder(
-      column: $table.folicAcidMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get foodFolateMcg => $composableBuilder(
-      column: $table.foodFolateMcg, builder: (column) => column);
-
-  GeneratedColumn<String> get foodGroup =>
-      $composableBuilder(column: $table.foodGroup, builder: (column) => column);
-
-  GeneratedColumn<double> get fructoseG =>
-      $composableBuilder(column: $table.fructoseG, builder: (column) => column);
-
-  GeneratedColumn<double> get galactoseG => $composableBuilder(
-      column: $table.galactoseG, builder: (column) => column);
-
-  GeneratedColumn<double> get glucoseDextroseG => $composableBuilder(
-      column: $table.glucoseDextroseG, builder: (column) => column);
-
-  GeneratedColumn<double> get glutamicAcidMg => $composableBuilder(
-      column: $table.glutamicAcidMg, builder: (column) => column);
-
-  GeneratedColumn<double> get glycineMg =>
-      $composableBuilder(column: $table.glycineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get histidineMg => $composableBuilder(
-      column: $table.histidineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get hydroxyprolineMg => $composableBuilder(
-      column: $table.hydroxyprolineMg, builder: (column) => column);
-
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get imageFile =>
-      $composableBuilder(column: $table.imageFile, builder: (column) => column);
-
-  GeneratedColumn<double> get insolubleFiberG => $composableBuilder(
-      column: $table.insolubleFiberG, builder: (column) => column);
-
-  GeneratedColumn<double> get ironFeMg =>
-      $composableBuilder(column: $table.ironFeMg, builder: (column) => column);
-
-  GeneratedColumn<double> get isoleucineMg => $composableBuilder(
-      column: $table.isoleucineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get lactoseG =>
-      $composableBuilder(column: $table.lactoseG, builder: (column) => column);
-
-  GeneratedColumn<double> get leucineMg =>
-      $composableBuilder(column: $table.leucineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get luteinZeaxanthinMcg => $composableBuilder(
-      column: $table.luteinZeaxanthinMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get lycopeneMcg => $composableBuilder(
-      column: $table.lycopeneMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get lysineMg =>
-      $composableBuilder(column: $table.lysineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get magnesiumMg => $composableBuilder(
-      column: $table.magnesiumMg, builder: (column) => column);
-
-  GeneratedColumn<double> get maltoseG =>
-      $composableBuilder(column: $table.maltoseG, builder: (column) => column);
-
-  GeneratedColumn<double> get manganeseMg => $composableBuilder(
-      column: $table.manganeseMg, builder: (column) => column);
-
-  GeneratedColumn<double> get menaquinone4Mcg => $composableBuilder(
-      column: $table.menaquinone4Mcg, builder: (column) => column);
-
-  GeneratedColumn<double> get methionineMg => $composableBuilder(
-      column: $table.methionineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get molybdenumMcg => $composableBuilder(
-      column: $table.molybdenumMcg, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<double> get netCarbsG =>
-      $composableBuilder(column: $table.netCarbsG, builder: (column) => column);
-
-  GeneratedColumn<double> get niacinB3Mg => $composableBuilder(
-      column: $table.niacinB3Mg, builder: (column) => column);
-
-  GeneratedColumn<double> get omega3sMg =>
-      $composableBuilder(column: $table.omega3sMg, builder: (column) => column);
-
-  GeneratedColumn<double> get omega6sMg =>
-      $composableBuilder(column: $table.omega6sMg, builder: (column) => column);
-
-  GeneratedColumn<double> get pantothenicAcidB5Mg => $composableBuilder(
-      column: $table.pantothenicAcidB5Mg, builder: (column) => column);
-
-  GeneratedColumn<double> get phenylalanineMg => $composableBuilder(
-      column: $table.phenylalanineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get phosphorusPMg => $composableBuilder(
-      column: $table.phosphorusPMg, builder: (column) => column);
-
-  GeneratedColumn<double> get potassiumKMg => $composableBuilder(
-      column: $table.potassiumKMg, builder: (column) => column);
-
-  GeneratedColumn<double> get pralScore =>
-      $composableBuilder(column: $table.pralScore, builder: (column) => column);
-
-  GeneratedColumn<double> get prolineMg =>
-      $composableBuilder(column: $table.prolineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get proteinG =>
-      $composableBuilder(column: $table.proteinG, builder: (column) => column);
-
-  GeneratedColumn<double> get retinolMcg => $composableBuilder(
-      column: $table.retinolMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get riboflavinB2Mg => $composableBuilder(
-      column: $table.riboflavinB2Mg, builder: (column) => column);
-
-  GeneratedColumn<double> get saturatedFatsG => $composableBuilder(
-      column: $table.saturatedFatsG, builder: (column) => column);
-
-  GeneratedColumn<double> get seleniumSeMcg => $composableBuilder(
-      column: $table.seleniumSeMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get serineMg =>
-      $composableBuilder(column: $table.serineMg, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription1G => $composableBuilder(
-      column: $table.servingDescription1G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription2G => $composableBuilder(
-      column: $table.servingDescription2G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription3G => $composableBuilder(
-      column: $table.servingDescription3G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription4G => $composableBuilder(
-      column: $table.servingDescription4G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription5G => $composableBuilder(
-      column: $table.servingDescription5G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription6G => $composableBuilder(
-      column: $table.servingDescription6G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription7G => $composableBuilder(
-      column: $table.servingDescription7G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription8G => $composableBuilder(
-      column: $table.servingDescription8G, builder: (column) => column);
-
-  GeneratedColumn<String> get servingDescription9G => $composableBuilder(
-      column: $table.servingDescription9G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingSize => $composableBuilder(
-      column: $table.servingSize, builder: (column) => column);
-
-  GeneratedColumn<String> get servingUnit => $composableBuilder(
-      column: $table.servingUnit, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight1G => $composableBuilder(
-      column: $table.servingWeight1G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight2G => $composableBuilder(
-      column: $table.servingWeight2G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight3G => $composableBuilder(
-      column: $table.servingWeight3G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight4G => $composableBuilder(
-      column: $table.servingWeight4G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight5G => $composableBuilder(
-      column: $table.servingWeight5G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight6G => $composableBuilder(
-      column: $table.servingWeight6G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight7G => $composableBuilder(
-      column: $table.servingWeight7G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight8G => $composableBuilder(
-      column: $table.servingWeight8G, builder: (column) => column);
-
-  GeneratedColumn<double> get servingWeight9G => $composableBuilder(
-      column: $table.servingWeight9G, builder: (column) => column);
-
-  GeneratedColumn<String> get smallImage => $composableBuilder(
-      column: $table.smallImage, builder: (column) => column);
-
-  GeneratedColumn<double> get sodiumMg =>
-      $composableBuilder(column: $table.sodiumMg, builder: (column) => column);
-
-  GeneratedColumn<double> get solubleFiberG => $composableBuilder(
-      column: $table.solubleFiberG, builder: (column) => column);
-
-  GeneratedColumn<double> get starchG =>
-      $composableBuilder(column: $table.starchG, builder: (column) => column);
-
-  GeneratedColumn<double> get sucroseG =>
-      $composableBuilder(column: $table.sucroseG, builder: (column) => column);
-
-  GeneratedColumn<double> get sugarsG =>
-      $composableBuilder(column: $table.sugarsG, builder: (column) => column);
-
-  GeneratedColumn<double> get theobromineMg => $composableBuilder(
-      column: $table.theobromineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get thiaminB1Mg => $composableBuilder(
-      column: $table.thiaminB1Mg, builder: (column) => column);
-
-  GeneratedColumn<double> get threonineMg => $composableBuilder(
-      column: $table.threonineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get totalSugarAlcoholsG => $composableBuilder(
-      column: $table.totalSugarAlcoholsG, builder: (column) => column);
-
-  GeneratedColumn<double> get transFattyAcidsG => $composableBuilder(
-      column: $table.transFattyAcidsG, builder: (column) => column);
-
-  GeneratedColumn<double> get tryptophanMg => $composableBuilder(
-      column: $table.tryptophanMg, builder: (column) => column);
-
-  GeneratedColumn<double> get tyrosineMg => $composableBuilder(
-      column: $table.tyrosineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get u183N3CCCAlaMg => $composableBuilder(
-      column: $table.u183N3CCCAlaMg, builder: (column) => column);
-
-  GeneratedColumn<double> get u200calorieWeightG => $composableBuilder(
-      column: $table.u200calorieWeightG, builder: (column) => column);
-
-  GeneratedColumn<double> get u205N3EpaMg => $composableBuilder(
-      column: $table.u205N3EpaMg, builder: (column) => column);
-
-  GeneratedColumn<double> get u225N3DpaMg => $composableBuilder(
-      column: $table.u225N3DpaMg, builder: (column) => column);
-
-  GeneratedColumn<double> get u226N3DhaMg => $composableBuilder(
-      column: $table.u226N3DhaMg, builder: (column) => column);
-
-  GeneratedColumn<double> get valineMg =>
-      $composableBuilder(column: $table.valineMg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminAIuIu => $composableBuilder(
-      column: $table.vitaminAIuIu, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminARaeMcg => $composableBuilder(
-      column: $table.vitaminARaeMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminB12Mcg => $composableBuilder(
-      column: $table.vitaminB12Mcg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminB6Mg => $composableBuilder(
-      column: $table.vitaminB6Mg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminCMg => $composableBuilder(
-      column: $table.vitaminCMg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminD2ErgocalciferolMcg => $composableBuilder(
-      column: $table.vitaminD2ErgocalciferolMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminD3CholecalciferolMcg => $composableBuilder(
-      column: $table.vitaminD3CholecalciferolMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminDIuIu => $composableBuilder(
-      column: $table.vitaminDIuIu, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminDMcg => $composableBuilder(
-      column: $table.vitaminDMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminEAlphaTocopherolMg => $composableBuilder(
-      column: $table.vitaminEAlphaTocopherolMg, builder: (column) => column);
-
-  GeneratedColumn<double> get vitaminKMcg => $composableBuilder(
-      column: $table.vitaminKMcg, builder: (column) => column);
-
-  GeneratedColumn<double> get waterG =>
-      $composableBuilder(column: $table.waterG, builder: (column) => column);
-
-  GeneratedColumn<double> get zincZnMg =>
-      $composableBuilder(column: $table.zincZnMg, builder: (column) => column);
-
-  Expression<T> entriesRefs<T extends Object>(
-      Expression<T> Function($$EntriesTableAnnotationComposer a) f) {
-    final $$EntriesTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.entries,
-        getReferencedColumn: (t) => t.food,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$EntriesTableAnnotationComposer(
-              $db: $db,
-              $table: $db.entries,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
-}
-
-class $$FoodsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $FoodsTable,
-    Food,
-    $$FoodsTableFilterComposer,
-    $$FoodsTableOrderingComposer,
-    $$FoodsTableAnnotationComposer,
-    $$FoodsTableCreateCompanionBuilder,
-    $$FoodsTableUpdateCompanionBuilder,
-    (Food, $$FoodsTableReferences),
-    Food,
-    PrefetchHooks Function({bool entriesRefs})> {
-  $$FoodsTableTableManager(_$AppDatabase db, $FoodsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$FoodsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$FoodsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$FoodsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String?> barcode = const Value.absent(),
-            Value<double?> addedSugarG = const Value.absent(),
-            Value<double?> alanineMg = const Value.absent(),
-            Value<double?> alcoholG = const Value.absent(),
-            Value<double?> arginineMg = const Value.absent(),
-            Value<double?> asparticAcidMg = const Value.absent(),
-            Value<double?> betaineMg = const Value.absent(),
-            Value<String?> bigImage = const Value.absent(),
-            Value<double?> biotinB7Mcg = const Value.absent(),
-            Value<double?> caffeineMg = const Value.absent(),
-            Value<double?> calciumMg = const Value.absent(),
-            Value<double?> calories = const Value.absent(),
-            Value<double?> carbohydrateG = const Value.absent(),
-            Value<double?> caroteneAlphaMcg = const Value.absent(),
-            Value<double?> caroteneBetaMcg = const Value.absent(),
-            Value<double?> chlorineMg = const Value.absent(),
-            Value<double?> cholesterolMg = const Value.absent(),
-            Value<double?> cholineMg = const Value.absent(),
-            Value<double?> copperCuMg = const Value.absent(),
-            Value<DateTime?> created = const Value.absent(),
-            Value<double?> cystineMg = const Value.absent(),
-            Value<double?> dihydrophylloquinoneMcg = const Value.absent(),
-            Value<double?> fatG = const Value.absent(),
-            Value<double?> fattyAcidsTotalMonounsaturatedMg =
-                const Value.absent(),
-            Value<double?> fattyAcidsTotalPolyunsaturatedMg =
-                const Value.absent(),
-            Value<bool?> favorite = const Value.absent(),
-            Value<double?> fiberG = const Value.absent(),
-            Value<double?> fluorideFMcg = const Value.absent(),
-            Value<double?> folateB9Mcg = const Value.absent(),
-            Value<double?> folateDfeMcg = const Value.absent(),
-            Value<double?> folicAcidMcg = const Value.absent(),
-            Value<double?> foodFolateMcg = const Value.absent(),
-            Value<String?> foodGroup = const Value.absent(),
-            Value<double?> fructoseG = const Value.absent(),
-            Value<double?> galactoseG = const Value.absent(),
-            Value<double?> glucoseDextroseG = const Value.absent(),
-            Value<double?> glutamicAcidMg = const Value.absent(),
-            Value<double?> glycineMg = const Value.absent(),
-            Value<double?> histidineMg = const Value.absent(),
-            Value<double?> hydroxyprolineMg = const Value.absent(),
-            Value<int> id = const Value.absent(),
-            Value<String?> imageFile = const Value.absent(),
-            Value<double?> insolubleFiberG = const Value.absent(),
-            Value<double?> ironFeMg = const Value.absent(),
-            Value<double?> isoleucineMg = const Value.absent(),
-            Value<double?> lactoseG = const Value.absent(),
-            Value<double?> leucineMg = const Value.absent(),
-            Value<double?> luteinZeaxanthinMcg = const Value.absent(),
-            Value<double?> lycopeneMcg = const Value.absent(),
-            Value<double?> lysineMg = const Value.absent(),
-            Value<double?> magnesiumMg = const Value.absent(),
-            Value<double?> maltoseG = const Value.absent(),
-            Value<double?> manganeseMg = const Value.absent(),
-            Value<double?> menaquinone4Mcg = const Value.absent(),
-            Value<double?> methionineMg = const Value.absent(),
-            Value<double?> molybdenumMcg = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<double?> netCarbsG = const Value.absent(),
-            Value<double?> niacinB3Mg = const Value.absent(),
-            Value<double?> omega3sMg = const Value.absent(),
-            Value<double?> omega6sMg = const Value.absent(),
-            Value<double?> pantothenicAcidB5Mg = const Value.absent(),
-            Value<double?> phenylalanineMg = const Value.absent(),
-            Value<double?> phosphorusPMg = const Value.absent(),
-            Value<double?> potassiumKMg = const Value.absent(),
-            Value<double?> pralScore = const Value.absent(),
-            Value<double?> prolineMg = const Value.absent(),
-            Value<double?> proteinG = const Value.absent(),
-            Value<double?> retinolMcg = const Value.absent(),
-            Value<double?> riboflavinB2Mg = const Value.absent(),
-            Value<double?> saturatedFatsG = const Value.absent(),
-            Value<double?> seleniumSeMcg = const Value.absent(),
-            Value<double?> serineMg = const Value.absent(),
-            Value<String?> servingDescription1G = const Value.absent(),
-            Value<String?> servingDescription2G = const Value.absent(),
-            Value<String?> servingDescription3G = const Value.absent(),
-            Value<String?> servingDescription4G = const Value.absent(),
-            Value<String?> servingDescription5G = const Value.absent(),
-            Value<String?> servingDescription6G = const Value.absent(),
-            Value<String?> servingDescription7G = const Value.absent(),
-            Value<String?> servingDescription8G = const Value.absent(),
-            Value<String?> servingDescription9G = const Value.absent(),
-            Value<double?> servingSize = const Value.absent(),
-            Value<String?> servingUnit = const Value.absent(),
-            Value<double?> servingWeight1G = const Value.absent(),
-            Value<double?> servingWeight2G = const Value.absent(),
-            Value<double?> servingWeight3G = const Value.absent(),
-            Value<double?> servingWeight4G = const Value.absent(),
-            Value<double?> servingWeight5G = const Value.absent(),
-            Value<double?> servingWeight6G = const Value.absent(),
-            Value<double?> servingWeight7G = const Value.absent(),
-            Value<double?> servingWeight8G = const Value.absent(),
-            Value<double?> servingWeight9G = const Value.absent(),
-            Value<String?> smallImage = const Value.absent(),
-            Value<double?> sodiumMg = const Value.absent(),
-            Value<double?> solubleFiberG = const Value.absent(),
-            Value<double?> starchG = const Value.absent(),
-            Value<double?> sucroseG = const Value.absent(),
-            Value<double?> sugarsG = const Value.absent(),
-            Value<double?> theobromineMg = const Value.absent(),
-            Value<double?> thiaminB1Mg = const Value.absent(),
-            Value<double?> threonineMg = const Value.absent(),
-            Value<double?> totalSugarAlcoholsG = const Value.absent(),
-            Value<double?> transFattyAcidsG = const Value.absent(),
-            Value<double?> tryptophanMg = const Value.absent(),
-            Value<double?> tyrosineMg = const Value.absent(),
-            Value<double?> u183N3CCCAlaMg = const Value.absent(),
-            Value<double?> u200calorieWeightG = const Value.absent(),
-            Value<double?> u205N3EpaMg = const Value.absent(),
-            Value<double?> u225N3DpaMg = const Value.absent(),
-            Value<double?> u226N3DhaMg = const Value.absent(),
-            Value<double?> valineMg = const Value.absent(),
-            Value<double?> vitaminAIuIu = const Value.absent(),
-            Value<double?> vitaminARaeMcg = const Value.absent(),
-            Value<double?> vitaminB12Mcg = const Value.absent(),
-            Value<double?> vitaminB6Mg = const Value.absent(),
-            Value<double?> vitaminCMg = const Value.absent(),
-            Value<double?> vitaminD2ErgocalciferolMcg = const Value.absent(),
-            Value<double?> vitaminD3CholecalciferolMcg = const Value.absent(),
-            Value<double?> vitaminDIuIu = const Value.absent(),
-            Value<double?> vitaminDMcg = const Value.absent(),
-            Value<double?> vitaminEAlphaTocopherolMg = const Value.absent(),
-            Value<double?> vitaminKMcg = const Value.absent(),
-            Value<double?> waterG = const Value.absent(),
-            Value<double?> zincZnMg = const Value.absent(),
-          }) =>
-              FoodsCompanion(
-            barcode: barcode,
-            addedSugarG: addedSugarG,
-            alanineMg: alanineMg,
-            alcoholG: alcoholG,
-            arginineMg: arginineMg,
-            asparticAcidMg: asparticAcidMg,
-            betaineMg: betaineMg,
-            bigImage: bigImage,
-            biotinB7Mcg: biotinB7Mcg,
-            caffeineMg: caffeineMg,
-            calciumMg: calciumMg,
-            calories: calories,
-            carbohydrateG: carbohydrateG,
-            caroteneAlphaMcg: caroteneAlphaMcg,
-            caroteneBetaMcg: caroteneBetaMcg,
-            chlorineMg: chlorineMg,
-            cholesterolMg: cholesterolMg,
-            cholineMg: cholineMg,
-            copperCuMg: copperCuMg,
-            created: created,
-            cystineMg: cystineMg,
-            dihydrophylloquinoneMcg: dihydrophylloquinoneMcg,
-            fatG: fatG,
-            fattyAcidsTotalMonounsaturatedMg: fattyAcidsTotalMonounsaturatedMg,
-            fattyAcidsTotalPolyunsaturatedMg: fattyAcidsTotalPolyunsaturatedMg,
-            favorite: favorite,
-            fiberG: fiberG,
-            fluorideFMcg: fluorideFMcg,
-            folateB9Mcg: folateB9Mcg,
-            folateDfeMcg: folateDfeMcg,
-            folicAcidMcg: folicAcidMcg,
-            foodFolateMcg: foodFolateMcg,
-            foodGroup: foodGroup,
-            fructoseG: fructoseG,
-            galactoseG: galactoseG,
-            glucoseDextroseG: glucoseDextroseG,
-            glutamicAcidMg: glutamicAcidMg,
-            glycineMg: glycineMg,
-            histidineMg: histidineMg,
-            hydroxyprolineMg: hydroxyprolineMg,
-            id: id,
-            imageFile: imageFile,
-            insolubleFiberG: insolubleFiberG,
-            ironFeMg: ironFeMg,
-            isoleucineMg: isoleucineMg,
-            lactoseG: lactoseG,
-            leucineMg: leucineMg,
-            luteinZeaxanthinMcg: luteinZeaxanthinMcg,
-            lycopeneMcg: lycopeneMcg,
-            lysineMg: lysineMg,
-            magnesiumMg: magnesiumMg,
-            maltoseG: maltoseG,
-            manganeseMg: manganeseMg,
-            menaquinone4Mcg: menaquinone4Mcg,
-            methionineMg: methionineMg,
-            molybdenumMcg: molybdenumMcg,
-            name: name,
-            netCarbsG: netCarbsG,
-            niacinB3Mg: niacinB3Mg,
-            omega3sMg: omega3sMg,
-            omega6sMg: omega6sMg,
-            pantothenicAcidB5Mg: pantothenicAcidB5Mg,
-            phenylalanineMg: phenylalanineMg,
-            phosphorusPMg: phosphorusPMg,
-            potassiumKMg: potassiumKMg,
-            pralScore: pralScore,
-            prolineMg: prolineMg,
-            proteinG: proteinG,
-            retinolMcg: retinolMcg,
-            riboflavinB2Mg: riboflavinB2Mg,
-            saturatedFatsG: saturatedFatsG,
-            seleniumSeMcg: seleniumSeMcg,
-            serineMg: serineMg,
-            servingDescription1G: servingDescription1G,
-            servingDescription2G: servingDescription2G,
-            servingDescription3G: servingDescription3G,
-            servingDescription4G: servingDescription4G,
-            servingDescription5G: servingDescription5G,
-            servingDescription6G: servingDescription6G,
-            servingDescription7G: servingDescription7G,
-            servingDescription8G: servingDescription8G,
-            servingDescription9G: servingDescription9G,
-            servingSize: servingSize,
-            servingUnit: servingUnit,
-            servingWeight1G: servingWeight1G,
-            servingWeight2G: servingWeight2G,
-            servingWeight3G: servingWeight3G,
-            servingWeight4G: servingWeight4G,
-            servingWeight5G: servingWeight5G,
-            servingWeight6G: servingWeight6G,
-            servingWeight7G: servingWeight7G,
-            servingWeight8G: servingWeight8G,
-            servingWeight9G: servingWeight9G,
-            smallImage: smallImage,
-            sodiumMg: sodiumMg,
-            solubleFiberG: solubleFiberG,
-            starchG: starchG,
-            sucroseG: sucroseG,
-            sugarsG: sugarsG,
-            theobromineMg: theobromineMg,
-            thiaminB1Mg: thiaminB1Mg,
-            threonineMg: threonineMg,
-            totalSugarAlcoholsG: totalSugarAlcoholsG,
-            transFattyAcidsG: transFattyAcidsG,
-            tryptophanMg: tryptophanMg,
-            tyrosineMg: tyrosineMg,
-            u183N3CCCAlaMg: u183N3CCCAlaMg,
-            u200calorieWeightG: u200calorieWeightG,
-            u205N3EpaMg: u205N3EpaMg,
-            u225N3DpaMg: u225N3DpaMg,
-            u226N3DhaMg: u226N3DhaMg,
-            valineMg: valineMg,
-            vitaminAIuIu: vitaminAIuIu,
-            vitaminARaeMcg: vitaminARaeMcg,
-            vitaminB12Mcg: vitaminB12Mcg,
-            vitaminB6Mg: vitaminB6Mg,
-            vitaminCMg: vitaminCMg,
-            vitaminD2ErgocalciferolMcg: vitaminD2ErgocalciferolMcg,
-            vitaminD3CholecalciferolMcg: vitaminD3CholecalciferolMcg,
-            vitaminDIuIu: vitaminDIuIu,
-            vitaminDMcg: vitaminDMcg,
-            vitaminEAlphaTocopherolMg: vitaminEAlphaTocopherolMg,
-            vitaminKMcg: vitaminKMcg,
-            waterG: waterG,
-            zincZnMg: zincZnMg,
-          ),
-          createCompanionCallback: ({
-            Value<String?> barcode = const Value.absent(),
-            Value<double?> addedSugarG = const Value.absent(),
-            Value<double?> alanineMg = const Value.absent(),
-            Value<double?> alcoholG = const Value.absent(),
-            Value<double?> arginineMg = const Value.absent(),
-            Value<double?> asparticAcidMg = const Value.absent(),
-            Value<double?> betaineMg = const Value.absent(),
-            Value<String?> bigImage = const Value.absent(),
-            Value<double?> biotinB7Mcg = const Value.absent(),
-            Value<double?> caffeineMg = const Value.absent(),
-            Value<double?> calciumMg = const Value.absent(),
-            Value<double?> calories = const Value.absent(),
-            Value<double?> carbohydrateG = const Value.absent(),
-            Value<double?> caroteneAlphaMcg = const Value.absent(),
-            Value<double?> caroteneBetaMcg = const Value.absent(),
-            Value<double?> chlorineMg = const Value.absent(),
-            Value<double?> cholesterolMg = const Value.absent(),
-            Value<double?> cholineMg = const Value.absent(),
-            Value<double?> copperCuMg = const Value.absent(),
-            Value<DateTime?> created = const Value.absent(),
-            Value<double?> cystineMg = const Value.absent(),
-            Value<double?> dihydrophylloquinoneMcg = const Value.absent(),
-            Value<double?> fatG = const Value.absent(),
-            Value<double?> fattyAcidsTotalMonounsaturatedMg =
-                const Value.absent(),
-            Value<double?> fattyAcidsTotalPolyunsaturatedMg =
-                const Value.absent(),
-            Value<bool?> favorite = const Value.absent(),
-            Value<double?> fiberG = const Value.absent(),
-            Value<double?> fluorideFMcg = const Value.absent(),
-            Value<double?> folateB9Mcg = const Value.absent(),
-            Value<double?> folateDfeMcg = const Value.absent(),
-            Value<double?> folicAcidMcg = const Value.absent(),
-            Value<double?> foodFolateMcg = const Value.absent(),
-            Value<String?> foodGroup = const Value.absent(),
-            Value<double?> fructoseG = const Value.absent(),
-            Value<double?> galactoseG = const Value.absent(),
-            Value<double?> glucoseDextroseG = const Value.absent(),
-            Value<double?> glutamicAcidMg = const Value.absent(),
-            Value<double?> glycineMg = const Value.absent(),
-            Value<double?> histidineMg = const Value.absent(),
-            Value<double?> hydroxyprolineMg = const Value.absent(),
-            Value<int> id = const Value.absent(),
-            Value<String?> imageFile = const Value.absent(),
-            Value<double?> insolubleFiberG = const Value.absent(),
-            Value<double?> ironFeMg = const Value.absent(),
-            Value<double?> isoleucineMg = const Value.absent(),
-            Value<double?> lactoseG = const Value.absent(),
-            Value<double?> leucineMg = const Value.absent(),
-            Value<double?> luteinZeaxanthinMcg = const Value.absent(),
-            Value<double?> lycopeneMcg = const Value.absent(),
-            Value<double?> lysineMg = const Value.absent(),
-            Value<double?> magnesiumMg = const Value.absent(),
-            Value<double?> maltoseG = const Value.absent(),
-            Value<double?> manganeseMg = const Value.absent(),
-            Value<double?> menaquinone4Mcg = const Value.absent(),
-            Value<double?> methionineMg = const Value.absent(),
-            Value<double?> molybdenumMcg = const Value.absent(),
-            required String name,
-            Value<double?> netCarbsG = const Value.absent(),
-            Value<double?> niacinB3Mg = const Value.absent(),
-            Value<double?> omega3sMg = const Value.absent(),
-            Value<double?> omega6sMg = const Value.absent(),
-            Value<double?> pantothenicAcidB5Mg = const Value.absent(),
-            Value<double?> phenylalanineMg = const Value.absent(),
-            Value<double?> phosphorusPMg = const Value.absent(),
-            Value<double?> potassiumKMg = const Value.absent(),
-            Value<double?> pralScore = const Value.absent(),
-            Value<double?> prolineMg = const Value.absent(),
-            Value<double?> proteinG = const Value.absent(),
-            Value<double?> retinolMcg = const Value.absent(),
-            Value<double?> riboflavinB2Mg = const Value.absent(),
-            Value<double?> saturatedFatsG = const Value.absent(),
-            Value<double?> seleniumSeMcg = const Value.absent(),
-            Value<double?> serineMg = const Value.absent(),
-            Value<String?> servingDescription1G = const Value.absent(),
-            Value<String?> servingDescription2G = const Value.absent(),
-            Value<String?> servingDescription3G = const Value.absent(),
-            Value<String?> servingDescription4G = const Value.absent(),
-            Value<String?> servingDescription5G = const Value.absent(),
-            Value<String?> servingDescription6G = const Value.absent(),
-            Value<String?> servingDescription7G = const Value.absent(),
-            Value<String?> servingDescription8G = const Value.absent(),
-            Value<String?> servingDescription9G = const Value.absent(),
-            Value<double?> servingSize = const Value.absent(),
-            Value<String?> servingUnit = const Value.absent(),
-            Value<double?> servingWeight1G = const Value.absent(),
-            Value<double?> servingWeight2G = const Value.absent(),
-            Value<double?> servingWeight3G = const Value.absent(),
-            Value<double?> servingWeight4G = const Value.absent(),
-            Value<double?> servingWeight5G = const Value.absent(),
-            Value<double?> servingWeight6G = const Value.absent(),
-            Value<double?> servingWeight7G = const Value.absent(),
-            Value<double?> servingWeight8G = const Value.absent(),
-            Value<double?> servingWeight9G = const Value.absent(),
-            Value<String?> smallImage = const Value.absent(),
-            Value<double?> sodiumMg = const Value.absent(),
-            Value<double?> solubleFiberG = const Value.absent(),
-            Value<double?> starchG = const Value.absent(),
-            Value<double?> sucroseG = const Value.absent(),
-            Value<double?> sugarsG = const Value.absent(),
-            Value<double?> theobromineMg = const Value.absent(),
-            Value<double?> thiaminB1Mg = const Value.absent(),
-            Value<double?> threonineMg = const Value.absent(),
-            Value<double?> totalSugarAlcoholsG = const Value.absent(),
-            Value<double?> transFattyAcidsG = const Value.absent(),
-            Value<double?> tryptophanMg = const Value.absent(),
-            Value<double?> tyrosineMg = const Value.absent(),
-            Value<double?> u183N3CCCAlaMg = const Value.absent(),
-            Value<double?> u200calorieWeightG = const Value.absent(),
-            Value<double?> u205N3EpaMg = const Value.absent(),
-            Value<double?> u225N3DpaMg = const Value.absent(),
-            Value<double?> u226N3DhaMg = const Value.absent(),
-            Value<double?> valineMg = const Value.absent(),
-            Value<double?> vitaminAIuIu = const Value.absent(),
-            Value<double?> vitaminARaeMcg = const Value.absent(),
-            Value<double?> vitaminB12Mcg = const Value.absent(),
-            Value<double?> vitaminB6Mg = const Value.absent(),
-            Value<double?> vitaminCMg = const Value.absent(),
-            Value<double?> vitaminD2ErgocalciferolMcg = const Value.absent(),
-            Value<double?> vitaminD3CholecalciferolMcg = const Value.absent(),
-            Value<double?> vitaminDIuIu = const Value.absent(),
-            Value<double?> vitaminDMcg = const Value.absent(),
-            Value<double?> vitaminEAlphaTocopherolMg = const Value.absent(),
-            Value<double?> vitaminKMcg = const Value.absent(),
-            Value<double?> waterG = const Value.absent(),
-            Value<double?> zincZnMg = const Value.absent(),
-          }) =>
-              FoodsCompanion.insert(
-            barcode: barcode,
-            addedSugarG: addedSugarG,
-            alanineMg: alanineMg,
-            alcoholG: alcoholG,
-            arginineMg: arginineMg,
-            asparticAcidMg: asparticAcidMg,
-            betaineMg: betaineMg,
-            bigImage: bigImage,
-            biotinB7Mcg: biotinB7Mcg,
-            caffeineMg: caffeineMg,
-            calciumMg: calciumMg,
-            calories: calories,
-            carbohydrateG: carbohydrateG,
-            caroteneAlphaMcg: caroteneAlphaMcg,
-            caroteneBetaMcg: caroteneBetaMcg,
-            chlorineMg: chlorineMg,
-            cholesterolMg: cholesterolMg,
-            cholineMg: cholineMg,
-            copperCuMg: copperCuMg,
-            created: created,
-            cystineMg: cystineMg,
-            dihydrophylloquinoneMcg: dihydrophylloquinoneMcg,
-            fatG: fatG,
-            fattyAcidsTotalMonounsaturatedMg: fattyAcidsTotalMonounsaturatedMg,
-            fattyAcidsTotalPolyunsaturatedMg: fattyAcidsTotalPolyunsaturatedMg,
-            favorite: favorite,
-            fiberG: fiberG,
-            fluorideFMcg: fluorideFMcg,
-            folateB9Mcg: folateB9Mcg,
-            folateDfeMcg: folateDfeMcg,
-            folicAcidMcg: folicAcidMcg,
-            foodFolateMcg: foodFolateMcg,
-            foodGroup: foodGroup,
-            fructoseG: fructoseG,
-            galactoseG: galactoseG,
-            glucoseDextroseG: glucoseDextroseG,
-            glutamicAcidMg: glutamicAcidMg,
-            glycineMg: glycineMg,
-            histidineMg: histidineMg,
-            hydroxyprolineMg: hydroxyprolineMg,
-            id: id,
-            imageFile: imageFile,
-            insolubleFiberG: insolubleFiberG,
-            ironFeMg: ironFeMg,
-            isoleucineMg: isoleucineMg,
-            lactoseG: lactoseG,
-            leucineMg: leucineMg,
-            luteinZeaxanthinMcg: luteinZeaxanthinMcg,
-            lycopeneMcg: lycopeneMcg,
-            lysineMg: lysineMg,
-            magnesiumMg: magnesiumMg,
-            maltoseG: maltoseG,
-            manganeseMg: manganeseMg,
-            menaquinone4Mcg: menaquinone4Mcg,
-            methionineMg: methionineMg,
-            molybdenumMcg: molybdenumMcg,
-            name: name,
-            netCarbsG: netCarbsG,
-            niacinB3Mg: niacinB3Mg,
-            omega3sMg: omega3sMg,
-            omega6sMg: omega6sMg,
-            pantothenicAcidB5Mg: pantothenicAcidB5Mg,
-            phenylalanineMg: phenylalanineMg,
-            phosphorusPMg: phosphorusPMg,
-            potassiumKMg: potassiumKMg,
-            pralScore: pralScore,
-            prolineMg: prolineMg,
-            proteinG: proteinG,
-            retinolMcg: retinolMcg,
-            riboflavinB2Mg: riboflavinB2Mg,
-            saturatedFatsG: saturatedFatsG,
-            seleniumSeMcg: seleniumSeMcg,
-            serineMg: serineMg,
-            servingDescription1G: servingDescription1G,
-            servingDescription2G: servingDescription2G,
-            servingDescription3G: servingDescription3G,
-            servingDescription4G: servingDescription4G,
-            servingDescription5G: servingDescription5G,
-            servingDescription6G: servingDescription6G,
-            servingDescription7G: servingDescription7G,
-            servingDescription8G: servingDescription8G,
-            servingDescription9G: servingDescription9G,
-            servingSize: servingSize,
-            servingUnit: servingUnit,
-            servingWeight1G: servingWeight1G,
-            servingWeight2G: servingWeight2G,
-            servingWeight3G: servingWeight3G,
-            servingWeight4G: servingWeight4G,
-            servingWeight5G: servingWeight5G,
-            servingWeight6G: servingWeight6G,
-            servingWeight7G: servingWeight7G,
-            servingWeight8G: servingWeight8G,
-            servingWeight9G: servingWeight9G,
-            smallImage: smallImage,
-            sodiumMg: sodiumMg,
-            solubleFiberG: solubleFiberG,
-            starchG: starchG,
-            sucroseG: sucroseG,
-            sugarsG: sugarsG,
-            theobromineMg: theobromineMg,
-            thiaminB1Mg: thiaminB1Mg,
-            threonineMg: threonineMg,
-            totalSugarAlcoholsG: totalSugarAlcoholsG,
-            transFattyAcidsG: transFattyAcidsG,
-            tryptophanMg: tryptophanMg,
-            tyrosineMg: tyrosineMg,
-            u183N3CCCAlaMg: u183N3CCCAlaMg,
-            u200calorieWeightG: u200calorieWeightG,
-            u205N3EpaMg: u205N3EpaMg,
-            u225N3DpaMg: u225N3DpaMg,
-            u226N3DhaMg: u226N3DhaMg,
-            valineMg: valineMg,
-            vitaminAIuIu: vitaminAIuIu,
-            vitaminARaeMcg: vitaminARaeMcg,
-            vitaminB12Mcg: vitaminB12Mcg,
-            vitaminB6Mg: vitaminB6Mg,
-            vitaminCMg: vitaminCMg,
-            vitaminD2ErgocalciferolMcg: vitaminD2ErgocalciferolMcg,
-            vitaminD3CholecalciferolMcg: vitaminD3CholecalciferolMcg,
-            vitaminDIuIu: vitaminDIuIu,
-            vitaminDMcg: vitaminDMcg,
-            vitaminEAlphaTocopherolMg: vitaminEAlphaTocopherolMg,
-            vitaminKMcg: vitaminKMcg,
-            waterG: waterG,
-            zincZnMg: zincZnMg,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$FoodsTableReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: ({entriesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (entriesRefs) db.entries],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (entriesRefs)
-                    await $_getPrefetchedData(
-                        currentTable: table,
-                        referencedTable:
-                            $$FoodsTableReferences._entriesRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$FoodsTableReferences(db, table, p0).entriesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.food == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$FoodsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $FoodsTable,
-    Food,
-    $$FoodsTableFilterComposer,
-    $$FoodsTableOrderingComposer,
-    $$FoodsTableAnnotationComposer,
-    $$FoodsTableCreateCompanionBuilder,
-    $$FoodsTableUpdateCompanionBuilder,
-    (Food, $$FoodsTableReferences),
-    Food,
-    PrefetchHooks Function({bool entriesRefs})>;
-typedef $$EntriesTableCreateCompanionBuilder = EntriesCompanion Function({
-  Value<int> id,
-  required int food,
-  required DateTime created,
-  required double quantity,
-  required String unit,
-  Value<double?> kCalories,
-  Value<double?> proteinG,
-  Value<double?> fatG,
-  Value<double?> carbG,
-  Value<double?> sodiumG,
-  Value<double?> fiberG,
-});
-typedef $$EntriesTableUpdateCompanionBuilder = EntriesCompanion Function({
-  Value<int> id,
-  Value<int> food,
-  Value<DateTime> created,
-  Value<double> quantity,
-  Value<String> unit,
-  Value<double?> kCalories,
-  Value<double?> proteinG,
-  Value<double?> fatG,
-  Value<double?> carbG,
-  Value<double?> sodiumG,
-  Value<double?> fiberG,
-});
-
-final class $$EntriesTableReferences
-    extends BaseReferences<_$AppDatabase, $EntriesTable, Entry> {
-  $$EntriesTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $FoodsTable _foodTable(_$AppDatabase db) =>
-      db.foods.createAlias($_aliasNameGenerator(db.entries.food, db.foods.id));
-
-  $$FoodsTableProcessedTableManager get food {
-    final $_column = $_itemColumn<int>('food')!;
-
-    final manager = $$FoodsTableTableManager($_db, $_db.foods)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_foodTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-}
-
-class $$EntriesTableFilterComposer
-    extends Composer<_$AppDatabase, $EntriesTable> {
-  $$EntriesTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get quantity => $composableBuilder(
-      column: $table.quantity, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get kCalories => $composableBuilder(
-      column: $table.kCalories, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get proteinG => $composableBuilder(
-      column: $table.proteinG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fatG => $composableBuilder(
-      column: $table.fatG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get carbG => $composableBuilder(
-      column: $table.carbG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get sodiumG => $composableBuilder(
-      column: $table.sodiumG, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get fiberG => $composableBuilder(
-      column: $table.fiberG, builder: (column) => ColumnFilters(column));
-
-  $$FoodsTableFilterComposer get food {
-    final $$FoodsTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.food,
-        referencedTable: $db.foods,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FoodsTableFilterComposer(
-              $db: $db,
-              $table: $db.foods,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$EntriesTableOrderingComposer
-    extends Composer<_$AppDatabase, $EntriesTable> {
-  $$EntriesTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get quantity => $composableBuilder(
-      column: $table.quantity, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get kCalories => $composableBuilder(
-      column: $table.kCalories, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get proteinG => $composableBuilder(
-      column: $table.proteinG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fatG => $composableBuilder(
-      column: $table.fatG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get carbG => $composableBuilder(
-      column: $table.carbG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get sodiumG => $composableBuilder(
-      column: $table.sodiumG, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get fiberG => $composableBuilder(
-      column: $table.fiberG, builder: (column) => ColumnOrderings(column));
-
-  $$FoodsTableOrderingComposer get food {
-    final $$FoodsTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.food,
-        referencedTable: $db.foods,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FoodsTableOrderingComposer(
-              $db: $db,
-              $table: $db.foods,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$EntriesTableAnnotationComposer
-    extends Composer<_$AppDatabase, $EntriesTable> {
-  $$EntriesTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get created =>
-      $composableBuilder(column: $table.created, builder: (column) => column);
-
-  GeneratedColumn<double> get quantity =>
-      $composableBuilder(column: $table.quantity, builder: (column) => column);
-
-  GeneratedColumn<String> get unit =>
-      $composableBuilder(column: $table.unit, builder: (column) => column);
-
-  GeneratedColumn<double> get kCalories =>
-      $composableBuilder(column: $table.kCalories, builder: (column) => column);
-
-  GeneratedColumn<double> get proteinG =>
-      $composableBuilder(column: $table.proteinG, builder: (column) => column);
-
-  GeneratedColumn<double> get fatG =>
-      $composableBuilder(column: $table.fatG, builder: (column) => column);
-
-  GeneratedColumn<double> get carbG =>
-      $composableBuilder(column: $table.carbG, builder: (column) => column);
-
-  GeneratedColumn<double> get sodiumG =>
-      $composableBuilder(column: $table.sodiumG, builder: (column) => column);
-
-  GeneratedColumn<double> get fiberG =>
-      $composableBuilder(column: $table.fiberG, builder: (column) => column);
-
-  $$FoodsTableAnnotationComposer get food {
-    final $$FoodsTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.food,
-        referencedTable: $db.foods,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FoodsTableAnnotationComposer(
-              $db: $db,
-              $table: $db.foods,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$EntriesTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $EntriesTable,
-    Entry,
-    $$EntriesTableFilterComposer,
-    $$EntriesTableOrderingComposer,
-    $$EntriesTableAnnotationComposer,
-    $$EntriesTableCreateCompanionBuilder,
-    $$EntriesTableUpdateCompanionBuilder,
-    (Entry, $$EntriesTableReferences),
-    Entry,
-    PrefetchHooks Function({bool food})> {
-  $$EntriesTableTableManager(_$AppDatabase db, $EntriesTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$EntriesTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$EntriesTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$EntriesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> food = const Value.absent(),
-            Value<DateTime> created = const Value.absent(),
-            Value<double> quantity = const Value.absent(),
-            Value<String> unit = const Value.absent(),
-            Value<double?> kCalories = const Value.absent(),
-            Value<double?> proteinG = const Value.absent(),
-            Value<double?> fatG = const Value.absent(),
-            Value<double?> carbG = const Value.absent(),
-            Value<double?> sodiumG = const Value.absent(),
-            Value<double?> fiberG = const Value.absent(),
-          }) =>
-              EntriesCompanion(
-            id: id,
-            food: food,
-            created: created,
-            quantity: quantity,
-            unit: unit,
-            kCalories: kCalories,
-            proteinG: proteinG,
-            fatG: fatG,
-            carbG: carbG,
-            sodiumG: sodiumG,
-            fiberG: fiberG,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int food,
-            required DateTime created,
-            required double quantity,
-            required String unit,
-            Value<double?> kCalories = const Value.absent(),
-            Value<double?> proteinG = const Value.absent(),
-            Value<double?> fatG = const Value.absent(),
-            Value<double?> carbG = const Value.absent(),
-            Value<double?> sodiumG = const Value.absent(),
-            Value<double?> fiberG = const Value.absent(),
-          }) =>
-              EntriesCompanion.insert(
-            id: id,
-            food: food,
-            created: created,
-            quantity: quantity,
-            unit: unit,
-            kCalories: kCalories,
-            proteinG: proteinG,
-            fatG: fatG,
-            carbG: carbG,
-            sodiumG: sodiumG,
-            fiberG: fiberG,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$EntriesTableReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: ({food = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (food) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.food,
-                    referencedTable: $$EntriesTableReferences._foodTable(db),
-                    referencedColumn:
-                        $$EntriesTableReferences._foodTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$EntriesTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $EntriesTable,
-    Entry,
-    $$EntriesTableFilterComposer,
-    $$EntriesTableOrderingComposer,
-    $$EntriesTableAnnotationComposer,
-    $$EntriesTableCreateCompanionBuilder,
-    $$EntriesTableUpdateCompanionBuilder,
-    (Entry, $$EntriesTableReferences),
-    Entry,
-    PrefetchHooks Function({bool food})>;
-typedef $$WeightsTableCreateCompanionBuilder = WeightsCompanion Function({
-  Value<int> id,
-  required DateTime created,
-  required String unit,
-  required double amount,
-  Value<String?> image,
-});
-typedef $$WeightsTableUpdateCompanionBuilder = WeightsCompanion Function({
-  Value<int> id,
-  Value<DateTime> created,
-  Value<String> unit,
-  Value<double> amount,
-  Value<String?> image,
-});
-
-class $$WeightsTableFilterComposer
-    extends Composer<_$AppDatabase, $WeightsTable> {
-  $$WeightsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get amount => $composableBuilder(
-      column: $table.amount, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get image => $composableBuilder(
-      column: $table.image, builder: (column) => ColumnFilters(column));
-}
-
-class $$WeightsTableOrderingComposer
-    extends Composer<_$AppDatabase, $WeightsTable> {
-  $$WeightsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<DateTime> get created => $composableBuilder(
-      column: $table.created, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get amount => $composableBuilder(
-      column: $table.amount, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get image => $composableBuilder(
-      column: $table.image, builder: (column) => ColumnOrderings(column));
-}
-
-class $$WeightsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $WeightsTable> {
-  $$WeightsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get created =>
-      $composableBuilder(column: $table.created, builder: (column) => column);
-
-  GeneratedColumn<String> get unit =>
-      $composableBuilder(column: $table.unit, builder: (column) => column);
-
-  GeneratedColumn<double> get amount =>
-      $composableBuilder(column: $table.amount, builder: (column) => column);
-
-  GeneratedColumn<String> get image =>
-      $composableBuilder(column: $table.image, builder: (column) => column);
-}
-
-class $$WeightsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $WeightsTable,
-    Weight,
-    $$WeightsTableFilterComposer,
-    $$WeightsTableOrderingComposer,
-    $$WeightsTableAnnotationComposer,
-    $$WeightsTableCreateCompanionBuilder,
-    $$WeightsTableUpdateCompanionBuilder,
-    (Weight, BaseReferences<_$AppDatabase, $WeightsTable, Weight>),
-    Weight,
-    PrefetchHooks Function()> {
-  $$WeightsTableTableManager(_$AppDatabase db, $WeightsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$WeightsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$WeightsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$WeightsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<DateTime> created = const Value.absent(),
-            Value<String> unit = const Value.absent(),
-            Value<double> amount = const Value.absent(),
-            Value<String?> image = const Value.absent(),
-          }) =>
-              WeightsCompanion(
-            id: id,
-            created: created,
-            unit: unit,
-            amount: amount,
-            image: image,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required DateTime created,
-            required String unit,
-            required double amount,
-            Value<String?> image = const Value.absent(),
-          }) =>
-              WeightsCompanion.insert(
-            id: id,
-            created: created,
-            unit: unit,
-            amount: amount,
-            image: image,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$WeightsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $WeightsTable,
-    Weight,
-    $$WeightsTableFilterComposer,
-    $$WeightsTableOrderingComposer,
-    $$WeightsTableAnnotationComposer,
-    $$WeightsTableCreateCompanionBuilder,
-    $$WeightsTableUpdateCompanionBuilder,
-    (Weight, BaseReferences<_$AppDatabase, $WeightsTable, Weight>),
-    Weight,
-    PrefetchHooks Function()>;
-typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
-  Value<bool> curveLines,
-  Value<int?> dailyCalories,
-  Value<int?> dailyCarb,
-  Value<int?> dailyFat,
-  Value<int?> dailyProtein,
-  required String diarySummary,
-  required String entryUnit,
-  required bool favoriteNew,
-  required String foodUnit,
-  Value<int> id,
-  Value<String> lastGraph,
-  required String longDateFormat,
-  Value<String?> offLogin,
-  Value<String?> offPassword,
-  Value<bool> positiveReinforcement,
-  Value<bool> reminders,
-  required bool selectEntryOnSubmit,
-  required String shortDateFormat,
-  Value<String?> fields,
-  Value<bool> showImages,
-  required bool showOthers,
-  required bool systemColors,
-  Value<bool> automaticBackups,
-  Value<String> tabs,
-  Value<double?> targetWeight,
-  Value<int> limit,
-  required String themeMode,
-  Value<String?> backupPath,
-  Value<String?> convertWeight,
-});
-typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
-  Value<bool> curveLines,
-  Value<int?> dailyCalories,
-  Value<int?> dailyCarb,
-  Value<int?> dailyFat,
-  Value<int?> dailyProtein,
-  Value<String> diarySummary,
-  Value<String> entryUnit,
-  Value<bool> favoriteNew,
-  Value<String> foodUnit,
-  Value<int> id,
-  Value<String> lastGraph,
-  Value<String> longDateFormat,
-  Value<String?> offLogin,
-  Value<String?> offPassword,
-  Value<bool> positiveReinforcement,
-  Value<bool> reminders,
-  Value<bool> selectEntryOnSubmit,
-  Value<String> shortDateFormat,
-  Value<String?> fields,
-  Value<bool> showImages,
-  Value<bool> showOthers,
-  Value<bool> systemColors,
-  Value<bool> automaticBackups,
-  Value<String> tabs,
-  Value<double?> targetWeight,
-  Value<int> limit,
-  Value<String> themeMode,
-  Value<String?> backupPath,
-  Value<String?> convertWeight,
-});
-
-class $$SettingsTableFilterComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<bool> get curveLines => $composableBuilder(
-      column: $table.curveLines, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get dailyCalories => $composableBuilder(
-      column: $table.dailyCalories, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get dailyCarb => $composableBuilder(
-      column: $table.dailyCarb, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get dailyFat => $composableBuilder(
-      column: $table.dailyFat, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get dailyProtein => $composableBuilder(
-      column: $table.dailyProtein, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get diarySummary => $composableBuilder(
-      column: $table.diarySummary, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get entryUnit => $composableBuilder(
-      column: $table.entryUnit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get favoriteNew => $composableBuilder(
-      column: $table.favoriteNew, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get foodUnit => $composableBuilder(
-      column: $table.foodUnit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get lastGraph => $composableBuilder(
-      column: $table.lastGraph, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get longDateFormat => $composableBuilder(
-      column: $table.longDateFormat,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get offLogin => $composableBuilder(
-      column: $table.offLogin, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get offPassword => $composableBuilder(
-      column: $table.offPassword, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get positiveReinforcement => $composableBuilder(
-      column: $table.positiveReinforcement,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get reminders => $composableBuilder(
-      column: $table.reminders, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get selectEntryOnSubmit => $composableBuilder(
-      column: $table.selectEntryOnSubmit,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get shortDateFormat => $composableBuilder(
-      column: $table.shortDateFormat,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get fields => $composableBuilder(
-      column: $table.fields, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get showImages => $composableBuilder(
-      column: $table.showImages, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get showOthers => $composableBuilder(
-      column: $table.showOthers, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get systemColors => $composableBuilder(
-      column: $table.systemColors, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<bool> get automaticBackups => $composableBuilder(
-      column: $table.automaticBackups,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get tabs => $composableBuilder(
-      column: $table.tabs, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<double> get targetWeight => $composableBuilder(
-      column: $table.targetWeight, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get limit => $composableBuilder(
-      column: $table.limit, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get themeMode => $composableBuilder(
-      column: $table.themeMode, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get backupPath => $composableBuilder(
-      column: $table.backupPath, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get convertWeight => $composableBuilder(
-      column: $table.convertWeight, builder: (column) => ColumnFilters(column));
-}
-
-class $$SettingsTableOrderingComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<bool> get curveLines => $composableBuilder(
-      column: $table.curveLines, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get dailyCalories => $composableBuilder(
-      column: $table.dailyCalories,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get dailyCarb => $composableBuilder(
-      column: $table.dailyCarb, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get dailyFat => $composableBuilder(
-      column: $table.dailyFat, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get dailyProtein => $composableBuilder(
-      column: $table.dailyProtein,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get diarySummary => $composableBuilder(
-      column: $table.diarySummary,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get entryUnit => $composableBuilder(
-      column: $table.entryUnit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get favoriteNew => $composableBuilder(
-      column: $table.favoriteNew, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get foodUnit => $composableBuilder(
-      column: $table.foodUnit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get lastGraph => $composableBuilder(
-      column: $table.lastGraph, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get longDateFormat => $composableBuilder(
-      column: $table.longDateFormat,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get offLogin => $composableBuilder(
-      column: $table.offLogin, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get offPassword => $composableBuilder(
-      column: $table.offPassword, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get positiveReinforcement => $composableBuilder(
-      column: $table.positiveReinforcement,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get reminders => $composableBuilder(
-      column: $table.reminders, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get selectEntryOnSubmit => $composableBuilder(
-      column: $table.selectEntryOnSubmit,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get shortDateFormat => $composableBuilder(
-      column: $table.shortDateFormat,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get fields => $composableBuilder(
-      column: $table.fields, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get showImages => $composableBuilder(
-      column: $table.showImages, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get showOthers => $composableBuilder(
-      column: $table.showOthers, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get systemColors => $composableBuilder(
-      column: $table.systemColors,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<bool> get automaticBackups => $composableBuilder(
-      column: $table.automaticBackups,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get tabs => $composableBuilder(
-      column: $table.tabs, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<double> get targetWeight => $composableBuilder(
-      column: $table.targetWeight,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get limit => $composableBuilder(
-      column: $table.limit, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get themeMode => $composableBuilder(
-      column: $table.themeMode, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get backupPath => $composableBuilder(
-      column: $table.backupPath, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get convertWeight => $composableBuilder(
-      column: $table.convertWeight,
-      builder: (column) => ColumnOrderings(column));
-}
-
-class $$SettingsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<bool> get curveLines => $composableBuilder(
-      column: $table.curveLines, builder: (column) => column);
-
-  GeneratedColumn<int> get dailyCalories => $composableBuilder(
-      column: $table.dailyCalories, builder: (column) => column);
-
-  GeneratedColumn<int> get dailyCarb =>
-      $composableBuilder(column: $table.dailyCarb, builder: (column) => column);
-
-  GeneratedColumn<int> get dailyFat =>
-      $composableBuilder(column: $table.dailyFat, builder: (column) => column);
-
-  GeneratedColumn<int> get dailyProtein => $composableBuilder(
-      column: $table.dailyProtein, builder: (column) => column);
-
-  GeneratedColumn<String> get diarySummary => $composableBuilder(
-      column: $table.diarySummary, builder: (column) => column);
-
-  GeneratedColumn<String> get entryUnit =>
-      $composableBuilder(column: $table.entryUnit, builder: (column) => column);
-
-  GeneratedColumn<bool> get favoriteNew => $composableBuilder(
-      column: $table.favoriteNew, builder: (column) => column);
-
-  GeneratedColumn<String> get foodUnit =>
-      $composableBuilder(column: $table.foodUnit, builder: (column) => column);
-
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get lastGraph =>
-      $composableBuilder(column: $table.lastGraph, builder: (column) => column);
-
-  GeneratedColumn<String> get longDateFormat => $composableBuilder(
-      column: $table.longDateFormat, builder: (column) => column);
-
-  GeneratedColumn<String> get offLogin =>
-      $composableBuilder(column: $table.offLogin, builder: (column) => column);
-
-  GeneratedColumn<String> get offPassword => $composableBuilder(
-      column: $table.offPassword, builder: (column) => column);
-
-  GeneratedColumn<bool> get positiveReinforcement => $composableBuilder(
-      column: $table.positiveReinforcement, builder: (column) => column);
-
-  GeneratedColumn<bool> get reminders =>
-      $composableBuilder(column: $table.reminders, builder: (column) => column);
-
-  GeneratedColumn<bool> get selectEntryOnSubmit => $composableBuilder(
-      column: $table.selectEntryOnSubmit, builder: (column) => column);
-
-  GeneratedColumn<String> get shortDateFormat => $composableBuilder(
-      column: $table.shortDateFormat, builder: (column) => column);
-
-  GeneratedColumn<String> get fields =>
-      $composableBuilder(column: $table.fields, builder: (column) => column);
-
-  GeneratedColumn<bool> get showImages => $composableBuilder(
-      column: $table.showImages, builder: (column) => column);
-
-  GeneratedColumn<bool> get showOthers => $composableBuilder(
-      column: $table.showOthers, builder: (column) => column);
-
-  GeneratedColumn<bool> get systemColors => $composableBuilder(
-      column: $table.systemColors, builder: (column) => column);
-
-  GeneratedColumn<bool> get automaticBackups => $composableBuilder(
-      column: $table.automaticBackups, builder: (column) => column);
-
-  GeneratedColumn<String> get tabs =>
-      $composableBuilder(column: $table.tabs, builder: (column) => column);
-
-  GeneratedColumn<double> get targetWeight => $composableBuilder(
-      column: $table.targetWeight, builder: (column) => column);
-
-  GeneratedColumn<int> get limit =>
-      $composableBuilder(column: $table.limit, builder: (column) => column);
-
-  GeneratedColumn<String> get themeMode =>
-      $composableBuilder(column: $table.themeMode, builder: (column) => column);
-
-  GeneratedColumn<String> get backupPath => $composableBuilder(
-      column: $table.backupPath, builder: (column) => column);
-
-  GeneratedColumn<String> get convertWeight => $composableBuilder(
-      column: $table.convertWeight, builder: (column) => column);
-}
-
-class $$SettingsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $SettingsTable,
-    Setting,
-    $$SettingsTableFilterComposer,
-    $$SettingsTableOrderingComposer,
-    $$SettingsTableAnnotationComposer,
-    $$SettingsTableCreateCompanionBuilder,
-    $$SettingsTableUpdateCompanionBuilder,
-    (Setting, BaseReferences<_$AppDatabase, $SettingsTable, Setting>),
-    Setting,
-    PrefetchHooks Function()> {
-  $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$SettingsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$SettingsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$SettingsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<bool> curveLines = const Value.absent(),
-            Value<int?> dailyCalories = const Value.absent(),
-            Value<int?> dailyCarb = const Value.absent(),
-            Value<int?> dailyFat = const Value.absent(),
-            Value<int?> dailyProtein = const Value.absent(),
-            Value<String> diarySummary = const Value.absent(),
-            Value<String> entryUnit = const Value.absent(),
-            Value<bool> favoriteNew = const Value.absent(),
-            Value<String> foodUnit = const Value.absent(),
-            Value<int> id = const Value.absent(),
-            Value<String> lastGraph = const Value.absent(),
-            Value<String> longDateFormat = const Value.absent(),
-            Value<String?> offLogin = const Value.absent(),
-            Value<String?> offPassword = const Value.absent(),
-            Value<bool> positiveReinforcement = const Value.absent(),
-            Value<bool> reminders = const Value.absent(),
-            Value<bool> selectEntryOnSubmit = const Value.absent(),
-            Value<String> shortDateFormat = const Value.absent(),
-            Value<String?> fields = const Value.absent(),
-            Value<bool> showImages = const Value.absent(),
-            Value<bool> showOthers = const Value.absent(),
-            Value<bool> systemColors = const Value.absent(),
-            Value<bool> automaticBackups = const Value.absent(),
-            Value<String> tabs = const Value.absent(),
-            Value<double?> targetWeight = const Value.absent(),
-            Value<int> limit = const Value.absent(),
-            Value<String> themeMode = const Value.absent(),
-            Value<String?> backupPath = const Value.absent(),
-            Value<String?> convertWeight = const Value.absent(),
-          }) =>
-              SettingsCompanion(
-            curveLines: curveLines,
-            dailyCalories: dailyCalories,
-            dailyCarb: dailyCarb,
-            dailyFat: dailyFat,
-            dailyProtein: dailyProtein,
-            diarySummary: diarySummary,
-            entryUnit: entryUnit,
-            favoriteNew: favoriteNew,
-            foodUnit: foodUnit,
-            id: id,
-            lastGraph: lastGraph,
-            longDateFormat: longDateFormat,
-            offLogin: offLogin,
-            offPassword: offPassword,
-            positiveReinforcement: positiveReinforcement,
-            reminders: reminders,
-            selectEntryOnSubmit: selectEntryOnSubmit,
-            shortDateFormat: shortDateFormat,
-            fields: fields,
-            showImages: showImages,
-            showOthers: showOthers,
-            systemColors: systemColors,
-            automaticBackups: automaticBackups,
-            tabs: tabs,
-            targetWeight: targetWeight,
-            limit: limit,
-            themeMode: themeMode,
-            backupPath: backupPath,
-            convertWeight: convertWeight,
-          ),
-          createCompanionCallback: ({
-            Value<bool> curveLines = const Value.absent(),
-            Value<int?> dailyCalories = const Value.absent(),
-            Value<int?> dailyCarb = const Value.absent(),
-            Value<int?> dailyFat = const Value.absent(),
-            Value<int?> dailyProtein = const Value.absent(),
-            required String diarySummary,
-            required String entryUnit,
-            required bool favoriteNew,
-            required String foodUnit,
-            Value<int> id = const Value.absent(),
-            Value<String> lastGraph = const Value.absent(),
-            required String longDateFormat,
-            Value<String?> offLogin = const Value.absent(),
-            Value<String?> offPassword = const Value.absent(),
-            Value<bool> positiveReinforcement = const Value.absent(),
-            Value<bool> reminders = const Value.absent(),
-            required bool selectEntryOnSubmit,
-            required String shortDateFormat,
-            Value<String?> fields = const Value.absent(),
-            Value<bool> showImages = const Value.absent(),
-            required bool showOthers,
-            required bool systemColors,
-            Value<bool> automaticBackups = const Value.absent(),
-            Value<String> tabs = const Value.absent(),
-            Value<double?> targetWeight = const Value.absent(),
-            Value<int> limit = const Value.absent(),
-            required String themeMode,
-            Value<String?> backupPath = const Value.absent(),
-            Value<String?> convertWeight = const Value.absent(),
-          }) =>
-              SettingsCompanion.insert(
-            curveLines: curveLines,
-            dailyCalories: dailyCalories,
-            dailyCarb: dailyCarb,
-            dailyFat: dailyFat,
-            dailyProtein: dailyProtein,
-            diarySummary: diarySummary,
-            entryUnit: entryUnit,
-            favoriteNew: favoriteNew,
-            foodUnit: foodUnit,
-            id: id,
-            lastGraph: lastGraph,
-            longDateFormat: longDateFormat,
-            offLogin: offLogin,
-            offPassword: offPassword,
-            positiveReinforcement: positiveReinforcement,
-            reminders: reminders,
-            selectEntryOnSubmit: selectEntryOnSubmit,
-            shortDateFormat: shortDateFormat,
-            fields: fields,
-            showImages: showImages,
-            showOthers: showOthers,
-            systemColors: systemColors,
-            automaticBackups: automaticBackups,
-            tabs: tabs,
-            targetWeight: targetWeight,
-            limit: limit,
-            themeMode: themeMode,
-            backupPath: backupPath,
-            convertWeight: convertWeight,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$SettingsTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $SettingsTable,
-    Setting,
-    $$SettingsTableFilterComposer,
-    $$SettingsTableOrderingComposer,
-    $$SettingsTableAnnotationComposer,
-    $$SettingsTableCreateCompanionBuilder,
-    $$SettingsTableUpdateCompanionBuilder,
-    (Setting, BaseReferences<_$AppDatabase, $SettingsTable, Setting>),
-    Setting,
-    PrefetchHooks Function()>;
-
-class $AppDatabaseManager {
-  final _$AppDatabase _db;
-  $AppDatabaseManager(this._db);
-  $$FoodsTableTableManager get foods =>
-      $$FoodsTableTableManager(_db, _db.foods);
-  $$EntriesTableTableManager get entries =>
-      $$EntriesTableTableManager(_db, _db.entries);
-  $$WeightsTableTableManager get weights =>
-      $$WeightsTableTableManager(_db, _db.weights);
-  $$SettingsTableTableManager get settings =>
-      $$SettingsTableTableManager(_db, _db.settings);
+  @override
+  int get schemaVersion => 32;
 }

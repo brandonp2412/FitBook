@@ -30,6 +30,7 @@ import 'schema_v25.dart' as v25;
 import 'schema_v20.dart' as v20;
 import 'schema_v14.dart' as v14;
 import 'schema_v6.dart' as v6;
+import 'schema_v32.dart' as v32;
 import 'schema_v13.dart' as v13;
 import 'schema_v7.dart' as v7;
 import 'schema_v31.dart' as v31;
@@ -92,6 +93,8 @@ class GeneratedHelper implements SchemaInstantiationHelper {
         return v14.DatabaseAtV14(db);
       case 6:
         return v6.DatabaseAtV6(db);
+      case 32:
+        return v32.DatabaseAtV32(db);
       case 13:
         return v13.DatabaseAtV13(db);
       case 7:
@@ -133,6 +136,7 @@ class GeneratedHelper implements SchemaInstantiationHelper {
     28,
     29,
     30,
-    31
+    31,
+    32
   ];
 }
