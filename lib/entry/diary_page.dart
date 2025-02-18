@@ -12,6 +12,7 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -75,6 +76,7 @@ class DiaryPageState extends State<DiaryPage> {
           String protein = "";
           String fat = "";
           String carb = "";
+          final formatter = NumberFormat('#,##0');
 
           switch (settings.diarySummary) {
             case 'DiarySummary.remaining':
@@ -89,7 +91,7 @@ class DiaryPageState extends State<DiaryPage> {
               break;
             case 'DiarySummary.division':
               cals =
-                  "${totalCals.toStringAsFixed(0)} / ${settings.dailyCalories} kcal";
+                  "${totalCals.toStringAsFixed(0)} / ${formatter.format(settings.dailyCalories ?? 0)} kcal";
               protein =
                   "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
               fat = "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
@@ -98,7 +100,7 @@ class DiaryPageState extends State<DiaryPage> {
               break;
             case 'DiarySummary.both':
               cals =
-                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${settings.dailyCalories} kcal)";
+                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${formatter.format(settings.dailyCalories ?? 0)} kcal)";
               protein =
                   "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} (${settings.dailyProtein} g)";
               fat =
@@ -110,7 +112,7 @@ class DiaryPageState extends State<DiaryPage> {
               break;
           }
 
-          final children = [
+          final goals = [
             if (settings.dailyCalories != null)
               Text(
                 cals,
@@ -213,7 +215,7 @@ class DiaryPageState extends State<DiaryPage> {
               ),
               material.Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: children,
+                children: goals,
               ),
             ],
           );
