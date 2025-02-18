@@ -45,6 +45,8 @@ class GraphPageState extends State<GraphPage>
     super.build(context);
     final settings = context.watch<SettingsState>().value;
     final fields = settings.fields?.split(',') ?? defaultFields;
+    final filteredFields =
+        fields.where((field) => !excludedFields.contains(field));
 
     return Scaffold(
       body: Padding(
@@ -54,7 +56,11 @@ class GraphPageState extends State<GraphPage>
           children: [
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
-              value: metric,
+              value: filteredFields.contains(metric) ||
+                      metric == 'calories' ||
+                      metric == 'body-weight'
+                  ? metric
+                  : null,
               items: [
                 DropdownMenuItem(
                   value: db.foods.calories.name,
@@ -64,14 +70,14 @@ class GraphPageState extends State<GraphPage>
                   value: 'body-weight',
                   child: Text("Body weight"),
                 ),
-                ...fields.where((field) => !excludedFields.contains(field)).map(
-                      (field) => DropdownMenuItem(
-                        value: field,
-                        child: Text(
-                          sentenceCase(field),
-                        ),
-                      ),
+                ...filteredFields.map(
+                  (field) => DropdownMenuItem(
+                    value: field,
+                    child: Text(
+                      sentenceCase(field),
                     ),
+                  ),
+                ),
               ],
               onChanged: (value) {
                 setState(() {
