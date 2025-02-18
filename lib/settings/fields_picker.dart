@@ -114,7 +114,9 @@ class _FieldsPickerState extends State<FieldsPicker> {
         onPressed: () {
           db.settings.update().write(
                 SettingsCompanion(
-                  fields: Value(fields.join(',')),
+                  fields: Value(
+                    fields.where((field) => field.isNotEmpty).join(','),
+                  ),
                 ),
               );
           Navigator.pop(context);
