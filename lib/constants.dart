@@ -19,6 +19,18 @@ enum Period {
 
 enum DiarySummary { remaining, division, both, none }
 
+const excludedFields = [
+  'id',
+  'created',
+  'favorite',
+  'name',
+  'calories',
+  'serving_unit',
+  'image_file',
+  'barcode',
+  'serving_size',
+];
+
 List<String> units = [
   'serving',
   'grams',

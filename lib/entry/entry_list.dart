@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
+import 'package:fit_book/entry/entry_food.dart';
+import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class EntryList extends StatefulWidget {
     required this.onNext,
   });
 
-  final List<EntryWithFood> entryFoods;
+  final List<EntryFood> entryFoods;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
@@ -58,17 +59,16 @@ class _EntryListState extends State<EntryList> {
         itemCount: widget.entryFoods.length,
         itemBuilder: (context, index) {
           final entryFood = widget.entryFoods[index];
-          final foodName = entryFood.foodName;
-          final entry = entryFood.entry;
+          final foodName = entryFood.name;
           final previous = index > 0 ? widget.entryFoods[index - 1] : null;
-          final selected = widget.selected.contains(entry.id);
+          final selected = widget.selected.contains(entryFood.entryId);
           final showDivider = previous != null &&
               !isSameDay(
-                previous.entry.created,
-                entryFood.entry.created,
+                previous.created,
+                entryFood.created,
               );
-          final suffix = entry.unit == 'serving' && entry.quantity > 1
-              ? " x${entry.quantity.toInt()}"
+          final suffix = entryFood.unit == 'serving' && entryFood.quantity > 1
+              ? " x${entryFood.quantity.toInt()}"
               : "";
 
           Widget? image;
@@ -94,7 +94,7 @@ class _EntryListState extends State<EntryList> {
                     const Icon(Icons.today),
                     Text(
                       DateFormat(settings.shortDateFormat)
-                          .format(previous.entry.created),
+                          .format(previous.created),
                     ),
                     const Expanded(child: Divider()),
                   ],
@@ -103,7 +103,7 @@ class _EntryListState extends State<EntryList> {
                 leading: image,
                 title: Text("$foodName$suffix"),
                 subtitle: Text(
-                  DateFormat(settings.longDateFormat).format(entry.created),
+                  DateFormat(settings.longDateFormat).format(entryFood.created),
                 ),
                 trailing: Stack(
                   children: [
@@ -113,7 +113,7 @@ class _EntryListState extends State<EntryList> {
                       child: Visibility(
                         visible: !selected,
                         child: Text(
-                          "${entry.kCalories?.toStringAsFixed(0) ?? 0} kcal",
+                          "${entryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
@@ -125,26 +125,26 @@ class _EntryListState extends State<EntryList> {
                         visible: selected,
                         child: Checkbox(
                           value: selected,
-                          onChanged: (_) => widget.onSelect(entry.id),
+                          onChanged: (_) => widget.onSelect(entryFood.entryId),
                         ),
                       ),
                     ),
                   ],
                 ),
                 selected: selected,
-                onLongPress: () => widget.onSelect(entry.id),
+                onLongPress: () => widget.onSelect(entryFood.entryId),
                 onTap: () {
                   if (widget.selected.isEmpty)
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditEntryPage(
-                          id: entry.id,
+                          id: entryFood.entryId,
                         ),
                       ),
                     );
                   else
-                    widget.onSelect(entry.id);
+                    widget.onSelect(entryFood.entryId);
                 },
               ),
             ],

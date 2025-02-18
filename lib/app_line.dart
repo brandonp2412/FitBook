@@ -18,7 +18,7 @@ class GraphData {
 }
 
 class AppLine extends StatefulWidget {
-  final AppMetric metric;
+  final String metric;
   final Period groupBy;
   final DateTime? startDate;
   final DateTime? endDate;
@@ -53,40 +53,54 @@ class _AppLineState extends State<AppLine> {
     _setStream();
   }
 
-  void _setStream() {
-    Expression<String> createdCol = const CustomExpression<String>(
-      "STRFTIME('%Y-%m-%d', DATE(created, 'unixepoch', 'localtime'))",
+  Expression<String> getCreated(String table) {
+    Expression<String> createdCol = CustomExpression<String>(
+      "STRFTIME('%Y-%m-%d', DATE($table.created, 'unixepoch', 'localtime'))",
     );
     if (widget.groupBy == Period.month)
-      createdCol = const CustomExpression<String>(
-        "STRFTIME('%Y-%m', DATE(created, 'unixepoch', 'localtime'))",
+      createdCol = CustomExpression<String>(
+        "STRFTIME('%Y-%m', DATE($table.created, 'unixepoch', 'localtime'))",
       );
     else if (widget.groupBy == Period.week)
-      createdCol = const CustomExpression<String>(
-        "STRFTIME('%Y-%m-%W', DATE(created, 'unixepoch', 'localtime'))",
+      createdCol = CustomExpression<String>(
+        "STRFTIME('%Y-%m-%W', DATE($table.created, 'unixepoch', 'localtime'))",
       );
     else if (widget.groupBy == Period.year)
-      createdCol = const CustomExpression<String>(
-        "STRFTIME('%Y', DATE(created, 'unixepoch', 'localtime'))",
+      createdCol = CustomExpression<String>(
+        "STRFTIME('%Y', DATE($table.created, 'unixepoch', 'localtime'))",
       );
+    return createdCol;
+  }
 
-    var cals = db.entries.kCalories.sum();
-    var fat = db.entries.fatG.sum();
-    var protein = db.entries.proteinG.sum();
-    var carb = db.entries.carbG.sum();
-
-    if (widget.groupBy != Period.day) {
-      cals = db.entries.kCalories.sum() /
-          db.entries.created.date.count(distinct: true).cast<double>();
-      fat = db.entries.fatG.sum() /
-          db.entries.created.date.count(distinct: true).cast<double>();
-      protein = db.entries.proteinG.sum() /
-          db.entries.created.date.count(distinct: true).cast<double>();
-      carb = db.entries.carbG.sum() /
-          db.entries.created.date.count(distinct: true).cast<double>();
+  void _setStream() {
+    final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
+    Map<String, CustomExpression> metricColumns = {
+      'calories': CustomExpression<double>(
+        "SUM(foods.calories)",
+        watchedTables: {db.foods},
+      ),
+    };
+    for (final field in fields) {
+      metricColumns[field] = CustomExpression<double>(
+        "SUM(foods.$field)",
+        watchedTables: {db.foods},
+      );
     }
 
-    if (widget.metric == AppMetric.bodyWeight)
+    if (widget.groupBy != Period.day) {
+      metricColumns['calories'] = CustomExpression<double>(
+        "SUM(foods.calories) / COUNT(DISTINCT date(entries.created, 'unixepoch'))",
+        watchedTables: {db.foods},
+      );
+      for (final field in fields)
+        metricColumns[field] = CustomExpression<double>(
+          "SUM(foods.$field) / COUNT(DISTINCT date(entries.created, 'unixepoch'))",
+          watchedTables: {db.foods},
+        );
+    }
+
+    if (widget.metric == 'body-weight') {
+      final createdCol = getCreated('weights');
       stream = (db.weights.selectOnly()
             ..orderBy([
               OrderingTerm(
@@ -123,15 +137,16 @@ class _AppLineState extends State<AppLine> {
                 )
                 .toList(),
           );
-    else
+    } else {
+      final createdCol = getCreated('entries');
       stream = (db.entries.selectOnly()
             ..addColumns([
               db.entries.created,
-              cals,
-              fat,
-              protein,
-              carb,
+              ...metricColumns.values,
             ])
+            ..join(
+              [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
+            )
             ..orderBy([
               OrderingTerm(
                 expression: db.entries.created,
@@ -154,46 +169,13 @@ class _AppLineState extends State<AppLine> {
           .map((results) {
         return results.map((result) {
           final created = result.read(db.entries.created)!.toLocal();
-          final totalCals = result.read(cals);
-          final totalFat = result.read(fat);
-          final totalProtein = result.read(protein);
-          final totalCarb = result.read(carb);
-
-          double value = 0.0;
-          String unit = 'g';
-
-          switch (widget.metric) {
-            case AppMetric.calories:
-              value = totalCals ?? 0;
-              unit = 'kcal';
-              break;
-            case AppMetric.protein:
-              value = totalProtein ?? 0;
-              break;
-            case AppMetric.fat:
-              value = totalFat ?? 0;
-              break;
-            case AppMetric.carbs:
-              value = totalCarb ?? 0;
-              break;
-            case AppMetric.bodyWeight:
-              throw Exception("Body weight isn't recorded here.");
-          }
+          double value =
+              (result.read(metricColumns[widget.metric]!) ?? 0.0) as double;
+          String unit = widget.metric == 'calories' ? 'kcal' : 'g';
 
           return GraphData(created: created, value: value, unit: unit);
         }).toList();
       });
-  }
-
-  double getValue(TypedResult row, AppMetric metric) {
-    if (metric == AppMetric.bodyWeight) {
-      return row.read(db.entries.quantity)!;
-    } else if (metric == AppMetric.calories) {
-      return row.read(db.entries.quantity)!;
-    } else if (metric == AppMetric.protein) {
-      return row.read(db.entries.quantity)!;
-    } else {
-      throw Exception("Metric not supported.");
     }
   }
 
@@ -204,19 +186,19 @@ class _AppLineState extends State<AppLine> {
     double goal = 0;
 
     switch (widget.metric) {
-      case AppMetric.calories:
+      case 'calories':
         goal = (settings.dailyCalories ?? 0).toDouble();
         break;
-      case AppMetric.protein:
+      case 'protein':
         goal = (settings.dailyProtein ?? 0).toDouble();
         break;
-      case AppMetric.bodyWeight:
+      case 'body-weight':
         goal = settings.targetWeight ?? 0;
         break;
-      case AppMetric.fat:
+      case 'fat':
         goal = (settings.dailyFat ?? 0).toDouble();
         break;
-      case AppMetric.carbs:
+      case 'carbs':
         goal = (settings.dailyCarb ?? 0).toDouble();
         break;
     }

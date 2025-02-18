@@ -331,8 +331,16 @@ class AppDatabase extends _$AppDatabase {
     from31To32: (Migrator m, Schema32 schema) async {
       await m.addColumn(schema.settings, schema.settings.fields);
     },
+    from32To33: (Migrator m, Schema33 schema) async {
+      await m.alterTable(TableMigration(schema.settings));
+    },
+    from33To34: (Migrator m, Schema34 schema) async {
+      await schema.settings
+          .update()
+          .write(RawValuesInsertable({'last_graph': Constant('calories')}));
+    },
   );
 
   @override
-  int get schemaVersion => 32;
+  int get schemaVersion => 34;
 }

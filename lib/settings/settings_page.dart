@@ -70,6 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ...getFoodSettings(
           settings: settingsState,
           term: search.text.toLowerCase(),
+          context: context,
         ),
         ...getDataSettings(
           context: context,

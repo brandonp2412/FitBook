@@ -5,6 +5,30 @@ import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
+String sentenceCase(String value) {
+  if (value.isEmpty) return '';
+  if (value == '_18_3_n_3_c_c_c_ala_mg')
+    return 'Alpha-linolenic acid (ALA)';
+  else if (value == '_200_calorie_weight_g')
+    return '200-Calorie Equivalent Weight';
+  else if (value == '_20_5_n_3_epa_mg')
+    return 'Eicosapentaenoic acid (EPA)';
+  else if (value == '_22_5_n_3_dpa_mg')
+    return 'Docosapentaenoic acid (DPA)';
+  else if (value == '_22_6_n_3_dha_mg')
+    return 'Docosahexaenoic acid (DHA)';
+  else if (value == 'vitamin_b_12_mcg')
+    return 'Vitamin B12 (Cobalamin)';
+  else if (value == 'vitamin_a_iu_iu')
+    return 'Vitamin A (International Units)';
+  else if (value == 'vitamin_d_iu_iu')
+    return 'Vitamin D (International Units)';
+  else if (value == 'vitamin_a_rae_mcg')
+    return 'Vitamin A (Retinol Activity Equivalents)';
+
+  return value[0].toUpperCase() + value.substring(1).replaceAll('_', ' ');
+}
+
 void toast(BuildContext context, String message, [SnackBarAction? action]) {
   final defaultAction = SnackBarAction(label: 'OK', onPressed: () {});
 

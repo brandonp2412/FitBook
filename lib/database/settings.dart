@@ -1,4 +1,13 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/main.dart';
+
+final defaultFields = [
+  db.foods.calories.name,
+  db.foods.proteinG.name,
+  db.foods.carbohydrateG.name,
+  db.foods.fatG.name,
+  db.foods.fiberG.name,
+];
 
 // coverage:ignore-file
 
@@ -23,7 +32,9 @@ class Settings extends Table {
   BoolColumn get reminders => boolean().withDefault(const Constant(false))();
   BoolColumn get selectEntryOnSubmit => boolean()();
   TextColumn get shortDateFormat => text()();
-  TextColumn get fields => text().nullable()();
+  TextColumn get fields => text().nullable().withDefault(
+        Constant('calories,protein_g,carbohydrate_g,fat_g,fiber_g'),
+      )();
   BoolColumn get showImages => boolean().withDefault(const Constant(true))();
   BoolColumn get showOthers => boolean()();
   BoolColumn get systemColors => boolean()();

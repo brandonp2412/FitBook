@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 List<Widget> getFoodSettings({
   required String term,
   required SettingsState settings,
+  required BuildContext context,
 }) {
   return [
     if ('food unit'.contains(term))
@@ -26,6 +28,23 @@ List<Widget> getFoodSettings({
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(foodUnit: Value(value!)),
               ),
+        ),
+      ),
+    if ('fields'.contains(term))
+      Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: ListTile(
+          leading: const Icon(Icons.list),
+          title: const Text('Fields'),
+          trailing: Text(
+            "(${settings.value.fields?.split(',').length.toString()})",
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => FieldsPicker(),
+            ),
+          ),
         ),
       ),
     if ('favorite new foods'.contains(term))
@@ -74,6 +93,7 @@ class _FoodSettingsState extends State<FoodSettings> {
           children: getFoodSettings(
             term: '',
             settings: settings,
+            context: context,
           ),
         ),
       ),

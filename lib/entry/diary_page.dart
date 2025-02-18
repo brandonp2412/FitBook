@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/database/entries.dart';
 import 'package:fit_book/entry/edit_entries_page.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
 import 'package:fit_book/entry/entry_filters.dart';
+import 'package:fit_book/entry/entry_food.dart';
 import 'package:fit_book/entry/entry_list.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
@@ -63,12 +63,12 @@ class DiaryPageState extends State<DiaryPage> {
           double totalProtein = 0;
           double totalFat = 0;
           double totalCarb = 0;
-          for (EntryWithFood entryFood in entryFoods)
-            if (isSameDay(entryFood.entry.created, DateTime.now().toLocal())) {
-              totalCals += entryFood.entry.kCalories ?? 0;
-              totalProtein += entryFood.entry.proteinG ?? 0;
-              totalFat += entryFood.entry.fatG ?? 0;
-              totalCarb += entryFood.entry.carbG ?? 0;
+          for (EntryFood entryFood in entryFoods)
+            if (isSameDay(entryFood.created, DateTime.now().toLocal())) {
+              totalCals += entryFood.metrics[db.foods.calories.name] ?? 0;
+              totalProtein += entryFood.metrics[db.foods.proteinG.name] ?? 0;
+              totalFat += entryFood.metrics[db.foods.fatG.name] ?? 0;
+              totalCarb += entryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
             }
 
           String cals = "";
@@ -155,7 +155,7 @@ class DiaryPageState extends State<DiaryPage> {
                 },
                 onSelect: () => setState(() {
                   selected.addAll(
-                    entryFoods.map((entryFood) => entryFood.entry.id),
+                    entryFoods.map((entryFood) => entryFood.entryId),
                   );
                 }),
                 selected: selected,

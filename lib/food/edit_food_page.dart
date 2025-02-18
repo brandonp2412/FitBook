@@ -6,6 +6,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
+import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,6 @@ class EditFoodPage extends StatefulWidget {
   createState() => _EditFoodPageState();
 }
 
-const excludedFields = [
-  'favorite',
-  'name',
-  'calories',
-  'serving_unit',
-  'image_file',
-];
-
 class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
   late String servingUnit;
@@ -40,26 +33,23 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final barcodeController = TextEditingController();
   final nameController = TextEditingController();
   final kilojoulesController = TextEditingController(text: "0");
+  final servingSizeController = TextEditingController(text: "1");
+  late SettingsState settingsState;
 
   Map<String, TextEditingController> controllers = {};
 
   @override
   void initState() {
     super.initState();
-    settings = context.read<SettingsState>().value;
+    settingsState = context.read<SettingsState>();
+    settings = settingsState.value;
     servingUnit = settings.foodUnit;
 
-    final fields = settings.fields == null
-        ? db.foods.$columns.map((column) => column.name)
-        : settings.fields!.split(',');
-    for (final field in fields) {
-      if (excludedFields.contains(field)) continue;
-      controllers[field] = TextEditingController();
-    }
-
+    setControllers();
+    settingsState.addListener(setControllers);
     if (servingUnit == 'serving')
-      controllers['serving_size']!.text = '1';
-    else if (servingUnit == 'grams') controllers['serving_size']!.text = '100';
+      servingSizeController.text = '1';
+    else if (servingUnit == 'grams') servingSizeController.text = '100';
 
     if (widget.id == null) return;
 
@@ -76,12 +66,37 @@ class _EditFoodPageState extends State<EditFoodPage> {
         servingUnit = food.servingUnit ?? servingUnit;
         nameController.text = food.name;
         imageFile = food.imageFile;
-        caloriesController.text = food.calories?.toString() ?? '';
+        caloriesController.text = food.calories?.toStringAsFixed(2) ?? '';
         kilojoulesController.text = food.calories == null
             ? ''
             : formatter.format(food.calories! * 4.184);
       });
     });
+  }
+
+  void setControllers() async {
+    settings = context.read<SettingsState>().value;
+    final fields = settings.fields == null
+        ? db.foods.$columns.map((column) => column.name)
+        : settings.fields!.split(',');
+    final food = await (db.foods.select()
+          ..where((u) => u.id.equals(widget.id!)))
+        .getSingle();
+    final columns = food.toColumns(true);
+    for (final field in fields) {
+      if (field.isEmpty) {
+        controllers = {};
+        continue;
+      }
+      if (excludedFields.contains(field)) continue;
+      final expression = columns[field];
+      if (expression is Variable<Object>)
+        controllers[field] =
+            TextEditingController(text: expression.value.toString());
+      else
+        controllers[field] = TextEditingController();
+    }
+    setState(() {});
   }
 
   @override
@@ -90,6 +105,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     for (final controller in controllers.values) {
       controller.dispose();
     }
+    if (mounted) settingsState.removeListener(setControllers);
   }
 
   Future<void> save() async {
@@ -183,28 +199,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelText: 'Name',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () async {
-                    Food? food = await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => SearchOpenFoodFacts(
-                          terms: nameController.text,
-                        ),
-                      ),
-                    );
-                    if (food == null) return;
-
-                    if (!context.mounted) return;
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditFoodPage(id: food.id),
-                      ),
-                    );
-                  },
-                ),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
               onSubmitted: (_) => selectAll(caloriesController),
               textInputAction: TextInputAction.next,
@@ -249,46 +244,62 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
-            DropdownButtonFormField<String>(
-              value: servingUnit,
-              decoration: const InputDecoration(labelText: 'Serving unit'),
-              items: units.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  servingUnit = newValue!;
-                });
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(labelText: 'Serving size'),
+                    controller: servingSizeController,
+                    onTap: () => selectAll(servingSizeController),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: servingUnit,
+                    decoration:
+                        const InputDecoration(labelText: 'Serving unit'),
+                    items: units.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        servingUnit = newValue!;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
-            if (Platform.isAndroid || Platform.isIOS)
-              TextField(
-                controller: barcodeController,
-                decoration: const InputDecoration(
-                  labelText: 'Barcode',
+            TextField(
+              controller: barcodeController,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: 'Barcode',
+                suffixIcon: ScanBarcode(
+                  text: true,
+                  value: barcodeController.text,
+                  onBarcode: (value) {
+                    barcodeController.text = value;
+                    toast(context, 'Barcode not found. Save to insert.');
+                  },
+                  onFood: (food) {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(id: food.id),
+                      ),
+                    );
+                  },
                 ),
               ),
-            if (Platform.isIOS || Platform.isAndroid)
-              ScanBarcode(
-                text: true,
-                value: barcodeController.text,
-                onBarcode: (value) {
-                  barcodeController.text = value;
-                  toast(context, 'Barcode not found. Save to insert.');
-                },
-                onFood: (food) {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditFoodPage(id: food.id),
-                    ),
-                  );
-                },
-              ),
+            ),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 16),
               Image.file(
@@ -300,11 +311,11 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ],
-            if (settings.showImages) ...[
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+            const SizedBox(height: 16),
+            Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                if (settings.showImages)
                   TextButton.icon(
                     icon: const Icon(Icons.image),
                     label: const Text('Set image'),
@@ -318,45 +329,73 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       });
                     },
                   ),
-                  if (imageFile?.isNotEmpty == true)
-                    TextButton.icon(
-                      icon: const Icon(Icons.delete),
-                      label: const Text("Remove image"),
-                      onPressed: () => setState(() {
-                        imageFile = null;
-                      }),
-                    ),
+                if (settings.showImages && imageFile?.isNotEmpty == true)
                   TextButton.icon(
-                    icon: const Icon(Icons.search),
-                    label: const Text("Search OpenFoodFacts"),
-                    onPressed: () async {
-                      Food? food = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SearchOpenFoodFacts(
-                            terms: nameController.text,
-                          ),
-                        ),
-                      );
-                      if (food == null) return;
-
-                      if (!context.mounted) return;
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditFoodPage(id: food.id),
-                        ),
-                      );
-                    },
+                    icon: const Icon(Icons.delete),
+                    label: const Text("Remove image"),
+                    onPressed: () => setState(() {
+                      imageFile = null;
+                    }),
                   ),
-                ],
-              ),
-            ],
+                TextButton.icon(
+                  icon: const Icon(Icons.search),
+                  label: const Text("OpenFoodFacts"),
+                  onPressed: () async {
+                    Food? food = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SearchOpenFoodFacts(
+                          terms: nameController.text,
+                        ),
+                      ),
+                    );
+                    if (food == null) return;
+
+                    if (!context.mounted) return;
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(id: food.id),
+                      ),
+                    );
+                  },
+                ),
+                TextButton.icon(
+                  onPressed: () => Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => FieldsPicker(),
+                        ),
+                      )
+                      .then((_) => setControllers()),
+                  label: Text("Fields"),
+                  icon: Icon(Icons.settings),
+                ),
+              ],
+            ),
             ...controllers.entries.map(
-              (controller) => TextField(
-                controller: controller.value,
-                decoration: InputDecoration(labelText: controller.key),
-              ),
+              (entry) {
+                final column =
+                    db.foods.$columns.firstWhere((c) => c.name == entry.key);
+
+                return TextField(
+                  controller: entry.value,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: column.type == DriftSqlType.double
+                      ? TextInputType.numberWithOptions(decimal: true)
+                      : null,
+                  onTap: () => selectAll(entry.value),
+                  onSubmitted: (_) {
+                    final currentIndex =
+                        controllers.values.toList().indexOf(entry.value);
+                    if (currentIndex < controllers.length - 1) {
+                      selectAll(controllers.values.elementAt(currentIndex + 1));
+                    }
+                  },
+                  decoration:
+                      InputDecoration(labelText: sentenceCase(entry.key)),
+                );
+              },
             ),
           ],
         ),

@@ -2,8 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +20,7 @@ class GraphPage extends StatefulWidget {
 
 class GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
-  AppMetric metric = AppMetric.calories;
+  String metric = 'calories';
   Period groupBy = Period.day;
   DateTime? startDate;
   DateTime? endDate;
@@ -26,13 +28,13 @@ class GraphPageState extends State<GraphPage>
   @override
   void initState() {
     super.initState();
-    final settings = context.read<SettingsState>();
-    if (settings.value.lastGraph == 'AppMetric.calories') return;
+    final settings = context.read<SettingsState>().value;
 
-    setState(() {
-      metric = AppMetric.values
-          .firstWhere((m) => m.toString() == settings.value.lastGraph);
-    });
+    final fields = settings.fields?.split(',') ?? defaultFields;
+    if (fields.contains(settings.lastGraph))
+      setState(() {
+        metric = settings.lastGraph;
+      });
   }
 
   @override
@@ -42,6 +44,7 @@ class GraphPageState extends State<GraphPage>
   Widget build(BuildContext context) {
     super.build(context);
     final settings = context.watch<SettingsState>().value;
+    final fields = settings.fields?.split(',') ?? defaultFields;
 
     return Scaffold(
       body: Padding(
@@ -52,27 +55,23 @@ class GraphPageState extends State<GraphPage>
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
               value: metric,
-              items: const [
+              items: [
                 DropdownMenuItem(
-                  value: AppMetric.calories,
+                  value: db.foods.calories.name,
                   child: Text("Calories"),
                 ),
                 DropdownMenuItem(
-                  value: AppMetric.protein,
-                  child: Text("Protein"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.fat,
-                  child: Text("Fat"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.carbs,
-                  child: Text("Carbs"),
-                ),
-                DropdownMenuItem(
-                  value: AppMetric.bodyWeight,
+                  value: 'body-weight',
                   child: Text("Body weight"),
                 ),
+                ...fields.where((field) => !excludedFields.contains(field)).map(
+                      (field) => DropdownMenuItem(
+                        value: field,
+                        child: Text(
+                          sentenceCase(field),
+                        ),
+                      ),
+                    ),
               ],
               onChanged: (value) {
                 setState(() {

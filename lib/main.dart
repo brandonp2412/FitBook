@@ -45,7 +45,9 @@ Future<void> main() async {
 Widget appProviders(SettingsState settingsState) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => settingsState),
-        ChangeNotifierProvider(create: (context) => EntryState()),
+        ChangeNotifierProvider(
+          create: (context) => EntryState(),
+        ),
       ],
       child: const App(),
     );

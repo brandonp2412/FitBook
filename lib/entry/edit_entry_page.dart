@@ -366,6 +366,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 nameController = textEditingController;
                 return TextFormField(
                   decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelText: 'Name',
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.search),
@@ -564,6 +565,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 controller: barcode,
                 decoration: const InputDecoration(
                   labelText: 'Barcode',
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
             ListTile(
