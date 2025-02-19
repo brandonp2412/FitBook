@@ -1,6 +1,6 @@
 # FitBook
 
-Graph your eating habits in style!
+Graph your eating habits with ease!
 
 <p float="left">
     <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
