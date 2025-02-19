@@ -80,7 +80,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
         ? db.foods.$columns.map((column) => column.name)
         : settings.fields!.split(',');
     final food = await (db.foods.select()
-          ..where((u) => u.id.equals(widget.id!)))
+          ..where(
+            (u) => widget.id != null
+                ? u.id.equals(widget.id!)
+                : CustomExpression('true'),
+          )
+          ..limit(1))
         .getSingle();
     final columns = food.toColumns(true);
     for (final field in fields) {

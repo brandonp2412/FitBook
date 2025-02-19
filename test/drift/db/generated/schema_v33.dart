@@ -5374,7 +5374,7 @@ class Settings extends Table with TableInfo<Settings, SettingsData> {
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const CustomExpression(
-          '\'barcode,serving_size,protein,carbohydrates,fat\''));
+          '\'calories,protein_g,carbohydrate_g,fat_g,fiber_g\''));
   late final GeneratedColumn<bool> showImages = GeneratedColumn<bool>(
       'show_images', aliasedName, false,
       type: DriftSqlType.bool,
