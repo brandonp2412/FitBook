@@ -35,7 +35,7 @@ Graph your eating habits with ease!
 
 # Donations
 
-If you would like to support this project:
+Contributing to this project helps us keep adding awesome features!
 
 - Bitcoin `bc1qzlte8featxzf7xvtp3rjv7qqtwkgpup8hu85gp`
 - Monero (XMR) `85tmLfWKbpd8nxQnUY878DDuFjmfcoCFXPWR7XYKLHBSbDZV8wxgoKYUtHtq1kHWJg4m14sdBXhYuUSbxEDA29d19XuREL5`
