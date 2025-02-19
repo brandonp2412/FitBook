@@ -1,4 +1,4 @@
-- Add manual editing of barcode
-- Zoop animation for checkboxes on select
-- Add images to weight
-- Cache images on food & diary
+- Add comma separator to daily kcal goal
+- Remove padding below search
+- Add foods field picker
+- Allow opening of DB in startup to fail
