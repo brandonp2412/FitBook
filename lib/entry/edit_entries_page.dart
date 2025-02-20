@@ -296,7 +296,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
               value: unit,
               decoration:
                   InputDecoration(labelText: 'Unit', hintText: oldUnits),
-              items: units.map((String value) {
+              items: unitOptions.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),

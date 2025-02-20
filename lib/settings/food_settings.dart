@@ -19,7 +19,7 @@ List<Widget> getFoodSettings({
         child: DropdownButtonFormField<String>(
           value: settings.value.foodUnit,
           decoration: const InputDecoration(labelText: 'Food unit'),
-          items: units.map((String value) {
+          items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

@@ -31,7 +31,7 @@ const excludedFields = [
   'serving_size',
 ];
 
-List<String> units = [
+List<String> unitOptions = [
   'serving',
   'grams',
   'milliliters',

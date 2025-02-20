@@ -56,6 +56,7 @@ class _FoodFiltersState extends State<FoodFilters> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       isLabelVisible: filterCount > 0,
       child: PopupMenuButton(
+        tooltip: 'Filter foods',
         icon: const Icon(Icons.filter_list),
         itemBuilder: (popupContext) => [
           PopupMenuItem(
@@ -96,7 +97,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 labelText: 'Serving unit',
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
               ),
-              items: units.map((String value) {
+              items: unitOptions.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -171,7 +172,7 @@ class _FoodFiltersState extends State<FoodFilters> {
           ),
           PopupMenuItem(
             child: ListTile(
-              leading: const Icon(Icons.clear_all),
+              leading: const Icon(Icons.close),
               title: Text("Clear ($filterCount)"),
               onTap: () {
                 widget.servingSizeGtController.text = '';

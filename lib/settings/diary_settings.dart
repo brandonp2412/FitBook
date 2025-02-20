@@ -31,7 +31,7 @@ List<Widget> getDiarySettings({
         child: DropdownButtonFormField<String>(
           value: settings.value.entryUnit,
           decoration: const InputDecoration(labelText: 'Diary unit'),
-          items: units.map((String value) {
+          items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/food/meal_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
@@ -265,7 +266,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     value: servingUnit,
                     decoration:
                         const InputDecoration(labelText: 'Serving unit'),
-                    items: units.map((String value) {
+                    items: unitOptions.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -320,6 +321,20 @@ class _EditFoodPageState extends State<EditFoodPage> {
             Wrap(
               alignment: WrapAlignment.center,
               children: [
+                TextButton.icon(
+                  onPressed: () async {
+                    int? id = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MealPage(),
+                      ),
+                    );
+
+                    if (id != null && context.mounted)
+                      Navigator.of(context).pop();
+                  },
+                  label: Text("Create meal"),
+                  icon: Icon(Icons.restaurant),
+                ),
                 if (settings.showImages)
                   TextButton.icon(
                     icon: const Icon(Icons.image),

@@ -91,6 +91,7 @@ class _FoodListState extends State<FoodList> {
                   ],
                 ),
               ListTile(
+                leading: image,
                 title: Text(food.name.value),
                 subtitle: Text(
                   "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
@@ -121,7 +122,6 @@ class _FoodListState extends State<FoodList> {
                     ),
                   ],
                 ),
-                leading: image,
                 onLongPress: () => widget.onSelect(food.id.value),
                 onTap: () {
                   if (widget.selected.isEmpty)

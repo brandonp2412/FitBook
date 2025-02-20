@@ -433,7 +433,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   child: DropdownButtonFormField<String>(
                     value: unit,
                     decoration: const InputDecoration(labelText: 'Unit'),
-                    items: units.map((String value) {
+                    items: unitOptions.map((String value) {
                       if (value == 'serving' && selectedFood != null)
                         return DropdownMenuItem<String>(
                           value: value,
