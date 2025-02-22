@@ -339,8 +339,11 @@ class AppDatabase extends _$AppDatabase {
           .update()
           .write(RawValuesInsertable({'last_graph': Constant('calories')}));
     },
+    from34To35: (Migrator m, Schema35 schema) async {
+      await m.addColumn(schema.settings, schema.settings.autoCalc);
+    },
   );
 
   @override
-  int get schemaVersion => 34;
+  int get schemaVersion => 35;
 }

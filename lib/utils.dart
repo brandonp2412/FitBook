@@ -5,6 +5,43 @@ import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
+class Macros {
+  final double protein;
+  final double fat;
+  final double carb;
+  final double calories;
+
+  Macros({
+    required this.protein,
+    required this.fat,
+    required this.carb,
+    required this.calories,
+  });
+}
+
+Macros getMacros(double amount, String unit) {
+  var kg = amount;
+  if (unit == 'lb') kg *= 2.2;
+
+  /*
+    Phillips SM, Van Loon LJ. (2011). 
+    Dietary protein for athletes: from requirements to optimum adaptation. 
+    Journal of Sports Sciences, 29(sup1), S29–S38. 
+    https://doi.org/10.1080/02640414.2011.619204
+    
+    Institute of Medicine. (2005). 
+    Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids. 
+    The National Academies Press. 
+    https://www.nap.edu/catalog/10490/dietary-reference-intakes-for-energy-carbohydrate-fiber-fat-fatty-acids-cholesterol-protein-and-amino-acids
+  */
+  return Macros(
+    carb: kg * 5,
+    fat: kg * 0.8,
+    protein: kg * 1.6,
+    calories: kg * 27.5,
+  );
+}
+
 String sentenceCase(String value) {
   if (value.isEmpty) return '';
   if (value == '_18_3_n_3_c_c_c_ala_mg')

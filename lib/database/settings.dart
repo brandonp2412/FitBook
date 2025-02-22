@@ -13,6 +13,7 @@ final defaultFields = [
 
 class Settings extends Table {
   BoolColumn get curveLines => boolean().withDefault(const Constant(true))();
+  BoolColumn get autoCalc => boolean().withDefault(const Constant(false))();
   IntColumn get dailyCalories => integer().nullable()();
   IntColumn get dailyCarb => integer().nullable()();
   IntColumn get dailyFat => integer().nullable()();

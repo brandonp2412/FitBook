@@ -27,7 +27,7 @@ List<Widget> getDiarySettings({
   return [
     if ('diary unit'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField<String>(
           value: settings.value.entryUnit,
           decoration: const InputDecoration(labelText: 'Diary unit'),
@@ -44,7 +44,7 @@ List<Widget> getDiarySettings({
       ),
     if ('diary summary'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField(
           value: settings.value.diarySummary,
           decoration: const InputDecoration(
@@ -76,7 +76,7 @@ List<Widget> getDiarySettings({
       ),
     if ('daily calories'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
           controller: calories,
           onChanged: (value) => db.settings.update().write(
@@ -85,13 +85,13 @@ List<Widget> getDiarySettings({
           onTap: () => selectAll(calories),
           keyboardType: TextInputType.number,
           decoration: const InputDecoration(
-            labelText: 'Daily calories',
+            labelText: 'Daily calories (kcal)',
           ),
         ),
       ),
     if ('daily protein'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
           controller: protein,
           onChanged: (value) => db.settings.update().write(
@@ -99,14 +99,14 @@ List<Widget> getDiarySettings({
               ),
           onTap: () => selectAll(protein),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Daily protein',
+          decoration: InputDecoration(
+            labelText: 'Daily protein (g)',
           ),
         ),
       ),
     if ('daily fat'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
           controller: fat,
           onChanged: (value) => db.settings.update().write(
@@ -115,13 +115,13 @@ List<Widget> getDiarySettings({
           onTap: () => selectAll(fat),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
-            labelText: 'Daily fat',
+            labelText: 'Daily fat (g)',
           ),
         ),
       ),
     if ('daily carb'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
           controller: carb,
           onChanged: (value) => db.settings.update().write(
@@ -130,7 +130,61 @@ List<Widget> getDiarySettings({
           onTap: () => selectAll(carb),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
-            labelText: 'Daily carbs',
+            labelText: 'Daily carbs (g)',
+          ),
+        ),
+      ),
+    if ('automatic dailies'.contains(term))
+      Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Tooltip(
+          message:
+              'Automatically calculate your recommended daily calories, protein, fat and carbs based on your body weight',
+          child: ListTile(
+            leading: const Icon(Icons.auto_mode),
+            title: const Text('Automatic dailies'),
+            onTap: () async {
+              final value = !settings.value.autoCalc;
+              db.settings.update().write(
+                    SettingsCompanion(
+                      autoCalc: Value(value),
+                    ),
+                  );
+
+              if (!value) return;
+
+              final bodyWeight = await (db.weights.select()
+                    ..orderBy([
+                      (u) => OrderingTerm(
+                            expression: u.created,
+                            mode: OrderingMode.desc,
+                          ),
+                    ])
+                    ..limit(1))
+                  .getSingle();
+
+              final macros = getMacros(bodyWeight.amount, bodyWeight.unit);
+              calories.text = macros.calories.toStringAsFixed(0);
+              protein.text = macros.protein.toStringAsFixed(0);
+              fat.text = macros.fat.toStringAsFixed(0);
+              carb.text = macros.carb.toStringAsFixed(0);
+              db.settings.update().write(
+                    SettingsCompanion(
+                      dailyCalories: Value(macros.calories.toInt()),
+                      dailyCarb: Value(macros.carb.toInt()),
+                      dailyFat: Value(macros.fat.toInt()),
+                      dailyProtein: Value(macros.protein.toInt()),
+                    ),
+                  );
+            },
+            trailing: Switch(
+              value: settings.value.autoCalc,
+              onChanged: (value) => db.settings.update().write(
+                    SettingsCompanion(
+                      autoCalc: Value(value),
+                    ),
+                  ),
+            ),
           ),
         ),
       ),

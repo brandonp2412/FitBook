@@ -122,6 +122,18 @@ class _EditWeightPageState extends State<EditWeightPage> {
       );
 
     final settings = context.read<SettingsState>().value;
+    if (settings.autoCalc) {
+      final macros = getMacros(amount, unit);
+      db.settings.update().write(
+            SettingsCompanion(
+              dailyCalories: Value(macros.calories.toInt()),
+              dailyCarb: Value(macros.carb.toInt()),
+              dailyFat: Value(macros.fat.toInt()),
+              dailyProtein: Value(macros.protein.toInt()),
+            ),
+          );
+    }
+
     if (settings.targetWeight == null) return;
     final show = shouldNotify(
       amount,
