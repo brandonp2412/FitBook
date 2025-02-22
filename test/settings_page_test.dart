@@ -94,7 +94,7 @@ void main() async {
 
     await tester.tap(find.text('Diary'));
     await tester.pumpAndSettle();
-    expect(find.bySemanticsLabel('Daily calories'), findsOne);
+    expect(find.bySemanticsLabel('Daily calories (kcal)'), findsOne);
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
 
