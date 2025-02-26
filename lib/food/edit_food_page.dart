@@ -71,6 +71,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
         kilojoulesController.text = food.calories == null
             ? ''
             : formatter.format(food.calories! * 4.184);
+        servingSizeController.text =
+            food.servingSize?.toStringAsFixed(0) ?? '100';
       });
     });
   }
@@ -122,6 +124,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       imageFile: Value(imageFile),
       calories: Value(double.tryParse(caloriesController.text)),
       servingUnit: Value(servingUnit),
+      servingSize: Value(double.parse(servingSizeController.text)),
       created: Value(DateTime.now()),
     );
 
