@@ -56,7 +56,10 @@ class DiaryPageState extends State<DiaryPage> {
       body: StreamBuilder(
         stream: entriesState.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return ErrorWidget(snapshot.error!);
+          if (snapshot.hasError) {
+            print(snapshot.stackTrace);
+            return ErrorWidget(snapshot.error!);
+          }
 
           final entryFoods = snapshot.data ?? [];
 
