@@ -1,1 +1,1 @@
-- Add setting to automatically calculate dailies
+- Fix broken graphs
