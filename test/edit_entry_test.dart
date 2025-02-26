@@ -21,6 +21,9 @@ void main() async {
         name: 'Test',
         calories: const Value(1),
         servingSize: const Value(1),
+        proteinG: const Value(2),
+        carbohydrateG: const Value(3),
+        fatG: const Value(4),
       ),
     ));
     final entryId = await (db.entries.insertOne(
@@ -53,7 +56,7 @@ void main() async {
     await tester.pump();
     await tester.tap(find.text('cups'));
     await tester.pump();
-    var calories = findTextWidget(find.text('Calories'));
+    var calories = findTextWidget(find.textContaining('Calories'));
     expect(calories.controller!.text, equals('250'));
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
@@ -81,6 +84,8 @@ void main() async {
         name: 'Hamburger',
         calories: const Value(240),
         proteinG: const Value(20),
+        carbohydrateG: const Value(3),
+        fatG: const Value(4),
       ),
     ));
     final entryId = await (db.entries.insertOne(
@@ -109,11 +114,17 @@ void main() async {
     expect(find.text('Edit entry'), findsOne);
     expect(find.text('Hamburger'), findsOne);
 
-    await tester.enterText(find.bySemanticsLabel('Calories'), '601');
+    await tester.enterText(
+      find.bySemanticsLabel('Calories (per 1.0 serving)'),
+      '601',
+    );
     await tester.pump();
     expect(find.text('601'), findsOne);
 
-    await tester.enterText(find.bySemanticsLabel('Protein'), '41');
+    await tester.enterText(
+      find.bySemanticsLabel('Protein (per 1.0 serving)'),
+      '41',
+    );
     await tester.pump();
     expect(find.text('41'), findsOne);
 
