@@ -61,10 +61,6 @@ class _ExportDataState extends State<ExportData> {
                           entry.created,
                           entry.quantity,
                           entry.unit,
-                          entry.kCalories,
-                          entry.proteinG,
-                          entry.fatG,
-                          entry.carbG,
                         ]);
                       }
                       final csv =

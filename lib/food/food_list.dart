@@ -52,6 +52,7 @@ class _FoodListState extends State<FoodList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        padding: EdgeInsets.only(top: 8),
         controller: scrollController,
         itemCount: widget.foods.length,
         itemBuilder: (context, index) {

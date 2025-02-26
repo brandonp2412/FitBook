@@ -31,6 +31,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
   final quantityNode = FocusNode();
+  final caloriesNode = FocusNode();
   final barcode = TextEditingController();
 
   late var settings = context.read<SettingsState>().value;
@@ -68,14 +69,13 @@ class _EditEntryPageState extends State<EditEntryPage> {
           barcode.text = food.barcode ?? "";
           nameController?.text = food.name;
           selectedFood = food;
-          calories.text = formatter.format(entry.kCalories);
-          protein.text = formatter.format(entry.proteinG);
-          carb.text = formatter.format(entry.carbG);
-          fat.text = formatter.format(entry.fatG);
-          kilojoules.text = entry.kCalories == null
-              ? ''
-              : formatter.format(food.calories! * 4.184);
+          calories.text = formatter.format(food.calories);
+          protein.text = formatter.format(food.proteinG);
+          carb.text = formatter.format(food.carbohydrateG);
+          fat.text = formatter.format(food.fatG);
+          kilojoules.text = formatter.format(food.calories! * 4.184);
         });
+        recalc();
       },
     );
   }
@@ -189,22 +189,27 @@ class _EditEntryPageState extends State<EditEntryPage> {
   Future<void> save() async {
     if (foodDirty) await saveFood();
     final food = selectedFood!;
-    final entry = calculateEntry(
-      food: food,
-      quantity: formatter.parse(quantity.text).toDouble(),
-      unit: unit,
-    ).copyWith(
-      created: Value(created ?? DateTime.now()),
-    );
 
     if (widget.id == null)
-      await db.into(db.entries).insert(entry);
-    else
-      await db.update(db.entries).replace(
-            entry.copyWith(
-              id: Value(widget.id!),
+      await db.into(db.entries).insert(
+            EntriesCompanion.insert(
+              food: food.id,
+              created: created ?? DateTime.now(),
+              quantity: double.parse(quantity.text),
+              unit: unit,
             ),
           );
+    else
+      db.update(db.entries)
+        ..where((u) => u.id.equals(widget.id!))
+        ..write(
+          EntriesCompanion(
+            food: Value(food.id),
+            created: Value(created ?? DateTime.now()),
+            quantity: Value(double.parse(quantity.text)),
+            unit: Value(unit),
+          ),
+        );
     if (!mounted) return;
     Navigator.pop(context);
   }
@@ -248,7 +253,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
   void recalc() {
     final food = selectedFood!;
-    final entry = calculateEntry(
+    final result = convertCustomServing(
       food: food,
       quantity: formatter.parse(quantity.text).toDouble(),
       unit: unit,
@@ -258,11 +263,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
     setState(() {
       barcode.text = food.barcode ?? '';
-      calories.text = formatter.format(entry.kCalories.value);
-      protein.text = formatter.format(entry.proteinG.value);
-      kilojoules.text = formatter.format((entry.kCalories.value ?? 0) * 4.184);
-      carb.text = formatter.format(entry.carbG.value);
-      fat.text = formatter.format(entry.fatG.value);
+      calories.text = formatter.format(result.calories);
+      protein.text = formatter.format(result.proteinG);
+      kilojoules.text = formatter.format((result.calories ?? 0) * 4.184);
+      carb.text = formatter.format(result.carbohydrateG);
+      fat.text = formatter.format(result.fatG);
     });
   }
 
@@ -428,7 +433,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     },
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 16),
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: unit,
@@ -455,13 +460,33 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
+            ListTile(
+              title: const Text('Created date'),
+              subtitle: Text(
+                DateFormat(settings.longDateFormat)
+                    .format(created ?? DateTime.now()),
+              ),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: () => pickDate(),
+            ),
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: Icon(Icons.restaurant),
+              title: Text("Food"),
+              subtitle: Text("The below details may affect many entries."),
+              onTap: () => caloriesNode.requestFocus(),
+            ),
+            SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: calories,
-                    decoration: const InputDecoration(
-                      labelText: 'Calories',
+                    focusNode: caloriesNode,
+                    decoration: InputDecoration(
+                      labelText: 'Calories (per ${quantity.text} $unit)',
                     ),
                     onTap: () => selectAll(calories),
                     keyboardType:
@@ -484,8 +509,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   Expanded(
                     child: TextField(
                       controller: kilojoules,
-                      decoration: const InputDecoration(
-                        labelText: 'Kilojoules',
+                      decoration: InputDecoration(
+                        labelText: 'Kilojoules (per ${quantity.text} $unit)',
                       ),
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
@@ -509,8 +534,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 Expanded(
                   child: TextField(
                     controller: protein,
-                    decoration: const InputDecoration(
-                      labelText: 'Protein',
+                    decoration: InputDecoration(
+                      labelText: 'Protein (per ${quantity.text} $unit)',
                     ),
                     onTap: () => selectAll(protein),
                     keyboardType:
@@ -528,8 +553,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 Expanded(
                   child: TextField(
                     controller: carb,
-                    decoration: const InputDecoration(
-                      labelText: 'Carbs',
+                    decoration: InputDecoration(
+                      labelText: 'Carbs (per ${quantity.text} $unit)',
                     ),
                     onTap: () => selectAll(carb),
                     keyboardType:
@@ -547,8 +572,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ),
             TextField(
               controller: fat,
-              decoration: const InputDecoration(
-                labelText: 'Fat',
+              decoration: InputDecoration(
+                labelText: 'Fat (per ${quantity.text} $unit)',
               ),
               onTap: () => selectAll(fat),
               keyboardType:
@@ -568,15 +593,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                 ),
               ),
-            ListTile(
-              title: const Text('Created date'),
-              subtitle: Text(
-                DateFormat(settings.longDateFormat)
-                    .format(created ?? DateTime.now()),
-              ),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () => pickDate(),
-            ),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 8),
               Image.file(

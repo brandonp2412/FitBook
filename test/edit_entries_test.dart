@@ -102,8 +102,6 @@ void main() async {
     final entries =
         await (db.entries.select()..where((u) => u.food.equals(richId))).get();
     expect(entries.length, equals(3));
-    expect(entries.first.kCalories, equals(200));
-    expect(entries.first.proteinG, equals(30));
 
     await db.close();
   });

@@ -360,10 +360,6 @@ class _ImportDataState extends State<ImportData> {
           created: Value(DateTime.parse(row[2])),
           quantity: Value(row[3] is String ? double.tryParse(row[3]) : row[3]),
           unit: Value(row[4]),
-          kCalories: Value(row[5] is String ? double.tryParse(row[5]) : row[5]),
-          proteinG: Value(row[6] is String ? double.tryParse(row[6]) : row[6]),
-          fatG: Value(row[7] is String ? double.tryParse(row[7]) : row[7]),
-          carbG: Value(row[8] is String ? double.tryParse(row[8]) : row[8]),
         ),
       );
     }

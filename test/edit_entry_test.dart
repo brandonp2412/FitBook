@@ -29,10 +29,6 @@ void main() async {
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
-        kCalories: const Value(0),
-        proteinG: const Value(0),
-        carbG: const Value(0),
-        fatG: const Value(0),
       ),
     ));
 
@@ -93,10 +89,6 @@ void main() async {
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
-        kCalories: const Value(0),
-        proteinG: const Value(0),
-        carbG: const Value(0),
-        fatG: const Value(0),
       ),
     ));
 

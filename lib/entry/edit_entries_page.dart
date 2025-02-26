@@ -47,8 +47,6 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             db.entries.id,
             db.entries.quantity,
             db.entries.unit,
-            db.entries.kCalories,
-            db.entries.proteinG,
             db.foods.name,
           ])
           ..where(db.entries.id.isIn(widget.entryIds))
@@ -62,24 +60,6 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             results.map((result) => result.read(db.entries.unit)).join(', ');
         oldQuantities = results
             .map((result) => result.read(db.entries.quantity))
-            .join(', ');
-        oldCalories = results
-            .map((result) => result.read(db.entries.kCalories))
-            .map(
-              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
-            )
-            .join(', ');
-        oldProtein = results
-            .map((result) => result.read(db.entries.proteinG))
-            .map(
-              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
-            )
-            .join(', ');
-        oldKj = results
-            .map((result) => result.read(db.entries.kCalories))
-            .map(
-              (number) => ((number ?? 0) * 4.184).toStringAsFixed(2),
-            )
             .join(', ');
       });
     });
@@ -110,18 +90,14 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
         foodId = selectedFood?.id ?? oldEntry.food;
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
-      final newEntry = calculateEntry(
-        food: food,
-        quantity: quantity ?? oldEntry.quantity,
-        unit: unit ?? oldEntry.unit,
+      final newEntry = EntriesCompanion(
+        food: Value(food.id),
+        quantity: Value(quantity ?? oldEntry.quantity),
+        unit: Value(unit ?? oldEntry.unit),
       );
-      final cals = double.tryParse(caloriesController.text);
-      final protein = double.tryParse(proteinController.text);
       await (db.entries.update()..where((u) => u.id.equals(id))).write(
         newEntry.copyWith(
           created: created != null ? Value(created!) : const Value.absent(),
-          kCalories: cals != null ? Value(cals) : const Value.absent(),
-          proteinG: protein != null ? Value(protein) : const Value.absent(),
         ),
       );
     }

@@ -9,10 +9,4 @@ class Entries extends Table {
   DateTimeColumn get created => dateTime()();
   RealColumn get quantity => real()();
   TextColumn get unit => text()();
-  RealColumn get kCalories => real().nullable()();
-  RealColumn get proteinG => real().nullable()();
-  RealColumn get fatG => real().nullable()();
-  RealColumn get carbG => real().nullable()();
-  RealColumn get sodiumG => real().nullable()();
-  RealColumn get fiberG => real().nullable()();
 }

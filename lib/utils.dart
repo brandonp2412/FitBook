@@ -118,38 +118,99 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.day == date2.day;
 }
 
-EntriesCompanion calculateEntry({
-  required Food food,
+double convertFromGrams(double quantityInGrams, String targetUnit) {
+  double convertedQuantity;
+  switch (targetUnit) {
+    case 'grams':
+    case 'serving':
+    case 'milliliters':
+      convertedQuantity = quantityInGrams;
+      break;
+    case 'milligrams':
+      convertedQuantity = quantityInGrams * 1000;
+      break;
+    case 'cups':
+      convertedQuantity = quantityInGrams / 250; // Metric system
+      break;
+    case 'tablespoons':
+      convertedQuantity = quantityInGrams / 15;
+      break;
+    case 'teaspoons':
+      convertedQuantity = quantityInGrams / 5;
+      break;
+    case 'ounces':
+      convertedQuantity = quantityInGrams / 28.35; // Exact conversion
+      break;
+    case 'pounds':
+      convertedQuantity = quantityInGrams / 453.592; // Exact conversion
+      break;
+    case 'liters':
+      convertedQuantity =
+          quantityInGrams / 1000; // Approximate conversion for water
+      break;
+    case 'kilojoules':
+      convertedQuantity = quantityInGrams * 4.184;
+      break;
+    default:
+      throw Exception('Unit not recognized');
+  }
+  return convertedQuantity;
+}
+
+Food convertCustomServing({
+  required Food food, // This contains original per-serving values
   required double quantity,
   required String unit,
 }) {
-  var entry = EntriesCompanion(
-    food: Value(food.id),
-    quantity: Value(quantity),
-    unit: Value(unit),
-  );
-
-  final servingG = convertToGrams(
+  // First, convert the original food to per-gram values
+  final originalServingG = convertToGrams(
     food.servingSize ?? 100,
     food.servingUnit ?? 'grams',
   );
 
-  var quantityG = 0.0;
-  if (unit == 'serving')
-    quantityG = quantity * servingG;
-  else
-    quantityG = convertToGrams(quantity, unit);
+  // Calculate per-gram values
+  final caloriesPerGram = (food.calories ?? 0) / originalServingG;
+  final proteinPerGram = (food.proteinG ?? 0) / originalServingG;
+  final fatPerGram = (food.fatG ?? 0) / originalServingG;
+  final carbPerGram = (food.carbohydrateG ?? 0) / originalServingG;
+
+  // Convert to the requested serving size
+  final targetServingG = convertToGrams(quantity, unit);
+
+  return Food(
+    id: food.id,
+    name: food.name,
+    servingSize: quantity,
+    servingUnit: unit,
+    calories: caloriesPerGram * targetServingG,
+    proteinG: proteinPerGram * targetServingG,
+    fatG: fatPerGram * targetServingG,
+    carbohydrateG: carbPerGram * targetServingG,
+  );
+}
+
+Food convertPer100G({
+  required Food food,
+  required double quantity,
+  required String unit,
+}) {
+  final servingG = convertToGrams(
+    food.servingSize ?? 100,
+    food.servingUnit ?? 'grams',
+  );
 
   final caloriesG = (food.calories ?? 0) / servingG;
   final proteinG = (food.proteinG ?? 0) / servingG;
   final fatG = (food.fatG ?? 0) / servingG;
   final carbG = (food.carbohydrateG ?? 0) / servingG;
 
-  return entry.copyWith(
-    kCalories: Value(quantityG * caloriesG),
-    fatG: Value(quantityG * fatG),
-    carbG: Value(quantityG * carbG),
-    proteinG: Value(quantityG * proteinG),
+  return Food(
+    calories: caloriesG,
+    proteinG: proteinG,
+    fatG: fatG,
+    carbohydrateG: carbG,
+    id: food.id,
+    name: food.name,
   );
 }
 

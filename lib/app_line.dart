@@ -74,29 +74,60 @@ class _AppLineState extends State<AppLine> {
 
   void _setStream() {
     final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
+
+    // Define the quantity in grams expression (same as in your original function)
+    final quantityInGrams = CustomExpression<double>('''
+    CASE 
+      WHEN entries.unit = 'serving' 
+      THEN entries.quantity * COALESCE(foods.serving_size, 100)
+      WHEN entries.unit IN ('grams', 'milliliters') THEN entries.quantity
+      WHEN entries.unit = 'milligrams' THEN entries.quantity / 1000
+      WHEN entries.unit = 'cups' THEN entries.quantity * 250
+      WHEN entries.unit = 'tablespoons' THEN entries.quantity * 15
+      WHEN entries.unit = 'teaspoons' THEN entries.quantity * 5
+      WHEN entries.unit = 'ounces' THEN entries.quantity * 28.35
+      WHEN entries.unit = 'pounds' THEN entries.quantity * 453.592
+      WHEN entries.unit = 'liters' THEN entries.quantity * 1000
+      WHEN entries.unit = 'kilojoules' THEN entries.quantity / 4.184
+      ELSE entries.quantity
+    END
+  ''');
+
+    // Define serving size with fallback to 100g
+    final servingG = CustomExpression<double>('''
+    COALESCE(foods.serving_size, 100)
+  ''');
+
+    // Calculate adjusted metrics with proper unit conversions
     Map<String, CustomExpression> metricColumns = {
       'calories': CustomExpression<double>(
-        "SUM(foods.calories)",
-        watchedTables: {db.foods},
+        '''SUM((${quantityInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
+        watchedTables: {db.foods, db.entries},
       ),
     };
+
     for (final field in fields) {
       metricColumns[field] = CustomExpression<double>(
-        "SUM(foods.$field)",
-        watchedTables: {db.foods},
+        '''SUM((${quantityInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content})''',
+        watchedTables: {db.foods, db.entries},
       );
     }
 
+    // Handle averaging for periods other than day
     if (widget.groupBy != Period.day) {
       metricColumns['calories'] = CustomExpression<double>(
-        "SUM(foods.calories) / COUNT(DISTINCT date(entries.created, 'unixepoch'))",
-        watchedTables: {db.foods},
+        '''SUM((${quantityInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
+         COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
+        watchedTables: {db.foods, db.entries},
       );
-      for (final field in fields)
+
+      for (final field in fields) {
         metricColumns[field] = CustomExpression<double>(
-          "SUM(foods.$field) / COUNT(DISTINCT date(entries.created, 'unixepoch'))",
-          watchedTables: {db.foods},
+          '''SUM((${quantityInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content}) / 
+           COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
+          watchedTables: {db.foods, db.entries},
         );
+      }
     }
 
     if (widget.metric == 'body-weight') {
@@ -172,7 +203,6 @@ class _AppLineState extends State<AppLine> {
           double value =
               (result.read(metricColumns[widget.metric]!) ?? 0.0) as double;
           String unit = widget.metric == 'calories' ? 'kcal' : 'g';
-
           return GraphData(created: created, value: value, unit: unit);
         }).toList();
       });

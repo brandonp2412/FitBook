@@ -342,8 +342,21 @@ class AppDatabase extends _$AppDatabase {
     from34To35: (Migrator m, Schema35 schema) async {
       await m.addColumn(schema.settings, schema.settings.autoCalc);
     },
+    from35To36: (Migrator m, Schema36 schema) async {
+      await m.dropColumn(schema.entries, "k_calories");
+      await m.dropColumn(schema.entries, "protein_g");
+      await m.dropColumn(schema.entries, "fat_g");
+      await m.dropColumn(schema.entries, "carb_g");
+      await m.dropColumn(schema.entries, "sodium_g");
+      await m.dropColumn(schema.entries, "fiber_g");
+    },
+    from36To37: (Migrator m, Schema37 schema) async {
+      await m.database.customUpdate(
+        "UPDATE foods SET calories = 100, serving_unit = 'grams' WHERE name = 'Quick-add'",
+      );
+    },
   );
 
   @override
-  int get schemaVersion => 35;
+  int get schemaVersion => 37;
 }

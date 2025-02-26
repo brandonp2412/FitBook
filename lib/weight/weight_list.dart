@@ -66,6 +66,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
 
     return Expanded(
       child: ListView.builder(
+        padding: EdgeInsets.only(top: 8),
         controller: scrollController,
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {

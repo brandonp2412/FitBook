@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
 import 'package:fit_book/entry/entry_food.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ class _EntryListState extends State<EntryList> {
 
     return Expanded(
       child: ListView.builder(
+        padding: EdgeInsets.only(top: 8),
         controller: scrollController,
         itemCount: widget.entryFoods.length,
         itemBuilder: (context, index) {
@@ -134,12 +136,22 @@ class _EntryListState extends State<EntryList> {
                 selected: selected,
                 onLongPress: () => widget.onSelect(entryFood.entryId),
                 onTap: () {
-                  if (widget.selected.isEmpty)
+                  if (widget.selected.isEmpty && entryFood.name != 'Quick-add')
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditEntryPage(
                           id: entryFood.entryId,
+                        ),
+                      ),
+                    );
+                  else if (widget.selected.isEmpty &&
+                      entryFood.name == 'Quick-add')
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuickAddPage(
+                          entryId: entryFood.entryId,
                         ),
                       ),
                     );

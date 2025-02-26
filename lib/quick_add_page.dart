@@ -1,13 +1,18 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'database/database.dart';
 
 class QuickAddPage extends StatefulWidget {
-  const QuickAddPage({super.key});
+  final int? entryId;
+
+  const QuickAddPage({super.key, this.entryId});
 
   @override
   createState() => _QuickAddPageState();
@@ -15,10 +20,20 @@ class QuickAddPage extends StatefulWidget {
 
 class _QuickAddPageState extends State<QuickAddPage> {
   final caloriesController = TextEditingController(text: "600");
+  var created = DateTime.now();
 
   @override
   void initState() {
     super.initState();
+    if (widget.entryId != null) initCalories();
+    selectAll(caloriesController);
+  }
+
+  void initCalories() async {
+    final entry = await (db.entries.select()
+          ..where((u) => u.id.equals(widget.entryId!)))
+        .getSingle();
+    caloriesController.text = entry.quantity.toStringAsFixed(2);
     selectAll(caloriesController);
   }
 
@@ -38,24 +53,75 @@ class _QuickAddPageState extends State<QuickAddPage> {
       FoodsCompanion.insert(
         name: 'Quick-add',
         created: Value(DateTime.now()),
+        calories: Value(100),
       ),
     ));
 
     final quantity = double.parse(caloriesController.text);
-    var entry = EntriesCompanion.insert(
-      food: foodId,
-      created: DateTime.now(),
-      quantity: quantity,
-      unit: 'grams',
+    if (widget.entryId == null)
+      db.into(db.entries).insert(
+            EntriesCompanion.insert(
+              food: foodId,
+              created: DateTime.now(),
+              quantity: quantity,
+              unit: 'grams',
+            ),
+          );
+    else
+      db.entries.update()
+        ..where((u) => u.id.equals(widget.entryId!))
+        ..write(
+          EntriesCompanion(
+            created: Value(DateTime.now()),
+            quantity: Value(quantity),
+          ),
+        );
+  }
+
+  Future<void> pickDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: created,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
     );
-    entry = entry.copyWith(
-      kCalories: Value(quantity),
+
+    if (pickedDate != null) {
+      pickTime(pickedDate);
+    }
+  }
+
+  Future<void> pickTime(DateTime pickedDate) async {
+    final settings = context.read<SettingsState>().value;
+
+    if (!settings.longDateFormat.contains('h:mm') &&
+        !settings.longDateFormat.contains('H:mm'))
+      return setState(() {
+        created = pickedDate;
+      });
+
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(created),
     );
-    db.into(db.entries).insert(entry);
+
+    if (pickedTime != null) {
+      setState(() {
+        created = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsState>().value;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -73,6 +139,14 @@ class _QuickAddPageState extends State<QuickAddPage> {
               keyboardType: TextInputType.number,
               onTap: () => selectAll(caloriesController),
               onSubmitted: (value) => _save(),
+            ),
+            ListTile(
+              title: const Text('Created date'),
+              subtitle: Text(
+                DateFormat(settings.longDateFormat).format(created),
+              ),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: () => pickDate(),
             ),
           ],
         ),

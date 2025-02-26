@@ -4,6 +4,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
@@ -44,7 +45,9 @@ class GraphPageState extends State<GraphPage>
   Widget build(BuildContext context) {
     super.build(context);
     final settings = context.watch<SettingsState>().value;
-    final fields = settings.fields?.split(',') ?? defaultFields;
+    final fields =
+        settings.fields?.split(',').where((field) => field.isNotEmpty) ??
+            defaultFields;
     final filteredFields =
         fields.where((field) => !excludedFields.contains(field));
 
@@ -54,6 +57,19 @@ class GraphPageState extends State<GraphPage>
         child: ListView(
           shrinkWrap: true,
           children: [
+            SizedBox(height: 8),
+            TextButton.icon(
+              onPressed: () => Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                      builder: (context) => FieldsPicker(),
+                    ),
+                  )
+                  .then((_) => setState(() {})),
+              label: Text("Fields"),
+              icon: Icon(Icons.settings),
+            ),
+            SizedBox(height: 8),
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
               value: filteredFields.contains(metric) ||
