@@ -40,6 +40,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     selectAll(valueController);
     setState(() {
       unit = widget.weight.unit.value;
+      convertTo = widget.weight.unit.value;
       created = widget.weight.created.value;
       image = widget.weight.image.value;
     });
