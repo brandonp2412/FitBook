@@ -84,6 +84,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
             name: nameController!.text,
             calories: Value(double.tryParse(caloriesController.text)),
             proteinG: Value(double.tryParse(proteinController.text)),
+            favorite: Value(settings.favoriteNew),
           ),
         ));
       else

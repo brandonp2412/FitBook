@@ -144,7 +144,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (widget.id != null)
       columns['id'] = Variable(widget.id);
     else
-      columns['favorite_new'] = Variable(settings.favoriteNew);
+      columns['favorite'] = Variable(settings.favoriteNew);
 
     if (widget.id != null)
       db.update(db.foods).replace(RawValuesInsertable(columns));
