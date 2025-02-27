@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
-import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 class DeleteRecordsButton extends StatelessWidget {
   final BuildContext pageContext;
@@ -47,30 +51,34 @@ class DeleteRecordsButton extends StatelessWidget {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,
-      builder: (BuildContext dialogContext) {
+      builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm delete'),
+          title: const Text('Confirm Delete'),
           content: const Text(
-            'Are you sure you want to delete everything? This action is not reversible.',
+            'Are you sure you want to delete your database? This action is not reversible and will destroy all your data.',
           ),
           actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
+            TextButton.icon(
+              label: const Text('Cancel'),
+              icon: const Icon(Icons.close),
               onPressed: () {
-                Navigator.pop(dialogContext);
+                Navigator.pop(context);
               },
             ),
-            TextButton(
-              child: const Text('Delete'),
+            TextButton.icon(
+              label: const Text('Delete'),
+              icon: const Icon(Icons.delete),
               onPressed: () async {
-                Navigator.pop(dialogContext);
-                db.transaction(() async {
-                  for (final table in db.allTables)
-                    await db.customStatement(
-                      'DELETE FROM ${table.actualTableName}',
-                    );
-                  await db.settings.insertOne(defaultSettings);
-                });
+                final dbFolder = await getApplicationDocumentsDirectory();
+                final file = File(
+                  p.join(dbFolder.path, 'fitbook.sqlite'),
+                );
+                await db.close();
+                await db.executor.close();
+                await file.delete();
+                if (Platform.isAndroid || Platform.isIOS) SystemNavigator.pop();
+                if (Platform.isWindows || Platform.isMacOS || Platform.isLinux)
+                  exit(0);
               },
             ),
           ],

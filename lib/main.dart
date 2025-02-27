@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/database/failed_migrations_page.dart';
 import 'package:fit_book/entry/diary_page.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/food/food_page.dart';
@@ -21,7 +22,13 @@ MethodChannel androidChannel =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final settings = await (db.settings.select()).getSingle();
+  Setting settings;
+  try {
+    settings = await (db.settings.select()).getSingle();
+  } catch (error) {
+    return runApp(FailedMigrationsPage(error: error));
+  }
+
   final settingsState = SettingsState(settings);
 
   if (settings.reminders)
