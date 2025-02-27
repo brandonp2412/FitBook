@@ -162,11 +162,28 @@ Food convertCustomServing({
   required double quantity,
   required String unit,
 }) {
-  // First, convert the original food to per-gram values
-  final originalServingG = convertToGrams(
-    food.servingSize ?? 100,
-    food.servingUnit ?? 'grams',
-  );
+  // Special case handling for 'serving' unit
+  if (unit == 'serving') {
+    // When user selects 'serving', we want to return the full nutritional values
+    // multiplied by the quantity
+    return Food(
+      id: food.id,
+      name: food.name,
+      servingSize: quantity,
+      servingUnit: unit,
+      calories: (food.calories ?? 0) * quantity,
+      proteinG: (food.proteinG ?? 0) * quantity,
+      fatG: (food.fatG ?? 0) * quantity,
+      carbohydrateG: (food.carbohydrateG ?? 0) * quantity,
+    );
+  }
+
+  // For other units, proceed with the gram conversion logic
+  // Get the original serving size in grams
+  final originalServingSize = food.servingSize ?? 100;
+  final originalServingUnit = food.servingUnit ?? 'grams';
+  final originalServingG =
+      convertToGrams(originalServingSize, originalServingUnit);
 
   // Calculate per-gram values
   final caloriesPerGram = (food.calories ?? 0) / originalServingG;
@@ -186,31 +203,6 @@ Food convertCustomServing({
     proteinG: proteinPerGram * targetServingG,
     fatG: fatPerGram * targetServingG,
     carbohydrateG: carbPerGram * targetServingG,
-  );
-}
-
-Food convertPer100G({
-  required Food food,
-  required double quantity,
-  required String unit,
-}) {
-  final servingG = convertToGrams(
-    food.servingSize ?? 100,
-    food.servingUnit ?? 'grams',
-  );
-
-  final caloriesG = (food.calories ?? 0) / servingG;
-  final proteinG = (food.proteinG ?? 0) / servingG;
-  final fatG = (food.fatG ?? 0) / servingG;
-  final carbG = (food.carbohydrateG ?? 0) / servingG;
-
-  return Food(
-    calories: caloriesG,
-    proteinG: proteinG,
-    fatG: fatG,
-    carbohydrateG: carbG,
-    id: food.id,
-    name: food.name,
   );
 }
 
