@@ -19,25 +19,29 @@ class QuickAddPage extends StatefulWidget {
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {
-  final caloriesController = TextEditingController(text: "600");
+  final calories = TextEditingController(text: "600");
   var created = DateTime.now();
+  final kilojoules = TextEditingController(text: "2,510.4");
+  final protein = TextEditingController(text: "0");
+  final carb = TextEditingController(text: "0");
+  final fat = TextEditingController(text: "0");
 
   @override
   void initState() {
     super.initState();
     if (widget.entryId != null) initCalories();
-    selectAll(caloriesController);
+    selectAll(calories);
   }
 
   void initCalories() async {
     final entry = await (db.entries.select()
           ..where((u) => u.id.equals(widget.entryId!)))
         .getSingle();
-    caloriesController.text = entry.quantity.toStringAsFixed(2);
+    calories.text = entry.quantity.toStringAsFixed(2);
     setState(() {
       created = entry.created;
     });
-    selectAll(caloriesController);
+    selectAll(calories);
   }
 
   @override
@@ -47,20 +51,18 @@ class _QuickAddPageState extends State<QuickAddPage> {
 
   Future<void> save() async {
     Navigator.pop(context);
-    final food = await (db.foods.select()
-          ..where((tbl) => tbl.name.equals('Quick-add'))
-          ..limit(1))
-        .getSingleOrNull();
-    var foodId = food?.id;
-    foodId ??= await (db.foods.insertOne(
+    final foodId = await (db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Quick-add',
         created: Value(created),
         calories: Value(100),
+        proteinG: Value(double.parse(protein.text)),
+        carbohydrateG: Value(double.parse(carb.text)),
+        fatG: Value(double.parse(fat.text)),
       ),
     ));
 
-    final quantity = double.parse(caloriesController.text);
+    final quantity = double.parse(calories.text);
     if (widget.entryId == null)
       db.into(db.entries).insert(
             EntriesCompanion.insert(
@@ -124,6 +126,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
+    final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
     return Scaffold(
       appBar: AppBar(
@@ -137,10 +140,69 @@ class _QuickAddPageState extends State<QuickAddPage> {
           children: [
             TextField(
               autofocus: true,
-              controller: caloriesController,
+              controller: calories,
               decoration: const InputDecoration(label: Text("Calories")),
               keyboardType: TextInputType.number,
-              onTap: () => selectAll(caloriesController),
+              onTap: () => selectAll(calories),
+              onSubmitted: (value) => save(),
+              onChanged: (value) {
+                setState(() {
+                  kilojoules.text =
+                      formatter.format(formatter.parse(value) * 4.184);
+                });
+              },
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: kilojoules,
+              decoration: InputDecoration(
+                labelText: 'Kilojoules',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onChanged: (value) {
+                setState(() {
+                  calories.text =
+                      formatter.format(formatter.parse(value) / 4.184);
+                });
+              },
+              onSubmitted: (value) => selectAll(protein),
+              onTap: () => selectAll(kilojoules),
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: protein,
+              decoration: InputDecoration(
+                labelText: 'Protein',
+              ),
+              onTap: () => selectAll(protein),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (value) => selectAll(carb),
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: carb,
+              decoration: InputDecoration(
+                labelText: 'Carbs',
+              ),
+              onTap: () => selectAll(carb),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (value) => selectAll(fat),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: fat,
+              decoration: InputDecoration(
+                labelText: 'Fat',
+              ),
+              onTap: () => selectAll(fat),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (value) => save(),
             ),
             ListTile(
