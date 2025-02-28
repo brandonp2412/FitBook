@@ -34,6 +34,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
           ..where((u) => u.id.equals(widget.entryId!)))
         .getSingle();
     caloriesController.text = entry.quantity.toStringAsFixed(2);
+    setState(() {
+      created = entry.created;
+    });
     selectAll(caloriesController);
   }
 
@@ -42,7 +45,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
     super.dispose();
   }
 
-  Future<void> _save() async {
+  Future<void> save() async {
     Navigator.pop(context);
     final food = await (db.foods.select()
           ..where((tbl) => tbl.name.equals('Quick-add'))
@@ -52,7 +55,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
     foodId ??= await (db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Quick-add',
-        created: Value(DateTime.now()),
+        created: Value(created),
         calories: Value(100),
       ),
     ));
@@ -62,7 +65,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       db.into(db.entries).insert(
             EntriesCompanion.insert(
               food: foodId,
-              created: DateTime.now(),
+              created: created,
               quantity: quantity,
               unit: 'grams',
             ),
@@ -72,7 +75,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
         ..where((u) => u.id.equals(widget.entryId!))
         ..write(
           EntriesCompanion(
-            created: Value(DateTime.now()),
+            created: Value(created),
             quantity: Value(quantity),
           ),
         );
@@ -138,7 +141,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
               decoration: const InputDecoration(label: Text("Calories")),
               keyboardType: TextInputType.number,
               onTap: () => selectAll(caloriesController),
-              onSubmitted: (value) => _save(),
+              onSubmitted: (value) => save(),
             ),
             ListTile(
               title: const Text('Created date'),
@@ -152,7 +155,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _save,
+        onPressed: save,
         tooltip: 'Save',
         child: const Icon(Icons.save),
       ),
