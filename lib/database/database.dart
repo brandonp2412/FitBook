@@ -366,6 +366,12 @@ UPDATE foods SET
 WHERE name = 'Quick-add'
 """);
     },
+    from38To39: (Migrator m, Schema39 schema) async {
+      await m.database.customUpdate("""UPDATE settings 
+        SET fields='calories,protein_g,carbohydrate_g,fat_g,fiber_g'
+        WHERE fields IS NULL
+        """);
+    },
   );
 
   @override
