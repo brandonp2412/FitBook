@@ -469,9 +469,34 @@ class _EditEntryPageState extends State<EditEntryPage> {
               trailing: const Icon(Icons.calendar_today),
               onTap: () => pickDate(),
             ),
-            const SizedBox(height: 16),
+            if (Platform.isAndroid || Platform.isIOS)
+              ScanBarcode(
+                text: true,
+                value: barcode.text,
+                onBarcode: (value) {
+                  setState(() {
+                    barcode.text = value;
+                    foodDirty = true;
+                  });
+                  toast(context, 'Barcode not found. Save to insert.');
+                },
+                onFood: (food) {
+                  setState(() {
+                    imageFile = food.imageFile;
+                    barcode.text = food.barcode ?? "";
+                    nameController?.text = food.name;
+                    selectedFood = food;
+                    protein.text = formatter.format(food.proteinG);
+                    carb.text = formatter.format(food.carbohydrateG);
+                    fat.text = formatter.format(food.fatG);
+                    kilojoules.text = food.calories == null
+                        ? ''
+                        : formatter.format(food.calories! * 4.184);
+                    calories.text = formatter.format(food.calories);
+                  });
+                },
+              ),
             const Divider(),
-            const SizedBox(height: 16),
             ListTile(
               leading: Icon(Icons.restaurant),
               title: Text("Food"),
@@ -604,33 +629,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ),
             ],
-            if (Platform.isAndroid || Platform.isIOS)
-              ScanBarcode(
-                text: true,
-                value: barcode.text,
-                onBarcode: (value) {
-                  setState(() {
-                    barcode.text = value;
-                    foodDirty = true;
-                  });
-                  toast(context, 'Barcode not found. Save to insert.');
-                },
-                onFood: (food) {
-                  setState(() {
-                    imageFile = food.imageFile;
-                    barcode.text = food.barcode ?? "";
-                    nameController?.text = food.name;
-                    selectedFood = food;
-                    protein.text = formatter.format(food.proteinG);
-                    carb.text = formatter.format(food.carbohydrateG);
-                    fat.text = formatter.format(food.fatG);
-                    kilojoules.text = food.calories == null
-                        ? ''
-                        : formatter.format(food.calories! * 4.184);
-                    calories.text = formatter.format(food.calories);
-                  });
-                },
-              ),
             if (settings.showImages) ...[
               const SizedBox(height: 8),
               TextButton.icon(
