@@ -375,5 +375,5 @@ WHERE name = 'Quick-add'
   );
 
   @override
-  int get schemaVersion => 38;
+  int get schemaVersion => 39;
 }
