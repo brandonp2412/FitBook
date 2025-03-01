@@ -1,5 +1,5 @@
-- Keep old conversion unit in weights page
-- Clear quick-add details
-- Fix favoriting new foods by default
-- Fix serving units in entries page
-- Fix emptying the database
+- Move up barcode button on entry
+- Limit the default fields
+- Add macros to quick-add
+- Fix date editing for quick-add
+- Fix monochrome launchers
