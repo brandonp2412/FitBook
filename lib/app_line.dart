@@ -324,6 +324,7 @@ class _AppLineState extends State<AppLine> {
                       LineChartBarData(
                         spots: spots,
                         isCurved: settings.curveLines,
+                        preventCurveOverShooting: true,
                         color: Theme.of(context).colorScheme.primary,
                         barWidth: 3,
                         isStrokeCapRound: true,
