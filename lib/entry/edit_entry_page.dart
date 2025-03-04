@@ -496,14 +496,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   });
                 },
               ),
-            const Divider(),
-            ListTile(
-              leading: Icon(Icons.restaurant),
-              title: Text("Food"),
-              subtitle: Text("The below details may affect many entries."),
-              onTap: () => caloriesNode.requestFocus(),
-            ),
-            SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
