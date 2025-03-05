@@ -1,5 +1,5 @@
-- Move up barcode button on entry
-- Limit the default fields
-- Add macros to quick-add
-- Fix date editing for quick-add
-- Fix monochrome launchers
+- Fix spacing on edit entry page
+- Remember if user picked body-weight or calories on graphs page
+- Move awkward fields button to fab
+- Remove all the spacing/labelling of food on entry
+- Prevent curves leaving graph areas
