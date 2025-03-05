@@ -32,6 +32,8 @@ class GraphPageState extends State<GraphPage>
     final settings = context.read<SettingsState>().value;
 
     final fields = settings.fields?.split(',') ?? defaultFields;
+    fields.add('calories');
+    fields.add('body-weight');
     if (fields.contains(settings.lastGraph))
       setState(() {
         metric = settings.lastGraph;
