@@ -496,6 +496,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   });
                 },
               ),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
