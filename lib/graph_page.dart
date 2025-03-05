@@ -57,19 +57,6 @@ class GraphPageState extends State<GraphPage>
         child: ListView(
           shrinkWrap: true,
           children: [
-            SizedBox(height: 8),
-            TextButton.icon(
-              onPressed: () => Navigator.of(context)
-                  .push(
-                    MaterialPageRoute(
-                      builder: (context) => FieldsPicker(),
-                    ),
-                  )
-                  .then((_) => setState(() {})),
-              label: Text("Fields"),
-              icon: Icon(Icons.settings),
-            ),
-            SizedBox(height: 8),
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
               value: filteredFields.contains(metric) ||
@@ -212,8 +199,22 @@ class GraphPageState extends State<GraphPage>
               startDate: startDate,
               endDate: endDate,
             ),
+            const SizedBox(height: 72),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => FieldsPicker(),
+                ),
+              )
+              .then((_) => setState(() {}));
+        },
+        label: Text("Fields"),
+        icon: Icon(Icons.settings),
       ),
     );
   }
