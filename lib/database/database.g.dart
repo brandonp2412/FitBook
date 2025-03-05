@@ -9768,7 +9768,7 @@ class $$FoodsTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (entriesRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<Food, $FoodsTable, Entry>(
                         currentTable: table,
                         referencedTable:
                             $$FoodsTableReferences._entriesRefsTable(db),
