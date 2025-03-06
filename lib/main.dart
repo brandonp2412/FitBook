@@ -105,15 +105,7 @@ class HomePage extends StatelessWidget {
         .select<SettingsState, String>((settings) => settings.value.tabs);
     final tabs = tabsSetting.split(',');
 
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).colorScheme.surface,
-        statusBarColor: Theme.of(context).colorScheme.surface,
-        statusBarIconBrightness: Theme.of(context).brightness == Brightness.dark
-            ? Brightness.light
-            : Brightness.dark,
-      ),
-      child: DefaultTabController(
+    return DefaultTabController(
         length: tabs.length,
         child: SafeArea(
           child: Scaffold(
@@ -160,7 +152,6 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
