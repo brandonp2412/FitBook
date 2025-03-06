@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
 import 'package:fit_book/entry/entry_food.dart';
+import 'package:fit_book/entry/stats.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
+import 'package:fit_book/settings/diary_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,27 @@ class _EntryListState extends State<EntryList> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
+    Map<DateTime, Stats> stats = {};
+    for (final entryFood in widget.entryFoods) {
+      final day = DateTime(
+        entryFood.created.year,
+        entryFood.created.month,
+        entryFood.created.day,
+      );
+      if (stats.containsKey(day)) {
+        stats[day]!.cals += entryFood.metrics[db.foods.calories.name] ?? 0;
+        stats[day]!.protein += entryFood.metrics[db.foods.proteinG.name] ?? 0;
+        stats[day]!.fat += entryFood.metrics[db.foods.fatG.name] ?? 0;
+        stats[day]!.carb += entryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
+      } else
+        stats[day] = Stats(
+          cals: entryFood.metrics[db.foods.calories.name] ?? 0,
+          protein: entryFood.metrics[db.foods.proteinG.name] ?? 0,
+          fat: entryFood.metrics[db.foods.fatG.name] ?? 0,
+          carb: entryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
+        );
+    }
+
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8),
@@ -73,6 +96,100 @@ class _EntryListState extends State<EntryList> {
               ? " x${entryFood.quantity.toInt()}"
               : "";
 
+          Widget? statsRow;
+          if (showDivider) {
+            String cals = "";
+            String protein = "";
+            String fat = "";
+            String carb = "";
+            final formatter = NumberFormat('#,##0');
+
+            final day = DateTime(
+              entryFood.created.year,
+              entryFood.created.month,
+              entryFood.created.day,
+            );
+
+            switch (settings.diarySummary) {
+              case 'DiarySummary.remaining':
+                cals =
+                    "${formatter.format((settings.dailyCalories ?? 0) - stats[day]!.cals)} kcal";
+                protein =
+                    "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)}g protein";
+                fat =
+                    "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)}g fat";
+                carb =
+                    "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)}g carbs";
+                break;
+              case 'DiarySummary.division':
+                cals =
+                    "${formatter.format(stats[day]!.cals)} / ${formatter.format(settings.dailyCalories ?? 0)} kcal";
+                protein =
+                    "${stats[day]!.protein.toStringAsFixed(0)} / ${settings.dailyProtein}g protein";
+                fat =
+                    "${stats[day]!.fat.toStringAsFixed(0)} / ${settings.dailyFat}g fat";
+                carb =
+                    "${stats[day]!.carb.toStringAsFixed(0)} / ${settings.dailyCarb}g carbs";
+                break;
+              case 'DiarySummary.both':
+                cals =
+                    "${((settings.dailyCalories ?? 0) - stats[day]!.cals).toStringAsFixed(0)} (${formatter.format(settings.dailyCalories ?? 0)} kcal)";
+                protein =
+                    "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)} (${settings.dailyProtein}g protein)";
+                fat =
+                    "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)} (${settings.dailyFat}g fat)";
+                carb =
+                    "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)} (${settings.dailyCarb}g carbs)";
+                break;
+              case 'DiarySummary.none':
+                break;
+            }
+
+            statsRow = GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => DiarySettings()),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        if (settings.dailyCalories != null) ...[
+                          Icon(Icons.whatshot),
+                          Text(cals),
+                        ],
+                        if (settings.dailyProtein != null) ...[
+                          Icon(Icons.egg_outlined),
+                          Text(protein),
+                        ],
+                      ],
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        if (settings.dailyFat != null) ...[
+                          Icon(Icons.opacity_outlined),
+                          Text(fat),
+                        ],
+                        if (settings.dailyCarb != null) ...[
+                          Icon(Icons.bakery_dining_outlined),
+                          Text(carb),
+                        ],
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            );
+          }
+
           Widget? image;
           if (settings.showImages) {
             if (entryFood.imageFile?.isNotEmpty == true)
@@ -89,6 +206,7 @@ class _EntryListState extends State<EntryList> {
 
           return Column(
             children: [
+              if (statsRow != null) statsRow,
               if (showDivider)
                 Row(
                   children: [

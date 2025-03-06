@@ -115,29 +115,6 @@ class DiaryPageState extends State<DiaryPage> {
               break;
           }
 
-          final goals = [
-            if (settings.dailyCalories != null)
-              Text(
-                cals,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-            if (settings.dailyProtein != null)
-              Text(
-                protein,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-            if (settings.dailyFat != null)
-              Text(
-                fat,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-            if (settings.dailyCarb != null)
-              Text(
-                carb,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-          ];
-
           return material.Column(
             children: [
               AppSearch(
@@ -215,10 +192,6 @@ class DiaryPageState extends State<DiaryPage> {
                 onNext: () async {
                   entriesState.limit += 100;
                 },
-              ),
-              material.Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: goals,
               ),
             ],
           );
