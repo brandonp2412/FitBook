@@ -106,52 +106,52 @@ class HomePage extends StatelessWidget {
     final tabs = tabsSetting.split(',');
 
     return DefaultTabController(
-        length: tabs.length,
-        child: SafeArea(
-          child: Scaffold(
-            body: TabBarView(
-              children: tabs.map((tab) {
-                if (tab == 'DiaryPage')
-                  return const DiaryPage();
-                else if (tab == 'GraphPage')
-                  return const GraphPage();
-                else if (tab == 'FoodPage')
-                  return const FoodPage();
-                else if (tab == 'WeightPage')
-                  return const WeightPage();
-                else
-                  return ErrorWidget('Invalid tab settings.');
-              }).toList(),
-            ),
-            bottomNavigationBar: TabBar(
-              dividerColor: Colors.transparent,
-              tabs: tabs.map((tab) {
-                if (tab == 'DiaryPage')
-                  return const Tab(
-                    icon: Icon(Icons.date_range),
-                    text: "Diary",
-                  );
-                else if (tab == 'GraphPage')
-                  return const Tab(
-                    icon: Icon(Icons.insights),
-                    text: "Graph",
-                  );
-                else if (tab == 'FoodPage')
-                  return const Tab(
-                    icon: Icon(Icons.restaurant),
-                    text: "Food",
-                  );
-                else if (tab == 'WeightPage')
-                  return const Tab(
-                    icon: Icon(Icons.scale),
-                    text: "Weight",
-                  );
-                else
-                  return ErrorWidget('Invalid tab settings.');
-              }).toList(),
-            ),
+      length: tabs.length,
+      child: SafeArea(
+        child: Scaffold(
+          body: TabBarView(
+            children: tabs.map((tab) {
+              if (tab == 'DiaryPage')
+                return const DiaryPage();
+              else if (tab == 'GraphPage')
+                return const GraphPage();
+              else if (tab == 'FoodPage')
+                return const FoodPage();
+              else if (tab == 'WeightPage')
+                return const WeightPage();
+              else
+                return ErrorWidget('Invalid tab settings.');
+            }).toList(),
+          ),
+          bottomNavigationBar: TabBar(
+            dividerColor: Colors.transparent,
+            tabs: tabs.map((tab) {
+              if (tab == 'DiaryPage')
+                return const Tab(
+                  icon: Icon(Icons.date_range),
+                  text: "Diary",
+                );
+              else if (tab == 'GraphPage')
+                return const Tab(
+                  icon: Icon(Icons.insights),
+                  text: "Graph",
+                );
+              else if (tab == 'FoodPage')
+                return const Tab(
+                  icon: Icon(Icons.restaurant),
+                  text: "Food",
+                );
+              else if (tab == 'WeightPage')
+                return const Tab(
+                  icon: Icon(Icons.scale),
+                  text: "Weight",
+                );
+              else
+                return ErrorWidget('Invalid tab settings.');
+            }).toList(),
           ),
         ),
-      );
+      ),
+    );
   }
 }

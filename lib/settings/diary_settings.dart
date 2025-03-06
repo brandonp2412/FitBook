@@ -96,8 +96,9 @@ List<Widget> getDiarySettings({
           controller: protein,
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(
-                    dailyProtein:
-                        value == "" ? Value(null) : Value(int.tryParse(value))),
+                  dailyProtein:
+                      value == "" ? Value(null) : Value(int.tryParse(value)),
+                ),
               ),
           onTap: () => selectAll(protein),
           keyboardType: TextInputType.number,
