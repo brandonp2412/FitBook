@@ -80,7 +80,7 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: calories,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyCalories: Value(int.parse(value))),
+                SettingsCompanion(dailyCalories: Value(int.tryParse(value))),
               ),
           onTap: () => selectAll(calories),
           keyboardType: TextInputType.number,
@@ -95,10 +95,12 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: protein,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyProtein: Value(int.parse(value))),
+                SettingsCompanion(
+                    dailyProtein:
+                        value == "" ? Value(null) : Value(int.tryParse(value))),
               ),
           onTap: () => selectAll(protein),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Daily protein (g)',
           ),
@@ -110,10 +112,10 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: fat,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyFat: Value(int.tryParse(value)!)),
+                SettingsCompanion(dailyFat: Value(int.tryParse(value))),
               ),
           onTap: () => selectAll(fat),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: TextInputType.number,
           decoration: const InputDecoration(
             labelText: 'Daily fat (g)',
           ),
@@ -128,7 +130,7 @@ List<Widget> getDiarySettings({
                 SettingsCompanion(dailyCarb: Value(int.tryParse(value))),
               ),
           onTap: () => selectAll(carb),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: TextInputType.number,
           decoration: const InputDecoration(
             labelText: 'Daily carbs (g)',
           ),
