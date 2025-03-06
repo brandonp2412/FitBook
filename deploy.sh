@@ -86,7 +86,7 @@ if [[ $* == *-w* ]]; then
   echo "Skipping Windows store..."
 else
   appId="$(yq -r .msix_config.msstore_appId pubspec.yaml)"
-  msstore publish -id "$appId" "$HOME/windows/flexify.msix"
+  msstore publish -id "$appId" "$HOME/windows/fitbook.msix"
 fi
 
 if [[ $* == *-p* ]]; then
