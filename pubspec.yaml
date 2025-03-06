@@ -70,7 +70,7 @@ flutter_launcher_icons:
 msix_config:
   msstore_appId: 9PJJVF8507G0
   display_name: FitBook - Calorie tracker
-  publisher_display_name: Frisbee Software
+  publisher_display_name: CodeSail Academy
   identity_name: FrisbeeSoftware.FitBook-Calorietracker
   msix_version: 1.0.45.0
   logo_path: assets/ic_launcher.png

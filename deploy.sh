@@ -85,7 +85,8 @@ git pull
 if [[ $* == *-w* ]]; then
   echo "Skipping Windows store..."
 else
-  ./scripts/msstore.sh "$HOME/windows/fitbook.msix" || true
+  appId="$(yq -r .msix_config.msstore_appId pubspec.yaml)"
+  msstore publish -id "$appId" "$HOME/windows/flexify.msix"
 fi
 
 if [[ $* == *-p* ]]; then
