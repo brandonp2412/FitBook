@@ -2,7 +2,9 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/diary_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/weight_settings.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -370,6 +372,20 @@ class _AppLineState extends State<AppLine> {
                 if (goal > 0)
                   Expanded(
                     child: ListTile(
+                      onTap: () {
+                        if (widget.metric == 'body-weight')
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => WeightSettings(),
+                            ),
+                          );
+                        else
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DiarySettings(),
+                            ),
+                          );
+                      },
                       title: const Text("Goal"),
                       subtitle: Text(
                         "${formatter.format(goal)} ${rows.first.unit}",
