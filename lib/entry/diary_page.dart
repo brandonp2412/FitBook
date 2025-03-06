@@ -4,15 +4,11 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/entry/edit_entries_page.dart';
 import 'package:fit_book/entry/edit_entry_page.dart';
 import 'package:fit_book/entry/entry_filters.dart';
-import 'package:fit_book/entry/entry_food.dart';
 import 'package:fit_book/entry/entry_list.dart';
 import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/main.dart';
-import 'package:fit_book/settings/settings_state.dart';
-import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -49,7 +45,6 @@ class DiaryPageState extends State<DiaryPage> {
   }
 
   Scaffold _diaryPage() {
-    final settings = context.watch<SettingsState>().value;
     entriesState = context.watch<EntryState>();
 
     return Scaffold(
@@ -57,63 +52,11 @@ class DiaryPageState extends State<DiaryPage> {
         stream: entriesState.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print(snapshot.stackTrace);
+            debugPrint(snapshot.stackTrace.toString());
             return ErrorWidget(snapshot.error!);
           }
 
           final entryFoods = snapshot.data ?? [];
-
-          double totalCals = 0;
-          double totalProtein = 0;
-          double totalFat = 0;
-          double totalCarb = 0;
-          for (EntryFood entryFood in entryFoods)
-            if (isSameDay(entryFood.created, DateTime.now().toLocal())) {
-              totalCals += entryFood.metrics[db.foods.calories.name] ?? 0;
-              totalProtein += entryFood.metrics[db.foods.proteinG.name] ?? 0;
-              totalFat += entryFood.metrics[db.foods.fatG.name] ?? 0;
-              totalCarb += entryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
-            }
-
-          String cals = "";
-          String protein = "";
-          String fat = "";
-          String carb = "";
-          final formatter = NumberFormat('#,##0');
-
-          switch (settings.diarySummary) {
-            case 'DiarySummary.remaining':
-              cals =
-                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} kcal";
-              protein =
-                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} g";
-              fat =
-                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} g";
-              carb =
-                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} g";
-              break;
-            case 'DiarySummary.division':
-              cals =
-                  "${totalCals.toStringAsFixed(0)} / ${formatter.format(settings.dailyCalories ?? 0)} kcal";
-              protein =
-                  "${totalProtein.toStringAsFixed(0)} / ${settings.dailyProtein} g";
-              fat = "${totalFat.toStringAsFixed(0)} / ${settings.dailyFat} g";
-              carb =
-                  "${totalCarb.toStringAsFixed(0)} / ${settings.dailyCarb} g";
-              break;
-            case 'DiarySummary.both':
-              cals =
-                  "${((settings.dailyCalories ?? 0) - totalCals).toStringAsFixed(0)} (${formatter.format(settings.dailyCalories ?? 0)} kcal)";
-              protein =
-                  "${((settings.dailyProtein ?? 0) - totalProtein).toStringAsFixed(0)} (${settings.dailyProtein} g)";
-              fat =
-                  "${((settings.dailyFat ?? 0) - totalFat).toStringAsFixed(0)} (${settings.dailyFat} g)";
-              carb =
-                  "${((settings.dailyCarb ?? 0) - totalCarb).toStringAsFixed(0)} (${settings.dailyCarb} g)";
-              break;
-            case 'DiarySummary.none':
-              break;
-          }
 
           return material.Column(
             children: [
