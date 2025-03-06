@@ -1,5 +1,4 @@
-- Fix spacing on edit entry page
-- Remember if user picked body-weight or calories on graphs page
-- Move awkward fields button to fab
-- Remove all the spacing/labelling of food on entry
-- Prevent curves leaving graph areas
+- Show summaries below each day in diary page
+- Open relevant settings when tapping on Goal
+- Allow clearing of daily goals in settings
+- Fix status bar on android 15
