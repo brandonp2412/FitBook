@@ -105,9 +105,9 @@ class _EntryListState extends State<EntryList> {
             final formatter = NumberFormat('#,##0');
 
             final day = DateTime(
-              entryFood.created.year,
-              entryFood.created.month,
-              entryFood.created.day,
+              previous.created.year,
+              previous.created.month,
+              previous.created.day,
             );
 
             switch (settings.diarySummary) {
@@ -155,6 +155,7 @@ class _EntryListState extends State<EntryList> {
                   children: [
                     Wrap(
                       alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       spacing: 16,
                       runSpacing: 8,
                       children: [
