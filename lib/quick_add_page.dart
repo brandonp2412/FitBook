@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 
 import 'database/database.dart';
 
+final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
+
 class QuickAddPage extends StatefulWidget {
   final int? entryId;
 
@@ -29,15 +31,52 @@ class _QuickAddPageState extends State<QuickAddPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.entryId != null) initCalories();
-    selectAll(calories);
+    initData();
   }
 
-  void initCalories() async {
+  void initData() async {
+    if (widget.entryId == null) {
+      final last = await (db.entries.selectOnly().join(
+        [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
+      )
+            ..addColumns(
+              [
+                db.entries.quantity,
+                db.foods.proteinG,
+                db.foods.carbohydrateG,
+                db.foods.fatG,
+              ],
+            )
+            ..where(db.foods.name.equals('Quick-add'))
+            ..orderBy([
+              OrderingTerm(
+                expression: db.entries.created,
+                mode: OrderingMode.desc,
+              ),
+            ])
+            ..limit(1))
+          .getSingleOrNull();
+      if (last == null) return;
+      calories.text = last.read(db.entries.quantity)!.toString();
+      kilojoules.text =
+          formatter.format(formatter.parse(calories.text) * 4.184);
+      protein.text = last.read(db.foods.proteinG)!.toString();
+      carb.text = last.read(db.foods.carbohydrateG)!.toString();
+      fat.text = last.read(db.foods.fatG)!.toString();
+
+      return;
+    }
+
     final entry = await (db.entries.select()
           ..where((u) => u.id.equals(widget.entryId!)))
         .getSingle();
+    final food = await (db.foods.select()
+          ..where((u) => u.id.equals(entry.food)))
+        .getSingle();
     calories.text = entry.quantity.toStringAsFixed(2);
+    protein.text = food.proteinG.toString();
+    carb.text = food.carbohydrateG.toString();
+    fat.text = food.fatG.toString();
     setState(() {
       created = entry.created;
     });
@@ -126,7 +165,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
-    final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
     return Scaffold(
       appBar: AppBar(
