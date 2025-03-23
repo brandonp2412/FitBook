@@ -1,4 +1,1 @@
-- Show summaries below each day in diary page
-- Open relevant settings when tapping on Goal
-- Allow clearing of daily goals in settings
-- Fix status bar on android 15
+- Remember macros on quick-add
