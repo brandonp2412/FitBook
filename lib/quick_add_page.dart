@@ -116,6 +116,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
         ..where((u) => u.id.equals(widget.entryId!))
         ..write(
           EntriesCompanion(
+            food: Value(foodId),
             created: Value(created),
             quantity: Value(quantity),
           ),
