@@ -42,6 +42,72 @@ class _AppLineState extends State<AppLine> {
 
   late Stream<List<GraphData>> stream;
   late Setting settings = context.read<SettingsState>().value;
+  bool showTrend = false;
+
+  Map<String, double> _calculateTrend(List<GraphData> data) {
+    if (data.length < 2) return {'slope': 0.0, 'intercept': 0.0};
+
+    // Sort data chronologically (oldest first) for proper trend calculation
+    final sortedData = data.toList()
+      ..sort((a, b) => a.created.compareTo(b.created));
+    double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    int n = sortedData.length;
+
+    for (int i = 0; i < n; i++) {
+      double x = i.toDouble();
+      double y = sortedData[i].value;
+      sumX += x;
+      sumY += y;
+      sumXY += x * y;
+      sumXX += x * x;
+    }
+
+    double slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    double intercept = (sumY - slope * sumX) / n;
+
+    return {'slope': slope, 'intercept': intercept};
+  }
+
+  String _getTrendText(List<GraphData> data) {
+    if (data.length < 2) return "0.00 ${data.first.unit}/week";
+
+    // Sort data chronologically for proper calculation
+    final sortedData = data.toList()
+      ..sort((a, b) => a.created.compareTo(b.created));
+    final trend = _calculateTrend(data);
+    double slope = trend['slope']!;
+
+    double daysSpan = sortedData.last.created
+        .difference(sortedData.first.created)
+        .inDays
+        .toDouble();
+    if (daysSpan == 0) daysSpan = 1;
+
+    double slopePerWeek = slope * (7.0 * data.length / daysSpan);
+
+    String sign = slopePerWeek >= 0 ? "+" : "";
+    return "$sign${formatter.format(slopePerWeek)} ${data.first.unit}/week";
+  }
+
+  List<FlSpot> _getTrendSpots(List<GraphData> data) {
+    if (data.length < 2) return [];
+
+    final trend = _calculateTrend(data);
+    double slope = trend['slope']!;
+    double intercept = trend['intercept']!;
+
+    // Create trend spots that match the display coordinate system
+    // The main chart uses rows (oldest-first), so we need to match that
+    List<FlSpot> trendSpots = [];
+    for (int i = 0; i < data.length; i++) {
+      // i represents the chronological index (0 = oldest, n-1 = newest)
+      // since we want to match the coordinate system of the main chart
+      double trendValue = slope * i.toDouble() + intercept;
+      trendSpots.add(FlSpot(i.toDouble(), trendValue));
+    }
+
+    return trendSpots;
+  }
 
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
@@ -287,6 +353,48 @@ class _AppLineState extends State<AppLine> {
         }
         average /= spots.length;
 
+        List<FlSpot> trendSpots = _getTrendSpots(rows);
+
+        List<LineChartBarData> lineBars = [
+          // Always show the original data
+          LineChartBarData(
+            spots: spots,
+            isCurved: settings.curveLines,
+            preventCurveOverShooting: true,
+            color: Theme.of(context).colorScheme.primary,
+            barWidth: 3,
+            isStrokeCapRound: true,
+            dotData: const FlDotData(
+              show: false,
+            ),
+            belowBarData: BarAreaData(
+              show: true,
+              gradient: LinearGradient(
+                colors: gradientColors
+                    .map((color) => color.withValues(alpha: 0.3))
+                    .toList(),
+              ),
+            ),
+          ),
+        ];
+
+        // Add trend line overlay if trend mode is selected
+        if (showTrend && trendSpots.isNotEmpty) {
+          lineBars.add(
+            LineChartBarData(
+              spots: trendSpots,
+              isCurved: false,
+              color: Theme.of(context).colorScheme.secondary,
+              barWidth: 2,
+              isStrokeCapRound: true,
+              dotData: const FlDotData(
+                show: false,
+              ),
+              belowBarData: BarAreaData(show: false),
+            ),
+          );
+        }
+
         return material.Column(
           children: [
             SizedBox(
@@ -302,7 +410,7 @@ class _AppLineState extends State<AppLine> {
                             y: goal.toDouble(),
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
-                        if (average > 0)
+                        if (!showTrend && spots.isNotEmpty)
                           HorizontalLine(
                             y: average,
                             color: Theme.of(context).colorScheme.tertiary,
@@ -336,27 +444,7 @@ class _AppLineState extends State<AppLine> {
                       touchTooltipData:
                           _tooltipData(context, rows, rows.first.unit),
                     ),
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: spots,
-                        isCurved: settings.curveLines,
-                        preventCurveOverShooting: true,
-                        color: Theme.of(context).colorScheme.primary,
-                        barWidth: 3,
-                        isStrokeCapRound: true,
-                        dotData: const FlDotData(
-                          show: false,
-                        ),
-                        belowBarData: BarAreaData(
-                          show: true,
-                          gradient: LinearGradient(
-                            colors: gradientColors
-                                .map((color) => color.withValues(alpha: 0.3))
-                                .toList(),
-                          ),
-                        ),
-                      ),
-                    ],
+                    lineBarsData: lineBars,
                     gridData: const FlGridData(show: false),
                   ),
                 ),
@@ -365,53 +453,73 @@ class _AppLineState extends State<AppLine> {
             const SizedBox(
               height: 16.0,
             ),
-            Row(
+            material.Column(
               children: [
-                Expanded(
-                  child: ListTile(
-                    title: const Text("Average"),
-                    subtitle: Text(
-                      "${formatter.format(average)} ${rows.first.unit}",
-                    ),
-                    leading: Radio(
-                      value: 1,
-                      groupValue: 1,
-                      onChanged: (value) {},
-                      fillColor: WidgetStateProperty.resolveWith(
-                        (states) => Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                  ),
-                ),
-                if (goal > 0)
-                  Expanded(
-                    child: ListTile(
-                      onTap: () {
-                        if (widget.metric == 'body-weight')
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => WeightSettings(),
-                            ),
-                          );
-                        else
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DiarySettings(),
-                            ),
-                          );
-                      },
-                      title: const Text("Goal"),
-                      subtitle: Text(
-                        "${formatter.format(goal)} ${rows.first.unit}",
-                      ),
-                      leading: Radio(
-                        value: 1,
-                        groupValue: 1,
-                        onChanged: (value) {},
-                        fillColor: WidgetStateProperty.resolveWith(
-                          (states) => Theme.of(context).colorScheme.onSurface,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        title: const Text("Average"),
+                        subtitle: Text(
+                          "${formatter.format(average)} ${rows.first.unit}",
+                        ),
+                        leading: Radio<bool>(
+                          value: false,
+                          groupValue: showTrend,
+                          onChanged: (value) {
+                            setState(() {
+                              showTrend = value!;
+                            });
+                          },
+                          fillColor: WidgetStateProperty.resolveWith(
+                            (states) => Theme.of(context).colorScheme.tertiary,
+                          ),
                         ),
                       ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: const Text("Trend"),
+                        subtitle: Text(_getTrendText(rows)),
+                        leading: Radio<bool>(
+                          value: true,
+                          groupValue: showTrend,
+                          onChanged: (value) {
+                            setState(() {
+                              showTrend = value!;
+                            });
+                          },
+                          fillColor: WidgetStateProperty.resolveWith(
+                            (states) => Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                if (goal > 0)
+                  ListTile(
+                    onTap: () {
+                      if (widget.metric == 'body-weight')
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WeightSettings(),
+                          ),
+                        );
+                      else
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DiarySettings(),
+                          ),
+                        );
+                    },
+                    title: const Text("Goal"),
+                    subtitle: Text(
+                      "${formatter.format(goal)} ${rows.first.unit}",
+                    ),
+                    leading: Icon(
+                      Icons.flag,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
               ],
@@ -465,7 +573,15 @@ class _AppLineState extends State<AppLine> {
     return LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
-        final row = rows.elementAt(touchedSpots.first.spotIndex);
+        if (touchedSpots.isEmpty) return [];
+
+        // Always show tooltip for the original data (first line)
+        final originalDataSpot = touchedSpots.firstWhere(
+          (spot) => spot.barIndex == 0,
+          orElse: () => touchedSpots.first,
+        );
+
+        final row = rows.elementAt(originalDataSpot.spotIndex);
         final created =
             DateFormat(settings.shortDateFormat).format(row.created);
         final value = formatter.format(row.value);
