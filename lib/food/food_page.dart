@@ -48,20 +48,43 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         db.foods.smallImage,
         db.foods.imageFile,
       ])
-      ..orderBy([
-        OrderingTerm(
-          expression: db.foods.favorite,
-          mode: OrderingMode.desc,
-        ),
-        OrderingTerm(
-          expression: db.foods.created,
-          mode: OrderingMode.desc,
-        ),
-      ])
       ..limit(limit));
 
-    if (search.isNotEmpty)
-      query = query..where(db.foods.name.contains(search.toLowerCase()));
+    if (search.isNotEmpty) {
+      final searchLower = search.toLowerCase();
+      query = query
+        ..where(db.foods.name.contains(searchLower))
+        ..orderBy([
+          OrderingTerm(
+            expression: db.foods.name.lower().equals(searchLower),
+            mode: OrderingMode.desc,
+          ),
+          OrderingTerm(
+            expression: db.foods.name.lower().like('$searchLower%'),
+            mode: OrderingMode.desc,
+          ),
+          OrderingTerm(
+            expression: db.foods.favorite,
+            mode: OrderingMode.desc,
+          ),
+          OrderingTerm(
+            expression: db.foods.created,
+            mode: OrderingMode.desc,
+          ),
+        ]);
+    } else {
+      query = query
+        ..orderBy([
+          OrderingTerm(
+            expression: db.foods.favorite,
+            mode: OrderingMode.desc,
+          ),
+          OrderingTerm(
+            expression: db.foods.created,
+            mode: OrderingMode.desc,
+          ),
+        ]);
+    }
     if (_foodGroup != null)
       query = query..where(db.foods.foodGroup.equals(_foodGroup!));
     if (_servingUnit != null)
