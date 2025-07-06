@@ -184,7 +184,7 @@ Food convertCustomServing({
   // Get the original serving size in grams
   final originalServingSize = food.servingSize ?? 100;
   final originalServingUnit = food.servingUnit ?? 'grams';
-  
+
   // Convert original serving size to grams, handling 'serving' unit properly
   double originalServingG;
   if (originalServingUnit == 'serving') {
