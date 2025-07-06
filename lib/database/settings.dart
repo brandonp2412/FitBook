@@ -16,6 +16,7 @@ class Settings extends Table {
   IntColumn get dailyCarb => integer().nullable()();
   IntColumn get dailyFat => integer().nullable()();
   IntColumn get dailyProtein => integer().nullable()();
+  IntColumn get dailyFiber => integer().nullable()();
   TextColumn get diarySummary => text()();
   TextColumn get entryUnit => text()();
   BoolColumn get favoriteNew => boolean()();

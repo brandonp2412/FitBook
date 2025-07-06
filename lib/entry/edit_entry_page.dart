@@ -30,6 +30,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
   final protein = TextEditingController(text: "0");
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
+  final fiber = TextEditingController(text: "0");
   final quantityNode = FocusNode();
   final caloriesNode = FocusNode();
   final barcode = TextEditingController();
@@ -73,6 +74,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           protein.text = formatter.format(food.proteinG);
           carb.text = formatter.format(food.carbohydrateG);
           fat.text = formatter.format(food.fatG);
+          fiber.text = formatter.format(food.fiberG);
           kilojoules.text = formatter.format(food.calories! * 4.184);
         });
         recalc();
@@ -112,6 +114,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
           carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
           fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
+          fiberG: Value(formatter.tryParse(fiber.text)?.toDouble()),
           favorite: Value(settings.favoriteNew),
           servingSize: Value(formatter.tryParse(quantity.text)?.toDouble()),
           servingUnit: Value(unit),
@@ -135,6 +138,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
           proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
           carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
           fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
+          fiberG: Value(formatter.tryParse(fiber.text)?.toDouble()),
           imageFile: Value(imageFile),
         ),
       );
@@ -268,6 +272,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       kilojoules.text = formatter.format((result.calories ?? 0) * 4.184);
       carb.text = formatter.format(result.carbohydrateG);
       fat.text = formatter.format(result.fatG);
+      fiber.text = formatter.format(result.fiberG);
     });
   }
 
@@ -489,6 +494,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     protein.text = formatter.format(food.proteinG);
                     carb.text = formatter.format(food.carbohydrateG);
                     fat.text = formatter.format(food.fatG);
+                    fiber.text = formatter.format(food.fiberG);
                     kilojoules.text = food.calories == null
                         ? ''
                         : formatter.format(food.calories! * 4.184);
@@ -588,20 +594,45 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
-            TextField(
-              controller: fat,
-              decoration: InputDecoration(
-                labelText: 'Fat (per ${quantity.text} $unit)',
-              ),
-              onTap: () => selectAll(fat),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                setState(() {
-                  foodDirty = true;
-                });
-              },
-              onSubmitted: (value) => save(),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: fat,
+                    decoration: InputDecoration(
+                      labelText: 'Fat (per ${quantity.text} $unit)',
+                    ),
+                    onTap: () => selectAll(fat),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        foodDirty = true;
+                      });
+                    },
+                    onSubmitted: (value) => selectAll(fiber),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: fiber,
+                    decoration: InputDecoration(
+                      labelText: 'Fiber (per ${quantity.text} $unit)',
+                    ),
+                    onTap: () => selectAll(fiber),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    onChanged: (value) {
+                      setState(() {
+                        foodDirty = true;
+                      });
+                    },
+                    onSubmitted: (value) => save(),
+                  ),
+                ),
+              ],
             ),
             if (Platform.isAndroid || Platform.isIOS)
               TextField(

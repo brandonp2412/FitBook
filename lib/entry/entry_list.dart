@@ -68,12 +68,14 @@ class _EntryListState extends State<EntryList> {
         stats[day]!.protein += entryFood.metrics[db.foods.proteinG.name] ?? 0;
         stats[day]!.fat += entryFood.metrics[db.foods.fatG.name] ?? 0;
         stats[day]!.carb += entryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
+        stats[day]!.fiber += entryFood.metrics[db.foods.fiberG.name] ?? 0;
       } else
         stats[day] = Stats(
           cals: entryFood.metrics[db.foods.calories.name] ?? 0,
           protein: entryFood.metrics[db.foods.proteinG.name] ?? 0,
           fat: entryFood.metrics[db.foods.fatG.name] ?? 0,
           carb: entryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
+          fiber: entryFood.metrics[db.foods.fiberG.name] ?? 0,
         );
     }
 
@@ -102,6 +104,7 @@ class _EntryListState extends State<EntryList> {
             String protein = "";
             String fat = "";
             String carb = "";
+            String fiber = "";
             final formatter = NumberFormat('#,##0');
 
             final day = DateTime(
@@ -120,6 +123,8 @@ class _EntryListState extends State<EntryList> {
                     "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)}g fat";
                 carb =
                     "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)}g carbs";
+                fiber =
+                    "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)}g fiber";
                 break;
               case 'DiarySummary.division':
                 cals =
@@ -130,6 +135,8 @@ class _EntryListState extends State<EntryList> {
                     "${stats[day]!.fat.toStringAsFixed(0)} / ${settings.dailyFat}g fat";
                 carb =
                     "${stats[day]!.carb.toStringAsFixed(0)} / ${settings.dailyCarb}g carbs";
+                fiber =
+                    "${stats[day]!.fiber.toStringAsFixed(0)} / ${settings.dailyFiber}g fiber";
                 break;
               case 'DiarySummary.both':
                 cals =
@@ -140,6 +147,8 @@ class _EntryListState extends State<EntryList> {
                     "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)} (${settings.dailyFat}g fat)";
                 carb =
                     "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)} (${settings.dailyCarb}g carbs)";
+                fiber =
+                    "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)} (${settings.dailyFiber}g fiber)";
                 break;
               case 'DiarySummary.none':
                 break;
@@ -181,6 +190,10 @@ class _EntryListState extends State<EntryList> {
                         if (settings.dailyCarb != null) ...[
                           Icon(Icons.bakery_dining_outlined),
                           Text(carb),
+                        ],
+                        if (settings.dailyFiber != null) ...[
+                          Icon(Icons.grass_outlined),
+                          Text(fiber),
                         ],
                       ],
                     ),

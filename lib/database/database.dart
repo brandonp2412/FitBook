@@ -360,8 +360,11 @@ WHERE name = 'Quick-add'
         WHERE fields IS NULL
         """);
     },
+    from39To40: (Migrator m, Schema40 schema) async {
+      await m.addColumn(schema.settings, schema.settings.dailyFiber);
+    },
   );
 
   @override
-  int get schemaVersion => 39;
+  int get schemaVersion => 40;
 }

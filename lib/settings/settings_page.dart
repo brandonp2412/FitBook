@@ -32,6 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final protein = TextEditingController();
   final fat = TextEditingController();
   final carb = TextEditingController();
+  final fiber = TextEditingController();
   final targetWeight = TextEditingController();
   late Setting settings;
 
@@ -43,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
     protein.text = settings.dailyProtein?.toString() ?? "";
     fat.text = settings.dailyFat?.toString() ?? "";
     carb.text = settings.dailyCarb?.toString() ?? "";
+    fiber.text = settings.dailyFiber?.toString() ?? "";
     targetWeight.text = settings.targetWeight?.toString() ?? "";
   }
 
@@ -59,6 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
           carb: carb,
           fat: fat,
           protein: protein,
+          fiber: fiber,
           settings: settingsState,
           term: search.text.toLowerCase(),
         ),

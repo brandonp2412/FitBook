@@ -23,6 +23,7 @@ List<Widget> getDiarySettings({
   required TextEditingController protein,
   required TextEditingController fat,
   required TextEditingController carb,
+  required TextEditingController fiber,
 }) {
   return [
     if ('diary unit'.contains(term))
@@ -137,6 +138,21 @@ List<Widget> getDiarySettings({
           ),
         ),
       ),
+    if ('daily fiber'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+        child: TextField(
+          controller: fiber,
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(dailyFiber: Value(int.tryParse(value))),
+              ),
+          onTap: () => selectAll(fiber),
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            labelText: 'Daily fiber (g)',
+          ),
+        ),
+      ),
     if ('automatic dailies'.contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -243,6 +259,8 @@ class _DiarySettingsState extends State<DiarySettings> {
       TextEditingController(text: settings.value.dailyFat?.toString());
   late final carb =
       TextEditingController(text: settings.value.dailyCarb?.toString());
+  late final fiber =
+      TextEditingController(text: settings.value.dailyFiber?.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -262,6 +280,7 @@ class _DiarySettingsState extends State<DiarySettings> {
             settings: settings,
             fat: fat,
             carb: carb,
+            fiber: fiber,
           ),
         ),
       ),

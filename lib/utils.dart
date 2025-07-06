@@ -177,6 +177,7 @@ Food convertCustomServing({
       proteinG: (food.proteinG ?? 0) * quantity,
       fatG: (food.fatG ?? 0) * quantity,
       carbohydrateG: (food.carbohydrateG ?? 0) * quantity,
+      fiberG: (food.fiberG ?? 0) * quantity,
     );
   }
 
@@ -199,6 +200,7 @@ Food convertCustomServing({
   final proteinPerGram = (food.proteinG ?? 0) / originalServingG;
   final fatPerGram = (food.fatG ?? 0) / originalServingG;
   final carbPerGram = (food.carbohydrateG ?? 0) / originalServingG;
+  final fiberPerGram = (food.fiberG ?? 0) / originalServingG;
 
   // Convert to the requested serving size
   final targetServingG = convertToGrams(quantity, unit);
@@ -212,6 +214,7 @@ Food convertCustomServing({
     proteinG: proteinPerGram * targetServingG,
     fatG: fatPerGram * targetServingG,
     carbohydrateG: carbPerGram * targetServingG,
+    fiberG: fiberPerGram * targetServingG,
   );
 }
 
