@@ -9,8 +9,6 @@ final defaultFields = [
   db.foods.fiberG.name,
 ];
 
-// coverage:ignore-file
-
 class Settings extends Table {
   BoolColumn get curveLines => boolean().withDefault(const Constant(true))();
   BoolColumn get autoCalc => boolean().withDefault(const Constant(false))();

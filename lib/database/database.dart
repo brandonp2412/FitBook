@@ -146,7 +146,6 @@ class AppDatabase extends _$AppDatabase {
     from7To8: (m, schema) async {
       await m.addColumn(schema.foods, schema.foods.favorite);
     },
-    // 1.0.8
     from8To9: (m, schema) async {
       await m.createIndex(
         Index('Foods', 'CREATE INDEX IF NOT EXISTS foods_id ON foods(id)'),
@@ -161,13 +160,10 @@ class AppDatabase extends _$AppDatabase {
     from9To10: (m, schema) async {
       await m.addColumn(schema.foods, schema.foods.servingUnit);
     },
-    // 1.0.30
     from10To11: (m, schema) async {},
-    // 1.0.38
     from11To12: (Migrator m, Schema12 schema) async {
       await m.addColumn(schema.foods, schema.foods.servingSize);
     },
-    // 1.0.50
     from12To13: (Migrator m, Schema13 schema) async {
       // Serving size wasn't properly initialized in version 12.
       // It needed to be added in onCreate as well.
@@ -175,11 +171,9 @@ class AppDatabase extends _$AppDatabase {
           .addColumn(schema.foods, schema.foods.servingSize)
           .catchError((_) {});
     },
-    // 1.0.51
     from13To14: (Migrator m, Schema14 schema) async {
       await m.createTable(schema.settings);
     },
-    // 1.0.51
     from14To15: (Migrator m, Schema15 schema) async {
       await m.addColumn(schema.settings, schema.settings.shortDateFormat);
       material.ThemeMode themeMode = material.ThemeMode.system;
@@ -224,7 +218,6 @@ class AppDatabase extends _$AppDatabase {
         }),
       ));
     },
-    // 1.0.52
     from15To16: (Migrator m, Schema16 schema) async {
       await (schema.foods.update()
             ..where((u) => const CustomExpression("serving_unit is null")))
@@ -237,14 +230,12 @@ class AppDatabase extends _$AppDatabase {
         const RawValuesInsertable({"serving_size": Variable(100)}),
       );
     },
-    // 1.0.55
     from16To17: (Migrator m, Schema17 schema) async {
       await m.addColumn(schema.foods, schema.foods.smallImage);
       await m.addColumn(schema.foods, schema.foods.bigImage);
       await m.addColumn(schema.foods, schema.foods.imageFile);
       await m.addColumn(schema.settings, schema.settings.showImages);
     },
-    // 1.0.56
     from17To18: (Migrator m, Schema18 schema) async {
       // Because I forgot to add these statements in onCreate at version 17
       // we need to do it again to fix people who installed the app at 17.
@@ -256,15 +247,12 @@ class AppDatabase extends _$AppDatabase {
           .addColumn(schema.foods, schema.foods.imageFile)
           .catchError((_) {});
     },
-    // 1.0.59
     from18To19: (Migrator m, Schema19 schema) async {
       await m.addColumn(schema.foods, schema.foods.created);
     },
-    // 1.0.60
     from19To20: (Migrator m, Schema20 schema) async {
       await m.addColumn(schema.foods, schema.foods.barcode);
     },
-    // 1.0.63
     from20To21: (Migrator m, Schema21 schema) async {
       await m.addColumn(schema.settings, schema.settings.offLogin);
       await m.addColumn(schema.settings, schema.settings.offPassword);

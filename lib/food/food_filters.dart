@@ -42,150 +42,129 @@ class _FoodFiltersState extends State<FoodFilters> {
       (widget.servingSizeLtController.text.isNotEmpty ? 1 : 0) +
       (widget.servingUnit?.isNotEmpty == true ? 1 : 0);
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Filter Foods'),
+        content: SingleChildScrollView(
+          child: material.Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              StreamBuilder(
+                stream: groupStream,
+                builder: (context, snapshot) {
+                  return DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Food group',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    ),
+                    value: widget.foodGroup,
+                    items: snapshot.data
+                        ?.map(
+                          (result) => DropdownMenuItem(
+                            value: result.read(db.foods.foodGroup)!,
+                            child: Text(
+                              result.read(db.foods.foodGroup)!,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      widget.onChange(
+                        foodGroup: value,
+                        servingUnit: widget.servingUnit,
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: widget.servingUnit,
+                decoration: const InputDecoration(
+                  labelText: 'Serving unit',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                ),
+                items: unitOptions.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  widget.onChange(
+                    foodGroup: widget.foodGroup,
+                    servingUnit: newValue,
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: widget.servingSizeGtController,
+                      onChanged: (value) => widget.onChange(
+                        foodGroup: widget.foodGroup,
+                        servingUnit: widget.servingUnit,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: "Serving size >",
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: widget.servingSizeLtController,
+                      onChanged: (value) => widget.onChange(
+                        foodGroup: widget.foodGroup,
+                        servingUnit: widget.servingUnit,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: "Serving size <",
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              widget.servingSizeGtController.clear();
+              widget.servingSizeLtController.clear();
+              widget.onChange(
+                foodGroup: null,
+                servingUnit: null,
+              );
+            },
+            child: const Text('Clear All'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Done'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    String? servingSize;
-    if (widget.servingSizeGtController.text.isNotEmpty)
-      servingSize = '> ${widget.servingSizeGtController.text} ';
-    if (widget.servingSizeLtController.text.isNotEmpty)
-      servingSize =
-          '${servingSize ?? ''}< ${widget.servingSizeLtController.text}';
-
     return Badge.count(
       count: filterCount,
       backgroundColor: Theme.of(context).colorScheme.primary,
       isLabelVisible: filterCount > 0,
-      child: PopupMenuButton(
+      child: IconButton(
         tooltip: 'Filter foods',
         icon: const Icon(Icons.filter_list),
-        itemBuilder: (popupContext) => [
-          PopupMenuItem(
-            child: StreamBuilder(
-              stream: groupStream,
-              builder: (context, snapshot) {
-                return DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Food group',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  ),
-                  value: widget.foodGroup,
-                  items: snapshot.data
-                      ?.map(
-                        (result) => DropdownMenuItem(
-                          value: result.read(db.foods.foodGroup)!,
-                          child: Text(
-                            result.read(db.foods.foodGroup)!,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    widget.onChange(
-                      foodGroup: value,
-                      servingUnit: widget.servingUnit,
-                    );
-                    Navigator.pop(popupContext);
-                  },
-                );
-              },
-            ),
-          ),
-          PopupMenuItem(
-            child: DropdownButtonFormField<String>(
-              value: widget.servingUnit,
-              decoration: const InputDecoration(
-                labelText: 'Serving unit',
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-              ),
-              items: unitOptions.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                widget.onChange(
-                  foodGroup: widget.foodGroup,
-                  servingUnit: newValue,
-                );
-              },
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              leading: const Icon(Icons.coffee),
-              title: const Text("Serving size"),
-              subtitle: servingSize != null ? Text(servingSize) : null,
-              onTap: () {
-                Navigator.pop(context);
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Serving size filter"),
-                    content: SingleChildScrollView(
-                      child: material.Column(
-                        children: [
-                          TextField(
-                            controller: widget.servingSizeGtController,
-                            onChanged: (value) => widget.onChange(
-                              foodGroup: widget.foodGroup,
-                              servingUnit: widget.servingUnit,
-                            ),
-                            decoration: const InputDecoration(
-                              labelText: "Greater than",
-                            ),
-                          ),
-                          TextField(
-                            controller: widget.servingSizeLtController,
-                            onChanged: (value) => widget.onChange(
-                              foodGroup: widget.foodGroup,
-                              servingUnit: widget.servingUnit,
-                            ),
-                            decoration:
-                                const InputDecoration(labelText: "Less than"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('Clear'),
-                        onPressed: () async {
-                          Navigator.pop(context);
-                          widget.onChange(
-                            foodGroup: widget.foodGroup,
-                            servingUnit: widget.servingUnit,
-                          );
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              leading: const Icon(Icons.close),
-              title: Text("Clear ($filterCount)"),
-              onTap: () {
-                widget.servingSizeGtController.text = '';
-                widget.servingSizeLtController.text = '';
-                widget.onChange(
-                  foodGroup: null,
-                  servingUnit: null,
-                );
-                Navigator.pop(popupContext);
-              },
-            ),
-          ),
-        ],
+        onPressed: _showFilterDialog,
       ),
     );
   }
