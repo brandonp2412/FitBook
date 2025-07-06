@@ -59,7 +59,7 @@ class AppDatabase extends _$AppDatabase {
       onCreate: (Migrator m) async {
         await m.createAll();
 
-        final blob = await rootBundle.load('assets/my-food-data.zip');
+        final blob = await rootBundle.load('assets/food-data.zip');
         final archive = ZipDecoder().decodeBytes(
           blob.buffer.asUint8List(blob.offsetInBytes, blob.lengthInBytes),
         );
