@@ -77,11 +77,25 @@ class _AppLineState extends State<AppLine> {
   void _setStream() {
     final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
 
-    // Define the quantity in grams expression (same as in your original function)
+    // Define the quantity in grams expression with proper serving unit handling
     final quantityInGrams = CustomExpression<double>('''
     CASE 
       WHEN entries.unit = 'serving' 
-      THEN entries.quantity * COALESCE(foods.serving_size, 100)
+      THEN entries.quantity * (
+        CASE 
+          WHEN foods.serving_size IS NULL THEN 100
+          WHEN foods.serving_unit IS NULL THEN foods.serving_size
+          WHEN foods.serving_unit = 'ounces' THEN foods.serving_size * 28.35
+          WHEN foods.serving_unit = 'grams' THEN foods.serving_size
+          WHEN foods.serving_unit = 'milliliters' THEN foods.serving_size
+          WHEN foods.serving_unit = 'cups' THEN foods.serving_size * 250
+          WHEN foods.serving_unit = 'tablespoons' THEN foods.serving_size * 15
+          WHEN foods.serving_unit = 'teaspoons' THEN foods.serving_size * 5
+          WHEN foods.serving_unit = 'pounds' THEN foods.serving_size * 453.592
+          WHEN foods.serving_unit = 'serving' THEN foods.serving_size
+          ELSE 100
+        END
+      )
       WHEN entries.unit IN ('grams', 'milliliters') THEN entries.quantity
       WHEN entries.unit = 'milligrams' THEN entries.quantity / 1000
       WHEN entries.unit = 'cups' THEN entries.quantity * 250

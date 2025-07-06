@@ -108,7 +108,7 @@ String getShortUnit(String unit) {
     case 'liters':
       return 'L';
     default:
-      return unit; // Return the original unit if no short form is defined
+      return unit;
   }
 }
 
@@ -122,15 +122,18 @@ double convertFromGrams(double quantityInGrams, String targetUnit) {
   double convertedQuantity;
   switch (targetUnit) {
     case 'grams':
-    case 'serving':
     case 'milliliters':
       convertedQuantity = quantityInGrams;
       break;
+    case 'serving':
+      // 'serving' should not be converted from grams here as it's handled separately
+      // This case should not be reached when 'serving' is properly handled
+      throw Exception('Serving unit should be handled separately');
     case 'milligrams':
       convertedQuantity = quantityInGrams * 1000;
       break;
     case 'cups':
-      convertedQuantity = quantityInGrams / 250; // Metric system
+      convertedQuantity = quantityInGrams / 250;
       break;
     case 'tablespoons':
       convertedQuantity = quantityInGrams / 15;
@@ -139,14 +142,13 @@ double convertFromGrams(double quantityInGrams, String targetUnit) {
       convertedQuantity = quantityInGrams / 5;
       break;
     case 'ounces':
-      convertedQuantity = quantityInGrams / 28.35; // Exact conversion
+      convertedQuantity = quantityInGrams / 28.35;
       break;
     case 'pounds':
-      convertedQuantity = quantityInGrams / 453.592; // Exact conversion
+      convertedQuantity = quantityInGrams / 453.592;
       break;
     case 'liters':
-      convertedQuantity =
-          quantityInGrams / 1000; // Approximate conversion for water
+      convertedQuantity = quantityInGrams / 1000;
       break;
     case 'kilojoules':
       convertedQuantity = quantityInGrams * 4.184;
@@ -165,7 +167,7 @@ Food convertCustomServing({
   // Special case handling for 'serving' unit
   if (unit == 'serving') {
     // When user selects 'serving', we want to return the full nutritional values
-    // multiplied by the quantity
+    // multiplied by the quantity based on the food's original serving size
     return Food(
       id: food.id,
       name: food.name,
@@ -182,8 +184,15 @@ Food convertCustomServing({
   // Get the original serving size in grams
   final originalServingSize = food.servingSize ?? 100;
   final originalServingUnit = food.servingUnit ?? 'grams';
-  final originalServingG =
-      convertToGrams(originalServingSize, originalServingUnit);
+  
+  // Convert original serving size to grams, handling 'serving' unit properly
+  double originalServingG;
+  if (originalServingUnit == 'serving') {
+    // If the original unit is 'serving', treat the serving size as grams
+    originalServingG = originalServingSize;
+  } else {
+    originalServingG = convertToGrams(originalServingSize, originalServingUnit);
+  }
 
   // Calculate per-gram values
   final caloriesPerGram = (food.calories ?? 0) / originalServingG;
@@ -211,15 +220,18 @@ double convertToGrams(double quantity, String unit) {
 
   switch (unit) {
     case 'grams':
-    case 'serving':
     case 'milliliters':
       quantityInGrams = quantity;
       break;
+    case 'serving':
+      // 'serving' should not be converted to grams here as it's handled separately
+      // This case should not be reached when 'serving' is properly handled
+      throw Exception('Serving unit should be handled separately');
     case 'milligrams':
       quantityInGrams = quantity / 1000;
       break;
     case 'cups':
-      quantityInGrams = quantity * 250; // Metric system
+      quantityInGrams = quantity * 250;
       break;
     case 'tablespoons':
       quantityInGrams = quantity * 15;
@@ -228,13 +240,13 @@ double convertToGrams(double quantity, String unit) {
       quantityInGrams = quantity * 5;
       break;
     case 'ounces':
-      quantityInGrams = quantity * 28.35; // Exact conversion
+      quantityInGrams = quantity * 28.35;
       break;
     case 'pounds':
-      quantityInGrams = quantity * 453.592; // Exact conversion
+      quantityInGrams = quantity * 453.592;
       break;
     case 'liters':
-      quantityInGrams = quantity * 1000; // Approximate conversion for water
+      quantityInGrams = quantity * 1000;
       break;
     case 'kilojoules':
       quantityInGrams = quantity / 4.184;
