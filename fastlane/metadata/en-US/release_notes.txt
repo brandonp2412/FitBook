@@ -1,3 +1,4 @@
-- Fix quick add editing of macros
-- Fix filters bug
-- Fix unit conversions
+- Add option for trend line
+- Add fiber to diary entries
+- Change ordering of foods page
+- Use new foods database
