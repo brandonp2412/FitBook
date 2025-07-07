@@ -70,12 +70,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
           barcode.text = food.barcode ?? "";
           nameController?.text = food.name;
           selectedFood = food;
-          calories.text = formatter.format(food.calories);
-          protein.text = formatter.format(food.proteinG);
-          carb.text = formatter.format(food.carbohydrateG);
-          fat.text = formatter.format(food.fatG);
-          fiber.text = formatter.format(food.fiberG);
-          kilojoules.text = formatter.format(food.calories! * 4.184);
+          calories.text = food.calories != null ? formatter.format(food.calories!) : "0";
+          protein.text = food.proteinG != null ? formatter.format(food.proteinG!) : "0";
+          carb.text = food.carbohydrateG != null ? formatter.format(food.carbohydrateG!) : "0";
+          fat.text = food.fatG != null ? formatter.format(food.fatG!) : "0";
+          fiber.text = food.fiberG != null ? formatter.format(food.fiberG!) : "0";
+          kilojoules.text = food.calories != null ? formatter.format(food.calories! * 4.184) : "0";
         });
         recalc();
       },
@@ -267,12 +267,12 @@ class _EditEntryPageState extends State<EditEntryPage> {
 
     setState(() {
       barcode.text = food.barcode ?? '';
-      calories.text = formatter.format(result.calories);
-      protein.text = formatter.format(result.proteinG);
+      calories.text = result.calories != null ? formatter.format(result.calories!) : "0";
+      protein.text = result.proteinG != null ? formatter.format(result.proteinG!) : "0";
       kilojoules.text = formatter.format((result.calories ?? 0) * 4.184);
-      carb.text = formatter.format(result.carbohydrateG);
-      fat.text = formatter.format(result.fatG);
-      fiber.text = formatter.format(result.fiberG);
+      carb.text = result.carbohydrateG != null ? formatter.format(result.carbohydrateG!) : "0";
+      fat.text = result.fatG != null ? formatter.format(result.fatG!) : "0";
+      fiber.text = result.fiberG != null ? formatter.format(result.fiberG!) : "0";
     });
   }
 
@@ -491,14 +491,14 @@ class _EditEntryPageState extends State<EditEntryPage> {
                     barcode.text = food.barcode ?? "";
                     nameController?.text = food.name;
                     selectedFood = food;
-                    protein.text = formatter.format(food.proteinG);
-                    carb.text = formatter.format(food.carbohydrateG);
-                    fat.text = formatter.format(food.fatG);
-                    fiber.text = formatter.format(food.fiberG);
+                    protein.text = food.proteinG != null ? formatter.format(food.proteinG!) : "0";
+                    carb.text = food.carbohydrateG != null ? formatter.format(food.carbohydrateG!) : "0";
+                    fat.text = food.fatG != null ? formatter.format(food.fatG!) : "0";
+                    fiber.text = food.fiberG != null ? formatter.format(food.fiberG!) : "0";
                     kilojoules.text = food.calories == null
-                        ? ''
+                        ? '0'
                         : formatter.format(food.calories! * 4.184);
-                    calories.text = formatter.format(food.calories);
+                    calories.text = food.calories != null ? formatter.format(food.calories!) : "0";
                   });
                 },
               ),
