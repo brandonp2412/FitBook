@@ -1,11 +1,7 @@
-Easily track your eating habits
+Never fear being tracked, or served ads with FitBook. Our app is completely free and open source. 
 
-Never suffer another ad while logging your foods.
-FitBook is completely Free and Open Source. 
-Have confidence we won't be marketing
-to you or sharing your data with third parties.
-Everything is stored locally - that means internet
-connectivity is optional.
+- Visualize your weight progress with beautiful graphs
+- Search OpenFoodFacts for all your favorite snacks
+- Customize absolutely everything to your hearts desires
 
-If you notice any bugs feel free to open a ticket at
 https://github.com/brandonp2412/FitBook
