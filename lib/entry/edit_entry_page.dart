@@ -8,6 +8,7 @@ import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -486,7 +487,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
               trailing: const Icon(Icons.calendar_today),
               onTap: () => pickDate(),
             ),
-            if (Platform.isAndroid || Platform.isIOS)
+            if (kIsWeb)
+              const SizedBox.shrink()
+            else
               ScanBarcode(
                 text: true,
                 value: barcode.text,
@@ -655,7 +658,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
-            if (Platform.isAndroid || Platform.isIOS)
+            if (kIsWeb)
+              const SizedBox.shrink()
+            else
               TextField(
                 controller: barcode,
                 decoration: const InputDecoration(
@@ -665,14 +670,17 @@ class _EditEntryPageState extends State<EditEntryPage> {
               ),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 8),
-              Image.file(
-                File(imageFile!),
-                errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                  onPressed: () {},
-                  label: const Text('Image error'),
-                  icon: const Icon(Icons.error),
-                ),
-              ),
+              kIsWeb
+                  ? const SizedBox.shrink()
+                  : Image.file(
+                      File(imageFile!),
+                      errorBuilder: (context, error, stackTrace) =>
+                          TextButton.icon(
+                        onPressed: () {},
+                        label: const Text('Image error'),
+                        icon: const Icon(Icons.error),
+                      ),
+                    ),
             ],
             if (settings.showImages) ...[
               const SizedBox(height: 8),

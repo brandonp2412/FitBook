@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
@@ -220,13 +219,13 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           ),
         ],
       ),
-      floatingActionButton: Platform.isAndroid || Platform.isIOS
-          ? FloatingActionButton.extended(
+      floatingActionButton: kIsWeb
+          ? null
+          : FloatingActionButton.extended(
               label: const Text("Scan barcode"),
               onPressed: scan,
               icon: const Icon(Icons.barcode_reader),
-            )
-          : null,
+            ),
     );
   }
 

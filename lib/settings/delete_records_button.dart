@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -76,9 +77,13 @@ class DeleteRecordsButton extends StatelessWidget {
                 await db.close();
                 await db.executor.close();
                 await file.delete();
-                if (Platform.isAndroid || Platform.isIOS) SystemNavigator.pop();
-                if (Platform.isWindows || Platform.isMacOS || Platform.isLinux)
-                  exit(0);
+                if (!kIsWeb) {
+                  if (Platform.isAndroid || Platform.isIOS)
+                    SystemNavigator.pop();
+                  if (Platform.isWindows ||
+                      Platform.isMacOS ||
+                      Platform.isLinux) exit(0);
+                }
               },
             ),
           ],

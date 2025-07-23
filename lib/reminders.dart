@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:workmanager/workmanager.dart';
@@ -10,6 +11,8 @@ import 'package:workmanager/workmanager.dart';
 Timer? timer;
 
 void setupReminders() {
+  if (kIsWeb) return;
+
   if (Platform.isAndroid || Platform.isIOS) {
     Permission.notification.request();
     Workmanager().initialize(doMobileReminders);
@@ -85,6 +88,8 @@ doDesktopReminders() async {
 }
 
 void cancelReminders() {
+  if (kIsWeb) return;
+
   if (Platform.isAndroid || Platform.isIOS)
     Workmanager().cancelByUniqueName('reminders');
   else

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:fit_book/about_page.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/appearance_settings.dart';
@@ -9,6 +7,7 @@ import 'package:fit_book/settings/food_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/tab_settings.dart';
 import 'package:fit_book/settings/weight_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Settings'),
         actions: [
-          if (!Platform.isIOS && !Platform.isMacOS)
+          if (kIsWeb)
             IconButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
