@@ -12,7 +12,7 @@ import 'mock_tests.dart';
 
 void main() async {
   testWidgets(
-    'WeightsPage list',
+    'WeightPage list',
     (WidgetTester tester) async {
       await mockTests();
       final settings = await (db.settings.select()).getSingle();
@@ -60,7 +60,7 @@ void main() async {
   );
 
   testWidgets(
-    'WeightsPage update',
+    'WeightPage update',
     (WidgetTester tester) async {
       await mockTests();
       final settings = await (db.settings.select()).getSingle();
@@ -104,7 +104,7 @@ void main() async {
   );
 
   testWidgets(
-    'WeightsPage delete',
+    'WeightPage delete',
     (WidgetTester tester) async {
       await mockTests();
       final settings = await (db.settings.select()).getSingle();
@@ -161,7 +161,7 @@ void main() async {
   );
 
   testWidgets(
-    'WeightsPage create',
+    'WeightPage create',
     (WidgetTester tester) async {
       await mockTests();
       final settings = await (db.settings.select()).getSingle();
