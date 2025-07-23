@@ -50,7 +50,7 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.text('Edit food'), findsNothing);
 
-    await tester.tap(find.byTooltip('Add'));
+    await tester.tap(find.text('Add'));
     await tester.pumpAndSettle();
     expect(find.text('Add food'), findsOne);
     await tester.enterText(find.bySemanticsLabel('Name'), 'Buns');

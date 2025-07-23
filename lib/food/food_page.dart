@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
@@ -24,6 +25,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   final TextEditingController servingSizeLtController = TextEditingController();
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final ScrollController scrollCtrl = ScrollController();
+
   String search = '';
   int limit = 100;
 
@@ -231,6 +234,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                   ),
                 ),
               FoodList(
+                ctrl: scrollCtrl,
                 foods: foods,
                 selected: selected,
                 onSelect: (id) {
@@ -254,16 +258,17 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+      floatingActionButton: AnimatedFab(
+        onTap: () async {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => const EditFoodPage(),
             ),
           );
         },
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
+        label: 'Add',
+        icon: Icons.add,
+        scroll: scrollCtrl,
       ),
     );
   }

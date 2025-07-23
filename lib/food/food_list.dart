@@ -16,35 +16,35 @@ class FoodList extends StatefulWidget {
     required this.selected,
     required this.onSelect,
     required this.onNext,
+    required this.ctrl,
   });
 
   final List<FoodsCompanion> foods;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
+  final ScrollController ctrl;
 
   @override
   State<FoodList> createState() => _FoodListState();
 }
 
 class _FoodListState extends State<FoodList> {
-  final ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_scrollListener);
+    widget.ctrl.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
     super.dispose();
-    scrollController.removeListener(_scrollListener);
+    widget.ctrl.removeListener(_scrollListener);
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels <
-        scrollController.position.maxScrollExtent - 200) return;
+    if (widget.ctrl.position.pixels <
+        widget.ctrl.position.maxScrollExtent - 200) return;
     widget.onNext();
   }
 
@@ -53,7 +53,7 @@ class _FoodListState extends State<FoodList> {
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8),
-        controller: scrollController,
+        controller: widget.ctrl,
         itemCount: widget.foods.length,
         itemBuilder: (context, index) {
           final food = widget.foods[index];

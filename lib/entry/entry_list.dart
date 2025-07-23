@@ -20,9 +20,11 @@ class EntryList extends StatefulWidget {
     required this.selected,
     required this.onSelect,
     required this.onNext,
+    required this.ctrl,
   });
 
   final List<EntryFood> entryFoods;
+  final ScrollController ctrl;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
@@ -32,23 +34,21 @@ class EntryList extends StatefulWidget {
 }
 
 class _EntryListState extends State<EntryList> {
-  final ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_scrollListener);
+    widget.ctrl.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
     super.dispose();
-    scrollController.removeListener(_scrollListener);
+    widget.ctrl.removeListener(_scrollListener);
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels <
-        scrollController.position.maxScrollExtent - 200) return;
+    if (widget.ctrl.position.pixels <
+        widget.ctrl.position.maxScrollExtent - 200) return;
     widget.onNext();
   }
 
@@ -82,7 +82,7 @@ class _EntryListState extends State<EntryList> {
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8),
-        controller: scrollController,
+        controller: widget.ctrl,
         itemCount: widget.entryFoods.length,
         itemBuilder: (context, index) {
           final entryFood = widget.entryFoods[index];

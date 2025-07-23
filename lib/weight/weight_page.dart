@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -19,6 +20,8 @@ class WeightPageState extends State<WeightPage>
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final TextEditingController searchController = TextEditingController();
+  final ScrollController scrollCtrl = ScrollController();
+
   String search = '';
   int limit = 100;
   late Stream<List<Weight>> stream;
@@ -130,6 +133,7 @@ class WeightPageState extends State<WeightPage>
                   ),
                 ),
               WeightList(
+                ctrl: scrollCtrl,
                 weights: weights,
                 selected: selected,
                 onSelect: (id) {
@@ -160,8 +164,8 @@ class WeightPageState extends State<WeightPage>
         builder: (context, snapshot) {
           if (snapshot.hasError) throw Exception(snapshot.error);
 
-          return FloatingActionButton(
-            onPressed: () async {
+          return AnimatedFab(
+            onTap: () async {
               var weight = WeightsCompanion.insert(
                 amount: 0.0,
                 created: DateTime.now(),
@@ -181,8 +185,9 @@ class WeightPageState extends State<WeightPage>
                 ),
               );
             },
-            tooltip: 'Add',
-            child: const Icon(Icons.add),
+            label: 'Add',
+            icon: Icons.add,
+            scroll: scrollCtrl,
           );
         },
       ),

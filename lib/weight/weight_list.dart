@@ -15,31 +15,32 @@ class WeightList extends StatefulWidget {
     required this.selected,
     required this.onSelect,
     required this.onNext,
+    required this.ctrl,
   });
 
   final List<Weight> weights;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
+  final ScrollController ctrl;
 
   @override
   State<WeightList> createState() => _WeightListState();
 }
 
 class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
-  final ScrollController scrollController = ScrollController();
   var now = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_scrollListener);
+    widget.ctrl.addListener(_scrollListener);
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    scrollController.removeListener(_scrollListener);
+    widget.ctrl.removeListener(_scrollListener);
     WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
@@ -55,8 +56,8 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels <
-        scrollController.position.maxScrollExtent - 200) return;
+    if (widget.ctrl.position.pixels <
+        widget.ctrl.position.maxScrollExtent - 200) return;
     widget.onNext();
   }
 
@@ -67,7 +68,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8),
-        controller: scrollController,
+        controller: widget.ctrl,
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {
           final weight = widget.weights[index];

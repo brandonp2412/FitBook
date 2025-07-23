@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
@@ -25,6 +26,8 @@ class GraphPageState extends State<GraphPage>
   Period groupBy = Period.day;
   DateTime? startDate;
   DateTime? endDate;
+
+  final ScrollController scrollCtrl = ScrollController();
 
   @override
   void initState() {
@@ -58,6 +61,7 @@ class GraphPageState extends State<GraphPage>
         padding: const EdgeInsets.all(16),
         child: ListView(
           shrinkWrap: true,
+          controller: scrollCtrl,
           children: [
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
@@ -205,8 +209,8 @@ class GraphPageState extends State<GraphPage>
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
+      floatingActionButton: AnimatedFab(
+        onTap: () {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
@@ -215,8 +219,9 @@ class GraphPageState extends State<GraphPage>
               )
               .then((_) => setState(() {}));
         },
-        label: Text("Fields"),
-        icon: Icon(Icons.settings),
+        label: "Fields",
+        icon: Icons.settings,
+        scroll: scrollCtrl,
       ),
     );
   }

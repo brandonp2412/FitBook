@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/entry/edit_entries_page.dart';
@@ -22,6 +23,7 @@ class DiaryPageState extends State<DiaryPage> {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+  final ScrollController scrollCtrl = ScrollController();
   late var entriesState = context.read<EntryState>();
   late final TextEditingController searchController =
       TextEditingController(text: entriesState.search);
@@ -120,6 +122,7 @@ class DiaryPageState extends State<DiaryPage> {
                   ),
                 ),
               EntryList(
+                ctrl: scrollCtrl,
                 entryFoods: entryFoods,
                 selected: selected,
                 onSelect: (id) {
@@ -140,16 +143,17 @@ class DiaryPageState extends State<DiaryPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+      floatingActionButton: AnimatedFab(
+        onTap: () async {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => const EditEntryPage(),
             ),
           );
         },
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
+        label: 'Add',
+        icon: Icons.add,
+        scroll: scrollCtrl,
       ),
     );
   }

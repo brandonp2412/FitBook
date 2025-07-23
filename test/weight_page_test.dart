@@ -181,7 +181,7 @@ void main() async {
       await tester.pumpAndSettle();
 
       expect(find.text('No weights found'), findsOne);
-      await tester.tap(find.byTooltip('Add'));
+      await tester.tap(find.text('Add'));
       await tester.pumpAndSettle();
       expect(find.text('Add weight'), findsOne);
       await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
