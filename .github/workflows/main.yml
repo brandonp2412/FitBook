@@ -7,7 +7,6 @@ on:
       - "pubspec.yaml"
       - "fastlane/metadata/**"
       - "assets/changelogs/**"
-  workflow_dispatch:
 
 # Add permissions for GitHub Pages
 permissions:
@@ -37,7 +36,8 @@ jobs:
 
       - name: Install yq
         run: |
-          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo wget -qO /usr/local/bin/yq 
+            https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
 
       - name: Calculate new version
@@ -140,8 +140,10 @@ jobs:
 
       - name: Update versions in pubspec.yaml
         run: |
-          yq e ".version |= \"${{ steps.version.outputs.flutter_version }}\"" -i pubspec.yaml
-          yq e ".msix_config.msix_version |= \"${{ steps.version.outputs.msix_version }}\"" -i pubspec.yaml
+          yq e ".version |= \"${{ steps.version.outputs.flutter_version }}\"" 
+            -i pubspec.yaml
+          yq e ".msix_config.msix_version |= \"${{ steps.version.outputs.msix_version }}\"" 
+            -i pubspec.yaml
 
       - name: Copy changelogs with timestamps
         run: |
@@ -181,7 +183,8 @@ jobs:
 
       - name: Enable KVM group perms
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | 
+            sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
@@ -199,7 +202,9 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            flutter drive --profile --driver=test_driver/integration_test.dart --target=integration_test/screenshot_test.dart --dart-define=FLEXIFY_DEVICE_TYPE=phoneScreenshots -d emulator-5554
+            flutter drive --profile --driver=test_driver/integration_test.dart 
+              --target=integration_test/screenshot_test.dart 
+              --dart-define=FLEXIFY_DEVICE_TYPE=phoneScreenshots -d emulator-5554
 
       - name: Commit version bump, screenshots and create tag
         if: ${{ env.ACT != 'true' }}
@@ -262,7 +267,8 @@ jobs:
           echo "storeFile=keystore.jks" >> android/key.properties
           flutter build apk --split-per-abi
           flutter build apk
-          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/fitbook.apk
+          mv build/app/outputs/flutter-apk/app-release.apk 
+            build/app/outputs/flutter-apk/fitbook.apk
           flutter build appbundle
           mkdir -p "${GITHUB_WORKSPACE}/build"
           mv build/* "${GITHUB_WORKSPACE}/build"
@@ -299,7 +305,9 @@ jobs:
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+          sudo apt-get install -y clang cmake 
+            ninja-build pkg-config libgtk-3-dev liblzma-dev 
+            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
       - name: Build Linux
         run: flutter build linux
@@ -340,7 +348,8 @@ jobs:
 
       - name: Create Windows zip
         run: |
-          Compress-Archive -Path ./build/windows/x64/runner/Release/* -DestinationPath ./fitbook-windows.zip
+          Compress-Archive -Path ./build/windows/x64/runner/Release/* 
+            -DestinationPath ./fitbook-windows.zip
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
@@ -378,7 +387,8 @@ jobs:
 
       - name: Build Flutter web
         run: |
-          flutter build web --release --base-href /${{ github.event.repository.name }}/
+          flutter build web --release 
+            --base-href /${{ github.event.repository.name }}/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -432,7 +442,8 @@ jobs:
         run: |
           git submodule update --init --recursive flutter
           chmod +x flutter/bin/*
-          echo "${{ github.workspace }}\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "${{ github.workspace }}\flutter\bin" | Out-File 
+            -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           flutter\bin\flutter config --no-analytics
 
       - name: Get Flutter dependencies
@@ -451,12 +462,16 @@ jobs:
 
       - name: Configure Microsoft Store CLI
         run: |
-          msstore reconfigure --tenantId ${{ secrets.AZURE_TENANT_ID }} --clientId ${{ secrets.AZURE_CLIENT_ID }} --clientSecret ${{ secrets.AZURE_CLIENT_SECRET }} --sellerId ${{ secrets.MSSTORE_SELLER_ID }}
+          msstore reconfigure --tenantId ${{ secrets.AZURE_TENANT_ID }} 
+            --clientId ${{ secrets.AZURE_CLIENT_ID }} 
+            --clientSecret ${{ secrets.AZURE_CLIENT_SECRET }} 
+            --sellerId ${{ secrets.MSSTORE_SELLER_ID }}
 
       - name: Publish to Microsoft Store
         if: ${{ env.ACT != 'true' }}
         run: |
-          msstore publish build/windows/x64/runner/Release/fitbook.msix --inputDirectory build/windows/x64/runner/Release --appId ${{ secrets.PRODUCT_ID }}
+          msstore publish build/windows/x64/runner/Release/fitbook.msix 
+            --inputDirectory build/windows/x64/runner/Release --appId ${{ secrets.PRODUCT_ID }}
 
   deploy-google-play:
     needs: [build-android]
