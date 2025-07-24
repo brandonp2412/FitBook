@@ -7,6 +7,7 @@ on:
       - "pubspec.yaml"
       - "fastlane/metadata/**"
       - "assets/changelogs/**"
+  workflow_dispatch:
 
 # Add permissions for GitHub Pages
 permissions:
