@@ -128,7 +128,6 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
           flutter/bin/flutter config --no-analytics
 
@@ -242,7 +241,6 @@ jobs:
         working-directory: /home/brandon/fitbook
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "/home/brandon/fitbook/flutter/bin" >> $GITHUB_PATH
           export PUB_CACHE=$(pwd)/.pub-cache
           flutter/bin/flutter config --no-analytics
@@ -289,7 +287,6 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
           flutter/bin/flutter config --no-analytics
 
@@ -328,7 +325,6 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "${{ github.workspace }}\flutter\bin" >> $env:GITHUB_PATH
           flutter\bin\flutter config --no-analytics
 
@@ -366,7 +362,6 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
           flutter/bin/flutter config --no-analytics
 
@@ -431,7 +426,6 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
           echo "${{ github.workspace }}\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           flutter\bin\flutter config --no-analytics
 
