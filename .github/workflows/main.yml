@@ -450,7 +450,7 @@ jobs:
       - name: Publish to Microsoft Store
         if: ${{ env.ACT != 'true' }}
         run: |
-          msstore publish build/windows/x64/runner/Release/fitbook.msix --inputDirectory build/windows/x64/runner/Release --appId ${{ secrets.PRODUCT_ID }}
+          msstore publish --inputDirectory build/windows/x64/runner/Release --appId ${{ secrets.PRODUCT_ID }}
 
   deploy-google-play:
     needs: [build-android]
