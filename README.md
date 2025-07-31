@@ -10,7 +10,7 @@ Graph your eating habits with ease!
 ## Features
 
 - 📈 **Graphs**: Plot your diet macros over time.
-- 🍏 **Foods**: FitBook ships with over 14 thousand foods (sourced from [MyFoodData](https://tools.myfooddata.com/nutrition-facts-database-spreadsheet.php)).
+- 🍏 **Foods**: FitBook ships with over 7 thousand foods (sourced from the [CORGIS Dataset Project](https://corgis-edu.github.io/corgis/csv/food/)).
 - 📵 **Offline**: Log your meals and snacks with ease, even without an internet connection.
 - 🍇 **OpenFoodFacts**: Scan barcodes & search for foods with [OpenFoodFacts](https://world.openfoodfacts.org/).
 
