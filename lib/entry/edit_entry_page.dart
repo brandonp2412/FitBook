@@ -274,6 +274,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     );
 
     setState(() {
+      nameController?.text = food.name;
       barcode.text = food.barcode ?? '';
       calories.text =
           result.calories != null ? formatter.format(result.calories!) : "0";
@@ -490,41 +491,28 @@ class _EditEntryPageState extends State<EditEntryPage> {
             if (kIsWeb)
               const SizedBox.shrink()
             else
-              ScanBarcode(
-                text: true,
-                value: barcode.text,
-                onBarcode: (value) {
-                  setState(() {
-                    barcode.text = value;
-                    foodDirty = true;
-                  });
-                  toast(context, 'Barcode not found. Save to insert.');
-                },
-                onFood: (food) {
-                  setState(() {
-                    imageFile = food.imageFile;
-                    barcode.text = food.barcode ?? "";
-                    nameController?.text = food.name;
-                    selectedFood = food;
-                    protein.text = food.proteinG != null
-                        ? formatter.format(food.proteinG!)
-                        : "0";
-                    carb.text = food.carbohydrateG != null
-                        ? formatter.format(food.carbohydrateG!)
-                        : "0";
-                    fat.text =
-                        food.fatG != null ? formatter.format(food.fatG!) : "0";
-                    fiber.text = food.fiberG != null
-                        ? formatter.format(food.fiberG!)
-                        : "0";
-                    kilojoules.text = food.calories == null
-                        ? '0'
-                        : formatter.format(food.calories! * 4.184);
-                    calories.text = food.calories != null
-                        ? formatter.format(food.calories!)
-                        : "0";
-                  });
-                },
+              TextField(
+                controller: barcode,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  labelText: 'Barcode',
+                  suffixIcon: ScanBarcode(
+                    text: true,
+                    value: barcode.text,
+                    onBarcode: (value) {
+                      barcode.text = value;
+                      toast(context, 'Barcode not found. Save to insert.');
+                    },
+                    onFood: (food) {
+                      barcode.text = food.barcode!;
+                      setState(() {
+                        selectedFood = food;
+                      });
+                      recalc();
+                    },
+                  ),
+                ),
               ),
             const SizedBox(height: 8),
             Row(
@@ -658,16 +646,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
-            if (kIsWeb)
-              const SizedBox.shrink()
-            else
-              TextField(
-                controller: barcode,
-                decoration: const InputDecoration(
-                  labelText: 'Barcode',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                ),
-              ),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 8),
               kIsWeb
