@@ -30,14 +30,14 @@ class PickedFood {
 }
 
 class _MealPageState extends State<MealPage> {
-  final TextEditingController searchController = TextEditingController();
-  final TextEditingController servingSizeGtController = TextEditingController();
-  final TextEditingController servingSizeLtController = TextEditingController();
-  final TextEditingController quantityController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final searchCtrl = TextEditingController();
+  final greaterCtrl = TextEditingController();
+  final lessCtrl = TextEditingController();
+  final quantityCtrl = TextEditingController();
+  final nameCtrl = TextEditingController();
+  final groupCtrl = TextEditingController();
 
   String? unit;
-  String? groupFilter;
   String? unitFilter;
   FoodsCompanion? selectedFood;
   List<PickedFood> pickedFoods = [];
@@ -75,24 +75,23 @@ class _MealPageState extends State<MealPage> {
       ])
       ..limit(100));
 
-    if (searchController.text.isNotEmpty)
+    if (searchCtrl.text.isNotEmpty)
       query = query
-        ..where(db.foods.name.contains(searchController.text.toLowerCase()));
-    if (groupFilter != null)
-      query = query..where(db.foods.foodGroup.equals(groupFilter!));
+        ..where(db.foods.name.contains(searchCtrl.text.toLowerCase()));
+    if (groupCtrl.text.isNotEmpty)
+      query = query..where(db.foods.foodGroup.like(groupCtrl.text));
     if (unitFilter != null)
       query = query..where(db.foods.servingUnit.equals(unitFilter!));
-    if (servingSizeGtController.text.isNotEmpty)
+    if (greaterCtrl.text.isNotEmpty)
       query = query
         ..where(
           db.foods.servingSize
-              .isBiggerThanValue(double.parse(servingSizeGtController.text)),
+              .isBiggerThanValue(double.parse(greaterCtrl.text)),
         );
-    if (servingSizeLtController.text.isNotEmpty)
+    if (lessCtrl.text.isNotEmpty)
       query = query
         ..where(
-          db.foods.servingSize
-              .isSmallerThanValue(double.parse(servingSizeLtController.text)),
+          db.foods.servingSize.isSmallerThanValue(double.parse(lessCtrl.text)),
         );
     if (showPicked)
       query = query..where(db.foods.id.isIn(pickedFoods.map((p) => p.id)));
@@ -126,12 +125,12 @@ class _MealPageState extends State<MealPage> {
     if (pickedIndex == -1)
       return setState(() {
         unit = 'serving';
-        quantityController.text = '1';
+        quantityCtrl.text = '1';
       });
 
     final picked = pickedFoods[pickedIndex];
     setState(() {
-      quantityController.text = picked.quantity.toString();
+      quantityCtrl.text = picked.quantity.toString();
       unit = picked.unit;
     });
   }
@@ -151,27 +150,27 @@ class _MealPageState extends State<MealPage> {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
               decoration: InputDecoration(labelText: 'Name'),
-              controller: nameController,
+              controller: nameCtrl,
               onChanged: (_) => setState(() {}),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: SearchBar(
-              controller: searchController,
+              controller: searchCtrl,
               padding: WidgetStateProperty.all(
                 const EdgeInsets.only(right: 8.0),
               ),
               hintText: 'Search...',
               onChanged: (value) => setStream(),
-              leading: searchController.text.isEmpty == true
+              leading: searchCtrl.text.isEmpty == true
                   ? const Padding(
                       padding: EdgeInsets.only(left: 16.0, right: 8.0),
                       child: Icon(Icons.search),
                     )
                   : IconButton(
                       onPressed: () {
-                        searchController.text = '';
+                        searchCtrl.text = '';
                         setStream();
                       },
                       icon: const Icon(Icons.arrow_back),
@@ -195,15 +194,15 @@ class _MealPageState extends State<MealPage> {
                       : Icon(Icons.visibility),
                 ),
                 FoodFilters(
+                  groupCtrl: groupCtrl,
                   onChange: ({foodGroup, servingUnit}) {
                     setState(() {
-                      groupFilter = foodGroup;
                       unitFilter = servingUnit;
                     });
                     setStream();
                   },
-                  servingSizeGtController: servingSizeGtController,
-                  servingSizeLtController: servingSizeLtController,
+                  servingSizeGtController: greaterCtrl,
+                  servingSizeLtController: lessCtrl,
                   servingUnit: unitFilter,
                 ),
               ],
@@ -246,8 +245,8 @@ class _MealPageState extends State<MealPage> {
                                 .indexWhere((f) => f.id == food.id.value) !=
                             -1,
                         onChanged: (value) {
-                          if (nameController.text.isEmpty)
-                            nameController.text = food.name.value;
+                          if (nameCtrl.text.isEmpty)
+                            nameCtrl.text = food.name.value;
                           setState(() {
                             if (value == true) {
                               pickedFoods.add(
@@ -275,9 +274,9 @@ class _MealPageState extends State<MealPage> {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
               enabled: selectedFood != null,
-              controller: quantityController,
+              controller: quantityCtrl,
               textInputAction: TextInputAction.next,
-              onTap: () => selectAll(quantityController),
+              onTap: () => selectAll(quantityCtrl),
               onChanged: (value) {
                 final index = pickedFoods
                     .indexWhere((f) => f.id == selectedFood?.id.value);
@@ -321,11 +320,10 @@ class _MealPageState extends State<MealPage> {
         ],
       ),
       floatingActionButton: AnimatedScale(
-        scale:
-            nameController.text.isNotEmpty && pickedFoods.isNotEmpty ? 1.0 : 0,
+        scale: nameCtrl.text.isNotEmpty && pickedFoods.isNotEmpty ? 1.0 : 0,
         duration: const Duration(milliseconds: 150),
         child: Visibility(
-          visible: nameController.text.isNotEmpty && pickedFoods.isNotEmpty,
+          visible: nameCtrl.text.isNotEmpty && pickedFoods.isNotEmpty,
           child: FloatingActionButton.extended(
             onPressed: () async {
               final columns = db.foods.$columns
@@ -354,7 +352,7 @@ class _MealPageState extends State<MealPage> {
 
               await (db.foods.insertOne(
                 RawValuesInsertable({
-                  "name": Variable(nameController.text),
+                  "name": Variable(nameCtrl.text),
                   "created": Variable(DateTime.now()),
                   "favorite": Variable(settings.favoriteNew),
                   "serving_unit": Variable("serving"),

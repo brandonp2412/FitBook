@@ -226,7 +226,7 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
       return (tester.state(find.byType(GraphPage)) as GraphPageState).context;
     case TabBarState.foods:
       return (tester.state(find.byType(FoodPage)) as FoodPageState)
-          .navigatorKey
+          .navKey
           .currentContext!;
     case null:
       break;

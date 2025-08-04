@@ -14,6 +14,136 @@ class EntryFilters extends StatefulWidget {
 }
 
 class _EntryFiltersState extends State<EntryFilters> {
+  void _showFiltersDialog() {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Filters'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Food group',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    isDense: true,
+                    hintText: 'Fruit',
+                  ),
+                  initialValue: context.read<EntryState>().foodGroup,
+                  onFieldSubmitted: (value) {
+                    context.read<EntryState>().foodGroup =
+                        value.isNotEmpty ? value : null;
+                    Navigator.of(dialogContext).pop();
+                  },
+                  onEditingComplete: () {},
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Start date filter
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Start date'),
+                subtitle: Consumer<SettingsState>(
+                  builder: (context, settingsState, child) {
+                    final state = context.watch<EntryState>();
+                    final shortDateFormat = settingsState.value.shortDateFormat;
+                    return state.startDate != null
+                        ? Text(
+                            DateFormat(shortDateFormat)
+                                .format(state.startDate!),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Text(
+                            shortDateFormat,
+                            overflow: TextOverflow.ellipsis,
+                          );
+                  },
+                ),
+                onLongPress: () {
+                  context.read<EntryState>().startDate = null;
+                },
+                leading: const Icon(Icons.calendar_today),
+                onTap: () async {
+                  final DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: context.read<EntryState>().startDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+
+                  if (pickedDate != null && mounted) {
+                    context.read<EntryState>().startDate = pickedDate.toLocal();
+                  }
+                },
+              ),
+
+              // End date filter
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Stop date'),
+                subtitle: Consumer<SettingsState>(
+                  builder: (context, settingsState, child) {
+                    final state = context.watch<EntryState>();
+                    final shortDateFormat = settingsState.value.shortDateFormat;
+                    return state.endDate != null
+                        ? Text(
+                            DateFormat(shortDateFormat).format(state.endDate!),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Text(
+                            shortDateFormat,
+                            overflow: TextOverflow.ellipsis,
+                          );
+                  },
+                ),
+                onLongPress: () {
+                  context.read<EntryState>().endDate = null;
+                },
+                leading: const Icon(Icons.calendar_today),
+                onTap: () async {
+                  final DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: context.read<EntryState>().endDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+
+                  if (pickedDate != null && mounted) {
+                    context.read<EntryState>().endDate = pickedDate.toLocal();
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.read<EntryState>().clear();
+              Navigator.of(dialogContext).pop();
+            },
+            child: Consumer<EntryState>(
+              builder: (context, state, child) => Text(
+                "Clear (${state.filterCount})",
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Done'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = context.watch<EntryState>();
@@ -22,118 +152,10 @@ class _EntryFiltersState extends State<EntryFilters> {
       count: state.filterCount,
       backgroundColor: Theme.of(context).colorScheme.primary,
       isLabelVisible: state.filterCount > 0,
-      child: PopupMenuButton(
+      child: IconButton(
         icon: const Icon(Icons.filter_list),
         tooltip: 'Show filters',
-        constraints: const BoxConstraints(
-          minWidth: 220,
-          maxWidth: 220,
-        ),
-        itemBuilder: (popupContext) => [
-          PopupMenuItem(
-            child: Container(
-              width: 200,
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Food group',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  isDense: true,
-                  hintText: 'Fruit',
-                ),
-                initialValue: state.foodGroup,
-                onFieldSubmitted: (value) {
-                  state.foodGroup = value.isNotEmpty ? value : null;
-                  Navigator.pop(popupContext);
-                },
-                onEditingComplete: () {
-                  // This prevents the default behavior and lets onFieldSubmitted handle it
-                },
-              ),
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              title: const Text('Start date'),
-              subtitle: Selector<SettingsState, String>(
-                selector: (p0, settings) => settings.value.shortDateFormat,
-                builder: (context, shortDateFormat, child) => state.startDate !=
-                        null
-                    ? Text(
-                        DateFormat(shortDateFormat).format(state.startDate!),
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : Text(
-                        shortDateFormat,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-              ),
-              onLongPress: () {
-                state.startDate = null;
-                Navigator.pop(popupContext);
-              },
-              leading: const Icon(Icons.calendar_today),
-              onTap: () async {
-                Navigator.pop(popupContext);
-                final DateTime? pickedDate = await showDatePicker(
-                  context: popupContext,
-                  initialDate: state.startDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                );
-
-                if (pickedDate != null) state.startDate = pickedDate.toLocal();
-              },
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              title: const Text('Stop date'),
-              subtitle: Selector<SettingsState, String>(
-                selector: (p0, settings) => settings.value.shortDateFormat,
-                builder: (context, shortDateFormat, child) =>
-                    state.endDate != null
-                        ? Text(
-                            DateFormat(shortDateFormat).format(state.endDate!),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Text(
-                            shortDateFormat,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-              ),
-              onLongPress: () {
-                state.endDate = null;
-                Navigator.pop(popupContext);
-              },
-              leading: const Icon(Icons.calendar_today),
-              onTap: () async {
-                Navigator.pop(popupContext);
-                final DateTime? pickedDate = await showDatePicker(
-                  context: popupContext,
-                  initialDate: state.endDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                );
-
-                if (pickedDate != null) state.endDate = pickedDate.toLocal();
-              },
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              leading: const Icon(Icons.clear_all),
-              title: Text(
-                "Clear (${state.filterCount})",
-                overflow: TextOverflow.ellipsis,
-              ),
-              onTap: () {
-                state.clear();
-                Navigator.pop(popupContext);
-              },
-            ),
-          ),
-        ],
+        onPressed: _showFiltersDialog,
       ),
     );
   }

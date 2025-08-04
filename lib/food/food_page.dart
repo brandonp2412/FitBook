@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/entry/entry_state.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_foods_page.dart';
 import 'package:fit_book/food/food_filters.dart';
@@ -9,6 +10,7 @@ import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
@@ -20,22 +22,25 @@ class FoodPage extends StatefulWidget {
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   late Stream<List<TypedResult>> stream;
 
-  final TextEditingController searchController = TextEditingController();
-  final TextEditingController servingSizeGtController = TextEditingController();
-  final TextEditingController servingSizeLtController = TextEditingController();
+  final TextEditingController searchCtrl = TextEditingController();
+  final groupCtrl = TextEditingController();
+  final TextEditingController gtController = TextEditingController();
+  final TextEditingController ltController = TextEditingController();
   final Set<int> selected = {};
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
   final ScrollController scrollCtrl = ScrollController();
 
   String search = '';
   int limit = 100;
 
-  String? _foodGroup;
   String? _servingUnit;
 
   @override
   void initState() {
     super.initState();
+
+    final state = context.read<EntryState>();
+    groupCtrl.text = state.foodGroup ?? "";
     setStream();
   }
 
@@ -88,21 +93,21 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           ),
         ]);
     }
-    if (_foodGroup != null)
-      query = query..where(db.foods.foodGroup.equals(_foodGroup!));
+    if (groupCtrl.text.isNotEmpty)
+      query = query..where(db.foods.foodGroup.like(groupCtrl.text));
     if (_servingUnit != null)
       query = query..where(db.foods.servingUnit.equals(_servingUnit!));
-    if (servingSizeGtController.text.isNotEmpty)
+    if (gtController.text.isNotEmpty)
       query = query
         ..where(
           db.foods.servingSize
-              .isBiggerThanValue(double.parse(servingSizeGtController.text)),
+              .isBiggerThanValue(double.parse(gtController.text)),
         );
-    if (servingSizeLtController.text.isNotEmpty)
+    if (ltController.text.isNotEmpty)
       query = query
         ..where(
           db.foods.servingSize
-              .isSmallerThanValue(double.parse(servingSizeLtController.text)),
+              .isSmallerThanValue(double.parse(ltController.text)),
         );
 
     setState(() {
@@ -130,12 +135,12 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
     super.build(context);
     return NavigatorPopHandler(
       onPopWithResult: (result) {
-        if (navigatorKey.currentState!.canPop() == false) return;
-        if (navigatorKey.currentState?.focusNode.hasFocus == false) return;
-        navigatorKey.currentState!.pop();
+        if (navKey.currentState!.canPop() == false) return;
+        if (navKey.currentState?.focusNode.hasFocus == false) return;
+        navKey.currentState!.pop();
       },
       child: Navigator(
-        key: navigatorKey,
+        key: navKey,
         onGenerateRoute: (settings) => MaterialPageRoute(
           builder: (context) => _foodsPage(),
           settings: settings,
@@ -155,7 +160,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           return material.Column(
             children: [
               AppSearch(
-                ctrl: searchController,
+                ctrl: searchCtrl,
                 onChange: (value) {
                   setState(() {
                     search = value;
@@ -163,17 +168,16 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                   setStream();
                 },
                 filter: FoodFilters(
-                  foodGroup: _foodGroup,
+                  groupCtrl: groupCtrl,
                   servingUnit: _servingUnit,
-                  servingSizeGtController: servingSizeGtController,
-                  servingSizeLtController: servingSizeLtController,
+                  servingSizeGtController: gtController,
+                  servingSizeLtController: ltController,
                   onChange: ({
                     foodGroup,
                     servingUnit,
                   }) {
                     setState(() {
                       limit = 100;
-                      _foodGroup = foodGroup;
                       _servingUnit = servingUnit;
                     });
                     setStream();
@@ -260,7 +264,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       ),
       floatingActionButton: AnimatedFab(
         onTap: () async {
-          navigatorKey.currentState!.push(
+          navKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => const EditFoodPage(),
             ),

@@ -1,21 +1,19 @@
-import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
-import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
 class FoodFilters extends StatefulWidget {
   const FoodFilters({
     super.key,
-    this.foodGroup,
     this.servingUnit,
+    required this.groupCtrl,
     required this.onChange,
     required this.servingSizeGtController,
     required this.servingSizeLtController,
   });
 
-  final String? foodGroup;
   final String? servingUnit;
+  final TextEditingController groupCtrl;
   final TextEditingController servingSizeGtController;
   final TextEditingController servingSizeLtController;
   final Function({
@@ -28,16 +26,8 @@ class FoodFilters extends StatefulWidget {
 }
 
 class _FoodFiltersState extends State<FoodFilters> {
-  late final groupStream = (db.foods.selectOnly(distinct: true)
-        ..orderBy([
-          OrderingTerm(expression: db.foods.foodGroup),
-        ])
-        ..where(db.foods.foodGroup.isNotNull())
-        ..addColumns([db.foods.foodGroup]))
-      .watch();
-
   int get filterCount =>
-      (widget.foodGroup?.isNotEmpty == true ? 1 : 0) +
+      (widget.groupCtrl.text.isNotEmpty == true ? 1 : 0) +
       (widget.servingSizeGtController.text.isNotEmpty ? 1 : 0) +
       (widget.servingSizeLtController.text.isNotEmpty ? 1 : 0) +
       (widget.servingUnit?.isNotEmpty == true ? 1 : 0);
@@ -51,33 +41,26 @@ class _FoodFiltersState extends State<FoodFilters> {
           child: material.Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              StreamBuilder(
-                stream: groupStream,
-                builder: (context, snapshot) {
-                  return DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Food group',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    ),
-                    value: widget.foodGroup,
-                    items: snapshot.data
-                        ?.map(
-                          (result) => DropdownMenuItem(
-                            value: result.read(db.foods.foodGroup)!,
-                            child: Text(
-                              result.read(db.foods.foodGroup)!,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      widget.onChange(
-                        foodGroup: value,
-                        servingUnit: widget.servingUnit,
-                      );
-                    },
-                  );
-                },
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  controller: widget.groupCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Food group',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    isDense: true,
+                    hintText: 'Fruit',
+                  ),
+                  onFieldSubmitted: (value) {
+                    widget.onChange(
+                      foodGroup: value,
+                      servingUnit: widget.servingUnit,
+                    );
+                    Navigator.of(dialogContext).pop();
+                  },
+                  onEditingComplete: () {},
+                ),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -94,7 +77,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   widget.onChange(
-                    foodGroup: widget.foodGroup,
+                    foodGroup: widget.groupCtrl.text,
                     servingUnit: newValue,
                   );
                 },
@@ -106,7 +89,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                     child: TextField(
                       controller: widget.servingSizeGtController,
                       onChanged: (value) => widget.onChange(
-                        foodGroup: widget.foodGroup,
+                        foodGroup: widget.groupCtrl.text,
                         servingUnit: widget.servingUnit,
                       ),
                       decoration: const InputDecoration(
@@ -120,7 +103,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                     child: TextField(
                       controller: widget.servingSizeLtController,
                       onChanged: (value) => widget.onChange(
-                        foodGroup: widget.foodGroup,
+                        foodGroup: widget.groupCtrl.text,
                         servingUnit: widget.servingUnit,
                       ),
                       decoration: const InputDecoration(
@@ -139,10 +122,12 @@ class _FoodFiltersState extends State<FoodFilters> {
             onPressed: () {
               widget.servingSizeGtController.clear();
               widget.servingSizeLtController.clear();
+              widget.groupCtrl.clear();
               widget.onChange(
                 foodGroup: null,
                 servingUnit: null,
               );
+              Navigator.of(dialogContext).pop();
             },
             child: const Text('Clear All'),
           ),
