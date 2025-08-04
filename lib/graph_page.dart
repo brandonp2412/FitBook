@@ -24,8 +24,8 @@ class GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
   String metric = 'calories';
   Period groupBy = Period.day;
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime? start;
+  DateTime? end;
 
   final ScrollController scrollCtrl = ScrollController();
 
@@ -138,16 +138,15 @@ class GraphPageState extends State<GraphPage>
                 Expanded(
                   child: ListTile(
                     title: const Text('Start date'),
-                    subtitle: startDate != null
+                    subtitle: start != null
                         ? Text(
-                            DateFormat(settings.shortDateFormat)
-                                .format(startDate!),
+                            DateFormat(settings.shortDateFormat).format(start!),
                           )
                         : Text(
                             settings.shortDateFormat,
                           ),
                     onLongPress: () => setState(() {
-                      startDate = null;
+                      start = null;
                     }),
                     trailing: const Icon(Icons.calendar_today),
                     onTap: () => _selectStart(),
@@ -156,14 +155,13 @@ class GraphPageState extends State<GraphPage>
                 Expanded(
                   child: ListTile(
                     title: const Text('Stop date'),
-                    subtitle: endDate != null
+                    subtitle: end != null
                         ? Text(
-                            DateFormat(settings.shortDateFormat)
-                                .format(endDate!),
+                            DateFormat(settings.shortDateFormat).format(end!),
                           )
                         : Text(settings.shortDateFormat),
                     onLongPress: () => setState(() {
-                      endDate = null;
+                      end = null;
                     }),
                     trailing: const Icon(Icons.calendar_today),
                     onTap: () => _selectEnd(),
@@ -202,8 +200,8 @@ class GraphPageState extends State<GraphPage>
             AppLine(
               metric: metric,
               groupBy: groupBy,
-              startDate: startDate,
-              endDate: endDate,
+              start: start,
+              end: end,
             ),
             const SizedBox(height: 72),
           ],
@@ -229,28 +227,28 @@ class GraphPageState extends State<GraphPage>
   Future<void> _selectEnd() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: endDate,
+      initialDate: end,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
     if (pickedDate != null)
       setState(() {
-        endDate = pickedDate.toLocal();
+        end = pickedDate.toLocal();
       });
   }
 
   Future<void> _selectStart() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: startDate,
+      initialDate: start,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
     if (pickedDate != null)
       setState(() {
-        startDate = pickedDate.toLocal();
+        start = pickedDate.toLocal();
       });
   }
 }

@@ -166,7 +166,7 @@ class AppDatabase extends _$AppDatabase {
       bool selectEntryOnSubmit = false;
       bool notifications = false;
 
-      int? dailyCalories;
+      int? dailyCals;
       int? dailyProtein;
       int? dailyFat;
       int? dailyCarbs;
@@ -186,7 +186,7 @@ class AppDatabase extends _$AppDatabase {
           "select_entry_on_submit": Variable(selectEntryOnSubmit),
           "show_others": Variable(showOthers),
           "system_colors": Variable(systemColors),
-          "daily_calories": Variable(dailyCalories),
+          "daily_calories": Variable(dailyCals),
           "daily_carb": Variable(dailyCarbs),
           "daily_fat": Variable(dailyFat),
           "daily_protein": Variable(dailyProtein),

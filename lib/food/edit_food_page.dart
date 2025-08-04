@@ -27,14 +27,14 @@ class EditFoodPage extends StatefulWidget {
 
 class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
-  late String servingUnit;
-  String? imageFile;
+  late String unit;
+  String? imgFile;
   final formatter = NumberFormat('#,##0.00');
-  final caloriesController = TextEditingController(text: "0");
-  final barcodeController = TextEditingController();
-  final nameController = TextEditingController();
-  final kilojoulesController = TextEditingController(text: "0");
-  final servingSizeController = TextEditingController(text: "1");
+  final calCtrl = TextEditingController(text: "0");
+  final barcodeCtrl = TextEditingController();
+  final nameCtrl = TextEditingController();
+  final kjCtrl = TextEditingController(text: "0");
+  final sizeCtrl = TextEditingController(text: "1");
   late SettingsState settingsState;
 
   Map<String, TextEditingController> controllers = {};
@@ -44,13 +44,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
     super.initState();
     settingsState = context.read<SettingsState>();
     settings = settingsState.value;
-    servingUnit = settings.foodUnit;
+    unit = settings.foodUnit;
 
-    setControllers();
-    settingsState.addListener(setControllers);
-    if (servingUnit == 'serving')
-      servingSizeController.text = '1';
-    else if (servingUnit == 'grams') servingSizeController.text = '100';
+    setCtrls();
+    settingsState.addListener(setCtrls);
+    if (unit == 'serving')
+      sizeCtrl.text = '1';
+    else if (unit == 'grams') sizeCtrl.text = '100';
 
     if (widget.id == null) return;
 
@@ -63,21 +63,20 @@ class _EditFoodPageState extends State<EditFoodPage> {
               (field.value as Variable).value.toString();
 
       setState(() {
-        barcodeController.text = food.barcode ?? "";
-        servingUnit = food.servingUnit ?? servingUnit;
-        nameController.text = food.name;
-        imageFile = food.imageFile;
-        caloriesController.text = food.calories?.toStringAsFixed(2) ?? '';
-        kilojoulesController.text = food.calories == null
+        barcodeCtrl.text = food.barcode ?? "";
+        unit = food.servingUnit ?? unit;
+        nameCtrl.text = food.name;
+        imgFile = food.imageFile;
+        calCtrl.text = food.calories?.toStringAsFixed(2) ?? '';
+        kjCtrl.text = food.calories == null
             ? ''
             : formatter.format(food.calories! * 4.184);
-        servingSizeController.text =
-            food.servingSize?.toStringAsFixed(0) ?? '100';
+        sizeCtrl.text = food.servingSize?.toStringAsFixed(0) ?? '100';
       });
     });
   }
 
-  void setControllers() async {
+  void setCtrls() async {
     settings = context.read<SettingsState>().value;
     final fields = settings.fields == null
         ? db.foods.$columns.map((column) => column.name)
@@ -113,18 +112,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
     for (final controller in controllers.values) {
       controller.dispose();
     }
-    if (mounted) settingsState.removeListener(setControllers);
+    if (mounted) settingsState.removeListener(setCtrls);
   }
 
   Future<void> save() async {
     Navigator.pop(context);
     var food = FoodsCompanion.insert(
-      name: nameController.text,
-      barcode: Value(barcodeController.text),
-      imageFile: Value(imageFile),
-      calories: Value(double.tryParse(caloriesController.text)),
-      servingUnit: Value(servingUnit),
-      servingSize: Value(double.parse(servingSizeController.text)),
+      name: nameCtrl.text,
+      barcode: Value(barcodeCtrl.text),
+      imageFile: Value(imgFile),
+      calories: Value(double.tryParse(calCtrl.text)),
+      servingUnit: Value(unit),
+      servingSize: Value(double.parse(sizeCtrl.text)),
       created: Value(DateTime.now()),
     );
 
@@ -168,23 +167,23 @@ class _EditFoodPageState extends State<EditFoodPage> {
               onPressed: () async {
                 await showDialog(
                   context: context,
-                  builder: (BuildContext dialogContext) {
+                  builder: (BuildContext dlgCtx) {
                     return AlertDialog(
                       title: const Text('Confirm delete'),
                       content: Text(
-                        'Are you sure you want to delete ${nameController.text}?',
+                        'Are you sure you want to delete ${nameCtrl.text}?',
                       ),
                       actions: <Widget>[
                         TextButton(
                           child: const Text('Cancel'),
                           onPressed: () {
-                            Navigator.pop(dialogContext);
+                            Navigator.pop(dlgCtx);
                           },
                         ),
                         TextButton(
                           child: const Text('Delete'),
                           onPressed: () async {
-                            Navigator.pop(dialogContext);
+                            Navigator.pop(dlgCtx);
                             await db.foods.deleteWhere(
                               (tbl) => tbl.id.equals(widget.id!),
                             );
@@ -204,50 +203,50 @@ class _EditFoodPageState extends State<EditFoodPage> {
         child: ListView(
           children: [
             TextField(
-              controller: nameController,
+              controller: nameCtrl,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelText: 'Name',
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
-              onSubmitted: (_) => selectAll(caloriesController),
+              onSubmitted: (_) => selectAll(calCtrl),
               textInputAction: TextInputAction.next,
             ),
             Row(
               children: [
                 Expanded(
                   child: TextField(
-                    controller: caloriesController,
+                    controller: calCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Calories (kcal)',
                     ),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      kilojoulesController.text =
+                      kjCtrl.text =
                           (double.parse(value) * 4.184).toStringAsFixed(2);
                     },
-                    onTap: () => selectAll(caloriesController),
-                    onSubmitted: (_) => selectAll(kilojoulesController),
+                    onTap: () => selectAll(calCtrl),
+                    onSubmitted: (_) => selectAll(kjCtrl),
                     textInputAction: TextInputAction.next,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
-                    controller: kilojoulesController,
+                    controller: kjCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Kilojoules (kj)',
                     ),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      caloriesController.text =
+                      calCtrl.text =
                           (double.parse(value.replaceAll(r',', '')) / 4.184)
                               .toStringAsFixed(2);
                     },
                     onSubmitted: (_) => selectAll(controllers['protein_g']!),
-                    onTap: () => selectAll(kilojoulesController),
+                    onTap: () => selectAll(kjCtrl),
                     textInputAction: TextInputAction.next,
                   ),
                 ),
@@ -258,15 +257,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(labelText: 'Serving size'),
-                    controller: servingSizeController,
-                    onTap: () => selectAll(servingSizeController),
+                    controller: sizeCtrl,
+                    onTap: () => selectAll(sizeCtrl),
                     textInputAction: TextInputAction.next,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: servingUnit,
+                    value: unit,
                     decoration:
                         const InputDecoration(labelText: 'Serving unit'),
                     items: unitOptions.map((String value) {
@@ -277,7 +276,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
-                        servingUnit = newValue!;
+                        unit = newValue!;
                       });
                     },
                   ),
@@ -285,16 +284,16 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ],
             ),
             TextField(
-              controller: barcodeController,
+              controller: barcodeCtrl,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelText: 'Barcode',
                 suffixIcon: ScanBarcode(
                   text: true,
-                  value: barcodeController.text,
+                  value: barcodeCtrl.text,
                   onBarcode: (value) {
-                    barcodeController.text = value;
+                    barcodeCtrl.text = value;
                     toast(context, 'Barcode not found. Save to insert.');
                   },
                   onFood: (food) {
@@ -309,10 +308,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ),
-            if (imageFile?.isNotEmpty == true && settings.showImages) ...[
+            if (imgFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 16),
               Image.file(
-                File(imageFile!),
+                File(imgFile!),
                 errorBuilder: (context, error, stackTrace) => TextButton.icon(
                   onPressed: () {},
                   label: const Text('Image error'),
@@ -348,16 +347,16 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       final path = result?.files.single.path;
                       if (path == null) return;
                       setState(() {
-                        imageFile = path;
+                        imgFile = path;
                       });
                     },
                   ),
-                if (settings.showImages && imageFile?.isNotEmpty == true)
+                if (settings.showImages && imgFile?.isNotEmpty == true)
                   TextButton.icon(
                     icon: const Icon(Icons.delete),
                     label: const Text("Remove image"),
                     onPressed: () => setState(() {
-                      imageFile = null;
+                      imgFile = null;
                     }),
                   ),
                 TextButton.icon(
@@ -367,7 +366,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     Food? food = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => SearchOpenFoodFacts(
-                          terms: nameController.text,
+                          terms: nameCtrl.text,
                         ),
                       ),
                     );
@@ -390,7 +389,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                           builder: (context) => FieldsPicker(),
                         ),
                       )
-                      .then((_) => setControllers()),
+                      .then((_) => setCtrls()),
                   label: Text("Fields"),
                   icon: Icon(Icons.settings),
                 ),

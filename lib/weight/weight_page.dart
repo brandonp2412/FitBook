@@ -82,7 +82,7 @@ class WeightPageState extends State<WeightPage>
           return material.Column(
             children: [
               AppSearch(
-                controller: searchController,
+                ctrl: searchController,
                 onChange: (value) {
                   setState(() {
                     search = value;

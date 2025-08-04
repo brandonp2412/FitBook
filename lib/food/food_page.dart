@@ -155,7 +155,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           return material.Column(
             children: [
               AppSearch(
-                controller: searchController,
+                ctrl: searchController,
                 onChange: (value) {
                   setState(() {
                     search = value;

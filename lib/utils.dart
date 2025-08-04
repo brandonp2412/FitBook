@@ -118,50 +118,50 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.day == date2.day;
 }
 
-double convertFromGrams(double quantityInGrams, String targetUnit) {
-  double convertedQuantity;
+double convertFromGrams(double qtyInGrams, String targetUnit) {
+  double convertedQty;
   switch (targetUnit) {
     case 'grams':
     case 'milliliters':
-      convertedQuantity = quantityInGrams;
+      convertedQty = qtyInGrams;
       break;
     case 'serving':
       // 'serving' should not be converted from grams here as it's handled separately
       // This case should not be reached when 'serving' is properly handled
       throw Exception('Serving unit should be handled separately');
     case 'milligrams':
-      convertedQuantity = quantityInGrams * 1000;
+      convertedQty = qtyInGrams * 1000;
       break;
     case 'cups':
-      convertedQuantity = quantityInGrams / 250;
+      convertedQty = qtyInGrams / 250;
       break;
     case 'tablespoons':
-      convertedQuantity = quantityInGrams / 15;
+      convertedQty = qtyInGrams / 15;
       break;
     case 'teaspoons':
-      convertedQuantity = quantityInGrams / 5;
+      convertedQty = qtyInGrams / 5;
       break;
     case 'ounces':
-      convertedQuantity = quantityInGrams / 28.35;
+      convertedQty = qtyInGrams / 28.35;
       break;
     case 'pounds':
-      convertedQuantity = quantityInGrams / 453.592;
+      convertedQty = qtyInGrams / 453.592;
       break;
     case 'liters':
-      convertedQuantity = quantityInGrams / 1000;
+      convertedQty = qtyInGrams / 1000;
       break;
     case 'kilojoules':
-      convertedQuantity = quantityInGrams * 4.184;
+      convertedQty = qtyInGrams * 4.184;
       break;
     default:
       throw Exception('Unit not recognized');
   }
-  return convertedQuantity;
+  return convertedQty;
 }
 
 Food convertCustomServing({
   required Food food, // This contains original per-serving values
-  required double quantity,
+  required double qty,
   required String unit,
 }) {
   // Special case handling for 'serving' unit
@@ -171,13 +171,13 @@ Food convertCustomServing({
     return Food(
       id: food.id,
       name: food.name,
-      servingSize: quantity,
+      servingSize: qty,
       servingUnit: unit,
-      calories: (food.calories ?? 0) * quantity,
-      proteinG: (food.proteinG ?? 0) * quantity,
-      fatG: (food.fatG ?? 0) * quantity,
-      carbohydrateG: (food.carbohydrateG ?? 0) * quantity,
-      fiberG: (food.fiberG ?? 0) * quantity,
+      calories: (food.calories ?? 0) * qty,
+      proteinG: (food.proteinG ?? 0) * qty,
+      fatG: (food.fatG ?? 0) * qty,
+      carbohydrateG: (food.carbohydrateG ?? 0) * qty,
+      fiberG: (food.fiberG ?? 0) * qty,
     );
   }
 
@@ -196,21 +196,21 @@ Food convertCustomServing({
   }
 
   // Calculate per-gram values
-  final caloriesPerGram = (food.calories ?? 0) / originalServingG;
+  final calsPerGram = (food.calories ?? 0) / originalServingG;
   final proteinPerGram = (food.proteinG ?? 0) / originalServingG;
   final fatPerGram = (food.fatG ?? 0) / originalServingG;
   final carbPerGram = (food.carbohydrateG ?? 0) / originalServingG;
   final fiberPerGram = (food.fiberG ?? 0) / originalServingG;
 
   // Convert to the requested serving size
-  final targetServingG = convertToGrams(quantity, unit);
+  final targetServingG = convertToGrams(qty, unit);
 
   return Food(
     id: food.id,
     name: food.name,
-    servingSize: quantity,
+    servingSize: qty,
     servingUnit: unit,
-    calories: caloriesPerGram * targetServingG,
+    calories: calsPerGram * targetServingG,
     proteinG: proteinPerGram * targetServingG,
     fatG: fatPerGram * targetServingG,
     carbohydrateG: carbPerGram * targetServingG,
@@ -218,53 +218,53 @@ Food convertCustomServing({
   );
 }
 
-double convertToGrams(double quantity, String unit) {
-  double quantityInGrams;
+double convertToGrams(double qty, String unit) {
+  double qtyInGrams;
 
   switch (unit) {
     case 'grams':
     case 'milliliters':
-      quantityInGrams = quantity;
+      qtyInGrams = qty;
       break;
     case 'serving':
       // 'serving' should not be converted to grams here as it's handled separately
       // This case should not be reached when 'serving' is properly handled
       throw Exception('Serving unit should be handled separately');
     case 'milligrams':
-      quantityInGrams = quantity / 1000;
+      qtyInGrams = qty / 1000;
       break;
     case 'cups':
-      quantityInGrams = quantity * 250;
+      qtyInGrams = qty * 250;
       break;
     case 'tablespoons':
-      quantityInGrams = quantity * 15;
+      qtyInGrams = qty * 15;
       break;
     case 'teaspoons':
-      quantityInGrams = quantity * 5;
+      qtyInGrams = qty * 5;
       break;
     case 'ounces':
-      quantityInGrams = quantity * 28.35;
+      qtyInGrams = qty * 28.35;
       break;
     case 'pounds':
-      quantityInGrams = quantity * 453.592;
+      qtyInGrams = qty * 453.592;
       break;
     case 'liters':
-      quantityInGrams = quantity * 1000;
+      qtyInGrams = qty * 1000;
       break;
     case 'kilojoules':
-      quantityInGrams = quantity / 4.184;
+      qtyInGrams = qty / 4.184;
       break;
     default:
       throw Exception('Unit not recognized');
   }
 
-  return quantityInGrams;
+  return qtyInGrams;
 }
 
-void selectAll(TextEditingController controller) {
-  controller.selection = TextSelection(
+void selectAll(TextEditingController ctrl) {
+  ctrl.selection = TextSelection(
     baseOffset: 0,
-    extentOffset: controller.text.length,
+    extentOffset: ctrl.text.length,
   );
 }
 

@@ -9,7 +9,7 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final packageInfo = PackageInfo.fromPlatform();
+    final pkgInfo = PackageInfo.fromPlatform();
     return Scaffold(
       appBar: AppBar(
         title: const Text("About"),
@@ -27,7 +27,7 @@ class AboutPage extends StatelessWidget {
             leading: const Icon(Icons.info_outline),
             title: const Text("Version"),
             subtitle: FutureBuilder(
-              future: packageInfo,
+              future: pkgInfo,
               builder: (context, snapshot) =>
                   Text(snapshot.data?.version ?? "1.0.0"),
             ),

@@ -283,7 +283,7 @@ class _EntryListState extends State<EntryList> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => QuickAddPage(
-                          entryId: entryFood.entryId,
+                          id: entryFood.entryId,
                         ),
                       ),
                     );

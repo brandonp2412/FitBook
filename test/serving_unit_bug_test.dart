@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:fit_book/utils.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/utils.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Serving Unit Bug Fix Tests', () {
@@ -20,7 +20,7 @@ void main() {
       // Test converting to "serving" unit with quantity 2
       final result = convertCustomServing(
         food: food,
-        quantity: 2.0,
+        qty: 2.0,
         unit: 'serving',
       );
 
@@ -49,7 +49,7 @@ void main() {
       // Test converting to "serving" unit with quantity 1.5
       final result = convertCustomServing(
         food: food,
-        quantity: 1.5,
+        qty: 1.5,
         unit: 'serving',
       );
 
@@ -78,7 +78,7 @@ void main() {
       // Test converting to grams (1 ounce = 28.35 grams)
       final result = convertCustomServing(
         food: food,
-        quantity: 28.35,
+        qty: 28.35,
         unit: 'grams',
       );
 

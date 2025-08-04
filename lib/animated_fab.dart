@@ -19,7 +19,7 @@ class AnimatedFab extends StatefulWidget {
 }
 
 class _AnimatedFabState extends State<AnimatedFab> {
-  bool extended = true;
+  bool extend = true;
 
   @override
   void initState() {
@@ -36,11 +36,11 @@ class _AnimatedFabState extends State<AnimatedFab> {
   void onScroll() {
     if (widget.scroll.position.atEdge && widget.scroll.position.pixels == 0)
       setState(() {
-        extended = true;
+        extend = true;
       });
     else
       setState(() {
-        extended = false;
+        extend = false;
       });
   }
 
@@ -49,17 +49,17 @@ class _AnimatedFabState extends State<AnimatedFab> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
-      width: extended ? 100 : 56,
+      width: extend ? 100 : 56,
       height: 56,
       child: FloatingActionButton.extended(
         onPressed: () => widget.onTap(),
         label: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
-          opacity: extended ? 1.0 : 0.0,
+          opacity: extend ? 1.0 : 0.0,
           child: Text(widget.label),
         ),
         icon: Icon(widget.icon),
-        isExtended: extended,
+        isExtended: extend,
       ),
     );
   }

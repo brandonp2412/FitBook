@@ -29,29 +29,29 @@ Future<void> main() async {
     return runApp(FailedMigrationsPage(error: error));
   }
 
-  final settingsState = SettingsState(settings);
+  final state = SettingsState(settings);
 
   if (settings.reminders)
     setupReminders();
   else
     cancelReminders();
 
-  final packageInfo = await PackageInfo.fromPlatform();
+  final pkgInfo = await PackageInfo.fromPlatform();
   OpenFoodAPIConfiguration.userAgent = UserAgent(
-    name: '${packageInfo.appName}/${packageInfo.version} (brandon@presley.nz)',
+    name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
     url: 'https://github.com/brandonp2412/FitBook',
   );
   OpenFoodAPIConfiguration.globalUser = User(
-    userId: settingsState.value.offLogin ?? '',
-    password: settingsState.value.offPassword ?? '',
+    userId: state.value.offLogin ?? '',
+    password: state.value.offPassword ?? '',
   );
 
-  runApp(appProviders(settingsState));
+  runApp(appProviders(state));
 }
 
-Widget appProviders(SettingsState settingsState) => MultiProvider(
+Widget appProviders(SettingsState state) => MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => settingsState),
+        ChangeNotifierProvider(create: (context) => state),
         ChangeNotifierProvider(
           create: (context) => EntryState(),
         ),

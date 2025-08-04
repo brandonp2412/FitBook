@@ -267,7 +267,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     final food = selectedFood!;
     final result = convertCustomServing(
       food: food,
-      quantity: formatter.parse(quantity.text).toDouble(),
+      qty: formatter.parse(quantity.text).toDouble(),
       unit: unit,
     ).copyWith(
       created: Value(created ?? DateTime.now()),

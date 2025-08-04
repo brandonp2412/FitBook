@@ -63,7 +63,7 @@ class DiaryPageState extends State<DiaryPage> {
           return material.Column(
             children: [
               AppSearch(
-                controller: searchController,
+                ctrl: searchController,
                 filter: const EntryFilters(),
                 onChange: (value) {
                   entriesState.search = value;

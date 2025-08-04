@@ -30,15 +30,15 @@ void setupReminders() {
 }
 
 doDesktopReminders() async {
-  const linuxSettings =
+  const linux =
       LinuxInitializationSettings(defaultActionName: 'Open notification');
-  const darwinSettings = DarwinInitializationSettings();
-  const initSettings = InitializationSettings(
-    linux: linuxSettings,
-    macOS: darwinSettings,
+  const darwin = DarwinInitializationSettings();
+  const init = InitializationSettings(
+    linux: linux,
+    macOS: darwin,
   );
   final plugin = FlutterLocalNotificationsPlugin();
-  await plugin.initialize(initSettings);
+  await plugin.initialize(init);
 
   final db = AppDatabase();
 
@@ -102,15 +102,14 @@ void cancelReminders() {
 )
 void doMobileReminders() {
   Workmanager().executeTask((task, inputData) async {
-    const darwinSettings = DarwinInitializationSettings();
-    const androidSettings =
-        AndroidInitializationSettings('@drawable/nutrition');
-    const initSettings = InitializationSettings(
-      iOS: darwinSettings,
-      android: androidSettings,
+    const darwin = DarwinInitializationSettings();
+    const android = AndroidInitializationSettings('@drawable/nutrition');
+    const init = InitializationSettings(
+      iOS: darwin,
+      android: android,
     );
     final plugin = FlutterLocalNotificationsPlugin();
-    await plugin.initialize(initSettings);
+    await plugin.initialize(init);
 
     final db = AppDatabase();
 

@@ -13,24 +13,24 @@ import 'package:provider/provider.dart';
 
 class GraphData {
   final DateTime created;
-  final double value;
+  final double val;
   final String unit;
 
-  GraphData({required this.created, required this.value, required this.unit});
+  GraphData({required this.created, required this.val, required this.unit});
 }
 
 class AppLine extends StatefulWidget {
   final String metric;
   final Period groupBy;
-  final DateTime? startDate;
-  final DateTime? endDate;
+  final DateTime? start;
+  final DateTime? end;
 
   const AppLine({
     super.key,
     required this.metric,
     required this.groupBy,
-    this.startDate,
-    this.endDate,
+    this.start,
+    this.end,
   });
 
   @override
@@ -44,7 +44,7 @@ class _AppLineState extends State<AppLine> {
   late Setting settings = context.read<SettingsState>().value;
   bool showTrend = false;
 
-  Map<String, double> _calculateTrend(List<GraphData> data) {
+  Map<String, double> _calcTrend(List<GraphData> data) {
     if (data.length < 2) return {'slope': 0.0, 'intercept': 0.0};
 
     // Sort data chronologically (oldest first) for proper trend calculation
@@ -55,7 +55,7 @@ class _AppLineState extends State<AppLine> {
 
     for (int i = 0; i < n; i++) {
       double x = i.toDouble();
-      double y = sortedData[i].value;
+      double y = sortedData[i].val;
       sumX += x;
       sumY += y;
       sumXY += x * y;
@@ -74,7 +74,7 @@ class _AppLineState extends State<AppLine> {
     // Sort data chronologically for proper calculation
     final sortedData = data.toList()
       ..sort((a, b) => a.created.compareTo(b.created));
-    final trend = _calculateTrend(data);
+    final trend = _calcTrend(data);
     double slope = trend['slope']!;
 
     double daysSpan = sortedData.last.created
@@ -92,7 +92,7 @@ class _AppLineState extends State<AppLine> {
   List<FlSpot> _getTrendSpots(List<GraphData> data) {
     if (data.length < 2) return [];
 
-    final trend = _calculateTrend(data);
+    final trend = _calcTrend(data);
     double slope = trend['slope']!;
     double intercept = trend['intercept']!;
 
@@ -102,8 +102,8 @@ class _AppLineState extends State<AppLine> {
     for (int i = 0; i < data.length; i++) {
       // i represents the chronological index (0 = oldest, n-1 = newest)
       // since we want to match the coordinate system of the main chart
-      double trendValue = slope * i.toDouble() + intercept;
-      trendSpots.add(FlSpot(i.toDouble(), trendValue));
+      double trendVal = slope * i.toDouble() + intercept;
+      trendSpots.add(FlSpot(i.toDouble(), trendVal));
     }
 
     return trendSpots;
@@ -144,7 +144,7 @@ class _AppLineState extends State<AppLine> {
     final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
 
     // Define the quantity in grams expression with proper serving unit handling
-    final quantityInGrams = CustomExpression<double>('''
+    final qtyInGrams = CustomExpression<double>('''
     CASE 
       WHEN entries.unit = 'serving' 
       THEN entries.quantity * (
@@ -193,31 +193,31 @@ class _AppLineState extends State<AppLine> {
 ''');
 
     // Calculate adjusted metrics with proper unit conversions
-    Map<String, CustomExpression> metricColumns = {
+    Map<String, CustomExpression> metricCols = {
       'calories': CustomExpression<double>(
-        '''SUM((${quantityInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
+        '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
         watchedTables: {db.foods, db.entries},
       ),
     };
 
     for (final field in fields) {
-      metricColumns[field] = CustomExpression<double>(
-        '''SUM((${quantityInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content})''',
+      metricCols[field] = CustomExpression<double>(
+        '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content})''',
         watchedTables: {db.foods, db.entries},
       );
     }
 
     // Handle averaging for periods other than day
     if (widget.groupBy != Period.day) {
-      metricColumns['calories'] = CustomExpression<double>(
-        '''SUM((${quantityInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
+      metricCols['calories'] = CustomExpression<double>(
+        '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
          COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
         watchedTables: {db.foods, db.entries},
       );
 
       for (final field in fields) {
-        metricColumns[field] = CustomExpression<double>(
-          '''SUM((${quantityInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content}) / 
+        metricCols[field] = CustomExpression<double>(
+          '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content}) / 
            COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
           watchedTables: {db.foods, db.entries},
         );
@@ -241,12 +241,12 @@ class _AppLineState extends State<AppLine> {
             ..groupBy([createdCol])
             ..where(
               db.weights.created.isBiggerOrEqualValue(
-                widget.startDate ?? DateTime(0),
+                widget.start ?? DateTime(0),
               ),
             )
             ..where(
               db.weights.created.isSmallerOrEqualValue(
-                widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
+                widget.end ?? DateTime.now().add(const Duration(days: 1)),
               ),
             )
             ..limit(settings.limit))
@@ -256,7 +256,7 @@ class _AppLineState extends State<AppLine> {
                 .map(
                   (result) => GraphData(
                     created: result.read(db.weights.created)!,
-                    value: result.read(db.weights.amount)!,
+                    val: result.read(db.weights.amount)!,
                     unit: result.read(db.weights.unit)!,
                   ),
                 )
@@ -267,7 +267,7 @@ class _AppLineState extends State<AppLine> {
       stream = (db.entries.selectOnly()
             ..addColumns([
               db.entries.created,
-              ...metricColumns.values,
+              ...metricCols.values,
             ])
             ..join(
               [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
@@ -280,12 +280,12 @@ class _AppLineState extends State<AppLine> {
             ])
             ..where(
               db.entries.created.isBiggerOrEqualValue(
-                widget.startDate ?? DateTime(0),
+                widget.start ?? DateTime(0),
               ),
             )
             ..where(
               db.entries.created.isSmallerOrEqualValue(
-                widget.endDate ?? DateTime.now().add(const Duration(days: 1)),
+                widget.end ?? DateTime.now().add(const Duration(days: 1)),
               ),
             )
             ..groupBy([createdCol])
@@ -294,10 +294,10 @@ class _AppLineState extends State<AppLine> {
           .map((results) {
         return results.map((result) {
           final created = result.read(db.entries.created)!.toLocal();
-          double value =
-              (result.read(metricColumns[widget.metric]!) ?? 0.0) as double;
+          double val =
+              (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
           String unit = widget.metric == 'calories' ? 'kcal' : 'g';
-          return GraphData(created: created, value: value, unit: unit);
+          return GraphData(created: created, val: val, unit: unit);
         }).toList();
       });
     }
@@ -339,19 +339,19 @@ class _AppLineState extends State<AppLine> {
           );
         if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
 
-        List<Color> gradientColors = [
+        List<Color> gradColors = [
           Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.surface,
         ];
 
         final rows = snapshot.data!.reversed.toList();
         List<FlSpot> spots = [];
-        var average = 0.0;
+        var avg = 0.0;
         for (var index = 0; index < rows.length; index++) {
-          spots.add(FlSpot(index.toDouble(), rows[index].value));
-          average += rows[index].value;
+          spots.add(FlSpot(index.toDouble(), rows[index].val));
+          avg += rows[index].val;
         }
-        average /= spots.length;
+        avg /= spots.length;
 
         List<FlSpot> trendSpots = _getTrendSpots(rows);
 
@@ -370,7 +370,7 @@ class _AppLineState extends State<AppLine> {
             belowBarData: BarAreaData(
               show: true,
               gradient: LinearGradient(
-                colors: gradientColors
+                colors: gradColors
                     .map((color) => color.withValues(alpha: 0.3))
                     .toList(),
               ),
@@ -412,7 +412,7 @@ class _AppLineState extends State<AppLine> {
                           ),
                         if (!showTrend && spots.isNotEmpty)
                           HorizontalLine(
-                            y: average,
+                            y: avg,
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
                       ],
@@ -461,7 +461,7 @@ class _AppLineState extends State<AppLine> {
                       child: ListTile(
                         title: const Text("Average"),
                         subtitle: Text(
-                          "${formatter.format(average)} ${rows.first.unit}",
+                          "${formatter.format(avg)} ${rows.first.unit}",
                         ),
                         leading: Radio<bool>(
                           value: false,
@@ -584,9 +584,9 @@ class _AppLineState extends State<AppLine> {
         final row = rows.elementAt(originalDataSpot.spotIndex);
         final created =
             DateFormat(settings.shortDateFormat).format(row.created);
-        final value = formatter.format(row.value);
+        final val = formatter.format(row.val);
 
-        String text = "$value $unit\n";
+        String text = "$val $unit\n";
 
         return [
           LineTooltipItem(

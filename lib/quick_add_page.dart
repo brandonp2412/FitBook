@@ -12,18 +12,18 @@ import 'database/database.dart';
 final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
 class QuickAddPage extends StatefulWidget {
-  final int? entryId;
+  final int? id;
 
-  const QuickAddPage({super.key, this.entryId});
+  const QuickAddPage({super.key, this.id});
 
   @override
   createState() => _QuickAddPageState();
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {
-  final calories = TextEditingController(text: "600");
+  final cal = TextEditingController(text: "600");
   var created = DateTime.now();
-  final kilojoules = TextEditingController(text: "2,510.4");
+  final kj = TextEditingController(text: "2,510.4");
   final protein = TextEditingController(text: "0");
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
@@ -35,7 +35,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
   }
 
   void initData() async {
-    if (widget.entryId == null) {
+    if (widget.id == null) {
       final last = await (db.entries.selectOnly().join(
         [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
       )
@@ -57,9 +57,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ..limit(1))
           .getSingleOrNull();
       if (last == null) return;
-      calories.text = last.read(db.entries.quantity)!.toString();
-      kilojoules.text =
-          formatter.format(formatter.parse(calories.text) * 4.184);
+      cal.text = last.read(db.entries.quantity)!.toString();
+      kj.text = formatter.format(formatter.parse(cal.text) * 4.184);
       protein.text = last.read(db.foods.proteinG)!.toString();
       carb.text = last.read(db.foods.carbohydrateG)!.toString();
       fat.text = last.read(db.foods.fatG)!.toString();
@@ -68,19 +67,19 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
 
     final entry = await (db.entries.select()
-          ..where((u) => u.id.equals(widget.entryId!)))
+          ..where((u) => u.id.equals(widget.id!)))
         .getSingle();
     final food = await (db.foods.select()
           ..where((u) => u.id.equals(entry.food)))
         .getSingle();
-    calories.text = entry.quantity.toStringAsFixed(2);
+    cal.text = entry.quantity.toStringAsFixed(2);
     protein.text = food.proteinG.toString();
     carb.text = food.carbohydrateG.toString();
     fat.text = food.fatG.toString();
     setState(() {
       created = entry.created;
     });
-    selectAll(calories);
+    selectAll(cal);
   }
 
   @override
@@ -101,24 +100,24 @@ class _QuickAddPageState extends State<QuickAddPage> {
       ),
     ));
 
-    final quantity = double.parse(calories.text);
-    if (widget.entryId == null)
+    final qty = double.parse(cal.text);
+    if (widget.id == null)
       db.into(db.entries).insert(
             EntriesCompanion.insert(
               food: foodId,
               created: created,
-              quantity: quantity,
+              quantity: qty,
               unit: 'grams',
             ),
           );
     else
       db.entries.update()
-        ..where((u) => u.id.equals(widget.entryId!))
+        ..where((u) => u.id.equals(widget.id!))
         ..write(
           EntriesCompanion(
             food: Value(foodId),
             created: Value(created),
-            quantity: Value(quantity),
+            quantity: Value(qty),
           ),
         );
   }
@@ -179,21 +178,20 @@ class _QuickAddPageState extends State<QuickAddPage> {
           children: [
             TextField(
               autofocus: true,
-              controller: calories,
+              controller: cal,
               decoration: const InputDecoration(label: Text("Calories")),
               keyboardType: TextInputType.number,
-              onTap: () => selectAll(calories),
+              onTap: () => selectAll(cal),
               onSubmitted: (value) => save(),
               onChanged: (value) {
                 setState(() {
-                  kilojoules.text =
-                      formatter.format(formatter.parse(value) * 4.184);
+                  kj.text = formatter.format(formatter.parse(value) * 4.184);
                 });
               },
             ),
             const SizedBox(height: 8),
             TextField(
-              controller: kilojoules,
+              controller: kj,
               decoration: InputDecoration(
                 labelText: 'Kilojoules',
               ),
@@ -201,12 +199,11 @@ class _QuickAddPageState extends State<QuickAddPage> {
                   const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
                 setState(() {
-                  calories.text =
-                      formatter.format(formatter.parse(value) / 4.184);
+                  cal.text = formatter.format(formatter.parse(value) / 4.184);
                 });
               },
               onSubmitted: (value) => selectAll(protein),
-              onTap: () => selectAll(kilojoules),
+              onTap: () => selectAll(kj),
               textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: 8),

@@ -13,7 +13,7 @@ class AppSearch extends StatefulWidget {
     required this.onSelect,
     required this.onFavorite,
     this.filter,
-    this.controller,
+    this.ctrl,
   });
 
   final Set<dynamic> selected;
@@ -24,7 +24,7 @@ class AppSearch extends StatefulWidget {
   final Function onSelect;
   final Function onFavorite;
   final Widget? filter;
-  final TextEditingController? controller;
+  final TextEditingController? ctrl;
 
   @override
   State<AppSearch> createState() => _AppSearchState();
@@ -37,31 +37,30 @@ class _AppSearchState extends State<AppSearch> {
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
       child: SearchBar(
         hintText: "Search...",
-        controller: widget.controller,
+        controller: widget.ctrl,
         padding: WidgetStateProperty.all(
           const EdgeInsets.only(right: 8.0),
         ),
         textCapitalization: TextCapitalization.sentences,
         onChanged: widget.onChange,
-        leading:
-            widget.selected.isEmpty && widget.controller?.text.isEmpty == true
-                ? const Padding(
-                    padding: EdgeInsets.only(left: 16.0, right: 8.0),
-                    child: Icon(Icons.search),
-                  )
-                : IconButton(
-                    onPressed: () {
-                      widget.onClear();
-                      widget.controller?.text = '';
-                      widget.onChange('');
-                    },
-                    icon: const Icon(Icons.arrow_back),
-                    tooltip: 'Clear',
-                    padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 8.0,
-                    ),
-                  ),
+        leading: widget.selected.isEmpty && widget.ctrl?.text.isEmpty == true
+            ? const Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 8.0),
+                child: Icon(Icons.search),
+              )
+            : IconButton(
+                onPressed: () {
+                  widget.onClear();
+                  widget.ctrl?.text = '';
+                  widget.onChange('');
+                },
+                icon: const Icon(Icons.arrow_back),
+                tooltip: 'Clear',
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  right: 8.0,
+                ),
+              ),
         trailing: [
           if (widget.filter != null && widget.selected.isEmpty) widget.filter!,
           if (widget.selected.isNotEmpty)

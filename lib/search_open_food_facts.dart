@@ -20,7 +20,7 @@ class SearchOpenFoodFacts extends StatefulWidget {
 }
 
 class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
-  final searchController = TextEditingController();
+  final searchCtrl = TextEditingController();
 
   List<Product> products = [];
   bool searching = false;
@@ -31,7 +31,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     super.initState();
     if (widget.terms?.isNotEmpty == true) {
       search(widget.terms!);
-      searchController.text = widget.terms!;
+      searchCtrl.text = widget.terms!;
     }
   }
 
@@ -82,8 +82,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             runSpacing: 8.0,
             children: products.map((product) {
               final kj = product.nutriments?.getComputedKJ(perSize);
-              final calories = (kj ?? 0) / 4.184;
-              return factCard(product, calories, context);
+              final cals = (kj ?? 0) / 4.184;
+              return factCard(product, cals, context);
             }).toList(),
           ),
         ),
@@ -94,9 +94,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         itemBuilder: (context, index) {
           final product = products[index];
           final kj = product.nutriments?.getComputedKJ(perSize);
-          final calories = (kj ?? 0) / 4.184;
+          final cals = (kj ?? 0) / 4.184;
 
-          return factTile(product, calories, context);
+          return factTile(product, cals, context);
         },
       ),
     );
@@ -171,16 +171,16 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               padding: WidgetStateProperty.all(
                 const EdgeInsets.only(right: 8.0),
               ),
-              controller: searchController,
+              controller: searchCtrl,
               textCapitalization: TextCapitalization.sentences,
-              leading: searchController.text.isEmpty == true
+              leading: searchCtrl.text.isEmpty == true
                   ? const Padding(
                       padding: EdgeInsets.only(left: 16.0, right: 8.0),
                       child: Icon(Icons.search),
                     )
                   : IconButton(
                       onPressed: () {
-                        searchController.text = '';
+                        searchCtrl.text = '';
                         setState(() {
                           products = [];
                           searching = false;
@@ -247,7 +247,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   Widget factCard(
     Product product,
-    double calories,
+    double cals,
     BuildContext context,
   ) {
     String brand = product.brands?.split(',').first ?? '';
@@ -276,7 +276,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                     Text(
                       '$title$brand ${product.quantity ?? ''}',
                     ),
-                    Text("${calories.toStringAsFixed(2)} kcal"),
+                    Text("${cals.toStringAsFixed(2)} kcal"),
                   ],
                 ),
               ),
@@ -289,12 +289,12 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   ListTile factTile(
     Product product,
-    double calories,
+    double cals,
     material.BuildContext context,
   ) {
     return ListTile(
       title: Text(product.productName ?? ""),
-      subtitle: Text("${calories.toStringAsFixed(2)} kcal"),
+      subtitle: Text("${cals.toStringAsFixed(2)} kcal"),
       trailing: product.imageFrontSmallUrl != null
           ? CachedNetworkImage(
               imageUrl: product.imageFrontUrl!,
