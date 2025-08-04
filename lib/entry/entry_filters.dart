@@ -1,6 +1,4 @@
-import 'package:drift/drift.dart';
 import 'package:fit_book/entry/entry_state.dart';
-import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,14 +14,6 @@ class EntryFilters extends StatefulWidget {
 }
 
 class _EntryFiltersState extends State<EntryFilters> {
-  late final groupStream = (db.foods.selectOnly(distinct: true)
-        ..orderBy([
-          OrderingTerm(expression: db.foods.foodGroup),
-        ])
-        ..where(db.foods.foodGroup.isNotNull())
-        ..addColumns([db.foods.foodGroup]))
-      .watch();
-
   @override
   Widget build(BuildContext context) {
     final state = context.watch<EntryState>();
@@ -35,33 +25,31 @@ class _EntryFiltersState extends State<EntryFilters> {
       child: PopupMenuButton(
         icon: const Icon(Icons.filter_list),
         tooltip: 'Show filters',
+        constraints: const BoxConstraints(
+          minWidth: 220,
+          maxWidth: 220,
+        ),
         itemBuilder: (popupContext) => [
           PopupMenuItem(
-            child: StreamBuilder(
-              stream: groupStream,
-              builder: (context, snapshot) {
-                return DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Food group',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  ),
-                  value: state.foodGroup,
-                  items: snapshot.data
-                      ?.map(
-                        (result) => DropdownMenuItem(
-                          value: result.read(db.foods.foodGroup)!,
-                          child: Text(
-                            result.read(db.foods.foodGroup)!,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    state.foodGroup = value;
-                    Navigator.pop(popupContext);
-                  },
-                );
-              },
+            child: Container(
+              width: 200,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Food group',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  isDense: true,
+                  hintText: 'Fruit',
+                ),
+                initialValue: state.foodGroup,
+                onFieldSubmitted: (value) {
+                  state.foodGroup = value.isNotEmpty ? value : null;
+                  Navigator.pop(popupContext);
+                },
+                onEditingComplete: () {
+                  // This prevents the default behavior and lets onFieldSubmitted handle it
+                },
+              ),
             ),
           ),
           PopupMenuItem(
@@ -73,8 +61,12 @@ class _EntryFiltersState extends State<EntryFilters> {
                         null
                     ? Text(
                         DateFormat(shortDateFormat).format(state.startDate!),
+                        overflow: TextOverflow.ellipsis,
                       )
-                    : Text(shortDateFormat),
+                    : Text(
+                        shortDateFormat,
+                        overflow: TextOverflow.ellipsis,
+                      ),
               ),
               onLongPress: () {
                 state.startDate = null;
@@ -103,8 +95,12 @@ class _EntryFiltersState extends State<EntryFilters> {
                     state.endDate != null
                         ? Text(
                             DateFormat(shortDateFormat).format(state.endDate!),
+                            overflow: TextOverflow.ellipsis,
                           )
-                        : Text(shortDateFormat),
+                        : Text(
+                            shortDateFormat,
+                            overflow: TextOverflow.ellipsis,
+                          ),
               ),
               onLongPress: () {
                 state.endDate = null;
@@ -127,7 +123,10 @@ class _EntryFiltersState extends State<EntryFilters> {
           PopupMenuItem(
             child: ListTile(
               leading: const Icon(Icons.clear_all),
-              title: Text("Clear (${state.filterCount})"),
+              title: Text(
+                "Clear (${state.filterCount})",
+                overflow: TextOverflow.ellipsis,
+              ),
               onTap: () {
                 state.clear();
                 Navigator.pop(popupContext);
