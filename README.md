@@ -7,12 +7,14 @@ Graph your eating habits with ease!
     <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
 </p>
 
-## Features
+# Features
 
 - 📈 **Graphs**: Plot your diet macros over time.
 - 🍏 **Foods**: FitBook ships with over 7 thousand foods (sourced from the [CORGIS Dataset Project](https://corgis-edu.github.io/corgis/csv/food/)).
 - 📵 **Offline**: Log your meals and snacks with ease, even without an internet connection.
 - 🍇 **OpenFoodFacts**: Scan barcodes & search for foods with [OpenFoodFacts](https://world.openfoodfacts.org/).
+
+# Screenshots
 
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'><img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 <a href="https://f-droid.org/packages/com.presley.fit_book"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="75"></a>
