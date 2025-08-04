@@ -111,14 +111,18 @@ class _FieldsPickerState extends State<FieldsPicker> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          db.settings.update().write(
+        onPressed: () async {
+          final updates = await (db.settings.update().writeReturning(
                 SettingsCompanion(
                   fields: Value(
                     fields.where((field) => field.isNotEmpty).join(','),
                   ),
                 ),
-              );
+              ));
+          if (!context.mounted) return;
+
+          final state = context.read<SettingsState>();
+          state.setValue(updates.first);
           Navigator.pop(context);
         },
         child: Icon(Icons.save),

@@ -81,6 +81,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     final fields = settings.fields == null
         ? db.foods.$columns.map((column) => column.name)
         : settings.fields!.split(',');
+
     final food = await (db.foods.select()
           ..where(
             (u) => widget.id != null
@@ -90,19 +91,28 @@ class _EditFoodPageState extends State<EditFoodPage> {
           ..limit(1))
         .getSingle();
     final columns = food.toColumns(true);
+
+    Map<String, TextEditingController> newControllers = {};
+
     for (final field in fields) {
-      if (field.isEmpty) {
-        controllers = {};
-        continue;
-      }
+      if (field.isEmpty) continue;
       if (excludedFields.contains(field)) continue;
+
       final expression = columns[field];
       if (expression is Variable<Object>)
-        controllers[field] =
+        newControllers[field] =
             TextEditingController(text: expression.value.toString());
       else
-        controllers[field] = TextEditingController();
+        newControllers[field] = TextEditingController();
     }
+
+    for (final entry in controllers.entries) {
+      if (!newControllers.containsKey(entry.key)) {
+        entry.value.dispose();
+      }
+    }
+
+    controllers = newControllers;
     setState(() {});
   }
 

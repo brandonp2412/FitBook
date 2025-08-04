@@ -18,6 +18,11 @@ class SettingsState extends ChangeNotifier {
     });
   }
 
+  void setValue(Setting newValue) {
+    value = newValue;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     subscription.cancel();
