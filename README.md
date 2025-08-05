@@ -3,7 +3,7 @@
 Graph your eating habits with ease!
 
 <p float="left">
-    <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/com.presley.fit_book?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
+    <a href="https://github.com/brandonp2412/FitBook/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/brandonp2412/fitbook?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418"></a>
     <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
 </p>
 
@@ -18,11 +18,9 @@ Graph your eating habits with ease!
 
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'><img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 <a href="https://f-droid.org/packages/com.presley.fit_book"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="75"></a>
-<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook.apk"><img src="docs/get-it-on-android.png" alt="Get it on Android" height="75"></a>
 
-<a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1717977600" alt="Download on the App Store" height="75"></a>
-<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" height="75"/></a>
-<a href="https://github.com/brandonp2412/FitBook/releases/latest/download/fitbook-linux.zip"><img src="docs/get-it-on-linux.png" alt="Get it on Linux" height="75"></a>
+<a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055"><img src="docs/get-it-on-app-store.svg" alt="Download on the App Store" height="75"></a>
+<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img src="docs/get-it-on-windows.svg" height="75"/></a>
 
 <p float="left">
     <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" height="600">
