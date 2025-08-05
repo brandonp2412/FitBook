@@ -102,21 +102,12 @@ jobs:
             sort -u | \
             grep -v "^Merge " | \
             grep -v "^Release " | \
-            grep -v "^${{ steps.version.outputs.version }}" | \
             grep -v "^Bump " | \
             grep -v "^Update " | \
+            grep -v "^[0-9]\+\.[0-9]\+\.[0-9]\+" | \
             head -10 | \
-            awk '{print "• "$0}' > "$changelog_file"
+            sed 's/^/• /' > "$changelog_file"
 
-          # Use fallback if file is empty or has no bullet points
-          if [ ! -s "$changelog_file" ] || ! grep -q "•" "$changelog_file"; then
-            echo "• Bug fixes and improvements" > "$changelog_file"
-            echo "Used fallback changelog content"
-          else
-            echo "Generated changelog from git commits"
-          fi
-
-          cat "$changelog_file"
           changelog=$(cat "$changelog_file")
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$changelog" >> $GITHUB_OUTPUT
