@@ -165,7 +165,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           Padding(
             padding: const EdgeInsets.all(8),
             child: SearchBar(
-              hintText: "Search...",
+              hintText: "Submit to search...",
               onSubmitted: (value) => search(value),
               onChanged: (value) => setState(() {}),
               padding: WidgetStateProperty.all(
