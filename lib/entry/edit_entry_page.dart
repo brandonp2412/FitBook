@@ -430,6 +430,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 );
               },
             ),
+            SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
@@ -565,6 +566,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ],
               ],
             ),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
@@ -606,6 +608,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
@@ -646,6 +649,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
             if (imageFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 8),
               kIsWeb
