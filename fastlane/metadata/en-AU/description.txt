@@ -6,4 +6,4 @@ Have confidence we won't be marketing to you or sharing your data with third par
 Everything is stored locally - that means internet connectivity is optional.
 
 If you notice any bugs feel free to open a ticket at
-https://github.com/brandonp2412/FitBook
+https://github.com/brandonp2412/FitBook/issues
