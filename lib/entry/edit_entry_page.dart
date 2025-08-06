@@ -347,17 +347,93 @@ class _EditEntryPageState extends State<EditEntryPage> {
           children: [
             Autocomplete<String>(
               optionsMaxHeight: 300,
-              optionsBuilder: (textEditingValue) {
+              optionsBuilder: (textEditingValue) async {
                 if (textEditingValue.text.isEmpty) return [];
-                return searchDrift(textEditingValue.text);
+
+                final results = await searchDrift(textEditingValue.text);
+
+                if (results.isEmpty && textEditingValue.text.isNotEmpty) {
+                  return ['__SEARCH_OPENFOODFACTS__|${textEditingValue.text}'];
+                }
+
+                return results;
+              },
+              displayStringForOption: (option) {
+                if (option.startsWith('__SEARCH_OPENFOODFACTS__|')) {
+                  return 'Search OpenFoodFacts';
+                }
+                return option;
+              },
+              optionsViewBuilder: (context, onSelected, options) {
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4.0,
+                    child: Container(
+                      constraints: const BoxConstraints(maxHeight: 300),
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: options.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final option = options.elementAt(index);
+                          final isOpenFoodFactsOption =
+                              option.startsWith('__SEARCH_OPENFOODFACTS__|');
+
+                          return InkWell(
+                            onTap: () => onSelected(option),
+                            child: Container(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  if (isOpenFoodFactsOption) ...[
+                                    const Icon(Icons.search, size: 20),
+                                    const SizedBox(width: 8),
+                                  ],
+                                  Expanded(
+                                    child: Text(
+                                      isOpenFoodFactsOption
+                                          ? 'Search OpenFoodFacts'
+                                          : option,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
               },
               onSelected: (option) async {
+                if (option.startsWith('__SEARCH_OPENFOODFACTS__|')) {
+                  final searchTerms = option.split('|')[1];
+                  Food? food = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SearchOpenFoodFacts(
+                        terms: searchTerms,
+                      ),
+                    ),
+                  );
+                  if (food == null) return;
+                  setState(() {
+                    selectedFood = food;
+                    foodDirty = false;
+                  });
+                  nameController?.text = food.name;
+                  recalc();
+                  quantityNode.requestFocus();
+                  selectAll(quantity);
+                  return;
+                }
+
                 final food = await (db.foods.select()
                       ..where((tbl) => tbl.name.equals(option))
                       ..limit(1))
                     .getSingleOrNull();
                 if (food == null) return;
-
                 final lastEntry = await (db.entries.select()
                       ..where((u) => u.food.equals(food.id))
                       ..orderBy([
@@ -368,7 +444,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       ])
                       ..limit(1))
                     .getSingleOrNull();
-
                 setState(() {
                   foodDirty = false;
                   selectedFood = food;
@@ -376,7 +451,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   quantity.text = lastEntry.quantity.toString();
                   unit = lastEntry.unit;
                 });
-
                 recalc();
                 quantityNode.requestFocus();
                 selectAll(quantity);
@@ -392,6 +466,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelText: 'Name',
+                    hintText: 'Type to search...',
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () async {
