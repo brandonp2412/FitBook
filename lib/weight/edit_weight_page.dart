@@ -256,12 +256,16 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 onTap: () => _selectDate(),
               ),
               if (image?.isNotEmpty == true && settings.showImages)
-                Image.file(
-                  File(image!),
-                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                    onPressed: () {},
-                    label: const Text('Image error'),
-                    icon: const Icon(Icons.error),
+                SizedBox(
+                  height: 200,
+                  child: Image.file(
+                    File(image!),
+                    errorBuilder: (context, error, stackTrace) =>
+                        TextButton.icon(
+                      onPressed: () {},
+                      label: const Text('Image error'),
+                      icon: const Icon(Icons.error),
+                    ),
                   ),
                 ),
               if (settings.showImages) ...[
