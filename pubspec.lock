@@ -1303,11 +1303,10 @@ packages:
   workmanager:
     dependency: "direct main"
     description:
-      path: workmanager
-      ref: main
-      resolved-ref: b45313bdcad1120b44b7f6e0dc772b101b8df68f
-      url: "https://github.com/fluttercommunity/flutter_workmanager.git"
-    source: git
+      name: workmanager
+      sha256: dffcbbfd99af17271ca52d8a3767ba8a1000b357f2774db8ed5d58879cb9783a
+      url: "https://pub.dev"
+    source: hosted
     version: "0.8.0"
   workmanager_android:
     dependency: transitive

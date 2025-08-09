@@ -14,118 +14,115 @@ class EntryFilters extends StatefulWidget {
 }
 
 class _EntryFiltersState extends State<EntryFilters> {
+  final groupCtrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<EntryState>();
+    groupCtrl.text = state.foodGroup ?? "";
+  }
+
   void _showFiltersDialog() {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Filters'),
-        content: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Food group',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    isDense: true,
-                    hintText: 'Fruit',
-                  ),
-                  initialValue: context.read<EntryState>().foodGroup,
-                  onFieldSubmitted: (value) {
-                    context.read<EntryState>().foodGroup =
-                        value.isNotEmpty ? value : null;
-                    Navigator.of(dialogContext).pop();
-                  },
-                  onEditingComplete: () {},
-                ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: groupCtrl,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                labelText: 'Food group',
+                hintText: 'Fruit',
               ),
-              const SizedBox(height: 16),
-
-              // Start date filter
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Start date'),
-                subtitle: Consumer<SettingsState>(
-                  builder: (context, settingsState, child) {
-                    final state = context.watch<EntryState>();
-                    final shortDateFormat = settingsState.value.shortDateFormat;
-                    return state.startDate != null
-                        ? Text(
-                            DateFormat(shortDateFormat)
-                                .format(state.startDate!),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Text(
-                            shortDateFormat,
-                            overflow: TextOverflow.ellipsis,
-                          );
-                  },
-                ),
-                onLongPress: () {
-                  context.read<EntryState>().startDate = null;
-                },
-                leading: const Icon(Icons.calendar_today),
-                onTap: () async {
-                  final DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: context.read<EntryState>().startDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-
-                  if (pickedDate != null && mounted) {
-                    context.read<EntryState>().startDate = pickedDate.toLocal();
-                  }
+              onFieldSubmitted: (value) {
+                context.read<EntryState>().foodGroup =
+                    value.isNotEmpty ? value : null;
+                Navigator.of(dialogContext).pop();
+              },
+              onEditingComplete: () {},
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Start date'),
+              subtitle: Consumer<SettingsState>(
+                builder: (context, settingsState, child) {
+                  final state = context.watch<EntryState>();
+                  final shortDateFormat = settingsState.value.shortDateFormat;
+                  return state.startDate != null
+                      ? Text(
+                          DateFormat(shortDateFormat).format(state.startDate!),
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Text(
+                          shortDateFormat,
+                          overflow: TextOverflow.ellipsis,
+                        );
                 },
               ),
+              onLongPress: () {
+                context.read<EntryState>().startDate = null;
+              },
+              leading: const Icon(Icons.calendar_today),
+              onTap: () async {
+                final DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: context.read<EntryState>().startDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
 
-              // End date filter
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Stop date'),
-                subtitle: Consumer<SettingsState>(
-                  builder: (context, settingsState, child) {
-                    final state = context.watch<EntryState>();
-                    final shortDateFormat = settingsState.value.shortDateFormat;
-                    return state.endDate != null
-                        ? Text(
-                            DateFormat(shortDateFormat).format(state.endDate!),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Text(
-                            shortDateFormat,
-                            overflow: TextOverflow.ellipsis,
-                          );
-                  },
-                ),
-                onLongPress: () {
-                  context.read<EntryState>().endDate = null;
-                },
-                leading: const Icon(Icons.calendar_today),
-                onTap: () async {
-                  final DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: context.read<EntryState>().endDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-
-                  if (pickedDate != null && mounted) {
-                    context.read<EntryState>().endDate = pickedDate.toLocal();
-                  }
+                if (pickedDate != null && mounted) {
+                  context.read<EntryState>().startDate = pickedDate.toLocal();
+                }
+              },
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Stop date'),
+              subtitle: Consumer<SettingsState>(
+                builder: (context, settingsState, child) {
+                  final state = context.watch<EntryState>();
+                  final shortDateFormat = settingsState.value.shortDateFormat;
+                  return state.endDate != null
+                      ? Text(
+                          DateFormat(shortDateFormat).format(state.endDate!),
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Text(
+                          shortDateFormat,
+                          overflow: TextOverflow.ellipsis,
+                        );
                 },
               ),
-            ],
-          ),
+              onLongPress: () {
+                context.read<EntryState>().endDate = null;
+              },
+              leading: const Icon(Icons.calendar_today),
+              onTap: () async {
+                final DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: context.read<EntryState>().endDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
+
+                if (pickedDate != null && mounted) {
+                  context.read<EntryState>().endDate = pickedDate.toLocal();
+                }
+              },
+            ),
+          ],
         ),
         actions: [
           TextButton(
             onPressed: () {
               context.read<EntryState>().clear();
+              groupCtrl.text = '';
               Navigator.of(dialogContext).pop();
             },
             child: Consumer<EntryState>(
@@ -136,7 +133,10 @@ class _EntryFiltersState extends State<EntryFilters> {
             ),
           ),
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
+            onPressed: () {
+              context.read<EntryState>().foodGroup = groupCtrl.text;
+              Navigator.of(dialogContext).pop();
+            },
             child: const Text('Done'),
           ),
         ],
