@@ -75,6 +75,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                   VoidCallback onFieldSubmitted,
                 ) {
                   controller = textEditingController;
+                  controller.text = widget.groupCtrl.text;
                   return TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Food group',
