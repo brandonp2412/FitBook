@@ -1,6 +1,9 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+
+import '../main.dart';
 
 class FoodFilters extends StatefulWidget {
   const FoodFilters({
@@ -26,6 +29,8 @@ class FoodFilters extends StatefulWidget {
 }
 
 class _FoodFiltersState extends State<FoodFilters> {
+  var controller = TextEditingController();
+
   int get filterCount =>
       (widget.groupCtrl.text.isNotEmpty == true ? 1 : 0) +
       (widget.servingSizeGtController.text.isNotEmpty ? 1 : 0) +
@@ -41,22 +46,52 @@ class _FoodFiltersState extends State<FoodFilters> {
           child: material.Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(
-                controller: widget.groupCtrl,
-                decoration: const InputDecoration(
-                  labelText: 'Food group',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  isDense: true,
-                  hintText: 'Fruit',
-                ),
-                onFieldSubmitted: (value) {
+              Autocomplete<String>(
+                optionsMaxHeight: 300,
+                optionsBuilder: (value) async {
+                  if (value.text.isEmpty) return [];
+                  final results = await (db.foods.selectOnly()
+                        ..where(
+                          db.foods.foodGroup.like('%${value.text}%') &
+                              db.foods.foodGroup.isNotNull(),
+                        )
+                        ..addColumns([db.foods.foodGroup])
+                        ..groupBy([db.foods.foodGroup]))
+                      .get();
+                  return results
+                      .map((result) => result.read(db.foods.foodGroup)!);
+                },
+                onSelected: (option) async {
+                  widget.groupCtrl.text = option;
                   widget.onChange(
-                    foodGroup: value,
+                    foodGroup: option,
                     servingUnit: widget.servingUnit,
                   );
-                  Navigator.of(dialogContext).pop();
                 },
-                onEditingComplete: () {},
+                fieldViewBuilder: (
+                  BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,
+                ) {
+                  controller = textEditingController;
+                  return TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Food group',
+                      hintText: 'Fruit',
+                    ),
+                    controller: textEditingController,
+                    focusNode: focusNode,
+                    textCapitalization: TextCapitalization.sentences,
+                    onFieldSubmitted: (String value) {
+                      widget.onChange(
+                        foodGroup: value,
+                        servingUnit: widget.servingUnit,
+                      );
+                    },
+                    textInputAction: TextInputAction.next,
+                  );
+                },
               ),
               DropdownButtonFormField<String>(
                 value: widget.servingUnit,

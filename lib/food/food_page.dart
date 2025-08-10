@@ -94,7 +94,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         ]);
     }
     if (groupCtrl.text.isNotEmpty)
-      query = query..where(db.foods.foodGroup.like(groupCtrl.text));
+      query = query..where(db.foods.foodGroup.like('%${groupCtrl.text}%'));
     if (_servingUnit != null)
       query = query..where(db.foods.servingUnit.equals(_servingUnit!));
     if (gtController.text.isNotEmpty)
