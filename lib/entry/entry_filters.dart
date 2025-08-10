@@ -60,6 +60,7 @@ class _EntryFiltersState extends State<EntryFilters> {
                 VoidCallback onFieldSubmitted,
               ) {
                 groupCtrl = textEditingController;
+                groupCtrl.text = context.read<EntryState>().foodGroup ?? "";
                 return TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Food group',
