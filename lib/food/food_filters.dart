@@ -41,28 +41,23 @@ class _FoodFiltersState extends State<FoodFilters> {
           child: material.Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  controller: widget.groupCtrl,
-                  decoration: const InputDecoration(
-                    labelText: 'Food group',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    isDense: true,
-                    hintText: 'Fruit',
-                  ),
-                  onFieldSubmitted: (value) {
-                    widget.onChange(
-                      foodGroup: value,
-                      servingUnit: widget.servingUnit,
-                    );
-                    Navigator.of(dialogContext).pop();
-                  },
-                  onEditingComplete: () {},
+              TextFormField(
+                controller: widget.groupCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'Food group',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  isDense: true,
+                  hintText: 'Fruit',
                 ),
+                onFieldSubmitted: (value) {
+                  widget.onChange(
+                    foodGroup: value,
+                    servingUnit: widget.servingUnit,
+                  );
+                  Navigator.of(dialogContext).pop();
+                },
+                onEditingComplete: () {},
               ),
-              const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: widget.servingUnit,
                 decoration: const InputDecoration(
@@ -82,37 +77,31 @@ class _FoodFiltersState extends State<FoodFilters> {
                   );
                 },
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: widget.servingSizeGtController,
-                      onChanged: (value) => widget.onChange(
-                        foodGroup: widget.groupCtrl.text,
-                        servingUnit: widget.servingUnit,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: "Serving size >",
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: widget.servingSizeLtController,
-                      onChanged: (value) => widget.onChange(
-                        foodGroup: widget.groupCtrl.text,
-                        servingUnit: widget.servingUnit,
-                      ),
-                      decoration: const InputDecoration(
-                        labelText: "Serving size <",
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
+              SizedBox(height: 8),
+              TextField(
+                controller: widget.servingSizeGtController,
+                onChanged: (value) => widget.onChange(
+                  foodGroup: widget.groupCtrl.text,
+                  servingUnit: widget.servingUnit,
+                ),
+                decoration: const InputDecoration(
+                  labelText: "Serving size greater than",
+                  prefixIcon: Icon(Icons.chevron_right),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 8),
+              TextField(
+                controller: widget.servingSizeLtController,
+                onChanged: (value) => widget.onChange(
+                  foodGroup: widget.groupCtrl.text,
+                  servingUnit: widget.servingUnit,
+                ),
+                decoration: const InputDecoration(
+                  labelText: "Serving size less than",
+                  prefixIcon: Icon(Icons.chevron_left),
+                ),
+                keyboardType: TextInputType.number,
               ),
             ],
           ),
@@ -132,7 +121,13 @@ class _FoodFiltersState extends State<FoodFilters> {
             child: const Text('Clear All'),
           ),
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
+            onPressed: () {
+              widget.onChange(
+                foodGroup: widget.groupCtrl.text,
+                servingUnit: widget.servingUnit,
+              );
+              Navigator.of(dialogContext).pop();
+            },
             child: const Text('Done'),
           ),
         ],
