@@ -55,9 +55,10 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         products = search.products ?? [];
       });
     } finally {
-      setState(() {
-        searching = false;
-      });
+      if (mounted)
+        setState(() {
+          searching = false;
+        });
     }
   }
 

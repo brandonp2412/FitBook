@@ -360,7 +360,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
               },
               displayStringForOption: (option) {
                 if (option.startsWith('__SEARCH_OPENFOODFACTS__|')) {
-                  return 'Search OpenFoodFacts';
+                  return option.split('|').last;
                 }
                 return option;
               },
@@ -381,7 +381,9 @@ class _EditEntryPageState extends State<EditEntryPage> {
                               option.startsWith('__SEARCH_OPENFOODFACTS__|');
 
                           return InkWell(
-                            onTap: () => onSelected(option),
+                            onTap: () {
+                              onSelected(option);
+                            },
                             child: Container(
                               padding: const EdgeInsets.all(16.0),
                               child: Row(
