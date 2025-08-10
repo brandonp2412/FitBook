@@ -729,13 +729,16 @@ class _EditEntryPageState extends State<EditEntryPage> {
               const SizedBox(height: 8),
               kIsWeb
                   ? const SizedBox.shrink()
-                  : Image.file(
-                      File(imageFile!),
-                      errorBuilder: (context, error, stackTrace) =>
-                          TextButton.icon(
-                        onPressed: () {},
-                        label: const Text('Image error'),
-                        icon: const Icon(Icons.error),
+                  : SizedBox(
+                      height: 200,
+                      child: Image.file(
+                        File(imageFile!),
+                        errorBuilder: (context, error, stackTrace) =>
+                            TextButton.icon(
+                          onPressed: () {},
+                          label: const Text('Image error'),
+                          icon: const Icon(Icons.error),
+                        ),
                       ),
                     ),
             ],
