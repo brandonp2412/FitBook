@@ -30,12 +30,27 @@ class FoodFilters extends StatefulWidget {
 
 class _FoodFiltersState extends State<FoodFilters> {
   var controller = TextEditingController();
+  String? _servingUnit;
+
+  @override
+  void initState() {
+    super.initState();
+    _servingUnit = widget.servingUnit;
+  }
+
+  @override
+  void didUpdateWidget(covariant FoodFilters oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.servingUnit != oldWidget.servingUnit) {
+      _servingUnit = widget.servingUnit;
+    }
+  }
 
   int get filterCount =>
       (widget.groupCtrl.text.isNotEmpty == true ? 1 : 0) +
       (widget.servingSizeGtController.text.isNotEmpty ? 1 : 0) +
       (widget.servingSizeLtController.text.isNotEmpty ? 1 : 0) +
-      (widget.servingUnit?.isNotEmpty == true ? 1 : 0);
+      (_servingUnit?.isNotEmpty == true ? 1 : 0);
 
   void _showFilterDialog() {
     showDialog(
@@ -65,7 +80,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                   widget.groupCtrl.text = option;
                   widget.onChange(
                     foodGroup: option,
-                    servingUnit: widget.servingUnit,
+                    servingUnit: _servingUnit,
                   );
                 },
                 fieldViewBuilder: (
@@ -87,7 +102,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                     onFieldSubmitted: (String value) {
                       widget.onChange(
                         foodGroup: value,
-                        servingUnit: widget.servingUnit,
+                        servingUnit: _servingUnit,
                       );
                     },
                     textInputAction: TextInputAction.next,
@@ -95,7 +110,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 },
               ),
               DropdownButtonFormField<String>(
-                value: widget.servingUnit,
+                value: _servingUnit,
                 decoration: const InputDecoration(
                   labelText: 'Serving unit',
                   floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -107,6 +122,9 @@ class _FoodFiltersState extends State<FoodFilters> {
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
+                  setState(() {
+                    _servingUnit = newValue;
+                  });
                   widget.onChange(
                     foodGroup: widget.groupCtrl.text,
                     servingUnit: newValue,
@@ -118,7 +136,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 controller: widget.servingSizeGtController,
                 onChanged: (value) => widget.onChange(
                   foodGroup: widget.groupCtrl.text,
-                  servingUnit: widget.servingUnit,
+                  servingUnit: _servingUnit,
                 ),
                 decoration: const InputDecoration(
                   labelText: "Serving size greater than",
@@ -131,7 +149,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 controller: widget.servingSizeLtController,
                 onChanged: (value) => widget.onChange(
                   foodGroup: widget.groupCtrl.text,
-                  servingUnit: widget.servingUnit,
+                  servingUnit: _servingUnit,
                 ),
                 decoration: const InputDecoration(
                   labelText: "Serving size less than",
@@ -148,6 +166,9 @@ class _FoodFiltersState extends State<FoodFilters> {
               widget.servingSizeGtController.clear();
               widget.servingSizeLtController.clear();
               widget.groupCtrl.clear();
+              setState(() {
+                _servingUnit = null;
+              });
               widget.onChange(
                 foodGroup: null,
                 servingUnit: null,
@@ -160,7 +181,7 @@ class _FoodFiltersState extends State<FoodFilters> {
             onPressed: () {
               widget.onChange(
                 foodGroup: widget.groupCtrl.text,
-                servingUnit: widget.servingUnit,
+                servingUnit: _servingUnit,
               );
               Navigator.of(dialogContext).pop();
             },

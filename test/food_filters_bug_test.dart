@@ -84,12 +84,15 @@ void main() async {
       await tester.tap(servingUnitDropdown);
       await tester.pumpAndSettle();
 
-      // Find and tap the "ounces" option
-      final ouncesOption = find.text('ounces').last;
-      expect(ouncesOption, findsOneWidget);
+      // Find and tap the "serving" option within the dropdown's overlay
+      final servingOption = find.descendant(
+        of: find.byType(DropdownMenuItem<String>),
+        matching: find.text('serving'),
+      );
+      expect(servingOption, findsOneWidget);
 
       // This should not cause any errors with the new implementation
-      await tester.tap(ouncesOption);
+      await tester.tap(servingOption);
       await tester.pumpAndSettle();
 
       // Close the dialog
@@ -98,7 +101,7 @@ void main() async {
 
       // Verify the onChange callback was called
       expect(onChangeCallbackCalled, isTrue);
-      expect(selectedServingUnit, equals('ounces'));
+      expect(selectedServingUnit, equals('serving'));
 
       // Clean up
       servingSizeGtController.dispose();
