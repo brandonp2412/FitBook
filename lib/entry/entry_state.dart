@@ -147,7 +147,7 @@ class EntryState extends ChangeNotifier {
       ..limit(_limit));
 
     if (_foodGroup != null)
-      query = query..where(db.foods.foodGroup.like(_foodGroup!));
+      query = query..where(db.foods.foodGroup.like('%$_foodGroup%'));
     if (_startDate != null)
       query = query..where(db.entries.created.isBiggerThanValue(_startDate!));
     if (_endDate != null)
