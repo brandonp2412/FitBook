@@ -91,7 +91,7 @@ void main() async {
     expect(find.text('Test 5'), findsOne);
 
     await tester.longPress(find.text('Test 5'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Delete'));
     await tester.pump();
     await tester.tap(find.text('Delete'));

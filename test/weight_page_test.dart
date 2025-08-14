@@ -145,7 +145,7 @@ void main() async {
 
       expect(find.textContaining('60'), findsOne);
       await tester.longPress(find.textContaining('60'));
-      await tester.pump();
+      await tester.pumpAndSettle();
       await tester.tap(find.textContaining('70'));
       await tester.tap(find.textContaining('80'));
       await tester.tap(find.byTooltip('Delete'));
