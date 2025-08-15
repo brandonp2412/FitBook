@@ -9,16 +9,16 @@ import 'package:provider/provider.dart';
 
 import '../database/database.dart';
 
-class EditEntriesPage extends StatefulWidget {
-  final List<int> entryIds;
+class EditDiariesPage extends StatefulWidget {
+  final List<int> diaryIds;
 
-  const EditEntriesPage({super.key, required this.entryIds});
+  const EditDiariesPage({super.key, required this.diaryIds});
 
   @override
-  createState() => _EditEntriesPageState();
+  createState() => _EditDiariesPageState();
 }
 
-class _EditEntriesPageState extends State<EditEntriesPage> {
+class _EditDiariesPageState extends State<EditDiariesPage> {
   final quantityController = TextEditingController();
   final caloriesController = TextEditingController();
   final kilojoulesController = TextEditingController();
@@ -42,24 +42,24 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   void initState() {
     super.initState();
 
-    (db.entries.selectOnly()
+    (db.diaries.selectOnly()
           ..addColumns([
-            db.entries.id,
-            db.entries.quantity,
-            db.entries.unit,
+            db.diaries.id,
+            db.diaries.quantity,
+            db.diaries.unit,
             db.foods.name,
           ])
-          ..where(db.entries.id.isIn(widget.entryIds))
-          ..join([innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))]))
+          ..where(db.diaries.id.isIn(widget.diaryIds))
+          ..join([innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))]))
         .get()
         .then((results) {
       setState(() {
         oldNames =
             results.map((result) => result.read(db.foods.name)).join(', ');
         oldUnits =
-            results.map((result) => result.read(db.entries.unit)).join(', ');
+            results.map((result) => result.read(db.diaries.unit)).join(', ');
         oldQuantities = results
-            .map((result) => result.read(db.entries.quantity))
+            .map((result) => result.read(db.diaries.quantity))
             .join(', ');
       });
     });
@@ -73,8 +73,8 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
   Future<void> _save() async {
     final quantity = double.tryParse(quantityController.text);
 
-    for (final id in widget.entryIds) {
-      final oldEntry = await (db.entries.select()
+    for (final id in widget.diaryIds) {
+      final oldEntry = await (db.diaries.select()
             ..where((u) => u.id.equals(id)))
           .getSingle();
       int foodId;
@@ -91,12 +91,12 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
         foodId = selectedFood?.id ?? oldEntry.food;
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
-      final newEntry = EntriesCompanion(
+      final newEntry = DiariesCompanion(
         food: Value(food.id),
         quantity: Value(quantity ?? oldEntry.quantity),
         unit: Value(unit ?? oldEntry.unit),
       );
-      await (db.entries.update()..where((u) => u.id.equals(id))).write(
+      await (db.diaries.update()..where((u) => u.id.equals(id))).write(
         newEntry.copyWith(
           created: created != null ? Value(created!) : const Value.absent(),
         ),
@@ -169,7 +169,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Edit ${widget.entryIds.length} entries",
+          "Edit ${widget.diaryIds.length} entries",
         ),
         actions: [
           IconButton(
@@ -181,7 +181,7 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                   return AlertDialog(
                     title: const Text('Confirm delete'),
                     content: Text(
-                      'Are you sure you want to delete ${widget.entryIds.length} entries?',
+                      'Are you sure you want to delete ${widget.diaryIds.length} entries?',
                     ),
                     actions: <Widget>[
                       TextButton(
@@ -194,8 +194,8 @@ class _EditEntriesPageState extends State<EditEntriesPage> {
                         child: const Text('Delete'),
                         onPressed: () async {
                           Navigator.pop(dialogContext);
-                          await db.entries
-                              .deleteWhere((u) => u.id.isIn(widget.entryIds));
+                          await db.diaries
+                              .deleteWhere((u) => u.id.isIn(widget.diaryIds));
                           if (context.mounted) Navigator.pop(context);
                         },
                       ),

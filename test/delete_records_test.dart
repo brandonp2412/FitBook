@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -13,8 +13,8 @@ import 'mock_tests.dart';
 void main() async {
   testWidgets('DeleteRecords diary', (WidgetTester tester) async {
     await mockTests();
-    await (db.entries.insertOne(
-      EntriesCompanion.insert(
+    await (db.diaries.insertOne(
+      DiariesCompanion.insert(
         food:
             await (db.foods.insertOne(FoodsCompanion.insert(name: 'Chicken'))),
         created: DateTime.now(),
@@ -29,7 +29,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -49,7 +49,7 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.text('Delete records'), findsNothing);
 
-    final remaining = await (db.entries.select()).get();
+    final remaining = await (db.diaries.select()).get();
     expect(remaining.length, equals(0));
 
     await db.close();
@@ -65,7 +65,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
           home: Scaffold(
@@ -107,7 +107,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
           home: Scaffold(

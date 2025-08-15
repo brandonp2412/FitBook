@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/internal/versioned_schema.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.steps.dart';
-import 'package:fit_book/database/entries.dart';
+import 'package:fit_book/database/diaries.dart';
 import 'package:fit_book/database/foods.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
@@ -20,7 +20,7 @@ import 'database_connection_web.dart'
 part 'database.g.dart';
 
 @DriftDatabase(
-  tables: [Foods, Entries, Weights, Settings],
+  tables: [Foods, Diaries, Weights, Settings],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor, bool? dontLog})
@@ -339,8 +339,15 @@ WHERE name = 'Quick-add'
     from39To40: (Migrator m, Schema40 schema) async {
       await m.addColumn(schema.settings, schema.settings.dailyFiber);
     },
+    from40To41: (Migrator m, Schema41 schema) async {
+      await m.createTable(schema.diaries);
+      await m.database.customStatement(
+        "INSERT INTO ${schema.diaries.actualTableName} SELECT * FROM entries",
+      );
+      await m.database.customStatement("DROP TABLE entries");
+    },
   );
 
   @override
-  int get schemaVersion => 40;
+  int get schemaVersion => 41;
 }

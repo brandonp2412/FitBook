@@ -2,8 +2,8 @@ import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/failed_migrations_page.dart';
-import 'package:fit_book/entry/diary_page.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_page.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/reminders.dart';
@@ -53,7 +53,7 @@ Widget appProviders(SettingsState state) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => state),
         ChangeNotifierProvider(
-          create: (context) => EntryState(),
+          create: (context) => DiaryState(),
         ),
       ],
       child: const App(),

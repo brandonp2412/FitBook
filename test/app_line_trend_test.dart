@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(
@@ -99,7 +99,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(
@@ -162,7 +162,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(
@@ -202,8 +202,8 @@ void main() async {
       final settings = await (db.settings.select()).getSingle();
       final settingsState = SettingsState(settings);
 
-      await (db.entries.insertAll([
-        EntriesCompanion.insert(
+      await (db.diaries.insertAll([
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test Food 1',
@@ -215,7 +215,7 @@ void main() async {
           quantity: 20,
           unit: 'serving',
         ),
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test Food 2',
@@ -227,7 +227,7 @@ void main() async {
           quantity: 18,
           unit: 'serving',
         ),
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test Food 3',
@@ -239,7 +239,7 @@ void main() async {
           quantity: 16,
           unit: 'serving',
         ),
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test Food 4',
@@ -257,7 +257,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(
@@ -304,7 +304,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(
@@ -342,7 +342,7 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => settingsState),
-            ChangeNotifierProvider(create: (context) => EntryState()),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
           child: MaterialApp(
             home: Scaffold(

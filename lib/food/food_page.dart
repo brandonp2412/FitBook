@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_foods_page.dart';
 import 'package:fit_book/food/food_filters.dart';
@@ -39,7 +39,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
 
-    final state = context.read<EntryState>();
+    final state = context.read<DiaryState>();
     groupCtrl.text = state.foodGroup ?? "";
     setStream();
   }

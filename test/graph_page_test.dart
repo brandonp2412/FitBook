@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -12,14 +12,14 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('GraphPage entries', (WidgetTester tester) async {
+  testWidgets('GraphPage diaries', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    await (db.entries.insertAll(
+    await (db.diaries.insertAll(
       [
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 3',
@@ -31,7 +31,7 @@ void main() async {
           quantity: 1,
           unit: 'serving',
         ),
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 2',
@@ -43,7 +43,7 @@ void main() async {
           quantity: 1,
           unit: 'serving',
         ),
-        EntriesCompanion.insert(
+        DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 1',
@@ -62,7 +62,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: const MaterialApp(
           home: GraphPage(),
@@ -120,7 +120,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: const MaterialApp(
           home: GraphPage(),

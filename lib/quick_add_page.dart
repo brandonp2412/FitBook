@@ -36,12 +36,12 @@ class _QuickAddPageState extends State<QuickAddPage> {
 
   void initData() async {
     if (widget.id == null) {
-      final last = await (db.entries.selectOnly().join(
-        [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
+      final last = await (db.diaries.selectOnly().join(
+        [innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))],
       )
             ..addColumns(
               [
-                db.entries.quantity,
+                db.diaries.quantity,
                 db.foods.proteinG,
                 db.foods.carbohydrateG,
                 db.foods.fatG,
@@ -50,14 +50,14 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ..where(db.foods.name.equals('Quick-add'))
             ..orderBy([
               OrderingTerm(
-                expression: db.entries.created,
+                expression: db.diaries.created,
                 mode: OrderingMode.desc,
               ),
             ])
             ..limit(1))
           .getSingleOrNull();
       if (last == null) return;
-      cal.text = last.read(db.entries.quantity)!.toString();
+      cal.text = last.read(db.diaries.quantity)!.toString();
       kj.text = formatter.format(formatter.parse(cal.text) * 4.184);
       protein.text = last.read(db.foods.proteinG)!.toString();
       carb.text = last.read(db.foods.carbohydrateG)!.toString();
@@ -66,7 +66,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       return;
     }
 
-    final entry = await (db.entries.select()
+    final entry = await (db.diaries.select()
           ..where((u) => u.id.equals(widget.id!)))
         .getSingle();
     final food = await (db.foods.select()
@@ -102,8 +102,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
 
     final qty = double.parse(cal.text);
     if (widget.id == null)
-      db.into(db.entries).insert(
-            EntriesCompanion.insert(
+      db.into(db.diaries).insert(
+            DiariesCompanion.insert(
               food: foodId,
               created: created,
               quantity: qty,
@@ -111,10 +111,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ),
           );
     else
-      db.entries.update()
+      db.diaries.update()
         ..where((u) => u.id.equals(widget.id!))
         ..write(
-          EntriesCompanion(
+          DiariesCompanion(
             food: Value(foodId),
             created: Value(created),
             quantity: Value(qty),

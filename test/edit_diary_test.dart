@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/edit_entry_page.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('EditEntry converts units', (WidgetTester tester) async {
+  testWidgets('EditDiary converts units', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -26,8 +26,8 @@ void main() async {
         fatG: const Value(4),
       ),
     ));
-    final entryId = await (db.entries.insertOne(
-      EntriesCompanion.insert(
+    final entryId = await (db.diaries.insertOne(
+      DiariesCompanion.insert(
         food: foodId,
         created: DateTime.now(),
         quantity: 1,
@@ -39,10 +39,10 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditEntryPage(
+          home: EditDiaryPage(
             id: entryId,
           ),
         ),
@@ -74,7 +74,7 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('EditEntry updates', (WidgetTester tester) async {
+  testWidgets('EditDiary updates', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -88,8 +88,8 @@ void main() async {
         fatG: const Value(4),
       ),
     ));
-    final entryId = await (db.entries.insertOne(
-      EntriesCompanion.insert(
+    final entryId = await (db.diaries.insertOne(
+      DiariesCompanion.insert(
         food: foodId,
         created: DateTime.now(),
         quantity: 1,
@@ -101,10 +101,10 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditEntryPage(
+          home: EditDiaryPage(
             id: entryId,
           ),
         ),
@@ -135,7 +135,7 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('EditEntry preserves OpenFoodFacts serving size on save',
+  testWidgets('EditDiary preserves OpenFoodFacts serving size on save',
       (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
@@ -155,8 +155,8 @@ void main() async {
         fatG: const Value(4),
       ),
     ));
-    final entryId = await (db.entries.insertOne(
-      EntriesCompanion.insert(
+    final entryId = await (db.diaries.insertOne(
+      DiariesCompanion.insert(
         food: foodId,
         created: DateTime.now(),
         quantity: 1,
@@ -168,10 +168,10 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditEntryPage(
+          home: EditDiaryPage(
             id: entryId,
           ),
         ),
@@ -202,7 +202,7 @@ void main() async {
     await tester.pumpAndSettle(); // Wait for navigation to complete
 
     // 5. Query the database for the saved food and entry
-    final updatedEntry = await (db.entries.select()
+    final updatedEntry = await (db.diaries.select()
           ..where((e) => e.id.equals(entryId)))
         .getSingle();
     final savedFood = await (db.foods.select()

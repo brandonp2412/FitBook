@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fit_book/entry/edit_entry_page.dart';
-import 'package:fit_book/entry/entry_food.dart';
-import 'package:fit_book/entry/stats.dart';
+import 'package:fit_book/diary/diary_food.dart';
+import 'package:fit_book/diary/edit_diary_page.dart';
+import 'package:fit_book/diary/stats.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings/diary_settings.dart';
@@ -13,27 +13,27 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EntryList extends StatefulWidget {
-  const EntryList({
+class DiaryList extends StatefulWidget {
+  const DiaryList({
     super.key,
-    required this.entryFoods,
+    required this.diaryFoods,
     required this.selected,
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
   });
 
-  final List<EntryFood> entryFoods;
+  final List<DiaryFood> diaryFoods;
   final ScrollController ctrl;
   final Set<int> selected;
   final Function(int) onSelect;
   final Function() onNext;
 
   @override
-  State<EntryList> createState() => _EntryListState();
+  State<DiaryList> createState() => _DiaryListState();
 }
 
-class _EntryListState extends State<EntryList> {
+class _DiaryListState extends State<DiaryList> {
   @override
   void initState() {
     super.initState();
@@ -57,25 +57,25 @@ class _EntryListState extends State<EntryList> {
     final settings = context.watch<SettingsState>().value;
 
     Map<DateTime, Stats> stats = {};
-    for (final entryFood in widget.entryFoods) {
+    for (final diaryFood in widget.diaryFoods) {
       final day = DateTime(
-        entryFood.created.year,
-        entryFood.created.month,
-        entryFood.created.day,
+        diaryFood.created.year,
+        diaryFood.created.month,
+        diaryFood.created.day,
       );
       if (stats.containsKey(day)) {
-        stats[day]!.cals += entryFood.metrics[db.foods.calories.name] ?? 0;
-        stats[day]!.protein += entryFood.metrics[db.foods.proteinG.name] ?? 0;
-        stats[day]!.fat += entryFood.metrics[db.foods.fatG.name] ?? 0;
-        stats[day]!.carb += entryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
-        stats[day]!.fiber += entryFood.metrics[db.foods.fiberG.name] ?? 0;
+        stats[day]!.cals += diaryFood.metrics[db.foods.calories.name] ?? 0;
+        stats[day]!.protein += diaryFood.metrics[db.foods.proteinG.name] ?? 0;
+        stats[day]!.fat += diaryFood.metrics[db.foods.fatG.name] ?? 0;
+        stats[day]!.carb += diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
+        stats[day]!.fiber += diaryFood.metrics[db.foods.fiberG.name] ?? 0;
       } else
         stats[day] = Stats(
-          cals: entryFood.metrics[db.foods.calories.name] ?? 0,
-          protein: entryFood.metrics[db.foods.proteinG.name] ?? 0,
-          fat: entryFood.metrics[db.foods.fatG.name] ?? 0,
-          carb: entryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
-          fiber: entryFood.metrics[db.foods.fiberG.name] ?? 0,
+          cals: diaryFood.metrics[db.foods.calories.name] ?? 0,
+          protein: diaryFood.metrics[db.foods.proteinG.name] ?? 0,
+          fat: diaryFood.metrics[db.foods.fatG.name] ?? 0,
+          carb: diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
+          fiber: diaryFood.metrics[db.foods.fiberG.name] ?? 0,
         );
     }
 
@@ -83,19 +83,19 @@ class _EntryListState extends State<EntryList> {
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8),
         controller: widget.ctrl,
-        itemCount: widget.entryFoods.length,
+        itemCount: widget.diaryFoods.length,
         itemBuilder: (context, index) {
-          final entryFood = widget.entryFoods[index];
-          final foodName = entryFood.name;
-          final previous = index > 0 ? widget.entryFoods[index - 1] : null;
-          final selected = widget.selected.contains(entryFood.entryId);
+          final diaryFood = widget.diaryFoods[index];
+          final foodName = diaryFood.name;
+          final previous = index > 0 ? widget.diaryFoods[index - 1] : null;
+          final selected = widget.selected.contains(diaryFood.entryId);
           final showDivider = previous != null &&
               !isSameDay(
                 previous.created,
-                entryFood.created,
+                diaryFood.created,
               );
-          final suffix = entryFood.unit == 'serving' && entryFood.quantity > 1
-              ? " x${entryFood.quantity.toInt()}"
+          final suffix = diaryFood.unit == 'serving' && diaryFood.quantity > 1
+              ? " x${diaryFood.quantity.toInt()}"
               : "";
 
           Widget? statsRow;
@@ -206,14 +206,14 @@ class _EntryListState extends State<EntryList> {
 
           Widget? image;
           if (settings.showImages) {
-            if (entryFood.imageFile?.isNotEmpty == true)
-              image = Image.file(File(entryFood.imageFile!));
-            else if (entryFood.smallImage?.isNotEmpty == true)
+            if (diaryFood.imageFile?.isNotEmpty == true)
+              image = Image.file(File(diaryFood.imageFile!));
+            else if (diaryFood.smallImage?.isNotEmpty == true)
               image = SizedBox(
                 height: 80,
                 width: 50,
                 child: CachedNetworkImage(
-                  imageUrl: entryFood.smallImage!,
+                  imageUrl: diaryFood.smallImage!,
                 ),
               );
           }
@@ -237,7 +237,7 @@ class _EntryListState extends State<EntryList> {
                 leading: image,
                 title: Text("$foodName$suffix"),
                 subtitle: Text(
-                  DateFormat(settings.longDateFormat).format(entryFood.created),
+                  DateFormat(settings.longDateFormat).format(diaryFood.created),
                 ),
                 trailing: Stack(
                   children: [
@@ -247,7 +247,7 @@ class _EntryListState extends State<EntryList> {
                       child: Visibility(
                         visible: !selected,
                         child: Text(
-                          "${entryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
+                          "${diaryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
@@ -259,36 +259,36 @@ class _EntryListState extends State<EntryList> {
                         visible: selected,
                         child: Checkbox(
                           value: selected,
-                          onChanged: (_) => widget.onSelect(entryFood.entryId),
+                          onChanged: (_) => widget.onSelect(diaryFood.entryId),
                         ),
                       ),
                     ),
                   ],
                 ),
                 selected: selected,
-                onLongPress: () => widget.onSelect(entryFood.entryId),
+                onLongPress: () => widget.onSelect(diaryFood.entryId),
                 onTap: () {
-                  if (widget.selected.isEmpty && entryFood.name != 'Quick-add')
+                  if (widget.selected.isEmpty && diaryFood.name != 'Quick-add')
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditEntryPage(
-                          id: entryFood.entryId,
+                        builder: (context) => EditDiaryPage(
+                          id: diaryFood.entryId,
                         ),
                       ),
                     );
                   else if (widget.selected.isEmpty &&
-                      entryFood.name == 'Quick-add')
+                      diaryFood.name == 'Quick-add')
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => QuickAddPage(
-                          id: entryFood.entryId,
+                          id: diaryFood.entryId,
                         ),
                       ),
                     );
                   else
-                    widget.onSelect(entryFood.entryId);
+                    widget.onSelect(diaryFood.entryId);
                 },
               ),
             ],

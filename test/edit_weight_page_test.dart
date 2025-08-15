@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
@@ -20,7 +20,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
           home: EditWeightPage(
@@ -65,7 +65,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
           home: EditWeightPage(

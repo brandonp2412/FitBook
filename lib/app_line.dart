@@ -146,8 +146,8 @@ class _AppLineState extends State<AppLine> {
     // Define the quantity in grams expression with proper serving unit handling
     final qtyInGrams = CustomExpression<double>('''
     CASE 
-      WHEN entries.unit = 'serving' 
-      THEN entries.quantity * (
+      WHEN diaries.unit = 'serving' 
+      THEN diaries.quantity * (
         CASE 
           WHEN foods.serving_size IS NULL THEN 100
           WHEN foods.serving_unit IS NULL THEN foods.serving_size
@@ -162,16 +162,16 @@ class _AppLineState extends State<AppLine> {
           ELSE 100
         END
       )
-      WHEN entries.unit IN ('grams', 'milliliters') THEN entries.quantity
-      WHEN entries.unit = 'milligrams' THEN entries.quantity / 1000
-      WHEN entries.unit = 'cups' THEN entries.quantity * 250
-      WHEN entries.unit = 'tablespoons' THEN entries.quantity * 15
-      WHEN entries.unit = 'teaspoons' THEN entries.quantity * 5
-      WHEN entries.unit = 'ounces' THEN entries.quantity * 28.35
-      WHEN entries.unit = 'pounds' THEN entries.quantity * 453.592
-      WHEN entries.unit = 'liters' THEN entries.quantity * 1000
-      WHEN entries.unit = 'kilojoules' THEN entries.quantity / 4.184
-      ELSE entries.quantity
+      WHEN diaries.unit IN ('grams', 'milliliters') THEN diaries.quantity
+      WHEN diaries.unit = 'milligrams' THEN diaries.quantity / 1000
+      WHEN diaries.unit = 'cups' THEN diaries.quantity * 250
+      WHEN diaries.unit = 'tablespoons' THEN diaries.quantity * 15
+      WHEN diaries.unit = 'teaspoons' THEN diaries.quantity * 5
+      WHEN diaries.unit = 'ounces' THEN diaries.quantity * 28.35
+      WHEN diaries.unit = 'pounds' THEN diaries.quantity * 453.592
+      WHEN diaries.unit = 'liters' THEN diaries.quantity * 1000
+      WHEN diaries.unit = 'kilojoules' THEN diaries.quantity / 4.184
+      ELSE diaries.quantity
     END
   ''');
 
@@ -196,14 +196,14 @@ class _AppLineState extends State<AppLine> {
     Map<String, CustomExpression> metricCols = {
       'calories': CustomExpression<double>(
         '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
-        watchedTables: {db.foods, db.entries},
+        watchedTables: {db.foods, db.diaries},
       ),
     };
 
     for (final field in fields) {
       metricCols[field] = CustomExpression<double>(
         '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content})''',
-        watchedTables: {db.foods, db.entries},
+        watchedTables: {db.foods, db.diaries},
       );
     }
 
@@ -211,15 +211,15 @@ class _AppLineState extends State<AppLine> {
     if (widget.groupBy != Period.day) {
       metricCols['calories'] = CustomExpression<double>(
         '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
-         COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
-        watchedTables: {db.foods, db.entries},
+         COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
+        watchedTables: {db.foods, db.diaries},
       );
 
       for (final field in fields) {
         metricCols[field] = CustomExpression<double>(
           '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content}) / 
-           COUNT(DISTINCT date(entries.created, 'unixepoch'))''',
-          watchedTables: {db.foods, db.entries},
+           COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
+          watchedTables: {db.foods, db.diaries},
         );
       }
     }
@@ -263,28 +263,28 @@ class _AppLineState extends State<AppLine> {
                 .toList(),
           );
     } else {
-      final createdCol = getCreated('entries');
-      stream = (db.entries.selectOnly()
+      final createdCol = getCreated('diaries');
+      stream = (db.diaries.selectOnly()
             ..addColumns([
-              db.entries.created,
+              db.diaries.created,
               ...metricCols.values,
             ])
             ..join(
-              [innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))],
+              [innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))],
             )
             ..orderBy([
               OrderingTerm(
-                expression: db.entries.created,
+                expression: db.diaries.created,
                 mode: OrderingMode.desc,
               ),
             ])
             ..where(
-              db.entries.created.isBiggerOrEqualValue(
+              db.diaries.created.isBiggerOrEqualValue(
                 widget.start ?? DateTime(0),
               ),
             )
             ..where(
-              db.entries.created.isSmallerOrEqualValue(
+              db.diaries.created.isSmallerOrEqualValue(
                 widget.end ?? DateTime.now().add(const Duration(days: 1)),
               ),
             )
@@ -293,7 +293,7 @@ class _AppLineState extends State<AppLine> {
           .watch()
           .map((results) {
         return results.map((result) {
-          final created = result.read(db.entries.created)!.toLocal();
+          final created = result.read(db.diaries.created)!.toLocal();
           double val =
               (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
           String unit = widget.metric == 'calories' ? 'kcal' : 'g';

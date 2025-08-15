@@ -1,4 +1,4 @@
-class EntryFood {
+class DiaryFood {
   final String name;
   final String unit;
   final double quantity;
@@ -9,7 +9,7 @@ class EntryFood {
   final String? imageFile;
   final String? smallImage;
 
-  EntryFood({
+  DiaryFood({
     required this.name,
     required this.foodId,
     required this.entryId,

@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/edit_entries_page.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('EditEntries', (WidgetTester tester) async {
+  testWidgets('EditDiaries', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -23,8 +23,8 @@ void main() async {
       ),
     ));
 
-    await (db.entries.insertAll([
-      EntriesCompanion.insert(
+    await (db.diaries.insertAll([
+      DiariesCompanion.insert(
         food: await (db.foods.insertOne(
           FoodsCompanion.insert(
             name: 'Cookie',
@@ -34,7 +34,7 @@ void main() async {
         quantity: 3,
         unit: 'serving',
       ),
-      EntriesCompanion.insert(
+      DiariesCompanion.insert(
         food: await (db.foods.insertOne(
           FoodsCompanion.insert(
             name: 'Chicken',
@@ -44,7 +44,7 @@ void main() async {
         quantity: 1,
         unit: 'serving',
       ),
-      EntriesCompanion.insert(
+      DiariesCompanion.insert(
         food: await (db.foods.insertOne(
           FoodsCompanion.insert(
             name: 'Coke',
@@ -60,11 +60,11 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => EntryState()),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditEntriesPage(
-            entryIds: (await (db.entries.select()).get())
+          home: EditDiariesPage(
+            diaryIds: (await (db.diaries.select()).get())
                 .map((entry) => entry.id)
                 .toList(),
           ),
@@ -99,9 +99,9 @@ void main() async {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final entries =
-        await (db.entries.select()..where((u) => u.food.equals(richId))).get();
-    expect(entries.length, equals(3));
+    final diaries =
+        await (db.diaries.select()..where((u) => u.food.equals(richId))).get();
+    expect(diaries.length, equals(3));
 
     await db.close();
   });

@@ -39,7 +39,7 @@ class _ExportDataState extends State<ExportData> {
                     });
                     Navigator.pop(context);
                     try {
-                      final entries = await db.entries.select().get();
+                      final diaries = await db.diaries.select().get();
 
                       final List<List<dynamic>> csvData = [
                         [
@@ -54,7 +54,7 @@ class _ExportDataState extends State<ExportData> {
                           'carbG',
                         ]
                       ];
-                      for (var entry in entries) {
+                      for (var entry in diaries) {
                         csvData.add([
                           entry.id,
                           entry.food,

@@ -15,16 +15,16 @@ import 'package:provider/provider.dart';
 
 import '../database/database.dart';
 
-class EditEntryPage extends StatefulWidget {
+class EditDiaryPage extends StatefulWidget {
   final int? id;
 
-  const EditEntryPage({super.key, this.id});
+  const EditDiaryPage({super.key, this.id});
 
   @override
-  createState() => _EditEntryPageState();
+  createState() => _EditDiaryPageState();
 }
 
-class _EditEntryPageState extends State<EditEntryPage> {
+class _EditDiaryPageState extends State<EditDiaryPage> {
   final quantity = TextEditingController(text: "1");
   final calories = TextEditingController(text: "0");
   final kilojoules = TextEditingController(text: "0");
@@ -51,7 +51,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
     super.initState();
     if (widget.id == null) return;
 
-    (db.entries.select()..where((u) => u.id.equals(widget.id!)))
+    (db.diaries.select()..where((u) => u.id.equals(widget.id!)))
         .getSingle()
         .then(
       (entry) async {
@@ -203,8 +203,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
     final food = selectedFood!;
 
     if (widget.id == null)
-      await db.into(db.entries).insert(
-            EntriesCompanion.insert(
+      await db.into(db.diaries).insert(
+            DiariesCompanion.insert(
               food: food.id,
               created: created ?? DateTime.now(),
               quantity: double.parse(quantity.text),
@@ -212,10 +212,10 @@ class _EditEntryPageState extends State<EditEntryPage> {
             ),
           );
     else
-      db.update(db.entries)
+      db.update(db.diaries)
         ..where((u) => u.id.equals(widget.id!))
         ..write(
-          EntriesCompanion(
+          DiariesCompanion(
             food: Value(food.id),
             created: Value(created ?? DateTime.now()),
             quantity: Value(double.parse(quantity.text)),
@@ -327,7 +327,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                           child: const Text('Delete'),
                           onPressed: () async {
                             Navigator.pop(dialogContext);
-                            await db.entries.deleteWhere(
+                            await db.diaries.deleteWhere(
                               (tbl) => tbl.id.equals(widget.id!),
                             );
                             if (context.mounted) Navigator.pop(context);
@@ -436,7 +436,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       ..limit(1))
                     .getSingleOrNull();
                 if (food == null) return;
-                final lastEntry = await (db.entries.select()
+                final lastEntry = await (db.diaries.select()
                       ..where((u) => u.food.equals(food.id))
                       ..orderBy([
                         (u) => OrderingTerm(

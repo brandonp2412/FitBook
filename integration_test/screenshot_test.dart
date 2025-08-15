@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/diary_page.dart';
-import 'package:fit_book/entry/edit_entry_page.dart';
+import 'package:fit_book/diary/diary_page.dart';
+import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
@@ -58,104 +58,104 @@ List<FoodsCompanion> foods = [
   ),
 ];
 
-List<EntriesCompanion> entries = [
-  EntriesCompanion.insert(
+List<DiariesCompanion> diaries = [
+  DiariesCompanion.insert(
     food: 0,
     created: DateTime.now(),
     quantity: 200,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 1,
     created: DateTime.now(),
     quantity: 500,
     unit: 'milliliters',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 2,
     created: DateTime.now(),
     quantity: 300,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 3,
     created: DateTime.now(),
     quantity: 250,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 4,
     created: DateTime.now(),
     quantity: 250,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 0,
     created: DateTime.now().subtract(const Duration(days: 1)),
     quantity: 250,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 1,
     created: DateTime.now().subtract(const Duration(days: 1)),
     quantity: 600,
     unit: 'milliliters',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 2,
     created: DateTime.now().subtract(const Duration(days: 1)),
     quantity: 400,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 3,
     created: DateTime.now().subtract(const Duration(days: 1)),
     quantity: 350,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 4,
     created: DateTime.now().subtract(const Duration(days: 1)),
     quantity: 251,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 0,
     created: DateTime.now().subtract(const Duration(days: 2)),
     quantity: 500,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 1,
     created: DateTime.now().subtract(const Duration(days: 2)),
     quantity: 600,
     unit: 'milliliters',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 2,
     created: DateTime.now().subtract(const Duration(days: 2)),
     quantity: 800,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 3,
     created: DateTime.now().subtract(const Duration(days: 2)),
     quantity: 750,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 4,
     created: DateTime.now().subtract(const Duration(days: 2)),
     quantity: 250,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 4,
     created: DateTime.now().subtract(const Duration(days: 3)),
     quantity: 250,
     unit: 'grams',
   ),
-  EntriesCompanion.insert(
+  DiariesCompanion.insert(
     food: 4,
     created: DateTime.now().subtract(const Duration(days: 4)),
     quantity: 250,
@@ -187,7 +187,7 @@ List<WeightsCompanion> weights = [
   ),
 ];
 
-enum TabBarState { entry, graph, foods, weights }
+enum TabBarState { diary, graph, foods, weights }
 
 const screenshotFood = "Chicken sushi";
 
@@ -218,7 +218,7 @@ Future<void> appWrapper() async {
 
 BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
   switch (tabBarState) {
-    case TabBarState.entry:
+    case TabBarState.diary:
       return (tester.state(find.byType(DiaryPage)) as DiaryPageState)
           .navigatorKey
           .currentContext!;
@@ -279,11 +279,11 @@ void main() {
 
   setUpAll(() async {
     app.db = AppDatabase(dontLog: true);
-    await app.db.entries.deleteAll();
+    await app.db.diaries.deleteAll();
     await app.db.foods.deleteAll();
     await app.db.weights.deleteAll();
 
-    await app.db.entries.insertAll(entries);
+    await app.db.diaries.insertAll(diaries);
     await app.db.foods.insertAll(foods);
     await app.db.weights.insertAll(weights);
   });
@@ -295,7 +295,7 @@ void main() {
         binding: binding,
         tester: tester,
         screenshotName: '1_en-US',
-        tabBarState: TabBarState.entry,
+        tabBarState: TabBarState.diary,
       ),
     );
 
@@ -323,7 +323,7 @@ void main() {
           context: context,
           page: const SettingsPage(),
         ),
-        tabBarState: TabBarState.entry,
+        tabBarState: TabBarState.diary,
       ),
     );
 
@@ -408,10 +408,10 @@ void main() {
         navigateToPage: (context) async {
           navigateTo(
             context: context,
-            page: const EditEntryPage(id: null),
+            page: const EditDiaryPage(id: null),
           );
         },
-        tabBarState: TabBarState.entry,
+        tabBarState: TabBarState.diary,
       ),
     );
   });

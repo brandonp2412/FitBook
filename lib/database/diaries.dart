@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/foods.dart';
 
-class Entries extends Table {
+class Diaries extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get food => integer().references(Foods, #id)();
   DateTimeColumn get created => dateTime()();

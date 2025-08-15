@@ -42,7 +42,7 @@ doDesktopReminders() async {
 
   final db = AppDatabase();
 
-  final entries = await (db.entries.select()
+  final diaries = await (db.diaries.select()
         ..where(
           (u) => const CustomExpression(
             "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
@@ -53,7 +53,7 @@ doDesktopReminders() async {
   final hour = now.hour;
 
   if (hour >= 6 && hour < 12) {
-    final entered = entries
+    final entered = diaries
         .where((entry) => entry.created.hour >= 6 && entry.created.hour < 12);
     if (entered.isEmpty)
       await plugin.show(
@@ -63,7 +63,7 @@ doDesktopReminders() async {
         null,
       );
   } else if (hour >= 12 && hour < 16) {
-    final entered = entries.where(
+    final entered = diaries.where(
       (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
     );
     if (entered.isEmpty)
@@ -74,7 +74,7 @@ doDesktopReminders() async {
         null,
       );
   } else if (hour >= 16 && hour < 22) {
-    final entered = entries.where(
+    final entered = diaries.where(
       (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
     );
     if (entered.isEmpty)
@@ -113,7 +113,7 @@ void doMobileReminders() {
 
     final db = AppDatabase();
 
-    final entries = await (db.entries.select()
+    final diaries = await (db.diaries.select()
           ..where(
             (u) => const CustomExpression(
               "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
@@ -128,7 +128,7 @@ void doMobileReminders() {
     bool isDinner(int value) => value >= 16 && value < 22;
 
     if (isBreakfast(hour)) {
-      final brekkie = entries.where((entry) => isBreakfast(entry.created.hour));
+      final brekkie = diaries.where((entry) => isBreakfast(entry.created.hour));
       if (brekkie.isNotEmpty) return Future.value(true);
 
       await plugin.show(
@@ -144,7 +144,7 @@ void doMobileReminders() {
         ),
       );
     } else if (isLunch(hour)) {
-      final lunch = entries.where((entry) => isLunch(entry.created.hour));
+      final lunch = diaries.where((entry) => isLunch(entry.created.hour));
       if (lunch.isNotEmpty) return Future.value(true);
 
       await plugin.show(
@@ -160,7 +160,7 @@ void doMobileReminders() {
         ),
       );
     } else if (isDinner(hour)) {
-      final dins = entries.where((entry) => isDinner(entry.created.hour));
+      final dins = diaries.where((entry) => isDinner(entry.created.hour));
       if (dins.isNotEmpty) return Future.value(true);
 
       await plugin.show(

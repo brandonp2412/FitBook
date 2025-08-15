@@ -100,7 +100,7 @@ class DeleteRecordsButton extends StatelessWidget {
         return AlertDialog(
           title: const Text('Confirm delete'),
           content: const Text(
-            'Are you sure you want to delete all food & entries? This action is not reversible.',
+            'Are you sure you want to delete all food & diary entries? This action is not reversible.',
           ),
           actions: <Widget>[
             TextButton(
@@ -113,7 +113,7 @@ class DeleteRecordsButton extends StatelessWidget {
               child: const Text('Delete'),
               onPressed: () async {
                 Navigator.pop(dialogContext);
-                await db.entries.deleteAll();
+                await db.diaries.deleteAll();
                 await db.foods.deleteAll();
                 if (pageContext.mounted) Navigator.pop(pageContext);
               },
@@ -136,13 +136,13 @@ class DeleteRecordsButton extends StatelessWidget {
               ..join(
                 [
                   leftOuterJoin(
-                    db.entries,
-                    db.entries.food.equalsExp(db.foods.id),
+                    db.diaries,
+                    db.diaries.food.equalsExp(db.foods.id),
                   ),
                 ],
               )
-              ..addColumns([db.entries.id])
-              ..where(db.entries.id.isNull()))
+              ..addColumns([db.diaries.id])
+              ..where(db.diaries.id.isNull()))
             .get();
 
         return AlertDialog(
@@ -184,7 +184,7 @@ class DeleteRecordsButton extends StatelessWidget {
         return AlertDialog(
           title: const Text('Confirm delete'),
           content: const Text(
-            'Are you sure you want to delete all entries? This action is not reversible.',
+            'Are you sure you want to delete all diary entries? This action is not reversible.',
           ),
           actions: <Widget>[
             TextButton(
@@ -197,7 +197,7 @@ class DeleteRecordsButton extends StatelessWidget {
               child: const Text('Delete'),
               onPressed: () async {
                 Navigator.pop(dialogContext);
-                await db.entries.deleteAll();
+                await db.diaries.deleteAll();
                 if (!pageContext.mounted) return;
                 Navigator.pop(pageContext);
               },

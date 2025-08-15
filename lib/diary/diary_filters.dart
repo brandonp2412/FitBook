@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart' as material;
@@ -7,22 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EntryFilters extends StatefulWidget {
-  const EntryFilters({
+class DiaryFilters extends StatefulWidget {
+  const DiaryFilters({
     super.key,
   });
 
   @override
-  createState() => _EntryFiltersState();
+  createState() => _DiaryFiltersState();
 }
 
-class _EntryFiltersState extends State<EntryFilters> {
+class _DiaryFiltersState extends State<DiaryFilters> {
   var groupCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    final state = context.read<EntryState>();
+    final state = context.read<DiaryState>();
     groupCtrl.text = state.foodGroup ?? "";
   }
 
@@ -51,7 +51,7 @@ class _EntryFiltersState extends State<EntryFilters> {
               },
               onSelected: (option) async {
                 groupCtrl.text = option;
-                context.read<EntryState>().foodGroup = option;
+                context.read<DiaryState>().foodGroup = option;
               },
               fieldViewBuilder: (
                 BuildContext context,
@@ -60,7 +60,7 @@ class _EntryFiltersState extends State<EntryFilters> {
                 VoidCallback onFieldSubmitted,
               ) {
                 groupCtrl = textEditingController;
-                groupCtrl.text = context.read<EntryState>().foodGroup ?? "";
+                groupCtrl.text = context.read<DiaryState>().foodGroup ?? "";
                 return TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Food group',
@@ -70,7 +70,7 @@ class _EntryFiltersState extends State<EntryFilters> {
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
                   onFieldSubmitted: (String value) {
-                    context.read<EntryState>().foodGroup = value;
+                    context.read<DiaryState>().foodGroup = value;
                     Navigator.of(context).pop();
                   },
                   textInputAction: TextInputAction.next,
@@ -83,7 +83,7 @@ class _EntryFiltersState extends State<EntryFilters> {
               title: const Text('Start date'),
               subtitle: Consumer<SettingsState>(
                 builder: (context, settingsState, child) {
-                  final state = context.watch<EntryState>();
+                  final state = context.watch<DiaryState>();
                   final shortDateFormat = settingsState.value.shortDateFormat;
                   return state.startDate != null
                       ? Text(
@@ -97,19 +97,19 @@ class _EntryFiltersState extends State<EntryFilters> {
                 },
               ),
               onLongPress: () {
-                context.read<EntryState>().startDate = null;
+                context.read<DiaryState>().startDate = null;
               },
               leading: const Icon(Icons.calendar_today),
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
-                  initialDate: context.read<EntryState>().startDate,
+                  initialDate: context.read<DiaryState>().startDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                 );
 
                 if (pickedDate != null && mounted) {
-                  context.read<EntryState>().startDate = pickedDate.toLocal();
+                  context.read<DiaryState>().startDate = pickedDate.toLocal();
                 }
               },
             ),
@@ -118,7 +118,7 @@ class _EntryFiltersState extends State<EntryFilters> {
               title: const Text('Stop date'),
               subtitle: Consumer<SettingsState>(
                 builder: (context, settingsState, child) {
-                  final state = context.watch<EntryState>();
+                  final state = context.watch<DiaryState>();
                   final shortDateFormat = settingsState.value.shortDateFormat;
                   return state.endDate != null
                       ? Text(
@@ -132,19 +132,19 @@ class _EntryFiltersState extends State<EntryFilters> {
                 },
               ),
               onLongPress: () {
-                context.read<EntryState>().endDate = null;
+                context.read<DiaryState>().endDate = null;
               },
               leading: const Icon(Icons.calendar_today),
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
-                  initialDate: context.read<EntryState>().endDate,
+                  initialDate: context.read<DiaryState>().endDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                 );
 
                 if (pickedDate != null && mounted) {
-                  context.read<EntryState>().endDate = pickedDate.toLocal();
+                  context.read<DiaryState>().endDate = pickedDate.toLocal();
                 }
               },
             ),
@@ -153,11 +153,11 @@ class _EntryFiltersState extends State<EntryFilters> {
         actions: [
           TextButton(
             onPressed: () {
-              context.read<EntryState>().clear();
+              context.read<DiaryState>().clear();
               groupCtrl.text = '';
               Navigator.of(dialogContext).pop();
             },
-            child: Consumer<EntryState>(
+            child: Consumer<DiaryState>(
               builder: (context, state, child) => Text(
                 "Clear (${state.filterCount})",
                 overflow: TextOverflow.ellipsis,
@@ -166,7 +166,7 @@ class _EntryFiltersState extends State<EntryFilters> {
           ),
           TextButton(
             onPressed: () {
-              context.read<EntryState>().foodGroup = groupCtrl.text;
+              context.read<DiaryState>().foodGroup = groupCtrl.text;
               Navigator.of(dialogContext).pop();
             },
             child: const Text('Done'),
@@ -178,7 +178,7 @@ class _EntryFiltersState extends State<EntryFilters> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<EntryState>();
+    final state = context.watch<DiaryState>();
 
     return Badge.count(
       count: state.filterCount,

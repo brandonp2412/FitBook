@@ -1,11 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/settings.dart';
-import 'package:fit_book/entry/entry_food.dart';
+import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 
-class EntryState extends ChangeNotifier {
-  late Stream<List<EntryFood>> _stream;
+class DiaryState extends ChangeNotifier {
+  late Stream<List<DiaryFood>> _stream;
 
   int _limit = 100;
   List<String> fieldNames = defaultFields;
@@ -14,12 +14,12 @@ class EntryState extends ChangeNotifier {
   DateTime? _startDate;
   DateTime? _endDate;
 
-  EntryState({List<String>? fields}) {
+  DiaryState({List<String>? fields}) {
     if (fields != null) fieldNames = fields;
     setStream();
   }
 
-  Stream<List<EntryFood>> get stream => _stream;
+  Stream<List<DiaryFood>> get stream => _stream;
   String? get foodGroup => _foodGroup;
   DateTime? get startDate => _startDate;
   DateTime? get endDate => _endDate;
@@ -68,8 +68,8 @@ class EntryState extends ChangeNotifier {
   void setStream() {
     final quantityInGrams = CustomExpression<double>('''
    CASE 
-     WHEN entries.unit = 'serving' 
-     THEN entries.quantity * (
+     WHEN diaries.unit = 'serving' 
+     THEN diaries.quantity * (
        CASE 
          WHEN foods.serving_size IS NULL THEN 100
          WHEN foods.serving_unit IS NULL THEN foods.serving_size
@@ -84,16 +84,16 @@ class EntryState extends ChangeNotifier {
          ELSE 100
        END
      )
-     WHEN entries.unit IN ('grams', 'milliliters') THEN entries.quantity
-     WHEN entries.unit = 'milligrams' THEN entries.quantity / 1000
-     WHEN entries.unit = 'cups' THEN entries.quantity * 250
-     WHEN entries.unit = 'tablespoons' THEN entries.quantity * 15
-     WHEN entries.unit = 'teaspoons' THEN entries.quantity * 5
-     WHEN entries.unit = 'ounces' THEN entries.quantity * 28.35
-     WHEN entries.unit = 'pounds' THEN entries.quantity * 453.592
-     WHEN entries.unit = 'liters' THEN entries.quantity * 1000
-     WHEN entries.unit = 'kilojoules' THEN entries.quantity / 4.184
-     ELSE entries.quantity
+     WHEN diaries.unit IN ('grams', 'milliliters') THEN diaries.quantity
+     WHEN diaries.unit = 'milligrams' THEN diaries.quantity / 1000
+     WHEN diaries.unit = 'cups' THEN diaries.quantity * 250
+     WHEN diaries.unit = 'tablespoons' THEN diaries.quantity * 15
+     WHEN diaries.unit = 'teaspoons' THEN diaries.quantity * 5
+     WHEN diaries.unit = 'ounces' THEN diaries.quantity * 28.35
+     WHEN diaries.unit = 'pounds' THEN diaries.quantity * 453.592
+     WHEN diaries.unit = 'liters' THEN diaries.quantity * 1000
+     WHEN diaries.unit = 'kilojoules' THEN diaries.quantity / 4.184
+     ELSE diaries.quantity
    END
  ''');
     final servingG = CustomExpression<double>('''
@@ -121,15 +121,15 @@ class EntryState extends ChangeNotifier {
           servingG;
     });
 
-    var query = (db.entries
+    var query = (db.diaries
         .selectOnly()
-        .join([innerJoin(db.foods, db.entries.food.equalsExp(db.foods.id))])
+        .join([innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))])
       ..addColumns([
-        db.entries.id,
-        db.entries.created,
-        db.entries.unit,
-        db.entries.quantity,
-        db.entries.food,
+        db.diaries.id,
+        db.diaries.created,
+        db.diaries.unit,
+        db.diaries.quantity,
+        db.diaries.food,
         servingG,
         db.foods.name,
         db.foods.imageFile,
@@ -140,7 +140,7 @@ class EntryState extends ChangeNotifier {
       ..where(db.foods.name.contains(search.toLowerCase()))
       ..orderBy([
         OrderingTerm(
-          expression: db.entries.created,
+          expression: db.diaries.created,
           mode: OrderingMode.desc,
         ),
       ])
@@ -149,9 +149,9 @@ class EntryState extends ChangeNotifier {
     if (_foodGroup != null)
       query = query..where(db.foods.foodGroup.equals(_foodGroup!));
     if (_startDate != null)
-      query = query..where(db.entries.created.isBiggerThanValue(_startDate!));
+      query = query..where(db.diaries.created.isBiggerThanValue(_startDate!));
     if (_endDate != null)
-      query = query..where(db.entries.created.isSmallerThanValue(_endDate!));
+      query = query..where(db.diaries.created.isSmallerThanValue(_endDate!));
 
     _stream = query.watch().map(
           (results) => results.map(
@@ -161,12 +161,12 @@ class EntryState extends ChangeNotifier {
                 metrics[fieldNames[i]] = row.read(expressions.elementAt(i))!;
               }
 
-              return EntryFood(
-                entryId: row.read(db.entries.id)!,
-                foodId: row.read(db.entries.food)!,
-                created: row.read(db.entries.created)!.toLocal(),
-                unit: row.read(db.entries.unit)!,
-                quantity: row.read(db.entries.quantity)!,
+              return DiaryFood(
+                entryId: row.read(db.diaries.id)!,
+                foodId: row.read(db.diaries.food)!,
+                created: row.read(db.diaries.created)!.toLocal(),
+                unit: row.read(db.diaries.unit)!,
+                quantity: row.read(db.diaries.quantity)!,
                 name: row.read(db.foods.name)!,
                 imageFile: row.read(db.foods.imageFile),
                 smallImage: row.read(db.foods.smallImage),

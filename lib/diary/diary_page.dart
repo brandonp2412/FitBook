@@ -2,11 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:fit_book/entry/edit_entries_page.dart';
-import 'package:fit_book/entry/edit_entry_page.dart';
-import 'package:fit_book/entry/entry_filters.dart';
-import 'package:fit_book/entry/entry_list.dart';
-import 'package:fit_book/entry/entry_state.dart';
+import 'package:fit_book/diary/diary_filters.dart';
+import 'package:fit_book/diary/diary_list.dart';
+import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/diary/edit_diaries_page.dart';
+import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class DiaryPageState extends State<DiaryPage> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   final ScrollController scrollCtrl = ScrollController();
-  late var entriesState = context.read<EntryState>();
+  late var entriesState = context.read<DiaryState>();
   late final TextEditingController searchController =
       TextEditingController(text: entriesState.search);
 
@@ -47,7 +47,7 @@ class DiaryPageState extends State<DiaryPage> {
   }
 
   Scaffold _diaryPage() {
-    entriesState = context.watch<EntryState>();
+    entriesState = context.watch<DiaryState>();
 
     return Scaffold(
       body: StreamBuilder(
@@ -64,7 +64,7 @@ class DiaryPageState extends State<DiaryPage> {
             children: [
               AppSearch(
                 ctrl: searchController,
-                filter: const EntryFilters(),
+                filter: const DiaryFilters(),
                 onChange: (value) {
                   entriesState.search = value;
                 },
@@ -76,7 +76,7 @@ class DiaryPageState extends State<DiaryPage> {
                   setState(() {
                     selected.clear();
                   });
-                  await (db.delete(db.entries)
+                  await (db.delete(db.diaries)
                         ..where((tbl) => tbl.id.isIn(selectedCopy)))
                       .go();
                 },
@@ -87,12 +87,12 @@ class DiaryPageState extends State<DiaryPage> {
                 }),
                 selected: selected,
                 onFavorite: () async {
-                  final entries = await (db.entries.selectOnly()
-                        ..addColumns([db.entries.id, db.entries.food])
-                        ..where(db.entries.id.isIn(selected)))
+                  final diaries = await (db.diaries.selectOnly()
+                        ..addColumns([db.diaries.id, db.diaries.food])
+                        ..where(db.diaries.id.isIn(selected)))
                       .get();
                   final foodIds =
-                      entries.map((entry) => entry.read(db.entries.food)!);
+                      diaries.map((entry) => entry.read(db.diaries.food)!);
                   await (db.foods.update()
                         ..where((tbl) => tbl.id.isIn(foodIds)))
                       .write(const FoodsCompanion(favorite: Value(true)));
@@ -104,8 +104,8 @@ class DiaryPageState extends State<DiaryPage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditEntriesPage(
-                        entryIds: selected.toList(),
+                      builder: (context) => EditDiariesPage(
+                        diaryIds: selected.toList(),
                       ),
                     ),
                   );
@@ -121,9 +121,9 @@ class DiaryPageState extends State<DiaryPage> {
                     "Tap the plus button to start logging your food.",
                   ),
                 ),
-              EntryList(
+              DiaryList(
                 ctrl: scrollCtrl,
-                entryFoods: entryFoods,
+                diaryFoods: entryFoods,
                 selected: selected,
                 onSelect: (id) {
                   if (selected.contains(id))
@@ -147,7 +147,7 @@ class DiaryPageState extends State<DiaryPage> {
         onTap: () async {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
-              builder: (context) => const EditEntryPage(),
+              builder: (context) => const EditDiaryPage(),
             ),
           );
         },
