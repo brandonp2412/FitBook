@@ -346,8 +346,11 @@ WHERE name = 'Quick-add'
       );
       await m.database.customStatement("DROP TABLE entries");
     },
+    from41To42: (Migrator m, Schema42 schema) async {
+      await m.addColumn(schema.settings, schema.settings.scrollableTabs);
+    },
   );
 
   @override
-  int get schemaVersion => 41;
+  int get schemaVersion => 42;
 }

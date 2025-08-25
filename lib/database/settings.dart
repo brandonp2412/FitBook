@@ -48,4 +48,6 @@ class Settings extends Table {
   TextColumn get themeMode => text()();
   TextColumn get backupPath => text().nullable()();
   TextColumn get convertWeight => text().nullable()();
+  BoolColumn get scrollableTabs =>
+      boolean().withDefault(const Constant(true))();
 }

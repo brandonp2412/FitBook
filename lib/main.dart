@@ -104,12 +104,17 @@ class HomePage extends StatelessWidget {
     final tabsSetting = context
         .select<SettingsState, String>((settings) => settings.value.tabs);
     final tabs = tabsSetting.split(',');
+    final scrollableTabs = context.select<SettingsState, bool>(
+        (settings) => settings.value.scrollableTabs);
 
     return DefaultTabController(
       length: tabs.length,
       child: SafeArea(
         child: Scaffold(
           body: TabBarView(
+            physics: scrollableTabs
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
             children: tabs.map((tab) {
               if (tab == 'DiaryPage')
                 return const DiaryPage();
