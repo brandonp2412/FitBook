@@ -14,13 +14,13 @@ Graph your eating habits with ease!
 - 📵 **Offline**: Log your meals and snacks with ease, even without an internet connection.
 - 🍇 **OpenFoodFacts**: Scan barcodes & search for foods with [OpenFoodFacts](https://world.openfoodfacts.org/).
 
-# Screenshots
-
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'><img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 <a href="https://f-droid.org/packages/com.presley.fit_book"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="75"></a>
 
 <a href="https://apps.apple.com/us/app/fitbook-calorie-tracker/id6504304055"><img src="docs/get-it-on-app-store.svg" alt="Download on the App Store" style="height: 75px !important"></a>
 <a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img src="docs/get-it-on-windows.svg" style="height: 75px !important"/></a>
+
+# Screenshots
 
 <p float="left">
     <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" height="600">
