@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
@@ -29,6 +30,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
   late String unit;
   String? imgFile;
+  String? smallImg;
+  String? bigImg;
   final formatter = NumberFormat('#,##0.00');
   final calCtrl = TextEditingController(text: "0");
   final barcodeCtrl = TextEditingController();
@@ -67,6 +70,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
         unit = food.servingUnit ?? unit;
         nameCtrl.text = food.name;
         imgFile = food.imageFile;
+        smallImg = food.smallImage;
+        bigImg = food.bigImage;
         calCtrl.text = food.calories?.toStringAsFixed(2) ?? '';
         kjCtrl.text = food.calories == null
             ? ''
@@ -318,6 +323,17 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ),
+            if ((smallImg?.isNotEmpty == true || bigImg?.isNotEmpty == true) &&
+                settings.showImages) ...[
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 80,
+                width: 50,
+                child: CachedNetworkImage(
+                  imageUrl: smallImg ?? bigImg!,
+                ),
+              ),
+            ],
             if (imgFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 16),
               Image.file(
