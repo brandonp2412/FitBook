@@ -23,6 +23,9 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   final caloriesController = TextEditingController();
   final kilojoulesController = TextEditingController();
   final proteinController = TextEditingController();
+  final carbController = TextEditingController();
+  final fatController = TextEditingController();
+  final fiberController = TextEditingController();
   late var settings = context.read<SettingsState>().value;
 
   bool newFood = false;
@@ -37,7 +40,9 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   String? oldCalories;
   String? oldKj;
   String? oldProtein;
-
+  String? oldCarb;
+  String? oldFat;
+  String? oldFiber;
   @override
   void initState() {
     super.initState();
@@ -48,6 +53,11 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             db.diaries.quantity,
             db.diaries.unit,
             db.foods.name,
+            db.foods.calories,
+            db.foods.proteinG,
+            db.foods.carbohydrateG,
+            db.foods.fatG,
+            db.foods.fiberG,
           ])
           ..where(db.diaries.id.isIn(widget.diaryIds))
           ..join([innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))]))
@@ -60,6 +70,42 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             results.map((result) => result.read(db.diaries.unit)).join(', ');
         oldQuantities = results
             .map((result) => result.read(db.diaries.quantity))
+            .join(', ');
+        oldCalories = results
+            .map(
+              (result) =>
+                  result.read(db.foods.calories)?.toStringAsFixed(2) ?? '0',
+            )
+            .join(', ');
+        oldKj = results
+            .map(
+              (result) => ((result.read(db.foods.calories) ?? 0) * 4.184)
+                  .toStringAsFixed(2),
+            )
+            .join(', ');
+        oldProtein = results
+            .map(
+              (result) =>
+                  result.read(db.foods.proteinG)?.toStringAsFixed(2) ?? '0',
+            )
+            .join(', ');
+        oldCarb = results
+            .map(
+              (result) =>
+                  result.read(db.foods.carbohydrateG)?.toStringAsFixed(2) ??
+                  '0',
+            )
+            .join(', ');
+        oldFat = results
+            .map(
+              (result) => result.read(db.foods.fatG)?.toStringAsFixed(2) ?? '0',
+            )
+            .join(', ');
+        oldFiber = results
+            .map(
+              (result) =>
+                  result.read(db.foods.fiberG)?.toStringAsFixed(2) ?? '0',
+            )
             .join(', ');
       });
     });
@@ -78,17 +124,40 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             ..where((u) => u.id.equals(id)))
           .getSingle();
       int foodId;
-      if (newFood)
+      if (newFood) {
         foodId = await (db.foods.insertOne(
           FoodsCompanion.insert(
             name: nameController!.text,
             calories: Value(double.tryParse(caloriesController.text)),
             proteinG: Value(double.tryParse(proteinController.text)),
+            carbohydrateG: Value(double.tryParse(carbController.text)),
+            fatG: Value(double.tryParse(fatController.text)),
+            fiberG: Value(double.tryParse(fiberController.text)),
             favorite: Value(settings.favoriteNew),
           ),
         ));
-      else
+      } else {
         foodId = selectedFood?.id ?? oldEntry.food;
+        await (db.foods.update()..where((u) => u.id.equals(foodId))).write(
+          FoodsCompanion(
+            calories: caloriesController.text.isNotEmpty
+                ? Value(double.tryParse(caloriesController.text))
+                : const Value.absent(),
+            proteinG: proteinController.text.isNotEmpty
+                ? Value(double.tryParse(proteinController.text))
+                : const Value.absent(),
+            carbohydrateG: carbController.text.isNotEmpty
+                ? Value(double.tryParse(carbController.text))
+                : const Value.absent(),
+            fatG: fatController.text.isNotEmpty
+                ? Value(double.tryParse(fatController.text))
+                : const Value.absent(),
+            fiberG: fiberController.text.isNotEmpty
+                ? Value(double.tryParse(fiberController.text))
+                : const Value.absent(),
+          ),
+        );
+      }
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
       final newEntry = DiariesCompanion(
@@ -342,6 +411,50 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                 hintText: oldProtein,
               ),
               onTap: () => selectAll(proteinController),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: carbController,
+                    decoration: InputDecoration(
+                      labelText: 'Carbs',
+                      hintText: oldCarb,
+                    ),
+                    onTap: () => selectAll(carbController),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: fatController,
+                    decoration: InputDecoration(
+                      labelText: 'Fat',
+                      hintText: oldFat,
+                    ),
+                    onTap: () => selectAll(fatController),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: fiberController,
+              decoration: InputDecoration(
+                labelText: 'Fiber',
+                hintText: oldFiber,
+              ),
+              onTap: () => selectAll(fiberController),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               textInputAction: TextInputAction.next,
