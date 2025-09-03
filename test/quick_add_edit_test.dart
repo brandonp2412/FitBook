@@ -53,22 +53,22 @@ void main() async {
     await tester.pumpAndSettle();
 
     // Verify the form is populated with existing values
-    expect(find.text('500.00'), findsOne); // calories
-    expect(find.text('20.0'), findsOne); // protein
-    expect(find.text('30.0'), findsOne); // carbs
-    expect(find.text('10.0'), findsOne); // fat
+    expect(find.text('100.00'), findsOne); // calories
+    expect(find.text('20.00'), findsOne); // protein
+    expect(find.text('30.00'), findsOne); // carbs
+    expect(find.text('10.00'), findsOne); // fat
 
     // Edit the macro-nutrients
     await tester.enterText(
-      find.widgetWithText(TextField, '20.0'),
+      find.widgetWithText(TextField, '20.00'),
       '25.0',
     ); // protein
     await tester.enterText(
-      find.widgetWithText(TextField, '30.0'),
+      find.widgetWithText(TextField, '30.00'),
       '35.0',
     ); // carbs
     await tester.enterText(
-      find.widgetWithText(TextField, '10.0'),
+      find.widgetWithText(TextField, '10.00'),
       '15.0',
     ); // fat
 
@@ -130,24 +130,22 @@ void main() async {
       innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id)),
     ])
           ..addColumns([
-            (db.foods.proteinG * db.diaries.quantity / Variable(100.0)).sum(),
-            (db.foods.carbohydrateG * db.diaries.quantity / Variable(100.0))
-                .sum(),
-            (db.foods.fatG * db.diaries.quantity / Variable(100.0)).sum(),
+            (db.foods.proteinG * db.diaries.quantity).sum(),
+            (db.foods.carbohydrateG * db.diaries.quantity).sum(),
+            (db.foods.fatG * db.diaries.quantity).sum(),
           ]))
         .getSingle();
 
     final initialProtein = initialTotals.read(
-          (db.foods.proteinG * db.diaries.quantity / Variable(100.0)).sum(),
+          (db.foods.proteinG * db.diaries.quantity).sum(),
         ) ??
         0.0;
     final initialCarbs = initialTotals.read(
-          (db.foods.carbohydrateG * db.diaries.quantity / Variable(100.0))
-              .sum(),
+          (db.foods.carbohydrateG * db.diaries.quantity).sum(),
         ) ??
         0.0;
     final initialFat = initialTotals.read(
-          (db.foods.fatG * db.diaries.quantity / Variable(100.0)).sum(),
+          (db.foods.fatG * db.diaries.quantity).sum(),
         ) ??
         0.0;
 
@@ -167,15 +165,15 @@ void main() async {
 
     // Update macro-nutrients
     await tester.enterText(
-      find.widgetWithText(TextField, '10.0'),
+      find.widgetWithText(TextField, '10.00'),
       '30.0',
     ); // protein: 10 -> 30
     await tester.enterText(
-      find.widgetWithText(TextField, '20.0'),
+      find.widgetWithText(TextField, '20.00'),
       '40.0',
     ); // carbs: 20 -> 40
     await tester.enterText(
-      find.widgetWithText(TextField, '5.0'),
+      find.widgetWithText(TextField, '5.00'),
       '15.0',
     ); // fat: 5 -> 15
 
@@ -188,24 +186,22 @@ void main() async {
       innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id)),
     ])
           ..addColumns([
-            (db.foods.proteinG * db.diaries.quantity / Variable(100.0)).sum(),
-            (db.foods.carbohydrateG * db.diaries.quantity / Variable(100.0))
-                .sum(),
-            (db.foods.fatG * db.diaries.quantity / Variable(100.0)).sum(),
+            (db.foods.proteinG * db.diaries.quantity).sum(),
+            (db.foods.carbohydrateG * db.diaries.quantity).sum(),
+            (db.foods.fatG * db.diaries.quantity).sum(),
           ]))
         .getSingle();
 
     final newProtein = newTotals.read(
-          (db.foods.proteinG * db.diaries.quantity / Variable(100.0)).sum(),
+          (db.foods.proteinG * db.diaries.quantity).sum(),
         ) ??
         0.0;
     final newCarbs = newTotals.read(
-          (db.foods.carbohydrateG * db.diaries.quantity / Variable(100.0))
-              .sum(),
+          (db.foods.carbohydrateG * db.diaries.quantity).sum(),
         ) ??
         0.0;
     final newFat = newTotals.read(
-          (db.foods.fatG * db.diaries.quantity / Variable(100.0)).sum(),
+          (db.foods.fatG * db.diaries.quantity).sum(),
         ) ??
         0.0;
 

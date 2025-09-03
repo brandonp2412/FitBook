@@ -96,12 +96,31 @@ void main() async {
     await tester.enterText(find.bySemanticsLabel('Protein'), '30');
     await tester.pump();
 
+    await tester.enterText(find.bySemanticsLabel('Carbs'), '40');
+    await tester.pump();
+
+    await tester.enterText(find.bySemanticsLabel('Fat'), '10');
+    await tester.pump();
+
+    await tester.enterText(find.bySemanticsLabel('Fiber'), '5');
+    await tester.pump();
+
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final diaries =
         await (db.diaries.select()..where((u) => u.food.equals(richId))).get();
     expect(diaries.length, equals(3));
+
+    final updatedFood = await (db.foods.select()
+          ..where((u) => u.id.equals(richId)))
+        .getSingle();
+
+    expect(updatedFood.calories, equals(200));
+    expect(updatedFood.proteinG, equals(30));
+    expect(updatedFood.carbohydrateG, equals(40));
+    expect(updatedFood.fatG, equals(10));
+    expect(updatedFood.fiberG, equals(5));
 
     await db.close();
   });
