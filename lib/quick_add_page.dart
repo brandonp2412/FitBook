@@ -41,7 +41,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       )
             ..addColumns(
               [
-                db.diaries.quantity,
+                db.foods.calories,
                 db.foods.proteinG,
                 db.foods.carbohydrateG,
                 db.foods.fatG,
@@ -57,7 +57,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ..limit(1))
           .getSingleOrNull();
       if (last == null) return;
-      cal.text = last.read(db.diaries.quantity)!.toString();
+      cal.text = last.read(db.foods.calories)!.toString();
       kj.text = formatter.format(formatter.parse(cal.text) * 4.184);
       protein.text = last.read(db.foods.proteinG)!.toString();
       carb.text = last.read(db.foods.carbohydrateG)!.toString();
@@ -72,10 +72,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
     final food = await (db.foods.select()
           ..where((u) => u.id.equals(entry.food)))
         .getSingle();
-    cal.text = entry.quantity.toStringAsFixed(2);
-    protein.text = food.proteinG.toString();
-    carb.text = food.carbohydrateG.toString();
-    fat.text = food.fatG.toString();
+    cal.text = food.calories?.toStringAsFixed(2) ?? "0";
+    protein.text = food.proteinG?.toStringAsFixed(2) ?? "0";
+    carb.text = food.carbohydrateG?.toStringAsFixed(2) ?? "0";
+    fat.text = food.fatG?.toStringAsFixed(2) ?? "0";
     setState(() {
       created = entry.created;
     });
@@ -93,21 +93,23 @@ class _QuickAddPageState extends State<QuickAddPage> {
       FoodsCompanion.insert(
         name: 'Quick-add',
         created: Value(created),
-        calories: Value(100),
+        calories: Value(double.parse(cal.text)),
         proteinG: Value(double.parse(protein.text)),
         carbohydrateG: Value(double.parse(carb.text)),
         fatG: Value(double.parse(fat.text)),
+        servingSize: Value(1.0),
+        servingUnit: Value('serving'),
       ),
     ));
 
-    final qty = double.parse(cal.text);
+    final qty = 1.0;
     if (widget.id == null)
       db.into(db.diaries).insert(
             DiariesCompanion.insert(
               food: foodId,
               created: created,
               quantity: qty,
-              unit: 'grams',
+              unit: 'serving',
             ),
           );
     else
@@ -118,6 +120,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             food: Value(foodId),
             created: Value(created),
             quantity: Value(qty),
+            unit: Value('serving'),
           ),
         );
   }
