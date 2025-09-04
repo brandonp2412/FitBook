@@ -54,9 +54,10 @@ class _DiaryListState extends State<DiaryList> {
 
   int _getCrossAxisCount(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width > 1200) return 3;
-    if (width > 800) return 2;
-    return 1; // Single column on mobile for better readability with stats
+    if (width > 1200) return 4; // More columns for very wide screens
+    if (width > 800) return 3; // 3 columns for tablets
+    if (width > 600) return 2; // 2 columns for small tablets
+    return 1; // Single column on mobile
   }
 
   @override
@@ -155,20 +156,31 @@ class _DiaryListState extends State<DiaryList> {
         _buildDateHeader(date, dayStats, settings),
         const SizedBox(height: 12),
 
-        // Food cards grid
-        GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: crossAxisCount,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: crossAxisCount == 1 ? 4.5 : 1.2,
-          children:
-              dayFoods.map((food) => _buildFoodCard(food, settings)).toList(),
+        // Food cards - using Wrap instead of GridView for consistent sizing
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: dayFoods
+              .map(
+                (food) => SizedBox(
+                  width: _getCardWidth(context, crossAxisCount),
+                  child: _buildFoodCard(food, settings),
+                ),
+              )
+              .toList(),
         ),
         const SizedBox(height: 24),
       ],
     );
+  }
+
+  double _getCardWidth(BuildContext context, int crossAxisCount) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final availableWidth =
+        screenWidth - 32; // Account for padding (12 * 2) and some margin
+    final spacing =
+        (crossAxisCount - 1) * 8; // Account for spacing between cards
+    return (availableWidth - spacing) / crossAxisCount;
   }
 
   Widget _buildDateHeader(DateTime date, Stats dayStats, dynamic settings) {
@@ -192,7 +204,7 @@ class _DiaryListState extends State<DiaryList> {
                   isToday ? Icons.today : Icons.calendar_today,
                   color: isToday
                       ? colorScheme.onPrimaryContainer
-                      : colorScheme.primary,
+                      : colorScheme.onSurface,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -410,7 +422,8 @@ class _DiaryListState extends State<DiaryList> {
         onLongPress: () => widget.onSelect(diaryFood.entryId),
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.all(8), // Reduced padding
+          height: 80, // Fixed height for all cards
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             gradient: isSelected
@@ -434,7 +447,7 @@ class _DiaryListState extends State<DiaryList> {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: settings.showImages ? 8 : 0, // Reduced spacing
+                    left: settings.showImages ? 8 : 0,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,7 +458,7 @@ class _DiaryListState extends State<DiaryList> {
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
-                        maxLines: 1, // Reduced to 1 line
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 2),
@@ -523,7 +536,7 @@ class _DiaryListState extends State<DiaryList> {
     }
 
     return Container(
-      width: 40, // Smaller image
+      width: 40,
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
@@ -542,7 +555,7 @@ class _DiaryListState extends State<DiaryList> {
       child: Icon(
         Icons.restaurant,
         color: colorScheme.onSurfaceVariant,
-        size: 20, // Smaller icon
+        size: 20,
       ),
     );
   }
