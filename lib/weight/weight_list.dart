@@ -292,6 +292,6 @@ class WeightCard extends StatelessWidget {
       return 'Yesterday';
 
     // For cards, use a shorter format
-    return DateFormat('MMM d').format(date);
+    return DateFormat(format).format(date);
   }
 }

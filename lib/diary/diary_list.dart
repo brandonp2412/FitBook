@@ -559,49 +559,4 @@ class _DiaryListState extends State<DiaryList> {
       ),
     );
   }
-
-  Widget _buildFoodImage(DiaryFood diaryFood, ColorScheme colorScheme) {
-    Widget? imageWidget;
-
-    if (diaryFood.imageFile?.isNotEmpty == true) {
-      imageWidget = Image.file(
-        File(diaryFood.imageFile!),
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            _buildImagePlaceholder(colorScheme),
-      );
-    } else if (diaryFood.smallImage?.isNotEmpty == true) {
-      imageWidget = CachedNetworkImage(
-        imageUrl: diaryFood.smallImage!,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => _buildImagePlaceholder(colorScheme),
-        errorWidget: (context, url, error) =>
-            _buildImagePlaceholder(colorScheme),
-      );
-    }
-
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: colorScheme.surfaceContainerHighest,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: imageWidget ?? _buildImagePlaceholder(colorScheme),
-      ),
-    );
-  }
-
-  Widget _buildImagePlaceholder(ColorScheme colorScheme) {
-    return Container(
-      color: colorScheme.surfaceContainerHighest,
-      child: Icon(
-        Icons.restaurant,
-        color: colorScheme.onSurfaceVariant,
-        size: 24,
-      ),
-    );
-  }
 }
