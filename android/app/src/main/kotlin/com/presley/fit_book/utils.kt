@@ -10,30 +10,28 @@ import java.io.File
 import java.util.Calendar
 
 fun scheduleBackups(context: Context) {
-    val backupIntent = Intent(context, BackupReceiver::class.java).apply {
-        setPackage(context.packageName)
-    }
+    val backupIntent =
+            Intent(context, BackupReceiver::class.java).apply { setPackage(context.packageName) }
 
-    val pendingIntent = PendingIntent.getBroadcast(
-        context, 0, backupIntent,
-        PendingIntent.FLAG_IMMUTABLE
-    )
+    val pendingIntent =
+            PendingIntent.getBroadcast(context, 0, backupIntent, PendingIntent.FLAG_IMMUTABLE)
 
-    val calendar: Calendar = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 2)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        if (timeInMillis < System.currentTimeMillis()) {
-            add(Calendar.DAY_OF_YEAR, 1)
-        }
-    }
+    val calendar: Calendar =
+            Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 2)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                if (timeInMillis < System.currentTimeMillis()) {
+                    add(Calendar.DAY_OF_YEAR, 1)
+                }
+            }
 
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     alarmManager.setInexactRepeating(
-        AlarmManager.RTC_WAKEUP,
-        calendar.timeInMillis,
-        AlarmManager.INTERVAL_DAY,
-        pendingIntent
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
     )
 }
 
@@ -69,5 +67,18 @@ fun getSettings(context: Context): Pair<Boolean, String?> {
         return Pair(automaticBackups, backupPath)
     } catch (e: Exception) {
         return Pair(false, null)
+    }
+}
+
+fun setAutomaticBackups(context: Context, enabled: Boolean) {
+    val db = openDb(context) ?: return
+
+    try {
+        val value = if (enabled) 1 else 0
+        val query = "UPDATE settings SET automatic_backups = $value"
+        db.execSQL(query)
+        db.close()
+    } catch (e: Exception) {
+        Log.e("utils@setAutomaticBackups:", e.toString())
     }
 }
