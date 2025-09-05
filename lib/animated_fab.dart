@@ -34,20 +34,23 @@ class _AnimatedFabState extends State<AnimatedFab> {
   }
 
   void onScroll() {
-    if (widget.scroll.position.atEdge && widget.scroll.position.pixels == 0)
+    if (widget.scroll.position.atEdge && widget.scroll.position.pixels == 0) {
       setState(() {
         extend = true;
       });
-    else
+    } else {
       setState(() {
         extend = false;
       });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 72),
+    return Container(
+      margin: EdgeInsets.only(
+        bottom: kToolbarHeight + 32 + 16,
+      ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,

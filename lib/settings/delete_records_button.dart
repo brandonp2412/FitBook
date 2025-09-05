@@ -215,34 +215,37 @@ class DeleteRecordsButton extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           builder: (sheetContext) {
-            return Wrap(
-              children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.date_range),
-                  title: const Text('Diary'),
-                  onTap: () => deleteDiary(sheetContext),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.restaurant),
-                  title: const Text('Food'),
-                  onTap: () => deleteFoods(sheetContext),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.no_meals),
-                  title: const Text('Unused food'),
-                  onTap: () => deleteUnused(sheetContext),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.scale),
-                  title: const Text('Weight'),
-                  onTap: () => deleteWeights(sheetContext),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.storage),
-                  title: const Text('Database'),
-                  onTap: () => deleteDatabase(sheetContext),
-                ),
-              ],
+            return Padding(
+              padding: const EdgeInsets.only(bottom: kToolbarHeight + 48),
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(Icons.date_range),
+                    title: const Text('Diary'),
+                    onTap: () => deleteDiary(sheetContext),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.restaurant),
+                    title: const Text('Food'),
+                    onTap: () => deleteFoods(sheetContext),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.no_meals),
+                    title: const Text('Unused food'),
+                    onTap: () => deleteUnused(sheetContext),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.scale),
+                    title: const Text('Weight'),
+                    onTap: () => deleteWeights(sheetContext),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.storage),
+                    title: const Text('Database'),
+                    onTap: () => deleteDatabase(sheetContext),
+                  ),
+                ],
+              ),
             );
           },
         );
