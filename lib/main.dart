@@ -73,25 +73,48 @@ class App extends StatelessWidget {
     );
 
     return DynamicColorBuilder(
-      builder: (lightDynamic, darkDynamic) => MaterialApp(
-        title: 'FitBook',
-        theme: ThemeData(
-          colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
-          fontFamily: 'Manrope',
-          useMaterial3: true,
-        ),
-        darkTheme: ThemeData(
-          colorScheme: settings.systemColors ? darkDynamic : defaultDark,
-          fontFamily: 'Manrope',
-          useMaterial3: true,
-          inputDecorationTheme: const InputDecorationTheme(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
+      builder: (lightDynamic, darkDynamic) {
+        final currentBrightness = settings.themeMode == 'ThemeMode.dark' ||
+                (settings.themeMode == 'ThemeMode.system' &&
+                    MediaQuery.of(context).platformBrightness ==
+                        Brightness.dark)
+            ? Brightness.dark
+            : Brightness.light;
+
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarIconBrightness: currentBrightness == Brightness.dark
+                ? Brightness.light
+                : Brightness.dark,
+            systemNavigationBarIconBrightness:
+                currentBrightness == Brightness.dark
+                    ? Brightness.light
+                    : Brightness.dark,
+            statusBarColor: Colors.transparent,
+            systemNavigationBarColor: Colors.transparent,
           ),
-        ),
-        themeMode: ThemeMode.values
-            .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
-        home: const HomePage(),
-      ),
+        );
+
+        return MaterialApp(
+          title: 'FitBook',
+          theme: ThemeData(
+            colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
+            fontFamily: 'Manrope',
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            colorScheme: settings.systemColors ? darkDynamic : defaultDark,
+            fontFamily: 'Manrope',
+            useMaterial3: true,
+            inputDecorationTheme: const InputDecorationTheme(
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+            ),
+          ),
+          themeMode: ThemeMode.values
+              .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
+          home: const HomePage(),
+        );
+      },
     );
   }
 }
@@ -105,13 +128,17 @@ class HomePage extends StatelessWidget {
         .select<SettingsState, String>((settings) => settings.value.tabs);
     final tabs = tabsSetting.split(',');
     final scrollableTabs = context.select<SettingsState, bool>(
-        (settings) => settings.value.scrollableTabs);
+      (settings) => settings.value.scrollableTabs,
+    );
 
     return DefaultTabController(
       length: tabs.length,
-      child: SafeArea(
-        child: Scaffold(
-          body: TabBarView(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        body: SafeArea(
+          bottom: false,
+          child: TabBarView(
             physics: scrollableTabs
                 ? const AlwaysScrollableScrollPhysics()
                 : const NeverScrollableScrollPhysics(),
@@ -128,32 +155,38 @@ class HomePage extends StatelessWidget {
                 return ErrorWidget('Invalid tab settings.');
             }).toList(),
           ),
-          bottomNavigationBar: TabBar(
-            dividerColor: Colors.transparent,
-            tabs: tabs.map((tab) {
-              if (tab == 'DiaryPage')
-                return const Tab(
-                  icon: Icon(Icons.date_range),
-                  text: "Diary",
-                );
-              else if (tab == 'GraphPage')
-                return const Tab(
-                  icon: Icon(Icons.insights),
-                  text: "Graph",
-                );
-              else if (tab == 'FoodPage')
-                return const Tab(
-                  icon: Icon(Icons.restaurant),
-                  text: "Food",
-                );
-              else if (tab == 'WeightPage')
-                return const Tab(
-                  icon: Icon(Icons.scale),
-                  text: "Weight",
-                );
-              else
-                return ErrorWidget('Invalid tab settings.');
-            }).toList(),
+        ),
+        bottomNavigationBar: Material(
+          color: Theme.of(context).colorScheme.surface,
+          child: SafeArea(
+            top: false,
+            child: TabBar(
+              dividerColor: Colors.transparent,
+              tabs: tabs.map((tab) {
+                if (tab == 'DiaryPage')
+                  return const Tab(
+                    icon: Icon(Icons.date_range),
+                    text: "Diary",
+                  );
+                else if (tab == 'GraphPage')
+                  return const Tab(
+                    icon: Icon(Icons.insights),
+                    text: "Graph",
+                  );
+                else if (tab == 'FoodPage')
+                  return const Tab(
+                    icon: Icon(Icons.restaurant),
+                    text: "Food",
+                  );
+                else if (tab == 'WeightPage')
+                  return const Tab(
+                    icon: Icon(Icons.scale),
+                    text: "Weight",
+                  );
+                else
+                  return ErrorWidget('Invalid tab settings.');
+              }).toList(),
+            ),
           ),
         ),
       ),
