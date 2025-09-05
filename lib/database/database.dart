@@ -349,8 +349,11 @@ WHERE name = 'Quick-add'
     from41To42: (Migrator m, Schema42 schema) async {
       await m.addColumn(schema.settings, schema.settings.scrollableTabs);
     },
+    from42To43: (Migrator m, Schema43 schema) async {
+      await m.addColumn(schema.settings, schema.settings.compactDiary);
+    },
   );
 
   @override
-  int get schemaVersion => 42;
+  int get schemaVersion => 43;
 }

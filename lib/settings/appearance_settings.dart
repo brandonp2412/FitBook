@@ -175,6 +175,29 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
           ),
         ),
       ),
+    if ('compact diary'.contains(term))
+      Tooltip(
+        message: 'Use a compact list display for diary entries',
+        child: ListTile(
+          title: const Text('Compact diary display'),
+          leading: settings.value.compactDiary
+              ? const Icon(Icons.list)
+              : const Icon(Icons.grid_view),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(
+                  compactDiary: Value(!settings.value.compactDiary),
+                ),
+              ),
+          trailing: Switch(
+            value: settings.value.compactDiary,
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    compactDiary: Value(value),
+                  ),
+                ),
+          ),
+        ),
+      ),
   ];
 }
 
