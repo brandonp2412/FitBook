@@ -134,11 +134,241 @@ class _DiaryListState extends State<DiaryList> {
     }
 
     return Expanded(
-      child: ListView(
-        padding: const EdgeInsets.all(12),
-        controller: widget.ctrl,
-        children: items,
-      ),
+      child: settings.compactDiary
+          ? _buildListDisplay(settings, stats)
+          : _buildCardDisplay(settings, crossAxisCount, items),
+    );
+  }
+
+  Widget _buildCardDisplay(
+    dynamic settings,
+    int crossAxisCount,
+    List<Widget> items,
+  ) {
+    return ListView(
+      padding: const EdgeInsets.all(12),
+      controller: widget.ctrl,
+      children: items,
+    );
+  }
+
+  Widget _buildListDisplay(dynamic settings, Map<DateTime, Stats> stats) {
+    return ListView.builder(
+      padding: const EdgeInsets.only(top: 8),
+      controller: widget.ctrl,
+      itemCount: widget.diaryFoods.length,
+      itemBuilder: (context, index) {
+        final diaryFood = widget.diaryFoods[index];
+        final foodName = diaryFood.name;
+        final previous = index > 0 ? widget.diaryFoods[index - 1] : null;
+        final selected = widget.selected.contains(diaryFood.entryId);
+        final showDivider = previous != null &&
+            !isSameDay(
+              previous.created,
+              diaryFood.created,
+            );
+        final suffix = diaryFood.unit == 'serving' && diaryFood.quantity > 1
+            ? " x${diaryFood.quantity.toInt()}"
+            : "";
+
+        Widget? statsRow;
+        if (showDivider) {
+          String cals = "";
+          String protein = "";
+          String fat = "";
+          String carb = "";
+          String fiber = "";
+          final formatter = NumberFormat('#,##0');
+
+          final day = DateTime(
+            previous.created.year,
+            previous.created.month,
+            previous.created.day,
+          );
+
+          switch (settings.diarySummary) {
+            case 'DiarySummary.remaining':
+              cals =
+                  "${formatter.format((settings.dailyCalories ?? 0) - stats[day]!.cals)} kcal";
+              protein =
+                  "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)}g protein";
+              fat =
+                  "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)}g fat";
+              carb =
+                  "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)}g carbs";
+              fiber =
+                  "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)}g fiber";
+              break;
+            case 'DiarySummary.division':
+              cals =
+                  "${formatter.format(stats[day]!.cals)} / ${formatter.format(settings.dailyCalories ?? 0)} kcal";
+              protein =
+                  "${stats[day]!.protein.toStringAsFixed(0)} / ${settings.dailyProtein}g protein";
+              fat =
+                  "${stats[day]!.fat.toStringAsFixed(0)} / ${settings.dailyFat}g fat";
+              carb =
+                  "${stats[day]!.carb.toStringAsFixed(0)} / ${settings.dailyCarb}g carbs";
+              fiber =
+                  "${stats[day]!.fiber.toStringAsFixed(0)} / ${settings.dailyFiber}g fiber";
+              break;
+            case 'DiarySummary.both':
+              cals =
+                  "${((settings.dailyCalories ?? 0) - stats[day]!.cals).toStringAsFixed(0)} (${formatter.format(settings.dailyCalories ?? 0)} kcal)";
+              protein =
+                  "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)} (${settings.dailyProtein}g protein)";
+              fat =
+                  "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)} (${settings.dailyFat}g fat)";
+              carb =
+                  "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)} (${settings.dailyCarb}g carbs)";
+              fiber =
+                  "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)} (${settings.dailyFiber}g fiber)";
+              break;
+            case 'DiarySummary.none':
+              break;
+          }
+
+          statsRow = GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const DiarySettings()),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 16,
+                    runSpacing: 8,
+                    children: [
+                      if (settings.dailyCalories != null) ...[
+                        const Icon(Icons.whatshot),
+                        Text(cals),
+                      ],
+                      if (settings.dailyProtein != null) ...[
+                        const Icon(Icons.egg_outlined),
+                        Text(protein),
+                      ],
+                    ],
+                  ),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 16,
+                    runSpacing: 8,
+                    children: [
+                      if (settings.dailyFat != null) ...[
+                        const Icon(Icons.opacity_outlined),
+                        Text(fat),
+                      ],
+                      if (settings.dailyCarb != null) ...[
+                        const Icon(Icons.bakery_dining_outlined),
+                        Text(carb),
+                      ],
+                      if (settings.dailyFiber != null) ...[
+                        const Icon(Icons.grass_outlined),
+                        Text(fiber),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          );
+        }
+
+        Widget? image;
+        if (settings.showImages) {
+          if (diaryFood.imageFile?.isNotEmpty == true) {
+            image = Image.file(File(diaryFood.imageFile!));
+          } else if (diaryFood.smallImage?.isNotEmpty == true) {
+            image = SizedBox(
+              height: 80,
+              width: 50,
+              child: CachedNetworkImage(
+                imageUrl: diaryFood.smallImage!,
+              ),
+            );
+          }
+        }
+
+        return Column(
+          children: [
+            if (statsRow != null) statsRow,
+            if (showDivider)
+              Row(
+                children: [
+                  const Expanded(child: Divider()),
+                  const Icon(Icons.today),
+                  Text(
+                    DateFormat(settings.shortDateFormat)
+                        .format(previous.created),
+                  ),
+                  const Expanded(child: Divider()),
+                ],
+              ),
+            ListTile(
+              leading: image,
+              title: Text("$foodName$suffix"),
+              subtitle: Text(
+                DateFormat(settings.longDateFormat).format(diaryFood.created),
+              ),
+              trailing: Stack(
+                children: [
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 150),
+                    scale: selected ? 0.0 : 1.0,
+                    child: Visibility(
+                      visible: !selected,
+                      child: Text(
+                        "${diaryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 150),
+                    scale: selected ? 1.0 : 0.0,
+                    child: Visibility(
+                      visible: selected,
+                      child: Checkbox(
+                        value: selected,
+                        onChanged: (_) => widget.onSelect(diaryFood.entryId),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              selected: selected,
+              onLongPress: () => widget.onSelect(diaryFood.entryId),
+              onTap: () {
+                if (widget.selected.isEmpty && diaryFood.name != 'Quick-add') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditDiaryPage(
+                        id: diaryFood.entryId,
+                      ),
+                    ),
+                  );
+                } else if (widget.selected.isEmpty &&
+                    diaryFood.name == 'Quick-add') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuickAddPage(
+                        id: diaryFood.entryId,
+                      ),
+                    ),
+                  );
+                } else {
+                  widget.onSelect(diaryFood.entryId);
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -305,7 +535,7 @@ class _DiaryListState extends State<DiaryList> {
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => DiarySettings()),
+        MaterialPageRoute(builder: (context) => const DiarySettings()),
       ),
       child: Wrap(
         alignment: WrapAlignment.center,
