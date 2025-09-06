@@ -137,8 +137,6 @@ class HomePage extends StatelessWidget {
         extendBodyBehindAppBar: true,
         extendBody: true,
         body: SafeArea(
-          top: true,
-          bottom: false,
           child: TabBarView(
             physics: scrollableTabs
                 ? const AlwaysScrollableScrollPhysics()

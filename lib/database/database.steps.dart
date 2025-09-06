@@ -11658,7 +11658,7 @@ i1.GeneratedColumn<bool> _column_172(String aliasedName) =>
         type: i1.DriftSqlType.bool,
         defaultConstraints: i1.GeneratedColumn.constraintIsAlways(
             'CHECK ("compact_diary" IN (0, 1))'),
-        defaultValue: const CustomExpression('0'));
+        defaultValue: const CustomExpression('1'));
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema3 schema) from1To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,

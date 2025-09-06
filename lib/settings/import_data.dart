@@ -381,27 +381,24 @@ class _ImportDataState extends State<ImportData> {
         showModalBottomSheet(
           context: context,
           builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: kToolbarHeight + 48),
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                    leading: const Icon(Icons.date_range),
-                    title: const Text('Diary'),
-                    onTap: () => _importEntries(context),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.restaurant),
-                    title: const Text('Foods'),
-                    onTap: () => _importFoods(context),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.storage),
-                    title: const Text('Database'),
-                    onTap: () => _importDatabase(context),
-                  ),
-                ],
-              ),
+            return Wrap(
+              children: <Widget>[
+                ListTile(
+                  leading: const Icon(Icons.date_range),
+                  title: const Text('Diary'),
+                  onTap: () => _importEntries(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.restaurant),
+                  title: const Text('Foods'),
+                  onTap: () => _importFoods(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.storage),
+                  title: const Text('Database'),
+                  onTap: () => _importDatabase(context),
+                ),
+              ],
             );
           },
         );

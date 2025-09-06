@@ -5252,7 +5252,7 @@ class Settings extends Table with TableInfo<Settings, SettingsData> {
       requiredDuringInsert: false,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("compact_diary" IN (0, 1))'),
-      defaultValue: const CustomExpression('0'));
+      defaultValue: const CustomExpression('1'));
   @override
   List<GeneratedColumn> get $columns => [
         curveLines,
