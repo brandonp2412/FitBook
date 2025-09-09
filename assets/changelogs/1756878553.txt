@@ -1,0 +1,3 @@
+• Add setting to toggle scrolling of tabs
+• Migrate entries -> diaries
+• Move badges in README [skip ci]

@@ -135,26 +135,11 @@ jobs:
 
       - name: Copy changelogs with timestamps
         run: |
-          mkdir -p assets/changelogs
-
           for file in fastlane/metadata/android/en-US/changelogs/*.txt; do
-            [ -f "$file" ] || continue
-
-            # Try birth time first
             timestamp=$(stat --format="%W" "$file")
-            if [ "$timestamp" -eq 0 ]; then
-              timestamp=$(stat --format="%Y" "$file")
-            fi
-
             target_file="assets/changelogs/$timestamp.txt"
-
-            # Copy only if file doesn't exist or differs
-            if [ ! -f "$target_file" ] || ! cmp -s "$file" "$target_file"; then
-              cp "$file" "$target_file"
-              echo "Copied $(basename "$file") to $timestamp.txt"
-            else
-              echo "Skipped $(basename "$file") (already exists with same content)"
-            fi
+            cp "$file" "$target_file"
+            echo "Copied $(basename "$file") to $timestamp.txt"
           done
 
       - name: Setup Java

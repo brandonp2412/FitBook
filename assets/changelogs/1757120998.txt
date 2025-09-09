@@ -1,3 +1,0 @@
-- Make scan barcode on OFF a big button
-- Fix selecting barcode from edit entry
-- Make graph dots further apart based on entry date

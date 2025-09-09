@@ -1,3 +1,4 @@
+import 'package:fit_book/settings/whats_new.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -36,6 +37,15 @@ class AboutPage extends StatelessWidget {
                   'https://github.com/brandonp2412/FitBook/releases/latest';
               if (await canLaunchUrlString(url)) await launchUrlString(url);
             },
+          ),
+          ListTile(
+            title: const Text("Whats new?"),
+            leading: const Icon(Icons.change_circle_outlined),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const WhatsNew(),
+              ),
+            ),
           ),
           ListTile(
             title: const Text("Author"),

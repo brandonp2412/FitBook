@@ -1,0 +1,4 @@
+- Add manual editing of barcode
+- Zoop animation for checkboxes on select
+- Add images to weight
+- Cache images on food & diary

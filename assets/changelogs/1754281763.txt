@@ -1,0 +1,4 @@
+• Fix buggy filters
+• Fix updating food fields
+• Improve speed of diary filters button
+• Shorten some variable names

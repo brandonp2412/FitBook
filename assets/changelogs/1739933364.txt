@@ -1,0 +1,4 @@
+- Add comma separator to daily kcal goal
+- Remove padding below search
+- Add foods field picker
+- Allow opening of DB in startup to fail

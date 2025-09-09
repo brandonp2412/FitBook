@@ -7,6 +7,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.steps.dart';
 import 'package:fit_book/database/diaries.dart';
 import 'package:fit_book/database/foods.dart';
+import 'package:fit_book/database/metadata.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
 import 'package:fit_book/main.dart';
@@ -20,7 +21,7 @@ import 'database_connection_web.dart'
 part 'database.g.dart';
 
 @DriftDatabase(
-  tables: [Foods, Diaries, Weights, Settings],
+  tables: [Foods, Diaries, Weights, Settings, Metadata],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor, bool? dontLog})
@@ -352,8 +353,11 @@ WHERE name = 'Quick-add'
     from42To43: (Migrator m, Schema43 schema) async {
       await m.addColumn(schema.settings, schema.settings.compactDiary);
     },
+    from43To44: (Migrator m, Schema44 schema) async {
+      await m.createTable(schema.metadata);
+    },
   );
 
   @override
-  int get schemaVersion => 43;
+  int get schemaVersion => 44;
 }

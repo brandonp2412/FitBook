@@ -1,0 +1,4 @@
+- Add option for trend line
+- Add fiber to diary entries
+- Change ordering of foods page
+- Use new foods database

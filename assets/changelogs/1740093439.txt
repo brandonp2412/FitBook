@@ -1,0 +1,2 @@
+- Add meals page
+- Move selection clear button to left of search bar

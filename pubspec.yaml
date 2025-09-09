@@ -46,6 +46,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/changelogs/
 flutter_launcher_icons:
   android: false
   ios: true

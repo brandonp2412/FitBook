@@ -1,0 +1,5 @@
+• Allow backing up to fail
+• Make diary entries cards
+• Make weights cards
+• Rework diary display
+• Use date format in weight list

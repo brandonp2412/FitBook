@@ -1,0 +1,3 @@
+- Fix calories on entries page & graphs
+- Handle errors more on diary page
+- Fix serving size not being edited in foods

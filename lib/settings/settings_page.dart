@@ -85,7 +85,8 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Settings'),
         actions: [
-          if (kIsWeb)
+          if (defaultTargetPlatform != TargetPlatform.iOS &&
+              defaultTargetPlatform != TargetPlatform.macOS)
             IconButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(

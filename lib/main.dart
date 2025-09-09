@@ -8,6 +8,8 @@ import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/whats_new.dart';
+import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -119,8 +121,48 @@ class App extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    final info = PackageInfo.fromPlatform();
+    info.then((pkg) async {
+      final meta = await (db.metadata.select()..limit(1)).getSingleOrNull();
+      if (int.parse(pkg.buildNumber) == meta?.buildNumber) return null;
+      if (meta == null)
+        db.metadata.insertOne(
+          MetadataCompanion(buildNumber: Value(int.parse(pkg.buildNumber))),
+        );
+      else
+        db.metadata.update().write(
+              MetadataCompanion(
+                buildNumber: Value(int.parse(pkg.buildNumber)),
+              ),
+            );
+
+      if (mounted)
+        toast(
+          context,
+          "New version ${pkg.version}",
+          SnackBarAction(
+            label: 'Changes',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const WhatsNew(),
+              ),
+            ),
+          ),
+        );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

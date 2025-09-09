@@ -1,0 +1,10 @@
+• Add autocomplete to food group filter
+• Allow partial match for food groups
+• Fix debugging macos
+• Fix done button on food filters
+• Fix food filters not retaining the group
+• Fix food filters unit tests
+• Fix food group filter persistence
+• Fix food group filters on diary page
+• Remove camera permissions from macos
+• Remove network.server entitlements

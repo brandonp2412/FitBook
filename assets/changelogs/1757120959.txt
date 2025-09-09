@@ -1,0 +1,2 @@
+• Add compactDiary setting and migration
+• Change diary display based on compact setting

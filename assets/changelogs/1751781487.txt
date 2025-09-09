@@ -1,0 +1,3 @@
+- Fix quick add editing of macros
+- Fix filters bug
+- Fix unit conversions

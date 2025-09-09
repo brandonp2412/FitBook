@@ -1,0 +1,6 @@
+• Explain OFF search
+• Fix height on edit diary entry
+• Fix name when coming back from OpenFoodFacts
+• Fix spacing on edit entry page
+• Nudge user to OpenFoodFacts when a food doesn't exist
+• Specify height on edit weight page image
