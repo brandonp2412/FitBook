@@ -71,7 +71,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
         controller: widget.ctrl,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 250,
-          mainAxisSpacing: 12,
+          mainAxisSpacing: 8,
         ),
         itemCount: widget.weights.length,
         itemBuilder: (context, index) {
