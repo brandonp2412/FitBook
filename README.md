@@ -4,7 +4,7 @@ Graph your eating habits with ease!
 
 <p float="left">
     <a href="https://github.com/brandonp2412/FitBook/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/brandonp2412/fitbook?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418"></a>
-    <img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418">
+    <a href="https://shields.io/badges/git-hub-downloads-all-assets-all-releases"><img alt="Release downloads" src="https://img.shields.io/github/downloads/brandonp2412/FitBook/total.svg?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418"></a>
 </p>
 
 # Features
