@@ -324,7 +324,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
             ),
             if ((smallImg?.isNotEmpty == true || bigImg?.isNotEmpty == true) &&
-                settings.showImages) ...[
+                settings.showImages &&
+                imgFile == null) ...[
               const SizedBox(height: 16),
               SizedBox(
                 height: 80,
