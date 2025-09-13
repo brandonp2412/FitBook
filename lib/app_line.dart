@@ -466,6 +466,11 @@ class _AppLineState extends State<AppLine> {
                         subtitle: Text(
                           "${formatter.format(avg)} ${rows.first.unit}",
                         ),
+                        onTap: () {
+                          setState(() {
+                            showTrend = false;
+                          });
+                        },
                         leading: Radio<bool>(
                           value: false,
                           groupValue: showTrend,
@@ -485,6 +490,9 @@ class _AppLineState extends State<AppLine> {
                       child: ListTile(
                         title: const Text("Trend"),
                         subtitle: Text(_getTrendText(rows)),
+                        onTap: () => setState(() {
+                          showTrend = true;
+                        }),
                         leading: Radio<bool>(
                           value: true,
                           groupValue: showTrend,
