@@ -356,8 +356,11 @@ WHERE name = 'Quick-add'
     from43To44: (Migrator m, Schema44 schema) async {
       await m.createTable(schema.metadata);
     },
+    from44To45: (Migrator m, Schema45 schema) async {
+      await m.addColumn(schema.settings, schema.settings.compactWeights);
+    },
   );
 
   @override
-  int get schemaVersion => 44;
+  int get schemaVersion => 45;
 }

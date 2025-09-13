@@ -65,45 +65,131 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(12),
-        controller: widget.ctrl,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 250,
-          mainAxisSpacing: 8,
-        ),
-        itemCount: widget.weights.length,
-        itemBuilder: (context, index) {
-          final weight = widget.weights[index];
-          final isToday = isSameDay(weight.created, now);
-          final isSelected = widget.selected.contains(weight.id);
+    if (settings.compactWeights) {
+      return Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 8),
+          controller: widget.ctrl,
+          itemCount: widget.weights.length,
+          itemBuilder: (context, index) {
+            final weight = widget.weights[index];
+            final isToday = isSameDay(weight.created, now);
+            Widget? leading;
 
-          return WeightCard(
-            weight: weight,
-            isToday: isToday,
-            isSelected: isSelected,
-            showImages: settings.showImages,
-            dateFormat: settings.longDateFormat,
-            onTap: () {
-              if (widget.selected.isEmpty) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditWeightPage(
-                      weight: weight.toCompanion(false),
+            if (settings.showImages && weight.image?.isNotEmpty == true) {
+              leading = Image.file(
+                File(weight.image!),
+                errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                  onPressed: () {},
+                  label: const Text('Image error'),
+                  icon: const Icon(Icons.error),
+                ),
+              );
+            }
+
+            return Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: widget.selected.contains(weight.id)
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: .08)
+                        : Colors.transparent,
+                    border: Border.all(
+                      color: widget.selected.contains(weight.id)
+                          ? Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withValues(alpha: 0.3)
+                          : Colors.transparent,
+                      width: 1,
                     ),
                   ),
-                );
-              } else {
-                widget.onSelect(weight.id);
-              }
-            },
-            onLongPress: () => widget.onSelect(weight.id),
-          );
-        },
-      ),
-    );
+                  child: ListTile(
+                    leading: leading,
+                    title: Text(
+                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
+                    ),
+                    trailing: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                      opacity: widget.selected.contains(weight.id) ? 1.0 : 0.0,
+                      child: Checkbox(
+                        value: widget.selected.contains(weight.id),
+                        onChanged: (_) => widget.onSelect(weight.id),
+                      ),
+                    ),
+                    subtitle: Text(
+                      DateFormat(settings.longDateFormat)
+                          .format(weight.created),
+                      style: isToday
+                          ? const TextStyle(fontWeight: FontWeight.bold)
+                          : null,
+                    ),
+                    onLongPress: () => widget.onSelect(weight.id),
+                    onTap: () {
+                      if (widget.selected.isEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditWeightPage(
+                              weight: weight.toCompanion(false),
+                            ),
+                          ),
+                        );
+                      } else {
+                        widget.onSelect(weight.id);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    } else {
+      return Expanded(
+        child: GridView.builder(
+          padding: const EdgeInsets.all(12),
+          controller: widget.ctrl,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 250,
+            mainAxisSpacing: 8,
+          ),
+          itemCount: widget.weights.length,
+          itemBuilder: (context, index) {
+            final weight = widget.weights[index];
+            final isToday = isSameDay(weight.created, now);
+            final isSelected = widget.selected.contains(weight.id);
+
+            return WeightCard(
+              weight: weight,
+              isToday: isToday,
+              isSelected: isSelected,
+              showImages: settings.showImages,
+              dateFormat: settings.longDateFormat,
+              onTap: () {
+                if (widget.selected.isEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditWeightPage(
+                        weight: weight.toCompanion(false),
+                      ),
+                    ),
+                  );
+                } else {
+                  widget.onSelect(weight.id);
+                }
+              },
+              onLongPress: () => widget.onSelect(weight.id),
+            );
+          },
+        ),
+      );
+    }
   }
 }
 

@@ -198,6 +198,29 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
           ),
         ),
       ),
+    if ('compact weights'.contains(term))
+      Tooltip(
+        message: 'Use a compact list display for weights',
+        child: ListTile(
+          title: const Text('Compact weights display'),
+          leading: settings.value.compactWeights
+              ? const Icon(Icons.list)
+              : const Icon(Icons.grid_view),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(
+                  compactWeights: Value(!settings.value.compactWeights),
+                ),
+              ),
+          trailing: Switch(
+            value: settings.value.compactWeights,
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    compactWeights: Value(value),
+                  ),
+                ),
+          ),
+        ),
+      ),
   ];
 }
 

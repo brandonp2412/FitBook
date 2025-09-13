@@ -51,4 +51,6 @@ class Settings extends Table {
   BoolColumn get scrollableTabs =>
       boolean().withDefault(const Constant(true))();
   BoolColumn get compactDiary => boolean().withDefault(const Constant(true))();
+  BoolColumn get compactWeights =>
+      boolean().withDefault(const Constant(true))();
 }
