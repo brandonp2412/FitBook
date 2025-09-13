@@ -91,52 +91,71 @@ class _FoodListState extends State<FoodList> {
                     Expanded(child: Divider()),
                   ],
                 ),
-              ListTile(
-                leading: image,
-                title: Text(food.name.value),
-                subtitle: Text(
-                  "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
+              material.Container(
+                decoration: BoxDecoration(
+                  color: selected
+                      ? Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: .08)
+                      : Colors.transparent,
+                  border: Border.all(
+                    color: selected
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.3)
+                        : Colors.transparent,
+                    width: 1,
+                  ),
                 ),
-                trailing: Stack(
-                  children: [
-                    AnimatedScale(
-                      duration: const Duration(milliseconds: 150),
-                      scale: selected ? 0.0 : 1.0,
-                      child: Visibility(
-                        visible: !selected,
-                        child: Text(
-                          "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
-                          style: const TextStyle(fontSize: 16),
+                child: ListTile(
+                  leading: image,
+                  title: Text(food.name.value),
+                  subtitle: Text(
+                    "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
+                  ),
+                  trailing: Stack(
+                    children: [
+                      AnimatedScale(
+                        duration: const Duration(milliseconds: 150),
+                        scale: selected ? 0.0 : 1.0,
+                        child: Visibility(
+                          visible: !selected,
+                          child: Text(
+                            "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ),
                       ),
-                    ),
-                    AnimatedScale(
-                      duration: const Duration(milliseconds: 150),
-                      scale: selected ? 1.0 : 0.0,
-                      child: Visibility(
-                        visible: selected,
-                        child: Checkbox(
-                          value: selected,
-                          onChanged: (_) => widget.onSelect(food.id.value),
+                      AnimatedScale(
+                        duration: const Duration(milliseconds: 150),
+                        scale: selected ? 1.0 : 0.0,
+                        child: Visibility(
+                          visible: selected,
+                          child: Checkbox(
+                            value: selected,
+                            onChanged: (_) => widget.onSelect(food.id.value),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  onLongPress: () => widget.onSelect(food.id.value),
+                  onTap: () {
+                    if (widget.selected.isEmpty)
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditFoodPage(
+                            id: food.id.value,
+                          ),
+                        ),
+                      );
+                    else
+                      widget.onSelect(food.id.value);
+                  },
                 ),
-                onLongPress: () => widget.onSelect(food.id.value),
-                onTap: () {
-                  if (widget.selected.isEmpty)
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditFoodPage(
-                          id: food.id.value,
-                        ),
-                      ),
-                    );
-                  else
-                    widget.onSelect(food.id.value);
-                },
               ),
             ],
           );
