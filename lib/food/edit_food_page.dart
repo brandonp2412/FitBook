@@ -166,6 +166,16 @@ class _EditFoodPageState extends State<EditFoodPage> {
       db.into(db.foods).insert(RawValuesInsertable(columns));
   }
 
+  void setImage() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+    final path = result?.files.single.path;
+    if (path == null) return;
+    setState(() {
+      imgFile = path;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
@@ -337,12 +347,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ],
             if (imgFile?.isNotEmpty == true && settings.showImages) ...[
               const SizedBox(height: 16),
-              Image.file(
-                File(imgFile!),
-                errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                  onPressed: () {},
-                  label: const Text('Image error'),
-                  icon: const Icon(Icons.error),
+              GestureDetector(
+                onTap: setImage,
+                child: Image.file(
+                  File(imgFile!),
+                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                    onPressed: setImage,
+                    label: const Text('Image error'),
+                    icon: const Icon(Icons.error),
+                  ),
                 ),
               ),
             ],
@@ -368,15 +381,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   TextButton.icon(
                     icon: const Icon(Icons.image),
                     label: const Text('Set image'),
-                    onPressed: () async {
-                      FilePickerResult? result = await FilePicker.platform
-                          .pickFiles(type: FileType.image);
-                      final path = result?.files.single.path;
-                      if (path == null) return;
-                      setState(() {
-                        imgFile = path;
-                      });
-                    },
+                    onPressed: setImage,
                   ),
                 if (settings.showImages && imgFile?.isNotEmpty == true)
                   TextButton.icon(
