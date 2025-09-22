@@ -9,7 +9,7 @@ Graph your eating habits with ease!
 
 # Features
 
-- � **Offline**: Internet is completely optional.
+- 🔌 **Offline**: Internet is completely optional.
 - 🍏 **Foods**: FitBook ships with over 7 thousand foods (sourced from the [CORGIS Dataset Project](https://corgis-edu.github.io/corgis/csv/food/)).
 - 🍇 **OpenFoodFacts**: Scan barcodes & search for foods with [OpenFoodFacts](https://world.openfoodfacts.org/).
 - 📈 **Graphs**: Plot your diet macros over time.
