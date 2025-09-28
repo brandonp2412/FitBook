@@ -1,6 +1,7 @@
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/export_data.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class FailedMigrationsPage extends StatelessWidget {
@@ -39,13 +40,14 @@ class FailedMigrationsPage extends StatelessWidget {
               DeleteRecordsButton(pageContext: context),
               TextButton.icon(
                 onPressed: () async {
+                  final info = await PackageInfo.fromPlatform();
                   final url = Uri(
                     scheme: 'https',
                     host: 'github.com',
                     path: '/brandonp2412/FitBook/issues/new',
                     queryParameters: {
                       'title': 'Failed migrations',
-                      'body': error.toString(),
+                      'body': '$error\n${info.version}',
                     },
                   ).toString();
 
