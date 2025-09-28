@@ -290,6 +290,19 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     });
   }
 
+  void setImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+    final path = result?.files.single.path;
+    if (path == null) return;
+    setState(() {
+      imageFile = path;
+      foodDirty = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
@@ -301,7 +314,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.id == null ? 'Add entry' : 'Edit entry',
+          widget.id == null ? 'Add diary entry' : 'Edit diary entry',
         ),
         actions: [
           if (widget.id != null)
@@ -727,41 +740,28 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ],
             ),
             const SizedBox(height: 8),
-            if (imageFile?.isNotEmpty == true && settings.showImages) ...[
+            if (imageFile?.isNotEmpty == true &&
+                settings.showImages &&
+                !kIsWeb) ...[
               const SizedBox(height: 8),
-              kIsWeb
-                  ? const SizedBox.shrink()
-                  : SizedBox(
-                      height: 200,
-                      child: Image.file(
-                        File(imageFile!),
-                        errorBuilder: (context, error, stackTrace) =>
-                            TextButton.icon(
-                          onPressed: () {},
-                          label: const Text('Image error'),
-                          icon: const Icon(Icons.error),
-                        ),
-                      ),
-                    ),
+              SizedBox(
+                height: 200,
+                child: Image.file(
+                  File(imageFile!),
+                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                    onPressed: setImage,
+                    label: const Text('Image error'),
+                    icon: const Icon(Icons.error),
+                  ),
+                ),
+              ),
             ],
-            if (settings.showImages) ...[
+            if (settings.showImages && imageFile == null) ...[
               const SizedBox(height: 8),
               TextButton.icon(
                 icon: const Icon(Icons.image),
                 label: const Text('Set image'),
-                onPressed: () async {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.image,
-                    allowMultiple: false,
-                  );
-                  final path = result?.files.single.path;
-                  if (path == null) return;
-                  setState(() {
-                    imageFile = path;
-                    foodDirty = true;
-                  });
-                },
+                onPressed: setImage,
               ),
             ],
             if (imageFile != null && settings.showImages)
