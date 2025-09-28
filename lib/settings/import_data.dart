@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -322,6 +323,7 @@ class _ImportDataState extends State<ImportData> {
 
   _importDatabase(BuildContext context) async {
     final entriesState = context.read<DiaryState>();
+    final settingsState = context.read<SettingsState>();
     Navigator.pop(context);
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;
@@ -334,6 +336,7 @@ class _ImportDataState extends State<ImportData> {
     if (!widget.pageContext.mounted) return;
     Navigator.pop(widget.pageContext);
     entriesState.limit = 100;
+    settingsState.setSubscription();
   }
 
   _importEntries(BuildContext context) async {

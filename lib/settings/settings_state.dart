@@ -13,6 +13,10 @@ class SettingsState extends ChangeNotifier {
 
   SettingsState(Setting settings) {
     value = settings;
+    setSubscription();
+  }
+
+  void setSubscription() {
     subscription =
         (db.settings.select()..limit(1)).watchSingle().listen((event) {
       value = event;
