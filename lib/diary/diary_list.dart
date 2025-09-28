@@ -280,7 +280,10 @@ class _DiaryListState extends State<DiaryList> {
         Widget? image;
         if (settings.showImages) {
           if (diaryFood.imageFile?.isNotEmpty == true) {
-            image = Image.file(File(diaryFood.imageFile!));
+            image = Image.file(
+              File(diaryFood.imageFile!),
+              errorBuilder: (context, error, stackTrace) => Icon(Icons.error),
+            );
           } else if (diaryFood.smallImage?.isNotEmpty == true) {
             image = SizedBox(
               height: 80,
