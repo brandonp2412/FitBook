@@ -49,7 +49,7 @@ void main() async {
       ),
     );
     await tester.pump();
-    expect(find.text('Edit entry'), findsOne);
+    expect(find.text('Edit diary entry'), findsOne);
     expect(find.text('Test'), findsOne);
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
@@ -111,7 +111,7 @@ void main() async {
       ),
     );
     await tester.pump();
-    expect(find.text('Edit entry'), findsOne);
+    expect(find.text('Edit diary entry'), findsOne);
     expect(find.text('Hamburger'), findsOne);
 
     await tester.enterText(
@@ -130,7 +130,7 @@ void main() async {
 
     await tester.tap(find.byTooltip('Save'));
     await tester.pump();
-    expect(find.text('Add entry'), findsNothing);
+    expect(find.text('Add diary entry'), findsNothing);
 
     await db.close();
   });
@@ -178,7 +178,7 @@ void main() async {
       ),
     );
     await tester.pump();
-    expect(find.text('Edit entry'), findsOne);
+    expect(find.text('Edit diary entry'), findsOne);
     expect(
       find.text('Pure Premium Orange Juice Calcium And Vitamin D No Pulp'),
       findsOne,

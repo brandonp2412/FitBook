@@ -220,7 +220,8 @@ class WeightCard extends StatelessWidget {
 
     return Card(
       elevation: isSelected ? 8 : 2,
-      shadowColor: isSelected ? colorScheme.primary.withOpacity(0.3) : null,
+      shadowColor:
+          isSelected ? colorScheme.primary.withValues(alpha: 0.3) : null,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: isSelected
@@ -240,8 +241,8 @@ class WeightCard extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      colorScheme.primary.withOpacity(0.1),
-                      colorScheme.primary.withOpacity(0.05),
+                      colorScheme.primary.withValues(alpha: 0.1),
+                      colorScheme.primary.withValues(alpha: 0.05),
                     ],
                   )
                 : null,
@@ -333,7 +334,7 @@ class WeightCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: isToday
-                      ? colorScheme.primary.withOpacity(0.15)
+                      ? colorScheme.primary.withValues(alpha: 0.15)
                       : colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(20),
                 ),

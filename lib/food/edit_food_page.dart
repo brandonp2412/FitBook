@@ -131,7 +131,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
   }
 
   Future<void> save() async {
-    Navigator.pop(context);
     var food = FoodsCompanion.insert(
       name: nameCtrl.text,
       barcode: Value(barcodeCtrl.text),
@@ -160,10 +159,51 @@ class _EditFoodPageState extends State<EditFoodPage> {
     else
       columns['favorite'] = Variable(settings.favoriteNew);
 
+    var id = widget.id;
     if (widget.id != null)
-      db.update(db.foods).replace(RawValuesInsertable(columns));
+      await db.update(db.foods).replace(RawValuesInsertable(columns));
     else
-      db.into(db.foods).insert(RawValuesInsertable(columns));
+      id = await db.into(db.foods).insert(RawValuesInsertable(columns));
+
+    final matches = await (db.foods.select()
+          ..where(
+            (u) =>
+                u.name.equals(nameCtrl.text) &
+                u.id.isNotValue(widget.id ?? id ?? -1),
+          ))
+        .get();
+
+    if (matches.length == 1 && mounted) {
+      bool replace = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Name conflict"),
+          content: Text(
+            "A food already exists with this name. Do you want to replace the old one?",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        ),
+      );
+      if (replace) {
+        await (db.update(db.diaries).write(DiariesCompanion(food: Value(id!))));
+        await db.foods.deleteWhere((u) => u.id.equals(matches.first.id));
+      }
+    }
+
+    if (mounted) Navigator.pop(context);
   }
 
   void setImage() async {

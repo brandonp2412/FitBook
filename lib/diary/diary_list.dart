@@ -559,7 +559,7 @@ class _DiaryListState extends State<DiaryList> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: isToday
-            ? colorScheme.surface.withOpacity(0.5)
+            ? colorScheme.surface.withValues(alpha: 0.5)
             : colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(20),
       ),
@@ -621,7 +621,8 @@ class _DiaryListState extends State<DiaryList> {
 
     return Card(
       elevation: isSelected ? 8 : 2,
-      shadowColor: isSelected ? colorScheme.primary.withOpacity(0.3) : null,
+      shadowColor:
+          isSelected ? colorScheme.primary.withValues(alpha: 0.3) : null,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: isSelected
@@ -664,8 +665,8 @@ class _DiaryListState extends State<DiaryList> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      colorScheme.primary.withOpacity(0.1),
-                      colorScheme.primary.withOpacity(0.05),
+                      colorScheme.primary.withValues(alpha: 0.1),
+                      colorScheme.primary.withValues(alpha: 0.05),
                     ],
                   )
                 : null,

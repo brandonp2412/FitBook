@@ -73,7 +73,7 @@ void main() async {
 
     await tester.tap(find.text('Add'));
     await tester.pump();
-    expect(find.text('Add entry'), findsOne);
+    expect(find.text('Add diary entry'), findsOne);
     await tester.enterText(find.bySemanticsLabel('Name'), 'Test 4');
     await tester.pump();
     await tester.tap(find.byTooltip('Save'));
@@ -83,7 +83,7 @@ void main() async {
 
     await tester.tap(find.text('Test 4'));
     await tester.pump();
-    expect(find.text('Edit entry'), findsOne);
+    expect(find.text('Edit diary entry'), findsOne);
     await tester.enterText(find.bySemanticsLabel('Name'), 'Test 5');
     await tester.pump();
     await tester.tap(find.byTooltip('Save'));
