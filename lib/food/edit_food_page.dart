@@ -198,7 +198,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
         ),
       );
       if (replace) {
-        await (db.update(db.diaries).write(DiariesCompanion(food: Value(id!))));
+        db.diaries.update()
+          ..where((u) => u.food.equals(matches.first.id))
+          ..write(
+            DiariesCompanion(
+              food: Value(widget.id ?? id!),
+            ),
+          );
         await db.foods.deleteWhere((u) => u.id.equals(matches.first.id));
       }
     }
