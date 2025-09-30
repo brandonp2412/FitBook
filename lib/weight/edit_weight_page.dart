@@ -136,6 +136,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
 
     if (settings.targetWeight == null) return;
+    if (!settings.positiveReinforcement) return;
     final show = shouldNotify(
       amount,
       widget.weight.amount.value,
