@@ -1,1 +1,7 @@
+• Change style of toasts
+• Clean up changelogs
+• Copy deployment process from Flexify
 • Fix bug when trying to merge food conflicts
+• Fix positive reinforcement still showing when you turn it off
+• Make deploy.sh executable
+• Show a preview of positive reinforcement when turning it on
