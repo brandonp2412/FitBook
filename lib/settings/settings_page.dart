@@ -65,6 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
           term: search.text.toLowerCase(),
         ),
         ...getWeightSettings(
+          context: context,
           settings: settingsState,
           term: search.text.toLowerCase(),
           targetWeight: targetWeight,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 List<Widget> getWeightSettings({
+  required BuildContext context,
   required String term,
   required SettingsState settings,
   required TextEditingController targetWeight,
@@ -35,12 +36,16 @@ List<Widget> getWeightSettings({
         child: ListTile(
           leading: const Icon(Icons.sentiment_very_satisfied),
           title: const Text('Positive reinforcement'),
-          onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  positiveReinforcement:
-                      Value(!settings.value.positiveReinforcement),
-                ),
-              ),
+          onTap: () {
+            db.settings.update().write(
+                  SettingsCompanion(
+                    positiveReinforcement:
+                        Value(!settings.value.positiveReinforcement),
+                  ),
+                );
+            if (!settings.value.positiveReinforcement)
+              toast(context, 'Nice messages will be shown like this!');
+          },
           trailing: Switch(
             value: settings.value.positiveReinforcement,
             onChanged: (value) => db.settings
@@ -77,6 +82,7 @@ class _WeightSettingsState extends State<WeightSettings> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: getWeightSettings(
+            context: context,
             term: '',
             settings: settings,
             targetWeight: targetWeight,
