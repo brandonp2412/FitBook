@@ -57,11 +57,11 @@ else
   exit 1
 fi
 
-export FLEXIFY_DEVICE_TYPE="$device_type"
+export FITBOOK_DEVICE_TYPE="$device_type"
 
 ./flutter/bin/flutter drive --profile --driver=test_driver/integration_test.dart \
   --target=integration_test/screenshot_test.dart \
-  --dart-define=FLEXIFY_DEVICE_TYPE="$device_type" -d "${device:-$device_type}"
+  --dart-define=FITBOOK_DEVICE_TYPE="$device_type" -d "${device:-$device_type}"
 code=$?
 
 if [[ "$(uname -s)" == Darwin* ]]; then

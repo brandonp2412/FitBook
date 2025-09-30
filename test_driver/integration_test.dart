@@ -1,12 +1,13 @@
 import 'dart:io';
+
 import 'package:integration_test/integration_test_driver_extended.dart';
 
 Future<void> main() async => await integrationDriver(
       onScreenshot: (name, image, [args]) async {
-        final deviceType = Platform.environment["FLEXIFY_DEVICE_TYPE"];
+        final deviceType = Platform.environment["FITBOOK_DEVICE_TYPE"];
         if (deviceType == null || deviceType.isEmpty)
-          throw "FLEXIFY_DEVICE_TYPE must be set, so integration driver knows where to save screenshots.";
-        final isIos = Platform.environment["FLEXIFY_IS_IOS"];
+          throw "FITBOOK_DEVICE_TYPE must be set, so integration driver knows where to save screenshots.";
+        final isIos = Platform.environment["FITBOOK_IS_IOS"];
         File imgFile;
         if (isIos != null)
           imgFile = await File(
