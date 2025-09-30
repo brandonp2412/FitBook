@@ -1,0 +1,5 @@
+• Add compact weight entries setting
+• Fix food image double-ups
+• Highlight selected food entries
+• Link shields.io in downloads badge
+• Tap text to show average/trend in graphs
