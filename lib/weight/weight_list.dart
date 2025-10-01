@@ -156,6 +156,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 250,
+            mainAxisExtent: 150,
             mainAxisSpacing: 8,
           ),
           itemCount: widget.weights.length,
@@ -256,7 +257,7 @@ class WeightCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
+                      "${weight.amount.toStringAsFixed(0)} ${weight.unit}",
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isToday ? colorScheme.primary : null,
