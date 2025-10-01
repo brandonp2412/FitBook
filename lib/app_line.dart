@@ -69,7 +69,7 @@ class _AppLineState extends State<AppLine> {
   }
 
   String _getTrendText(List<GraphData> data) {
-    if (data.length < 2) return "0.00 ${data.first.unit}/week";
+    if (data.length < 2) return "0.00 ${data.first.unit}";
 
     // Sort data chronologically for proper calculation
     final sortedData = data.toList()
@@ -86,7 +86,7 @@ class _AppLineState extends State<AppLine> {
     double slopePerWeek = slope * (7.0 * data.length / daysSpan);
 
     String sign = slopePerWeek >= 0 ? "+" : "";
-    return "$sign${formatter.format(slopePerWeek)} ${data.first.unit}/week";
+    return "$sign${formatter.format(slopePerWeek)} ${data.first.unit}";
   }
 
   List<FlSpot> _getTrendSpots(List<GraphData> data) {
@@ -455,12 +455,11 @@ class _AppLineState extends State<AppLine> {
             ),
             material.Column(
               children: [
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     material.SizedBox(
-                      width: 200,
+                      width: 165,
                       child: ListTile(
                         title: const Text("Average"),
                         subtitle: Text(
@@ -486,7 +485,7 @@ class _AppLineState extends State<AppLine> {
                       ),
                     ),
                     material.SizedBox(
-                      width: 200,
+                      width: 165,
                       child: ListTile(
                         title: const Text("Trend"),
                         subtitle: Text(_getTrendText(rows)),
@@ -507,36 +506,36 @@ class _AppLineState extends State<AppLine> {
                         ),
                       ),
                     ),
-                    if (goal > 0)
-                      material.SizedBox(
-                        width: 200,
-                        child: ListTile(
-                          onTap: () {
-                            if (widget.metric == 'body-weight')
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => WeightSettings(),
-                                ),
-                              );
-                            else
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => DiarySettings(),
-                                ),
-                              );
-                          },
-                          title: const Text("Goal"),
-                          subtitle: Text(
-                            "${formatter.format(goal)} ${rows.first.unit}",
-                          ),
-                          leading: Icon(
-                            Icons.flag,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
                   ],
                 ),
+                if (goal > 0)
+                  material.SizedBox(
+                    width: 150,
+                    child: ListTile(
+                      onTap: () {
+                        if (widget.metric == 'body-weight')
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => WeightSettings(),
+                            ),
+                          );
+                        else
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DiarySettings(),
+                            ),
+                          );
+                      },
+                      title: const Text("Goal"),
+                      subtitle: Text(
+                        "${formatter.format(goal)} ${rows.first.unit}",
+                      ),
+                      leading: Icon(
+                        Icons.flag,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ],
