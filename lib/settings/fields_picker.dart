@@ -68,7 +68,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
                     showSelected = !showSelected;
                   });
                 },
-                label: Text("Show selected"),
+                label: showSelected ? Text("All") : Text("Only selected"),
                 icon: showSelected
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility_outlined),
