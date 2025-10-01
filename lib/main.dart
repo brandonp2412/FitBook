@@ -38,6 +38,8 @@ Future<void> main() async {
   else
     cancelReminders();
 
+  runApp(appProviders(state));
+
   final pkgInfo = await PackageInfo.fromPlatform();
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
@@ -47,8 +49,6 @@ Future<void> main() async {
     userId: state.value.offLogin ?? '',
     password: state.value.offPassword ?? '',
   );
-
-  runApp(appProviders(state));
 }
 
 Widget appProviders(SettingsState state) => MultiProvider(
