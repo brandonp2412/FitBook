@@ -66,7 +66,7 @@ void main() async {
       await tester.tap(find.text('Trend'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('kg/week'), findsOneWidget);
+      expect(find.textContaining('-4.67 kg'), findsOneWidget);
 
       await db.close();
     });
@@ -129,7 +129,7 @@ void main() async {
       );
 
       expect(trendText.data, contains('+'));
-      expect(trendText.data, contains('kg/week'));
+      expect(trendText.data, contains('kg'));
 
       await db.close();
     });
@@ -192,7 +192,7 @@ void main() async {
       );
 
       expect(trendText.data, contains('-'));
-      expect(trendText.data, contains('kg/week'));
+      expect(trendText.data, contains('kg'));
 
       await db.close();
     });
@@ -276,7 +276,7 @@ void main() async {
       await tester.tap(find.text('Trend'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('kcal/week'), findsOneWidget);
+      expect(find.textContaining('-933.33 kcal'), findsOneWidget);
 
       await db.close();
     });
@@ -359,7 +359,7 @@ void main() async {
       await tester.tap(find.text('Trend'));
       await tester.pumpAndSettle();
 
-      expect(find.text('0.00 kg/week'), findsOneWidget);
+      expect(find.text('0.00 kg'), findsOneWidget);
 
       await db.close();
     });

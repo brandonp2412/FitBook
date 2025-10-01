@@ -155,7 +155,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
           padding: const EdgeInsets.all(12),
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 250,
+            maxCrossAxisExtent: 190,
             mainAxisExtent: 150,
             mainAxisSpacing: 8,
           ),
