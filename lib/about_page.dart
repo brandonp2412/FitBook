@@ -50,7 +50,7 @@ class AboutPage extends StatelessWidget {
           ListTile(
             title: const Text("Author"),
             leading: const Icon(Icons.person),
-            subtitle: const Text("Brandon Presley"),
+            subtitle: const Text("Brandon Dick"),
             onTap: () async {
               const url = 'https://github.com/brandonp2412';
               if (await canLaunchUrlString(url)) await launchUrlString(url);
