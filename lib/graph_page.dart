@@ -65,7 +65,7 @@ class GraphPageState extends State<GraphPage>
           children: [
             DropdownButtonFormField(
               decoration: const InputDecoration(labelText: 'Metric'),
-              value: filteredFields.contains(metric) ||
+              initialValue: filteredFields.contains(metric) ||
                       metric == 'calories' ||
                       metric == 'body-weight'
                   ? metric
@@ -104,7 +104,7 @@ class GraphPageState extends State<GraphPage>
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: DropdownButtonFormField(
                 decoration: const InputDecoration(labelText: 'Group by'),
-                value: groupBy,
+                initialValue: groupBy,
                 items: const [
                   DropdownMenuItem(
                     value: Period.day,
