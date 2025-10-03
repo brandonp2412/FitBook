@@ -54,6 +54,7 @@ class _AnimatedFabState extends State<AnimatedFab> {
       height: 56,
       child: FloatingActionButton.extended(
         onPressed: () => widget.onTap(),
+        heroTag: 'hero',
         label: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
           opacity: extend ? 1.0 : 0.0,
