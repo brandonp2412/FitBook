@@ -118,7 +118,7 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
               decoration: const InputDecoration(labelText: 'Serving size'),
             ),
             DropdownButtonFormField<String>(
-              value: servingUnit,
+              initialValue: servingUnit,
               decoration: const InputDecoration(labelText: 'Unit'),
               items: unitOptions.map((String value) {
                 return DropdownMenuItem<String>(

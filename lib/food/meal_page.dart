@@ -293,7 +293,7 @@ class _MealPageState extends State<MealPage> {
           Padding(
             padding: EdgeInsets.only(left: 16, right: 16, bottom: 88),
             child: DropdownButtonFormField<String>(
-              value: unit,
+              initialValue: unit,
               decoration: InputDecoration(
                 labelText:
                     'Serving unit (${selectedFood?.name.value ?? "Pick a food first"})',

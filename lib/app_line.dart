@@ -455,58 +455,56 @@ class _AppLineState extends State<AppLine> {
             ),
             material.Column(
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    material.SizedBox(
-                      width: 165,
-                      child: ListTile(
-                        title: const Text("Average"),
-                        subtitle: Text(
-                          "${formatter.format(avg)} ${rows.first.unit}",
-                        ),
-                        onTap: () {
-                          setState(() {
-                            showTrend = false;
-                          });
-                        },
-                        leading: Radio<bool>(
-                          value: false,
-                          groupValue: showTrend,
-                          onChanged: (value) {
+                RadioGroup(
+                  groupValue: showTrend,
+                  onChanged: (value) {
+                    setState(() {
+                      showTrend = value!;
+                    });
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      material.SizedBox(
+                        width: 165,
+                        child: ListTile(
+                          title: const Text("Average"),
+                          subtitle: Text(
+                            "${formatter.format(avg)} ${rows.first.unit}",
+                          ),
+                          onTap: () {
                             setState(() {
-                              showTrend = value!;
+                              showTrend = false;
                             });
                           },
-                          fillColor: WidgetStateProperty.resolveWith(
-                            (states) => Theme.of(context).colorScheme.tertiary,
+                          leading: Radio<bool>(
+                            value: false,
+                            fillColor: WidgetStateProperty.resolveWith(
+                              (states) =>
+                                  Theme.of(context).colorScheme.tertiary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    material.SizedBox(
-                      width: 165,
-                      child: ListTile(
-                        title: const Text("Trend"),
-                        subtitle: Text(_getTrendText(rows)),
-                        onTap: () => setState(() {
-                          showTrend = true;
-                        }),
-                        leading: Radio<bool>(
-                          value: true,
-                          groupValue: showTrend,
-                          onChanged: (value) {
-                            setState(() {
-                              showTrend = value!;
-                            });
-                          },
-                          fillColor: WidgetStateProperty.resolveWith(
-                            (states) => Theme.of(context).colorScheme.secondary,
+                      material.SizedBox(
+                        width: 165,
+                        child: ListTile(
+                          title: const Text("Trend"),
+                          subtitle: Text(_getTrendText(rows)),
+                          onTap: () => setState(() {
+                            showTrend = true;
+                          }),
+                          leading: Radio<bool>(
+                            value: true,
+                            fillColor: WidgetStateProperty.resolveWith(
+                              (states) =>
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 if (goal > 0)
                   material.SizedBox(

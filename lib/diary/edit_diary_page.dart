@@ -546,7 +546,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: unit,
+                    initialValue: unit,
                     decoration: const InputDecoration(labelText: 'Unit'),
                     items: unitOptions.map((String value) {
                       if (value == 'serving' && selectedFood != null)

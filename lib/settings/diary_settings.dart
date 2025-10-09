@@ -30,7 +30,7 @@ List<Widget> getDiarySettings({
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField<String>(
-          value: settings.value.entryUnit,
+          initialValue: settings.value.entryUnit,
           decoration: const InputDecoration(labelText: 'Diary unit'),
           items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
@@ -47,7 +47,7 @@ List<Widget> getDiarySettings({
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField(
-          value: settings.value.diarySummary,
+          initialValue: settings.value.diarySummary,
           decoration: const InputDecoration(
             labelStyle: TextStyle(),
             labelText: 'Diary summary',

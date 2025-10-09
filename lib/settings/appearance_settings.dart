@@ -40,7 +40,7 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<ThemeMode>(
-          value: ThemeMode.values
+          initialValue: ThemeMode.values
               .byName(settings.value.themeMode.replaceFirst('ThemeMode.', '')),
           decoration: const InputDecoration(
             labelStyle: TextStyle(),
@@ -71,7 +71,7 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
-          value: settings.value.longDateFormat,
+          initialValue: settings.value.longDateFormat,
           items: longFormats.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -90,7 +90,7 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
-          value: settings.value.shortDateFormat,
+          initialValue: settings.value.shortDateFormat,
           items: shortFormats.map((String value) {
             return DropdownMenuItem<String>(
               value: value,

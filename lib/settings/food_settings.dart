@@ -17,7 +17,7 @@ List<Widget> getFoodSettings({
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: DropdownButtonFormField<String>(
-          value: settings.value.foodUnit,
+          initialValue: settings.value.foodUnit,
           decoration: const InputDecoration(labelText: 'Food unit'),
           items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(

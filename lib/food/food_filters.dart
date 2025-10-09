@@ -110,7 +110,7 @@ class _FoodFiltersState extends State<FoodFilters> {
                 },
               ),
               DropdownButtonFormField<String>(
-                value: _servingUnit,
+                initialValue: _servingUnit,
                 decoration: const InputDecoration(
                   labelText: 'Serving unit',
                   floatingLabelBehavior: FloatingLabelBehavior.auto,

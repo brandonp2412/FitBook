@@ -339,7 +339,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
               textInputAction: TextInputAction.next,
             ),
             DropdownButtonFormField<String>(
-              value: unit,
+              initialValue: unit,
               decoration:
                   InputDecoration(labelText: 'Unit', hintText: oldUnits),
               items: unitOptions.map((String value) {
