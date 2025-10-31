@@ -30,6 +30,15 @@ class AppDatabase extends _$AppDatabase {
               (kIsWeb ? createWebConnection() : createNativeConnection()),
         );
 
+  factory AppDatabase.withData(Uint8List data) {
+    if (kIsWeb) {
+      importedDatabaseData = data;
+      return AppDatabase();
+    } else {
+      throw UnsupportedError('withData constructor only works on web');
+    }
+  }
+
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(

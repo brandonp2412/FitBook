@@ -8,6 +8,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -33,18 +34,22 @@ class _ImportDataState extends State<ImportData> {
     Navigator.pop(context);
 
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        withData: true,
+      );
+      if (result == null || result.files.single.bytes == null) return;
       setState(() {
         importing = true;
       });
 
-      File file = File(result!.files.single.path!);
+      final bytes = result.files.single.bytes!;
       String csv;
       try {
-        csv = await file.readAsString(encoding: utf8);
-      } catch (error) {
-        csv = await file.readAsString(encoding: latin1);
+        csv = utf8.decode(bytes, allowMalformed: false);
+      } on FormatException {
+        csv = latin1.decode(bytes);
       }
+
       List<List<dynamic>> rows =
           const CsvToListConverter(eol: "\n").convert(csv);
 
@@ -325,14 +330,34 @@ class _ImportDataState extends State<ImportData> {
     final entriesState = context.read<DiaryState>();
     final settingsState = context.read<SettingsState>();
     Navigator.pop(context);
+
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result == null) return;
 
-    File sourceFile = File(result.files.single.path!);
-    final dbFolder = await getApplicationDocumentsDirectory();
     await db.close();
-    await sourceFile.copy(p.join(dbFolder.path, 'fitbook.sqlite'));
-    db = AppDatabase();
+
+    if (kIsWeb) {
+      final bytes = result.files.single.bytes;
+      if (bytes == null) {
+        // Show error to user
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to read file')),
+          );
+        }
+        return;
+      }
+
+      // Import the database by reopening with the new data
+      db = AppDatabase.withData(bytes);
+    } else {
+      // Native implementation (iOS/Android/Linux/etc.)
+      File sourceFile = File(result.files.single.path!);
+      final dbFolder = await getApplicationDocumentsDirectory();
+      await sourceFile.copy(p.join(dbFolder.path, 'fitbook.sqlite'));
+      db = AppDatabase();
+    }
+
     if (!widget.pageContext.mounted) return;
     Navigator.pop(widget.pageContext);
     entriesState.limit = 100;
@@ -340,18 +365,26 @@ class _ImportDataState extends State<ImportData> {
   }
 
   _importEntries(BuildContext context) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      withData: true,
+    );
+
+    if (result == null) return;
+
     setState(() {
       importing = true;
     });
 
-    File file = File(result!.files.single.path!);
+    final bytes = result.files.single.bytes!;
+
     String csv;
     try {
-      csv = await file.readAsString(encoding: utf8);
+      csv = utf8.decode(bytes);
     } catch (error) {
-      csv = await file.readAsString(encoding: latin1);
+      csv = latin1.decode(bytes);
     }
+
+    // Rest of your code remains the same...
     List<List<dynamic>> rows = const CsvToListConverter(eol: "\n").convert(csv);
 
     List<DiariesCompanion> diaries = [];
