@@ -1,7 +1,5 @@
-• Change graph average/trend display
-• Change labels on field picker
-• Change style of toasts
-• Change weight cards
-• Clean up changelogs
-• Fix positive reinforcement still showing when you turn it off
-• Improve load time of app
+• Disable avoid print warning in linting
+• Fix hero tag errors
+• Fix linting warning on graph page
+• Fix linting warnings
+• Rework weight card display
