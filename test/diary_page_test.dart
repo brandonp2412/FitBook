@@ -68,34 +68,42 @@ void main() async {
         ),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Test 1'), findsOne);
 
     await tester.tap(find.text('Add'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Add diary entry'), findsOne);
-    await tester.enterText(find.bySemanticsLabel('Name'), 'Test 4');
-    await tester.pump();
+
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Name'),
+      'Test 4',
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save'));
-    await tester.pump();
+    await tester.pumpAndSettle();
+
     expect(find.text('Add'), findsOne);
     expect(find.text('Test 4'), findsOne);
 
     await tester.tap(find.text('Test 4'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Edit diary entry'), findsOne);
-    await tester.enterText(find.bySemanticsLabel('Name'), 'Test 5');
-    await tester.pump();
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Name'),
+      'Test 5',
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Test 5'), findsOne);
 
     await tester.longPress(find.text('Test 5'));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Delete'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Delete'));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Test 5'), findsNothing);
 
     await db.close();
