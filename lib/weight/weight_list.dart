@@ -156,7 +156,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 190,
-            mainAxisExtent: 150,
+            mainAxisExtent: 140,
             mainAxisSpacing: 8,
           ),
           itemCount: widget.weights.length,
@@ -170,7 +170,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
               isToday: isToday,
               isSelected: isSelected,
               showImages: settings.showImages,
-              dateFormat: settings.longDateFormat,
+              dateFormat: settings.shortDateFormat,
               onTap: () {
                 if (widget.selected.isEmpty) {
                   Navigator.push(
@@ -257,9 +257,8 @@ class WeightCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${weight.amount.toStringAsFixed(0)} ${weight.unit}",
+                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
                       style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
                         color: isToday ? colorScheme.primary : null,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -353,6 +352,41 @@ class WeightCard extends StatelessWidget {
                     Flexible(
                       child: Text(
                         _formatDateForCard(weight.created, dateFormat),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontWeight: isToday ? FontWeight.bold : null,
+                          color: isToday
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: isToday
+                      ? colorScheme.primary.withValues(alpha: 0.15)
+                      : colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.timer,
+                      size: 14,
+                      color: isToday
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        DateFormat('hh:mm a').format(weight.created),
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontWeight: isToday ? FontWeight.bold : null,
                           color: isToday
