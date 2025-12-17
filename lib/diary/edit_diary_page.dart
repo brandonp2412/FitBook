@@ -556,50 +556,41 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               },
             ),
             SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: quantity,
-                    focusNode: quantityNode,
-                    decoration: const InputDecoration(label: Text("Quantity")),
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    onTap: () => quantity.selection = TextSelection(
-                      baseOffset: 0,
-                      extentOffset: quantity.text.length,
-                    ),
-                    textInputAction: TextInputAction.next,
-                    onSubmitted: (value) {
-                      if (selectedFood != null) save();
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    initialValue: unit,
-                    decoration: const InputDecoration(labelText: 'Unit'),
-                    items: unitOptions.map((String value) {
-                      if (value == 'serving' && selectedFood != null)
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text("serving ($servingSize $shortUnit)"),
-                        );
-                      else
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        unit = newValue!;
-                      });
-                    },
-                  ),
-                ),
-              ],
+            TextField(
+              controller: quantity,
+              focusNode: quantityNode,
+              decoration: const InputDecoration(label: Text("Quantity")),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onTap: () => quantity.selection = TextSelection(
+                baseOffset: 0,
+                extentOffset: quantity.text.length,
+              ),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (value) {
+                if (selectedFood != null) save();
+              },
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              initialValue: unit,
+              decoration: const InputDecoration(labelText: 'Unit'),
+              items: unitOptions.map((String value) {
+                if (value == 'serving' && selectedFood != null)
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text("serving ($servingSize $shortUnit)"),
+                  );
+                else
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  unit = newValue!;
+                });
+              },
             ),
             ListTile(
               title: const Text('Created date'),
