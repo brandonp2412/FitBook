@@ -10,6 +10,12 @@ import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
 
+void dumpTexts() {
+  final texts =
+      find.byType(Text).evaluate().map((e) => (e.widget as Text).data);
+  debugPrint('Visible texts: $texts');
+}
+
 void main() async {
   testWidgets('EntryPage CRUD', (WidgetTester tester) async {
     await mockTests();
@@ -21,30 +27,6 @@ void main() async {
         DiariesCompanion.insert(
           food: await (db.foods.insertOne(
             FoodsCompanion.insert(
-              name: 'Test 3',
-              calories: const Value(1),
-              servingWeight1G: const Value(1),
-            ),
-          )),
-          created: DateTime.now(),
-          quantity: 1,
-          unit: 'serving',
-        ),
-        DiariesCompanion.insert(
-          food: await (db.foods.insertOne(
-            FoodsCompanion.insert(
-              name: 'Test 2',
-              calories: const Value(1),
-              servingWeight1G: const Value(1),
-            ),
-          )),
-          created: DateTime.now(),
-          quantity: 1,
-          unit: 'serving',
-        ),
-        DiariesCompanion.insert(
-          food: await (db.foods.insertOne(
-            FoodsCompanion.insert(
               name: 'Test 1',
               calories: const Value(1),
               servingWeight1G: const Value(1),
@@ -52,7 +34,7 @@ void main() async {
           )),
           created: DateTime.now(),
           quantity: 1,
-          unit: 'serving',
+          unit: 'grams',
         ),
       ],
     ));
@@ -84,6 +66,7 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(find.text('Add'), findsOne);
+    dumpTexts();
     expect(find.text('Test 4'), findsOne);
 
     await tester.tap(find.text('Test 4'));
