@@ -25,7 +25,7 @@ class EditDiaryPage extends StatefulWidget {
 }
 
 class _EditDiaryPageState extends State<EditDiaryPage> {
-  final quantity = TextEditingController(text: "1");
+  final quantity = TextEditingController(text: "100");
   final calories = TextEditingController(text: "0");
   final kilojoules = TextEditingController(text: "0");
   final protein = TextEditingController(text: "0");
@@ -71,6 +71,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           barcode.text = food.barcode ?? "";
           nameController?.text = food.name;
           selectedFood = food;
+          // Display base values (per servingSize)
           calories.text =
               food.calories != null ? formatter.format(food.calories!) : "0";
           protein.text =
@@ -85,7 +86,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ? formatter.format(food.calories! * 4.184)
               : "0";
         });
-        recalc();
       },
     );
   }
@@ -114,15 +114,22 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   Future<void> saveFood() async {
+    // Parse the displayed values (which are per servingSize, typically 100g)
+    final parsedCalories = formatter.tryParse(calories.text)?.toDouble();
+    final parsedProtein = formatter.tryParse(protein.text)?.toDouble();
+    final parsedCarb = formatter.tryParse(carb.text)?.toDouble();
+    final parsedFat = formatter.tryParse(fat.text)?.toDouble();
+    final parsedFiber = formatter.tryParse(fiber.text)?.toDouble();
+
     if (selectedFood?.name != nameController?.text) {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
           name: nameController!.text,
-          calories: Value(formatter.tryParse(calories.text)?.toDouble()),
-          proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
-          carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
-          fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
-          fiberG: Value(formatter.tryParse(fiber.text)?.toDouble()),
+          calories: Value(parsedCalories),
+          proteinG: Value(parsedProtein),
+          carbohydrateG: Value(parsedCarb),
+          fatG: Value(parsedFat),
+          fiberG: Value(parsedFiber),
           favorite: Value(settings.favoriteNew),
           servingSize: Value(selectedFood?.servingSize ?? 100.0),
           servingUnit: Value(selectedFood?.servingUnit ?? settings.foodUnit),
@@ -142,11 +149,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ..where((u) => u.id.equals(selectedFood?.id ?? -1)))
           .write(
         FoodsCompanion(
-          calories: Value(formatter.tryParse(calories.text)?.toDouble()),
-          proteinG: Value(formatter.tryParse(protein.text)?.toDouble()),
-          carbohydrateG: Value(formatter.tryParse(carb.text)?.toDouble()),
-          fatG: Value(formatter.tryParse(fat.text)?.toDouble()),
-          fiberG: Value(formatter.tryParse(fiber.text)?.toDouble()),
+          calories: Value(parsedCalories),
+          proteinG: Value(parsedProtein),
+          carbohydrateG: Value(parsedCarb),
+          fatG: Value(parsedFat),
+          fiberG: Value(parsedFiber),
           imageFile: Value(imageFile),
         ),
       );
@@ -261,33 +268,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         );
       });
     }
-  }
-
-  void recalc() {
-    final food = selectedFood!;
-    final result = convertCustomServing(
-      food: food,
-      qty: formatter.parse(quantity.text).toDouble(),
-      unit: unit,
-    ).copyWith(
-      created: Value(created ?? DateTime.now()),
-    );
-
-    setState(() {
-      nameController?.text = food.name;
-      barcode.text = food.barcode ?? '';
-      calories.text =
-          result.calories != null ? formatter.format(result.calories!) : "0";
-      protein.text =
-          result.proteinG != null ? formatter.format(result.proteinG!) : "0";
-      kilojoules.text = formatter.format((result.calories ?? 0) * 4.184);
-      carb.text = result.carbohydrateG != null
-          ? formatter.format(result.carbohydrateG!)
-          : "0";
-      fat.text = result.fatG != null ? formatter.format(result.fatG!) : "0";
-      fiber.text =
-          result.fiberG != null ? formatter.format(result.fiberG!) : "0";
-    });
   }
 
   void setImage() async {
@@ -436,9 +416,26 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   setState(() {
                     selectedFood = food;
                     foodDirty = false;
+                    // Set base nutritional values (per servingSize)
+                    calories.text = food.calories != null
+                        ? formatter.format(food.calories!)
+                        : "0";
+                    protein.text = food.proteinG != null
+                        ? formatter.format(food.proteinG!)
+                        : "0";
+                    carb.text = food.carbohydrateG != null
+                        ? formatter.format(food.carbohydrateG!)
+                        : "0";
+                    fat.text =
+                        food.fatG != null ? formatter.format(food.fatG!) : "0";
+                    fiber.text = food.fiberG != null
+                        ? formatter.format(food.fiberG!)
+                        : "0";
+                    kilojoules.text = food.calories != null
+                        ? formatter.format(food.calories! * 4.184)
+                        : "0";
                   });
                   nameController?.text = food.name;
-                  recalc();
                   quantityNode.requestFocus();
                   selectAll(quantity);
                   return;
@@ -462,11 +459,28 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 setState(() {
                   foodDirty = false;
                   selectedFood = food;
+                  // Set base nutritional values (per servingSize)
+                  calories.text = food.calories != null
+                      ? formatter.format(food.calories!)
+                      : "0";
+                  protein.text = food.proteinG != null
+                      ? formatter.format(food.proteinG!)
+                      : "0";
+                  carb.text = food.carbohydrateG != null
+                      ? formatter.format(food.carbohydrateG!)
+                      : "0";
+                  fat.text =
+                      food.fatG != null ? formatter.format(food.fatG!) : "0";
+                  fiber.text = food.fiberG != null
+                      ? formatter.format(food.fiberG!)
+                      : "0";
+                  kilojoules.text = food.calories != null
+                      ? formatter.format(food.calories! * 4.184)
+                      : "0";
                   if (lastEntry == null) return;
                   quantity.text = lastEntry.quantity.toString();
                   unit = lastEntry.unit;
                 });
-                recalc();
                 quantityNode.requestFocus();
                 selectAll(quantity);
               },
@@ -495,9 +509,27 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         if (food == null) return;
                         setState(() {
                           selectedFood = food;
+                          // Set base nutritional values
+                          calories.text = food.calories != null
+                              ? formatter.format(food.calories!)
+                              : "0";
+                          protein.text = food.proteinG != null
+                              ? formatter.format(food.proteinG!)
+                              : "0";
+                          carb.text = food.carbohydrateG != null
+                              ? formatter.format(food.carbohydrateG!)
+                              : "0";
+                          fat.text = food.fatG != null
+                              ? formatter.format(food.fatG!)
+                              : "0";
+                          fiber.text = food.fiberG != null
+                              ? formatter.format(food.fiberG!)
+                              : "0";
+                          kilojoules.text = food.calories != null
+                              ? formatter.format(food.calories! * 4.184)
+                              : "0";
                         });
                         nameController?.text = food.name;
-                        recalc();
                         quantityNode.requestFocus();
                         selectAll(quantity);
                       },
@@ -534,9 +566,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       baseOffset: 0,
                       extentOffset: quantity.text.length,
                     ),
-                    onChanged: (value) {
-                      recalc();
-                    },
                     textInputAction: TextInputAction.next,
                     onSubmitted: (value) {
                       if (selectedFood != null) save();
@@ -564,7 +593,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       setState(() {
                         unit = newValue!;
                       });
-                      recalc();
                     },
                   ),
                 ),
@@ -599,8 +627,26 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       barcode.text = food.barcode!;
                       setState(() {
                         selectedFood = food;
+                        // Set base nutritional values
+                        calories.text = food.calories != null
+                            ? formatter.format(food.calories!)
+                            : "0";
+                        protein.text = food.proteinG != null
+                            ? formatter.format(food.proteinG!)
+                            : "0";
+                        carb.text = food.carbohydrateG != null
+                            ? formatter.format(food.carbohydrateG!)
+                            : "0";
+                        fat.text = food.fatG != null
+                            ? formatter.format(food.fatG!)
+                            : "0";
+                        fiber.text = food.fiberG != null
+                            ? formatter.format(food.fiberG!)
+                            : "0";
+                        kilojoules.text = food.calories != null
+                            ? formatter.format(food.calories! * 4.184)
+                            : "0";
                       });
-                      recalc();
                     },
                   ),
                 ),
@@ -613,7 +659,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     controller: calories,
                     focusNode: caloriesNode,
                     decoration: InputDecoration(
-                      labelText: 'Calories (per ${quantity.text} $unit)',
+                      labelText: 'Calories (per $servingSize $shortUnit)',
                     ),
                     onTap: () => selectAll(calories),
                     keyboardType:
@@ -637,7 +683,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     child: TextField(
                       controller: kilojoules,
                       decoration: InputDecoration(
-                        labelText: 'Kilojoules (per ${quantity.text} $unit)',
+                        labelText: 'Kilojoules (per $servingSize $shortUnit)',
                       ),
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
@@ -663,7 +709,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   child: TextField(
                     controller: protein,
                     decoration: InputDecoration(
-                      labelText: 'Protein (per ${quantity.text} $unit)',
+                      labelText: 'Protein (per $servingSize $shortUnit)',
                     ),
                     onTap: () => selectAll(protein),
                     keyboardType:
@@ -682,7 +728,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   child: TextField(
                     controller: carb,
                     decoration: InputDecoration(
-                      labelText: 'Carbs (per ${quantity.text} $unit)',
+                      labelText: 'Carbs (per $servingSize $shortUnit)',
                     ),
                     onTap: () => selectAll(carb),
                     keyboardType:
@@ -705,7 +751,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   child: TextField(
                     controller: fat,
                     decoration: InputDecoration(
-                      labelText: 'Fat (per ${quantity.text} $unit)',
+                      labelText: 'Fat (per $servingSize $shortUnit)',
                     ),
                     onTap: () => selectAll(fat),
                     keyboardType:
@@ -724,7 +770,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   child: TextField(
                     controller: fiber,
                     decoration: InputDecoration(
-                      labelText: 'Fiber (per ${quantity.text} $unit)',
+                      labelText: 'Fiber (per $servingSize $shortUnit)',
                     ),
                     onTap: () => selectAll(fiber),
                     keyboardType:

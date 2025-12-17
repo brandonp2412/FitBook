@@ -359,8 +359,18 @@ WHERE name = 'Quick-add'
     from44To45: (Migrator m, Schema45 schema) async {
       await m.addColumn(schema.settings, schema.settings.compactWeights);
     },
+    from45To46: (Migrator m, Schema46 schema) async {
+      await m.database.customUpdate("""UPDATE settings 
+        SET entry_unit='grams'
+        WHERE entry_unit='serving'
+        """);
+      await m.database.customUpdate("""UPDATE settings 
+        SET food_unit='grams'
+        WHERE food_unit='serving'
+        """);
+    },
   );
 
   @override
-  int get schemaVersion => 45;
+  int get schemaVersion => 46;
 }
