@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:drift/drift.dart' as drift;
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -297,10 +298,11 @@ class _EditWeightPageState extends State<EditWeightPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: save,
-        tooltip: "Save",
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: save,
+        label: "Save",
+        icon: Icons.save,
+        scroll: ScrollController(),
       ),
     );
   }

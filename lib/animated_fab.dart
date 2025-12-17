@@ -53,6 +53,7 @@ class _AnimatedFabState extends State<AnimatedFab> {
       width: extend ? 100 : 56,
       height: 56,
       child: FloatingActionButton.extended(
+        tooltip: widget.label,
         onPressed: () => widget.onTap(),
         heroTag: 'hero',
         label: AnimatedOpacity(

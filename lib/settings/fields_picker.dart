@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -18,6 +19,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
   var fields = db.foods.$columns.map((column) => column.name).toList();
   var search = '';
   bool showSelected = false;
+  final ctrl = ScrollController();
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
         title: Text("Pick fields"),
       ),
       body: ListView(
+        controller: ctrl,
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -110,8 +113,8 @@ class _FieldsPickerState extends State<FieldsPicker> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+      floatingActionButton: AnimatedFab(
+        onTap: () async {
           final updates = await (db.settings.update().writeReturning(
                 SettingsCompanion(
                   fields: Value(
@@ -125,7 +128,9 @@ class _FieldsPickerState extends State<FieldsPicker> {
           state.setValue(updates.first);
           Navigator.pop(context);
         },
-        child: Icon(Icons.save),
+        icon: Icons.save,
+        label: 'Save',
+        scroll: ctrl,
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -35,6 +36,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   final quantityNode = FocusNode();
   final caloriesNode = FocusNode();
   final barcode = TextEditingController();
+  final scrollCtrl = ScrollController();
 
   late var settings = context.read<SettingsState>().value;
   late var unit = settings.entryUnit;
@@ -337,6 +339,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
+          controller: scrollCtrl,
           children: [
             Autocomplete<String>(
               optionsMaxHeight: 300,
@@ -822,10 +825,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: save,
-        tooltip: 'Save',
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: save,
+        label: 'Save',
+        icon: Icons.save,
+        scroll: scrollCtrl,
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/food/meal_page.dart';
 import 'package:fit_book/main.dart';
@@ -39,6 +40,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final kjCtrl = TextEditingController(text: "0");
   final sizeCtrl = TextEditingController(text: "1");
   late SettingsState settingsState;
+  final scrollCtrl = ScrollController();
 
   Map<String, TextEditingController> controllers = {};
 
@@ -272,6 +274,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
+          controller: scrollCtrl,
           children: [
             TextField(
               controller: nameCtrl,
@@ -500,10 +503,11 @@ class _EditFoodPageState extends State<EditFoodPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: save,
-        tooltip: 'Save',
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: save,
+        label: 'Save',
+        icon: Icons.save,
+        scroll: scrollCtrl,
       ),
     );
   }

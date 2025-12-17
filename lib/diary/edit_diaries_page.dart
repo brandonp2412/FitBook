@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -27,6 +28,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   final fatController = TextEditingController();
   final fiberController = TextEditingController();
   late var settings = context.read<SettingsState>().value;
+  final scrollCtrl = ScrollController();
 
   bool newFood = false;
 
@@ -279,6 +281,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
+          controller: scrollCtrl,
           children: [
             Autocomplete<String>(
               optionsMaxHeight: 300,
@@ -471,10 +474,11 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _save,
-        tooltip: 'Save',
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: () => _save(),
+        icon: Icons.save,
+        label: 'Save',
+        scroll: scrollCtrl,
       ),
     );
   }

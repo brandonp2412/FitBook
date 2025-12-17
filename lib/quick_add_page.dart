@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -255,10 +256,11 @@ class _QuickAddPageState extends State<QuickAddPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: save,
-        tooltip: 'Save',
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: save,
+        label: 'Save',
+        icon: Icons.save,
+        scroll: ScrollController(),
       ),
     );
   }

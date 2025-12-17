@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -22,6 +23,7 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
   final proteinGController = TextEditingController();
   final carbohydrateGController = TextEditingController();
   final servingSizeController = TextEditingController();
+  final scrollCtrl = ScrollController();
 
   String? servingUnit;
   String? oldNames;
@@ -87,6 +89,7 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
+          controller: scrollCtrl,
           children: [
             TextField(
               controller: nameController,
@@ -135,9 +138,11 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => save(),
-        child: const Icon(Icons.save),
+      floatingActionButton: AnimatedFab(
+        onTap: () => save(),
+        icon: Icons.save,
+        label: 'Save',
+        scroll: scrollCtrl,
       ),
     );
   }
