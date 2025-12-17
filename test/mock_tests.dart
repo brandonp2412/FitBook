@@ -17,7 +17,7 @@ mockTests() async {
       id: const Value(1),
       longDateFormat: "dd/MM/yy",
       shortDateFormat: 'd/M/yy',
-      entryUnit: 'serving',
+      entryUnit: 'grams',
       foodUnit: 'grams',
       themeMode: ThemeMode.system.toString(),
       diarySummary: DiarySummary.division.toString(),
