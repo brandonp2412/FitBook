@@ -156,7 +156,7 @@ class AppDatabase extends _$AppDatabase {
       material.ThemeMode themeMode = material.ThemeMode.system;
       String longDateFormat = 'dd/MM/yy';
       String shortDateFormat = 'd/M/yy';
-      String entryUnit = 'serving';
+      String entryUnit = 'grams';
       String foodUnit = 'grams';
       DiarySummary diarySummary = DiarySummary.division;
 
