@@ -257,7 +257,7 @@ class WeightCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
+                      "${weight.amount.toStringAsFixed(1)} ${weight.unit}",
                       style: theme.textTheme.headlineSmall?.copyWith(
                         color: isToday ? colorScheme.primary : null,
                       ),
