@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide Table;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
@@ -47,6 +47,60 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   TextEditingController? nameController;
   String? imageFile;
   final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
+
+  // The logic for grabbing the nutritional values from the entry
+  double _num(TextEditingController c) {
+    return formatter.tryParse(c.text)?.toDouble() ?? 0.0;
+  }
+
+  double get _entryServings {
+    final q = _num(quantity);
+    if (q == 0) return 0;
+
+    final s = (selectedFood?.servingSize ?? 100).toDouble();
+    if (s == 0) return 0;
+
+    if (unit == 'serving') return q;
+    return q / s;
+  }
+
+  double get entryCalories {
+    return _num(calories) * _entryServings;
+  }
+
+  double get entryProtein {
+    return _num(protein) * _entryServings;
+  }
+
+  double get entryCarb {
+    return _num(carb) * _entryServings;
+  }
+
+  double get entryFat {
+    return _num(fat) * _entryServings;
+  }
+
+  double get entryFiber {
+    return _num(fiber) * _entryServings;
+  }
+
+  double get entryKJ {
+    return entryCalories * 4.184;
+  }
+
+  // Formatting for cells in table that calculates the entries total nutrition
+  Widget totalCell({
+    required String label,
+    required String value,
+  }) {
+    return InputDecorator(
+      decoration: InputDecoration(
+        labelText: label,
+        border: const OutlineInputBorder(),
+      ),
+      child: Text(value),
+    );
+  }
 
   @override
   void initState() {
@@ -813,6 +867,60 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   foodDirty = true;
                 }),
               ),
+            const SizedBox(height: 32),
+            Row(
+              children: [
+                Expanded(
+                  child: totalCell(
+                    label: 'Calories per ${quantity.text} g',
+                    value: '${formatter.format(entryCalories)} kcal',
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: totalCell(
+                    label: 'Kilojoules',
+                    value: '${formatter.format(entryKJ)} kJ',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: totalCell(
+                    label: 'Protein',
+                    value: '${formatter.format(entryProtein)} g',
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: totalCell(
+                    label: 'Carbs',
+                    value: '${formatter.format(entryCarb)} g',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: totalCell(
+                    label: 'Fat',
+                    value: '${formatter.format(entryFat)} g',
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: totalCell(
+                    label: 'Fiber',
+                    value: '${formatter.format(entryFiber)} g',
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
