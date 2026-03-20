@@ -620,6 +620,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 extentOffset: quantity.text.length,
               ),
               textInputAction: TextInputAction.next,
+              onChanged: (value) => setState(() {}),
               onSubmitted: (value) {
                 if (selectedFood != null) save();
               },
@@ -872,7 +873,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               children: [
                 Expanded(
                   child: totalCell(
-                    label: 'Calories per ${quantity.text} g',
+                    label: 'Calories per ${quantity.text} $shortUnit',
                     value: '${formatter.format(entryCalories)} kcal',
                   ),
                 ),
