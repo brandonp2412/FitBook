@@ -1,4 +1,5 @@
-• Add labels and animate fabs
-• Fix toasts never dismissing
-• Make defaults 100g instead of 1 serving
-• Round cards to 1dp instead of 2
+• Adds 2x3 table to diary page to calculate per entry nutrition
+• Automatically close stale feature requests
+• Fix snackbar error in utils.dart
+• Recalculate nutrition preview on edit
+• Removes tracking on pubspec.lock and .vscode/settings.json while updating .gitignore to reflect this
