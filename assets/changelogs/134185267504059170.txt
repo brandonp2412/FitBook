@@ -1,0 +1,1 @@
+• Adds 2x3 table to diary page to calculate per entry nutrition
