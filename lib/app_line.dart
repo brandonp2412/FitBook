@@ -586,27 +586,16 @@ class _AppLineState extends State<AppLine> {
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
         if (touchedSpots.isEmpty) return [];
-
-        // Always show tooltip for the original data (first line)
-        final originalDataSpot = touchedSpots.firstWhere(
-          (spot) => spot.barIndex == 0,
-          orElse: () => touchedSpots.first,
-        );
-
-        final row = rows.elementAt(originalDataSpot.spotIndex);
-        final created =
-            DateFormat(settings.shortDateFormat).format(row.created);
-        final val = formatter.format(row.val);
-
-        String text = "$val $unit\n";
-
-        return [
-          LineTooltipItem(
-            text,
-            TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
-            children: [TextSpan(text: created)],
-          ),
-        ];
+        return touchedSpots.map(
+          (spot) {
+            if (spot.barIndex != 0) return null;
+            final value = rows.elementAt(spot.spotIndex).val;
+            return LineTooltipItem(
+              "${formatter.format(value)} $unit",
+              TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
+            );
+          },
+        ).toList();
       },
     );
   }
