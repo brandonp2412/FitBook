@@ -29,7 +29,7 @@ class ImportData extends StatefulWidget {
 class _ImportDataState extends State<ImportData> {
   bool importing = false;
 
-  _importFoods(BuildContext context) async {
+  Future<void> _importFoods(BuildContext context) async {
     Navigator.pop(context);
 
     try {
@@ -45,8 +45,9 @@ class _ImportDataState extends State<ImportData> {
       } catch (error) {
         csv = await file.readAsString(encoding: latin1);
       }
-      List<List<dynamic>> rows =
-          const CsvToListConverter(eol: "\n").convert(csv);
+
+      final codec = Csv(lineDelimiter: '\n');
+      final rows = codec.decode(csv);
 
       List<FoodsCompanion> foods = [];
       for (final row in rows.skip(1)) {
@@ -321,7 +322,7 @@ class _ImportDataState extends State<ImportData> {
     }
   }
 
-  _importDatabase(BuildContext context) async {
+  Future<void> _importDatabase(BuildContext context) async {
     final entriesState = context.read<DiaryState>();
     final settingsState = context.read<SettingsState>();
     Navigator.pop(context);
@@ -339,7 +340,7 @@ class _ImportDataState extends State<ImportData> {
     settingsState.setSubscription();
   }
 
-  _importEntries(BuildContext context) async {
+  Future<void> _importEntries(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     setState(() {
       importing = true;
@@ -352,7 +353,8 @@ class _ImportDataState extends State<ImportData> {
     } catch (error) {
       csv = await file.readAsString(encoding: latin1);
     }
-    List<List<dynamic>> rows = const CsvToListConverter(eol: "\n").convert(csv);
+    final codec = Csv(lineDelimiter: '\n');
+    final rows = codec.decode(csv);
 
     List<DiariesCompanion> diaries = [];
     for (final row in rows.skip(1)) {

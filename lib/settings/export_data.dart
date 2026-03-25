@@ -63,8 +63,8 @@ class _ExportDataState extends State<ExportData> {
                           entry.unit,
                         ]);
                       }
-                      final csv =
-                          const ListToCsvConverter(eol: '\n').convert(csvData);
+                      final codec = Csv(lineDelimiter: '\n');
+                      final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
                       await FilePicker.platform.saveFile(
                         fileName: 'diary.csv',
@@ -219,8 +219,9 @@ class _ExportDataState extends State<ExportData> {
                           food.created?.toIso8601String() ?? "",
                         ]);
                       }
-                      final csv = const ListToCsvConverter(eol: '\n')
-                          .convert(csvData, convertNullTo: "");
+
+                      final codec = Csv(lineDelimiter: '\n');
+                      final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
                       await FilePicker.platform.saveFile(
                         fileName: 'foods.csv',
