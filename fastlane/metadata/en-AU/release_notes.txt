@@ -1,5 +1,10 @@
+• Add ps1 script for deployment
 • Adds 2x3 table to diary page to calculate per entry nutrition
 • Automatically close stale feature requests
+• Fix selecting trend breaking tooltip on graphs
 • Fix snackbar error in utils.dart
+• Fix unit tests
 • Recalculate nutrition preview on edit
+• Remove App Store download link from README
 • Removes tracking on pubspec.lock and .vscode/settings.json while updating .gitignore to reflect this
+• Revert "Removes tracking on pubspec.lock and .vscode/settings.json while updating .gitignore to reflect this"
