@@ -59,7 +59,20 @@ void main() async {
     expect(find.text('10.00'), findsOne); // fat
 
     // Edit the macro-nutrients
-    // TEMP: skip enterText
+    await tester.enterText(
+      find.widgetWithText(TextField, '20.00'),
+      '25.0',
+    ); // protein
+    await tester.enterText(
+      find.widgetWithText(TextField, '30.00'),
+      '35.0',
+    ); // carbs
+    await tester.enterText(
+      find.widgetWithText(TextField, '10.00'),
+      '15.0',
+    ); // fat
+
+    // Save the changes
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
@@ -126,7 +139,21 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    // TEMP: skip enterText, go straight to save
+    // Update macro-nutrients
+    await tester.enterText(
+      find.widgetWithText(TextField, '10.00'),
+      '30.0',
+    ); // protein: 10 -> 30
+    await tester.enterText(
+      find.widgetWithText(TextField, '20.00'),
+      '40.0',
+    ); // carbs: 20 -> 40
+    await tester.enterText(
+      find.widgetWithText(TextField, '5.00'),
+      '15.0',
+    ); // fat: 5 -> 15
+
+    // Save the changes
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
