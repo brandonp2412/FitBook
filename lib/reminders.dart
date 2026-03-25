@@ -29,7 +29,7 @@ void setupReminders() {
   }
 }
 
-doDesktopReminders() async {
+Future<void> doDesktopReminders() async {
   const linux =
       LinuxInitializationSettings(defaultActionName: 'Open notification');
   const darwin = DarwinInitializationSettings();
@@ -38,7 +38,7 @@ doDesktopReminders() async {
     macOS: darwin,
   );
   final plugin = FlutterLocalNotificationsPlugin();
-  await plugin.initialize(init);
+  await plugin.initialize(settings: init);
 
   final db = AppDatabase();
 
@@ -57,10 +57,8 @@ doDesktopReminders() async {
         .where((entry) => entry.created.hour >= 6 && entry.created.hour < 12);
     if (entered.isEmpty)
       await plugin.show(
-        1,
-        "Don't forget to log breakfast",
-        null,
-        null,
+        id: 1,
+        title: "Don't forget to log breakfast",
       );
   } else if (hour >= 12 && hour < 16) {
     final entered = diaries.where(
@@ -68,10 +66,8 @@ doDesktopReminders() async {
     );
     if (entered.isEmpty)
       await plugin.show(
-        2,
-        "Don't forget to log lunch",
-        null,
-        null,
+        id: 2,
+        title: "Don't forget to log lunch",
       );
   } else if (hour >= 16 && hour < 22) {
     final entered = diaries.where(
@@ -79,10 +75,8 @@ doDesktopReminders() async {
     );
     if (entered.isEmpty)
       await plugin.show(
-        3,
-        "Don't forget to log dinner",
-        null,
-        null,
+        id: 3,
+        title: "Don't forget to log dinner",
       );
   }
 }
@@ -109,7 +103,7 @@ void doMobileReminders() {
       android: android,
     );
     final plugin = FlutterLocalNotificationsPlugin();
-    await plugin.initialize(init);
+    await plugin.initialize(settings: init);
 
     final db = AppDatabase();
 
@@ -132,10 +126,9 @@ void doMobileReminders() {
       if (brekkie.isNotEmpty) return Future.value(true);
 
       await plugin.show(
-        1,
-        "Don't forget to log breakfast",
-        null,
-        const NotificationDetails(
+        id: 1,
+        title: "Don't forget to log breakfast",
+        notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
             'breakfast-reminders',
             'Breakfast reminders',
@@ -148,10 +141,9 @@ void doMobileReminders() {
       if (lunch.isNotEmpty) return Future.value(true);
 
       await plugin.show(
-        2,
-        "Don't forget to log lunch",
-        null,
-        const NotificationDetails(
+        id: 2,
+        title: "Don't forget to log lunch",
+        notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
             'lunch-reminders',
             'Lunch reminders',
@@ -164,10 +156,9 @@ void doMobileReminders() {
       if (dins.isNotEmpty) return Future.value(true);
 
       await plugin.show(
-        3,
-        "Don't forget to log dinner",
-        null,
-        const NotificationDetails(
+        id: 3,
+        title: "Don't forget to log dinner",
+        notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
             'dinner-reminders',
             'Dinner reminders',
