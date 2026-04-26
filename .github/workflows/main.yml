@@ -31,6 +31,12 @@ jobs:
           distribution: "zulu"
           java-version: "17"
 
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
       - name: Create brandon user directory structure (match F-Droid)
         run: |
           sudo mkdir -p /home/brandon
@@ -41,14 +47,12 @@ jobs:
           cd ..
           mv ${{ github.event.repository.name }} /home/brandon/fitbook
 
-      - name: Setup Flutter from submodule and get dependencies
+      - name: Get dependencies
         working-directory: /home/brandon/fitbook
         run: |
-          git submodule update --init --recursive flutter
-          echo "/home/brandon/fitbook/flutter/bin" >> $GITHUB_PATH
           export PUB_CACHE=$(pwd)/.pub-cache
-          flutter/bin/flutter config --no-analytics
-          flutter/bin/flutter pub get
+          flutter config --no-analytics
+          flutter pub get
 
       - name: Decode Android keystore
         working-directory: /home/brandon/fitbook
@@ -84,15 +88,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }} # Checkout the tag
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Flutter from submodule
-        run: |
-          git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
-          echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
-          flutter/bin/flutter config --no-analytics
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -122,15 +125,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }} # Checkout the tag
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Flutter from submodule
-        run: |
-          git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
-          echo "${{ github.workspace }}\flutter\bin" >> $env:GITHUB_PATH
-          flutter\bin\flutter config --no-analytics
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -158,15 +160,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }} # Checkout the tag
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Flutter from submodule
-        run: |
-          git submodule update --init --recursive flutter
-          chmod +x flutter/bin/*
-          echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
-          flutter/bin/flutter config --no-analytics
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -197,7 +198,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }} # Checkout the tag
+          ref: ${{ github.ref_name }}
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -224,13 +225,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }} # Checkout the tag
+          ref: ${{ github.ref_name }}
 
-      - name: Setup Flutter from submodule
-        run: |
-          git submodule update --init --recursive flutter
-          echo "${{ github.workspace }}\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          flutter\bin\flutter config --no-analytics
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
       - name: Get Flutter dependencies
         run: flutter pub get
