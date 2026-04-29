@@ -230,7 +230,7 @@ class _AppLineState extends State<AppLine> {
             ..orderBy([
               OrderingTerm(
                 expression: db.weights.created,
-                mode: OrderingMode.desc,
+                mode: OrderingMode.asc,
               ),
             ])
             ..addColumns([
@@ -275,7 +275,7 @@ class _AppLineState extends State<AppLine> {
             ..orderBy([
               OrderingTerm(
                 expression: db.diaries.created,
-                mode: OrderingMode.desc,
+                mode: OrderingMode.asc,
               ),
             ])
             ..where(
@@ -305,25 +305,46 @@ class _AppLineState extends State<AppLine> {
 
   @override
   Widget build(BuildContext context) {
-    settings = context.watch<SettingsState>().value;
+    final sel = context.select<
+        SettingsState,
+        ({
+          int? dailyCalories,
+          int? dailyProtein,
+          double? targetWeight,
+          int? dailyFat,
+          int? dailyCarb,
+          bool curveLines,
+          String shortDateFormat,
+        })>(
+      (s) => (
+        dailyCalories: s.value.dailyCalories,
+        dailyProtein: s.value.dailyProtein,
+        targetWeight: s.value.targetWeight,
+        dailyFat: s.value.dailyFat,
+        dailyCarb: s.value.dailyCarb,
+        curveLines: s.value.curveLines,
+        shortDateFormat: s.value.shortDateFormat,
+      ),
+    );
+    settings = context.read<SettingsState>().value;
 
     double goal = 0;
 
     switch (widget.metric) {
       case 'calories':
-        goal = (settings.dailyCalories ?? 0).toDouble();
+        goal = (sel.dailyCalories ?? 0).toDouble();
         break;
       case 'protein':
-        goal = (settings.dailyProtein ?? 0).toDouble();
+        goal = (sel.dailyProtein ?? 0).toDouble();
         break;
       case 'body-weight':
-        goal = settings.targetWeight ?? 0;
+        goal = sel.targetWeight ?? 0;
         break;
       case 'fat':
-        goal = (settings.dailyFat ?? 0).toDouble();
+        goal = (sel.dailyFat ?? 0).toDouble();
         break;
       case 'carbs':
-        goal = (settings.dailyCarb ?? 0).toDouble();
+        goal = (sel.dailyCarb ?? 0).toDouble();
         break;
     }
 
@@ -344,7 +365,7 @@ class _AppLineState extends State<AppLine> {
           Theme.of(context).colorScheme.surface,
         ];
 
-        final rows = snapshot.data!.reversed.toList();
+        final rows = snapshot.data!;
         List<FlSpot> spots = [];
         var avg = 0.0;
         for (var index = 0; index < rows.length; index++) {
@@ -359,7 +380,7 @@ class _AppLineState extends State<AppLine> {
           // Always show the original data
           LineChartBarData(
             spots: spots,
-            isCurved: settings.curveLines,
+            isCurved: sel.curveLines,
             preventCurveOverShooting: true,
             color: Theme.of(context).colorScheme.primary,
             barWidth: 3,

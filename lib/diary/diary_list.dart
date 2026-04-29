@@ -34,10 +34,80 @@ class DiaryList extends StatefulWidget {
 }
 
 class _DiaryListState extends State<DiaryList> {
+  static final _formatter = NumberFormat('#,##0');
+
+  Map<DateTime, Stats> _stats = {};
+  List<({DateTime date, List<DiaryFood> foods})> _dayGroups = [];
+
+  void _computeGroupings() {
+    final newStats = <DateTime, Stats>{};
+    for (final diaryFood in widget.diaryFoods) {
+      final day = DateTime(
+        diaryFood.created.year,
+        diaryFood.created.month,
+        diaryFood.created.day,
+      );
+      if (newStats.containsKey(day)) {
+        newStats[day]!.cals += diaryFood.metrics[db.foods.calories.name] ?? 0;
+        newStats[day]!.protein +=
+            diaryFood.metrics[db.foods.proteinG.name] ?? 0;
+        newStats[day]!.fat += diaryFood.metrics[db.foods.fatG.name] ?? 0;
+        newStats[day]!.carb +=
+            diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
+        newStats[day]!.fiber +=
+            diaryFood.metrics[db.foods.fiberG.name] ?? 0;
+      } else {
+        newStats[day] = Stats(
+          cals: diaryFood.metrics[db.foods.calories.name] ?? 0,
+          protein: diaryFood.metrics[db.foods.proteinG.name] ?? 0,
+          fat: diaryFood.metrics[db.foods.fatG.name] ?? 0,
+          carb: diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
+          fiber: diaryFood.metrics[db.foods.fiberG.name] ?? 0,
+        );
+      }
+    }
+
+    final newGroups = <({DateTime date, List<DiaryFood> foods})>[];
+    DateTime? lastDate;
+    var currentDayFoods = <DiaryFood>[];
+
+    for (final diaryFood in widget.diaryFoods) {
+      final currentDate = DateTime(
+        diaryFood.created.year,
+        diaryFood.created.month,
+        diaryFood.created.day,
+      );
+
+      if (lastDate != null && !isSameDay(lastDate, currentDate)) {
+        newGroups.add((date: lastDate, foods: currentDayFoods));
+        currentDayFoods = [];
+      }
+
+      currentDayFoods.add(diaryFood);
+      lastDate = currentDate;
+    }
+
+    if (currentDayFoods.isNotEmpty && lastDate != null) {
+      newGroups.add((date: lastDate, foods: currentDayFoods));
+    }
+
+    _stats = newStats;
+    _dayGroups = newGroups;
+  }
+
   @override
   void initState() {
     super.initState();
     widget.ctrl.addListener(_scrollListener);
+    _computeGroupings();
+  }
+
+  @override
+  void didUpdateWidget(covariant DiaryList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.diaryFoods != oldWidget.diaryFoods) {
+      _computeGroupings();
+    }
   }
 
   @override
@@ -64,95 +134,39 @@ class _DiaryListState extends State<DiaryList> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
     final crossAxisCount = _getCrossAxisCount(context);
-
-    Map<DateTime, Stats> stats = {};
-    for (final diaryFood in widget.diaryFoods) {
-      final day = DateTime(
-        diaryFood.created.year,
-        diaryFood.created.month,
-        diaryFood.created.day,
-      );
-      if (stats.containsKey(day)) {
-        stats[day]!.cals += diaryFood.metrics[db.foods.calories.name] ?? 0;
-        stats[day]!.protein += diaryFood.metrics[db.foods.proteinG.name] ?? 0;
-        stats[day]!.fat += diaryFood.metrics[db.foods.fatG.name] ?? 0;
-        stats[day]!.carb += diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
-        stats[day]!.fiber += diaryFood.metrics[db.foods.fiberG.name] ?? 0;
-      } else {
-        stats[day] = Stats(
-          cals: diaryFood.metrics[db.foods.calories.name] ?? 0,
-          protein: diaryFood.metrics[db.foods.proteinG.name] ?? 0,
-          fat: diaryFood.metrics[db.foods.fatG.name] ?? 0,
-          carb: diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
-          fiber: diaryFood.metrics[db.foods.fiberG.name] ?? 0,
-        );
-      }
-    }
-
-    // Group items by day for proper layout
-    List<Widget> items = [];
-    DateTime? lastDate;
-    List<DiaryFood> currentDayFoods = [];
-
-    for (int index = 0; index < widget.diaryFoods.length; index++) {
-      final diaryFood = widget.diaryFoods[index];
-      final currentDate = DateTime(
-        diaryFood.created.year,
-        diaryFood.created.month,
-        diaryFood.created.day,
-      );
-
-      if (lastDate != null && !isSameDay(lastDate, currentDate)) {
-        // Add previous day's content
-        items.add(
-          _buildDaySection(
-            currentDayFoods,
-            lastDate,
-            stats[lastDate]!,
-            settings,
-            crossAxisCount,
-          ),
-        );
-        currentDayFoods = [];
-      }
-
-      currentDayFoods.add(diaryFood);
-      lastDate = currentDate;
-    }
-
-    // Add the last day's content
-    if (currentDayFoods.isNotEmpty && lastDate != null) {
-      items.add(
-        _buildDaySection(
-          currentDayFoods,
-          lastDate,
-          stats[lastDate]!,
-          settings,
-          crossAxisCount,
-        ),
-      );
-    }
+    final cardWidth = _computeCardWidth(context, crossAxisCount);
 
     return Expanded(
       child: settings.compactDiary
-          ? _buildListDisplay(settings, stats)
-          : _buildCardDisplay(settings, crossAxisCount, items),
+          ? _buildListDisplay(settings)
+          : _buildCardDisplay(settings, crossAxisCount, cardWidth),
     );
   }
 
   Widget _buildCardDisplay(
     dynamic settings,
     int crossAxisCount,
-    List<Widget> items,
+    double cardWidth,
   ) {
-    return ListView(
+    return ListView.builder(
       padding: const EdgeInsets.all(12),
       controller: widget.ctrl,
-      children: items,
+      itemCount: _dayGroups.length,
+      itemBuilder: (context, index) {
+        final group = _dayGroups[index];
+        return _buildDaySection(
+          group.foods,
+          group.date,
+          _stats[group.date]!,
+          settings,
+          crossAxisCount,
+          cardWidth,
+        );
+      },
     );
   }
 
-  Widget _buildListDisplay(dynamic settings, Map<DateTime, Stats> stats) {
+  Widget _buildListDisplay(dynamic settings) {
     return ListView.builder(
       padding: const EdgeInsets.only(top: 8),
       controller: widget.ctrl,
@@ -178,7 +192,6 @@ class _DiaryListState extends State<DiaryList> {
           String fat = "";
           String carb = "";
           String fiber = "";
-          final formatter = NumberFormat('#,##0');
 
           final day = DateTime(
             previous.created.year,
@@ -189,39 +202,39 @@ class _DiaryListState extends State<DiaryList> {
           switch (settings.diarySummary) {
             case 'DiarySummary.remaining':
               cals =
-                  "${formatter.format((settings.dailyCalories ?? 0) - stats[day]!.cals)} kcal";
+                  "${_formatter.format((settings.dailyCalories ?? 0) - _stats[day]!.cals)} kcal";
               protein =
-                  "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)}g protein";
+                  "${((settings.dailyProtein ?? 0) - _stats[day]!.protein).toStringAsFixed(0)}g protein";
               fat =
-                  "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)}g fat";
+                  "${((settings.dailyFat ?? 0) - _stats[day]!.fat).toStringAsFixed(0)}g fat";
               carb =
-                  "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)}g carbs";
+                  "${((settings.dailyCarb ?? 0) - _stats[day]!.carb).toStringAsFixed(0)}g carbs";
               fiber =
-                  "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)}g fiber";
+                  "${((settings.dailyFiber ?? 0) - _stats[day]!.fiber).toStringAsFixed(0)}g fiber";
               break;
             case 'DiarySummary.division':
               cals =
-                  "${formatter.format(stats[day]!.cals)} / ${formatter.format(settings.dailyCalories ?? 0)} kcal";
+                  "${_formatter.format(_stats[day]!.cals)} / ${_formatter.format(settings.dailyCalories ?? 0)} kcal";
               protein =
-                  "${stats[day]!.protein.toStringAsFixed(0)} / ${settings.dailyProtein}g protein";
+                  "${_stats[day]!.protein.toStringAsFixed(0)} / ${settings.dailyProtein}g protein";
               fat =
-                  "${stats[day]!.fat.toStringAsFixed(0)} / ${settings.dailyFat}g fat";
+                  "${_stats[day]!.fat.toStringAsFixed(0)} / ${settings.dailyFat}g fat";
               carb =
-                  "${stats[day]!.carb.toStringAsFixed(0)} / ${settings.dailyCarb}g carbs";
+                  "${_stats[day]!.carb.toStringAsFixed(0)} / ${settings.dailyCarb}g carbs";
               fiber =
-                  "${stats[day]!.fiber.toStringAsFixed(0)} / ${settings.dailyFiber}g fiber";
+                  "${_stats[day]!.fiber.toStringAsFixed(0)} / ${settings.dailyFiber}g fiber";
               break;
             case 'DiarySummary.both':
               cals =
-                  "${((settings.dailyCalories ?? 0) - stats[day]!.cals).toStringAsFixed(0)} (${formatter.format(settings.dailyCalories ?? 0)} kcal)";
+                  "${((settings.dailyCalories ?? 0) - _stats[day]!.cals).toStringAsFixed(0)} (${_formatter.format(settings.dailyCalories ?? 0)} kcal)";
               protein =
-                  "${((settings.dailyProtein ?? 0) - stats[day]!.protein).toStringAsFixed(0)} (${settings.dailyProtein}g protein)";
+                  "${((settings.dailyProtein ?? 0) - _stats[day]!.protein).toStringAsFixed(0)} (${settings.dailyProtein}g protein)";
               fat =
-                  "${((settings.dailyFat ?? 0) - stats[day]!.fat).toStringAsFixed(0)} (${settings.dailyFat}g fat)";
+                  "${((settings.dailyFat ?? 0) - _stats[day]!.fat).toStringAsFixed(0)} (${settings.dailyFat}g fat)";
               carb =
-                  "${((settings.dailyCarb ?? 0) - stats[day]!.carb).toStringAsFixed(0)} (${settings.dailyCarb}g carbs)";
+                  "${((settings.dailyCarb ?? 0) - _stats[day]!.carb).toStringAsFixed(0)} (${settings.dailyCarb}g carbs)";
               fiber =
-                  "${((settings.dailyFiber ?? 0) - stats[day]!.fiber).toStringAsFixed(0)} (${settings.dailyFiber}g fiber)";
+                  "${((settings.dailyFiber ?? 0) - _stats[day]!.fiber).toStringAsFixed(0)} (${settings.dailyFiber}g fiber)";
               break;
             case 'DiarySummary.none':
               break;
@@ -381,22 +394,20 @@ class _DiaryListState extends State<DiaryList> {
     Stats dayStats,
     dynamic settings,
     int crossAxisCount,
+    double cardWidth,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Date header with stats
         _buildDateHeader(date, dayStats, settings),
         const SizedBox(height: 12),
-
-        // Food cards - using Wrap instead of GridView for consistent sizing
         Wrap(
           spacing: 8,
           runSpacing: 8,
           children: dayFoods
               .map(
                 (food) => SizedBox(
-                  width: _getCardWidth(context, crossAxisCount),
+                  width: cardWidth,
                   child: _buildFoodCard(food, settings),
                 ),
               )
@@ -407,12 +418,10 @@ class _DiaryListState extends State<DiaryList> {
     );
   }
 
-  double _getCardWidth(BuildContext context, int crossAxisCount) {
+  double _computeCardWidth(BuildContext context, int crossAxisCount) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final availableWidth =
-        screenWidth - 32; // Account for padding (12 * 2) and some margin
-    final spacing =
-        (crossAxisCount - 1) * 8; // Account for spacing between cards
+    final availableWidth = screenWidth - 32;
+    final spacing = (crossAxisCount - 1) * 8;
     return (availableWidth - spacing) / crossAxisCount;
   }
 
@@ -586,24 +595,22 @@ class _DiaryListState extends State<DiaryList> {
     int target,
     dynamic settings,
   ) {
-    final formatter = NumberFormat('#,##0');
-
     switch (settings.diarySummary) {
       case 'DiarySummary.remaining':
         final remaining = target - current;
         if (type == 'calories') {
-          return "${formatter.format(remaining)} kcal";
+          return "${_formatter.format(remaining)} kcal";
         }
         return "${remaining.toStringAsFixed(0)}g $type";
       case 'DiarySummary.division':
         if (type == 'calories') {
-          return "${formatter.format(current)} / ${formatter.format(target)} kcal";
+          return "${_formatter.format(current)} / ${_formatter.format(target)} kcal";
         }
         return "${current.toStringAsFixed(0)} / ${target.toStringAsFixed(0)}g $type";
       case 'DiarySummary.both':
         final remaining = target - current;
         if (type == 'calories') {
-          return "${remaining.toStringAsFixed(0)} (${formatter.format(target)} kcal)";
+          return "${remaining.toStringAsFixed(0)} (${_formatter.format(target)} kcal)";
         }
         return "${remaining.toStringAsFixed(0)} (${target.toStringAsFixed(0)}g $type)";
       default:
