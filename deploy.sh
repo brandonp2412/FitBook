@@ -87,9 +87,6 @@ else
     git submodule update --recursive flutter
 fi
 
-export PATH="$PWD/flutter/bin:$PATH"
-chmod +x flutter/bin/* # Ensure executables are runnable
-
 # Run tests and analysis
 print_step "Running tests and analysis"
 flutter test
