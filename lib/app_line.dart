@@ -230,7 +230,7 @@ class _AppLineState extends State<AppLine> {
             ..orderBy([
               OrderingTerm(
                 expression: db.weights.created,
-                mode: OrderingMode.asc,
+                mode: OrderingMode.desc,
               ),
             ])
             ..addColumns([
@@ -260,6 +260,8 @@ class _AppLineState extends State<AppLine> {
                     unit: result.read(db.weights.unit)!,
                   ),
                 )
+                .toList()
+                .reversed
                 .toList(),
           );
     } else {
@@ -275,7 +277,7 @@ class _AppLineState extends State<AppLine> {
             ..orderBy([
               OrderingTerm(
                 expression: db.diaries.created,
-                mode: OrderingMode.asc,
+                mode: OrderingMode.desc,
               ),
             ])
             ..where(
@@ -298,7 +300,7 @@ class _AppLineState extends State<AppLine> {
               (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
           String unit = widget.metric == 'calories' ? 'kcal' : 'g';
           return GraphData(created: created, val: val, unit: unit);
-        }).toList();
+        }).toList().reversed.toList();
       });
     }
   }
