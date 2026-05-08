@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
+import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
@@ -17,11 +18,17 @@ class FoodList extends StatefulWidget {
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
+    this.meals = const [],
+    this.selectedMeals = const {},
+    this.onMealSelect,
   });
 
   final List<FoodsCompanion> foods;
+  final List<Meal> meals;
   final Set<int> selected;
+  final Set<int> selectedMeals;
   final Function(int) onSelect;
+  final Function(int)? onMealSelect;
   final Function() onNext;
   final ScrollController ctrl;
 
@@ -50,71 +57,83 @@ class _FoodListState extends State<FoodList> {
 
   @override
   Widget build(BuildContext context) {
+    final mealCount = widget.meals.length;
+    final totalCount = mealCount + widget.foods.length;
+
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 8),
         controller: widget.ctrl,
-        itemCount: widget.foods.length,
+        itemCount: totalCount,
         itemBuilder: (context, index) {
-          final food = widget.foods[index];
-          final previous = index > 0 ? widget.foods[index - 1] : null;
+          if (index < mealCount) {
+            final meal = widget.meals[index];
+            return KeyedSubtree(
+              key: ValueKey('meal_${meal.id}'),
+              child: _buildMealTile(context, meal),
+            );
+          }
+
+          final foodIndex = index - mealCount;
+          final food = widget.foods[foodIndex];
           final selected = widget.selected.contains(food.id.value);
-          final showDivider = previous != null &&
-              (food.favorite.value ?? false) !=
-                  (previous.favorite.value ?? false);
 
           final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
-
           final settings = context.watch<SettingsState>().value;
 
           Widget? image;
           if (settings.showImages) {
             if (food.imageFile.value?.isNotEmpty == true)
-              image = Image.file(File(food.imageFile.value!));
+              image = Image.file(
+                File(food.imageFile.value!),
+                errorBuilder: (context, error, stackTrace) =>
+                    const SizedBox.shrink(),
+              );
             else if (food.smallImage.value?.isNotEmpty == true)
               image = material.SizedBox(
                 height: 80,
                 width: 50,
-                child: CachedNetworkImage(
-                  imageUrl: food.smallImage.value!,
-                ),
+                child: CachedNetworkImage(imageUrl: food.smallImage.value!),
               );
           }
 
-          return material.Column(
-            children: [
-              if (showDivider)
-                const Row(
-                  children: [
-                    Expanded(child: Divider()),
-                    Icon(Icons.favorite_outline),
-                    Expanded(child: Divider()),
-                  ],
-                ),
-              material.Container(
-                decoration: BoxDecoration(
-                  color: selected
-                      ? Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: .08)
-                      : Colors.transparent,
-                  border: Border.all(
-                    color: selected
-                        ? Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: 0.3)
-                        : Colors.transparent,
-                    width: 1,
-                  ),
-                ),
-                child: ListTile(
-                  leading: image,
-                  title: Text(food.name.value),
-                  subtitle: Text(
+          return material.Container(
+            key: ValueKey('food_${food.id.value}'),
+            decoration: BoxDecoration(
+              color: selected
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: .08)
+                  : Colors.transparent,
+              border: Border.all(
+                color: selected
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.3)
+                    : Colors.transparent,
+                width: 1,
+              ),
+            ),
+            child: ListTile(
+              leading: image,
+              title: Text(food.name.value),
+              subtitle: Row(
+                children: [
+                  Text(
                     "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
                   ),
+                  if (food.favorite.value == true) ...[
+                    const SizedBox(width: 6),
+                    Icon(
+                      Icons.favorite,
+                      size: 12,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ],
+                ],
+              ),
                   trailing: Stack(
                     children: [
                       AnimatedScale(
@@ -143,22 +162,101 @@ class _FoodListState extends State<FoodList> {
                   ),
                   onLongPress: () => widget.onSelect(food.id.value),
                   onTap: () {
-                    if (widget.selected.isEmpty)
+                    if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditFoodPage(
-                            id: food.id.value,
-                          ),
+                          builder: (context) => EditFoodPage(id: food.id.value),
                         ),
                       );
                     else
                       widget.onSelect(food.id.value);
                   },
                 ),
-              ),
-            ],
           );
+        },
+      ),
+    );
+  }
+
+  Widget _buildMealTile(BuildContext context, Meal meal) {
+    final selected = widget.selectedMeals.contains(meal.id);
+    final settings = context.watch<SettingsState>().value;
+
+    Widget leading;
+    if (settings.showImages && meal.imageFile?.isNotEmpty == true) {
+      leading = Stack(
+        clipBehavior: Clip.none,
+        children: [
+          SizedBox(
+            height: 48,
+            width: 48,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.file(
+                File(meal.imageFile!),
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Icon(
+                  Icons.restaurant,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: -4,
+            bottom: -4,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.restaurant, size: 10, color: Colors.white),
+            ),
+          ),
+        ],
+      );
+    } else {
+      leading = Icon(
+        Icons.restaurant,
+        color: Theme.of(context).colorScheme.primary,
+      );
+    }
+
+    return material.Container(
+      decoration: BoxDecoration(
+        color: selected
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+            : Colors.transparent,
+        border: Border.all(
+          color: selected
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
+              : Colors.transparent,
+          width: 1,
+        ),
+      ),
+      child: ListTile(
+        leading: leading,
+        title: Text(meal.name),
+        subtitle: const Text('Meal'),
+        trailing: selected
+            ? Checkbox(
+                value: true,
+                onChanged: (_) => widget.onMealSelect?.call(meal.id),
+              )
+            : null,
+        onLongPress: () => widget.onMealSelect?.call(meal.id),
+        onTap: () {
+          if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditMealPage(id: meal.id),
+              ),
+            );
+          else
+            widget.onMealSelect?.call(meal.id);
         },
       ),
     );

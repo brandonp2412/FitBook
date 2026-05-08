@@ -5,6 +5,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_foods_page.dart';
+import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
@@ -21,12 +22,14 @@ class FoodPage extends StatefulWidget {
 
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   late Stream<List<TypedResult>> stream;
+  late Stream<List<Meal>> mealStream;
 
   final TextEditingController searchCtrl = TextEditingController();
   final groupCtrl = TextEditingController();
   final TextEditingController gtController = TextEditingController();
   final TextEditingController ltController = TextEditingController();
   final Set<int> selected = {};
+  final Set<int> selectedMeals = {};
   final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
   final ScrollController scrollCtrl = ScrollController();
 
@@ -42,6 +45,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
     final state = context.read<DiaryState>();
     groupCtrl.text = state.foodGroup ?? "";
     setStream();
+    setMealStream();
   }
 
   void setStream() {
@@ -115,6 +119,18 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
     });
   }
 
+  void setMealStream() {
+    var query = db.meals.select()
+      ..orderBy([
+        (t) => OrderingTerm(expression: t.created, mode: OrderingMode.desc),
+      ]);
+    if (search.isNotEmpty)
+      query = query..where((t) => t.name.contains(search.toLowerCase()));
+    setState(() {
+      mealStream = query.watch();
+    });
+  }
+
   List<FoodsCompanion> resultsToCompanions(List<TypedResult> results) => results
       .map(
         (result) => FoodsCompanion(
@@ -129,6 +145,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         ),
       )
       .toList();
+
+  Set<int> get _allSelected => {...selected, ...selectedMeals};
 
   @override
   Widget build(BuildContext context) {
@@ -151,128 +169,163 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
 
   Scaffold _foodsPage() {
     return Scaffold(
-      body: StreamBuilder(
-        stream: stream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) throw snapshot.error!;
-          final foods = resultsToCompanions(snapshot.data ?? []);
+      body: StreamBuilder<List<Meal>>(
+        stream: mealStream,
+        builder: (context, mealSnapshot) {
+          final meals = mealSnapshot.data ?? [];
+          return StreamBuilder(
+            stream: stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) throw snapshot.error!;
+              final foods = resultsToCompanions(snapshot.data ?? []);
 
-          return material.Column(
-            children: [
-              AppSearch(
-                ctrl: searchCtrl,
-                onChange: (value) {
-                  setState(() {
-                    search = value;
-                  });
-                  setStream();
-                },
-                filter: FoodFilters(
-                  groupCtrl: groupCtrl,
-                  servingUnit: _servingUnit,
-                  servingSizeGtController: gtController,
-                  servingSizeLtController: ltController,
-                  onChange: ({
-                    foodGroup,
-                    servingUnit,
-                  }) {
-                    setState(() {
-                      limit = 100;
-                      _servingUnit = servingUnit;
-                    });
-                    setStream();
-                  },
-                ),
-                onClear: () => setState(() {
-                  selected.clear();
-                }),
-                onDelete: () async {
-                  final selectedCopy = selected.toList();
-                  setState(() {
-                    selected.clear();
-                  });
-                  await (db.delete(db.foods)
-                        ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                      .go();
-                },
-                onSelect: () => setState(() {
-                  selected.addAll(
-                    foods.map((food) => food.id.value),
-                  );
-                }),
-                selected: selected,
-                onEdit: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditFoodsPage(
-                        ids: selected.toList(),
-                      ),
+              return material.Column(
+                children: [
+                  AppSearch(
+                    ctrl: searchCtrl,
+                    onChange: (value) {
+                      setState(() {
+                        search = value;
+                      });
+                      setStream();
+                      setMealStream();
+                    },
+                    filter: FoodFilters(
+                      groupCtrl: groupCtrl,
+                      servingUnit: _servingUnit,
+                      servingSizeGtController: gtController,
+                      servingSizeLtController: ltController,
+                      onChange: ({
+                        foodGroup,
+                        servingUnit,
+                      }) {
+                        setState(() {
+                          _servingUnit = servingUnit;
+                        });
+                        setStream();
+                      },
                     ),
-                  );
-                  setState(() {
-                    selected.clear();
-                  });
-                },
-                onFavorite: () async {
-                  final first = await (db.foods.select()
-                        ..where((tbl) => tbl.id.equals(selected.first)))
-                      .getSingle();
-                  await (db.foods.update()
-                        ..where((tbl) => tbl.id.isIn(selected)))
-                      .write(
-                    FoodsCompanion(
-                      favorite: Value(first.favorite == true ? false : true),
-                    ),
-                  );
-                  setState(() {
-                    selected.clear();
-                  });
-                },
-              ),
-              if (snapshot.data?.isEmpty == true)
-                const ListTile(
-                  title: Text("No food yet."),
-                  subtitle: Text(
-                    "Tap the plus button to add foods.",
+                    onClear: () => setState(() {
+                      selected.clear();
+                      selectedMeals.clear();
+                    }),
+                    onDelete: () async {
+                      final selectedCopy = selected.toList();
+                      final selectedMealsCopy = selectedMeals.toList();
+                      setState(() {
+                        selected.clear();
+                        selectedMeals.clear();
+                      });
+                      if (selectedCopy.isNotEmpty)
+                        await (db.delete(db.foods)
+                              ..where((tbl) => tbl.id.isIn(selectedCopy)))
+                            .go();
+                      if (selectedMealsCopy.isNotEmpty)
+                        await (db.delete(db.meals)
+                              ..where((tbl) => tbl.id.isIn(selectedMealsCopy)))
+                            .go();
+                    },
+                    onSelect: () => setState(() {
+                      selected.addAll(foods.map((food) => food.id.value));
+                    }),
+                    selected: _allSelected,
+                    onEdit: () async {
+                      if (selected.isEmpty) return;
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditFoodsPage(
+                            ids: selected.toList(),
+                          ),
+                        ),
+                      );
+                      setState(() {
+                        selected.clear();
+                      });
+                    },
+                    onFavorite: () async {
+                      if (selected.isEmpty) return;
+                      final first = await (db.foods.select()
+                            ..where((tbl) => tbl.id.equals(selected.first)))
+                          .getSingle();
+                      await (db.foods.update()
+                            ..where((tbl) => tbl.id.isIn(selected)))
+                          .write(
+                        FoodsCompanion(
+                          favorite:
+                              Value(first.favorite == true ? false : true),
+                        ),
+                      );
+                      setState(() {
+                        selected.clear();
+                      });
+                    },
                   ),
-                ),
-              FoodList(
-                ctrl: scrollCtrl,
-                foods: foods,
-                selected: selected,
-                onSelect: (id) {
-                  if (selected.contains(id))
-                    setState(() {
-                      selected.remove(id);
-                    });
-                  else
-                    setState(() {
-                      selected.add(id);
-                    });
-                },
-                onNext: () async {
-                  setState(() {
-                    limit += 10;
-                  });
-                  setStream();
-                },
-              ),
-            ],
+                  if (snapshot.data?.isEmpty == true && meals.isEmpty)
+                    const ListTile(
+                      title: Text("No food yet."),
+                      subtitle: Text("Tap the plus button to add foods."),
+                    ),
+                  FoodList(
+                    ctrl: scrollCtrl,
+                    foods: foods,
+                    meals: meals,
+                    selected: selected,
+                    selectedMeals: selectedMeals,
+                    onSelect: (id) {
+                      if (selected.contains(id))
+                        setState(() => selected.remove(id));
+                      else
+                        setState(() => selected.add(id));
+                    },
+                    onMealSelect: (id) {
+                      if (selectedMeals.contains(id))
+                        setState(() => selectedMeals.remove(id));
+                      else
+                        setState(() => selectedMeals.add(id));
+                    },
+                    onNext: () async {
+                      setState(() {
+                        limit += 10;
+                      });
+                      setStream();
+                    },
+                  ),
+                ],
+              );
+            },
           );
         },
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: () async {
-          navKey.currentState!.push(
-            MaterialPageRoute(
-              builder: (context) => const EditFoodPage(),
-            ),
-          );
-        },
-        label: 'Add',
-        icon: Icons.add,
-        scroll: scrollCtrl,
+      floatingActionButton: material.Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton.small(
+            heroTag: 'addMeal',
+            tooltip: 'Add meal',
+            onPressed: () {
+              navKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (context) => const EditMealPage(),
+                ),
+              );
+            },
+            child: const Icon(Icons.restaurant),
+          ),
+          const SizedBox(height: 8),
+          AnimatedFab(
+            onTap: () async {
+              navKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (context) => const EditFoodPage(),
+                ),
+              );
+            },
+            label: 'Add',
+            icon: Icons.add,
+            scroll: scrollCtrl,
+          ),
+        ],
       ),
     );
   }

@@ -9,392 +9,640 @@ class Foods extends Table with TableInfo<Foods, FoodsData> {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   Foods(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<String> barcode = GeneratedColumn<String>(
+      'barcode', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> addedSugarG = GeneratedColumn<double>(
       'added_sugar_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> alanineMg = GeneratedColumn<double>(
       'alanine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> alcoholG = GeneratedColumn<double>(
       'alcohol_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> arginineMg = GeneratedColumn<double>(
       'arginine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> asparticAcidMg = GeneratedColumn<double>(
       'aspartic_acid_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> betaineMg = GeneratedColumn<double>(
       'betaine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> bigImage = GeneratedColumn<String>(
       'big_image', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> biotinB7Mcg = GeneratedColumn<double>(
       'biotin_b7_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> caffeineMg = GeneratedColumn<double>(
       'caffeine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> calciumMg = GeneratedColumn<double>(
       'calcium_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> calories = GeneratedColumn<double>(
       'calories', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> carbohydrateG = GeneratedColumn<double>(
       'carbohydrate_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> caroteneAlphaMcg = GeneratedColumn<double>(
       'carotene_alpha_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> caroteneBetaMcg = GeneratedColumn<double>(
       'carotene_beta_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> chlorineMg = GeneratedColumn<double>(
       'chlorine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> cholesterolMg = GeneratedColumn<double>(
       'cholesterol_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> cholineMg = GeneratedColumn<double>(
       'choline_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> copperCuMg = GeneratedColumn<double>(
       'copper_cu_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> created = GeneratedColumn<int>(
       'created', aliasedName, true,
-      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> cystineMg = GeneratedColumn<double>(
       'cystine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> dihydrophylloquinoneMcg =
       GeneratedColumn<double>('dihydrophylloquinone_mcg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> fatG = GeneratedColumn<double>(
       'fat_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> fattyAcidsTotalMonounsaturatedMg =
       GeneratedColumn<double>(
           'fatty_acids_total_monounsaturated_mg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> fattyAcidsTotalPolyunsaturatedMg =
       GeneratedColumn<double>(
           'fatty_acids_total_polyunsaturated_mg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<bool> favorite = GeneratedColumn<bool>(
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
+  late final GeneratedColumn<int> favorite = GeneratedColumn<int>(
       'favorite', aliasedName, true,
-      type: DriftSqlType.bool,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("favorite" IN (0, 1))'));
+      $customConstraints: 'NULL CHECK (favorite IN (0, 1))');
   late final GeneratedColumn<double> fiberG = GeneratedColumn<double>(
       'fiber_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> fluorideFMcg = GeneratedColumn<double>(
       'fluoride_f_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> folateB9Mcg = GeneratedColumn<double>(
       'folate_b9_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> folateDfeMcg = GeneratedColumn<double>(
       'folate_dfe_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> folicAcidMcg = GeneratedColumn<double>(
       'folic_acid_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> foodFolateMcg = GeneratedColumn<double>(
       'food_folate_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> foodGroup = GeneratedColumn<String>(
       'food_group', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> fructoseG = GeneratedColumn<double>(
       'fructose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> galactoseG = GeneratedColumn<double>(
       'galactose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> glucoseDextroseG = GeneratedColumn<double>(
       'glucose_dextrose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> glutamicAcidMg = GeneratedColumn<double>(
       'glutamic_acid_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> glycineMg = GeneratedColumn<double>(
       'glycine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> histidineMg = GeneratedColumn<double>(
       'histidine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> hydroxyprolineMg = GeneratedColumn<double>(
       'hydroxyproline_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
   late final GeneratedColumn<String> imageFile = GeneratedColumn<String>(
       'image_file', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> insolubleFiberG = GeneratedColumn<double>(
       'insoluble_fiber_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> ironFeMg = GeneratedColumn<double>(
       'iron_fe_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> isoleucineMg = GeneratedColumn<double>(
       'isoleucine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> lactoseG = GeneratedColumn<double>(
       'lactose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> leucineMg = GeneratedColumn<double>(
       'leucine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> luteinZeaxanthinMcg =
       GeneratedColumn<double>('lutein_zeaxanthin_mcg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> lycopeneMcg = GeneratedColumn<double>(
       'lycopene_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> lysineMg = GeneratedColumn<double>(
       'lysine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> magnesiumMg = GeneratedColumn<double>(
       'magnesium_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> maltoseG = GeneratedColumn<double>(
       'maltose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> manganeseMg = GeneratedColumn<double>(
       'manganese_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> menaquinone4Mcg = GeneratedColumn<double>(
       'menaquinone_4_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> methionineMg = GeneratedColumn<double>(
       'methionine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> molybdenumMcg = GeneratedColumn<double>(
       'molybdenum_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<double> netCarbsG = GeneratedColumn<double>(
       'net_carbs_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> niacinB3Mg = GeneratedColumn<double>(
       'niacin_b3_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> omega3sMg = GeneratedColumn<double>(
       'omega_3s_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> omega6sMg = GeneratedColumn<double>(
       'omega_6s_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> pantothenicAcidB5Mg =
       GeneratedColumn<double>('pantothenic_acid_b5_mg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> phenylalanineMg = GeneratedColumn<double>(
       'phenylalanine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> phosphorusPMg = GeneratedColumn<double>(
       'phosphorus_p_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> potassiumKMg = GeneratedColumn<double>(
       'potassium_k_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> pralScore = GeneratedColumn<double>(
       'pral_score', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> prolineMg = GeneratedColumn<double>(
       'proline_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> proteinG = GeneratedColumn<double>(
       'protein_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> retinolMcg = GeneratedColumn<double>(
       'retinol_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> riboflavinB2Mg = GeneratedColumn<double>(
       'riboflavin_b2_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> saturatedFatsG = GeneratedColumn<double>(
       'saturated_fats_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> seleniumSeMcg = GeneratedColumn<double>(
       'selenium_se_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> serineMg = GeneratedColumn<double>(
       'serine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription1G =
       GeneratedColumn<String>('serving_description_1_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription2G =
       GeneratedColumn<String>('serving_description_2_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription3G =
       GeneratedColumn<String>('serving_description_3_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription4G =
       GeneratedColumn<String>('serving_description_4_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription5G =
       GeneratedColumn<String>('serving_description_5_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription6G =
       GeneratedColumn<String>('serving_description_6_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription7G =
       GeneratedColumn<String>('serving_description_7_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription8G =
       GeneratedColumn<String>('serving_description_8_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingDescription9G =
       GeneratedColumn<String>('serving_description_9_g', aliasedName, true,
-          type: DriftSqlType.string, requiredDuringInsert: false);
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingSize = GeneratedColumn<double>(
       'serving_size', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> servingUnit = GeneratedColumn<String>(
       'serving_unit', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight1G = GeneratedColumn<double>(
       'serving_weight_1_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight2G = GeneratedColumn<double>(
       'serving_weight_2_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight3G = GeneratedColumn<double>(
       'serving_weight_3_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight4G = GeneratedColumn<double>(
       'serving_weight_4_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight5G = GeneratedColumn<double>(
       'serving_weight_5_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight6G = GeneratedColumn<double>(
       'serving_weight_6_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight7G = GeneratedColumn<double>(
       'serving_weight_7_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight8G = GeneratedColumn<double>(
       'serving_weight_8_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> servingWeight9G = GeneratedColumn<double>(
       'serving_weight_9_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<String> smallImage = GeneratedColumn<String>(
       'small_image', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> sodiumMg = GeneratedColumn<double>(
       'sodium_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> solubleFiberG = GeneratedColumn<double>(
       'soluble_fiber_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> starchG = GeneratedColumn<double>(
       'starch_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> sucroseG = GeneratedColumn<double>(
       'sucrose_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> sugarsG = GeneratedColumn<double>(
       'sugars_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> theobromineMg = GeneratedColumn<double>(
       'theobromine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> thiaminB1Mg = GeneratedColumn<double>(
       'thiamin_b1_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> threonineMg = GeneratedColumn<double>(
       'threonine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> totalSugarAlcoholsG =
       GeneratedColumn<double>('total_sugar_alcohols_g', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> transFattyAcidsG = GeneratedColumn<double>(
       'trans_fatty_acids_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> tryptophanMg = GeneratedColumn<double>(
       'tryptophan_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> tyrosineMg = GeneratedColumn<double>(
       'tyrosine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> u183N3CCCAlaMg = GeneratedColumn<double>(
       '_18_3_n_3_c_c_c_ala_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> u200calorieWeightG =
       GeneratedColumn<double>('_200_calorie_weight_g', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> u205N3EpaMg = GeneratedColumn<double>(
       '_20_5_n_3_epa_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> u225N3DpaMg = GeneratedColumn<double>(
       '_22_5_n_3_dpa_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> u226N3DhaMg = GeneratedColumn<double>(
       '_22_6_n_3_dha_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> valineMg = GeneratedColumn<double>(
       'valine_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminAIuIu = GeneratedColumn<double>(
       'vitamin_a_iu_iu', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminARaeMcg = GeneratedColumn<double>(
       'vitamin_a_rae_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminB12Mcg = GeneratedColumn<double>(
       'vitamin_b_12_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminB6Mg = GeneratedColumn<double>(
       'vitamin_b6_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminCMg = GeneratedColumn<double>(
       'vitamin_c_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminD2ErgocalciferolMcg =
       GeneratedColumn<double>(
           'vitamin_d2_ergocalciferol_mcg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminD3CholecalciferolMcg =
       GeneratedColumn<double>(
           'vitamin_d3_cholecalciferol_mcg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminDIuIu = GeneratedColumn<double>(
       'vitamin_d_iu_iu', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminDMcg = GeneratedColumn<double>(
       'vitamin_d_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminEAlphaTocopherolMg =
       GeneratedColumn<double>(
           'vitamin_e_alpha_tocopherol_mg', aliasedName, true,
-          type: DriftSqlType.double, requiredDuringInsert: false);
+          type: DriftSqlType.double,
+          requiredDuringInsert: false,
+          $customConstraints: 'NULL');
   late final GeneratedColumn<double> vitaminKMcg = GeneratedColumn<double>(
       'vitamin_k_mcg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> waterG = GeneratedColumn<double>(
       'water_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   late final GeneratedColumn<double> zincZnMg = GeneratedColumn<double>(
       'zinc_zn_mg', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   @override
   List<GeneratedColumn> get $columns => [
+        barcode,
         addedSugarG,
         alanineMg,
         alcoholG,
@@ -531,6 +779,8 @@ class Foods extends Table with TableInfo<Foods, FoodsData> {
   FoodsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FoodsData(
+      barcode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}barcode']),
       addedSugarG: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}added_sugar_g']),
       alanineMg: attachedDatabase.typeMapping
@@ -568,7 +818,7 @@ class Foods extends Table with TableInfo<Foods, FoodsData> {
       copperCuMg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}copper_cu_mg']),
       created: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created']),
+          .read(DriftSqlType.int, data['${effectivePrefix}created']),
       cystineMg: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}cystine_mg']),
       dihydrophylloquinoneMcg: attachedDatabase.typeMapping.read(
@@ -583,7 +833,7 @@ class Foods extends Table with TableInfo<Foods, FoodsData> {
           DriftSqlType.double,
           data['${effectivePrefix}fatty_acids_total_polyunsaturated_mg']),
       favorite: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}favorite']),
+          .read(DriftSqlType.int, data['${effectivePrefix}favorite']),
       fiberG: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}fiber_g']),
       fluorideFMcg: attachedDatabase.typeMapping
@@ -803,9 +1053,13 @@ class Foods extends Table with TableInfo<Foods, FoodsData> {
   Foods createAlias(String alias) {
     return Foods(attachedDatabase, alias);
   }
+
+  @override
+  bool get dontWriteConstraints => true;
 }
 
 class FoodsData extends DataClass implements Insertable<FoodsData> {
+  final String? barcode;
   final double? addedSugarG;
   final double? alanineMg;
   final double? alcoholG;
@@ -824,13 +1078,13 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   final double? cholesterolMg;
   final double? cholineMg;
   final double? copperCuMg;
-  final DateTime? created;
+  final int? created;
   final double? cystineMg;
   final double? dihydrophylloquinoneMcg;
   final double? fatG;
   final double? fattyAcidsTotalMonounsaturatedMg;
   final double? fattyAcidsTotalPolyunsaturatedMg;
-  final bool? favorite;
+  final int? favorite;
   final double? fiberG;
   final double? fluorideFMcg;
   final double? folateB9Mcg;
@@ -931,7 +1185,8 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   final double? waterG;
   final double? zincZnMg;
   const FoodsData(
-      {this.addedSugarG,
+      {this.barcode,
+      this.addedSugarG,
       this.alanineMg,
       this.alcoholG,
       this.arginineMg,
@@ -1058,6 +1313,9 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (!nullToAbsent || barcode != null) {
+      map['barcode'] = Variable<String>(barcode);
+    }
     if (!nullToAbsent || addedSugarG != null) {
       map['added_sugar_g'] = Variable<double>(addedSugarG);
     }
@@ -1113,7 +1371,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
       map['copper_cu_mg'] = Variable<double>(copperCuMg);
     }
     if (!nullToAbsent || created != null) {
-      map['created'] = Variable<DateTime>(created);
+      map['created'] = Variable<int>(created);
     }
     if (!nullToAbsent || cystineMg != null) {
       map['cystine_mg'] = Variable<double>(cystineMg);
@@ -1134,7 +1392,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
           Variable<double>(fattyAcidsTotalPolyunsaturatedMg);
     }
     if (!nullToAbsent || favorite != null) {
-      map['favorite'] = Variable<bool>(favorite);
+      map['favorite'] = Variable<int>(favorite);
     }
     if (!nullToAbsent || fiberG != null) {
       map['fiber_g'] = Variable<double>(fiberG);
@@ -1437,6 +1695,9 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
 
   FoodsCompanion toCompanion(bool nullToAbsent) {
     return FoodsCompanion(
+      barcode: barcode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(barcode),
       addedSugarG: addedSugarG == null && nullToAbsent
           ? const Value.absent()
           : Value(addedSugarG),
@@ -1813,6 +2074,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FoodsData(
+      barcode: serializer.fromJson<String?>(json['barcode']),
       addedSugarG: serializer.fromJson<double?>(json['addedSugarG']),
       alanineMg: serializer.fromJson<double?>(json['alanineMg']),
       alcoholG: serializer.fromJson<double?>(json['alcoholG']),
@@ -1831,7 +2093,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
       cholesterolMg: serializer.fromJson<double?>(json['cholesterolMg']),
       cholineMg: serializer.fromJson<double?>(json['cholineMg']),
       copperCuMg: serializer.fromJson<double?>(json['copperCuMg']),
-      created: serializer.fromJson<DateTime?>(json['created']),
+      created: serializer.fromJson<int?>(json['created']),
       cystineMg: serializer.fromJson<double?>(json['cystineMg']),
       dihydrophylloquinoneMcg:
           serializer.fromJson<double?>(json['dihydrophylloquinoneMcg']),
@@ -1840,7 +2102,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
           .fromJson<double?>(json['fattyAcidsTotalMonounsaturatedMg']),
       fattyAcidsTotalPolyunsaturatedMg: serializer
           .fromJson<double?>(json['fattyAcidsTotalPolyunsaturatedMg']),
-      favorite: serializer.fromJson<bool?>(json['favorite']),
+      favorite: serializer.fromJson<int?>(json['favorite']),
       fiberG: serializer.fromJson<double?>(json['fiberG']),
       fluorideFMcg: serializer.fromJson<double?>(json['fluorideFMcg']),
       folateB9Mcg: serializer.fromJson<double?>(json['folateB9Mcg']),
@@ -1962,6 +2224,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'barcode': serializer.toJson<String?>(barcode),
       'addedSugarG': serializer.toJson<double?>(addedSugarG),
       'alanineMg': serializer.toJson<double?>(alanineMg),
       'alcoholG': serializer.toJson<double?>(alcoholG),
@@ -1980,7 +2243,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
       'cholesterolMg': serializer.toJson<double?>(cholesterolMg),
       'cholineMg': serializer.toJson<double?>(cholineMg),
       'copperCuMg': serializer.toJson<double?>(copperCuMg),
-      'created': serializer.toJson<DateTime?>(created),
+      'created': serializer.toJson<int?>(created),
       'cystineMg': serializer.toJson<double?>(cystineMg),
       'dihydrophylloquinoneMcg':
           serializer.toJson<double?>(dihydrophylloquinoneMcg),
@@ -1989,7 +2252,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
           serializer.toJson<double?>(fattyAcidsTotalMonounsaturatedMg),
       'fattyAcidsTotalPolyunsaturatedMg':
           serializer.toJson<double?>(fattyAcidsTotalPolyunsaturatedMg),
-      'favorite': serializer.toJson<bool?>(favorite),
+      'favorite': serializer.toJson<int?>(favorite),
       'fiberG': serializer.toJson<double?>(fiberG),
       'fluorideFMcg': serializer.toJson<double?>(fluorideFMcg),
       'folateB9Mcg': serializer.toJson<double?>(folateB9Mcg),
@@ -2096,7 +2359,8 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   }
 
   FoodsData copyWith(
-          {Value<double?> addedSugarG = const Value.absent(),
+          {Value<String?> barcode = const Value.absent(),
+          Value<double?> addedSugarG = const Value.absent(),
           Value<double?> alanineMg = const Value.absent(),
           Value<double?> alcoholG = const Value.absent(),
           Value<double?> arginineMg = const Value.absent(),
@@ -2114,7 +2378,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
           Value<double?> cholesterolMg = const Value.absent(),
           Value<double?> cholineMg = const Value.absent(),
           Value<double?> copperCuMg = const Value.absent(),
-          Value<DateTime?> created = const Value.absent(),
+          Value<int?> created = const Value.absent(),
           Value<double?> cystineMg = const Value.absent(),
           Value<double?> dihydrophylloquinoneMcg = const Value.absent(),
           Value<double?> fatG = const Value.absent(),
@@ -2122,7 +2386,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
               const Value.absent(),
           Value<double?> fattyAcidsTotalPolyunsaturatedMg =
               const Value.absent(),
-          Value<bool?> favorite = const Value.absent(),
+          Value<int?> favorite = const Value.absent(),
           Value<double?> fiberG = const Value.absent(),
           Value<double?> fluorideFMcg = const Value.absent(),
           Value<double?> folateB9Mcg = const Value.absent(),
@@ -2223,6 +2487,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
           Value<double?> waterG = const Value.absent(),
           Value<double?> zincZnMg = const Value.absent()}) =>
       FoodsData(
+        barcode: barcode.present ? barcode.value : this.barcode,
         addedSugarG: addedSugarG.present ? addedSugarG.value : this.addedSugarG,
         alanineMg: alanineMg.present ? alanineMg.value : this.alanineMg,
         alcoholG: alcoholG.present ? alcoholG.value : this.alcoholG,
@@ -2448,6 +2713,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
       );
   FoodsData copyWithCompanion(FoodsCompanion data) {
     return FoodsData(
+      barcode: data.barcode.present ? data.barcode.value : this.barcode,
       addedSugarG:
           data.addedSugarG.present ? data.addedSugarG.value : this.addedSugarG,
       alanineMg: data.alanineMg.present ? data.alanineMg.value : this.alanineMg,
@@ -2727,6 +2993,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   @override
   String toString() {
     return (StringBuffer('FoodsData(')
+          ..write('barcode: $barcode, ')
           ..write('addedSugarG: $addedSugarG, ')
           ..write('alanineMg: $alanineMg, ')
           ..write('alcoholG: $alcoholG, ')
@@ -2859,6 +3126,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
 
   @override
   int get hashCode => Object.hashAll([
+        barcode,
         addedSugarG,
         alanineMg,
         alcoholG,
@@ -2988,6 +3256,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FoodsData &&
+          other.barcode == this.barcode &&
           other.addedSugarG == this.addedSugarG &&
           other.alanineMg == this.alanineMg &&
           other.alcoholG == this.alcoholG &&
@@ -3118,6 +3387,7 @@ class FoodsData extends DataClass implements Insertable<FoodsData> {
 }
 
 class FoodsCompanion extends UpdateCompanion<FoodsData> {
+  final Value<String?> barcode;
   final Value<double?> addedSugarG;
   final Value<double?> alanineMg;
   final Value<double?> alcoholG;
@@ -3136,13 +3406,13 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   final Value<double?> cholesterolMg;
   final Value<double?> cholineMg;
   final Value<double?> copperCuMg;
-  final Value<DateTime?> created;
+  final Value<int?> created;
   final Value<double?> cystineMg;
   final Value<double?> dihydrophylloquinoneMcg;
   final Value<double?> fatG;
   final Value<double?> fattyAcidsTotalMonounsaturatedMg;
   final Value<double?> fattyAcidsTotalPolyunsaturatedMg;
-  final Value<bool?> favorite;
+  final Value<int?> favorite;
   final Value<double?> fiberG;
   final Value<double?> fluorideFMcg;
   final Value<double?> folateB9Mcg;
@@ -3243,6 +3513,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   final Value<double?> waterG;
   final Value<double?> zincZnMg;
   const FoodsCompanion({
+    this.barcode = const Value.absent(),
     this.addedSugarG = const Value.absent(),
     this.alanineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
@@ -3369,6 +3640,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
     this.zincZnMg = const Value.absent(),
   });
   FoodsCompanion.insert({
+    this.barcode = const Value.absent(),
     this.addedSugarG = const Value.absent(),
     this.alanineMg = const Value.absent(),
     this.alcoholG = const Value.absent(),
@@ -3495,6 +3767,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
     this.zincZnMg = const Value.absent(),
   }) : name = Value(name);
   static Insertable<FoodsData> custom({
+    Expression<String>? barcode,
     Expression<double>? addedSugarG,
     Expression<double>? alanineMg,
     Expression<double>? alcoholG,
@@ -3513,13 +3786,13 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
     Expression<double>? cholesterolMg,
     Expression<double>? cholineMg,
     Expression<double>? copperCuMg,
-    Expression<DateTime>? created,
+    Expression<int>? created,
     Expression<double>? cystineMg,
     Expression<double>? dihydrophylloquinoneMcg,
     Expression<double>? fatG,
     Expression<double>? fattyAcidsTotalMonounsaturatedMg,
     Expression<double>? fattyAcidsTotalPolyunsaturatedMg,
-    Expression<bool>? favorite,
+    Expression<int>? favorite,
     Expression<double>? fiberG,
     Expression<double>? fluorideFMcg,
     Expression<double>? folateB9Mcg,
@@ -3621,6 +3894,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
     Expression<double>? zincZnMg,
   }) {
     return RawValuesInsertable({
+      if (barcode != null) 'barcode': barcode,
       if (addedSugarG != null) 'added_sugar_g': addedSugarG,
       if (alanineMg != null) 'alanine_mg': alanineMg,
       if (alcoholG != null) 'alcohol_g': alcoholG,
@@ -3770,7 +4044,8 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   }
 
   FoodsCompanion copyWith(
-      {Value<double?>? addedSugarG,
+      {Value<String?>? barcode,
+      Value<double?>? addedSugarG,
       Value<double?>? alanineMg,
       Value<double?>? alcoholG,
       Value<double?>? arginineMg,
@@ -3788,13 +4063,13 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
       Value<double?>? cholesterolMg,
       Value<double?>? cholineMg,
       Value<double?>? copperCuMg,
-      Value<DateTime?>? created,
+      Value<int?>? created,
       Value<double?>? cystineMg,
       Value<double?>? dihydrophylloquinoneMcg,
       Value<double?>? fatG,
       Value<double?>? fattyAcidsTotalMonounsaturatedMg,
       Value<double?>? fattyAcidsTotalPolyunsaturatedMg,
-      Value<bool?>? favorite,
+      Value<int?>? favorite,
       Value<double?>? fiberG,
       Value<double?>? fluorideFMcg,
       Value<double?>? folateB9Mcg,
@@ -3895,6 +4170,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
       Value<double?>? waterG,
       Value<double?>? zincZnMg}) {
     return FoodsCompanion(
+      barcode: barcode ?? this.barcode,
       addedSugarG: addedSugarG ?? this.addedSugarG,
       alanineMg: alanineMg ?? this.alanineMg,
       alcoholG: alcoholG ?? this.alcoholG,
@@ -4031,6 +4307,9 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (barcode.present) {
+      map['barcode'] = Variable<String>(barcode.value);
+    }
     if (addedSugarG.present) {
       map['added_sugar_g'] = Variable<double>(addedSugarG.value);
     }
@@ -4086,7 +4365,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
       map['copper_cu_mg'] = Variable<double>(copperCuMg.value);
     }
     if (created.present) {
-      map['created'] = Variable<DateTime>(created.value);
+      map['created'] = Variable<int>(created.value);
     }
     if (cystineMg.present) {
       map['cystine_mg'] = Variable<double>(cystineMg.value);
@@ -4107,7 +4386,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
           Variable<double>(fattyAcidsTotalPolyunsaturatedMg.value);
     }
     if (favorite.present) {
-      map['favorite'] = Variable<bool>(favorite.value);
+      map['favorite'] = Variable<int>(favorite.value);
     }
     if (fiberG.present) {
       map['fiber_g'] = Variable<double>(fiberG.value);
@@ -4427,6 +4706,7 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   @override
   String toString() {
     return (StringBuffer('FoodsCompanion(')
+          ..write('barcode: $barcode, ')
           ..write('addedSugarG: $addedSugarG, ')
           ..write('alanineMg: $alanineMg, ')
           ..write('alcoholG: $alcoholG, ')
@@ -4558,161 +4838,114 @@ class FoodsCompanion extends UpdateCompanion<FoodsData> {
   }
 }
 
-class Entries extends Table with TableInfo<Entries, EntriesData> {
+class Diaries extends Table with TableInfo<Diaries, DiariesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  Entries(this.attachedDatabase, [this._alias]);
+  Diaries(this.attachedDatabase, [this._alias]);
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
   late final GeneratedColumn<int> food = GeneratedColumn<int>(
       'food', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES foods (id)'));
-  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
+      $customConstraints: 'NOT NULL REFERENCES foods(id)');
+  late final GeneratedColumn<int> created = GeneratedColumn<int>(
       'created', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
       'quantity', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+      type: DriftSqlType.double,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
       'unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<double> kCalories = GeneratedColumn<double>(
-      'k_calories', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<double> proteinG = GeneratedColumn<double>(
-      'protein_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<double> fatG = GeneratedColumn<double>(
-      'fat_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<double> carbG = GeneratedColumn<double>(
-      'carb_g', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, food, created, quantity, unit, kCalories, proteinG, fatG, carbG];
+  List<GeneratedColumn> get $columns => [id, food, created, quantity, unit];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'entries';
+  static const String $name = 'diaries';
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  EntriesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  DiariesData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return EntriesData(
+    return DiariesData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       food: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}food'])!,
       created: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}created'])!,
       quantity: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}quantity'])!,
       unit: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
-      kCalories: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}k_calories']),
-      proteinG: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}protein_g']),
-      fatG: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}fat_g']),
-      carbG: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}carb_g']),
     );
   }
 
   @override
-  Entries createAlias(String alias) {
-    return Entries(attachedDatabase, alias);
+  Diaries createAlias(String alias) {
+    return Diaries(attachedDatabase, alias);
   }
+
+  @override
+  bool get dontWriteConstraints => true;
 }
 
-class EntriesData extends DataClass implements Insertable<EntriesData> {
+class DiariesData extends DataClass implements Insertable<DiariesData> {
   final int id;
   final int food;
-  final DateTime created;
+  final int created;
   final double quantity;
   final String unit;
-  final double? kCalories;
-  final double? proteinG;
-  final double? fatG;
-  final double? carbG;
-  const EntriesData(
+  const DiariesData(
       {required this.id,
       required this.food,
       required this.created,
       required this.quantity,
-      required this.unit,
-      this.kCalories,
-      this.proteinG,
-      this.fatG,
-      this.carbG});
+      required this.unit});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['food'] = Variable<int>(food);
-    map['created'] = Variable<DateTime>(created);
+    map['created'] = Variable<int>(created);
     map['quantity'] = Variable<double>(quantity);
     map['unit'] = Variable<String>(unit);
-    if (!nullToAbsent || kCalories != null) {
-      map['k_calories'] = Variable<double>(kCalories);
-    }
-    if (!nullToAbsent || proteinG != null) {
-      map['protein_g'] = Variable<double>(proteinG);
-    }
-    if (!nullToAbsent || fatG != null) {
-      map['fat_g'] = Variable<double>(fatG);
-    }
-    if (!nullToAbsent || carbG != null) {
-      map['carb_g'] = Variable<double>(carbG);
-    }
     return map;
   }
 
-  EntriesCompanion toCompanion(bool nullToAbsent) {
-    return EntriesCompanion(
+  DiariesCompanion toCompanion(bool nullToAbsent) {
+    return DiariesCompanion(
       id: Value(id),
       food: Value(food),
       created: Value(created),
       quantity: Value(quantity),
       unit: Value(unit),
-      kCalories: kCalories == null && nullToAbsent
-          ? const Value.absent()
-          : Value(kCalories),
-      proteinG: proteinG == null && nullToAbsent
-          ? const Value.absent()
-          : Value(proteinG),
-      fatG: fatG == null && nullToAbsent ? const Value.absent() : Value(fatG),
-      carbG:
-          carbG == null && nullToAbsent ? const Value.absent() : Value(carbG),
     );
   }
 
-  factory EntriesData.fromJson(Map<String, dynamic> json,
+  factory DiariesData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return EntriesData(
+    return DiariesData(
       id: serializer.fromJson<int>(json['id']),
       food: serializer.fromJson<int>(json['food']),
-      created: serializer.fromJson<DateTime>(json['created']),
+      created: serializer.fromJson<int>(json['created']),
       quantity: serializer.fromJson<double>(json['quantity']),
       unit: serializer.fromJson<String>(json['unit']),
-      kCalories: serializer.fromJson<double?>(json['kCalories']),
-      proteinG: serializer.fromJson<double?>(json['proteinG']),
-      fatG: serializer.fromJson<double?>(json['fatG']),
-      carbG: serializer.fromJson<double?>(json['carbG']),
     );
   }
   @override
@@ -4721,130 +4954,85 @@ class EntriesData extends DataClass implements Insertable<EntriesData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'food': serializer.toJson<int>(food),
-      'created': serializer.toJson<DateTime>(created),
+      'created': serializer.toJson<int>(created),
       'quantity': serializer.toJson<double>(quantity),
       'unit': serializer.toJson<String>(unit),
-      'kCalories': serializer.toJson<double?>(kCalories),
-      'proteinG': serializer.toJson<double?>(proteinG),
-      'fatG': serializer.toJson<double?>(fatG),
-      'carbG': serializer.toJson<double?>(carbG),
     };
   }
 
-  EntriesData copyWith(
-          {int? id,
-          int? food,
-          DateTime? created,
-          double? quantity,
-          String? unit,
-          Value<double?> kCalories = const Value.absent(),
-          Value<double?> proteinG = const Value.absent(),
-          Value<double?> fatG = const Value.absent(),
-          Value<double?> carbG = const Value.absent()}) =>
-      EntriesData(
+  DiariesData copyWith(
+          {int? id, int? food, int? created, double? quantity, String? unit}) =>
+      DiariesData(
         id: id ?? this.id,
         food: food ?? this.food,
         created: created ?? this.created,
         quantity: quantity ?? this.quantity,
         unit: unit ?? this.unit,
-        kCalories: kCalories.present ? kCalories.value : this.kCalories,
-        proteinG: proteinG.present ? proteinG.value : this.proteinG,
-        fatG: fatG.present ? fatG.value : this.fatG,
-        carbG: carbG.present ? carbG.value : this.carbG,
       );
-  EntriesData copyWithCompanion(EntriesCompanion data) {
-    return EntriesData(
+  DiariesData copyWithCompanion(DiariesCompanion data) {
+    return DiariesData(
       id: data.id.present ? data.id.value : this.id,
       food: data.food.present ? data.food.value : this.food,
       created: data.created.present ? data.created.value : this.created,
       quantity: data.quantity.present ? data.quantity.value : this.quantity,
       unit: data.unit.present ? data.unit.value : this.unit,
-      kCalories: data.kCalories.present ? data.kCalories.value : this.kCalories,
-      proteinG: data.proteinG.present ? data.proteinG.value : this.proteinG,
-      fatG: data.fatG.present ? data.fatG.value : this.fatG,
-      carbG: data.carbG.present ? data.carbG.value : this.carbG,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('EntriesData(')
+    return (StringBuffer('DiariesData(')
           ..write('id: $id, ')
           ..write('food: $food, ')
           ..write('created: $created, ')
           ..write('quantity: $quantity, ')
-          ..write('unit: $unit, ')
-          ..write('kCalories: $kCalories, ')
-          ..write('proteinG: $proteinG, ')
-          ..write('fatG: $fatG, ')
-          ..write('carbG: $carbG')
+          ..write('unit: $unit')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, food, created, quantity, unit, kCalories, proteinG, fatG, carbG);
+  int get hashCode => Object.hash(id, food, created, quantity, unit);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is EntriesData &&
+      (other is DiariesData &&
           other.id == this.id &&
           other.food == this.food &&
           other.created == this.created &&
           other.quantity == this.quantity &&
-          other.unit == this.unit &&
-          other.kCalories == this.kCalories &&
-          other.proteinG == this.proteinG &&
-          other.fatG == this.fatG &&
-          other.carbG == this.carbG);
+          other.unit == this.unit);
 }
 
-class EntriesCompanion extends UpdateCompanion<EntriesData> {
+class DiariesCompanion extends UpdateCompanion<DiariesData> {
   final Value<int> id;
   final Value<int> food;
-  final Value<DateTime> created;
+  final Value<int> created;
   final Value<double> quantity;
   final Value<String> unit;
-  final Value<double?> kCalories;
-  final Value<double?> proteinG;
-  final Value<double?> fatG;
-  final Value<double?> carbG;
-  const EntriesCompanion({
+  const DiariesCompanion({
     this.id = const Value.absent(),
     this.food = const Value.absent(),
     this.created = const Value.absent(),
     this.quantity = const Value.absent(),
     this.unit = const Value.absent(),
-    this.kCalories = const Value.absent(),
-    this.proteinG = const Value.absent(),
-    this.fatG = const Value.absent(),
-    this.carbG = const Value.absent(),
   });
-  EntriesCompanion.insert({
+  DiariesCompanion.insert({
     this.id = const Value.absent(),
     required int food,
-    required DateTime created,
+    required int created,
     required double quantity,
     required String unit,
-    this.kCalories = const Value.absent(),
-    this.proteinG = const Value.absent(),
-    this.fatG = const Value.absent(),
-    this.carbG = const Value.absent(),
   })  : food = Value(food),
         created = Value(created),
         quantity = Value(quantity),
         unit = Value(unit);
-  static Insertable<EntriesData> custom({
+  static Insertable<DiariesData> custom({
     Expression<int>? id,
     Expression<int>? food,
-    Expression<DateTime>? created,
+    Expression<int>? created,
     Expression<double>? quantity,
     Expression<String>? unit,
-    Expression<double>? kCalories,
-    Expression<double>? proteinG,
-    Expression<double>? fatG,
-    Expression<double>? carbG,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -4852,33 +5040,21 @@ class EntriesCompanion extends UpdateCompanion<EntriesData> {
       if (created != null) 'created': created,
       if (quantity != null) 'quantity': quantity,
       if (unit != null) 'unit': unit,
-      if (kCalories != null) 'k_calories': kCalories,
-      if (proteinG != null) 'protein_g': proteinG,
-      if (fatG != null) 'fat_g': fatG,
-      if (carbG != null) 'carb_g': carbG,
     });
   }
 
-  EntriesCompanion copyWith(
+  DiariesCompanion copyWith(
       {Value<int>? id,
       Value<int>? food,
-      Value<DateTime>? created,
+      Value<int>? created,
       Value<double>? quantity,
-      Value<String>? unit,
-      Value<double?>? kCalories,
-      Value<double?>? proteinG,
-      Value<double?>? fatG,
-      Value<double?>? carbG}) {
-    return EntriesCompanion(
+      Value<String>? unit}) {
+    return DiariesCompanion(
       id: id ?? this.id,
       food: food ?? this.food,
       created: created ?? this.created,
       quantity: quantity ?? this.quantity,
       unit: unit ?? this.unit,
-      kCalories: kCalories ?? this.kCalories,
-      proteinG: proteinG ?? this.proteinG,
-      fatG: fatG ?? this.fatG,
-      carbG: carbG ?? this.carbG,
     );
   }
 
@@ -4892,7 +5068,7 @@ class EntriesCompanion extends UpdateCompanion<EntriesData> {
       map['food'] = Variable<int>(food.value);
     }
     if (created.present) {
-      map['created'] = Variable<DateTime>(created.value);
+      map['created'] = Variable<int>(created.value);
     }
     if (quantity.present) {
       map['quantity'] = Variable<double>(quantity.value);
@@ -4900,33 +5076,17 @@ class EntriesCompanion extends UpdateCompanion<EntriesData> {
     if (unit.present) {
       map['unit'] = Variable<String>(unit.value);
     }
-    if (kCalories.present) {
-      map['k_calories'] = Variable<double>(kCalories.value);
-    }
-    if (proteinG.present) {
-      map['protein_g'] = Variable<double>(proteinG.value);
-    }
-    if (fatG.present) {
-      map['fat_g'] = Variable<double>(fatG.value);
-    }
-    if (carbG.present) {
-      map['carb_g'] = Variable<double>(carbG.value);
-    }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('EntriesCompanion(')
+    return (StringBuffer('DiariesCompanion(')
           ..write('id: $id, ')
           ..write('food: $food, ')
           ..write('created: $created, ')
           ..write('quantity: $quantity, ')
-          ..write('unit: $unit, ')
-          ..write('kCalories: $kCalories, ')
-          ..write('proteinG: $proteinG, ')
-          ..write('fatG: $fatG, ')
-          ..write('carbG: $carbG')
+          ..write('unit: $unit')
           ..write(')'))
         .toString();
   }
@@ -4942,19 +5102,29 @@ class Weights extends Table with TableInfo<Weights, WeightsData> {
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
+  late final GeneratedColumn<int> created = GeneratedColumn<int>(
       'created', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
       'unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
       'amount', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+      type: DriftSqlType.double,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> image = GeneratedColumn<String>(
+      'image', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
   @override
-  List<GeneratedColumn> get $columns => [id, created, unit, amount];
+  List<GeneratedColumn> get $columns => [id, created, unit, amount, image];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4969,11 +5139,13 @@ class Weights extends Table with TableInfo<Weights, WeightsData> {
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       created: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}created'])!,
       unit: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      image: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}image']),
     );
   }
 
@@ -4981,25 +5153,33 @@ class Weights extends Table with TableInfo<Weights, WeightsData> {
   Weights createAlias(String alias) {
     return Weights(attachedDatabase, alias);
   }
+
+  @override
+  bool get dontWriteConstraints => true;
 }
 
 class WeightsData extends DataClass implements Insertable<WeightsData> {
   final int id;
-  final DateTime created;
+  final int created;
   final String unit;
   final double amount;
+  final String? image;
   const WeightsData(
       {required this.id,
       required this.created,
       required this.unit,
-      required this.amount});
+      required this.amount,
+      this.image});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['created'] = Variable<DateTime>(created);
+    map['created'] = Variable<int>(created);
     map['unit'] = Variable<String>(unit);
     map['amount'] = Variable<double>(amount);
+    if (!nullToAbsent || image != null) {
+      map['image'] = Variable<String>(image);
+    }
     return map;
   }
 
@@ -5009,6 +5189,8 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
       created: Value(created),
       unit: Value(unit),
       amount: Value(amount),
+      image:
+          image == null && nullToAbsent ? const Value.absent() : Value(image),
     );
   }
 
@@ -5017,9 +5199,10 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return WeightsData(
       id: serializer.fromJson<int>(json['id']),
-      created: serializer.fromJson<DateTime>(json['created']),
+      created: serializer.fromJson<int>(json['created']),
       unit: serializer.fromJson<String>(json['unit']),
       amount: serializer.fromJson<double>(json['amount']),
+      image: serializer.fromJson<String?>(json['image']),
     );
   }
   @override
@@ -5027,19 +5210,25 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'created': serializer.toJson<DateTime>(created),
+      'created': serializer.toJson<int>(created),
       'unit': serializer.toJson<String>(unit),
       'amount': serializer.toJson<double>(amount),
+      'image': serializer.toJson<String?>(image),
     };
   }
 
   WeightsData copyWith(
-          {int? id, DateTime? created, String? unit, double? amount}) =>
+          {int? id,
+          int? created,
+          String? unit,
+          double? amount,
+          Value<String?> image = const Value.absent()}) =>
       WeightsData(
         id: id ?? this.id,
         created: created ?? this.created,
         unit: unit ?? this.unit,
         amount: amount ?? this.amount,
+        image: image.present ? image.value : this.image,
       );
   WeightsData copyWithCompanion(WeightsCompanion data) {
     return WeightsData(
@@ -5047,6 +5236,7 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
       created: data.created.present ? data.created.value : this.created,
       unit: data.unit.present ? data.unit.value : this.unit,
       amount: data.amount.present ? data.amount.value : this.amount,
+      image: data.image.present ? data.image.value : this.image,
     );
   }
 
@@ -5056,13 +5246,14 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
           ..write('id: $id, ')
           ..write('created: $created, ')
           ..write('unit: $unit, ')
-          ..write('amount: $amount')
+          ..write('amount: $amount, ')
+          ..write('image: $image')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, created, unit, amount);
+  int get hashCode => Object.hash(id, created, unit, amount, image);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -5070,52 +5261,60 @@ class WeightsData extends DataClass implements Insertable<WeightsData> {
           other.id == this.id &&
           other.created == this.created &&
           other.unit == this.unit &&
-          other.amount == this.amount);
+          other.amount == this.amount &&
+          other.image == this.image);
 }
 
 class WeightsCompanion extends UpdateCompanion<WeightsData> {
   final Value<int> id;
-  final Value<DateTime> created;
+  final Value<int> created;
   final Value<String> unit;
   final Value<double> amount;
+  final Value<String?> image;
   const WeightsCompanion({
     this.id = const Value.absent(),
     this.created = const Value.absent(),
     this.unit = const Value.absent(),
     this.amount = const Value.absent(),
+    this.image = const Value.absent(),
   });
   WeightsCompanion.insert({
     this.id = const Value.absent(),
-    required DateTime created,
+    required int created,
     required String unit,
     required double amount,
+    this.image = const Value.absent(),
   })  : created = Value(created),
         unit = Value(unit),
         amount = Value(amount);
   static Insertable<WeightsData> custom({
     Expression<int>? id,
-    Expression<DateTime>? created,
+    Expression<int>? created,
     Expression<String>? unit,
     Expression<double>? amount,
+    Expression<String>? image,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (created != null) 'created': created,
       if (unit != null) 'unit': unit,
       if (amount != null) 'amount': amount,
+      if (image != null) 'image': image,
     });
   }
 
   WeightsCompanion copyWith(
       {Value<int>? id,
-      Value<DateTime>? created,
+      Value<int>? created,
       Value<String>? unit,
-      Value<double>? amount}) {
+      Value<double>? amount,
+      Value<String?>? image}) {
     return WeightsCompanion(
       id: id ?? this.id,
       created: created ?? this.created,
       unit: unit ?? this.unit,
       amount: amount ?? this.amount,
+      image: image ?? this.image,
     );
   }
 
@@ -5126,13 +5325,16 @@ class WeightsCompanion extends UpdateCompanion<WeightsData> {
       map['id'] = Variable<int>(id.value);
     }
     if (created.present) {
-      map['created'] = Variable<DateTime>(created.value);
+      map['created'] = Variable<int>(created.value);
     }
     if (unit.present) {
       map['unit'] = Variable<String>(unit.value);
     }
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
+    }
+    if (image.present) {
+      map['image'] = Variable<String>(image.value);
     }
     return map;
   }
@@ -5143,7 +5345,8 @@ class WeightsCompanion extends UpdateCompanion<WeightsData> {
           ..write('id: $id, ')
           ..write('created: $created, ')
           ..write('unit: $unit, ')
-          ..write('amount: $amount')
+          ..write('amount: $amount, ')
+          ..write('image: $image')
           ..write(')'))
         .toString();
   }
@@ -5154,110 +5357,234 @@ class Settings extends Table with TableInfo<Settings, SettingsData> {
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   Settings(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<int> curveLines = GeneratedColumn<int>(
+      'curve_lines', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 1 CHECK (curve_lines IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
+  late final GeneratedColumn<int> autoCalc = GeneratedColumn<int>(
+      'auto_calc', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0 CHECK (auto_calc IN (0, 1))',
+      defaultValue: const CustomExpression('0'));
+  late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
+      'daily_calories', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
+      'daily_carb', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
+      'daily_fat', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
+      'daily_protein', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> dailyFiber = GeneratedColumn<int>(
+      'daily_fiber', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
+      'diary_summary', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
+      'entry_unit', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<int> favoriteNew = GeneratedColumn<int>(
+      'favorite_new', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL CHECK (favorite_new IN (0, 1))');
+  late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
+      'food_unit', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
-      'theme_mode', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
+  late final GeneratedColumn<String> lastGraph = GeneratedColumn<String>(
+      'last_graph', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT \'AppMetric.calories\'',
+      defaultValue: const CustomExpression('\'AppMetric.calories\''));
   late final GeneratedColumn<String> longDateFormat = GeneratedColumn<String>(
       'long_date_format', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> offLogin = GeneratedColumn<String>(
+      'off_login', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<String> offPassword = GeneratedColumn<String>(
+      'off_password', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> positiveReinforcement = GeneratedColumn<int>(
+      'positive_reinforcement', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NOT NULL DEFAULT 1 CHECK (positive_reinforcement IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
+  late final GeneratedColumn<int> reminders = GeneratedColumn<int>(
+      'reminders', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0 CHECK (reminders IN (0, 1))',
+      defaultValue: const CustomExpression('0'));
+  late final GeneratedColumn<int> selectEntryOnSubmit = GeneratedColumn<int>(
+      'select_entry_on_submit', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL CHECK (select_entry_on_submit IN (0, 1))');
   late final GeneratedColumn<String> shortDateFormat = GeneratedColumn<String>(
       'short_date_format', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<String> entryUnit = GeneratedColumn<String>(
-      'entry_unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<String> foodUnit = GeneratedColumn<String>(
-      'food_unit', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  late final GeneratedColumn<String> diarySummary = GeneratedColumn<String>(
-      'diary_summary', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> fields = GeneratedColumn<String>(
+      'fields', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NULL DEFAULT \'calories,protein_g,carbohydrate_g,fat_g,fiber_g\'',
+      defaultValue: const CustomExpression(
+          '\'calories,protein_g,carbohydrate_g,fat_g,fiber_g\''));
+  late final GeneratedColumn<int> showImages = GeneratedColumn<int>(
+      'show_images', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 1 CHECK (show_images IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
+  late final GeneratedColumn<int> showOthers = GeneratedColumn<int>(
+      'show_others', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL CHECK (show_others IN (0, 1))');
+  late final GeneratedColumn<int> systemColors = GeneratedColumn<int>(
+      'system_colors', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL CHECK (system_colors IN (0, 1))');
+  late final GeneratedColumn<int> automaticBackups = GeneratedColumn<int>(
+      'automatic_backups', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NOT NULL DEFAULT 0 CHECK (automatic_backups IN (0, 1))',
+      defaultValue: const CustomExpression('0'));
+  late final GeneratedColumn<String> tabs = GeneratedColumn<String>(
+      'tabs', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NOT NULL DEFAULT \'DiaryPage,GraphPage,FoodPage,WeightPage\'',
+      defaultValue: const CustomExpression(
+          '\'DiaryPage,GraphPage,FoodPage,WeightPage\''));
   late final GeneratedColumn<double> targetWeight = GeneratedColumn<double>(
       'target_weight', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  late final GeneratedColumn<bool> systemColors = GeneratedColumn<bool>(
-      'system_colors', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("system_colors" IN (0, 1))'));
-  late final GeneratedColumn<bool> curveLines = GeneratedColumn<bool>(
-      'curve_lines', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("curve_lines" IN (0, 1))'));
-  late final GeneratedColumn<bool> showOthers = GeneratedColumn<bool>(
-      'show_others', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("show_others" IN (0, 1))'));
-  late final GeneratedColumn<bool> showImages = GeneratedColumn<bool>(
-      'show_images', aliasedName, false,
-      type: DriftSqlType.bool,
+      type: DriftSqlType.double,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("show_images" IN (0, 1))'),
-      defaultValue: const Constant(true));
-  late final GeneratedColumn<bool> favoriteNew = GeneratedColumn<bool>(
-      'favorite_new', aliasedName, false,
-      type: DriftSqlType.bool,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> limit = GeneratedColumn<int>(
+      'limit', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 30',
+      defaultValue: const CustomExpression('30'));
+  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
+      'theme_mode', aliasedName, false,
+      type: DriftSqlType.string,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("favorite_new" IN (0, 1))'));
-  late final GeneratedColumn<bool> selectEntryOnSubmit = GeneratedColumn<bool>(
-      'select_entry_on_submit', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("select_entry_on_submit" IN (0, 1))'));
-  late final GeneratedColumn<bool> notifications = GeneratedColumn<bool>(
-      'notifications', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("notifications" IN (0, 1))'));
-  late final GeneratedColumn<int> dailyCalories = GeneratedColumn<int>(
-      'daily_calories', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyProtein = GeneratedColumn<int>(
-      'daily_protein', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyFat = GeneratedColumn<int>(
-      'daily_fat', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  late final GeneratedColumn<int> dailyCarb = GeneratedColumn<int>(
-      'daily_carb', aliasedName, true,
-      type: DriftSqlType.int, requiredDuringInsert: false);
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> backupPath = GeneratedColumn<String>(
+      'backup_path', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<String> convertWeight = GeneratedColumn<String>(
+      'convert_weight', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  late final GeneratedColumn<int> scrollableTabs = GeneratedColumn<int>(
+      'scrollable_tabs', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NOT NULL DEFAULT 1 CHECK (scrollable_tabs IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
+  late final GeneratedColumn<int> compactDiary = GeneratedColumn<int>(
+      'compact_diary', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 1 CHECK (compact_diary IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
+  late final GeneratedColumn<int> compactWeights = GeneratedColumn<int>(
+      'compact_weights', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints:
+          'NOT NULL DEFAULT 1 CHECK (compact_weights IN (0, 1))',
+      defaultValue: const CustomExpression('1'));
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        themeMode,
-        longDateFormat,
-        shortDateFormat,
-        entryUnit,
-        foodUnit,
-        diarySummary,
-        targetWeight,
-        systemColors,
         curveLines,
-        showOthers,
-        showImages,
-        favoriteNew,
-        selectEntryOnSubmit,
-        notifications,
+        autoCalc,
         dailyCalories,
-        dailyProtein,
+        dailyCarb,
         dailyFat,
-        dailyCarb
+        dailyProtein,
+        dailyFiber,
+        diarySummary,
+        entryUnit,
+        favoriteNew,
+        foodUnit,
+        id,
+        lastGraph,
+        longDateFormat,
+        offLogin,
+        offPassword,
+        positiveReinforcement,
+        reminders,
+        selectEntryOnSubmit,
+        shortDateFormat,
+        fields,
+        showImages,
+        showOthers,
+        systemColors,
+        automaticBackups,
+        tabs,
+        targetWeight,
+        limit,
+        themeMode,
+        backupPath,
+        convertWeight,
+        scrollableTabs,
+        compactDiary,
+        compactWeights
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -5270,44 +5597,74 @@ class Settings extends Table with TableInfo<Settings, SettingsData> {
   SettingsData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return SettingsData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      themeMode: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
-      longDateFormat: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
-      shortDateFormat: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}short_date_format'])!,
-      entryUnit: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}entry_unit'])!,
-      foodUnit: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}food_unit'])!,
-      diarySummary: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}diary_summary'])!,
-      targetWeight: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}target_weight']),
-      systemColors: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}system_colors'])!,
       curveLines: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}curve_lines'])!,
-      showOthers: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}show_others'])!,
-      showImages: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}show_images'])!,
-      favoriteNew: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}favorite_new'])!,
-      selectEntryOnSubmit: attachedDatabase.typeMapping.read(
-          DriftSqlType.bool, data['${effectivePrefix}select_entry_on_submit'])!,
-      notifications: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}notifications'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}curve_lines'])!,
+      autoCalc: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}auto_calc'])!,
       dailyCalories: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}daily_calories']),
-      dailyProtein: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}daily_protein']),
-      dailyFat: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}daily_fat']),
       dailyCarb: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}daily_carb']),
+      dailyFat: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_fat']),
+      dailyProtein: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_protein']),
+      dailyFiber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}daily_fiber']),
+      diarySummary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}diary_summary'])!,
+      entryUnit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_unit'])!,
+      favoriteNew: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}favorite_new'])!,
+      foodUnit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}food_unit'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      lastGraph: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_graph'])!,
+      longDateFormat: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}long_date_format'])!,
+      offLogin: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}off_login']),
+      offPassword: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}off_password']),
+      positiveReinforcement: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}positive_reinforcement'])!,
+      reminders: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}reminders'])!,
+      selectEntryOnSubmit: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}select_entry_on_submit'])!,
+      shortDateFormat: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}short_date_format'])!,
+      fields: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}fields']),
+      showImages: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}show_images'])!,
+      showOthers: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}show_others'])!,
+      systemColors: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}system_colors'])!,
+      automaticBackups: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}automatic_backups'])!,
+      tabs: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tabs'])!,
+      targetWeight: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}target_weight']),
+      limit: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}limit'])!,
+      themeMode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
+      backupPath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}backup_path']),
+      convertWeight: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}convert_weight']),
+      scrollableTabs: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}scrollable_tabs'])!,
+      compactDiary: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}compact_diary'])!,
+      compactWeights: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}compact_weights'])!,
     );
   }
 
@@ -5315,114 +5672,200 @@ class Settings extends Table with TableInfo<Settings, SettingsData> {
   Settings createAlias(String alias) {
     return Settings(attachedDatabase, alias);
   }
+
+  @override
+  bool get dontWriteConstraints => true;
 }
 
 class SettingsData extends DataClass implements Insertable<SettingsData> {
-  final int id;
-  final String themeMode;
-  final String longDateFormat;
-  final String shortDateFormat;
-  final String entryUnit;
-  final String foodUnit;
-  final String diarySummary;
-  final double? targetWeight;
-  final bool systemColors;
-  final bool curveLines;
-  final bool showOthers;
-  final bool showImages;
-  final bool favoriteNew;
-  final bool selectEntryOnSubmit;
-  final bool notifications;
+  final int curveLines;
+  final int autoCalc;
   final int? dailyCalories;
-  final int? dailyProtein;
-  final int? dailyFat;
   final int? dailyCarb;
+  final int? dailyFat;
+  final int? dailyProtein;
+  final int? dailyFiber;
+  final String diarySummary;
+  final String entryUnit;
+  final int favoriteNew;
+  final String foodUnit;
+  final int id;
+  final String lastGraph;
+  final String longDateFormat;
+  final String? offLogin;
+  final String? offPassword;
+  final int positiveReinforcement;
+  final int reminders;
+  final int selectEntryOnSubmit;
+  final String shortDateFormat;
+  final String? fields;
+  final int showImages;
+  final int showOthers;
+  final int systemColors;
+  final int automaticBackups;
+  final String tabs;
+  final double? targetWeight;
+  final int limit;
+  final String themeMode;
+  final String? backupPath;
+  final String? convertWeight;
+  final int scrollableTabs;
+  final int compactDiary;
+  final int compactWeights;
   const SettingsData(
-      {required this.id,
-      required this.themeMode,
-      required this.longDateFormat,
-      required this.shortDateFormat,
-      required this.entryUnit,
-      required this.foodUnit,
-      required this.diarySummary,
-      this.targetWeight,
-      required this.systemColors,
-      required this.curveLines,
-      required this.showOthers,
-      required this.showImages,
-      required this.favoriteNew,
-      required this.selectEntryOnSubmit,
-      required this.notifications,
+      {required this.curveLines,
+      required this.autoCalc,
       this.dailyCalories,
-      this.dailyProtein,
+      this.dailyCarb,
       this.dailyFat,
-      this.dailyCarb});
+      this.dailyProtein,
+      this.dailyFiber,
+      required this.diarySummary,
+      required this.entryUnit,
+      required this.favoriteNew,
+      required this.foodUnit,
+      required this.id,
+      required this.lastGraph,
+      required this.longDateFormat,
+      this.offLogin,
+      this.offPassword,
+      required this.positiveReinforcement,
+      required this.reminders,
+      required this.selectEntryOnSubmit,
+      required this.shortDateFormat,
+      this.fields,
+      required this.showImages,
+      required this.showOthers,
+      required this.systemColors,
+      required this.automaticBackups,
+      required this.tabs,
+      this.targetWeight,
+      required this.limit,
+      required this.themeMode,
+      this.backupPath,
+      this.convertWeight,
+      required this.scrollableTabs,
+      required this.compactDiary,
+      required this.compactWeights});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['theme_mode'] = Variable<String>(themeMode);
-    map['long_date_format'] = Variable<String>(longDateFormat);
-    map['short_date_format'] = Variable<String>(shortDateFormat);
-    map['entry_unit'] = Variable<String>(entryUnit);
-    map['food_unit'] = Variable<String>(foodUnit);
-    map['diary_summary'] = Variable<String>(diarySummary);
-    if (!nullToAbsent || targetWeight != null) {
-      map['target_weight'] = Variable<double>(targetWeight);
-    }
-    map['system_colors'] = Variable<bool>(systemColors);
-    map['curve_lines'] = Variable<bool>(curveLines);
-    map['show_others'] = Variable<bool>(showOthers);
-    map['show_images'] = Variable<bool>(showImages);
-    map['favorite_new'] = Variable<bool>(favoriteNew);
-    map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
-    map['notifications'] = Variable<bool>(notifications);
+    map['curve_lines'] = Variable<int>(curveLines);
+    map['auto_calc'] = Variable<int>(autoCalc);
     if (!nullToAbsent || dailyCalories != null) {
       map['daily_calories'] = Variable<int>(dailyCalories);
-    }
-    if (!nullToAbsent || dailyProtein != null) {
-      map['daily_protein'] = Variable<int>(dailyProtein);
-    }
-    if (!nullToAbsent || dailyFat != null) {
-      map['daily_fat'] = Variable<int>(dailyFat);
     }
     if (!nullToAbsent || dailyCarb != null) {
       map['daily_carb'] = Variable<int>(dailyCarb);
     }
+    if (!nullToAbsent || dailyFat != null) {
+      map['daily_fat'] = Variable<int>(dailyFat);
+    }
+    if (!nullToAbsent || dailyProtein != null) {
+      map['daily_protein'] = Variable<int>(dailyProtein);
+    }
+    if (!nullToAbsent || dailyFiber != null) {
+      map['daily_fiber'] = Variable<int>(dailyFiber);
+    }
+    map['diary_summary'] = Variable<String>(diarySummary);
+    map['entry_unit'] = Variable<String>(entryUnit);
+    map['favorite_new'] = Variable<int>(favoriteNew);
+    map['food_unit'] = Variable<String>(foodUnit);
+    map['id'] = Variable<int>(id);
+    map['last_graph'] = Variable<String>(lastGraph);
+    map['long_date_format'] = Variable<String>(longDateFormat);
+    if (!nullToAbsent || offLogin != null) {
+      map['off_login'] = Variable<String>(offLogin);
+    }
+    if (!nullToAbsent || offPassword != null) {
+      map['off_password'] = Variable<String>(offPassword);
+    }
+    map['positive_reinforcement'] = Variable<int>(positiveReinforcement);
+    map['reminders'] = Variable<int>(reminders);
+    map['select_entry_on_submit'] = Variable<int>(selectEntryOnSubmit);
+    map['short_date_format'] = Variable<String>(shortDateFormat);
+    if (!nullToAbsent || fields != null) {
+      map['fields'] = Variable<String>(fields);
+    }
+    map['show_images'] = Variable<int>(showImages);
+    map['show_others'] = Variable<int>(showOthers);
+    map['system_colors'] = Variable<int>(systemColors);
+    map['automatic_backups'] = Variable<int>(automaticBackups);
+    map['tabs'] = Variable<String>(tabs);
+    if (!nullToAbsent || targetWeight != null) {
+      map['target_weight'] = Variable<double>(targetWeight);
+    }
+    map['limit'] = Variable<int>(limit);
+    map['theme_mode'] = Variable<String>(themeMode);
+    if (!nullToAbsent || backupPath != null) {
+      map['backup_path'] = Variable<String>(backupPath);
+    }
+    if (!nullToAbsent || convertWeight != null) {
+      map['convert_weight'] = Variable<String>(convertWeight);
+    }
+    map['scrollable_tabs'] = Variable<int>(scrollableTabs);
+    map['compact_diary'] = Variable<int>(compactDiary);
+    map['compact_weights'] = Variable<int>(compactWeights);
     return map;
   }
 
   SettingsCompanion toCompanion(bool nullToAbsent) {
     return SettingsCompanion(
-      id: Value(id),
-      themeMode: Value(themeMode),
-      longDateFormat: Value(longDateFormat),
-      shortDateFormat: Value(shortDateFormat),
-      entryUnit: Value(entryUnit),
-      foodUnit: Value(foodUnit),
-      diarySummary: Value(diarySummary),
-      targetWeight: targetWeight == null && nullToAbsent
-          ? const Value.absent()
-          : Value(targetWeight),
-      systemColors: Value(systemColors),
       curveLines: Value(curveLines),
-      showOthers: Value(showOthers),
-      showImages: Value(showImages),
-      favoriteNew: Value(favoriteNew),
-      selectEntryOnSubmit: Value(selectEntryOnSubmit),
-      notifications: Value(notifications),
+      autoCalc: Value(autoCalc),
       dailyCalories: dailyCalories == null && nullToAbsent
           ? const Value.absent()
           : Value(dailyCalories),
-      dailyProtein: dailyProtein == null && nullToAbsent
-          ? const Value.absent()
-          : Value(dailyProtein),
-      dailyFat: dailyFat == null && nullToAbsent
-          ? const Value.absent()
-          : Value(dailyFat),
       dailyCarb: dailyCarb == null && nullToAbsent
           ? const Value.absent()
           : Value(dailyCarb),
+      dailyFat: dailyFat == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyFat),
+      dailyProtein: dailyProtein == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyProtein),
+      dailyFiber: dailyFiber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyFiber),
+      diarySummary: Value(diarySummary),
+      entryUnit: Value(entryUnit),
+      favoriteNew: Value(favoriteNew),
+      foodUnit: Value(foodUnit),
+      id: Value(id),
+      lastGraph: Value(lastGraph),
+      longDateFormat: Value(longDateFormat),
+      offLogin: offLogin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(offLogin),
+      offPassword: offPassword == null && nullToAbsent
+          ? const Value.absent()
+          : Value(offPassword),
+      positiveReinforcement: Value(positiveReinforcement),
+      reminders: Value(reminders),
+      selectEntryOnSubmit: Value(selectEntryOnSubmit),
+      shortDateFormat: Value(shortDateFormat),
+      fields:
+          fields == null && nullToAbsent ? const Value.absent() : Value(fields),
+      showImages: Value(showImages),
+      showOthers: Value(showOthers),
+      systemColors: Value(systemColors),
+      automaticBackups: Value(automaticBackups),
+      tabs: Value(tabs),
+      targetWeight: targetWeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetWeight),
+      limit: Value(limit),
+      themeMode: Value(themeMode),
+      backupPath: backupPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(backupPath),
+      convertWeight: convertWeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(convertWeight),
+      scrollableTabs: Value(scrollableTabs),
+      compactDiary: Value(compactDiary),
+      compactWeights: Value(compactWeights),
     );
   }
 
@@ -5430,26 +5873,1028 @@ class SettingsData extends DataClass implements Insertable<SettingsData> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return SettingsData(
-      id: serializer.fromJson<int>(json['id']),
-      themeMode: serializer.fromJson<String>(json['themeMode']),
-      longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
-      shortDateFormat: serializer.fromJson<String>(json['shortDateFormat']),
-      entryUnit: serializer.fromJson<String>(json['entryUnit']),
-      foodUnit: serializer.fromJson<String>(json['foodUnit']),
-      diarySummary: serializer.fromJson<String>(json['diarySummary']),
-      targetWeight: serializer.fromJson<double?>(json['targetWeight']),
-      systemColors: serializer.fromJson<bool>(json['systemColors']),
-      curveLines: serializer.fromJson<bool>(json['curveLines']),
-      showOthers: serializer.fromJson<bool>(json['showOthers']),
-      showImages: serializer.fromJson<bool>(json['showImages']),
-      favoriteNew: serializer.fromJson<bool>(json['favoriteNew']),
-      selectEntryOnSubmit:
-          serializer.fromJson<bool>(json['selectEntryOnSubmit']),
-      notifications: serializer.fromJson<bool>(json['notifications']),
+      curveLines: serializer.fromJson<int>(json['curveLines']),
+      autoCalc: serializer.fromJson<int>(json['autoCalc']),
       dailyCalories: serializer.fromJson<int?>(json['dailyCalories']),
-      dailyProtein: serializer.fromJson<int?>(json['dailyProtein']),
-      dailyFat: serializer.fromJson<int?>(json['dailyFat']),
       dailyCarb: serializer.fromJson<int?>(json['dailyCarb']),
+      dailyFat: serializer.fromJson<int?>(json['dailyFat']),
+      dailyProtein: serializer.fromJson<int?>(json['dailyProtein']),
+      dailyFiber: serializer.fromJson<int?>(json['dailyFiber']),
+      diarySummary: serializer.fromJson<String>(json['diarySummary']),
+      entryUnit: serializer.fromJson<String>(json['entryUnit']),
+      favoriteNew: serializer.fromJson<int>(json['favoriteNew']),
+      foodUnit: serializer.fromJson<String>(json['foodUnit']),
+      id: serializer.fromJson<int>(json['id']),
+      lastGraph: serializer.fromJson<String>(json['lastGraph']),
+      longDateFormat: serializer.fromJson<String>(json['longDateFormat']),
+      offLogin: serializer.fromJson<String?>(json['offLogin']),
+      offPassword: serializer.fromJson<String?>(json['offPassword']),
+      positiveReinforcement:
+          serializer.fromJson<int>(json['positiveReinforcement']),
+      reminders: serializer.fromJson<int>(json['reminders']),
+      selectEntryOnSubmit:
+          serializer.fromJson<int>(json['selectEntryOnSubmit']),
+      shortDateFormat: serializer.fromJson<String>(json['shortDateFormat']),
+      fields: serializer.fromJson<String?>(json['fields']),
+      showImages: serializer.fromJson<int>(json['showImages']),
+      showOthers: serializer.fromJson<int>(json['showOthers']),
+      systemColors: serializer.fromJson<int>(json['systemColors']),
+      automaticBackups: serializer.fromJson<int>(json['automaticBackups']),
+      tabs: serializer.fromJson<String>(json['tabs']),
+      targetWeight: serializer.fromJson<double?>(json['targetWeight']),
+      limit: serializer.fromJson<int>(json['limit']),
+      themeMode: serializer.fromJson<String>(json['themeMode']),
+      backupPath: serializer.fromJson<String?>(json['backupPath']),
+      convertWeight: serializer.fromJson<String?>(json['convertWeight']),
+      scrollableTabs: serializer.fromJson<int>(json['scrollableTabs']),
+      compactDiary: serializer.fromJson<int>(json['compactDiary']),
+      compactWeights: serializer.fromJson<int>(json['compactWeights']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'curveLines': serializer.toJson<int>(curveLines),
+      'autoCalc': serializer.toJson<int>(autoCalc),
+      'dailyCalories': serializer.toJson<int?>(dailyCalories),
+      'dailyCarb': serializer.toJson<int?>(dailyCarb),
+      'dailyFat': serializer.toJson<int?>(dailyFat),
+      'dailyProtein': serializer.toJson<int?>(dailyProtein),
+      'dailyFiber': serializer.toJson<int?>(dailyFiber),
+      'diarySummary': serializer.toJson<String>(diarySummary),
+      'entryUnit': serializer.toJson<String>(entryUnit),
+      'favoriteNew': serializer.toJson<int>(favoriteNew),
+      'foodUnit': serializer.toJson<String>(foodUnit),
+      'id': serializer.toJson<int>(id),
+      'lastGraph': serializer.toJson<String>(lastGraph),
+      'longDateFormat': serializer.toJson<String>(longDateFormat),
+      'offLogin': serializer.toJson<String?>(offLogin),
+      'offPassword': serializer.toJson<String?>(offPassword),
+      'positiveReinforcement': serializer.toJson<int>(positiveReinforcement),
+      'reminders': serializer.toJson<int>(reminders),
+      'selectEntryOnSubmit': serializer.toJson<int>(selectEntryOnSubmit),
+      'shortDateFormat': serializer.toJson<String>(shortDateFormat),
+      'fields': serializer.toJson<String?>(fields),
+      'showImages': serializer.toJson<int>(showImages),
+      'showOthers': serializer.toJson<int>(showOthers),
+      'systemColors': serializer.toJson<int>(systemColors),
+      'automaticBackups': serializer.toJson<int>(automaticBackups),
+      'tabs': serializer.toJson<String>(tabs),
+      'targetWeight': serializer.toJson<double?>(targetWeight),
+      'limit': serializer.toJson<int>(limit),
+      'themeMode': serializer.toJson<String>(themeMode),
+      'backupPath': serializer.toJson<String?>(backupPath),
+      'convertWeight': serializer.toJson<String?>(convertWeight),
+      'scrollableTabs': serializer.toJson<int>(scrollableTabs),
+      'compactDiary': serializer.toJson<int>(compactDiary),
+      'compactWeights': serializer.toJson<int>(compactWeights),
+    };
+  }
+
+  SettingsData copyWith(
+          {int? curveLines,
+          int? autoCalc,
+          Value<int?> dailyCalories = const Value.absent(),
+          Value<int?> dailyCarb = const Value.absent(),
+          Value<int?> dailyFat = const Value.absent(),
+          Value<int?> dailyProtein = const Value.absent(),
+          Value<int?> dailyFiber = const Value.absent(),
+          String? diarySummary,
+          String? entryUnit,
+          int? favoriteNew,
+          String? foodUnit,
+          int? id,
+          String? lastGraph,
+          String? longDateFormat,
+          Value<String?> offLogin = const Value.absent(),
+          Value<String?> offPassword = const Value.absent(),
+          int? positiveReinforcement,
+          int? reminders,
+          int? selectEntryOnSubmit,
+          String? shortDateFormat,
+          Value<String?> fields = const Value.absent(),
+          int? showImages,
+          int? showOthers,
+          int? systemColors,
+          int? automaticBackups,
+          String? tabs,
+          Value<double?> targetWeight = const Value.absent(),
+          int? limit,
+          String? themeMode,
+          Value<String?> backupPath = const Value.absent(),
+          Value<String?> convertWeight = const Value.absent(),
+          int? scrollableTabs,
+          int? compactDiary,
+          int? compactWeights}) =>
+      SettingsData(
+        curveLines: curveLines ?? this.curveLines,
+        autoCalc: autoCalc ?? this.autoCalc,
+        dailyCalories:
+            dailyCalories.present ? dailyCalories.value : this.dailyCalories,
+        dailyCarb: dailyCarb.present ? dailyCarb.value : this.dailyCarb,
+        dailyFat: dailyFat.present ? dailyFat.value : this.dailyFat,
+        dailyProtein:
+            dailyProtein.present ? dailyProtein.value : this.dailyProtein,
+        dailyFiber: dailyFiber.present ? dailyFiber.value : this.dailyFiber,
+        diarySummary: diarySummary ?? this.diarySummary,
+        entryUnit: entryUnit ?? this.entryUnit,
+        favoriteNew: favoriteNew ?? this.favoriteNew,
+        foodUnit: foodUnit ?? this.foodUnit,
+        id: id ?? this.id,
+        lastGraph: lastGraph ?? this.lastGraph,
+        longDateFormat: longDateFormat ?? this.longDateFormat,
+        offLogin: offLogin.present ? offLogin.value : this.offLogin,
+        offPassword: offPassword.present ? offPassword.value : this.offPassword,
+        positiveReinforcement:
+            positiveReinforcement ?? this.positiveReinforcement,
+        reminders: reminders ?? this.reminders,
+        selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
+        shortDateFormat: shortDateFormat ?? this.shortDateFormat,
+        fields: fields.present ? fields.value : this.fields,
+        showImages: showImages ?? this.showImages,
+        showOthers: showOthers ?? this.showOthers,
+        systemColors: systemColors ?? this.systemColors,
+        automaticBackups: automaticBackups ?? this.automaticBackups,
+        tabs: tabs ?? this.tabs,
+        targetWeight:
+            targetWeight.present ? targetWeight.value : this.targetWeight,
+        limit: limit ?? this.limit,
+        themeMode: themeMode ?? this.themeMode,
+        backupPath: backupPath.present ? backupPath.value : this.backupPath,
+        convertWeight:
+            convertWeight.present ? convertWeight.value : this.convertWeight,
+        scrollableTabs: scrollableTabs ?? this.scrollableTabs,
+        compactDiary: compactDiary ?? this.compactDiary,
+        compactWeights: compactWeights ?? this.compactWeights,
+      );
+  SettingsData copyWithCompanion(SettingsCompanion data) {
+    return SettingsData(
+      curveLines:
+          data.curveLines.present ? data.curveLines.value : this.curveLines,
+      autoCalc: data.autoCalc.present ? data.autoCalc.value : this.autoCalc,
+      dailyCalories: data.dailyCalories.present
+          ? data.dailyCalories.value
+          : this.dailyCalories,
+      dailyCarb: data.dailyCarb.present ? data.dailyCarb.value : this.dailyCarb,
+      dailyFat: data.dailyFat.present ? data.dailyFat.value : this.dailyFat,
+      dailyProtein: data.dailyProtein.present
+          ? data.dailyProtein.value
+          : this.dailyProtein,
+      dailyFiber:
+          data.dailyFiber.present ? data.dailyFiber.value : this.dailyFiber,
+      diarySummary: data.diarySummary.present
+          ? data.diarySummary.value
+          : this.diarySummary,
+      entryUnit: data.entryUnit.present ? data.entryUnit.value : this.entryUnit,
+      favoriteNew:
+          data.favoriteNew.present ? data.favoriteNew.value : this.favoriteNew,
+      foodUnit: data.foodUnit.present ? data.foodUnit.value : this.foodUnit,
+      id: data.id.present ? data.id.value : this.id,
+      lastGraph: data.lastGraph.present ? data.lastGraph.value : this.lastGraph,
+      longDateFormat: data.longDateFormat.present
+          ? data.longDateFormat.value
+          : this.longDateFormat,
+      offLogin: data.offLogin.present ? data.offLogin.value : this.offLogin,
+      offPassword:
+          data.offPassword.present ? data.offPassword.value : this.offPassword,
+      positiveReinforcement: data.positiveReinforcement.present
+          ? data.positiveReinforcement.value
+          : this.positiveReinforcement,
+      reminders: data.reminders.present ? data.reminders.value : this.reminders,
+      selectEntryOnSubmit: data.selectEntryOnSubmit.present
+          ? data.selectEntryOnSubmit.value
+          : this.selectEntryOnSubmit,
+      shortDateFormat: data.shortDateFormat.present
+          ? data.shortDateFormat.value
+          : this.shortDateFormat,
+      fields: data.fields.present ? data.fields.value : this.fields,
+      showImages:
+          data.showImages.present ? data.showImages.value : this.showImages,
+      showOthers:
+          data.showOthers.present ? data.showOthers.value : this.showOthers,
+      systemColors: data.systemColors.present
+          ? data.systemColors.value
+          : this.systemColors,
+      automaticBackups: data.automaticBackups.present
+          ? data.automaticBackups.value
+          : this.automaticBackups,
+      tabs: data.tabs.present ? data.tabs.value : this.tabs,
+      targetWeight: data.targetWeight.present
+          ? data.targetWeight.value
+          : this.targetWeight,
+      limit: data.limit.present ? data.limit.value : this.limit,
+      themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
+      backupPath:
+          data.backupPath.present ? data.backupPath.value : this.backupPath,
+      convertWeight: data.convertWeight.present
+          ? data.convertWeight.value
+          : this.convertWeight,
+      scrollableTabs: data.scrollableTabs.present
+          ? data.scrollableTabs.value
+          : this.scrollableTabs,
+      compactDiary: data.compactDiary.present
+          ? data.compactDiary.value
+          : this.compactDiary,
+      compactWeights: data.compactWeights.present
+          ? data.compactWeights.value
+          : this.compactWeights,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsData(')
+          ..write('curveLines: $curveLines, ')
+          ..write('autoCalc: $autoCalc, ')
+          ..write('dailyCalories: $dailyCalories, ')
+          ..write('dailyCarb: $dailyCarb, ')
+          ..write('dailyFat: $dailyFat, ')
+          ..write('dailyProtein: $dailyProtein, ')
+          ..write('dailyFiber: $dailyFiber, ')
+          ..write('diarySummary: $diarySummary, ')
+          ..write('entryUnit: $entryUnit, ')
+          ..write('favoriteNew: $favoriteNew, ')
+          ..write('foodUnit: $foodUnit, ')
+          ..write('id: $id, ')
+          ..write('lastGraph: $lastGraph, ')
+          ..write('longDateFormat: $longDateFormat, ')
+          ..write('offLogin: $offLogin, ')
+          ..write('offPassword: $offPassword, ')
+          ..write('positiveReinforcement: $positiveReinforcement, ')
+          ..write('reminders: $reminders, ')
+          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
+          ..write('shortDateFormat: $shortDateFormat, ')
+          ..write('fields: $fields, ')
+          ..write('showImages: $showImages, ')
+          ..write('showOthers: $showOthers, ')
+          ..write('systemColors: $systemColors, ')
+          ..write('automaticBackups: $automaticBackups, ')
+          ..write('tabs: $tabs, ')
+          ..write('targetWeight: $targetWeight, ')
+          ..write('limit: $limit, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('backupPath: $backupPath, ')
+          ..write('convertWeight: $convertWeight, ')
+          ..write('scrollableTabs: $scrollableTabs, ')
+          ..write('compactDiary: $compactDiary, ')
+          ..write('compactWeights: $compactWeights')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        curveLines,
+        autoCalc,
+        dailyCalories,
+        dailyCarb,
+        dailyFat,
+        dailyProtein,
+        dailyFiber,
+        diarySummary,
+        entryUnit,
+        favoriteNew,
+        foodUnit,
+        id,
+        lastGraph,
+        longDateFormat,
+        offLogin,
+        offPassword,
+        positiveReinforcement,
+        reminders,
+        selectEntryOnSubmit,
+        shortDateFormat,
+        fields,
+        showImages,
+        showOthers,
+        systemColors,
+        automaticBackups,
+        tabs,
+        targetWeight,
+        limit,
+        themeMode,
+        backupPath,
+        convertWeight,
+        scrollableTabs,
+        compactDiary,
+        compactWeights
+      ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettingsData &&
+          other.curveLines == this.curveLines &&
+          other.autoCalc == this.autoCalc &&
+          other.dailyCalories == this.dailyCalories &&
+          other.dailyCarb == this.dailyCarb &&
+          other.dailyFat == this.dailyFat &&
+          other.dailyProtein == this.dailyProtein &&
+          other.dailyFiber == this.dailyFiber &&
+          other.diarySummary == this.diarySummary &&
+          other.entryUnit == this.entryUnit &&
+          other.favoriteNew == this.favoriteNew &&
+          other.foodUnit == this.foodUnit &&
+          other.id == this.id &&
+          other.lastGraph == this.lastGraph &&
+          other.longDateFormat == this.longDateFormat &&
+          other.offLogin == this.offLogin &&
+          other.offPassword == this.offPassword &&
+          other.positiveReinforcement == this.positiveReinforcement &&
+          other.reminders == this.reminders &&
+          other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
+          other.shortDateFormat == this.shortDateFormat &&
+          other.fields == this.fields &&
+          other.showImages == this.showImages &&
+          other.showOthers == this.showOthers &&
+          other.systemColors == this.systemColors &&
+          other.automaticBackups == this.automaticBackups &&
+          other.tabs == this.tabs &&
+          other.targetWeight == this.targetWeight &&
+          other.limit == this.limit &&
+          other.themeMode == this.themeMode &&
+          other.backupPath == this.backupPath &&
+          other.convertWeight == this.convertWeight &&
+          other.scrollableTabs == this.scrollableTabs &&
+          other.compactDiary == this.compactDiary &&
+          other.compactWeights == this.compactWeights);
+}
+
+class SettingsCompanion extends UpdateCompanion<SettingsData> {
+  final Value<int> curveLines;
+  final Value<int> autoCalc;
+  final Value<int?> dailyCalories;
+  final Value<int?> dailyCarb;
+  final Value<int?> dailyFat;
+  final Value<int?> dailyProtein;
+  final Value<int?> dailyFiber;
+  final Value<String> diarySummary;
+  final Value<String> entryUnit;
+  final Value<int> favoriteNew;
+  final Value<String> foodUnit;
+  final Value<int> id;
+  final Value<String> lastGraph;
+  final Value<String> longDateFormat;
+  final Value<String?> offLogin;
+  final Value<String?> offPassword;
+  final Value<int> positiveReinforcement;
+  final Value<int> reminders;
+  final Value<int> selectEntryOnSubmit;
+  final Value<String> shortDateFormat;
+  final Value<String?> fields;
+  final Value<int> showImages;
+  final Value<int> showOthers;
+  final Value<int> systemColors;
+  final Value<int> automaticBackups;
+  final Value<String> tabs;
+  final Value<double?> targetWeight;
+  final Value<int> limit;
+  final Value<String> themeMode;
+  final Value<String?> backupPath;
+  final Value<String?> convertWeight;
+  final Value<int> scrollableTabs;
+  final Value<int> compactDiary;
+  final Value<int> compactWeights;
+  const SettingsCompanion({
+    this.curveLines = const Value.absent(),
+    this.autoCalc = const Value.absent(),
+    this.dailyCalories = const Value.absent(),
+    this.dailyCarb = const Value.absent(),
+    this.dailyFat = const Value.absent(),
+    this.dailyProtein = const Value.absent(),
+    this.dailyFiber = const Value.absent(),
+    this.diarySummary = const Value.absent(),
+    this.entryUnit = const Value.absent(),
+    this.favoriteNew = const Value.absent(),
+    this.foodUnit = const Value.absent(),
+    this.id = const Value.absent(),
+    this.lastGraph = const Value.absent(),
+    this.longDateFormat = const Value.absent(),
+    this.offLogin = const Value.absent(),
+    this.offPassword = const Value.absent(),
+    this.positiveReinforcement = const Value.absent(),
+    this.reminders = const Value.absent(),
+    this.selectEntryOnSubmit = const Value.absent(),
+    this.shortDateFormat = const Value.absent(),
+    this.fields = const Value.absent(),
+    this.showImages = const Value.absent(),
+    this.showOthers = const Value.absent(),
+    this.systemColors = const Value.absent(),
+    this.automaticBackups = const Value.absent(),
+    this.tabs = const Value.absent(),
+    this.targetWeight = const Value.absent(),
+    this.limit = const Value.absent(),
+    this.themeMode = const Value.absent(),
+    this.backupPath = const Value.absent(),
+    this.convertWeight = const Value.absent(),
+    this.scrollableTabs = const Value.absent(),
+    this.compactDiary = const Value.absent(),
+    this.compactWeights = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    this.curveLines = const Value.absent(),
+    this.autoCalc = const Value.absent(),
+    this.dailyCalories = const Value.absent(),
+    this.dailyCarb = const Value.absent(),
+    this.dailyFat = const Value.absent(),
+    this.dailyProtein = const Value.absent(),
+    this.dailyFiber = const Value.absent(),
+    required String diarySummary,
+    required String entryUnit,
+    required int favoriteNew,
+    required String foodUnit,
+    this.id = const Value.absent(),
+    this.lastGraph = const Value.absent(),
+    required String longDateFormat,
+    this.offLogin = const Value.absent(),
+    this.offPassword = const Value.absent(),
+    this.positiveReinforcement = const Value.absent(),
+    this.reminders = const Value.absent(),
+    required int selectEntryOnSubmit,
+    required String shortDateFormat,
+    this.fields = const Value.absent(),
+    this.showImages = const Value.absent(),
+    required int showOthers,
+    required int systemColors,
+    this.automaticBackups = const Value.absent(),
+    this.tabs = const Value.absent(),
+    this.targetWeight = const Value.absent(),
+    this.limit = const Value.absent(),
+    required String themeMode,
+    this.backupPath = const Value.absent(),
+    this.convertWeight = const Value.absent(),
+    this.scrollableTabs = const Value.absent(),
+    this.compactDiary = const Value.absent(),
+    this.compactWeights = const Value.absent(),
+  })  : diarySummary = Value(diarySummary),
+        entryUnit = Value(entryUnit),
+        favoriteNew = Value(favoriteNew),
+        foodUnit = Value(foodUnit),
+        longDateFormat = Value(longDateFormat),
+        selectEntryOnSubmit = Value(selectEntryOnSubmit),
+        shortDateFormat = Value(shortDateFormat),
+        showOthers = Value(showOthers),
+        systemColors = Value(systemColors),
+        themeMode = Value(themeMode);
+  static Insertable<SettingsData> custom({
+    Expression<int>? curveLines,
+    Expression<int>? autoCalc,
+    Expression<int>? dailyCalories,
+    Expression<int>? dailyCarb,
+    Expression<int>? dailyFat,
+    Expression<int>? dailyProtein,
+    Expression<int>? dailyFiber,
+    Expression<String>? diarySummary,
+    Expression<String>? entryUnit,
+    Expression<int>? favoriteNew,
+    Expression<String>? foodUnit,
+    Expression<int>? id,
+    Expression<String>? lastGraph,
+    Expression<String>? longDateFormat,
+    Expression<String>? offLogin,
+    Expression<String>? offPassword,
+    Expression<int>? positiveReinforcement,
+    Expression<int>? reminders,
+    Expression<int>? selectEntryOnSubmit,
+    Expression<String>? shortDateFormat,
+    Expression<String>? fields,
+    Expression<int>? showImages,
+    Expression<int>? showOthers,
+    Expression<int>? systemColors,
+    Expression<int>? automaticBackups,
+    Expression<String>? tabs,
+    Expression<double>? targetWeight,
+    Expression<int>? limit,
+    Expression<String>? themeMode,
+    Expression<String>? backupPath,
+    Expression<String>? convertWeight,
+    Expression<int>? scrollableTabs,
+    Expression<int>? compactDiary,
+    Expression<int>? compactWeights,
+  }) {
+    return RawValuesInsertable({
+      if (curveLines != null) 'curve_lines': curveLines,
+      if (autoCalc != null) 'auto_calc': autoCalc,
+      if (dailyCalories != null) 'daily_calories': dailyCalories,
+      if (dailyCarb != null) 'daily_carb': dailyCarb,
+      if (dailyFat != null) 'daily_fat': dailyFat,
+      if (dailyProtein != null) 'daily_protein': dailyProtein,
+      if (dailyFiber != null) 'daily_fiber': dailyFiber,
+      if (diarySummary != null) 'diary_summary': diarySummary,
+      if (entryUnit != null) 'entry_unit': entryUnit,
+      if (favoriteNew != null) 'favorite_new': favoriteNew,
+      if (foodUnit != null) 'food_unit': foodUnit,
+      if (id != null) 'id': id,
+      if (lastGraph != null) 'last_graph': lastGraph,
+      if (longDateFormat != null) 'long_date_format': longDateFormat,
+      if (offLogin != null) 'off_login': offLogin,
+      if (offPassword != null) 'off_password': offPassword,
+      if (positiveReinforcement != null)
+        'positive_reinforcement': positiveReinforcement,
+      if (reminders != null) 'reminders': reminders,
+      if (selectEntryOnSubmit != null)
+        'select_entry_on_submit': selectEntryOnSubmit,
+      if (shortDateFormat != null) 'short_date_format': shortDateFormat,
+      if (fields != null) 'fields': fields,
+      if (showImages != null) 'show_images': showImages,
+      if (showOthers != null) 'show_others': showOthers,
+      if (systemColors != null) 'system_colors': systemColors,
+      if (automaticBackups != null) 'automatic_backups': automaticBackups,
+      if (tabs != null) 'tabs': tabs,
+      if (targetWeight != null) 'target_weight': targetWeight,
+      if (limit != null) 'limit': limit,
+      if (themeMode != null) 'theme_mode': themeMode,
+      if (backupPath != null) 'backup_path': backupPath,
+      if (convertWeight != null) 'convert_weight': convertWeight,
+      if (scrollableTabs != null) 'scrollable_tabs': scrollableTabs,
+      if (compactDiary != null) 'compact_diary': compactDiary,
+      if (compactWeights != null) 'compact_weights': compactWeights,
+    });
+  }
+
+  SettingsCompanion copyWith(
+      {Value<int>? curveLines,
+      Value<int>? autoCalc,
+      Value<int?>? dailyCalories,
+      Value<int?>? dailyCarb,
+      Value<int?>? dailyFat,
+      Value<int?>? dailyProtein,
+      Value<int?>? dailyFiber,
+      Value<String>? diarySummary,
+      Value<String>? entryUnit,
+      Value<int>? favoriteNew,
+      Value<String>? foodUnit,
+      Value<int>? id,
+      Value<String>? lastGraph,
+      Value<String>? longDateFormat,
+      Value<String?>? offLogin,
+      Value<String?>? offPassword,
+      Value<int>? positiveReinforcement,
+      Value<int>? reminders,
+      Value<int>? selectEntryOnSubmit,
+      Value<String>? shortDateFormat,
+      Value<String?>? fields,
+      Value<int>? showImages,
+      Value<int>? showOthers,
+      Value<int>? systemColors,
+      Value<int>? automaticBackups,
+      Value<String>? tabs,
+      Value<double?>? targetWeight,
+      Value<int>? limit,
+      Value<String>? themeMode,
+      Value<String?>? backupPath,
+      Value<String?>? convertWeight,
+      Value<int>? scrollableTabs,
+      Value<int>? compactDiary,
+      Value<int>? compactWeights}) {
+    return SettingsCompanion(
+      curveLines: curveLines ?? this.curveLines,
+      autoCalc: autoCalc ?? this.autoCalc,
+      dailyCalories: dailyCalories ?? this.dailyCalories,
+      dailyCarb: dailyCarb ?? this.dailyCarb,
+      dailyFat: dailyFat ?? this.dailyFat,
+      dailyProtein: dailyProtein ?? this.dailyProtein,
+      dailyFiber: dailyFiber ?? this.dailyFiber,
+      diarySummary: diarySummary ?? this.diarySummary,
+      entryUnit: entryUnit ?? this.entryUnit,
+      favoriteNew: favoriteNew ?? this.favoriteNew,
+      foodUnit: foodUnit ?? this.foodUnit,
+      id: id ?? this.id,
+      lastGraph: lastGraph ?? this.lastGraph,
+      longDateFormat: longDateFormat ?? this.longDateFormat,
+      offLogin: offLogin ?? this.offLogin,
+      offPassword: offPassword ?? this.offPassword,
+      positiveReinforcement:
+          positiveReinforcement ?? this.positiveReinforcement,
+      reminders: reminders ?? this.reminders,
+      selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
+      shortDateFormat: shortDateFormat ?? this.shortDateFormat,
+      fields: fields ?? this.fields,
+      showImages: showImages ?? this.showImages,
+      showOthers: showOthers ?? this.showOthers,
+      systemColors: systemColors ?? this.systemColors,
+      automaticBackups: automaticBackups ?? this.automaticBackups,
+      tabs: tabs ?? this.tabs,
+      targetWeight: targetWeight ?? this.targetWeight,
+      limit: limit ?? this.limit,
+      themeMode: themeMode ?? this.themeMode,
+      backupPath: backupPath ?? this.backupPath,
+      convertWeight: convertWeight ?? this.convertWeight,
+      scrollableTabs: scrollableTabs ?? this.scrollableTabs,
+      compactDiary: compactDiary ?? this.compactDiary,
+      compactWeights: compactWeights ?? this.compactWeights,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (curveLines.present) {
+      map['curve_lines'] = Variable<int>(curveLines.value);
+    }
+    if (autoCalc.present) {
+      map['auto_calc'] = Variable<int>(autoCalc.value);
+    }
+    if (dailyCalories.present) {
+      map['daily_calories'] = Variable<int>(dailyCalories.value);
+    }
+    if (dailyCarb.present) {
+      map['daily_carb'] = Variable<int>(dailyCarb.value);
+    }
+    if (dailyFat.present) {
+      map['daily_fat'] = Variable<int>(dailyFat.value);
+    }
+    if (dailyProtein.present) {
+      map['daily_protein'] = Variable<int>(dailyProtein.value);
+    }
+    if (dailyFiber.present) {
+      map['daily_fiber'] = Variable<int>(dailyFiber.value);
+    }
+    if (diarySummary.present) {
+      map['diary_summary'] = Variable<String>(diarySummary.value);
+    }
+    if (entryUnit.present) {
+      map['entry_unit'] = Variable<String>(entryUnit.value);
+    }
+    if (favoriteNew.present) {
+      map['favorite_new'] = Variable<int>(favoriteNew.value);
+    }
+    if (foodUnit.present) {
+      map['food_unit'] = Variable<String>(foodUnit.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (lastGraph.present) {
+      map['last_graph'] = Variable<String>(lastGraph.value);
+    }
+    if (longDateFormat.present) {
+      map['long_date_format'] = Variable<String>(longDateFormat.value);
+    }
+    if (offLogin.present) {
+      map['off_login'] = Variable<String>(offLogin.value);
+    }
+    if (offPassword.present) {
+      map['off_password'] = Variable<String>(offPassword.value);
+    }
+    if (positiveReinforcement.present) {
+      map['positive_reinforcement'] =
+          Variable<int>(positiveReinforcement.value);
+    }
+    if (reminders.present) {
+      map['reminders'] = Variable<int>(reminders.value);
+    }
+    if (selectEntryOnSubmit.present) {
+      map['select_entry_on_submit'] = Variable<int>(selectEntryOnSubmit.value);
+    }
+    if (shortDateFormat.present) {
+      map['short_date_format'] = Variable<String>(shortDateFormat.value);
+    }
+    if (fields.present) {
+      map['fields'] = Variable<String>(fields.value);
+    }
+    if (showImages.present) {
+      map['show_images'] = Variable<int>(showImages.value);
+    }
+    if (showOthers.present) {
+      map['show_others'] = Variable<int>(showOthers.value);
+    }
+    if (systemColors.present) {
+      map['system_colors'] = Variable<int>(systemColors.value);
+    }
+    if (automaticBackups.present) {
+      map['automatic_backups'] = Variable<int>(automaticBackups.value);
+    }
+    if (tabs.present) {
+      map['tabs'] = Variable<String>(tabs.value);
+    }
+    if (targetWeight.present) {
+      map['target_weight'] = Variable<double>(targetWeight.value);
+    }
+    if (limit.present) {
+      map['limit'] = Variable<int>(limit.value);
+    }
+    if (themeMode.present) {
+      map['theme_mode'] = Variable<String>(themeMode.value);
+    }
+    if (backupPath.present) {
+      map['backup_path'] = Variable<String>(backupPath.value);
+    }
+    if (convertWeight.present) {
+      map['convert_weight'] = Variable<String>(convertWeight.value);
+    }
+    if (scrollableTabs.present) {
+      map['scrollable_tabs'] = Variable<int>(scrollableTabs.value);
+    }
+    if (compactDiary.present) {
+      map['compact_diary'] = Variable<int>(compactDiary.value);
+    }
+    if (compactWeights.present) {
+      map['compact_weights'] = Variable<int>(compactWeights.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('curveLines: $curveLines, ')
+          ..write('autoCalc: $autoCalc, ')
+          ..write('dailyCalories: $dailyCalories, ')
+          ..write('dailyCarb: $dailyCarb, ')
+          ..write('dailyFat: $dailyFat, ')
+          ..write('dailyProtein: $dailyProtein, ')
+          ..write('dailyFiber: $dailyFiber, ')
+          ..write('diarySummary: $diarySummary, ')
+          ..write('entryUnit: $entryUnit, ')
+          ..write('favoriteNew: $favoriteNew, ')
+          ..write('foodUnit: $foodUnit, ')
+          ..write('id: $id, ')
+          ..write('lastGraph: $lastGraph, ')
+          ..write('longDateFormat: $longDateFormat, ')
+          ..write('offLogin: $offLogin, ')
+          ..write('offPassword: $offPassword, ')
+          ..write('positiveReinforcement: $positiveReinforcement, ')
+          ..write('reminders: $reminders, ')
+          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
+          ..write('shortDateFormat: $shortDateFormat, ')
+          ..write('fields: $fields, ')
+          ..write('showImages: $showImages, ')
+          ..write('showOthers: $showOthers, ')
+          ..write('systemColors: $systemColors, ')
+          ..write('automaticBackups: $automaticBackups, ')
+          ..write('tabs: $tabs, ')
+          ..write('targetWeight: $targetWeight, ')
+          ..write('limit: $limit, ')
+          ..write('themeMode: $themeMode, ')
+          ..write('backupPath: $backupPath, ')
+          ..write('convertWeight: $convertWeight, ')
+          ..write('scrollableTabs: $scrollableTabs, ')
+          ..write('compactDiary: $compactDiary, ')
+          ..write('compactWeights: $compactWeights')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Metadata extends Table with TableInfo<Metadata, MetadataData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Metadata(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<int> buildNumber = GeneratedColumn<int>(
+      'build_number', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [buildNumber];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'metadata';
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  MetadataData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MetadataData(
+      buildNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}build_number'])!,
+    );
+  }
+
+  @override
+  Metadata createAlias(String alias) {
+    return Metadata(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class MetadataData extends DataClass implements Insertable<MetadataData> {
+  final int buildNumber;
+  const MetadataData({required this.buildNumber});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['build_number'] = Variable<int>(buildNumber);
+    return map;
+  }
+
+  MetadataCompanion toCompanion(bool nullToAbsent) {
+    return MetadataCompanion(
+      buildNumber: Value(buildNumber),
+    );
+  }
+
+  factory MetadataData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MetadataData(
+      buildNumber: serializer.fromJson<int>(json['buildNumber']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'buildNumber': serializer.toJson<int>(buildNumber),
+    };
+  }
+
+  MetadataData copyWith({int? buildNumber}) => MetadataData(
+        buildNumber: buildNumber ?? this.buildNumber,
+      );
+  MetadataData copyWithCompanion(MetadataCompanion data) {
+    return MetadataData(
+      buildNumber:
+          data.buildNumber.present ? data.buildNumber.value : this.buildNumber,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataData(')
+          ..write('buildNumber: $buildNumber')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => buildNumber.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MetadataData && other.buildNumber == this.buildNumber);
+}
+
+class MetadataCompanion extends UpdateCompanion<MetadataData> {
+  final Value<int> buildNumber;
+  final Value<int> rowid;
+  const MetadataCompanion({
+    this.buildNumber = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MetadataCompanion.insert({
+    required int buildNumber,
+    this.rowid = const Value.absent(),
+  }) : buildNumber = Value(buildNumber);
+  static Insertable<MetadataData> custom({
+    Expression<int>? buildNumber,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (buildNumber != null) 'build_number': buildNumber,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MetadataCompanion copyWith({Value<int>? buildNumber, Value<int>? rowid}) {
+    return MetadataCompanion(
+      buildNumber: buildNumber ?? this.buildNumber,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (buildNumber.present) {
+      map['build_number'] = Variable<int>(buildNumber.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetadataCompanion(')
+          ..write('buildNumber: $buildNumber, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Meals extends Table with TableInfo<Meals, MealsData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Meals(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<int> created = GeneratedColumn<int>(
+      'created', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<int> favorite = GeneratedColumn<int>(
+      'favorite', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT 0 CHECK (favorite IN (0, 1))',
+      defaultValue: const CustomExpression('0'));
+  late final GeneratedColumn<String> imageFile = GeneratedColumn<String>(
+      'image_file', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NULL');
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, created, favorite, imageFile];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'meals';
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MealsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MealsData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      created: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}created'])!,
+      favorite: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}favorite'])!,
+      imageFile: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}image_file']),
+    );
+  }
+
+  @override
+  Meals createAlias(String alias) {
+    return Meals(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class MealsData extends DataClass implements Insertable<MealsData> {
+  final int id;
+  final String name;
+  final int created;
+  final int favorite;
+  final String? imageFile;
+  const MealsData(
+      {required this.id,
+      required this.name,
+      required this.created,
+      required this.favorite,
+      this.imageFile});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['created'] = Variable<int>(created);
+    map['favorite'] = Variable<int>(favorite);
+    if (!nullToAbsent || imageFile != null) {
+      map['image_file'] = Variable<String>(imageFile);
+    }
+    return map;
+  }
+
+  MealsCompanion toCompanion(bool nullToAbsent) {
+    return MealsCompanion(
+      id: Value(id),
+      name: Value(name),
+      created: Value(created),
+      favorite: Value(favorite),
+      imageFile: imageFile == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageFile),
+    );
+  }
+
+  factory MealsData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MealsData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      created: serializer.fromJson<int>(json['created']),
+      favorite: serializer.fromJson<int>(json['favorite']),
+      imageFile: serializer.fromJson<String?>(json['imageFile']),
     );
   }
   @override
@@ -5457,347 +6902,110 @@ class SettingsData extends DataClass implements Insertable<SettingsData> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'themeMode': serializer.toJson<String>(themeMode),
-      'longDateFormat': serializer.toJson<String>(longDateFormat),
-      'shortDateFormat': serializer.toJson<String>(shortDateFormat),
-      'entryUnit': serializer.toJson<String>(entryUnit),
-      'foodUnit': serializer.toJson<String>(foodUnit),
-      'diarySummary': serializer.toJson<String>(diarySummary),
-      'targetWeight': serializer.toJson<double?>(targetWeight),
-      'systemColors': serializer.toJson<bool>(systemColors),
-      'curveLines': serializer.toJson<bool>(curveLines),
-      'showOthers': serializer.toJson<bool>(showOthers),
-      'showImages': serializer.toJson<bool>(showImages),
-      'favoriteNew': serializer.toJson<bool>(favoriteNew),
-      'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
-      'notifications': serializer.toJson<bool>(notifications),
-      'dailyCalories': serializer.toJson<int?>(dailyCalories),
-      'dailyProtein': serializer.toJson<int?>(dailyProtein),
-      'dailyFat': serializer.toJson<int?>(dailyFat),
-      'dailyCarb': serializer.toJson<int?>(dailyCarb),
+      'name': serializer.toJson<String>(name),
+      'created': serializer.toJson<int>(created),
+      'favorite': serializer.toJson<int>(favorite),
+      'imageFile': serializer.toJson<String?>(imageFile),
     };
   }
 
-  SettingsData copyWith(
+  MealsData copyWith(
           {int? id,
-          String? themeMode,
-          String? longDateFormat,
-          String? shortDateFormat,
-          String? entryUnit,
-          String? foodUnit,
-          String? diarySummary,
-          Value<double?> targetWeight = const Value.absent(),
-          bool? systemColors,
-          bool? curveLines,
-          bool? showOthers,
-          bool? showImages,
-          bool? favoriteNew,
-          bool? selectEntryOnSubmit,
-          bool? notifications,
-          Value<int?> dailyCalories = const Value.absent(),
-          Value<int?> dailyProtein = const Value.absent(),
-          Value<int?> dailyFat = const Value.absent(),
-          Value<int?> dailyCarb = const Value.absent()}) =>
-      SettingsData(
+          String? name,
+          int? created,
+          int? favorite,
+          Value<String?> imageFile = const Value.absent()}) =>
+      MealsData(
         id: id ?? this.id,
-        themeMode: themeMode ?? this.themeMode,
-        longDateFormat: longDateFormat ?? this.longDateFormat,
-        shortDateFormat: shortDateFormat ?? this.shortDateFormat,
-        entryUnit: entryUnit ?? this.entryUnit,
-        foodUnit: foodUnit ?? this.foodUnit,
-        diarySummary: diarySummary ?? this.diarySummary,
-        targetWeight:
-            targetWeight.present ? targetWeight.value : this.targetWeight,
-        systemColors: systemColors ?? this.systemColors,
-        curveLines: curveLines ?? this.curveLines,
-        showOthers: showOthers ?? this.showOthers,
-        showImages: showImages ?? this.showImages,
-        favoriteNew: favoriteNew ?? this.favoriteNew,
-        selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
-        notifications: notifications ?? this.notifications,
-        dailyCalories:
-            dailyCalories.present ? dailyCalories.value : this.dailyCalories,
-        dailyProtein:
-            dailyProtein.present ? dailyProtein.value : this.dailyProtein,
-        dailyFat: dailyFat.present ? dailyFat.value : this.dailyFat,
-        dailyCarb: dailyCarb.present ? dailyCarb.value : this.dailyCarb,
+        name: name ?? this.name,
+        created: created ?? this.created,
+        favorite: favorite ?? this.favorite,
+        imageFile: imageFile.present ? imageFile.value : this.imageFile,
       );
-  SettingsData copyWithCompanion(SettingsCompanion data) {
-    return SettingsData(
+  MealsData copyWithCompanion(MealsCompanion data) {
+    return MealsData(
       id: data.id.present ? data.id.value : this.id,
-      themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
-      longDateFormat: data.longDateFormat.present
-          ? data.longDateFormat.value
-          : this.longDateFormat,
-      shortDateFormat: data.shortDateFormat.present
-          ? data.shortDateFormat.value
-          : this.shortDateFormat,
-      entryUnit: data.entryUnit.present ? data.entryUnit.value : this.entryUnit,
-      foodUnit: data.foodUnit.present ? data.foodUnit.value : this.foodUnit,
-      diarySummary: data.diarySummary.present
-          ? data.diarySummary.value
-          : this.diarySummary,
-      targetWeight: data.targetWeight.present
-          ? data.targetWeight.value
-          : this.targetWeight,
-      systemColors: data.systemColors.present
-          ? data.systemColors.value
-          : this.systemColors,
-      curveLines:
-          data.curveLines.present ? data.curveLines.value : this.curveLines,
-      showOthers:
-          data.showOthers.present ? data.showOthers.value : this.showOthers,
-      showImages:
-          data.showImages.present ? data.showImages.value : this.showImages,
-      favoriteNew:
-          data.favoriteNew.present ? data.favoriteNew.value : this.favoriteNew,
-      selectEntryOnSubmit: data.selectEntryOnSubmit.present
-          ? data.selectEntryOnSubmit.value
-          : this.selectEntryOnSubmit,
-      notifications: data.notifications.present
-          ? data.notifications.value
-          : this.notifications,
-      dailyCalories: data.dailyCalories.present
-          ? data.dailyCalories.value
-          : this.dailyCalories,
-      dailyProtein: data.dailyProtein.present
-          ? data.dailyProtein.value
-          : this.dailyProtein,
-      dailyFat: data.dailyFat.present ? data.dailyFat.value : this.dailyFat,
-      dailyCarb: data.dailyCarb.present ? data.dailyCarb.value : this.dailyCarb,
+      name: data.name.present ? data.name.value : this.name,
+      created: data.created.present ? data.created.value : this.created,
+      favorite: data.favorite.present ? data.favorite.value : this.favorite,
+      imageFile: data.imageFile.present ? data.imageFile.value : this.imageFile,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('SettingsData(')
+    return (StringBuffer('MealsData(')
           ..write('id: $id, ')
-          ..write('themeMode: $themeMode, ')
-          ..write('longDateFormat: $longDateFormat, ')
-          ..write('shortDateFormat: $shortDateFormat, ')
-          ..write('entryUnit: $entryUnit, ')
-          ..write('foodUnit: $foodUnit, ')
-          ..write('diarySummary: $diarySummary, ')
-          ..write('targetWeight: $targetWeight, ')
-          ..write('systemColors: $systemColors, ')
-          ..write('curveLines: $curveLines, ')
-          ..write('showOthers: $showOthers, ')
-          ..write('showImages: $showImages, ')
-          ..write('favoriteNew: $favoriteNew, ')
-          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
-          ..write('notifications: $notifications, ')
-          ..write('dailyCalories: $dailyCalories, ')
-          ..write('dailyProtein: $dailyProtein, ')
-          ..write('dailyFat: $dailyFat, ')
-          ..write('dailyCarb: $dailyCarb')
+          ..write('name: $name, ')
+          ..write('created: $created, ')
+          ..write('favorite: $favorite, ')
+          ..write('imageFile: $imageFile')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id,
-      themeMode,
-      longDateFormat,
-      shortDateFormat,
-      entryUnit,
-      foodUnit,
-      diarySummary,
-      targetWeight,
-      systemColors,
-      curveLines,
-      showOthers,
-      showImages,
-      favoriteNew,
-      selectEntryOnSubmit,
-      notifications,
-      dailyCalories,
-      dailyProtein,
-      dailyFat,
-      dailyCarb);
+  int get hashCode => Object.hash(id, name, created, favorite, imageFile);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SettingsData &&
+      (other is MealsData &&
           other.id == this.id &&
-          other.themeMode == this.themeMode &&
-          other.longDateFormat == this.longDateFormat &&
-          other.shortDateFormat == this.shortDateFormat &&
-          other.entryUnit == this.entryUnit &&
-          other.foodUnit == this.foodUnit &&
-          other.diarySummary == this.diarySummary &&
-          other.targetWeight == this.targetWeight &&
-          other.systemColors == this.systemColors &&
-          other.curveLines == this.curveLines &&
-          other.showOthers == this.showOthers &&
-          other.showImages == this.showImages &&
-          other.favoriteNew == this.favoriteNew &&
-          other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
-          other.notifications == this.notifications &&
-          other.dailyCalories == this.dailyCalories &&
-          other.dailyProtein == this.dailyProtein &&
-          other.dailyFat == this.dailyFat &&
-          other.dailyCarb == this.dailyCarb);
+          other.name == this.name &&
+          other.created == this.created &&
+          other.favorite == this.favorite &&
+          other.imageFile == this.imageFile);
 }
 
-class SettingsCompanion extends UpdateCompanion<SettingsData> {
+class MealsCompanion extends UpdateCompanion<MealsData> {
   final Value<int> id;
-  final Value<String> themeMode;
-  final Value<String> longDateFormat;
-  final Value<String> shortDateFormat;
-  final Value<String> entryUnit;
-  final Value<String> foodUnit;
-  final Value<String> diarySummary;
-  final Value<double?> targetWeight;
-  final Value<bool> systemColors;
-  final Value<bool> curveLines;
-  final Value<bool> showOthers;
-  final Value<bool> showImages;
-  final Value<bool> favoriteNew;
-  final Value<bool> selectEntryOnSubmit;
-  final Value<bool> notifications;
-  final Value<int?> dailyCalories;
-  final Value<int?> dailyProtein;
-  final Value<int?> dailyFat;
-  final Value<int?> dailyCarb;
-  const SettingsCompanion({
+  final Value<String> name;
+  final Value<int> created;
+  final Value<int> favorite;
+  final Value<String?> imageFile;
+  const MealsCompanion({
     this.id = const Value.absent(),
-    this.themeMode = const Value.absent(),
-    this.longDateFormat = const Value.absent(),
-    this.shortDateFormat = const Value.absent(),
-    this.entryUnit = const Value.absent(),
-    this.foodUnit = const Value.absent(),
-    this.diarySummary = const Value.absent(),
-    this.targetWeight = const Value.absent(),
-    this.systemColors = const Value.absent(),
-    this.curveLines = const Value.absent(),
-    this.showOthers = const Value.absent(),
-    this.showImages = const Value.absent(),
-    this.favoriteNew = const Value.absent(),
-    this.selectEntryOnSubmit = const Value.absent(),
-    this.notifications = const Value.absent(),
-    this.dailyCalories = const Value.absent(),
-    this.dailyProtein = const Value.absent(),
-    this.dailyFat = const Value.absent(),
-    this.dailyCarb = const Value.absent(),
+    this.name = const Value.absent(),
+    this.created = const Value.absent(),
+    this.favorite = const Value.absent(),
+    this.imageFile = const Value.absent(),
   });
-  SettingsCompanion.insert({
+  MealsCompanion.insert({
     this.id = const Value.absent(),
-    required String themeMode,
-    required String longDateFormat,
-    required String shortDateFormat,
-    required String entryUnit,
-    required String foodUnit,
-    required String diarySummary,
-    this.targetWeight = const Value.absent(),
-    required bool systemColors,
-    required bool curveLines,
-    required bool showOthers,
-    this.showImages = const Value.absent(),
-    required bool favoriteNew,
-    required bool selectEntryOnSubmit,
-    required bool notifications,
-    this.dailyCalories = const Value.absent(),
-    this.dailyProtein = const Value.absent(),
-    this.dailyFat = const Value.absent(),
-    this.dailyCarb = const Value.absent(),
-  })  : themeMode = Value(themeMode),
-        longDateFormat = Value(longDateFormat),
-        shortDateFormat = Value(shortDateFormat),
-        entryUnit = Value(entryUnit),
-        foodUnit = Value(foodUnit),
-        diarySummary = Value(diarySummary),
-        systemColors = Value(systemColors),
-        curveLines = Value(curveLines),
-        showOthers = Value(showOthers),
-        favoriteNew = Value(favoriteNew),
-        selectEntryOnSubmit = Value(selectEntryOnSubmit),
-        notifications = Value(notifications);
-  static Insertable<SettingsData> custom({
+    required String name,
+    required int created,
+    this.favorite = const Value.absent(),
+    this.imageFile = const Value.absent(),
+  })  : name = Value(name),
+        created = Value(created);
+  static Insertable<MealsData> custom({
     Expression<int>? id,
-    Expression<String>? themeMode,
-    Expression<String>? longDateFormat,
-    Expression<String>? shortDateFormat,
-    Expression<String>? entryUnit,
-    Expression<String>? foodUnit,
-    Expression<String>? diarySummary,
-    Expression<double>? targetWeight,
-    Expression<bool>? systemColors,
-    Expression<bool>? curveLines,
-    Expression<bool>? showOthers,
-    Expression<bool>? showImages,
-    Expression<bool>? favoriteNew,
-    Expression<bool>? selectEntryOnSubmit,
-    Expression<bool>? notifications,
-    Expression<int>? dailyCalories,
-    Expression<int>? dailyProtein,
-    Expression<int>? dailyFat,
-    Expression<int>? dailyCarb,
+    Expression<String>? name,
+    Expression<int>? created,
+    Expression<int>? favorite,
+    Expression<String>? imageFile,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (themeMode != null) 'theme_mode': themeMode,
-      if (longDateFormat != null) 'long_date_format': longDateFormat,
-      if (shortDateFormat != null) 'short_date_format': shortDateFormat,
-      if (entryUnit != null) 'entry_unit': entryUnit,
-      if (foodUnit != null) 'food_unit': foodUnit,
-      if (diarySummary != null) 'diary_summary': diarySummary,
-      if (targetWeight != null) 'target_weight': targetWeight,
-      if (systemColors != null) 'system_colors': systemColors,
-      if (curveLines != null) 'curve_lines': curveLines,
-      if (showOthers != null) 'show_others': showOthers,
-      if (showImages != null) 'show_images': showImages,
-      if (favoriteNew != null) 'favorite_new': favoriteNew,
-      if (selectEntryOnSubmit != null)
-        'select_entry_on_submit': selectEntryOnSubmit,
-      if (notifications != null) 'notifications': notifications,
-      if (dailyCalories != null) 'daily_calories': dailyCalories,
-      if (dailyProtein != null) 'daily_protein': dailyProtein,
-      if (dailyFat != null) 'daily_fat': dailyFat,
-      if (dailyCarb != null) 'daily_carb': dailyCarb,
+      if (name != null) 'name': name,
+      if (created != null) 'created': created,
+      if (favorite != null) 'favorite': favorite,
+      if (imageFile != null) 'image_file': imageFile,
     });
   }
 
-  SettingsCompanion copyWith(
+  MealsCompanion copyWith(
       {Value<int>? id,
-      Value<String>? themeMode,
-      Value<String>? longDateFormat,
-      Value<String>? shortDateFormat,
-      Value<String>? entryUnit,
-      Value<String>? foodUnit,
-      Value<String>? diarySummary,
-      Value<double?>? targetWeight,
-      Value<bool>? systemColors,
-      Value<bool>? curveLines,
-      Value<bool>? showOthers,
-      Value<bool>? showImages,
-      Value<bool>? favoriteNew,
-      Value<bool>? selectEntryOnSubmit,
-      Value<bool>? notifications,
-      Value<int?>? dailyCalories,
-      Value<int?>? dailyProtein,
-      Value<int?>? dailyFat,
-      Value<int?>? dailyCarb}) {
-    return SettingsCompanion(
+      Value<String>? name,
+      Value<int>? created,
+      Value<int>? favorite,
+      Value<String?>? imageFile}) {
+    return MealsCompanion(
       id: id ?? this.id,
-      themeMode: themeMode ?? this.themeMode,
-      longDateFormat: longDateFormat ?? this.longDateFormat,
-      shortDateFormat: shortDateFormat ?? this.shortDateFormat,
-      entryUnit: entryUnit ?? this.entryUnit,
-      foodUnit: foodUnit ?? this.foodUnit,
-      diarySummary: diarySummary ?? this.diarySummary,
-      targetWeight: targetWeight ?? this.targetWeight,
-      systemColors: systemColors ?? this.systemColors,
-      curveLines: curveLines ?? this.curveLines,
-      showOthers: showOthers ?? this.showOthers,
-      showImages: showImages ?? this.showImages,
-      favoriteNew: favoriteNew ?? this.favoriteNew,
-      selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
-      notifications: notifications ?? this.notifications,
-      dailyCalories: dailyCalories ?? this.dailyCalories,
-      dailyProtein: dailyProtein ?? this.dailyProtein,
-      dailyFat: dailyFat ?? this.dailyFat,
-      dailyCarb: dailyCarb ?? this.dailyCarb,
+      name: name ?? this.name,
+      created: created ?? this.created,
+      favorite: favorite ?? this.favorite,
+      imageFile: imageFile ?? this.imageFile,
     );
   }
 
@@ -5807,102 +7015,303 @@ class SettingsCompanion extends UpdateCompanion<SettingsData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (themeMode.present) {
-      map['theme_mode'] = Variable<String>(themeMode.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
-    if (longDateFormat.present) {
-      map['long_date_format'] = Variable<String>(longDateFormat.value);
+    if (created.present) {
+      map['created'] = Variable<int>(created.value);
     }
-    if (shortDateFormat.present) {
-      map['short_date_format'] = Variable<String>(shortDateFormat.value);
+    if (favorite.present) {
+      map['favorite'] = Variable<int>(favorite.value);
     }
-    if (entryUnit.present) {
-      map['entry_unit'] = Variable<String>(entryUnit.value);
-    }
-    if (foodUnit.present) {
-      map['food_unit'] = Variable<String>(foodUnit.value);
-    }
-    if (diarySummary.present) {
-      map['diary_summary'] = Variable<String>(diarySummary.value);
-    }
-    if (targetWeight.present) {
-      map['target_weight'] = Variable<double>(targetWeight.value);
-    }
-    if (systemColors.present) {
-      map['system_colors'] = Variable<bool>(systemColors.value);
-    }
-    if (curveLines.present) {
-      map['curve_lines'] = Variable<bool>(curveLines.value);
-    }
-    if (showOthers.present) {
-      map['show_others'] = Variable<bool>(showOthers.value);
-    }
-    if (showImages.present) {
-      map['show_images'] = Variable<bool>(showImages.value);
-    }
-    if (favoriteNew.present) {
-      map['favorite_new'] = Variable<bool>(favoriteNew.value);
-    }
-    if (selectEntryOnSubmit.present) {
-      map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit.value);
-    }
-    if (notifications.present) {
-      map['notifications'] = Variable<bool>(notifications.value);
-    }
-    if (dailyCalories.present) {
-      map['daily_calories'] = Variable<int>(dailyCalories.value);
-    }
-    if (dailyProtein.present) {
-      map['daily_protein'] = Variable<int>(dailyProtein.value);
-    }
-    if (dailyFat.present) {
-      map['daily_fat'] = Variable<int>(dailyFat.value);
-    }
-    if (dailyCarb.present) {
-      map['daily_carb'] = Variable<int>(dailyCarb.value);
+    if (imageFile.present) {
+      map['image_file'] = Variable<String>(imageFile.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('SettingsCompanion(')
+    return (StringBuffer('MealsCompanion(')
           ..write('id: $id, ')
-          ..write('themeMode: $themeMode, ')
-          ..write('longDateFormat: $longDateFormat, ')
-          ..write('shortDateFormat: $shortDateFormat, ')
-          ..write('entryUnit: $entryUnit, ')
-          ..write('foodUnit: $foodUnit, ')
-          ..write('diarySummary: $diarySummary, ')
-          ..write('targetWeight: $targetWeight, ')
-          ..write('systemColors: $systemColors, ')
-          ..write('curveLines: $curveLines, ')
-          ..write('showOthers: $showOthers, ')
-          ..write('showImages: $showImages, ')
-          ..write('favoriteNew: $favoriteNew, ')
-          ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
-          ..write('notifications: $notifications, ')
-          ..write('dailyCalories: $dailyCalories, ')
-          ..write('dailyProtein: $dailyProtein, ')
-          ..write('dailyFat: $dailyFat, ')
-          ..write('dailyCarb: $dailyCarb')
+          ..write('name: $name, ')
+          ..write('created: $created, ')
+          ..write('favorite: $favorite, ')
+          ..write('imageFile: $imageFile')
           ..write(')'))
         .toString();
   }
 }
 
-class DatabaseAtV19 extends GeneratedDatabase {
-  DatabaseAtV19(QueryExecutor e) : super(e);
+class MealFoods extends Table with TableInfo<MealFoods, MealFoodsData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  MealFoods(this.attachedDatabase, [this._alias]);
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL PRIMARY KEY AUTOINCREMENT');
+  late final GeneratedColumn<int> meal = GeneratedColumn<int>(
+      'meal', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES meals(id)');
+  late final GeneratedColumn<int> food = GeneratedColumn<int>(
+      'food', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES foods(id)');
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
+      'quantity', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+      'unit', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [id, meal, food, quantity, unit];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'meal_foods';
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MealFoodsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MealFoodsData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      meal: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}meal'])!,
+      food: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}food'])!,
+      quantity: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}quantity'])!,
+      unit: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit'])!,
+    );
+  }
+
+  @override
+  MealFoods createAlias(String alias) {
+    return MealFoods(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class MealFoodsData extends DataClass implements Insertable<MealFoodsData> {
+  final int id;
+  final int meal;
+  final int food;
+  final double quantity;
+  final String unit;
+  const MealFoodsData(
+      {required this.id,
+      required this.meal,
+      required this.food,
+      required this.quantity,
+      required this.unit});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['meal'] = Variable<int>(meal);
+    map['food'] = Variable<int>(food);
+    map['quantity'] = Variable<double>(quantity);
+    map['unit'] = Variable<String>(unit);
+    return map;
+  }
+
+  MealFoodsCompanion toCompanion(bool nullToAbsent) {
+    return MealFoodsCompanion(
+      id: Value(id),
+      meal: Value(meal),
+      food: Value(food),
+      quantity: Value(quantity),
+      unit: Value(unit),
+    );
+  }
+
+  factory MealFoodsData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MealFoodsData(
+      id: serializer.fromJson<int>(json['id']),
+      meal: serializer.fromJson<int>(json['meal']),
+      food: serializer.fromJson<int>(json['food']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unit: serializer.fromJson<String>(json['unit']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'meal': serializer.toJson<int>(meal),
+      'food': serializer.toJson<int>(food),
+      'quantity': serializer.toJson<double>(quantity),
+      'unit': serializer.toJson<String>(unit),
+    };
+  }
+
+  MealFoodsData copyWith(
+          {int? id, int? meal, int? food, double? quantity, String? unit}) =>
+      MealFoodsData(
+        id: id ?? this.id,
+        meal: meal ?? this.meal,
+        food: food ?? this.food,
+        quantity: quantity ?? this.quantity,
+        unit: unit ?? this.unit,
+      );
+  MealFoodsData copyWithCompanion(MealFoodsCompanion data) {
+    return MealFoodsData(
+      id: data.id.present ? data.id.value : this.id,
+      meal: data.meal.present ? data.meal.value : this.meal,
+      food: data.food.present ? data.food.value : this.food,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MealFoodsData(')
+          ..write('id: $id, ')
+          ..write('meal: $meal, ')
+          ..write('food: $food, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, meal, food, quantity, unit);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MealFoodsData &&
+          other.id == this.id &&
+          other.meal == this.meal &&
+          other.food == this.food &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit);
+}
+
+class MealFoodsCompanion extends UpdateCompanion<MealFoodsData> {
+  final Value<int> id;
+  final Value<int> meal;
+  final Value<int> food;
+  final Value<double> quantity;
+  final Value<String> unit;
+  const MealFoodsCompanion({
+    this.id = const Value.absent(),
+    this.meal = const Value.absent(),
+    this.food = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+  });
+  MealFoodsCompanion.insert({
+    this.id = const Value.absent(),
+    required int meal,
+    required int food,
+    required double quantity,
+    required String unit,
+  })  : meal = Value(meal),
+        food = Value(food),
+        quantity = Value(quantity),
+        unit = Value(unit);
+  static Insertable<MealFoodsData> custom({
+    Expression<int>? id,
+    Expression<int>? meal,
+    Expression<int>? food,
+    Expression<double>? quantity,
+    Expression<String>? unit,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (meal != null) 'meal': meal,
+      if (food != null) 'food': food,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+    });
+  }
+
+  MealFoodsCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? meal,
+      Value<int>? food,
+      Value<double>? quantity,
+      Value<String>? unit}) {
+    return MealFoodsCompanion(
+      id: id ?? this.id,
+      meal: meal ?? this.meal,
+      food: food ?? this.food,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (meal.present) {
+      map['meal'] = Variable<int>(meal.value);
+    }
+    if (food.present) {
+      map['food'] = Variable<int>(food.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MealFoodsCompanion(')
+          ..write('id: $id, ')
+          ..write('meal: $meal, ')
+          ..write('food: $food, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class DatabaseAtV48 extends GeneratedDatabase {
+  DatabaseAtV48(QueryExecutor e) : super(e);
   late final Foods foods = Foods(this);
-  late final Entries entries = Entries(this);
+  late final Diaries diaries = Diaries(this);
   late final Weights weights = Weights(this);
   late final Settings settings = Settings(this);
+  late final Metadata metadata = Metadata(this);
+  late final Meals meals = Meals(this);
+  late final MealFoods mealFoods = MealFoods(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [foods, entries, weights, settings];
+      [foods, diaries, weights, settings, metadata, meals, mealFoods];
   @override
-  int get schemaVersion => 19;
+  int get schemaVersion => 48;
 }

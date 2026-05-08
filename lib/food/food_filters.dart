@@ -179,10 +179,14 @@ class _FoodFiltersState extends State<FoodFilters> {
           ),
           TextButton(
             onPressed: () {
-              widget.onChange(
-                foodGroup: widget.groupCtrl.text,
-                servingUnit: _servingUnit,
-              );
+              final groupChanged = controller.text != widget.groupCtrl.text;
+              widget.groupCtrl.text = controller.text;
+              if (groupChanged) {
+                widget.onChange(
+                  foodGroup: controller.text,
+                  servingUnit: _servingUnit,
+                );
+              }
               Navigator.of(dialogContext).pop();
             },
             child: const Text('Done'),

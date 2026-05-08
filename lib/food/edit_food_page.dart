@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
-import 'package:fit_book/food/meal_page.dart';
+import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
@@ -30,6 +30,7 @@ class EditFoodPage extends StatefulWidget {
 class _EditFoodPageState extends State<EditFoodPage> {
   late Setting settings;
   late String unit;
+  bool? _favorite;
   String? imgFile;
   String? smallImg;
   String? bigImg;
@@ -57,6 +58,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       sizeCtrl.text = '1';
     else if (unit == 'grams') sizeCtrl.text = '100';
 
+    _favorite = settings.favoriteNew;
     if (widget.id == null) return;
 
     (db.foods.select()..where((u) => u.id.equals(widget.id!)))
@@ -79,6 +81,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ? ''
             : formatter.format(food.calories! * 4.184);
         sizeCtrl.text = food.servingSize?.toStringAsFixed(0) ?? '100';
+        _favorite = food.favorite;
       });
     });
   }
@@ -158,8 +161,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
 
     if (widget.id != null)
       columns['id'] = Variable(widget.id);
-    else
-      columns['favorite'] = Variable(settings.favoriteNew);
+    columns['favorite'] = Variable(_favorite ?? false);
 
     var id = widget.id;
     if (widget.id != null)
@@ -234,6 +236,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
           widget.id != null ? 'Edit food' : 'Add food',
         ),
         actions: [
+          IconButton(
+            icon: Icon(
+              _favorite == true ? Icons.favorite : Icons.favorite_border,
+            ),
+            onPressed: () => setState(() => _favorite = !(_favorite ?? false)),
+          ),
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.delete),
@@ -413,18 +421,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
               alignment: WrapAlignment.center,
               children: [
                 TextButton.icon(
-                  onPressed: () async {
-                    int? id = await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => MealPage(),
-                      ),
-                    );
-
-                    if (id != null && context.mounted)
-                      Navigator.of(context).pop();
-                  },
-                  label: Text("Create meal"),
-                  icon: Icon(Icons.restaurant),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditMealPage(),
+                    ),
+                  ),
+                  label: const Text("Create meal"),
+                  icon: const Icon(Icons.restaurant),
                 ),
                 if (settings.showImages)
                   TextButton.icon(

@@ -115,10 +115,16 @@ class DiaryPageState extends State<DiaryPage> {
                 },
               ),
               if (snapshot.data?.isEmpty == true)
-                const ListTile(
-                  title: Text("No entries today."),
-                  subtitle: Text(
-                    "Tap the plus button to start logging your food.",
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ListTile(
+                    title: const Text("No entries today."),
+                    subtitle: const Text("Tap here to start logging your food."),
+                    onTap: () => navigatorKey.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (context) => const EditDiaryPage(),
+                      ),
+                    ),
                   ),
                 ),
               DiaryList(

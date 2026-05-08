@@ -7,6 +7,8 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.steps.dart';
 import 'package:fit_book/database/diaries.dart';
 import 'package:fit_book/database/foods.dart';
+import 'package:fit_book/database/meal_foods.dart';
+import 'package:fit_book/database/meals.dart';
 import 'package:fit_book/database/metadata.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
@@ -21,7 +23,7 @@ import 'database_connection_web.dart'
 part 'database.g.dart';
 
 @DriftDatabase(
-  tables: [Foods, Diaries, Weights, Settings, Metadata],
+  tables: [Foods, Diaries, Weights, Settings, Metadata, Meals, MealFoods],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor, bool? dontLog})
@@ -360,17 +362,24 @@ WHERE name = 'Quick-add'
       await m.addColumn(schema.settings, schema.settings.compactWeights);
     },
     from45To46: (Migrator m, Schema46 schema) async {
-      await m.database.customUpdate("""UPDATE settings 
+      await m.database.customUpdate("""UPDATE settings
         SET entry_unit='grams'
         WHERE entry_unit='serving'
         """);
-      await m.database.customUpdate("""UPDATE settings 
+      await m.database.customUpdate("""UPDATE settings
         SET food_unit='grams'
         WHERE food_unit='serving'
         """);
     },
+    from46To47: (Migrator m, Schema47 schema) async {
+      await m.createTable(schema.meals);
+      await m.createTable(schema.mealFoods);
+    },
+    from47To48: (Migrator m, Schema48 schema) async {
+      await m.addColumn(schema.meals, schema.meals.imageFile);
+    },
   );
 
   @override
-  int get schemaVersion => 46;
+  int get schemaVersion => 48;
 }
