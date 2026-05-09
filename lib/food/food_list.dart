@@ -8,6 +8,7 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class FoodList extends StatefulWidget {
@@ -39,6 +40,8 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
+  final formatter = NumberFormat('#,##0');
+
   @override
   void initState() {
     super.initState();
@@ -121,7 +124,7 @@ class _FoodListState extends State<FoodList> {
               subtitle: Row(
                 children: [
                   Text(
-                    "${food.calories.value?.toStringAsFixed(0) ?? 0} kcal",
+                    "${formatter.format(food.calories.value)} kcal",
                   ),
                   if (food.favorite.value == true) ...[
                     const SizedBox(width: 6),
@@ -241,7 +244,7 @@ class _FoodListState extends State<FoodList> {
         title: Text(meal.name),
         subtitle: Text(
           widget.mealCalories.containsKey(meal.id)
-              ? '${widget.mealCalories[meal.id]!.toStringAsFixed(0)} kcal'
+              ? '${formatter.format(widget.mealCalories[meal.id])} kcal'
               : 'Meal',
         ),
         trailing: selected
