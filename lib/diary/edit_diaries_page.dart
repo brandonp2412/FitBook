@@ -139,7 +139,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
           ),
         ));
       } else {
-        foodId = selectedFood?.id ?? oldEntry.food;
+        foodId = selectedFood?.id ?? oldEntry.food ?? 0;
         await (db.foods.update()..where((u) => u.id.equals(foodId))).write(
           FoodsCompanion(
             calories: caloriesController.text.isNotEmpty

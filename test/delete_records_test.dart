@@ -15,8 +15,9 @@ void main() async {
     await mockTests();
     await (db.diaries.insertOne(
       DiariesCompanion.insert(
-        food:
-            await (db.foods.insertOne(FoodsCompanion.insert(name: 'Chicken'))),
+        food: Value(
+          await (db.foods.insertOne(FoodsCompanion.insert(name: 'Chicken'))),
+        ),
         created: DateTime.now(),
         quantity: 1,
         unit: 'kg',

@@ -159,8 +159,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       columns[entry.key] = value;
     }
 
-    if (widget.id != null)
-      columns['id'] = Variable(widget.id);
+    if (widget.id != null) columns['id'] = Variable(widget.id);
     columns['favorite'] = Variable(_favorite ?? false);
 
     var id = widget.id;
@@ -217,8 +216,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   }
 
   void setImage() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
+    FilePickerResult? result = await FilePicker.pickFiles(type: FileType.image);
     final path = result?.files.single.path;
     if (path == null) return;
     setState(() {

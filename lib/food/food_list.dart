@@ -101,10 +101,7 @@ class _FoodListState extends State<FoodList> {
             key: ValueKey('food_${food.id.value}'),
             decoration: BoxDecoration(
               color: selected
-                  ? Theme.of(context)
-                      .colorScheme
-                      .primary
-                      .withValues(alpha: .08)
+                  ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
                   : Colors.transparent,
               border: Border.all(
                 color: selected
@@ -134,45 +131,45 @@ class _FoodListState extends State<FoodList> {
                   ],
                 ],
               ),
-                  trailing: Stack(
-                    children: [
-                      AnimatedScale(
-                        duration: const Duration(milliseconds: 150),
-                        scale: selected ? 0.0 : 1.0,
-                        child: Visibility(
-                          visible: !selected,
-                          child: Text(
-                            "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ),
+              trailing: Stack(
+                children: [
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 150),
+                    scale: selected ? 0.0 : 1.0,
+                    child: Visibility(
+                      visible: !selected,
+                      child: Text(
+                        "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      AnimatedScale(
-                        duration: const Duration(milliseconds: 150),
-                        scale: selected ? 1.0 : 0.0,
-                        child: Visibility(
-                          visible: selected,
-                          child: Checkbox(
-                            value: selected,
-                            onChanged: (_) => widget.onSelect(food.id.value),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  onLongPress: () => widget.onSelect(food.id.value),
-                  onTap: () {
-                    if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditFoodPage(id: food.id.value),
-                        ),
-                      );
-                    else
-                      widget.onSelect(food.id.value);
-                  },
-                ),
+                  AnimatedScale(
+                    duration: const Duration(milliseconds: 150),
+                    scale: selected ? 1.0 : 0.0,
+                    child: Visibility(
+                      visible: selected,
+                      child: Checkbox(
+                        value: selected,
+                        onChanged: (_) => widget.onSelect(food.id.value),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              onLongPress: () => widget.onSelect(food.id.value),
+              onTap: () {
+                if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditFoodPage(id: food.id.value),
+                    ),
+                  );
+                else
+                  widget.onSelect(food.id.value);
+              },
+            ),
           );
         },
       ),
@@ -212,7 +209,8 @@ class _FoodListState extends State<FoodList> {
                 color: Theme.of(context).colorScheme.primary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.restaurant, size: 10, color: Colors.white),
+              child:
+                  const Icon(Icons.restaurant, size: 10, color: Colors.white),
             ),
           ),
         ],

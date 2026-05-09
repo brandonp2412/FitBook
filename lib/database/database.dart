@@ -63,14 +63,39 @@ class AppDatabase extends _$AppDatabase {
         // Following the advice from https://drift.simonbinder.eu/Migrations/api/#general-tips
         await customStatement('PRAGMA foreign_keys = OFF');
 
-        await transaction(
-          () => VersionedSchema.runMigrationSteps(
-            migrator: m,
-            from: from,
-            to: to,
-            steps: _upgrade,
-          ),
-        );
+        await transaction(() async {
+          // runMigrationSteps only knows steps up to v48; cap the range so it
+          // does not throw "unknown migration from 48" when upgrading to v49+.
+          final stepTo = to < 49 ? to : 48;
+          if (from < stepTo) {
+            await VersionedSchema.runMigrationSteps(
+              migrator: m,
+              from: from,
+              to: stepTo,
+              steps: _upgrade,
+            );
+          }
+
+          if (from < 49 && to >= 49) {
+            await m.database.customStatement('''
+              CREATE TABLE diaries_new (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                food INTEGER REFERENCES foods(id),
+                meal INTEGER REFERENCES meals(id),
+                created INTEGER NOT NULL,
+                quantity REAL NOT NULL,
+                unit TEXT NOT NULL
+              )
+            ''');
+            await m.database.customStatement(
+              'INSERT INTO diaries_new SELECT id, food, NULL, created, quantity, unit FROM diaries',
+            );
+            await m.database.customStatement('DROP TABLE diaries');
+            await m.database.customStatement(
+              'ALTER TABLE diaries_new RENAME TO diaries',
+            );
+          }
+        });
 
         // TODO: Un-comment this (drift upgrade broke validations)
         // if (kDebugMode) {
@@ -381,5 +406,5 @@ WHERE name = 'Quick-add'
   );
 
   @override
-  int get schemaVersion => 48;
+  int get schemaVersion => 49;
 }

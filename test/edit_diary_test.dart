@@ -27,7 +27,7 @@ void main() async {
     ));
     final entryId = await (db.diaries.insertOne(
       DiariesCompanion.insert(
-        food: foodId,
+        food: Value(foodId),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
@@ -94,7 +94,7 @@ void main() async {
     ));
     final entryId = await (db.diaries.insertOne(
       DiariesCompanion.insert(
-        food: foodId,
+        food: Value(foodId),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
@@ -114,7 +114,7 @@ void main() async {
         ),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Edit diary entry'), findsOne);
     expect(
       find.text('Pure Premium Orange Juice Calcium And Vitamin D No Pulp'),
@@ -124,7 +124,7 @@ void main() async {
     // 2. Change the quantity in the quantity text field
     const String newQuantity = '3.5';
     await tester.enterText(find.bySemanticsLabel('Quantity'), newQuantity);
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // 3. Change the name to trigger the 'foodDirty' and new food insertion logic
     final Finder nameField = find.bySemanticsLabel('Name');
@@ -143,7 +143,7 @@ void main() async {
           ..where((e) => e.id.equals(entryId)))
         .getSingle();
     final savedFood = await (db.foods.select()
-          ..where((f) => f.id.equals(updatedEntry.food)))
+          ..where((f) => f.id.equals(updatedEntry.food!)))
         .getSingle();
 
     // 6. Assert that the saved food's servingSize and servingUnit are still the original values

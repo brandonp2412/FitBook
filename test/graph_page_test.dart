@@ -20,37 +20,37 @@ void main() async {
     await (db.diaries.insertAll(
       [
         DiariesCompanion.insert(
-          food: await (db.foods.insertOne(
+          food: Value(await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 3',
               calories: const Value(1),
               servingWeight1G: const Value(1),
             ),
-          )),
+          ))),
           created: DateTime.now(),
           quantity: 1,
           unit: 'serving',
         ),
         DiariesCompanion.insert(
-          food: await (db.foods.insertOne(
+          food: Value(await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 2',
               calories: const Value(1),
               servingWeight1G: const Value(1),
             ),
-          )),
+          ))),
           created: DateTime.now().subtract(const Duration(days: 1)),
           quantity: 1,
           unit: 'serving',
         ),
         DiariesCompanion.insert(
-          food: await (db.foods.insertOne(
+          food: Value(await (db.foods.insertOne(
             FoodsCompanion.insert(
               name: 'Test 1',
               calories: const Value(1),
               servingWeight1G: const Value(1),
             ),
-          )),
+          ))),
           created: DateTime.now().subtract(const Duration(days: 2)),
           quantity: 1,
           unit: 'serving',

@@ -53,7 +53,7 @@ List<Widget> getDataSettings({
         onPressed: () async {
           final dbFolder = await getApplicationDocumentsDirectory();
           final dbPath = p.join(dbFolder.path, 'fitbook.sqlite');
-          await Share.shareXFiles([XFile(dbPath)]);
+          await SharePlus.instance.share(ShareParams(files: [XFile(dbPath)]));
         },
         label: const Text("Share database"),
         icon: const Icon(Icons.share),

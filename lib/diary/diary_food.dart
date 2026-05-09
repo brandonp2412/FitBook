@@ -3,7 +3,8 @@ class DiaryFood {
   final String unit;
   final double quantity;
   final DateTime created;
-  final int foodId;
+  final int? foodId;
+  final int? mealId;
   final int entryId;
   final Map<String, double> metrics;
   final String? imageFile;
@@ -11,7 +12,8 @@ class DiaryFood {
 
   DiaryFood({
     required this.name,
-    required this.foodId,
+    this.foodId,
+    this.mealId,
     required this.entryId,
     required this.quantity,
     required this.unit,

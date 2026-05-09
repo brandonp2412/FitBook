@@ -33,7 +33,7 @@ class _ImportDataState extends State<ImportData> {
     Navigator.pop(context);
 
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result = await FilePicker.pickFiles();
       setState(() {
         importing = true;
       });
@@ -326,7 +326,7 @@ class _ImportDataState extends State<ImportData> {
     final entriesState = context.read<DiaryState>();
     final settingsState = context.read<SettingsState>();
     Navigator.pop(context);
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.pickFiles();
     if (result == null) return;
 
     File sourceFile = File(result.files.single.path!);
@@ -341,7 +341,7 @@ class _ImportDataState extends State<ImportData> {
   }
 
   Future<void> _importEntries(BuildContext context) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.pickFiles();
     setState(() {
       importing = true;
     });

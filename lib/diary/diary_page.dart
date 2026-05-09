@@ -119,7 +119,8 @@ class DiaryPageState extends State<DiaryPage> {
                   padding: const EdgeInsets.all(16),
                   child: ListTile(
                     title: const Text("No entries today."),
-                    subtitle: const Text("Tap here to start logging your food."),
+                    subtitle:
+                        const Text("Tap here to start logging your food."),
                     onTap: () => navigatorKey.currentState!.push(
                       MaterialPageRoute(
                         builder: (context) => const EditDiaryPage(),

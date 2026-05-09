@@ -54,8 +54,7 @@ class _DiaryListState extends State<DiaryList> {
         newStats[day]!.fat += diaryFood.metrics[db.foods.fatG.name] ?? 0;
         newStats[day]!.carb +=
             diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
-        newStats[day]!.fiber +=
-            diaryFood.metrics[db.foods.fiberG.name] ?? 0;
+        newStats[day]!.fiber += diaryFood.metrics[db.foods.fiberG.name] ?? 0;
       } else {
         newStats[day] = Stats(
           cals: diaryFood.metrics[db.foods.calories.name] ?? 0,

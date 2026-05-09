@@ -31,7 +31,7 @@ void main() async {
 
     final entryId = await db.diaries.insertOne(
       DiariesCompanion.insert(
-        food: originalFoodId,
+        food: Value(originalFoodId),
         created: DateTime.now(),
         quantity: 500.0,
         unit: 'grams',
@@ -82,7 +82,7 @@ void main() async {
         .getSingle();
 
     final updatedFood = await (db.foods.select()
-          ..where((u) => u.id.equals(updatedEntry.food)))
+          ..where((u) => u.id.equals(updatedEntry.food!)))
         .getSingle();
 
     // Verify the entry now points to a new food record with updated macro-nutrients
@@ -118,7 +118,7 @@ void main() async {
 
     final entryId = await db.diaries.insertOne(
       DiariesCompanion.insert(
-        food: originalFoodId,
+        food: Value(originalFoodId),
         created: DateTime.now(),
         quantity: 100.0,
         unit: 'grams',

@@ -66,7 +66,7 @@ class _ExportDataState extends State<ExportData> {
                       final codec = Csv(lineDelimiter: '\n');
                       final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
-                      await FilePicker.platform.saveFile(
+                      await FilePicker.saveFile(
                         fileName: 'diary.csv',
                         bytes: bytes,
                       );
@@ -223,7 +223,7 @@ class _ExportDataState extends State<ExportData> {
                       final codec = Csv(lineDelimiter: '\n');
                       final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
-                      await FilePicker.platform.saveFile(
+                      await FilePicker.saveFile(
                         fileName: 'foods.csv',
                         bytes: bytes,
                       );
@@ -243,7 +243,7 @@ class _ExportDataState extends State<ExportData> {
                     final dbFolder = await getApplicationDocumentsDirectory();
                     final file = File(p.join(dbFolder.path, 'fitbook.sqlite'));
                     final bytes = await file.readAsBytes();
-                    await FilePicker.platform.saveFile(
+                    await FilePicker.saveFile(
                       fileName: 'fitbook.sqlite',
                       bytes: bytes,
                     );

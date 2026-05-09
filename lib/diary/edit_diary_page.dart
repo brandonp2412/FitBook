@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Table;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
@@ -16,6 +17,33 @@ import 'package:provider/provider.dart';
 
 import '../database/database.dart';
 
+enum _ResultType { food, meal, openFoodFacts }
+
+class _SearchResult {
+  final _ResultType type;
+  final String name;
+  final Food? food;
+  final Meal? meal;
+
+  _SearchResult.food(Food f)
+      : type = _ResultType.food,
+        name = f.name,
+        food = f,
+        meal = null;
+
+  _SearchResult.meal(Meal m)
+      : type = _ResultType.meal,
+        name = m.name,
+        food = null,
+        meal = m;
+
+  _SearchResult.openFoodFacts(String term)
+      : type = _ResultType.openFoodFacts,
+        name = term,
+        food = null,
+        meal = null;
+}
+
 class EditDiaryPage extends StatefulWidget {
   final int? id;
 
@@ -26,6 +54,7 @@ class EditDiaryPage extends StatefulWidget {
 }
 
 class _EditDiaryPageState extends State<EditDiaryPage> {
+  final nameController = TextEditingController();
   final quantity = TextEditingController(text: "100");
   final calories = TextEditingController(text: "0");
   final kilojoules = TextEditingController(text: "0");
@@ -33,10 +62,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
   final fiber = TextEditingController(text: "0");
+  final nameFocusNode = FocusNode();
   final quantityNode = FocusNode();
   final caloriesNode = FocusNode();
   final barcode = TextEditingController();
   final scrollCtrl = ScrollController();
+  bool _transitionListenerAdded = false;
 
   late var settings = context.read<SettingsState>().value;
   late var unit = settings.entryUnit;
@@ -44,11 +75,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   DateTime? created;
   bool foodDirty = false;
   Food? selectedFood;
-  TextEditingController? nameController;
+  int? _selectedMealId;
   String? imageFile;
+  List<_SearchResult> searchResults = [];
   final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
-  // The logic for grabbing the nutritional values from the entry
   double _num(TextEditingController c) {
     return formatter.tryParse(c.text)?.toDouble() ?? 0.0;
   }
@@ -56,43 +87,20 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   double get _entryServings {
     final q = _num(quantity);
     if (q == 0) return 0;
-
     final s = (selectedFood?.servingSize ?? 100).toDouble();
     if (s == 0) return 0;
-
     if (unit == 'serving') return q;
     return q / s;
   }
 
-  double get entryCalories {
-    return _num(calories) * _entryServings;
-  }
+  double get entryCalories => _num(calories) * _entryServings;
+  double get entryProtein => _num(protein) * _entryServings;
+  double get entryCarb => _num(carb) * _entryServings;
+  double get entryFat => _num(fat) * _entryServings;
+  double get entryFiber => _num(fiber) * _entryServings;
+  double get entryKJ => entryCalories * 4.184;
 
-  double get entryProtein {
-    return _num(protein) * _entryServings;
-  }
-
-  double get entryCarb {
-    return _num(carb) * _entryServings;
-  }
-
-  double get entryFat {
-    return _num(fat) * _entryServings;
-  }
-
-  double get entryFiber {
-    return _num(fiber) * _entryServings;
-  }
-
-  double get entryKJ {
-    return entryCalories * 4.184;
-  }
-
-  // Formatting for cells in table that calculates the entries total nutrition
-  Widget totalCell({
-    required String label,
-    required String value,
-  }) {
+  Widget totalCell({required String label, required String value}) {
     return InputDecorator(
       decoration: InputDecoration(
         labelText: label,
@@ -103,84 +111,221 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_transitionListenerAdded) {
+      _transitionListenerAdded = true;
+      final animation = ModalRoute.of(context)?.animation;
+      if (animation == null || animation.status == AnimationStatus.completed) {
+        _onTransitionComplete();
+      } else {
+        animation.addStatusListener(_onRouteAnimation);
+      }
+    }
+  }
+
+  void _onRouteAnimation(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      ModalRoute.of(context)
+          ?.animation
+          ?.removeStatusListener(_onRouteAnimation);
+      if (mounted) _onTransitionComplete();
+    }
+  }
+
+  void _onTransitionComplete() {
+    if (widget.id == null) nameFocusNode.requestFocus();
+  }
+
+  @override
   void initState() {
     super.initState();
+    _performSearch('');
+
     if (widget.id == null) return;
 
     (db.diaries.select()..where((u) => u.id.equals(widget.id!)))
         .getSingle()
-        .then(
-      (entry) async {
-        setState(() {
-          quantity.text = entry.quantity.toString();
-          created = entry.created;
-          unit = entry.unit;
-        });
+        .then((entry) async {
+      setState(() {
+        quantity.text = entry.quantity.toString();
+        created = entry.created;
+        unit = entry.unit;
+      });
 
-        final food = await (db.foods.select()
-              ..where((u) => u.id.equals(entry.food)))
+      if (entry.meal != null) {
+        final meal = await (db.meals.select()
+              ..where((u) => u.id.equals(entry.meal!)))
             .getSingleOrNull();
-        if (food == null) return;
-
+        if (meal == null || !mounted) return;
         setState(() {
-          imageFile = food.imageFile;
-          barcode.text = food.barcode ?? "";
-          nameController?.text = food.name;
-          selectedFood = food;
-          // Display base values (per servingSize)
-          calories.text =
-              food.calories != null ? formatter.format(food.calories!) : "0";
-          protein.text =
-              food.proteinG != null ? formatter.format(food.proteinG!) : "0";
-          carb.text = food.carbohydrateG != null
-              ? formatter.format(food.carbohydrateG!)
-              : "0";
-          fat.text = food.fatG != null ? formatter.format(food.fatG!) : "0";
-          fiber.text =
-              food.fiberG != null ? formatter.format(food.fiberG!) : "0";
-          kilojoules.text = food.calories != null
-              ? formatter.format(food.calories! * 4.184)
-              : "0";
+          _selectedMealId = meal.id;
+          nameController.text = meal.name;
+          imageFile = meal.imageFile;
         });
-      },
-    );
-  }
+        return;
+      }
 
-  Future<List<String>> searchDrift(String term) async {
-    return await (db.foods.selectOnly()
-          ..where(db.foods.name.contains(term.toLowerCase()))
-          ..limit(30)
-          ..orderBy([
-            OrderingTerm(
-              expression: db.foods.favorite,
-              mode: OrderingMode.desc,
-            ),
-          ])
-          ..addColumns([db.foods.name, db.foods.favorite]))
-        .get()
-        .then(
-          (results) =>
-              results.map((result) => result.read(db.foods.name)!).toList(),
-        );
+      if (entry.food == null) return;
+      final food = await (db.foods.select()
+            ..where((u) => u.id.equals(entry.food!)))
+          .getSingleOrNull();
+      if (food == null) return;
+
+      setState(() {
+        imageFile = food.imageFile;
+        barcode.text = food.barcode ?? "";
+        nameController.text = food.name;
+        selectedFood = food;
+        calories.text =
+            food.calories != null ? formatter.format(food.calories!) : "0";
+        protein.text =
+            food.proteinG != null ? formatter.format(food.proteinG!) : "0";
+        carb.text = food.carbohydrateG != null
+            ? formatter.format(food.carbohydrateG!)
+            : "0";
+        fat.text = food.fatG != null ? formatter.format(food.fatG!) : "0";
+        fiber.text = food.fiberG != null ? formatter.format(food.fiberG!) : "0";
+        kilojoules.text = food.calories != null
+            ? formatter.format(food.calories! * 4.184)
+            : "0";
+      });
+    });
   }
 
   @override
   void dispose() {
+    nameController.dispose();
+    nameFocusNode.dispose();
     super.dispose();
   }
 
+  Future<void> _performSearch(String term) async {
+    final foods = await (db.foods.select()
+          ..where(
+            (f) => term.isEmpty
+                ? const Constant(true)
+                : f.name.contains(term.toLowerCase()),
+          )
+          ..orderBy([
+            (f) =>
+                OrderingTerm(expression: f.favorite, mode: OrderingMode.desc),
+          ])
+          ..limit(20))
+        .get();
+
+    final meals = await (db.meals.select()
+          ..where(
+            (m) => term.isEmpty
+                ? const Constant(true)
+                : m.name.contains(term.toLowerCase()),
+          )
+          ..orderBy([
+            (m) =>
+                OrderingTerm(expression: m.favorite, mode: OrderingMode.desc),
+          ])
+          ..limit(10))
+        .get();
+
+    final results = <_SearchResult>[
+      ...meals.map((m) => _SearchResult.meal(m)),
+      ...foods.map((f) => _SearchResult.food(f)),
+    ];
+
+    if (term.isNotEmpty) {
+      results.add(_SearchResult.openFoodFacts(term));
+    }
+
+    if (!mounted) return;
+    setState(() {
+      searchResults = results;
+    });
+  }
+
+  void _applyMeal(Meal meal) {
+    setState(() {
+      _selectedMealId = meal.id;
+      selectedFood = null;
+      nameController.text = meal.name;
+      imageFile = meal.imageFile;
+      unit = 'serving';
+      quantity.text = '1';
+    });
+    quantityNode.requestFocus();
+    selectAll(quantity);
+  }
+
+  void _applyFood(Food food, {double? lastQuantity, String? lastUnit}) {
+    setState(() {
+      foodDirty = false;
+      selectedFood = food;
+      nameController.text = food.name;
+      calories.text =
+          food.calories != null ? formatter.format(food.calories!) : "0";
+      protein.text =
+          food.proteinG != null ? formatter.format(food.proteinG!) : "0";
+      carb.text = food.carbohydrateG != null
+          ? formatter.format(food.carbohydrateG!)
+          : "0";
+      fat.text = food.fatG != null ? formatter.format(food.fatG!) : "0";
+      fiber.text = food.fiberG != null ? formatter.format(food.fiberG!) : "0";
+      kilojoules.text = food.calories != null
+          ? formatter.format(food.calories! * 4.184)
+          : "0";
+      if (lastQuantity != null) quantity.text = lastQuantity.toString();
+      if (lastUnit != null) unit = lastUnit;
+    });
+    quantityNode.requestFocus();
+    selectAll(quantity);
+  }
+
+  Future<void> _onResultTap(_SearchResult result) async {
+    if (result.type == _ResultType.openFoodFacts) {
+      final Food? food = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => SearchOpenFoodFacts(terms: result.name),
+        ),
+      );
+      if (food == null) return;
+      _applyFood(food);
+      return;
+    }
+
+    if (result.type == _ResultType.meal) {
+      _applyMeal(result.meal!);
+      return;
+    }
+
+    final food = result.food!;
+    final lastEntry = await (db.diaries.select()
+          ..where((u) => u.food.equals(food.id))
+          ..orderBy([
+            (u) => OrderingTerm(
+                  expression: u.created,
+                  mode: OrderingMode.desc,
+                ),
+          ])
+          ..limit(1))
+        .getSingleOrNull();
+
+    _applyFood(
+      food,
+      lastQuantity: lastEntry?.quantity,
+      lastUnit: lastEntry?.unit,
+    );
+  }
+
   Future<void> saveFood() async {
-    // Parse the displayed values (which are per servingSize, typically 100g)
     final parsedCalories = formatter.tryParse(calories.text)?.toDouble();
     final parsedProtein = formatter.tryParse(protein.text)?.toDouble();
     final parsedCarb = formatter.tryParse(carb.text)?.toDouble();
     final parsedFat = formatter.tryParse(fat.text)?.toDouble();
     final parsedFiber = formatter.tryParse(fiber.text)?.toDouble();
 
-    if (selectedFood?.name != nameController?.text) {
+    if (selectedFood?.name != nameController.text) {
       final foodId = await (db.foods.insertOne(
         FoodsCompanion.insert(
-          name: nameController!.text,
+          name: nameController.text,
           calories: Value(parsedCalories),
           proteinG: Value(parsedProtein),
           carbohydrateG: Value(parsedCarb),
@@ -196,7 +341,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       ));
       final food = await (db.foods.select()..where((u) => u.id.equals(foodId)))
           .getSingle();
-
       setState(() {
         selectedFood = food;
       });
@@ -216,7 +360,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       final food = await (db.foods.select()
             ..where((u) => u.id.equals(selectedFood!.id)))
           .getSingle();
-
       setState(() {
         selectedFood = food;
       });
@@ -230,10 +373,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-
-    if (pickedDate != null) {
-      pickTime(pickedDate);
-    }
+    if (pickedDate != null) pickTime(pickedDate);
   }
 
   Future<void> pickTime(DateTime pickedDate) async {
@@ -247,7 +387,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       context: context,
       initialTime: TimeOfDay.fromDateTime(created ?? DateTime.now()),
     );
-
     if (pickedTime != null) {
       setState(() {
         created = DateTime(
@@ -262,15 +401,45 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   Future<void> save() async {
+    final qty = double.tryParse(quantity.text) ?? 1.0;
+    final date = created ?? DateTime.now();
+
+    if (_selectedMealId != null) {
+      if (widget.id == null)
+        await db.into(db.diaries).insert(
+              DiariesCompanion.insert(
+                meal: Value(_selectedMealId!),
+                created: date,
+                quantity: qty,
+                unit: unit,
+              ),
+            );
+      else
+        db.update(db.diaries)
+          ..where((u) => u.id.equals(widget.id!))
+          ..write(
+            DiariesCompanion(
+              meal: Value(_selectedMealId!),
+              food: const Value(null),
+              created: Value(date),
+              quantity: Value(qty),
+              unit: Value(unit),
+            ),
+          );
+      if (!mounted) return;
+      Navigator.pop(context);
+      return;
+    }
+
     if (foodDirty) await saveFood();
     final food = selectedFood!;
 
     if (widget.id == null)
       await db.into(db.diaries).insert(
             DiariesCompanion.insert(
-              food: food.id,
-              created: created ?? DateTime.now(),
-              quantity: double.parse(quantity.text),
+              food: Value(food.id),
+              created: date,
+              quantity: qty,
               unit: unit,
             ),
           );
@@ -280,8 +449,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         ..write(
           DiariesCompanion(
             food: Value(food.id),
-            created: Value(created ?? DateTime.now()),
-            quantity: Value(double.parse(quantity.text)),
+            meal: const Value(null),
+            created: Value(date),
+            quantity: Value(qty),
             unit: Value(unit),
           ),
         );
@@ -289,45 +459,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     Navigator.pop(context);
   }
 
-  Future<void> selectDate() async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: created,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (pickedDate != null) {
-      selectTime(pickedDate);
-    }
-  }
-
-  Future<void> selectTime(DateTime pickedDate) async {
-    if (!settings.longDateFormat.contains('h:mm'))
-      return setState(() {
-        created = pickedDate;
-      });
-
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(created ?? DateTime.now()),
-    );
-
-    if (pickedTime != null) {
-      setState(() {
-        created = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-      });
-    }
-  }
-
   void setImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.image,
       allowMultiple: false,
     );
@@ -339,6 +472,58 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     });
   }
 
+  Widget _buildResultLeading(_SearchResult result) {
+    if (result.type == _ResultType.openFoodFacts)
+      return const Icon(Icons.search);
+
+    if (result.type == _ResultType.meal) {
+      final imageFile = result.meal!.imageFile;
+      if (settings.showImages && imageFile?.isNotEmpty == true) {
+        return SizedBox(
+          height: 48,
+          width: 48,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.file(
+              File(imageFile!),
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Icon(
+                Icons.restaurant,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+        );
+      }
+      return Icon(Icons.restaurant,
+          color: Theme.of(context).colorScheme.primary);
+    }
+
+    final food = result.food!;
+    if (settings.showImages) {
+      if (food.imageFile?.isNotEmpty == true)
+        return SizedBox(
+          height: 48,
+          width: 48,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.file(
+              File(food.imageFile!),
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
+          ),
+        );
+      if (food.smallImage?.isNotEmpty == true)
+        return SizedBox(
+          height: 48,
+          width: 50,
+          child: CachedNetworkImage(imageUrl: food.smallImage!),
+        );
+    }
+    return const Icon(Icons.food_bank_outlined);
+  }
+
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
@@ -346,6 +531,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     final shortUnit =
         getShortUnit(selectedFood?.servingUnit ?? settings.foodUnit);
     final servingSize = selectedFood?.servingSize ?? 100;
+    final showList = selectedFood == null && _selectedMealId == null;
 
     return Scaffold(
       appBar: AppBar(
@@ -368,9 +554,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       actions: <Widget>[
                         TextButton(
                           child: const Text('Cancel'),
-                          onPressed: () {
-                            Navigator.pop(dialogContext);
-                          },
+                          onPressed: () => Navigator.pop(dialogContext),
                         ),
                         TextButton(
                           child: const Text('Delete'),
@@ -395,542 +579,378 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         child: ListView(
           controller: scrollCtrl,
           children: [
-            Autocomplete<String>(
-              optionsMaxHeight: 300,
-              optionsBuilder: (textEditingValue) async {
-                if (textEditingValue.text.isEmpty) return [];
-
-                final results = await searchDrift(textEditingValue.text);
-
-                if (results.isEmpty && textEditingValue.text.isNotEmpty) {
-                  return ['__SEARCH_OPENFOODFACTS__|${textEditingValue.text}'];
-                }
-
-                return results;
-              },
-              displayStringForOption: (option) {
-                if (option.startsWith('__SEARCH_OPENFOODFACTS__|')) {
-                  return option.split('|').last;
-                }
-                return option;
-              },
-              optionsViewBuilder: (context, onSelected, options) {
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4.0,
-                    child: Container(
-                      constraints: const BoxConstraints(maxHeight: 300),
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final option = options.elementAt(index);
-                          final isOpenFoodFactsOption =
-                              option.startsWith('__SEARCH_OPENFOODFACTS__|');
-
-                          return InkWell(
-                            onTap: () {
-                              onSelected(option);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  if (isOpenFoodFactsOption) ...[
-                                    const Icon(Icons.search, size: 20),
-                                    const SizedBox(width: 8),
-                                  ],
-                                  Expanded(
-                                    child: Text(
-                                      isOpenFoodFactsOption
-                                          ? 'Search OpenFoodFacts'
-                                          : option,
-                                    ),
-                                  ),
-                                ],
+            TextField(
+              key: const Key('name_field'),
+              controller: nameController,
+              focusNode: nameFocusNode,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: 'Name',
+                hintText: 'Search foods and meals...',
+                suffixIcon: (selectedFood != null || _selectedMealId != null)
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          setState(() {
+                            selectedFood = null;
+                            _selectedMealId = null;
+                            foodDirty = false;
+                          });
+                          nameController.clear();
+                          _performSearch('');
+                        },
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () async {
+                          final Food? food = await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SearchOpenFoodFacts(
+                                terms: nameController.text,
                               ),
                             ),
                           );
+                          if (food == null) return;
+                          _applyFood(food);
                         },
                       ),
-                    ),
-                  ),
-                );
-              },
-              onSelected: (option) async {
-                if (option.startsWith('__SEARCH_OPENFOODFACTS__|')) {
-                  final searchTerms = option.split('|')[1];
-                  Food? food = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SearchOpenFoodFacts(
-                        terms: searchTerms,
-                      ),
-                    ),
-                  );
-                  if (food == null) return;
+              ),
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: (value) {
+                if (selectedFood == null) {
+                  _performSearch(value);
+                } else {
                   setState(() {
-                    selectedFood = food;
-                    foodDirty = false;
-                    // Set base nutritional values (per servingSize)
-                    calories.text = food.calories != null
-                        ? formatter.format(food.calories!)
-                        : "0";
-                    protein.text = food.proteinG != null
-                        ? formatter.format(food.proteinG!)
-                        : "0";
-                    carb.text = food.carbohydrateG != null
-                        ? formatter.format(food.carbohydrateG!)
-                        : "0";
-                    fat.text =
-                        food.fatG != null ? formatter.format(food.fatG!) : "0";
-                    fiber.text = food.fiberG != null
-                        ? formatter.format(food.fiberG!)
-                        : "0";
-                    kilojoules.text = food.calories != null
-                        ? formatter.format(food.calories! * 4.184)
-                        : "0";
+                    foodDirty = true;
                   });
-                  nameController?.text = food.name;
-                  quantityNode.requestFocus();
-                  selectAll(quantity);
-                  return;
                 }
-
-                final food = await (db.foods.select()
-                      ..where((tbl) => tbl.name.equals(option))
-                      ..limit(1))
-                    .getSingleOrNull();
-                if (food == null) return;
-                final lastEntry = await (db.diaries.select()
-                      ..where((u) => u.food.equals(food.id))
-                      ..orderBy([
-                        (u) => OrderingTerm(
-                              expression: u.created,
-                              mode: OrderingMode.desc,
-                            ),
-                      ])
-                      ..limit(1))
-                    .getSingleOrNull();
-                setState(() {
-                  foodDirty = false;
-                  selectedFood = food;
-                  // Set base nutritional values (per servingSize)
-                  calories.text = food.calories != null
-                      ? formatter.format(food.calories!)
-                      : "0";
-                  protein.text = food.proteinG != null
-                      ? formatter.format(food.proteinG!)
-                      : "0";
-                  carb.text = food.carbohydrateG != null
-                      ? formatter.format(food.carbohydrateG!)
-                      : "0";
-                  fat.text =
-                      food.fatG != null ? formatter.format(food.fatG!) : "0";
-                  fiber.text = food.fiberG != null
-                      ? formatter.format(food.fiberG!)
-                      : "0";
-                  kilojoules.text = food.calories != null
-                      ? formatter.format(food.calories! * 4.184)
-                      : "0";
-                  if (lastEntry == null) return;
-                  quantity.text = lastEntry.quantity.toString();
-                  unit = lastEntry.unit;
-                });
-                quantityNode.requestFocus();
-                selectAll(quantity);
               },
-              fieldViewBuilder: (
-                BuildContext context,
-                TextEditingController textEditingController,
-                FocusNode focusNode,
-                VoidCallback onFieldSubmitted,
-              ) {
-                nameController = textEditingController;
-                return TextFormField(
+            ),
+            const SizedBox(height: 8),
+            if (showList) ...[
+              for (final result in searchResults)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: _buildResultLeading(result),
+                  title: Text(
+                    result.type == _ResultType.openFoodFacts
+                        ? 'Search OpenFoodFacts for "${result.name}"'
+                        : result.name,
+                  ),
+                  subtitle: result.type == _ResultType.meal
+                      ? const Text('Meal')
+                      : result.food?.calories != null
+                          ? Text(
+                              '${result.food!.calories!.toStringAsFixed(0)} kcal',
+                            )
+                          : null,
+                  onTap: () => _onResultTap(result),
+                ),
+            ] else ...[
+              TextField(
+                controller: quantity,
+                focusNode: quantityNode,
+                decoration: const InputDecoration(label: Text("Quantity")),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onTap: () => quantity.selection = TextSelection(
+                  baseOffset: 0,
+                  extentOffset: quantity.text.length,
+                ),
+                textInputAction: TextInputAction.next,
+                onChanged: (value) => setState(() {}),
+                onSubmitted: (value) {
+                  if (selectedFood != null) save();
+                },
+              ),
+              const SizedBox(height: 8),
+              DropdownButtonFormField<String>(
+                initialValue: unit,
+                decoration: const InputDecoration(labelText: 'Unit'),
+                items: unitOptions.map((String value) {
+                  if (value == 'serving' && selectedFood != null)
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text("serving ($servingSize $shortUnit)"),
+                    );
+                  else
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    unit = newValue!;
+                  });
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Created date'),
+                subtitle: Text(
+                  DateFormat(settings.longDateFormat)
+                      .format(created ?? DateTime.now()),
+                ),
+                trailing: const Icon(Icons.calendar_today),
+                onTap: () => pickDate(),
+              ),
+              if (_selectedMealId == null && !kIsWeb)
+                TextField(
+                  controller: barcode,
+                  textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Name',
-                    hintText: 'Type to search...',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () async {
-                        Food? food = await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SearchOpenFoodFacts(
-                              terms: textEditingController.text,
-                            ),
-                          ),
-                        );
-                        if (food == null) return;
-                        setState(() {
-                          selectedFood = food;
-                          // Set base nutritional values
-                          calories.text = food.calories != null
-                              ? formatter.format(food.calories!)
-                              : "0";
-                          protein.text = food.proteinG != null
-                              ? formatter.format(food.proteinG!)
-                              : "0";
-                          carb.text = food.carbohydrateG != null
-                              ? formatter.format(food.carbohydrateG!)
-                              : "0";
-                          fat.text = food.fatG != null
-                              ? formatter.format(food.fatG!)
-                              : "0";
-                          fiber.text = food.fiberG != null
-                              ? formatter.format(food.fiberG!)
-                              : "0";
-                          kilojoules.text = food.calories != null
-                              ? formatter.format(food.calories! * 4.184)
-                              : "0";
-                        });
-                        nameController?.text = food.name;
-                        quantityNode.requestFocus();
-                        selectAll(quantity);
+                    labelText: 'Barcode',
+                    suffixIcon: ScanBarcode(
+                      text: true,
+                      value: barcode.text,
+                      onBarcode: (value) {
+                        barcode.text = value;
+                        toast(context, 'Barcode not found. Save to insert.');
+                      },
+                      onFood: (food) {
+                        barcode.text = food.barcode!;
+                        _applyFood(food);
                       },
                     ),
                   ),
-                  autofocus: widget.id == null,
-                  controller: textEditingController,
-                  focusNode: focusNode,
-                  textCapitalization: TextCapitalization.sentences,
-                  onFieldSubmitted: (String value) {
-                    if (!settings.selectEntryOnSubmit) return;
-                    onFieldSubmitted();
-                  },
-                  onChanged: (value) => setState(() {
-                    foodDirty = true;
-                  }),
-                  textInputAction: settings.selectEntryOnSubmit
-                      ? TextInputAction.next
-                      : null,
-                );
-              },
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: quantity,
-              focusNode: quantityNode,
-              decoration: const InputDecoration(label: Text("Quantity")),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onTap: () => quantity.selection = TextSelection(
-                baseOffset: 0,
-                extentOffset: quantity.text.length,
-              ),
-              textInputAction: TextInputAction.next,
-              onChanged: (value) => setState(() {}),
-              onSubmitted: (value) {
-                if (selectedFood != null) save();
-              },
-            ),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              initialValue: unit,
-              decoration: const InputDecoration(labelText: 'Unit'),
-              items: unitOptions.map((String value) {
-                if (value == 'serving' && selectedFood != null)
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text("serving ($servingSize $shortUnit)"),
-                  );
-                else
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  unit = newValue!;
-                });
-              },
-            ),
-            ListTile(
-              title: const Text('Created date'),
-              subtitle: Text(
-                DateFormat(settings.longDateFormat)
-                    .format(created ?? DateTime.now()),
-              ),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () => pickDate(),
-            ),
-            if (kIsWeb)
-              const SizedBox.shrink()
-            else
-              TextField(
-                controller: barcode,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelText: 'Barcode',
-                  suffixIcon: ScanBarcode(
-                    text: true,
-                    value: barcode.text,
-                    onBarcode: (value) {
-                      barcode.text = value;
-                      toast(context, 'Barcode not found. Save to insert.');
-                    },
-                    onFood: (food) {
-                      barcode.text = food.barcode!;
-                      setState(() {
-                        selectedFood = food;
-                        // Set base nutritional values
-                        calories.text = food.calories != null
-                            ? formatter.format(food.calories!)
-                            : "0";
-                        protein.text = food.proteinG != null
-                            ? formatter.format(food.proteinG!)
-                            : "0";
-                        carb.text = food.carbohydrateG != null
-                            ? formatter.format(food.carbohydrateG!)
-                            : "0";
-                        fat.text = food.fatG != null
-                            ? formatter.format(food.fatG!)
-                            : "0";
-                        fiber.text = food.fiberG != null
-                            ? formatter.format(food.fiberG!)
-                            : "0";
-                        kilojoules.text = food.calories != null
-                            ? formatter.format(food.calories! * 4.184)
-                            : "0";
-                      });
-                    },
-                  ),
                 ),
-              ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: calories,
-                    focusNode: caloriesNode,
-                    decoration: InputDecoration(
-                      labelText: 'Calories (per $servingSize $shortUnit)',
-                    ),
-                    onTap: () => selectAll(calories),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      setState(() {
-                        foodDirty = true;
-                        kilojoules.text =
-                            formatter.format(formatter.parse(value) * 4.184);
-                      });
-                    },
-                    onSubmitted: (value) {
-                      selectAll(kilojoules);
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                ),
-                if (unit != 'kilojoules') ...[
-                  const SizedBox(width: 16.0),
-                  Expanded(
-                    child: TextField(
-                      controller: kilojoules,
-                      decoration: InputDecoration(
-                        labelText: 'Kilojoules (per $servingSize $shortUnit)',
+              if (_selectedMealId == null) ...[
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: calories,
+                        focusNode: caloriesNode,
+                        decoration: InputDecoration(
+                          labelText: 'Calories (per $servingSize $shortUnit)',
+                        ),
+                        onTap: () => selectAll(calories),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (value) {
+                          setState(() {
+                            foodDirty = true;
+                            kilojoules.text = formatter
+                                .format(formatter.parse(value) * 4.184);
+                          });
+                        },
+                        onSubmitted: (value) => selectAll(kilojoules),
+                        textInputAction: TextInputAction.next,
                       ),
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      onChanged: (value) {
-                        setState(() {
-                          foodDirty = true;
-                          calories.text =
-                              formatter.format(formatter.parse(value) / 4.184);
-                        });
-                      },
-                      onSubmitted: (value) => selectAll(protein),
-                      onTap: () => selectAll(kilojoules),
-                      textInputAction: TextInputAction.next,
+                    ),
+                    if (unit != 'kilojoules') ...[
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: TextField(
+                          controller: kilojoules,
+                          decoration: InputDecoration(
+                            labelText:
+                                'Kilojoules (per $servingSize $shortUnit)',
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          onChanged: (value) {
+                            setState(() {
+                              foodDirty = true;
+                              calories.text = formatter
+                                  .format(formatter.parse(value) / 4.184);
+                            });
+                          },
+                          onSubmitted: (value) => selectAll(protein),
+                          onTap: () => selectAll(kilojoules),
+                          textInputAction: TextInputAction.next,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: protein,
+                        decoration: InputDecoration(
+                          labelText: 'Protein (per $servingSize $shortUnit)',
+                        ),
+                        onTap: () => selectAll(protein),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (value) {
+                          setState(() {
+                            foodDirty = true;
+                          });
+                        },
+                        onSubmitted: (value) => selectAll(carb),
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: carb,
+                        decoration: InputDecoration(
+                          labelText: 'Carbs (per $servingSize $shortUnit)',
+                        ),
+                        onTap: () => selectAll(carb),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (value) {
+                          setState(() {
+                            foodDirty = true;
+                          });
+                        },
+                        textInputAction: TextInputAction.next,
+                        onSubmitted: (value) => selectAll(fat),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: fat,
+                        decoration: InputDecoration(
+                          labelText: 'Fat (per $servingSize $shortUnit)',
+                        ),
+                        onTap: () => selectAll(fat),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (value) {
+                          setState(() {
+                            foodDirty = true;
+                          });
+                        },
+                        onSubmitted: (value) => selectAll(fiber),
+                        textInputAction: TextInputAction.next,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: fiber,
+                        decoration: InputDecoration(
+                          labelText: 'Fiber (per $servingSize $shortUnit)',
+                        ),
+                        onTap: () => selectAll(fiber),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        onChanged: (value) {
+                          setState(() {
+                            foodDirty = true;
+                          });
+                        },
+                        onSubmitted: (value) => save(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (imageFile?.isNotEmpty == true &&
+                    settings.showImages &&
+                    !kIsWeb) ...[
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 200,
+                    child: Image.file(
+                      File(imageFile!),
+                      errorBuilder: (context, error, stackTrace) =>
+                          TextButton.icon(
+                        onPressed: setImage,
+                        label: const Text('Image error'),
+                        icon: const Icon(Icons.error),
+                      ),
                     ),
                   ),
                 ],
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: protein,
-                    decoration: InputDecoration(
-                      labelText: 'Protein (per $servingSize $shortUnit)',
-                    ),
-                    onTap: () => selectAll(protein),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      setState(() {
-                        foodDirty = true;
-                      });
-                    },
-                    onSubmitted: (value) => selectAll(carb),
-                    textInputAction: TextInputAction.next,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: carb,
-                    decoration: InputDecoration(
-                      labelText: 'Carbs (per $servingSize $shortUnit)',
-                    ),
-                    onTap: () => selectAll(carb),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      setState(() {
-                        foodDirty = true;
-                      });
-                    },
-                    textInputAction: TextInputAction.next,
-                    onSubmitted: (value) => selectAll(fat),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: fat,
-                    decoration: InputDecoration(
-                      labelText: 'Fat (per $servingSize $shortUnit)',
-                    ),
-                    onTap: () => selectAll(fat),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      setState(() {
-                        foodDirty = true;
-                      });
-                    },
-                    onSubmitted: (value) => selectAll(fiber),
-                    textInputAction: TextInputAction.next,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: fiber,
-                    decoration: InputDecoration(
-                      labelText: 'Fiber (per $servingSize $shortUnit)',
-                    ),
-                    onTap: () => selectAll(fiber),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (value) {
-                      setState(() {
-                        foodDirty = true;
-                      });
-                    },
-                    onSubmitted: (value) => save(),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (imageFile?.isNotEmpty == true &&
-                settings.showImages &&
-                !kIsWeb) ...[
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 200,
-                child: Image.file(
-                  File(imageFile!),
-                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                if (settings.showImages && imageFile == null) ...[
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    icon: const Icon(Icons.image),
+                    label: const Text('Set image'),
                     onPressed: setImage,
-                    label: const Text('Image error'),
-                    icon: const Icon(Icons.error),
                   ),
+                ],
+                if (imageFile != null && settings.showImages)
+                  TextButton.icon(
+                    icon: const Icon(Icons.delete),
+                    label: const Text("Remove image"),
+                    onPressed: () => setState(() {
+                      imageFile = null;
+                      foodDirty = true;
+                    }),
+                  ),
+                const SizedBox(height: 32),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Calories per ${quantity.text} $shortUnit',
+                        value: '${formatter.format(entryCalories)} kcal',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Kilojoules',
+                        value: '${formatter.format(entryKJ)} kJ',
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Protein',
+                        value: '${formatter.format(entryProtein)} g',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Carbs',
+                        value: '${formatter.format(entryCarb)} g',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Fat',
+                        value: '${formatter.format(entryFat)} g',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Fiber',
+                        value: '${formatter.format(entryFiber)} g',
+                      ),
+                    ),
+                  ],
+                ),
+              ], // end if (_selectedMealId == null)
             ],
-            if (settings.showImages && imageFile == null) ...[
-              const SizedBox(height: 8),
-              TextButton.icon(
-                icon: const Icon(Icons.image),
-                label: const Text('Set image'),
-                onPressed: setImage,
-              ),
-            ],
-            if (imageFile != null && settings.showImages)
-              TextButton.icon(
-                icon: const Icon(Icons.delete),
-                label: const Text("Remove image"),
-                onPressed: () => setState(() {
-                  imageFile = null;
-                  foodDirty = true;
-                }),
-              ),
-            const SizedBox(height: 32),
-            Row(
-              children: [
-                Expanded(
-                  child: totalCell(
-                    label: 'Calories per ${quantity.text} $shortUnit',
-                    value: '${formatter.format(entryCalories)} kcal',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: totalCell(
-                    label: 'Kilojoules',
-                    value: '${formatter.format(entryKJ)} kJ',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: totalCell(
-                    label: 'Protein',
-                    value: '${formatter.format(entryProtein)} g',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: totalCell(
-                    label: 'Carbs',
-                    value: '${formatter.format(entryCarb)} g',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: totalCell(
-                    label: 'Fat',
-                    value: '${formatter.format(entryFat)} g',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: totalCell(
-                    label: 'Fiber',
-                    value: '${formatter.format(entryFiber)} g',
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: save,
-        label: 'Save',
-        icon: Icons.save,
-        scroll: scrollCtrl,
-      ),
+      floatingActionButton: (selectedFood != null || _selectedMealId != null)
+          ? AnimatedFab(
+              onTap: save,
+              label: 'Save',
+              icon: Icons.save,
+              scroll: scrollCtrl,
+            )
+          : null,
     );
   }
 }

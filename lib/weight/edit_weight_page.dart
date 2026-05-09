@@ -162,8 +162,10 @@ class _EditWeightPageState extends State<EditWeightPage> {
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
-              Share.share(
-                "I just weighed ${valueController.text} $unit!",
+              SharePlus.instance.share(
+                ShareParams(
+                  text: "I just weighed ${valueController.text} $unit!",
+                ),
               );
             },
           ),
@@ -276,8 +278,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
                   icon: const Icon(Icons.image),
                   label: const Text('Set image'),
                   onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(type: FileType.image);
+                    FilePickerResult? result =
+                        await FilePicker.pickFiles(type: FileType.image);
                     final path = result?.files.single.path;
                     if (path == null) return;
                     setState(() {

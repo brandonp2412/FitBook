@@ -294,13 +294,17 @@ class _AppLineState extends State<AppLine> {
             ..limit(settings.limit))
           .watch()
           .map((results) {
-        return results.map((result) {
-          final created = result.read(db.diaries.created)!.toLocal();
-          double val =
-              (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
-          String unit = widget.metric == 'calories' ? 'kcal' : 'g';
-          return GraphData(created: created, val: val, unit: unit);
-        }).toList().reversed.toList();
+        return results
+            .map((result) {
+              final created = result.read(db.diaries.created)!.toLocal();
+              double val =
+                  (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
+              String unit = widget.metric == 'calories' ? 'kcal' : 'g';
+              return GraphData(created: created, val: val, unit: unit);
+            })
+            .toList()
+            .reversed
+            .toList();
       });
     }
   }

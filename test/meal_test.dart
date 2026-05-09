@@ -149,9 +149,9 @@ void main() {
     await settle(tester);
 
     // Verify in DB
-    final updatedMeal =
-        await (db.meals.select()..where((t) => t.id.equals(mealId)))
-            .getSingle();
+    final updatedMeal = await (db.meals.select()
+          ..where((t) => t.id.equals(mealId)))
+        .getSingle();
     expect(updatedMeal.name, 'New Meal Name');
 
     final mealFoods = await db.mealFoods.select().get();

@@ -61,9 +61,9 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   Future<void> _load() async {
-    final meal =
-        await (db.meals.select()..where((t) => t.id.equals(widget.id!)))
-            .getSingle();
+    final meal = await (db.meals.select()
+          ..where((t) => t.id.equals(widget.id!)))
+        .getSingle();
     final rows = await (db.mealFoods.select().join([
       innerJoin(db.foods, db.foods.id.equalsExp(db.mealFoods.food)),
     ])
@@ -103,8 +103,8 @@ class _EditMealPageState extends State<EditMealPage> {
       );
     } else {
       mealId = widget.id!;
-      await (db.meals.update()..where((t) => t.id.equals(mealId)))
-          .write(MealsCompanion(name: Value(name), imageFile: Value(_imageFile)));
+      await (db.meals.update()..where((t) => t.id.equals(mealId))).write(
+          MealsCompanion(name: Value(name), imageFile: Value(_imageFile)));
     }
 
     await (db.mealFoods.delete()..where((t) => t.meal.equals(mealId))).go();
@@ -123,7 +123,7 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   Future<void> _pickImage() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    final result = await FilePicker.pickFiles(type: FileType.image);
     if (result == null) return;
     setState(() => _imageFile = result.files.single.path);
   }
@@ -182,99 +182,95 @@ class _EditMealPageState extends State<EditMealPage> {
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                  child: TextField(
-                    controller: nameCtrl,
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: OutlineInputBorder(),
+          : ListView.builder(
+              controller: scrollCtrl,
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+              itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
+              itemBuilder: (ctx, i) {
+                if (i == 0)
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: TextField(
+                      controller: nameCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (_) => setState(() {}),
+                      textCapitalization: TextCapitalization.sentences,
+                      autofocus: widget.id == null,
+                      textInputAction: TextInputAction.done,
                     ),
-                    onChanged: (_) => setState(() {}),
-                    textCapitalization: TextCapitalization.sentences,
-                    autofocus: widget.id == null,
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
-                if (_imageFile != null)
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.file(
-                            File(_imageFile!),
-                            height: 160,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                  );
+                if (i == 1) {
+                  if (_imageFile != null)
+                    return Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.file(
+                              File(_imageFile!),
+                              height: 160,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 4, 20, 0),
-                        child: IconButton.filled(
-                          icon: const Icon(Icons.close),
-                          style: IconButton.styleFrom(
-                            backgroundColor:
-                                Colors.black.withValues(alpha: 0.5),
-                            foregroundColor: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                          child: IconButton.filled(
+                            icon: const Icon(Icons.close),
+                            style: IconButton.styleFrom(
+                              backgroundColor:
+                                  Colors.black.withValues(alpha: 0.5),
+                              foregroundColor: Colors.white,
+                            ),
+                            onPressed: () => setState(() => _imageFile = null),
                           ),
-                          onPressed: () => setState(() => _imageFile = null),
                         ),
-                      ),
-                    ],
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                      ],
+                    );
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.image),
                       label: const Text('Add image'),
                       onPressed: _pickImage,
                     ),
-                  ),
-                Expanded(
-                  child: mealFoods.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.restaurant_menu,
-                                size: 64,
-                                color: theme.colorScheme.outlineVariant,
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                'No foods yet. Tap + to add foods.',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          controller: scrollCtrl,
-                          padding: const EdgeInsets.fromLTRB(12, 4, 12, 100),
-                          itemCount: mealFoods.length,
-                          itemBuilder: (ctx, i) {
-                            final entry = mealFoods[i];
-                            return _FoodEntryCard(
-                              entry: entry,
-                              onRemove: () =>
-                                  setState(() => mealFoods.removeAt(i)),
-                              onChanged: () => setState(() {}),
-                            );
-                          },
+                  );
+                }
+                if (mealFoods.isEmpty)
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 48),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.restaurant_menu,
+                          size: 64,
+                          color: theme.colorScheme.outlineVariant,
                         ),
-                ),
-              ],
+                        const SizedBox(height: 12),
+                        Text(
+                          'No foods yet. Tap + to add foods.',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                final idx = i - 2;
+                return _FoodEntryCard(
+                  entry: mealFoods[idx],
+                  onRemove: () => setState(() => mealFoods.removeAt(idx)),
+                  onChanged: () => setState(() {}),
+                );
+              },
             ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -317,86 +313,94 @@ class _FoodEntryCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
-        child: Row(
-          children: [
-            Icon(
-              Icons.set_meal,
-              color: theme.colorScheme.primary,
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(entry.foodName, style: theme.textTheme.bodyLarge),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 68,
-                        child: TextField(
-                          controller: entry.quantityCtrl,
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          onTap: () => selectAll(entry.quantityCtrl),
-                          onChanged: (_) => onChanged(),
-                          style: theme.textTheme.bodyMedium,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.set_meal, color: theme.colorScheme.primary),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        entry.foodName,
+                        style: theme.textTheme.bodyLarge,
                       ),
-                      const SizedBox(width: 8),
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: unitOptions.contains(entry.unit)
-                              ? entry.unit
-                              : unitOptions.first,
+                    ),
+                    const SizedBox(width: 32),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 72,
+                      child: TextField(
+                        controller: entry.quantityCtrl,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        onTap: () => selectAll(entry.quantityCtrl),
+                        onChanged: (_) => onChanged(),
+                        style: theme.textTheme.bodyMedium,
+                        decoration: InputDecoration(
                           isDense: true,
-                          style: theme.textTheme.bodyMedium,
-                          items: unitOptions
-                              .map(
-                                (u) => DropdownMenuItem(
-                                  value: u,
-                                  child: Text(u),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (v) {
-                            entry.unit = v!;
-                            onChanged();
-                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        '${cal.toStringAsFixed(0)} kcal',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                    ),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: unitOptions.contains(entry.unit)
+                            ? entry.unit
+                            : unitOptions.first,
+                        isDense: true,
+                        style: theme.textTheme.bodyMedium,
+                        items: unitOptions
+                            .map(
+                              (u) => DropdownMenuItem(
+                                value: u,
+                                child: Text(u),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (v) {
+                          entry.unit = v!;
+                          onChanged();
+                        },
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Text(
+                      '${cal.toStringAsFixed(0)} kcal',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            IconButton(
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
               icon: const Icon(Icons.close),
               tooltip: 'Remove',
               onPressed: onRemove,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

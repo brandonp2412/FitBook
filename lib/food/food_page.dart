@@ -223,8 +223,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
                       if (selectedMealsCopy.isNotEmpty) {
                         await (db.delete(db.mealFoods)
                               ..where(
-                                (tbl) =>
-                                    tbl.meal.isIn(selectedMealsCopy),
+                                (tbl) => tbl.meal.isIn(selectedMealsCopy),
                               ))
                             .go();
                         await (db.delete(db.meals)
