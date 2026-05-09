@@ -76,9 +76,9 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await settle(tester);
 
-    // Back on food page — meal should appear with 'Meal' subtitle
+    // Back on food page — meal should appear with kcal total
     expect(find.text('Chicken and Rice'), findsOne);
-    expect(find.text('Meal'), findsOne);
+    expect(find.text('330 kcal'), findsOne);
 
     // Verify the meal icon is shown
     expect(find.byIcon(Icons.restaurant), findsWidgets);

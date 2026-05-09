@@ -21,6 +21,7 @@ class FoodList extends StatefulWidget {
     this.meals = const [],
     this.selectedMeals = const {},
     this.onMealSelect,
+    this.mealCalories = const {},
   });
 
   final List<FoodsCompanion> foods;
@@ -31,6 +32,7 @@ class FoodList extends StatefulWidget {
   final Function(int)? onMealSelect;
   final Function() onNext;
   final ScrollController ctrl;
+  final Map<int, double> mealCalories;
 
   @override
   State<FoodList> createState() => _FoodListState();
@@ -237,7 +239,11 @@ class _FoodListState extends State<FoodList> {
       child: ListTile(
         leading: leading,
         title: Text(meal.name),
-        subtitle: const Text('Meal'),
+        subtitle: Text(
+          widget.mealCalories.containsKey(meal.id)
+              ? '${widget.mealCalories[meal.id]!.toStringAsFixed(0)} kcal'
+              : 'Meal',
+        ),
         trailing: selected
             ? Checkbox(
                 value: true,
