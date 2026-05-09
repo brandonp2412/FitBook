@@ -22,6 +22,7 @@ class _MealFoodEntry {
   final int foodId;
   final String foodName;
   final double? calories;
+  final double servingSize;
   final TextEditingController quantityCtrl;
   String unit;
 
@@ -29,9 +30,11 @@ class _MealFoodEntry {
     required this.foodId,
     required this.foodName,
     this.calories,
+    double? servingSize,
     required double quantity,
     required this.unit,
-  }) : quantityCtrl = TextEditingController(text: quantity.toString());
+  })  : servingSize = servingSize ?? 100.0,
+        quantityCtrl = TextEditingController(text: quantity.toString());
 }
 
 class _EditMealPageState extends State<EditMealPage> {
@@ -80,6 +83,7 @@ class _EditMealPageState extends State<EditMealPage> {
           foodId: mf.food,
           foodName: food.name,
           calories: food.calories,
+          servingSize: food.servingSize,
           quantity: mf.quantity,
           unit: mf.unit,
         );
@@ -142,8 +146,9 @@ class _EditMealPageState extends State<EditMealPage> {
                 foodId: food.id,
                 foodName: food.name,
                 calories: food.calories,
+                servingSize: food.servingSize,
                 quantity: 1,
-                unit: food.servingUnit ?? 'serving',
+                unit: 'serving',
               ),
             ),
           );
@@ -152,10 +157,25 @@ class _EditMealPageState extends State<EditMealPage> {
     );
   }
 
-  double get _totalCalories => mealFoods.fold(0, (sum, e) {
-        final qty = double.tryParse(e.quantityCtrl.text) ?? 1;
-        return sum + (e.calories ?? 0) * qty;
-      });
+  double _entryCalories(_MealFoodEntry e) {
+    final qty = double.tryParse(e.quantityCtrl.text) ?? 1;
+    final qtyInGrams = switch (e.unit) {
+      'serving' => qty * e.servingSize,
+      'grams' || 'milliliters' => qty,
+      'milligrams' => qty / 1000.0,
+      'ounces' => qty * 28.35,
+      'pounds' => qty * 453.592,
+      'cups' => qty * 250.0,
+      'tablespoons' => qty * 15.0,
+      'teaspoons' => qty * 5.0,
+      'liters' => qty * 1000.0,
+      _ => qty,
+    };
+    return (e.calories ?? 0) * qtyInGrams / e.servingSize;
+  }
+
+  double get _totalCalories =>
+      mealFoods.fold(0, (sum, e) => sum + _entryCalories(e));
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +329,19 @@ class _FoodEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final qty = double.tryParse(entry.quantityCtrl.text) ?? 1;
-    final cal = (entry.calories ?? 0) * qty;
+    final qtyInGrams = switch (entry.unit) {
+      'serving' => qty * entry.servingSize,
+      'grams' || 'milliliters' => qty,
+      'milligrams' => qty / 1000.0,
+      'ounces' => qty * 28.35,
+      'pounds' => qty * 453.592,
+      'cups' => qty * 250.0,
+      'tablespoons' => qty * 15.0,
+      'teaspoons' => qty * 5.0,
+      'liters' => qty * 1000.0,
+      _ => qty,
+    };
+    final cal = (entry.calories ?? 0) * qtyInGrams / entry.servingSize;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
