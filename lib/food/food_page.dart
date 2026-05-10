@@ -266,6 +266,11 @@ GROUP BY meal_foods.meal
                                   ..where((tbl) => tbl.id.isIn(selectedCopy)))
                                 .go();
                           if (selectedMealsCopy.isNotEmpty) {
+                            await (db.delete(db.diaries)
+                                  ..where(
+                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                  ))
+                                .go();
                             await (db.delete(db.mealFoods)
                                   ..where(
                                     (tbl) => tbl.meal.isIn(selectedMealsCopy),
