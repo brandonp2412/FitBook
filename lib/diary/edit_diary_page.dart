@@ -415,17 +415,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ),
             );
       else
-        db.update(db.diaries)
-          ..where((u) => u.id.equals(widget.id!))
-          ..write(
-            DiariesCompanion(
-              meal: Value(_selectedMealId!),
-              food: const Value(null),
-              created: Value(date),
-              quantity: Value(qty),
-              unit: Value(unit),
-            ),
-          );
+        await (db.update(db.diaries)..where((u) => u.id.equals(widget.id!)))
+            .write(
+          DiariesCompanion(
+            meal: Value(_selectedMealId!),
+            food: const Value(null),
+            created: Value(date),
+            quantity: Value(qty),
+            unit: Value(unit),
+          ),
+        );
       if (!mounted) return;
       Navigator.pop(context);
       return;
@@ -444,17 +443,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ),
           );
     else
-      db.update(db.diaries)
-        ..where((u) => u.id.equals(widget.id!))
-        ..write(
-          DiariesCompanion(
-            food: Value(food.id),
-            meal: const Value(null),
-            created: Value(date),
-            quantity: Value(qty),
-            unit: Value(unit),
-          ),
-        );
+      await (db.update(db.diaries)..where((u) => u.id.equals(widget.id!)))
+          .write(
+        DiariesCompanion(
+          food: Value(food.id),
+          meal: const Value(null),
+          created: Value(date),
+          quantity: Value(qty),
+          unit: Value(unit),
+        ),
+      );
     if (!mounted) return;
     Navigator.pop(context);
   }
@@ -474,7 +472,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
 
   Widget _buildResultLeading(_SearchResult result) {
     if (result.type == _ResultType.openFoodFacts)
-      return const Icon(Icons.search);
+      return const SizedBox(
+        width: 48,
+        height: 48,
+        child: Center(child: Icon(Icons.search)),
+      );
 
     if (result.type == _ResultType.meal) {
       final imageFile = result.meal!.imageFile;
@@ -487,16 +489,26 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             child: Image.file(
               File(imageFile!),
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Icon(
-                Icons.restaurant,
-                color: Theme.of(context).colorScheme.primary,
+              errorBuilder: (_, __, ___) => Center(
+                child: Icon(
+                  Icons.restaurant,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ),
         );
       }
-      return Icon(Icons.restaurant,
-          color: Theme.of(context).colorScheme.primary);
+      return SizedBox(
+        width: 48,
+        height: 48,
+        child: Center(
+          child: Icon(
+            Icons.restaurant,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      );
     }
 
     final food = result.food!;
@@ -517,11 +529,15 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       if (food.smallImage?.isNotEmpty == true)
         return SizedBox(
           height: 48,
-          width: 50,
+          width: 48,
           child: CachedNetworkImage(imageUrl: food.smallImage!),
         );
     }
-    return const Icon(Icons.food_bank_outlined);
+    return const SizedBox(
+      width: 48,
+      height: 48,
+      child: Center(child: Icon(Icons.food_bank_outlined)),
+    );
   }
 
   @override
@@ -728,7 +744,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         ),
                         onTap: () => selectAll(calories),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;
@@ -750,7 +767,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                                 'Kilojoules (per $servingSize $shortUnit)',
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
+                            decimal: true,
+                          ),
                           onChanged: (value) {
                             setState(() {
                               foodDirty = true;
@@ -777,7 +795,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         ),
                         onTap: () => selectAll(protein),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;
@@ -796,7 +815,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         ),
                         onTap: () => selectAll(carb),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;
@@ -819,7 +839,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         ),
                         onTap: () => selectAll(fat),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;
@@ -838,7 +859,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         ),
                         onTap: () => selectAll(fiber),
                         keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;

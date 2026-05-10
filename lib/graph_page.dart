@@ -63,111 +63,120 @@ class GraphPageState extends State<GraphPage>
           shrinkWrap: true,
           controller: scrollCtrl,
           children: [
-            DropdownButtonFormField(
-              decoration: const InputDecoration(labelText: 'Metric'),
-              initialValue: filteredFields.contains(metric) ||
-                      metric == 'calories' ||
-                      metric == 'body-weight'
-                  ? metric
-                  : null,
-              items: [
-                DropdownMenuItem(
-                  value: db.foods.calories.name,
-                  child: Text("Calories"),
-                ),
-                DropdownMenuItem(
-                  value: 'body-weight',
-                  child: Text("Body weight"),
-                ),
-                ...filteredFields.map(
-                  (field) => DropdownMenuItem(
-                    value: field,
-                    child: Text(
-                      sentenceCase(field),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isWide = constraints.maxWidth > 600;
+
+                final metricDropdown = DropdownButtonFormField(
+                  decoration: const InputDecoration(labelText: 'Metric'),
+                  initialValue: filteredFields.contains(metric) ||
+                          metric == 'calories' ||
+                          metric == 'body-weight'
+                      ? metric
+                      : null,
+                  items: [
+                    DropdownMenuItem(
+                      value: db.foods.calories.name,
+                      child: Text("Calories"),
                     ),
-                  ),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  metric = value!;
-                });
-                db.settings.update().write(
-                      SettingsCompanion(
-                        lastGraph: Value(metric.toString()),
+                    DropdownMenuItem(
+                      value: 'body-weight',
+                      child: Text("Body weight"),
+                    ),
+                    ...filteredFields.map(
+                      (field) => DropdownMenuItem(
+                        value: field,
+                        child: Text(sentenceCase(field)),
                       ),
-                    );
-              },
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: DropdownButtonFormField(
-                decoration: const InputDecoration(labelText: 'Group by'),
-                initialValue: groupBy,
-                items: const [
-                  DropdownMenuItem(
-                    value: Period.day,
-                    child: Text("Day"),
-                  ),
-                  DropdownMenuItem(
-                    value: Period.week,
-                    child: Text("Week"),
-                  ),
-                  DropdownMenuItem(
-                    value: Period.month,
-                    child: Text("Month"),
-                  ),
-                  DropdownMenuItem(
-                    value: Period.year,
-                    child: Text("Year"),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    groupBy = value!;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Start date'),
-                    subtitle: start != null
-                        ? Text(
-                            DateFormat(settings.shortDateFormat).format(start!),
-                          )
-                        : Text(
-                            settings.shortDateFormat,
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      metric = value!;
+                    });
+                    db.settings.update().write(
+                          SettingsCompanion(
+                            lastGraph: Value(metric.toString()),
                           ),
-                    onLongPress: () => setState(() {
-                      start = null;
-                    }),
-                    trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectStart(),
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Stop date'),
-                    subtitle: end != null
-                        ? Text(
-                            DateFormat(settings.shortDateFormat).format(end!),
-                          )
-                        : Text(settings.shortDateFormat),
-                    onLongPress: () => setState(() {
-                      end = null;
-                    }),
-                    trailing: const Icon(Icons.calendar_today),
-                    onTap: () => _selectEnd(),
-                  ),
-                ),
-              ],
+                        );
+                  },
+                );
+
+                final groupByDropdown = DropdownButtonFormField(
+                  decoration: const InputDecoration(labelText: 'Group by'),
+                  initialValue: groupBy,
+                  items: const [
+                    DropdownMenuItem(value: Period.day, child: Text("Day")),
+                    DropdownMenuItem(value: Period.week, child: Text("Week")),
+                    DropdownMenuItem(value: Period.month, child: Text("Month")),
+                    DropdownMenuItem(value: Period.year, child: Text("Year")),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      groupBy = value!;
+                    });
+                  },
+                );
+
+                final startTile = ListTile(
+                  title: const Text('Start date'),
+                  subtitle: start != null
+                      ? Text(
+                          DateFormat(settings.shortDateFormat).format(start!),
+                        )
+                      : Text(settings.shortDateFormat),
+                  onLongPress: () => setState(() => start = null),
+                  trailing: const Icon(Icons.calendar_today),
+                  onTap: () => _selectStart(),
+                );
+
+                final stopTile = ListTile(
+                  title: const Text('Stop date'),
+                  subtitle: end != null
+                      ? Text(DateFormat(settings.shortDateFormat).format(end!))
+                      : Text(settings.shortDateFormat),
+                  onLongPress: () => setState(() => end = null),
+                  trailing: const Icon(Icons.calendar_today),
+                  onTap: () => _selectEnd(),
+                );
+
+                if (isWide) {
+                  return material.Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: metricDropdown),
+                          const SizedBox(width: 8),
+                          Expanded(child: groupByDropdown),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(child: startTile),
+                          Expanded(child: stopTile),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+
+                return material.Column(
+                  children: [
+                    metricDropdown,
+                    const SizedBox(height: 16),
+                    groupByDropdown,
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(child: startTile),
+                        Expanded(child: stopTile),
+                      ],
+                    ),
+                  ],
+                );
+              },
             ),
             material.Column(
               children: [

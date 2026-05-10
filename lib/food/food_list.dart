@@ -65,9 +65,11 @@ class _FoodListState extends State<FoodList> {
     final mealCount = widget.meals.length;
     final totalCount = mealCount + widget.foods.length;
 
+    final width = MediaQuery.of(context).size.width;
+    final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 8),
+        padding: EdgeInsets.only(top: 8, left: hPad, right: hPad),
         controller: widget.ctrl,
         itemCount: totalCount,
         itemBuilder: (context, index) {
@@ -124,7 +126,7 @@ class _FoodListState extends State<FoodList> {
               subtitle: Row(
                 children: [
                   Text(
-                    "${formatter.format(food.calories.value)} kcal",
+                    "${formatter.format(food.calories.value ?? 0)} kcal",
                   ),
                   if (food.favorite.value == true) ...[
                     const SizedBox(width: 6),

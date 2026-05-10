@@ -166,8 +166,10 @@ class _DiaryListState extends State<DiaryList> {
   }
 
   Widget _buildListDisplay(dynamic settings) {
+    final width = MediaQuery.of(context).size.width;
+    final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return ListView.builder(
-      padding: const EdgeInsets.only(top: 8),
+      padding: EdgeInsets.only(top: 8, left: hPad, right: hPad),
       controller: widget.ctrl,
       itemCount: widget.diaryFoods.length,
       itemBuilder: (context, index) {
@@ -239,51 +241,54 @@ class _DiaryListState extends State<DiaryList> {
               break;
           }
 
-          statsRow = GestureDetector(
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const DiarySettings()),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 16,
-                    runSpacing: 8,
-                    children: [
-                      if (settings.dailyCalories != null) ...[
-                        const Icon(Icons.whatshot),
-                        Text(cals),
+          statsRow = MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const DiarySettings()),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        if (settings.dailyCalories != null) ...[
+                          const Icon(Icons.whatshot),
+                          Text(cals),
+                        ],
+                        if (settings.dailyProtein != null) ...[
+                          const Icon(Icons.egg_outlined),
+                          Text(protein),
+                        ],
                       ],
-                      if (settings.dailyProtein != null) ...[
-                        const Icon(Icons.egg_outlined),
-                        Text(protein),
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: [
+                        if (settings.dailyFat != null) ...[
+                          const Icon(Icons.opacity_outlined),
+                          Text(fat),
+                        ],
+                        if (settings.dailyCarb != null) ...[
+                          const Icon(Icons.bakery_dining_outlined),
+                          Text(carb),
+                        ],
+                        if (settings.dailyFiber != null) ...[
+                          const Icon(Icons.grass_outlined),
+                          Text(fiber),
+                        ],
                       ],
-                    ],
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 16,
-                    runSpacing: 8,
-                    children: [
-                      if (settings.dailyFat != null) ...[
-                        const Icon(Icons.opacity_outlined),
-                        Text(fat),
-                      ],
-                      if (settings.dailyCarb != null) ...[
-                        const Icon(Icons.bakery_dining_outlined),
-                        Text(carb),
-                      ],
-                      if (settings.dailyFiber != null) ...[
-                        const Icon(Icons.grass_outlined),
-                        Text(fiber),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               ),
             ),
           );
@@ -544,15 +549,18 @@ class _DiaryListState extends State<DiaryList> {
       );
     }
 
-    return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const DiarySettings()),
-      ),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 16,
-        runSpacing: 12,
-        children: statItems,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const DiarySettings()),
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 16,
+          runSpacing: 12,
+          children: statItems,
+        ),
       ),
     );
   }

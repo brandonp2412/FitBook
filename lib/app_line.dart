@@ -480,88 +480,85 @@ class _AppLineState extends State<AppLine> {
             const SizedBox(
               height: 16.0,
             ),
-            material.Column(
-              children: [
-                RadioGroup(
-                  groupValue: showTrend,
-                  onChanged: (value) {
-                    setState(() {
-                      showTrend = value!;
-                    });
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      material.SizedBox(
-                        width: 165,
-                        child: ListTile(
-                          title: const Text("Average"),
-                          subtitle: Text(
-                            "${formatter.format(avg)} ${rows.first.unit}",
-                          ),
-                          onTap: () {
-                            setState(() {
-                              showTrend = false;
-                            });
-                          },
-                          leading: Radio<bool>(
-                            value: false,
-                            fillColor: WidgetStateProperty.resolveWith(
-                              (states) =>
-                                  Theme.of(context).colorScheme.tertiary,
-                            ),
+            Center(
+              child: RadioGroup(
+                groupValue: showTrend,
+                onChanged: (value) {
+                  setState(() {
+                    showTrend = value!;
+                  });
+                },
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    material.SizedBox(
+                      width: 165,
+                      child: ListTile(
+                        title: const Text("Average"),
+                        subtitle: Text(
+                          "${formatter.format(avg)} ${rows.first.unit}",
+                        ),
+                        onTap: () {
+                          setState(() {
+                            showTrend = false;
+                          });
+                        },
+                        leading: Radio<bool>(
+                          value: false,
+                          fillColor: WidgetStateProperty.resolveWith(
+                            (states) => Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
-                      ),
-                      material.SizedBox(
-                        width: 165,
-                        child: ListTile(
-                          title: const Text("Trend"),
-                          subtitle: Text(_getTrendText(rows)),
-                          onTap: () => setState(() {
-                            showTrend = true;
-                          }),
-                          leading: Radio<bool>(
-                            value: true,
-                            fillColor: WidgetStateProperty.resolveWith(
-                              (states) =>
-                                  Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (goal > 0)
-                  material.SizedBox(
-                    width: 150,
-                    child: ListTile(
-                      onTap: () {
-                        if (widget.metric == 'body-weight')
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => WeightSettings(),
-                            ),
-                          );
-                        else
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DiarySettings(),
-                            ),
-                          );
-                      },
-                      title: const Text("Goal"),
-                      subtitle: Text(
-                        "${formatter.format(goal)} ${rows.first.unit}",
-                      ),
-                      leading: Icon(
-                        Icons.flag,
-                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                  ),
-              ],
+                    material.SizedBox(
+                      width: 165,
+                      child: ListTile(
+                        title: const Text("Trend"),
+                        subtitle: Text(_getTrendText(rows)),
+                        onTap: () => setState(() {
+                          showTrend = true;
+                        }),
+                        leading: Radio<bool>(
+                          value: true,
+                          fillColor: WidgetStateProperty.resolveWith(
+                            (states) => Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (goal > 0)
+                      material.SizedBox(
+                        width: 165,
+                        child: ListTile(
+                          onTap: () {
+                            if (widget.metric == 'body-weight')
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => WeightSettings(),
+                                ),
+                              );
+                            else
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => DiarySettings(),
+                                ),
+                              );
+                          },
+                          title: const Text("Goal"),
+                          subtitle: Text(
+                            "${formatter.format(goal)} ${rows.first.unit}",
+                          ),
+                          leading: Icon(
+                            Icons.flag,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ],
         );
