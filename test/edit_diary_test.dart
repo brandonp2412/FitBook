@@ -187,7 +187,9 @@ void main() async {
     await tester.tap(
       find
           .ancestor(
-              of: find.text('Chicken Bowl'), matching: find.byType(ListTile),)
+            of: find.text('Chicken Bowl'),
+            matching: find.byType(ListTile),
+          )
           .first,
     );
     await tester.pumpAndSettle();
@@ -243,7 +245,9 @@ void main() async {
     await tester.tap(
       find
           .ancestor(
-              of: find.text('Lunch Wrap'), matching: find.byType(ListTile),)
+            of: find.text('Lunch Wrap'),
+            matching: find.byType(ListTile),
+          )
           .first,
     );
     await tester.pumpAndSettle();
