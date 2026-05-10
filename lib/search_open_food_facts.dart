@@ -103,7 +103,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     );
   }
 
-  scan() async {
+  Future<void> scan() async {
     final status = await Permission.camera.request();
     if (!status.isGranted) return;
 
@@ -230,7 +230,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     );
   }
 
-  tap(Product product) async {
+  Future<void> tap(Product product) async {
     final settings = context.read<SettingsState>().value;
     var companion = mapOpenFoodFacts(product, settings.foodUnit);
     if (settings.favoriteNew)

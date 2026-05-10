@@ -9,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
-import 'test_utils.dart';
 
 void main() async {
   testWidgets('EntryPage CRUD', (WidgetTester tester) async {
@@ -75,7 +74,6 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(find.text('Add'), findsOne);
-    dumpTexts();
     expect(find.text('Test 4'), findsOne);
 
     await tester.tap(find.text('Test 4'));

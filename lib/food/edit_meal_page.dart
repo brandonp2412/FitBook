@@ -108,7 +108,8 @@ class _EditMealPageState extends State<EditMealPage> {
     } else {
       mealId = widget.id!;
       await (db.meals.update()..where((t) => t.id.equals(mealId))).write(
-          MealsCompanion(name: Value(name), imageFile: Value(_imageFile)));
+        MealsCompanion(name: Value(name), imageFile: Value(_imageFile)),
+      );
     }
 
     await (db.mealFoods.delete()..where((t) => t.meal.equals(mealId))).go();

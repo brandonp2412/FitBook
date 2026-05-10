@@ -6,7 +6,7 @@ import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-mockTests() async {
+Future<void> mockTests() async {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   TestWidgetsFlutterBinding.ensureInitialized();
   db = AppDatabase(
@@ -32,7 +32,7 @@ mockTests() async {
   ));
 }
 
-findTextWidget(FinderBase<Element> of) => find
+TextField findTextWidget(FinderBase<Element> of) => find
     .ancestor(
       matching: find.byType(TextField),
       of: of,

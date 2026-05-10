@@ -25,31 +25,37 @@ void main() async {
 
     await (db.diaries.insertAll([
       DiariesCompanion.insert(
-        food: Value(await (db.foods.insertOne(
-          FoodsCompanion.insert(
-            name: 'Cookie',
-          ),
-        ))),
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Cookie',
+            ),
+          )),
+        ),
         created: DateTime.now(),
         quantity: 3,
         unit: 'serving',
       ),
       DiariesCompanion.insert(
-        food: Value(await (db.foods.insertOne(
-          FoodsCompanion.insert(
-            name: 'Chicken',
-          ),
-        ))),
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Chicken',
+            ),
+          )),
+        ),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
       ),
       DiariesCompanion.insert(
-        food: Value(await (db.foods.insertOne(
-          FoodsCompanion.insert(
-            name: 'Coke',
-          ),
-        ))),
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Coke',
+            ),
+          )),
+        ),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',

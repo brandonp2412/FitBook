@@ -40,7 +40,7 @@ class _TabSettingsState extends State<TabSettings> {
     tabs = enabledTabs + disabledTabs;
   }
 
-  setTab(String name, bool enabled) {
+  void setTab(String name, bool enabled) {
     if (!enabled && tabs.where((tab) => tab.enabled == true).length == 1)
       return toast(context, 'You need at least one tab');
     final index = tabs.indexWhere((tappedTab) => tappedTab.name == name);

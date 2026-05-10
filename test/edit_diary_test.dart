@@ -73,7 +73,7 @@ void main() async {
     await tester.pump();
     expect(find.text('41'), findsOne);
 
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pump();
     expect(find.text('Add diary entry'), findsNothing);
 
@@ -143,7 +143,7 @@ void main() async {
     await tester.pump();
 
     // 4. Tap the save button
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle(); // Wait for navigation to complete
 
     // 5. Query the database for the saved food and entry
@@ -164,7 +164,8 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Selecting a meal in edit diary creates diary entry referencing that meal',
+  testWidgets(
+      'Selecting a meal in edit diary creates diary entry referencing that meal',
       (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
@@ -185,7 +186,8 @@ void main() async {
     // Tap the 'Meal' subtitle result (the meal tile)
     await tester.tap(
       find
-          .ancestor(of: find.text('Chicken Bowl'), matching: find.byType(ListTile))
+          .ancestor(
+              of: find.text('Chicken Bowl'), matching: find.byType(ListTile),)
           .first,
     );
     await tester.pumpAndSettle();
@@ -193,7 +195,7 @@ void main() async {
     expect(find.text('Chicken Bowl'), findsOne);
 
     // Save
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
 
     final entries = await db.diaries.select().get();
@@ -240,15 +242,17 @@ void main() async {
 
     await tester.tap(
       find
-          .ancestor(of: find.text('Lunch Wrap'), matching: find.byType(ListTile))
+          .ancestor(
+              of: find.text('Lunch Wrap'), matching: find.byType(ListTile),)
           .first,
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
 
-    final updated = await (db.diaries.select()..where((t) => t.id.equals(entryId)))
+    final updated = await (db.diaries.select()
+          ..where((t) => t.id.equals(entryId)))
         .getSingle();
     expect(updated.meal, meal2Id);
     expect(updated.food, isNull);
@@ -256,7 +260,8 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Editing a food diary entry persists quantity change to the database',
+  testWidgets(
+      'Editing a food diary entry persists quantity change to the database',
       (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
@@ -287,10 +292,11 @@ void main() async {
     await tester.enterText(find.bySemanticsLabel('Quantity'), '250');
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
 
-    final updated = await (db.diaries.select()..where((t) => t.id.equals(entryId)))
+    final updated = await (db.diaries.select()
+          ..where((t) => t.id.equals(entryId)))
         .getSingle();
     expect(updated.quantity, 250.0);
     expect(updated.food, foodId);

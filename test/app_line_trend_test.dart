@@ -204,49 +204,57 @@ void main() async {
 
       await (db.diaries.insertAll([
         DiariesCompanion.insert(
-          food: Value(await (db.foods.insertOne(
-            FoodsCompanion.insert(
-              name: 'Test Food 1',
-              calories: const Value(100),
-              servingWeight1G: const Value(1),
-            ),
-          ))),
+          food: Value(
+            await (db.foods.insertOne(
+              FoodsCompanion.insert(
+                name: 'Test Food 1',
+                calories: const Value(100),
+                servingWeight1G: const Value(1),
+              ),
+            )),
+          ),
           created: DateTime.now().subtract(const Duration(days: 6)),
           quantity: 20,
           unit: 'serving',
         ),
         DiariesCompanion.insert(
-          food: Value(await (db.foods.insertOne(
-            FoodsCompanion.insert(
-              name: 'Test Food 2',
-              calories: const Value(100),
-              servingWeight1G: const Value(1),
-            ),
-          ))),
+          food: Value(
+            await (db.foods.insertOne(
+              FoodsCompanion.insert(
+                name: 'Test Food 2',
+                calories: const Value(100),
+                servingWeight1G: const Value(1),
+              ),
+            )),
+          ),
           created: DateTime.now().subtract(const Duration(days: 4)),
           quantity: 18,
           unit: 'serving',
         ),
         DiariesCompanion.insert(
-          food: Value(await (db.foods.insertOne(
-            FoodsCompanion.insert(
-              name: 'Test Food 3',
-              calories: const Value(100),
-              servingWeight1G: const Value(1),
-            ),
-          ))),
+          food: Value(
+            await (db.foods.insertOne(
+              FoodsCompanion.insert(
+                name: 'Test Food 3',
+                calories: const Value(100),
+                servingWeight1G: const Value(1),
+              ),
+            )),
+          ),
           created: DateTime.now().subtract(const Duration(days: 2)),
           quantity: 16,
           unit: 'serving',
         ),
         DiariesCompanion.insert(
-          food: Value(await (db.foods.insertOne(
-            FoodsCompanion.insert(
-              name: 'Test Food 4',
-              calories: const Value(100),
-              servingWeight1G: const Value(1),
-            ),
-          ))),
+          food: Value(
+            await (db.foods.insertOne(
+              FoodsCompanion.insert(
+                name: 'Test Food 4',
+                calories: const Value(100),
+                servingWeight1G: const Value(1),
+              ),
+            )),
+          ),
           created: DateTime.now(),
           quantity: 14,
           unit: 'serving',

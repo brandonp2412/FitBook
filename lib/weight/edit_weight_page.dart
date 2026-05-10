@@ -91,7 +91,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
   }
 
-  save() async {
+  Future<void> save() async {
     Navigator.of(context).pop();
     var amount = double.parse(valueController.text);
     if (unit == 'kg' && convertTo == 'lb') {

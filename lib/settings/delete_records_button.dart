@@ -17,7 +17,7 @@ class DeleteRecordsButton extends StatelessWidget {
     required this.pageContext,
   });
 
-  deleteWeights(BuildContext sheetContext) {
+  void deleteWeights(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,
@@ -48,7 +48,7 @@ class DeleteRecordsButton extends StatelessWidget {
     );
   }
 
-  deleteDatabase(BuildContext sheetContext) {
+  void deleteDatabase(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,
@@ -92,7 +92,7 @@ class DeleteRecordsButton extends StatelessWidget {
     );
   }
 
-  deleteFoods(BuildContext sheetContext) {
+  void deleteFoods(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,
@@ -126,7 +126,7 @@ class DeleteRecordsButton extends StatelessWidget {
 
   final formatter = NumberFormat('#,##0');
 
-  deleteUnused(BuildContext sheetContext) {
+  void deleteUnused(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,
@@ -176,7 +176,7 @@ class DeleteRecordsButton extends StatelessWidget {
     );
   }
 
-  deleteDiary(BuildContext sheetContext) {
+  void deleteDiary(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
     showDialog(
       context: sheetContext,

@@ -31,7 +31,7 @@ class ScanBarcode extends StatefulWidget {
 class _ScanBarcodeState extends State<ScanBarcode> {
   bool searching = false;
 
-  scan() async {
+  Future<void> scan() async {
     final status = await Permission.camera.request();
     if (!status.isGranted) return;
 

@@ -27,7 +27,7 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
     onMount();
   }
 
-  onMount() async {
+  Future<void> onMount() async {
     final settings = context.read<SettingsState>().value;
     login.text = settings.offLogin ?? '';
     password.text = settings.offPassword ?? '';
