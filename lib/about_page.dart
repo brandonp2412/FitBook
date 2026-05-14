@@ -76,6 +76,16 @@ class AboutPage extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text("Leave a review"),
+            leading: const Icon(Icons.reviews_outlined),
+            subtitle: const Text("Rate FitBook on the Play Store"),
+            onTap: () async {
+              const url =
+                  'https://play.google.com/store/apps/details?id=com.presley.fit_book';
+              if (await canLaunchUrlString(url)) await launchUrlString(url);
+            },
+          ),
+          ListTile(
             title: const Text("Source code"),
             leading: const Icon(Icons.code),
             onTap: () async {
