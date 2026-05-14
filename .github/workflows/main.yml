@@ -162,9 +162,22 @@ jobs:
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=keystore.jks" >> android/key.properties
-          flutter build apk --split-per-abi
-          flutter build apk
+
+          # Build each ABI separately with --target-platform so that
+          # NativeAssetsManifest.json only lists the target architecture,
+          # matching exactly what F-Droid builds for reproducibility checks.
+          flutter build apk --release --target-platform android-x64
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-x86_64-release.apk
+
+          flutter build apk --release --target-platform android-arm64
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+
+          flutter build apk --release --target-platform android-arm
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+
+          flutter build apk --release
           mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/fitbook.apk
+
           flutter build appbundle
           mkdir -p "${GITHUB_WORKSPACE}/build"
           mv build/* "${GITHUB_WORKSPACE}/build"
