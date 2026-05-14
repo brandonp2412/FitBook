@@ -151,6 +151,12 @@ jobs:
           flutter/bin/flutter config --no-analytics
           flutter/bin/flutter pub get
 
+      - name: Strip non-deterministic build IDs from jni native library
+        working-directory: /home/brandon/fitbook
+        run: |
+          sed -i -e 's/-Wl,/-Wl,--build-id=none,/' \
+            .pub-cache/hosted/pub.dev/jni-*/src/CMakeLists.txt
+
       - name: Decode Android keystore
         working-directory: /home/brandon/fitbook
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
@@ -162,9 +168,18 @@ jobs:
           echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=keystore.jks" >> android/key.properties
-          flutter build apk --split-per-abi
-          flutter build apk
+
+          # Use --split-per-abi WITH --target-platform to match F-Droid exactly.
+          # Without --split-per-abi: produces a universal APK with all ABI native
+          # libs and versionCode override = base*10+3 (wrong for x86_64 which needs +1).
+          # Without --target-platform: NativeAssetsManifest.json lists all 3 archs.
+          flutter build apk --release --split-per-abi --target-platform android-x64
+          flutter build apk --release --split-per-abi --target-platform android-arm64
+          flutter build apk --release --split-per-abi --target-platform android-arm
+
+          flutter build apk --release
           mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/fitbook.apk
+
           flutter build appbundle
           mkdir -p "${GITHUB_WORKSPACE}/build"
           mv build/* "${GITHUB_WORKSPACE}/build"
