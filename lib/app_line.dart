@@ -47,8 +47,7 @@ class _AppLineState extends State<AppLine> {
   Map<String, double> _calcTrend(List<GraphData> data) {
     if (data.length < 2) return {'slope': 0.0, 'intercept': 0.0};
 
-    // Sort data chronologically (oldest first) for proper trend calculation
-    final sortedData = data.toList()
+    final sortedData = List<GraphData>.from(data)
       ..sort((a, b) => a.created.compareTo(b.created));
     double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
     int n = sortedData.length;
@@ -62,7 +61,12 @@ class _AppLineState extends State<AppLine> {
       sumXX += x * x;
     }
 
-    double slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    final denominator = n * sumXX - sumX * sumX;
+    if (denominator == 0) {
+      return {'slope': 0.0, 'intercept': sumY / n};
+    }
+
+    double slope = (n * sumXY - sumX * sumY) / denominator;
     double intercept = (sumY - slope * sumX) / n;
 
     return {'slope': slope, 'intercept': intercept};
@@ -71,10 +75,9 @@ class _AppLineState extends State<AppLine> {
   String _getTrendText(List<GraphData> data) {
     if (data.length < 2) return "0.00 ${data.first.unit}";
 
-    // Sort data chronologically for proper calculation
-    final sortedData = data.toList()
+    final sortedData = List<GraphData>.from(data)
       ..sort((a, b) => a.created.compareTo(b.created));
-    final trend = _calcTrend(data);
+    final trend = _calcTrend(sortedData);
     double slope = trend['slope']!;
 
     double daysSpan = sortedData.last.created
@@ -96,12 +99,8 @@ class _AppLineState extends State<AppLine> {
     double slope = trend['slope']!;
     double intercept = trend['intercept']!;
 
-    // Create trend spots that match the display coordinate system
-    // The main chart uses rows (oldest-first), so we need to match that
     List<FlSpot> trendSpots = [];
     for (int i = 0; i < data.length; i++) {
-      // i represents the chronological index (0 = oldest, n-1 = newest)
-      // since we want to match the coordinate system of the main chart
       double trendVal = slope * i.toDouble() + intercept;
       trendSpots.add(FlSpot(i.toDouble(), trendVal));
     }
@@ -143,7 +142,6 @@ class _AppLineState extends State<AppLine> {
   void _setStream() {
     final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
 
-    // Define the quantity in grams expression with proper serving unit handling
     final qtyInGrams = CustomExpression<double>('''
     CASE 
       WHEN diaries.unit = 'serving' 
@@ -175,7 +173,6 @@ class _AppLineState extends State<AppLine> {
     END
   ''');
 
-    // Define serving size with fallback to 100g
     final servingG = CustomExpression<double>('''
       CASE 
         WHEN foods.serving_size IS NULL THEN 100
@@ -192,7 +189,6 @@ class _AppLineState extends State<AppLine> {
       END
 ''');
 
-    // Calculate adjusted metrics with proper unit conversions
     Map<String, CustomExpression> metricCols = {
       'calories': CustomExpression<double>(
         '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
@@ -207,7 +203,6 @@ class _AppLineState extends State<AppLine> {
       );
     }
 
-    // Handle averaging for periods other than day
     if (widget.groupBy != Period.day) {
       metricCols['calories'] = CustomExpression<double>(
         '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
@@ -380,10 +375,9 @@ class _AppLineState extends State<AppLine> {
         }
         avg /= spots.length;
 
-        List<FlSpot> trendSpots = _getTrendSpots(rows);
+        List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
 
         List<LineChartBarData> lineBars = [
-          // Always show the original data
           LineChartBarData(
             spots: spots,
             isCurved: sel.curveLines,
@@ -405,7 +399,6 @@ class _AppLineState extends State<AppLine> {
           ),
         ];
 
-        // Add trend line overlay if trend mode is selected
         if (showTrend && trendSpots.isNotEmpty) {
           lineBars.add(
             LineChartBarData(
