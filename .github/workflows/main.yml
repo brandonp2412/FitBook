@@ -148,6 +148,7 @@ jobs:
           git submodule update --init --recursive flutter
           echo "/home/brandon/fitbook/flutter/bin" >> $GITHUB_PATH
           export PUB_CACHE=$(pwd)/.pub-cache
+          echo "PUB_CACHE=$(pwd)/.pub-cache" >> $GITHUB_ENV
           flutter/bin/flutter config --no-analytics
           flutter/bin/flutter pub get
 
