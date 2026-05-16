@@ -1,0 +1,2 @@
+• feat: add Leave a review link to About page
+• fix: build each ABI separately and strip non-deterministic build IDs
