@@ -97,4 +97,63 @@ The `--build-id=none` sed fix is still needed for libdartjni.so.
 
 ---
 
-## Attempt 4 (current) — Correct CI to `--split-per-abi --target-platform` (IN PROGRESS)
+## Attempt 4 — Correct CI to `--split-per-abi --target-platform` (WRONG version targeted)
+
+**Hypothesis:** Commit `97d8fde` (CI fix: `--split-per-abi --target-platform` per ABI +
+`--build-id=none` sed) would produce correct 2.0.40 reference APKs.
+
+**What was done:**
+- Pushed CI fix commit `97d8fde` to main (force-push).
+- Version-bump CI job failed: `fatal: tag '2.0.39' already exists` (force-push orphaned
+  the previous version-bump commit, leaving pubspec at `2.0.39+157` with tags 2.0.38/39/40
+  all existing).
+- MR `!38323` targeting 2.0.40 was accidentally merged by licaon-kter (despite failing
+  CI), then immediately reverted with commit `b224dc363`.
+
+**Why it failed:**
+The version-bump tag conflict meant 2.0.41 was never built with the correct CI.
+The fdroid pipeline ran against the 2.0.40 reference APK which was built with the
+WRONG CI (universal APK).
+
+---
+
+## Attempt 5 — 2.0.41 fdroiddata format issues (WRONG)
+
+**What was done:** MR !38408 opened targeting 2.0.41. Three sub-failures:
+
+1. `fdroid rewritemeta` failed: local rewritemeta (newer version) uses inline `binary: url`
+   format; fdroid CI's rewritemeta wants multi-line `binary: \n  url` with trailing space.
+   **Fix:** Don't run local rewritemeta; commit in the multi-line format the CI expects.
+
+2. `fdroid rewritemeta` failed again: blank line count wrong — two blank lines before first
+   new entry (needs one), missing blank line before `AllowedAPKSigningKeys` (needs one).
+   **Fix:** Corrected blank lines exactly as the CI diff showed.
+
+3. `fdroid build` failed: `libdartjni.so` differs. Root cause: `PUB_CACHE` env var was
+   set with `export` (local to that step only), so `flutter build apk` in the next step
+   defaulted to `~/.pub-cache`, re-downloaded `jni` fresh WITHOUT the `--build-id=none`
+   sed patch. F-Droid used the patched cache; reference APK did not → mismatch.
+
+---
+
+## Attempt 6 — 2.0.42 with PUB_CACHE persisted via GITHUB_ENV (SUCCESS ✓)
+
+**What was done:**
+- Added `echo "PUB_CACHE=$(pwd)/.pub-cache" >> $GITHUB_ENV` to the "Setup Flutter"
+  step in `.github/workflows/main.yml` so PUB_CACHE persists across all subsequent steps.
+- Bumped pubspec to `2.0.40+158` [skip ci], triggered workflow_dispatch → built 2.0.42
+  (versionCodes 1601/1602/1603, commit `9d728fc9`).
+- Updated fdroiddata MR !38408 to 2.0.42 entries.
+
+**Result:** GitLab pipeline 2529432418 — ALL 9 JOBS PASS ✓
+- check apk ✓
+- check source code ✓
+- schema validation ✓
+- tools check scripts ✓
+- fdroid rewritemeta ✓
+- fdroid lint ✓
+- git redirect ✓
+- checkupdates ✓
+- fdroid build ✓ (reproducibility check passed — libdartjni.so matches)
+
+MR: https://gitlab.com/fdroid/fdroiddata/-/merge_requests/38408
