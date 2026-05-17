@@ -30,6 +30,7 @@ class EditWeightPage extends StatefulWidget {
 class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
   final FocusNode _valueFocusNode = FocusNode();
+  Animation<double>? _routeAnimation;
 
   String unit = 'kg';
   String convertTo = 'kg';
@@ -51,28 +52,41 @@ class _EditWeightPageState extends State<EditWeightPage> {
       setState(() {
         valueController.text = widget.weight.amount.value.toStringAsFixed(2);
       });
+  }
 
-    if (!widget.weight.id.present) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        final animation = ModalRoute.of(context)?.animation;
-        if (animation == null || animation.status == AnimationStatus.completed) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_routeAnimation == null) {
+      _routeAnimation = ModalRoute.of(context)?.animation;
+      _routeAnimation?.addStatusListener(_onRouteAnimationStatus);
+
+      if (!widget.weight.id.present) {
+        if (_routeAnimation == null ||
+            _routeAnimation!.status == AnimationStatus.completed) {
           _valueFocusNode.requestFocus();
         } else {
-          void listener(AnimationStatus status) {
+          void onReady(AnimationStatus status) {
             if (status == AnimationStatus.completed) {
-              animation.removeStatusListener(listener);
+              _routeAnimation?.removeStatusListener(onReady);
               if (mounted) _valueFocusNode.requestFocus();
             }
           }
-          animation.addStatusListener(listener);
+          _routeAnimation!.addStatusListener(onReady);
         }
-      });
+      }
+    }
+  }
+
+  void _onRouteAnimationStatus(AnimationStatus status) {
+    if (status == AnimationStatus.reverse) {
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 
   @override
   void dispose() {
+    _routeAnimation?.removeStatusListener(_onRouteAnimationStatus);
     _valueFocusNode.dispose();
     super.dispose();
   }
