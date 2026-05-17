@@ -73,6 +73,7 @@ class WeightPageState extends State<WeightPage>
 
   Scaffold _weightsPage() {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: StreamBuilder(
         stream: stream,
         builder: (context, snapshot) {
