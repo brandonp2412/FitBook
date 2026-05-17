@@ -29,6 +29,7 @@ class EditWeightPage extends StatefulWidget {
 
 class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
+  final FocusNode _valueFocusNode = FocusNode();
 
   String unit = 'kg';
   String convertTo = 'kg';
@@ -50,6 +51,30 @@ class _EditWeightPageState extends State<EditWeightPage> {
       setState(() {
         valueController.text = widget.weight.amount.value.toStringAsFixed(2);
       });
+
+    if (!widget.weight.id.present) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final animation = ModalRoute.of(context)?.animation;
+        if (animation == null || animation.status == AnimationStatus.completed) {
+          _valueFocusNode.requestFocus();
+        } else {
+          void listener(AnimationStatus status) {
+            if (status == AnimationStatus.completed) {
+              animation.removeStatusListener(listener);
+              if (mounted) _valueFocusNode.requestFocus();
+            }
+          }
+          animation.addStatusListener(listener);
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _valueFocusNode.dispose();
+    super.dispose();
   }
 
   Future<void> _selectDate() async {
@@ -178,12 +203,12 @@ class _EditWeightPageState extends State<EditWeightPage> {
             children: [
               TextFormField(
                 controller: valueController,
+                focusNode: _valueFocusNode,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(labelText: 'Weight ($unit)'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter weight' : null,
-                autofocus: !widget.weight.id.present,
                 onTap: () => selectAll(valueController),
                 onFieldSubmitted: (value) => save(),
               ),
