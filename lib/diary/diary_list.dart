@@ -327,64 +327,83 @@ class _DiaryListState extends State<DiaryList> {
                   const Expanded(child: Divider()),
                 ],
               ),
-            ListTile(
-              leading: image,
-              title: Text("$foodName$suffix"),
-              subtitle: Text(
-                DateFormat(settings.longDateFormat).format(diaryFood.created),
+            Container(
+              decoration: BoxDecoration(
+                color: selected
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: .08)
+                    : Colors.transparent,
+                border: Border.all(
+                  color: selected
+                      ? Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.3)
+                      : Colors.transparent,
+                  width: 1,
+                ),
               ),
-              trailing: Stack(
-                children: [
-                  AnimatedScale(
-                    duration: const Duration(milliseconds: 150),
-                    scale: selected ? 0.0 : 1.0,
-                    child: Visibility(
-                      visible: !selected,
-                      child: Text(
-                        "${diaryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
-                        style: const TextStyle(fontSize: 16),
+              child: ListTile(
+                leading: image,
+                title: Text("$foodName$suffix"),
+                subtitle: Text(
+                  DateFormat(settings.longDateFormat).format(diaryFood.created),
+                ),
+                trailing: Stack(
+                  children: [
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 0.0 : 1.0,
+                      child: Visibility(
+                        visible: !selected,
+                        child: Text(
+                          "${diaryFood.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? 0} kcal",
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
-                  ),
-                  AnimatedScale(
-                    duration: const Duration(milliseconds: 150),
-                    scale: selected ? 1.0 : 0.0,
-                    child: Visibility(
-                      visible: selected,
-                      child: Checkbox(
-                        value: selected,
-                        onChanged: (_) => widget.onSelect(diaryFood.entryId),
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 150),
+                      scale: selected ? 1.0 : 0.0,
+                      child: Visibility(
+                        visible: selected,
+                        child: Checkbox(
+                          value: selected,
+                          onChanged: (_) => widget.onSelect(diaryFood.entryId),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                onLongPress: () => widget.onSelect(diaryFood.entryId),
+                onTap: () {
+                  if (widget.selected.isEmpty &&
+                      diaryFood.name != 'Quick-add') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditDiaryPage(
+                          id: diaryFood.entryId,
+                        ),
+                      ),
+                    );
+                  } else if (widget.selected.isEmpty &&
+                      diaryFood.name == 'Quick-add') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuickAddPage(
+                          id: diaryFood.entryId,
+                        ),
+                      ),
+                    );
+                  } else {
+                    widget.onSelect(diaryFood.entryId);
+                  }
+                },
               ),
-              selected: selected,
-              onLongPress: () => widget.onSelect(diaryFood.entryId),
-              onTap: () {
-                if (widget.selected.isEmpty && diaryFood.name != 'Quick-add') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditDiaryPage(
-                        id: diaryFood.entryId,
-                      ),
-                    ),
-                  );
-                } else if (widget.selected.isEmpty &&
-                    diaryFood.name == 'Quick-add') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuickAddPage(
-                        id: diaryFood.entryId,
-                      ),
-                    ),
-                  );
-                } else {
-                  widget.onSelect(diaryFood.entryId);
-                }
-              },
             ),
           ],
         );
