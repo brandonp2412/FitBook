@@ -64,7 +64,10 @@ class WeightPageState extends State<WeightPage>
       child: Navigator(
         key: navigatorKey,
         onGenerateRoute: (settings) => MaterialPageRoute(
-          builder: (context) => _weightsPage(),
+          builder: (context) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(viewInsets: EdgeInsets.zero),
+            child: _weightsPage(),
+          ),
           settings: settings,
         ),
       ),
