@@ -38,7 +38,7 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
   return [
     if ('theme'.contains(term))
       Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
         child: SegmentedButton<String>(
           segments: const [
             ButtonSegment(
