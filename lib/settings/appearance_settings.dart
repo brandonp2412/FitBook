@@ -38,33 +38,60 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
   return [
     if ('theme'.contains(term))
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: DropdownButtonFormField<ThemeMode>(
-          initialValue: ThemeMode.values
-              .byName(settings.value.themeMode.replaceFirst('ThemeMode.', '')),
-          decoration: const InputDecoration(
-            labelStyle: TextStyle(),
-            labelText: 'Theme',
-          ),
-          items: const [
-            DropdownMenuItem(
-              value: ThemeMode.system,
-              child: Text("System"),
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        child: SegmentedButton<String>(
+          segments: const [
+            ButtonSegment(
+              value: 'ThemeMode.system',
+              label: Text('System'),
+              icon: Icon(Icons.brightness_auto),
             ),
-            DropdownMenuItem(
-              value: ThemeMode.dark,
-              child: Text("Dark"),
+            ButtonSegment(
+              value: 'ThemeMode.dark',
+              label: Text('Dark'),
+              icon: Icon(Icons.dark_mode),
             ),
-            DropdownMenuItem(
-              value: ThemeMode.light,
-              child: Text("Light"),
+            ButtonSegment(
+              value: 'ThemeMode.light',
+              label: Text('Light'),
+              icon: Icon(Icons.light_mode),
             ),
           ],
-          onChanged: (value) => db.settings.update().write(
+          selected: {
+            settings.value.themeMode == 'ThemeMode.amoled'
+                ? 'ThemeMode.dark'
+                : settings.value.themeMode,
+          },
+          onSelectionChanged: (selection) => db.settings.update().write(
+                SettingsCompanion(themeMode: Value(selection.first)),
+              ),
+        ),
+      ),
+    if ('pure black amoled'.contains(term))
+      Tooltip(
+        message: 'Use pure black colors for AMOLED displays',
+        child: ListTile(
+          leading: const Icon(Icons.contrast),
+          title: const Text('Pure black (AMOLED)'),
+          onTap: () => db.settings.update().write(
                 SettingsCompanion(
-                  themeMode: Value(value.toString()),
+                  themeMode: Value(
+                    settings.value.themeMode == 'ThemeMode.amoled'
+                        ? 'ThemeMode.dark'
+                        : 'ThemeMode.amoled',
+                  ),
                 ),
               ),
+          trailing: Switch(
+            value: settings.value.themeMode == 'ThemeMode.amoled',
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    themeMode: Value(
+                      value ? 'ThemeMode.amoled' : 'ThemeMode.dark',
+                    ),
+                  ),
+                ),
+          ),
         ),
       ),
     if ('long date format'.contains(term))

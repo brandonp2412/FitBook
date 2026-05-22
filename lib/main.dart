@@ -77,6 +77,7 @@ class App extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         final currentBrightness = settings.themeMode == 'ThemeMode.dark' ||
+                settings.themeMode == 'ThemeMode.amoled' ||
                 (settings.themeMode == 'ThemeMode.system' &&
                     MediaQuery.of(context).platformBrightness ==
                         Brightness.dark)
@@ -105,15 +106,22 @@ class App extends StatelessWidget {
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
-            colorScheme: settings.systemColors ? darkDynamic : defaultDark,
+            colorScheme:
+                (settings.systemColors ? darkDynamic : defaultDark)?.copyWith(
+              surface: settings.themeMode == 'ThemeMode.amoled'
+                  ? Colors.black
+                  : null,
+            ),
             fontFamily: 'Manrope',
             useMaterial3: true,
             inputDecorationTheme: const InputDecorationTheme(
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),
           ),
-          themeMode: ThemeMode.values
-              .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
+          themeMode: settings.themeMode == 'ThemeMode.amoled'
+              ? ThemeMode.dark
+              : ThemeMode.values
+                  .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
           home: const HomePage(),
         );
       },

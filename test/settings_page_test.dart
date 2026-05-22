@@ -82,7 +82,7 @@ void main() async {
 
     await tester.tap(find.text('Appearance'));
     await tester.pumpAndSettle();
-    expect(find.text('Theme'), findsOne);
+    expect(find.text('System'), findsOne);
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
 
