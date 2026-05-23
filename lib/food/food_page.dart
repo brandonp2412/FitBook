@@ -17,7 +17,7 @@ class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
 
   @override
-  createState() => FoodPageState();
+  State<FoodPage> createState() => FoodPageState();
 }
 
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {

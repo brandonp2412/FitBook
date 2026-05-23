@@ -13,7 +13,7 @@ class DiaryFilters extends StatefulWidget {
   });
 
   @override
-  createState() => _DiaryFiltersState();
+  State<DiaryFilters> createState() => _DiaryFiltersState();
 }
 
 class _DiaryFiltersState extends State<DiaryFilters> {

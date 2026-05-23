@@ -26,8 +26,8 @@ class DiaryList extends StatefulWidget {
   final List<DiaryFood> diaryFoods;
   final ScrollController ctrl;
   final Set<int> selected;
-  final Function(int) onSelect;
-  final Function() onNext;
+  final ValueChanged<int> onSelect;
+  final VoidCallback onNext;
 
   @override
   State<DiaryList> createState() => _DiaryListState();

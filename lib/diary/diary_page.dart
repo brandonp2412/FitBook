@@ -16,7 +16,7 @@ class DiaryPage extends StatefulWidget {
   const DiaryPage({super.key});
 
   @override
-  createState() => DiaryPageState();
+  State<DiaryPage> createState() => DiaryPageState();
 }
 
 class DiaryPageState extends State<DiaryPage> {

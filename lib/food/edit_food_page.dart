@@ -24,7 +24,7 @@ class EditFoodPage extends StatefulWidget {
   const EditFoodPage({super.key, this.id});
 
   @override
-  createState() => _EditFoodPageState();
+  State<EditFoodPage> createState() => _EditFoodPageState();
 }
 
 class _EditFoodPageState extends State<EditFoodPage> {

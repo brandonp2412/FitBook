@@ -29,9 +29,9 @@ class FoodList extends StatefulWidget {
   final List<Meal> meals;
   final Set<int> selected;
   final Set<int> selectedMeals;
-  final Function(int) onSelect;
-  final Function(int)? onMealSelect;
-  final Function() onNext;
+  final ValueChanged<int> onSelect;
+  final ValueChanged<int>? onMealSelect;
+  final VoidCallback onNext;
   final ScrollController ctrl;
   final Map<int, double> mealCalories;
 

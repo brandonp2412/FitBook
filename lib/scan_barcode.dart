@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 import 'database/database.dart';
 
 class ScanBarcode extends StatefulWidget {
-  final Function(Food) onFood;
-  final Function(String) onBarcode;
+  final ValueChanged<Food> onFood;
+  final ValueChanged<String> onBarcode;
   final bool? text;
   final String? value;
 
@@ -25,7 +25,7 @@ class ScanBarcode extends StatefulWidget {
   });
 
   @override
-  createState() => _ScanBarcodeState();
+  State<ScanBarcode> createState() => _ScanBarcodeState();
 }
 
 class _ScanBarcodeState extends State<ScanBarcode> {
@@ -64,16 +64,15 @@ class _ScanBarcodeState extends State<ScanBarcode> {
 
     if (!mounted) return;
     final settings = context.read<SettingsState>().value;
+    final now = DateTime.now();
     var companion = mapOpenFoodFacts(search.products!.first, settings.foodUnit);
     companion = companion.copyWith(
       favorite: Value(settings.favoriteNew),
-      created: Value(DateTime.now()),
+      created: Value(now),
       barcode: Value(barcode),
     );
 
-    final id = await db.foods.insertOne(
-      companion.copyWith(created: Value(DateTime.now())),
-    );
+    final id = await db.foods.insertOne(companion);
     food = await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
     widget.onFood(food);
   }

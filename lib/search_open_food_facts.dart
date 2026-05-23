@@ -16,7 +16,7 @@ class SearchOpenFoodFacts extends StatefulWidget {
   final String? terms;
 
   @override
-  createState() => _SearchOpenFoodFactsState();
+  State<SearchOpenFoodFacts> createState() => _SearchOpenFoodFactsState();
 }
 
 class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {

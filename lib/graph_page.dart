@@ -17,7 +17,7 @@ class GraphPage extends StatefulWidget {
   const GraphPage({super.key});
 
   @override
-  createState() => GraphPageState();
+  State<GraphPage> createState() => GraphPageState();
 }
 
 class GraphPageState extends State<GraphPage>

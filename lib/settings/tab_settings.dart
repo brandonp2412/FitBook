@@ -10,7 +10,7 @@ class TabSettings extends StatefulWidget {
   const TabSettings({super.key});
 
   @override
-  createState() => _TabSettingsState();
+  State<TabSettings> createState() => _TabSettingsState();
 }
 
 typedef TabSetting = ({

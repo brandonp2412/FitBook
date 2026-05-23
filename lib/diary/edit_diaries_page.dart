@@ -16,7 +16,7 @@ class EditDiariesPage extends StatefulWidget {
   const EditDiariesPage({super.key, required this.diaryIds});
 
   @override
-  createState() => _EditDiariesPageState();
+  State<EditDiariesPage> createState() => _EditDiariesPageState();
 }
 
 class _EditDiariesPageState extends State<EditDiariesPage> {

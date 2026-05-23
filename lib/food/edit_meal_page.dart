@@ -15,7 +15,7 @@ class EditMealPage extends StatefulWidget {
   const EditMealPage({super.key, this.id});
 
   @override
-  createState() => _EditMealPageState();
+  State<EditMealPage> createState() => _EditMealPageState();
 }
 
 class _MealFoodEntry {

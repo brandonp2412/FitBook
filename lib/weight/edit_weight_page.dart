@@ -24,7 +24,7 @@ class EditWeightPage extends StatefulWidget {
   });
 
   @override
-  createState() => _EditWeightPageState();
+  State<EditWeightPage> createState() => _EditWeightPageState();
 }
 
 class _EditWeightPageState extends State<EditWeightPage> {

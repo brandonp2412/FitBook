@@ -20,8 +20,8 @@ class WeightList extends StatefulWidget {
 
   final List<Weight> weights;
   final Set<int> selected;
-  final Function(int) onSelect;
-  final Function() onNext;
+  final ValueChanged<int> onSelect;
+  final VoidCallback onNext;
   final ScrollController ctrl;
 
   @override

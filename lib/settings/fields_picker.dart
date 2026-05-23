@@ -12,7 +12,7 @@ class FieldsPicker extends StatefulWidget {
   const FieldsPicker({super.key});
 
   @override
-  createState() => _FieldsPickerState();
+  State<FieldsPicker> createState() => _FieldsPickerState();
 }
 
 class _FieldsPickerState extends State<FieldsPicker> {

@@ -18,7 +18,7 @@ class QuickAddPage extends StatefulWidget {
   const QuickAddPage({super.key, this.id});
 
   @override
-  createState() => _QuickAddPageState();
+  State<QuickAddPage> createState() => _QuickAddPageState();
 }
 
 class _QuickAddPageState extends State<QuickAddPage> {

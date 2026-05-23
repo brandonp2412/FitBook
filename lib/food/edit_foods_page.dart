@@ -11,7 +11,7 @@ class EditFoodsPage extends StatefulWidget {
   final List<int> ids;
 
   @override
-  createState() => _EditFoodsPageState();
+  State<EditFoodsPage> createState() => _EditFoodsPageState();
 }
 
 class _EditFoodsPageState extends State<EditFoodsPage> {

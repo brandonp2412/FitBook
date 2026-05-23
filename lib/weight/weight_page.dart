@@ -12,7 +12,7 @@ class WeightPage extends StatefulWidget {
   const WeightPage({super.key});
 
   @override
-  createState() => WeightPageState();
+  State<WeightPage> createState() => WeightPageState();
 }
 
 class WeightPageState extends State<WeightPage>
