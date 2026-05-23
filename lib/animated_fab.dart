@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AnimatedFab extends StatefulWidget {
-  final Function onTap;
+  final VoidCallback onTap;
   final String label;
   final ScrollController scroll;
   final IconData icon;
@@ -34,13 +34,11 @@ class _AnimatedFabState extends State<AnimatedFab> {
   }
 
   void onScroll() {
-    if (widget.scroll.position.atEdge && widget.scroll.position.pixels == 0) {
+    final newExtend =
+        widget.scroll.position.atEdge && widget.scroll.position.pixels == 0;
+    if (extend != newExtend) {
       setState(() {
-        extend = true;
-      });
-    } else {
-      setState(() {
-        extend = false;
+        extend = newExtend;
       });
     }
   }
@@ -54,7 +52,7 @@ class _AnimatedFabState extends State<AnimatedFab> {
       height: 56,
       child: FloatingActionButton.extended(
         tooltip: widget.label,
-        onPressed: () => widget.onTap(),
+        onPressed: widget.onTap,
         heroTag: 'hero',
         label: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),

@@ -20,12 +20,12 @@ class FoodFilters extends StatefulWidget {
   final TextEditingController servingSizeGtController;
   final TextEditingController servingSizeLtController;
   final Function({
-    String? foodGroup,
-    String? servingUnit,
+    required String? foodGroup,
+    required String? servingUnit,
   }) onChange;
 
   @override
-  createState() => _FoodFiltersState();
+  State<FoodFilters> createState() => _FoodFiltersState();
 }
 
 class _FoodFiltersState extends State<FoodFilters> {

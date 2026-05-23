@@ -20,20 +20,9 @@ class Macros {
 }
 
 Macros getMacros(double amount, String unit) {
-  var kg = amount;
-  if (unit == 'lb') kg *= 2.2;
+  // Convert to kg: lb -> kg conversion is divide by 2.2
+  final kg = unit == 'lb' ? amount / 2.2 : amount;
 
-  /*
-    Phillips SM, Van Loon LJ. (2011). 
-    Dietary protein for athletes: from requirements to optimum adaptation. 
-    Journal of Sports Sciences, 29(sup1), S29–S38. 
-    https://doi.org/10.1080/02640414.2011.619204
-    
-    Institute of Medicine. (2005). 
-    Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids. 
-    The National Academies Press. 
-    https://www.nap.edu/catalog/10490/dietary-reference-intakes-for-energy-carbohydrate-fiber-fat-fatty-acids-cholesterol-protein-and-amino-acids
-  */
   return Macros(
     carb: kg * 5,
     fat: kg * 0.8,
@@ -44,26 +33,21 @@ Macros getMacros(double amount, String unit) {
 
 String sentenceCase(String value) {
   if (value.isEmpty) return '';
-  if (value == '_18_3_n_3_c_c_c_ala_mg')
-    return 'Alpha-linolenic acid (ALA)';
-  else if (value == '_200_calorie_weight_g')
-    return '200-Calorie Equivalent Weight';
-  else if (value == '_20_5_n_3_epa_mg')
-    return 'Eicosapentaenoic acid (EPA)';
-  else if (value == '_22_5_n_3_dpa_mg')
-    return 'Docosapentaenoic acid (DPA)';
-  else if (value == '_22_6_n_3_dha_mg')
-    return 'Docosahexaenoic acid (DHA)';
-  else if (value == 'vitamin_b_12_mcg')
-    return 'Vitamin B12 (Cobalamin)';
-  else if (value == 'vitamin_a_iu_iu')
-    return 'Vitamin A (International Units)';
-  else if (value == 'vitamin_d_iu_iu')
-    return 'Vitamin D (International Units)';
-  else if (value == 'vitamin_a_rae_mcg')
-    return 'Vitamin A (Retinol Activity Equivalents)';
 
-  return value[0].toUpperCase() + value.substring(1).replaceAll('_', ' ');
+  const specialCases = {
+    '_18_3_n_3_c_c_c_ala_mg': 'Alpha-linolenic acid (ALA)',
+    '_200_calorie_weight_g': '200-Calorie Equivalent Weight',
+    '_20_5_n_3_epa_mg': 'Eicosapentaenoic acid (EPA)',
+    '_22_5_n_3_dpa_mg': 'Docosapentaenoic acid (DPA)',
+    '_22_6_n_3_dha_mg': 'Docosahexaenoic acid (DHA)',
+    'vitamin_b_12_mcg': 'Vitamin B12 (Cobalamin)',
+    'vitamin_a_iu_iu': 'Vitamin A (International Units)',
+    'vitamin_d_iu_iu': 'Vitamin D (International Units)',
+    'vitamin_a_rae_mcg': 'Vitamin A (Retinol Activity Equivalents)',
+  };
+
+  return specialCases[value] ??
+      value[0].toUpperCase() + value.substring(1).replaceAll('_', ' ');
 }
 
 void toast(BuildContext context, String message, [SnackBarAction? action]) {
@@ -84,34 +68,21 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
 }
 
 String getShortUnit(String unit) {
-  switch (unit.toLowerCase()) {
-    case 'serving':
-      return 'srv';
-    case 'grams':
-      return 'g';
-    case 'milliliters':
-      return 'ml';
-    case 'kilojoules':
-      return 'kJ';
-    case 'cups':
-      return 'cup';
-    case 'tablespoons':
-      return 'tbsp';
-    case 'milligrams':
-      return 'mg';
-    case 'teaspoons':
-      return 'tsp';
-    case 'ounces':
-      return 'oz';
-    case 'pounds':
-      return 'lb';
-    case 'kilograms':
-      return 'kg';
-    case 'liters':
-      return 'L';
-    default:
-      return unit;
-  }
+  const shortUnits = {
+    'serving': 'srv',
+    'grams': 'g',
+    'milliliters': 'ml',
+    'kilojoules': 'kJ',
+    'cups': 'cup',
+    'tablespoons': 'tbsp',
+    'milligrams': 'mg',
+    'teaspoons': 'tsp',
+    'ounces': 'oz',
+    'pounds': 'lb',
+    'kilograms': 'kg',
+    'liters': 'L',
+  };
+  return shortUnits[unit.toLowerCase()] ?? unit;
 }
 
 bool isSameDay(DateTime date1, DateTime date2) {
@@ -121,44 +92,26 @@ bool isSameDay(DateTime date1, DateTime date2) {
 }
 
 double convertFromGrams(double qtyInGrams, String targetUnit) {
-  double convertedQty;
-  switch (targetUnit) {
-    case 'grams':
-    case 'milliliters':
-      convertedQty = qtyInGrams;
-      break;
-    case 'serving':
-      // 'serving' should not be converted from grams here as it's handled separately
-      // This case should not be reached when 'serving' is properly handled
-      throw Exception('Serving unit should be handled separately');
-    case 'milligrams':
-      convertedQty = qtyInGrams * 1000;
-      break;
-    case 'cups':
-      convertedQty = qtyInGrams / 250;
-      break;
-    case 'tablespoons':
-      convertedQty = qtyInGrams / 15;
-      break;
-    case 'teaspoons':
-      convertedQty = qtyInGrams / 5;
-      break;
-    case 'ounces':
-      convertedQty = qtyInGrams / 28.35;
-      break;
-    case 'pounds':
-      convertedQty = qtyInGrams / 453.592;
-      break;
-    case 'liters':
-      convertedQty = qtyInGrams / 1000;
-      break;
-    case 'kilojoules':
-      convertedQty = qtyInGrams * 4.184;
-      break;
-    default:
-      throw Exception('Unit not recognized');
+  const conversionFactors = {
+    'grams': 1.0,
+    'milliliters': 1.0,
+    'milligrams': 1000.0,
+    'cups': 1.0 / 250,
+    'tablespoons': 1.0 / 15,
+    'teaspoons': 1.0 / 5,
+    'ounces': 1.0 / 28.35,
+    'pounds': 1.0 / 453.592,
+    'liters': 1.0 / 1000,
+    'kilojoules': 4.184,
+  };
+
+  if (targetUnit == 'serving') {
+    throw Exception('Serving unit should be handled separately');
   }
-  return convertedQty;
+
+  final factor = conversionFactors[targetUnit];
+  if (factor == null) throw Exception('Unit not recognized');
+  return qtyInGrams * factor;
 }
 
 Food convertCustomServing({
@@ -221,46 +174,26 @@ Food convertCustomServing({
 }
 
 double convertToGrams(double qty, String unit) {
-  double qtyInGrams;
+  const conversionFactors = {
+    'grams': 1.0,
+    'milliliters': 1.0,
+    'milligrams': 1.0 / 1000,
+    'cups': 250.0,
+    'tablespoons': 15.0,
+    'teaspoons': 5.0,
+    'ounces': 28.35,
+    'pounds': 453.592,
+    'liters': 1000.0,
+    'kilojoules': 1.0 / 4.184,
+  };
 
-  switch (unit) {
-    case 'grams':
-    case 'milliliters':
-      qtyInGrams = qty;
-      break;
-    case 'serving':
-      // 'serving' should not be converted to grams here as it's handled separately
-      // This case should not be reached when 'serving' is properly handled
-      throw Exception('Serving unit should be handled separately');
-    case 'milligrams':
-      qtyInGrams = qty / 1000;
-      break;
-    case 'cups':
-      qtyInGrams = qty * 250;
-      break;
-    case 'tablespoons':
-      qtyInGrams = qty * 15;
-      break;
-    case 'teaspoons':
-      qtyInGrams = qty * 5;
-      break;
-    case 'ounces':
-      qtyInGrams = qty * 28.35;
-      break;
-    case 'pounds':
-      qtyInGrams = qty * 453.592;
-      break;
-    case 'liters':
-      qtyInGrams = qty * 1000;
-      break;
-    case 'kilojoules':
-      qtyInGrams = qty / 4.184;
-      break;
-    default:
-      throw Exception('Unit not recognized');
+  if (unit == 'serving') {
+    throw Exception('Serving unit should be handled separately');
   }
 
-  return qtyInGrams;
+  final factor = conversionFactors[unit];
+  if (factor == null) throw Exception('Unit not recognized');
+  return qty * factor;
 }
 
 void selectAll(TextEditingController ctrl) {
@@ -275,40 +208,34 @@ bool shouldNotify(
   double? secondLastWeight,
   double goalWeight,
 ) {
-  Random random = Random();
-  int chance = random.nextInt(100);
-
   if (secondLastWeight == null) return false;
-  bool trending = (secondLastWeight > lastWeight && lastWeight > goalWeight) ||
+
+  final trending = (secondLastWeight > lastWeight && lastWeight > goalWeight) ||
       (secondLastWeight < lastWeight && lastWeight < goalWeight);
+  if (!trending) return false;
 
-  if (!trending) {
-    return false;
-  }
+  final withinGoal =
+      (goalWeight <= lastWeight && lastWeight - goalWeight <= 1) ||
+          (goalWeight >= lastWeight && goalWeight - lastWeight <= 1);
+  if (!withinGoal) return false;
 
-  if ((goalWeight <= lastWeight && goalWeight - lastWeight > 1) ||
-      (goalWeight >= lastWeight && lastWeight - goalWeight > 1)) {
-    return false;
-  }
+  return Random().nextInt(100) < 30;
+}
 
-  if (chance >= 30) {
-    return false;
-  }
-
-  return true;
+Value<double?> _getNutrimentValue(
+  Nutriments? nutriments,
+  Nutrient nutrient,
+  PerSize perSize,
+) {
+  return Value(nutriments?.getValue(nutrient, perSize));
 }
 
 FoodsCompanion mapOpenFoodFacts(Product product, String foodUnit) {
-  var perSize = PerSize.oneHundredGrams;
-  var servingSize = 100.0;
-  if (foodUnit == 'serving') {
-    servingSize = product.servingQuantity ?? 1;
-    perSize = PerSize.serving;
-  }
-
-  final kj = product.nutriments?.getComputedKJ(
-    perSize,
-  );
+  final perSize =
+      foodUnit == 'serving' ? PerSize.serving : PerSize.oneHundredGrams;
+  final servingSize =
+      foodUnit == 'serving' ? product.servingQuantity ?? 1 : 100.0;
+  final kj = product.nutriments?.getComputedKJ(perSize);
 
   return FoodsCompanion.insert(
     name: product.productName ?? "",
@@ -317,251 +244,87 @@ FoodsCompanion mapOpenFoodFacts(Product product, String foodUnit) {
     calories: Value((kj ?? 0) / 4.184),
     smallImage: Value(product.imageFrontSmallUrl),
     bigImage: Value(product.imageFrontUrl),
-    proteinG: Value(
-      product.nutriments?.getValue(
-        Nutrient.proteins,
-        perSize,
-      ),
+    proteinG:
+        _getNutrimentValue(product.nutriments, Nutrient.proteins, perSize),
+    fatG: _getNutrimentValue(product.nutriments, Nutrient.fat, perSize),
+    carbohydrateG:
+        _getNutrimentValue(product.nutriments, Nutrient.carbohydrates, perSize),
+    sugarsG: _getNutrimentValue(product.nutriments, Nutrient.sugars, perSize),
+    fiberG: _getNutrimentValue(product.nutriments, Nutrient.fiber, perSize),
+    cholesterolMg:
+        _getNutrimentValue(product.nutriments, Nutrient.cholesterol, perSize),
+    saturatedFatsG:
+        _getNutrimentValue(product.nutriments, Nutrient.saturatedFat, perSize),
+    calciumMg:
+        _getNutrimentValue(product.nutriments, Nutrient.calcium, perSize),
+    ironFeMg: _getNutrimentValue(product.nutriments, Nutrient.iron, perSize),
+    potassiumKMg:
+        _getNutrimentValue(product.nutriments, Nutrient.potassium, perSize),
+    magnesiumMg:
+        _getNutrimentValue(product.nutriments, Nutrient.magnesium, perSize),
+    vitaminAIuIu:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminA, perSize),
+    vitaminCMg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminC, perSize),
+    vitaminB12Mcg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminB12, perSize),
+    vitaminDMcg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminD, perSize),
+    vitaminEAlphaTocopherolMg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminE, perSize),
+    addedSugarG:
+        _getNutrimentValue(product.nutriments, Nutrient.addedSugars, perSize),
+    omega3sMg: _getNutrimentValue(product.nutriments, Nutrient.omega3, perSize),
+    omega6sMg: _getNutrimentValue(product.nutriments, Nutrient.omega6, perSize),
+    transFattyAcidsG:
+        _getNutrimentValue(product.nutriments, Nutrient.transFat, perSize),
+    solubleFiberG:
+        _getNutrimentValue(product.nutriments, Nutrient.fiber, perSize),
+    phosphorusPMg:
+        _getNutrimentValue(product.nutriments, Nutrient.phosphorus, perSize),
+    sodiumMg: _getNutrimentValue(product.nutriments, Nutrient.sodium, perSize),
+    zincZnMg: _getNutrimentValue(product.nutriments, Nutrient.zinc, perSize),
+    copperCuMg:
+        _getNutrimentValue(product.nutriments, Nutrient.copper, perSize),
+    manganeseMg:
+        _getNutrimentValue(product.nutriments, Nutrient.manganese, perSize),
+    seleniumSeMcg:
+        _getNutrimentValue(product.nutriments, Nutrient.selenium, perSize),
+    fluorideFMcg:
+        _getNutrimentValue(product.nutriments, Nutrient.fluoride, perSize),
+    thiaminB1Mg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminB1, perSize),
+    riboflavinB2Mg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminB2, perSize),
+    pantothenicAcidB5Mg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.pantothenicAcid,
+      perSize,
     ),
-    fatG: Value(
-      product.nutriments?.getValue(
-        Nutrient.fat,
-        perSize,
-      ),
+    vitaminB6Mg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminB6, perSize),
+    biotinB7Mcg:
+        _getNutrimentValue(product.nutriments, Nutrient.biotin, perSize),
+    folateB9Mcg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminB9, perSize),
+    caroteneBetaMcg:
+        _getNutrimentValue(product.nutriments, Nutrient.betaCarotene, perSize),
+    vitaminDIuIu:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminD, perSize),
+    vitaminKMcg:
+        _getNutrimentValue(product.nutriments, Nutrient.vitaminK, perSize),
+    fattyAcidsTotalMonounsaturatedMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.monounsaturatedFat,
+      perSize,
     ),
-    carbohydrateG: Value(
-      product.nutriments?.getValue(
-        Nutrient.carbohydrates,
-        perSize,
-      ),
+    fattyAcidsTotalPolyunsaturatedMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.polyunsaturatedFat,
+      perSize,
     ),
-    sugarsG: Value(
-      product.nutriments?.getValue(
-        Nutrient.sugars,
-        perSize,
-      ),
-    ),
-    fiberG: Value(
-      product.nutriments?.getValue(
-        Nutrient.fiber,
-        perSize,
-      ),
-    ),
-    cholesterolMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.cholesterol,
-        perSize,
-      ),
-    ),
-    saturatedFatsG: Value(
-      product.nutriments?.getValue(
-        Nutrient.saturatedFat,
-        perSize,
-      ),
-    ),
-    calciumMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.calcium,
-        perSize,
-      ),
-    ),
-    ironFeMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.iron,
-        perSize,
-      ),
-    ),
-    potassiumKMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.potassium,
-        perSize,
-      ),
-    ),
-    magnesiumMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.magnesium,
-        perSize,
-      ),
-    ),
-    vitaminAIuIu: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminA,
-        perSize,
-      ),
-    ),
-    vitaminCMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminC,
-        perSize,
-      ),
-    ),
-    vitaminB12Mcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminB12,
-        perSize,
-      ),
-    ),
-    vitaminDMcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminD,
-        perSize,
-      ),
-    ),
-    vitaminEAlphaTocopherolMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminE,
-        perSize,
-      ),
-    ),
-    addedSugarG: Value(
-      product.nutriments?.getValue(
-        Nutrient.addedSugars,
-        perSize,
-      ),
-    ),
-    omega3sMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.omega3,
-        perSize,
-      ),
-    ),
-    omega6sMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.omega6,
-        perSize,
-      ),
-    ),
-    transFattyAcidsG: Value(
-      product.nutriments?.getValue(
-        Nutrient.transFat,
-        perSize,
-      ),
-    ),
-    solubleFiberG: Value(
-      product.nutriments?.getValue(
-        Nutrient.fiber,
-        perSize,
-      ),
-    ),
-    phosphorusPMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.phosphorus,
-        perSize,
-      ),
-    ),
-    sodiumMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.sodium,
-        perSize,
-      ),
-    ),
-    zincZnMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.zinc,
-        perSize,
-      ),
-    ),
-    copperCuMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.copper,
-        perSize,
-      ),
-    ),
-    manganeseMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.manganese,
-        perSize,
-      ),
-    ),
-    seleniumSeMcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.selenium,
-        perSize,
-      ),
-    ),
-    fluorideFMcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.fluoride,
-        perSize,
-      ),
-    ),
-    thiaminB1Mg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminB1,
-        perSize,
-      ),
-    ),
-    riboflavinB2Mg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminB2,
-        perSize,
-      ),
-    ),
-    pantothenicAcidB5Mg: Value(
-      product.nutriments?.getValue(
-        Nutrient.pantothenicAcid,
-        perSize,
-      ),
-    ),
-    vitaminB6Mg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminB6,
-        perSize,
-      ),
-    ),
-    biotinB7Mcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.biotin,
-        perSize,
-      ),
-    ),
-    folateB9Mcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminB9,
-        perSize,
-      ),
-    ),
-    caroteneBetaMcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.betaCarotene,
-        perSize,
-      ),
-    ),
-    vitaminDIuIu: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminD,
-        perSize,
-      ),
-    ),
-    vitaminKMcg: Value(
-      product.nutriments?.getValue(
-        Nutrient.vitaminK,
-        perSize,
-      ),
-    ),
-    fattyAcidsTotalMonounsaturatedMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.monounsaturatedFat,
-        perSize,
-      ),
-    ),
-    fattyAcidsTotalPolyunsaturatedMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.polyunsaturatedFat,
-        perSize,
-      ),
-    ),
-    alcoholG: Value(
-      product.nutriments?.getValue(
-        Nutrient.alcohol,
-        perSize,
-      ),
-    ),
-    caffeineMg: Value(
-      product.nutriments?.getValue(
-        Nutrient.caffeine,
-        perSize,
-      ),
-    ),
+    alcoholG: _getNutrimentValue(product.nutriments, Nutrient.alcohol, perSize),
+    caffeineMg:
+        _getNutrimentValue(product.nutriments, Nutrient.caffeine, perSize),
   );
 }

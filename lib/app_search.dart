@@ -17,12 +17,12 @@ class AppSearch extends StatefulWidget {
   });
 
   final Set<dynamic> selected;
-  final Function(String) onChange;
-  final Function onClear;
-  final Function onEdit;
-  final Function onDelete;
-  final Function onSelect;
-  final Function onFavorite;
+  final ValueChanged<String> onChange;
+  final VoidCallback onClear;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+  final VoidCallback onSelect;
+  final VoidCallback onFavorite;
   final Widget? filter;
   final TextEditingController? ctrl;
 
@@ -33,45 +33,42 @@ class AppSearch extends StatefulWidget {
 class _AppSearchState extends State<AppSearch> {
   @override
   Widget build(BuildContext context) {
-    Widget trailingMain;
-
-    if (widget.filter != null && widget.selected.isEmpty)
-      trailingMain = widget.filter!;
-    else if (widget.selected.isNotEmpty)
-      trailingMain = IconButton(
-        tooltip: 'Delete',
-        icon: const Icon(Icons.delete),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Confirm delete'),
-                content: Text(
-                  'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
+    final trailingMain = widget.filter != null && widget.selected.isEmpty
+        ? widget.filter!
+        : widget.selected.isNotEmpty
+            ? IconButton(
+                tooltip: 'Delete',
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Confirm delete'),
+                        content: Text(
+                          'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Cancel'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('Delete'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              widget.onDelete();
+                            },
+                          ),
+                        ],
+                      );
                     },
-                  ),
-                  TextButton(
-                    child: const Text('Delete'),
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      widget.onDelete();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      );
-    else
-      trailingMain = const SizedBox.shrink(key: ValueKey('emptyWidget'));
+                  );
+                },
+              )
+            : const SizedBox.shrink(key: ValueKey('emptyWidget'));
 
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -148,7 +145,7 @@ class _AppSearchState extends State<AppSearch> {
                           child: ListTile(
                             leading: const Icon(Icons.done_all),
                             title: const Text('Select all'),
-                            onTap: () async {
+                            onTap: () {
                               Navigator.pop(context);
                               widget.onSelect();
                             },
@@ -159,7 +156,7 @@ class _AppSearchState extends State<AppSearch> {
                             child: ListTile(
                               leading: const Icon(Icons.electric_bolt),
                               title: const Text('Quick-add'),
-                              onTap: () async {
+                              onTap: () {
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
@@ -174,7 +171,7 @@ class _AppSearchState extends State<AppSearch> {
                             child: ListTile(
                               leading: const Icon(Icons.settings),
                               title: const Text('Settings'),
-                              onTap: () async {
+                              onTap: () {
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
@@ -191,7 +188,7 @@ class _AppSearchState extends State<AppSearch> {
                             child: ListTile(
                               leading: const Icon(Icons.edit),
                               title: const Text('Edit'),
-                              onTap: () async {
+                              onTap: () {
                                 Navigator.pop(context);
                                 widget.onEdit();
                               },
@@ -201,7 +198,7 @@ class _AppSearchState extends State<AppSearch> {
                             child: ListTile(
                               leading: const Icon(Icons.favorite_outline),
                               title: const Text('Favorite'),
-                              onTap: () async {
+                              onTap: () {
                                 Navigator.pop(context);
                                 widget.onFavorite();
                               },

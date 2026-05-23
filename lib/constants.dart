@@ -31,7 +31,7 @@ const excludedFields = [
   'serving_size',
 ];
 
-List<String> unitOptions = [
+const unitOptions = [
   'serving',
   'grams',
   'milliliters',
@@ -46,7 +46,7 @@ List<String> unitOptions = [
   'liters',
 ];
 
-List<String> foodFields = [
+const foodFields = [
   'id',
   'name',
   'foodGroup',

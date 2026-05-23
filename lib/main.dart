@@ -33,10 +33,7 @@ Future<void> main() async {
 
   final state = SettingsState(settings);
 
-  if (settings.reminders)
-    setupReminders();
-  else
-    cancelReminders();
+  (settings.reminders ? setupReminders : cancelReminders)();
 
   runApp(appProviders(state));
 
@@ -64,6 +61,30 @@ Widget appProviders(SettingsState state) => MultiProvider(
 class App extends StatelessWidget {
   const App({super.key});
 
+  Brightness _getCurrentBrightness(Setting settings, BuildContext context) {
+    if (settings.themeMode == 'ThemeMode.dark' ||
+        settings.themeMode == 'ThemeMode.amoled') {
+      return Brightness.dark;
+    }
+    if (settings.themeMode == 'ThemeMode.system') {
+      return MediaQuery.of(context).platformBrightness;
+    }
+    return Brightness.light;
+  }
+
+  void _setSystemUIStyle(Brightness brightness) {
+    final iconBrightness =
+        brightness == Brightness.dark ? Brightness.light : Brightness.dark;
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: iconBrightness,
+        systemNavigationBarIconBrightness: iconBrightness,
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
@@ -76,27 +97,8 @@ class App extends StatelessWidget {
 
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
-        final currentBrightness = settings.themeMode == 'ThemeMode.dark' ||
-                settings.themeMode == 'ThemeMode.amoled' ||
-                (settings.themeMode == 'ThemeMode.system' &&
-                    MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark)
-            ? Brightness.dark
-            : Brightness.light;
-
-        SystemChrome.setSystemUIOverlayStyle(
-          SystemUiOverlayStyle(
-            statusBarIconBrightness: currentBrightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark,
-            systemNavigationBarIconBrightness:
-                currentBrightness == Brightness.dark
-                    ? Brightness.light
-                    : Brightness.dark,
-            statusBarColor: Colors.transparent,
-            systemNavigationBarColor: Colors.transparent,
-          ),
-        );
+        final currentBrightness = _getCurrentBrightness(settings, context);
+        _setSystemUIStyle(currentBrightness);
 
         return MaterialApp(
           title: 'FitBook',
@@ -137,6 +139,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Widget _buildTabPage(String tab) {
+    switch (tab) {
+      case 'DiaryPage':
+        return const DiaryPage();
+      case 'GraphPage':
+        return const GraphPage();
+      case 'FoodPage':
+        return const FoodPage();
+      case 'WeightPage':
+        return const WeightPage();
+      default:
+        return ErrorWidget('Invalid tab settings.');
+    }
+  }
+
+  Tab _buildTabWidget(String tab) {
+    return switch (tab) {
+      'DiaryPage' => const Tab(icon: Icon(Icons.date_range), text: "Diary"),
+      'GraphPage' => const Tab(icon: Icon(Icons.insights), text: "Graph"),
+      'FoodPage' => const Tab(icon: Icon(Icons.restaurant), text: "Food"),
+      'WeightPage' => const Tab(icon: Icon(Icons.scale), text: "Weight"),
+      _ => const Tab(icon: Icon(Icons.error), text: "Error"),
+    };
+  }
+
   @override
   void initState() {
     super.initState();
@@ -191,18 +218,7 @@ class _HomePageState extends State<HomePage> {
             physics: scrollableTabs
                 ? const AlwaysScrollableScrollPhysics()
                 : const NeverScrollableScrollPhysics(),
-            children: tabs.map((tab) {
-              if (tab == 'DiaryPage')
-                return const DiaryPage();
-              else if (tab == 'GraphPage')
-                return const GraphPage();
-              else if (tab == 'FoodPage')
-                return const FoodPage();
-              else if (tab == 'WeightPage')
-                return const WeightPage();
-              else
-                return ErrorWidget('Invalid tab settings.');
-            }).toList(),
+            children: tabs.map(_buildTabPage).toList(),
           ),
         ),
         bottomNavigationBar: Material(
@@ -211,30 +227,7 @@ class _HomePageState extends State<HomePage> {
             top: false,
             child: TabBar(
               dividerColor: Colors.transparent,
-              tabs: tabs.map((tab) {
-                if (tab == 'DiaryPage')
-                  return const Tab(
-                    icon: Icon(Icons.date_range),
-                    text: "Diary",
-                  );
-                else if (tab == 'GraphPage')
-                  return const Tab(
-                    icon: Icon(Icons.insights),
-                    text: "Graph",
-                  );
-                else if (tab == 'FoodPage')
-                  return const Tab(
-                    icon: Icon(Icons.restaurant),
-                    text: "Food",
-                  );
-                else if (tab == 'WeightPage')
-                  return const Tab(
-                    icon: Icon(Icons.scale),
-                    text: "Weight",
-                  );
-                else
-                  return ErrorWidget('Invalid tab settings.');
-              }).toList(),
+              tabs: tabs.map(_buildTabWidget).toList(),
             ),
           ),
         ),

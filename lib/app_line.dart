@@ -34,14 +34,14 @@ class AppLine extends StatefulWidget {
   });
 
   @override
-  createState() => _AppLineState();
+  State<AppLine> createState() => _AppLineState();
 }
 
 class _AppLineState extends State<AppLine> {
   final formatter = NumberFormat('#,##0.00');
 
   late Stream<List<GraphData>> stream;
-  late Setting settings = context.read<SettingsState>().value;
+  late Setting settings;
   bool showTrend = false;
 
   Map<String, double> _calcTrend(List<GraphData> data) {
@@ -117,6 +117,7 @@ class _AppLineState extends State<AppLine> {
   @override
   void initState() {
     super.initState();
+    settings = context.read<SettingsState>().value;
     _setStream();
   }
 

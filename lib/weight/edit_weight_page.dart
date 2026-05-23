@@ -72,6 +72,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
               if (mounted) _valueFocusNode.requestFocus();
             }
           }
+
           _routeAnimation!.addStatusListener(onReady);
         }
       }
