@@ -76,6 +76,12 @@ class AppDatabase extends _$AppDatabase {
             );
           }
 
+          if (from < 50 && to >= 50) {
+            await m.database.customStatement(
+              'ALTER TABLE settings ADD COLUMN graphs_start_at_zero INTEGER NOT NULL DEFAULT 0',
+            );
+          }
+
           if (from < 49 && to >= 49) {
             await m.database.customStatement('''
               CREATE TABLE diaries_new (
@@ -406,5 +412,5 @@ WHERE name = 'Quick-add'
   );
 
   @override
-  int get schemaVersion => 49;
+  int get schemaVersion => 50;
 }

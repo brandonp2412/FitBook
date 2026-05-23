@@ -316,6 +316,7 @@ class _AppLineState extends State<AppLine> {
           int? dailyFat,
           int? dailyCarb,
           bool curveLines,
+          bool graphsStartAtZero,
           String shortDateFormat,
         })>(
       (s) => (
@@ -325,6 +326,7 @@ class _AppLineState extends State<AppLine> {
         dailyFat: s.value.dailyFat,
         dailyCarb: s.value.dailyCarb,
         curveLines: s.value.curveLines,
+        graphsStartAtZero: s.value.graphsStartAtZero,
         shortDateFormat: s.value.shortDateFormat,
       ),
     );
@@ -424,6 +426,7 @@ class _AppLineState extends State<AppLine> {
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: LineChart(
                   LineChartData(
+                    minY: sel.graphsStartAtZero ? 0 : null,
                     extraLinesData: ExtraLinesData(
                       horizontalLines: [
                         if (goal > 0)

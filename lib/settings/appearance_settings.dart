@@ -248,6 +248,27 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
           ),
         ),
       ),
+    if ('graphs start at zero'.contains(term))
+      Tooltip(
+        message: 'Always start the graph y-axis at zero',
+        child: ListTile(
+          title: const Text('Graphs start at zero'),
+          leading: const Icon(Icons.vertical_align_bottom),
+          onTap: () => db.settings.update().write(
+                SettingsCompanion(
+                  graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
+                ),
+              ),
+          trailing: Switch(
+            value: settings.value.graphsStartAtZero,
+            onChanged: (value) => db.settings.update().write(
+                  SettingsCompanion(
+                    graphsStartAtZero: Value(value),
+                  ),
+                ),
+          ),
+        ),
+      ),
   ];
 }
 

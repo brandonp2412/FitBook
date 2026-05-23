@@ -53,4 +53,6 @@ class Settings extends Table {
   BoolColumn get compactDiary => boolean().withDefault(const Constant(true))();
   BoolColumn get compactWeights =>
       boolean().withDefault(const Constant(true))();
+  BoolColumn get graphsStartAtZero =>
+      boolean().withDefault(const Constant(false))();
 }
