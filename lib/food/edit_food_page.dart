@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide Column;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
@@ -135,7 +135,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (mounted) settingsState.removeListener(setCtrls);
   }
 
-  Future<void> save() async {
+  Map<String, Expression> _buildFoodColumns({int? id}) {
     var food = FoodsCompanion.insert(
       name: nameCtrl.text,
       barcode: Value(barcodeCtrl.text),
@@ -159,8 +159,19 @@ class _EditFoodPageState extends State<EditFoodPage> {
       columns[entry.key] = value;
     }
 
-    if (widget.id != null) columns['id'] = Variable(widget.id);
+    if (id != null) columns['id'] = Variable(id);
     columns['favorite'] = Variable(_favorite ?? false);
+    return columns;
+  }
+
+  Future<void> saveAs() async {
+    final columns = _buildFoodColumns();
+    await db.into(db.foods).insert(RawValuesInsertable(columns));
+    if (mounted) Navigator.pop(context);
+  }
+
+  Future<void> save() async {
+    final columns = _buildFoodColumns(id: widget.id);
 
     var id = widget.id;
     if (widget.id != null)
@@ -504,11 +515,26 @@ class _EditFoodPageState extends State<EditFoodPage> {
           ],
         ),
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: save,
-        label: 'Save',
-        icon: Icons.save,
-        scroll: scrollCtrl,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (widget.id != null) ...[
+            FloatingActionButton.small(
+              heroTag: 'saveAs',
+              tooltip: 'Save as new copy',
+              onPressed: saveAs,
+              child: const Icon(Icons.save_as),
+            ),
+            const SizedBox(height: 8),
+          ],
+          AnimatedFab(
+            onTap: save,
+            label: 'Save',
+            icon: Icons.save,
+            scroll: scrollCtrl,
+          ),
+        ],
       ),
     );
   }
