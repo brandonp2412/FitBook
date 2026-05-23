@@ -56,7 +56,7 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       persist: false,
-      margin: EdgeInsets.only(bottom: 89, left: 16, right: 16),
+      margin: const EdgeInsets.only(bottom: 89, left: 16, right: 16),
       content: Text(message),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(

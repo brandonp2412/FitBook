@@ -113,18 +113,16 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Future<void> _save() async {
     final quantity = double.tryParse(quantityController.text);
 
+    final oldEntries = await (db.diaries.select()
+          ..where((u) => u.id.isIn(widget.diaryIds)))
+        .get();
+    final entriesById = {for (final e in oldEntries) e.id: e};
+
     for (final id in widget.diaryIds) {
-      final oldEntry = await (db.diaries.select()
-            ..where((u) => u.id.equals(id)))
-          .getSingle();
+      final oldEntry = entriesById[id]!;
       int foodId;
       if (newFood) {
         foodId = await (db.foods.insertOne(

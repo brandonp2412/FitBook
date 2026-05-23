@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/diary/stats.dart';
@@ -41,49 +42,46 @@ class _DiaryListState extends State<DiaryList> {
 
   void _computeGroupings() {
     final newStats = <DateTime, Stats>{};
+    final newGroups = <({DateTime date, List<DiaryFood> foods})>[];
+    DateTime? lastDate;
+    var currentDayFoods = <DiaryFood>[];
+
     for (final diaryFood in widget.diaryFoods) {
       final day = DateTime(
         diaryFood.created.year,
         diaryFood.created.month,
         diaryFood.created.day,
       );
+
+      final cals = diaryFood.metrics[db.foods.calories.name] ?? 0;
+      final protein = diaryFood.metrics[db.foods.proteinG.name] ?? 0;
+      final fat = diaryFood.metrics[db.foods.fatG.name] ?? 0;
+      final carb = diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
+      final fiber = diaryFood.metrics[db.foods.fiberG.name] ?? 0;
+
       if (newStats.containsKey(day)) {
-        newStats[day]!.cals += diaryFood.metrics[db.foods.calories.name] ?? 0;
-        newStats[day]!.protein +=
-            diaryFood.metrics[db.foods.proteinG.name] ?? 0;
-        newStats[day]!.fat += diaryFood.metrics[db.foods.fatG.name] ?? 0;
-        newStats[day]!.carb +=
-            diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0;
-        newStats[day]!.fiber += diaryFood.metrics[db.foods.fiberG.name] ?? 0;
+        newStats[day]!.cals += cals;
+        newStats[day]!.protein += protein;
+        newStats[day]!.fat += fat;
+        newStats[day]!.carb += carb;
+        newStats[day]!.fiber += fiber;
       } else {
         newStats[day] = Stats(
-          cals: diaryFood.metrics[db.foods.calories.name] ?? 0,
-          protein: diaryFood.metrics[db.foods.proteinG.name] ?? 0,
-          fat: diaryFood.metrics[db.foods.fatG.name] ?? 0,
-          carb: diaryFood.metrics[db.foods.carbohydrateG.name] ?? 0,
-          fiber: diaryFood.metrics[db.foods.fiberG.name] ?? 0,
+          cals: cals,
+          protein: protein,
+          fat: fat,
+          carb: carb,
+          fiber: fiber,
         );
       }
-    }
 
-    final newGroups = <({DateTime date, List<DiaryFood> foods})>[];
-    DateTime? lastDate;
-    var currentDayFoods = <DiaryFood>[];
-
-    for (final diaryFood in widget.diaryFoods) {
-      final currentDate = DateTime(
-        diaryFood.created.year,
-        diaryFood.created.month,
-        diaryFood.created.day,
-      );
-
-      if (lastDate != null && !isSameDay(lastDate, currentDate)) {
+      if (lastDate != null && !isSameDay(lastDate, day)) {
         newGroups.add((date: lastDate, foods: currentDayFoods));
         currentDayFoods = [];
       }
 
       currentDayFoods.add(diaryFood);
-      lastDate = currentDate;
+      lastDate = day;
     }
 
     if (currentDayFoods.isNotEmpty && lastDate != null) {
@@ -143,7 +141,7 @@ class _DiaryListState extends State<DiaryList> {
   }
 
   Widget _buildCardDisplay(
-    dynamic settings,
+    Setting settings,
     int crossAxisCount,
     double cardWidth,
   ) {
@@ -165,7 +163,7 @@ class _DiaryListState extends State<DiaryList> {
     );
   }
 
-  Widget _buildListDisplay(dynamic settings) {
+  Widget _buildListDisplay(Setting settings) {
     final width = MediaQuery.of(context).size.width;
     final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return ListView.builder(
@@ -415,7 +413,7 @@ class _DiaryListState extends State<DiaryList> {
     List<DiaryFood> dayFoods,
     DateTime date,
     Stats dayStats,
-    dynamic settings,
+    Setting settings,
     int crossAxisCount,
     double cardWidth,
   ) {
@@ -448,7 +446,7 @@ class _DiaryListState extends State<DiaryList> {
     return (availableWidth - spacing) / crossAxisCount;
   }
 
-  Widget _buildDateHeader(DateTime date, Stats dayStats, dynamic settings) {
+  Widget _buildDateHeader(DateTime date, Stats dayStats, Setting settings) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isToday = isSameDay(date, DateTime.now());
@@ -461,7 +459,6 @@ class _DiaryListState extends State<DiaryList> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Date title
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -483,8 +480,6 @@ class _DiaryListState extends State<DiaryList> {
                 ),
               ],
             ),
-
-            // Stats
             if (settings.diarySummary != 'DiarySummary.none') ...[
               const SizedBox(height: 16),
               _buildStatsSection(dayStats, settings, colorScheme, isToday),
@@ -497,7 +492,7 @@ class _DiaryListState extends State<DiaryList> {
 
   Widget _buildStatsSection(
     Stats dayStats,
-    dynamic settings,
+    Setting settings,
     ColorScheme colorScheme,
     bool isToday,
   ) {
@@ -618,33 +613,34 @@ class _DiaryListState extends State<DiaryList> {
   String _formatStat(
     String type,
     double current,
-    int target,
-    dynamic settings,
+    int? target,
+    Setting settings,
   ) {
+    final t = target ?? 0;
     switch (settings.diarySummary) {
       case 'DiarySummary.remaining':
-        final remaining = target - current;
+        final remaining = t - current;
         if (type == 'calories') {
           return "${_formatter.format(remaining)} kcal";
         }
         return "${remaining.toStringAsFixed(0)}g $type";
       case 'DiarySummary.division':
         if (type == 'calories') {
-          return "${_formatter.format(current)} / ${_formatter.format(target)} kcal";
+          return "${_formatter.format(current)} / ${_formatter.format(t)} kcal";
         }
-        return "${current.toStringAsFixed(0)} / ${target.toStringAsFixed(0)}g $type";
+        return "${current.toStringAsFixed(0)} / ${t.toStringAsFixed(0)}g $type";
       case 'DiarySummary.both':
-        final remaining = target - current;
+        final remaining = t - current;
         if (type == 'calories') {
-          return "${remaining.toStringAsFixed(0)} (${_formatter.format(target)} kcal)";
+          return "${remaining.toStringAsFixed(0)} (${_formatter.format(t)} kcal)";
         }
-        return "${remaining.toStringAsFixed(0)} (${target.toStringAsFixed(0)}g $type)";
+        return "${remaining.toStringAsFixed(0)} (${t.toStringAsFixed(0)}g $type)";
       default:
         return '';
     }
   }
 
-  Widget _buildFoodCard(DiaryFood diaryFood, dynamic settings) {
+  Widget _buildFoodCard(DiaryFood diaryFood, Setting settings) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isSelected = widget.selected.contains(diaryFood.entryId);
@@ -689,7 +685,7 @@ class _DiaryListState extends State<DiaryList> {
         onLongPress: () => widget.onSelect(diaryFood.entryId),
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          height: 80, // Fixed height for all cards
+          height: 80,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -706,11 +702,8 @@ class _DiaryListState extends State<DiaryList> {
           ),
           child: Row(
             children: [
-              // Smaller food image
               if (settings.showImages)
                 _buildCompactFoodImage(diaryFood, colorScheme),
-
-              // Food info
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -739,8 +732,6 @@ class _DiaryListState extends State<DiaryList> {
                   ),
                 ),
               ),
-
-              // Compact calories/selection
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 child: isSelected

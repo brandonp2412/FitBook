@@ -83,11 +83,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
     selectAll(cal);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Future<void> save() async {
     Navigator.pop(context);
     final foodId = await (db.foods.insertOne(

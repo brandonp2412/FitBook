@@ -251,7 +251,6 @@ class WeightCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header with weight and selection indicator
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -282,10 +281,7 @@ class WeightCard extends StatelessWidget {
                   ),
                 ],
               ),
-
               const SizedBox(height: 12),
-
-              // Image section (if available)
               if (showImages && weight.image?.isNotEmpty == true)
                 Expanded(
                   flex: 2,
@@ -328,8 +324,6 @@ class WeightCard extends StatelessWidget {
                 )
               else
                 const Spacer(),
-
-              // Date section
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
