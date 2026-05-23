@@ -1,4 +1,3 @@
-import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
@@ -155,21 +154,6 @@ class _AppSearchState extends State<AppSearch> {
                           ),
                         ),
                         if (widget.selected.isEmpty) ...[
-                          PopupMenuItem(
-                            child: ListTile(
-                              leading: const Icon(Icons.electric_bolt),
-                              title: const Text('Quick-add'),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const QuickAddPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
                           PopupMenuItem(
                             child: ListTile(
                               leading: const Icon(Icons.settings),

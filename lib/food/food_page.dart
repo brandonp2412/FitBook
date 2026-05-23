@@ -9,6 +9,7 @@ import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/quick_add_page.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -361,6 +362,19 @@ GROUP BY meal_foods.meal
       floatingActionButton: material.Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          FloatingActionButton.small(
+            heroTag: 'quickAdd',
+            tooltip: 'Quick-add',
+            onPressed: () {
+              navKey.currentState!.push(
+                MaterialPageRoute(
+                  builder: (context) => const QuickAddPage(),
+                ),
+              );
+            },
+            child: const Icon(Icons.electric_bolt),
+          ),
+          const SizedBox(height: 8),
           FloatingActionButton.small(
             heroTag: 'addMeal',
             tooltip: 'Add meal',
