@@ -33,42 +33,45 @@ class AppSearch extends StatefulWidget {
 class _AppSearchState extends State<AppSearch> {
   @override
   Widget build(BuildContext context) {
-    final trailingMain = widget.filter != null && widget.selected.isEmpty
-        ? widget.filter!
-        : widget.selected.isNotEmpty
-            ? IconButton(
-                tooltip: 'Delete',
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Confirm delete'),
-                        content: Text(
-                          'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: const Text('Cancel'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          TextButton(
-                            child: const Text('Delete'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              widget.onDelete();
-                            },
-                          ),
-                        ],
-                      );
+    Widget trailingMain;
+
+    if (widget.filter != null && widget.selected.isEmpty)
+      trailingMain = widget.filter!;
+    else if (widget.selected.isNotEmpty)
+      trailingMain = IconButton(
+        tooltip: 'Delete',
+        icon: const Icon(Icons.delete),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Confirm delete'),
+                content: Text(
+                  'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
-                  );
-                },
-              )
-            : const SizedBox.shrink(key: ValueKey('emptyWidget'));
+                  ),
+                  TextButton(
+                    child: const Text('Delete'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      widget.onDelete();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+    else
+      trailingMain = const SizedBox.shrink(key: ValueKey('emptyWidget'));
 
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
