@@ -80,6 +80,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   List<_SearchResult> searchResults = [];
   final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
+  double _mealCalsPerServing = 0;
+  double _mealProteinPerServing = 0;
+  double _mealCarbPerServing = 0;
+  double _mealFatPerServing = 0;
+  double _mealFiberPerServing = 0;
+
   double _num(TextEditingController c) {
     return formatter.tryParse(c.text)?.toDouble() ?? 0.0;
   }
@@ -163,6 +169,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           nameController.text = meal.name;
           imageFile = meal.imageFile;
         });
+        _loadMealNutrients(meal.id);
         return;
       }
 
@@ -242,6 +249,55 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     });
   }
 
+  /// Loads the component foods of [mealId] and computes per-serving nutrient
+  /// totals, accounting for each food's quantity and unit within the meal.
+  Future<void> _loadMealNutrients(int mealId) async {
+    final rows = await (db.mealFoods.select().join([
+      innerJoin(db.foods, db.foods.id.equalsExp(db.mealFoods.food)),
+    ])
+          ..where(db.mealFoods.meal.equals(mealId)))
+        .get();
+
+    var cals = 0.0;
+    var prot = 0.0;
+    var carbs = 0.0;
+    var fat = 0.0;
+    var fiber = 0.0;
+
+    for (final row in rows) {
+      final mf = row.readTable(db.mealFoods);
+      final food = row.readTable(db.foods);
+      final servingSize = food.servingSize ?? 100.0;
+      final qtyInGrams = switch (mf.unit) {
+        'serving' => mf.quantity * servingSize,
+        'grams' || 'milliliters' => mf.quantity,
+        'milligrams' => mf.quantity / 1000.0,
+        'ounces' => mf.quantity * 28.35,
+        'pounds' => mf.quantity * 453.592,
+        'cups' => mf.quantity * 250.0,
+        'tablespoons' => mf.quantity * 15.0,
+        'teaspoons' => mf.quantity * 5.0,
+        'liters' => mf.quantity * 1000.0,
+        _ => mf.quantity,
+      };
+      final ratio = qtyInGrams / servingSize;
+      cals += (food.calories ?? 0) * ratio;
+      prot += (food.proteinG ?? 0) * ratio;
+      carbs += (food.carbohydrateG ?? 0) * ratio;
+      fat += (food.fatG ?? 0) * ratio;
+      fiber += (food.fiberG ?? 0) * ratio;
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _mealCalsPerServing = cals;
+      _mealProteinPerServing = prot;
+      _mealCarbPerServing = carbs;
+      _mealFatPerServing = fat;
+      _mealFiberPerServing = fiber;
+    });
+  }
+
   void _applyMeal(Meal meal) {
     setState(() {
       _selectedMealId = meal.id;
@@ -251,6 +307,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       unit = 'serving';
       quantity.text = '1';
     });
+    _loadMealNutrients(meal.id);
     quantityNode.requestFocus();
     selectAll(quantity);
   }
@@ -961,6 +1018,68 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   ],
                 ),
               ], // end if (_selectedMealId == null)
+              if (_selectedMealId != null) ...[
+                const SizedBox(height: 32),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Calories per ${quantity.text} serving',
+                        value:
+                            '${formatter.format(_mealCalsPerServing * _num(quantity))} kcal',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Kilojoules',
+                        value:
+                            '${formatter.format(_mealCalsPerServing * _num(quantity) * 4.184)} kJ',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Protein',
+                        value:
+                            '${formatter.format(_mealProteinPerServing * _num(quantity))} g',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Carbs',
+                        value:
+                            '${formatter.format(_mealCarbPerServing * _num(quantity))} g',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: totalCell(
+                        label: 'Fat',
+                        value:
+                            '${formatter.format(_mealFatPerServing * _num(quantity))} g',
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: totalCell(
+                        label: 'Fiber',
+                        value:
+                            '${formatter.format(_mealFiberPerServing * _num(quantity))} g',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ],
         ),

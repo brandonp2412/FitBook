@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/main.dart';
@@ -254,6 +255,77 @@ void main() {
 
     final meals = await db.meals.select().get();
     expect(meals.isEmpty, true);
+
+    await db.close();
+  });
+
+  testWidgets(
+      'EditDiaryPage shows nutrient summary when a meal entry is opened',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    final chickenId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Chicken',
+        calories: const Value(200),
+        proteinG: const Value(40),
+        carbohydrateG: const Value(0),
+        fatG: const Value(5),
+        fiberG: const Value(0),
+        servingSize: const Value(100),
+        servingUnit: const Value('grams'),
+      ),
+    );
+    final riceId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Rice',
+        calories: const Value(130),
+        proteinG: const Value(3),
+        carbohydrateG: const Value(28),
+        fatG: const Value(0),
+        fiberG: const Value(1),
+        servingSize: const Value(100),
+        servingUnit: const Value('grams'),
+      ),
+    );
+    final mealId = await db.meals.insertOne(
+      MealsCompanion.insert(name: 'Chicken and Rice', created: DateTime.now()),
+    );
+    // 1 serving (100 g) each
+    await db.mealFoods.insertAll([
+      MealFoodsCompanion.insert(
+        meal: mealId,
+        food: chickenId,
+        quantity: 1,
+        unit: 'serving',
+      ),
+      MealFoodsCompanion.insert(
+        meal: mealId,
+        food: riceId,
+        quantity: 1,
+        unit: 'serving',
+      ),
+    ]);
+    final entryId = await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        meal: Value(mealId),
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Edit diary entry'), findsOne);
+    expect(find.text('Chicken and Rice'), findsOne);
+
+    // Total for 1 serving: 200+130=330 kcal, 40+3=43 g protein
+    expect(find.textContaining('330'), findsWidgets);
+    expect(find.textContaining('43'), findsWidgets);
 
     await db.close();
   });

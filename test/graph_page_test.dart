@@ -97,6 +97,59 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('GraphPage includes meal diary entries in calorie graph',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Rice',
+        calories: const Value(130),
+        servingSize: const Value(100),
+        servingUnit: const Value('grams'),
+      ),
+    );
+    final mealId = await db.meals.insertOne(
+      MealsCompanion.insert(name: 'Rice Bowl', created: DateTime.now()),
+    );
+    await db.mealFoods.insertOne(
+      MealFoodsCompanion.insert(
+        meal: mealId,
+        food: foodId,
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+    // Add a meal diary entry (food is NULL — previously excluded by innerJoin).
+    await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        meal: Value(mealId),
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: GraphPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // The chart should render with data rather than showing "No data yet".
+    expect(find.text('No data yet'), findsNothing);
+    expect(find.byType(LineChart), findsOne);
+
+    await db.close();
+  });
+
   testWidgets('GraphPage body weight', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();

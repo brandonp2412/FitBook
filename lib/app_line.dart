@@ -143,78 +143,107 @@ class _AppLineState extends State<AppLine> {
   void _setStream() {
     final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
 
-    final qtyInGrams = CustomExpression<double>('''
-    CASE 
-      WHEN diaries.unit = 'serving' 
-      THEN diaries.quantity * (
-        CASE 
-          WHEN foods.serving_size IS NULL THEN 100
-          WHEN foods.serving_unit IS NULL THEN foods.serving_size
-          WHEN foods.serving_unit = 'ounces' THEN foods.serving_size * 28.35
-          WHEN foods.serving_unit = 'grams' THEN foods.serving_size
-          WHEN foods.serving_unit = 'milliliters' THEN foods.serving_size
-          WHEN foods.serving_unit = 'cups' THEN foods.serving_size * 250
-          WHEN foods.serving_unit = 'tablespoons' THEN foods.serving_size * 15
-          WHEN foods.serving_unit = 'teaspoons' THEN foods.serving_size * 5
-          WHEN foods.serving_unit = 'pounds' THEN foods.serving_size * 453.592
-          WHEN foods.serving_unit = 'serving' THEN foods.serving_size
-          ELSE 100
-        END
-      )
-      WHEN diaries.unit IN ('grams', 'milliliters') THEN diaries.quantity
-      WHEN diaries.unit = 'milligrams' THEN diaries.quantity / 1000
-      WHEN diaries.unit = 'cups' THEN diaries.quantity * 250
-      WHEN diaries.unit = 'tablespoons' THEN diaries.quantity * 15
-      WHEN diaries.unit = 'teaspoons' THEN diaries.quantity * 5
-      WHEN diaries.unit = 'ounces' THEN diaries.quantity * 28.35
-      WHEN diaries.unit = 'pounds' THEN diaries.quantity * 453.592
-      WHEN diaries.unit = 'liters' THEN diaries.quantity * 1000
-      WHEN diaries.unit = 'kilojoules' THEN diaries.quantity / 4.184
-      ELSE diaries.quantity
-    END
-  ''');
-
-    final servingG = CustomExpression<double>('''
-      CASE 
-        WHEN foods.serving_size IS NULL THEN 100
-        WHEN foods.serving_unit IS NULL THEN foods.serving_size
-        WHEN foods.serving_unit = 'ounces' THEN foods.serving_size * 28.35
-        WHEN foods.serving_unit = 'grams' THEN foods.serving_size
-        WHEN foods.serving_unit = 'milliliters' THEN foods.serving_size
-        WHEN foods.serving_unit = 'cups' THEN foods.serving_size * 250
-        WHEN foods.serving_unit = 'tablespoons' THEN foods.serving_size * 15
-        WHEN foods.serving_unit = 'teaspoons' THEN foods.serving_size * 5
-        WHEN foods.serving_unit = 'pounds' THEN foods.serving_size * 453.592
-        WHEN foods.serving_unit = 'serving' THEN foods.serving_size
-        ELSE 100
+    // Returns a SQL expression for a nutrient field that handles both food and
+    // meal diary entries. Meal entries (diaries.food IS NULL) use a correlated
+    // subquery that sums the nutrient across all meal_foods components.
+    String mealAwareFieldExpr(String field) => '''
+      CASE
+        WHEN diaries.meal IS NOT NULL THEN
+          diaries.quantity * COALESCE((
+            SELECT SUM(
+              CASE
+                WHEN mf.unit = 'serving'
+                  THEN mf.quantity * COALESCE(mf_f.serving_size, 100.0)
+                WHEN mf.unit IN ('grams', 'milliliters') THEN mf.quantity
+                WHEN mf.unit = 'milligrams' THEN mf.quantity / 1000.0
+                WHEN mf.unit = 'ounces' THEN mf.quantity * 28.35
+                WHEN mf.unit = 'pounds' THEN mf.quantity * 453.592
+                WHEN mf.unit = 'cups' THEN mf.quantity * 250.0
+                WHEN mf.unit = 'tablespoons' THEN mf.quantity * 15.0
+                WHEN mf.unit = 'teaspoons' THEN mf.quantity * 5.0
+                WHEN mf.unit = 'liters' THEN mf.quantity * 1000.0
+                ELSE mf.quantity
+              END
+              * COALESCE(mf_f.$field, 0.0)
+              / NULLIF(COALESCE(mf_f.serving_size, 100.0), 0.0)
+            )
+            FROM meal_foods AS mf
+            JOIN foods AS mf_f ON mf_f.id = mf.food
+            WHERE mf.meal = diaries.meal
+          ), 0.0)
+        ELSE
+          (CASE
+            WHEN diaries.unit = 'serving'
+            THEN diaries.quantity * (
+              CASE
+                WHEN foods.serving_size IS NULL THEN 100
+                WHEN foods.serving_unit IS NULL THEN foods.serving_size
+                WHEN foods.serving_unit = 'ounces' THEN foods.serving_size * 28.35
+                WHEN foods.serving_unit = 'grams' THEN foods.serving_size
+                WHEN foods.serving_unit = 'milliliters' THEN foods.serving_size
+                WHEN foods.serving_unit = 'cups' THEN foods.serving_size * 250
+                WHEN foods.serving_unit = 'tablespoons' THEN foods.serving_size * 15
+                WHEN foods.serving_unit = 'teaspoons' THEN foods.serving_size * 5
+                WHEN foods.serving_unit = 'pounds' THEN foods.serving_size * 453.592
+                WHEN foods.serving_unit = 'serving' THEN foods.serving_size
+                ELSE 100
+              END
+            )
+            WHEN diaries.unit IN ('grams', 'milliliters') THEN diaries.quantity
+            WHEN diaries.unit = 'milligrams' THEN diaries.quantity / 1000
+            WHEN diaries.unit = 'cups' THEN diaries.quantity * 250
+            WHEN diaries.unit = 'tablespoons' THEN diaries.quantity * 15
+            WHEN diaries.unit = 'teaspoons' THEN diaries.quantity * 5
+            WHEN diaries.unit = 'ounces' THEN diaries.quantity * 28.35
+            WHEN diaries.unit = 'pounds' THEN diaries.quantity * 453.592
+            WHEN diaries.unit = 'liters' THEN diaries.quantity * 1000
+            WHEN diaries.unit = 'kilojoules' THEN diaries.quantity / 4.184
+            ELSE diaries.quantity
+          END)
+          * COALESCE(foods.$field, 0.0)
+          / NULLIF((
+            CASE
+              WHEN foods.serving_size IS NULL THEN 100
+              WHEN foods.serving_unit IS NULL THEN foods.serving_size
+              WHEN foods.serving_unit = 'ounces' THEN foods.serving_size * 28.35
+              WHEN foods.serving_unit = 'grams' THEN foods.serving_size
+              WHEN foods.serving_unit = 'milliliters' THEN foods.serving_size
+              WHEN foods.serving_unit = 'cups' THEN foods.serving_size * 250
+              WHEN foods.serving_unit = 'tablespoons' THEN foods.serving_size * 15
+              WHEN foods.serving_unit = 'teaspoons' THEN foods.serving_size * 5
+              WHEN foods.serving_unit = 'pounds' THEN foods.serving_size * 453.592
+              WHEN foods.serving_unit = 'serving' THEN foods.serving_size
+              ELSE 100
+            END
+          ), 0.0)
       END
-''');
+    ''';
 
     Map<String, CustomExpression> metricCols = {
       'calories': CustomExpression<double>(
-        '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content})''',
+        'SUM(${mealAwareFieldExpr('calories')})',
         watchedTables: {db.foods, db.diaries},
       ),
     };
 
     for (final field in fields) {
       metricCols[field] = CustomExpression<double>(
-        '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content})''',
+        'SUM(${mealAwareFieldExpr(field)})',
         watchedTables: {db.foods, db.diaries},
       );
     }
 
     if (widget.groupBy != Period.day) {
       metricCols['calories'] = CustomExpression<double>(
-        '''SUM((${qtyInGrams.content}) * COALESCE(foods.calories, 0) / ${servingG.content}) / 
-         COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
+        '''SUM(${mealAwareFieldExpr('calories')}) /
+           COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
         watchedTables: {db.foods, db.diaries},
       );
 
       for (final field in fields) {
         metricCols[field] = CustomExpression<double>(
-          '''SUM((${qtyInGrams.content}) * COALESCE(foods.$field, 0) / ${servingG.content}) / 
-           COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
+          '''SUM(${mealAwareFieldExpr(field)}) /
+             COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
           watchedTables: {db.foods, db.diaries},
         );
       }
@@ -267,9 +296,12 @@ class _AppLineState extends State<AppLine> {
               db.diaries.created,
               ...metricCols.values,
             ])
-            ..join(
-              [innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id))],
-            )
+            ..join([
+              leftOuterJoin(
+                db.foods,
+                db.diaries.food.equalsExp(db.foods.id),
+              ),
+            ])
             ..orderBy([
               OrderingTerm(
                 expression: db.diaries.created,
