@@ -522,6 +522,9 @@ class _AppLineState extends State<AppLine> {
                     children: [
                       Expanded(
                         child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          minLeadingWidth: 0,
+                          titleAlignment: ListTileTitleAlignment.center,
                           title: const Text("Average"),
                           subtitle: Text(
                             "${formatter.format(avg)} ${rows.first.unit}",
@@ -538,6 +541,9 @@ class _AppLineState extends State<AppLine> {
                       ),
                       Expanded(
                         child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          minLeadingWidth: 0,
+                          titleAlignment: ListTileTitleAlignment.center,
                           title: const Text("Trend"),
                           subtitle: Text(_getTrendText(rows)),
                           onTap: () => setState(() => showTrend = true),
@@ -557,6 +563,8 @@ class _AppLineState extends State<AppLine> {
                       children: [
                         Expanded(
                           child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            minLeadingWidth: 0,
                             onTap: () {
                               if (widget.metric == 'body-weight')
                                 Navigator.of(context).push(
@@ -640,9 +648,11 @@ class _AppLineState extends State<AppLine> {
         return touchedSpots.map(
           (spot) {
             if (spot.barIndex != 0) return null;
-            final value = rows.elementAt(spot.spotIndex).val;
+            final row = rows.elementAt(spot.spotIndex);
+            final dateStr =
+                DateFormat(settings.shortDateFormat).format(row.created);
             return LineTooltipItem(
-              "${formatter.format(value)} $unit",
+              "${formatter.format(row.val)} $unit\n$dateStr",
               TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
             );
           },

@@ -106,6 +106,15 @@ class App extends StatelessWidget {
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',
             useMaterial3: true,
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+              },
+            ),
           ),
           darkTheme: ThemeData(
             colorScheme:
@@ -118,6 +127,15 @@ class App extends StatelessWidget {
             useMaterial3: true,
             inputDecorationTheme: const InputDecorationTheme(
               floatingLabelBehavior: FloatingLabelBehavior.always,
+            ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+              },
             ),
           ),
           themeMode: settings.themeMode == 'ThemeMode.amoled'
