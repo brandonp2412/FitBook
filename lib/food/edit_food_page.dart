@@ -140,6 +140,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
       name: nameCtrl.text,
       barcode: Value(barcodeCtrl.text),
       imageFile: Value(imgFile),
+      smallImage: Value(smallImg),
+      bigImage: Value(bigImg),
       calories: Value(double.tryParse(calCtrl.text)),
       servingUnit: Value(unit),
       servingSize: Value(double.parse(sizeCtrl.text)),

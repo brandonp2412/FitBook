@@ -27,6 +27,8 @@ const excludedFields = [
   'calories',
   'serving_unit',
   'image_file',
+  'small_image',
+  'big_image',
   'barcode',
   'serving_size',
 ];
