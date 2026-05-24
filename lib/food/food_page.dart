@@ -61,6 +61,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         db.foods.servingUnit,
         db.foods.smallImage,
         db.foods.imageFile,
+        db.foods.created,
       ])
       ..limit(limit));
 
@@ -183,6 +184,7 @@ GROUP BY meal_foods.meal
           servingUnit: Value(result.read(db.foods.servingUnit)),
           imageFile: Value(result.read(db.foods.imageFile)),
           smallImage: Value(result.read(db.foods.smallImage)),
+          created: Value(result.read(db.foods.created)),
         ),
       )
       .toList();
@@ -223,6 +225,21 @@ GROUP BY meal_foods.meal
                 builder: (context, snapshot) {
                   if (snapshot.hasError) throw snapshot.error!;
                   final foods = resultsToCompanions(snapshot.data ?? []);
+
+                  final items = <Object>[...meals, ...foods];
+                  if (search.isEmpty) {
+                    items.sort((a, b) {
+                      final aDate = (a is Meal
+                              ? a.created
+                              : (a as FoodsCompanion).created.value) ??
+                          DateTime(0);
+                      final bDate = (b is Meal
+                              ? b.created
+                              : (b as FoodsCompanion).created.value) ??
+                          DateTime(0);
+                      return bDate.compareTo(aDate);
+                    });
+                  }
 
                   return material.Column(
                     children: [
@@ -319,18 +336,22 @@ GROUP BY meal_foods.meal
                           });
                         },
                       ),
-                      if (snapshot.data?.isEmpty == true && meals.isEmpty)
+                      if (items.isEmpty)
                         const ListTile(
                           title: Text("No food yet."),
                           subtitle: Text("Tap the plus button to add foods."),
                         ),
                       FoodList(
                         ctrl: scrollCtrl,
-                        foods: foods,
-                        meals: meals,
+                        items: items,
                         mealCalories: mealCalories,
                         selected: selected,
                         selectedMeals: selectedMeals,
+                        onSavedNew: () => scrollCtrl.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        ),
                         onSelect: (id) {
                           if (selected.contains(id))
                             setState(() => selected.remove(id));
@@ -378,7 +399,13 @@ GROUP BY meal_foods.meal
             onTap: () async {
               navKey.currentState!.push(
                 MaterialPageRoute(
-                  builder: (context) => const EditFoodPage(),
+                  builder: (context) => EditFoodPage(
+                    onSavedNew: () => scrollCtrl.animateTo(
+                      0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    ),
+                  ),
                 ),
               );
             },

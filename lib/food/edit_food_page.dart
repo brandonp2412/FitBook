@@ -21,7 +21,11 @@ import '../database/database.dart';
 class EditFoodPage extends StatefulWidget {
   final int? id;
 
-  const EditFoodPage({super.key, this.id});
+  /// Called after a new food row is created (save-as or first-time add), so
+  /// the caller can scroll the food list back to the top.
+  final VoidCallback? onSavedNew;
+
+  const EditFoodPage({super.key, this.id, this.onSavedNew});
 
   @override
   State<EditFoodPage> createState() => _EditFoodPageState();
@@ -169,17 +173,21 @@ class _EditFoodPageState extends State<EditFoodPage> {
   Future<void> saveAs() async {
     final columns = _buildFoodColumns();
     await db.into(db.foods).insert(RawValuesInsertable(columns));
-    if (mounted) Navigator.pop(context);
+    if (!mounted) return;
+    Navigator.pop(context);
+    widget.onSavedNew?.call();
   }
 
   Future<void> save() async {
     final columns = _buildFoodColumns(id: widget.id);
 
     var id = widget.id;
-    if (widget.id != null)
+    if (widget.id != null) {
       await db.update(db.foods).replace(RawValuesInsertable(columns));
-    else
+    } else {
       id = await db.into(db.foods).insert(RawValuesInsertable(columns));
+      widget.onSavedNew?.call();
+    }
 
     final matches = await (db.foods.select()
           ..where(

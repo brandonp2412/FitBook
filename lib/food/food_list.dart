@@ -14,19 +14,19 @@ import 'package:provider/provider.dart';
 class FoodList extends StatefulWidget {
   const FoodList({
     super.key,
-    required this.foods,
+    required this.items,
     required this.selected,
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
-    this.meals = const [],
     this.selectedMeals = const {},
     this.onMealSelect,
     this.mealCalories = const {},
+    this.onSavedNew,
   });
 
-  final List<FoodsCompanion> foods;
-  final List<Meal> meals;
+  /// Combined list of [FoodsCompanion] and [Meal] objects, already sorted.
+  final List<Object> items;
   final Set<int> selected;
   final Set<int> selectedMeals;
   final ValueChanged<int> onSelect;
@@ -34,6 +34,10 @@ class FoodList extends StatefulWidget {
   final VoidCallback onNext;
   final ScrollController ctrl;
   final Map<int, double> mealCalories;
+
+  /// Called after a new food is created (save-as or add-new), so the parent
+  /// can scroll back to the top of the list.
+  final VoidCallback? onSavedNew;
 
   @override
   State<FoodList> createState() => _FoodListState();
@@ -62,29 +66,25 @@ class _FoodListState extends State<FoodList> {
 
   @override
   Widget build(BuildContext context) {
-    final mealCount = widget.meals.length;
-    final totalCount = mealCount + widget.foods.length;
-
     final width = MediaQuery.of(context).size.width;
     final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(top: 8, left: hPad, right: hPad),
         controller: widget.ctrl,
-        itemCount: totalCount,
+        itemCount: widget.items.length,
         itemBuilder: (context, index) {
-          if (index < mealCount) {
-            final meal = widget.meals[index];
+          final item = widget.items[index];
+
+          if (item is Meal) {
             return KeyedSubtree(
-              key: ValueKey('meal_${meal.id}'),
-              child: _buildMealTile(context, meal),
+              key: ValueKey('meal_${item.id}'),
+              child: _buildMealTile(context, item),
             );
           }
 
-          final foodIndex = index - mealCount;
-          final food = widget.foods[foodIndex];
+          final food = item as FoodsCompanion;
           final selected = widget.selected.contains(food.id.value);
-
           final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
           final settings = context.watch<SettingsState>().value;
 
@@ -170,7 +170,10 @@ class _FoodListState extends State<FoodList> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditFoodPage(id: food.id.value),
+                      builder: (context) => EditFoodPage(
+                        id: food.id.value,
+                        onSavedNew: widget.onSavedNew,
+                      ),
                     ),
                   );
                 else
