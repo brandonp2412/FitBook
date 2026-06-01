@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:csv/csv.dart';
+import 'package:csv/csv.dart' show CsvToListConverter;
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
@@ -49,8 +49,8 @@ class _ImportDataState extends State<ImportData> {
         csv = await file.readAsString(encoding: latin1);
       }
 
-      final codec = Csv(lineDelimiter: '\n');
-      final rows = codec.decode(csv);
+      const codec = CsvToListConverter(eol: '\n');
+      final rows = codec.convert(csv);
 
       List<FoodsCompanion> foods = [];
       for (final row in rows.skip(1)) {
@@ -263,8 +263,8 @@ class _ImportDataState extends State<ImportData> {
     } catch (error) {
       csv = await file.readAsString(encoding: latin1);
     }
-    final codec = Csv(lineDelimiter: '\n');
-    final rows = codec.decode(csv);
+    const codec = CsvToListConverter(eol: '\n');
+    final rows = codec.convert(csv);
 
     List<DiariesCompanion> diaries = [];
     for (final row in rows.skip(1)) {
