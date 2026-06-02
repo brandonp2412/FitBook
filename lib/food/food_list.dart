@@ -104,12 +104,9 @@ class _FoodListState extends State<FoodList> {
               );
           }
 
-          return material.Container(
+          return material.DecoratedBox(
             key: ValueKey('food_${food.id.value}'),
             decoration: BoxDecoration(
-              color: selected
-                  ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
-                  : Colors.transparent,
               border: Border.all(
                 color: selected
                     ? Theme.of(context)
@@ -121,6 +118,9 @@ class _FoodListState extends State<FoodList> {
               ),
             ),
             child: ListTile(
+              tileColor: selected
+                  ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+                  : null,
               leading: image,
               title: Text(food.name.value),
               subtitle: Row(
@@ -232,11 +232,8 @@ class _FoodListState extends State<FoodList> {
       );
     }
 
-    return material.Container(
+    return material.DecoratedBox(
       decoration: BoxDecoration(
-        color: selected
-            ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
-            : Colors.transparent,
         border: Border.all(
           color: selected
               ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
@@ -245,6 +242,9 @@ class _FoodListState extends State<FoodList> {
         ),
       ),
       child: ListTile(
+        tileColor: selected
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+            : null,
         leading: leading,
         title: Text(meal.name),
         subtitle: Text(

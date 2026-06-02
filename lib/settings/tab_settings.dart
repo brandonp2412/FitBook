@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:drift/drift.dart' hide Column;
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';

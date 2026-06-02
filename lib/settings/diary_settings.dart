@@ -243,7 +243,9 @@ List<Widget> getDiarySettings({
 }
 
 class DiarySettings extends StatefulWidget {
-  const DiarySettings({super.key});
+  final String initialTerm;
+
+  const DiarySettings({super.key, this.initialTerm = ''});
 
   @override
   State<DiarySettings> createState() => _DiarySettingsState();
@@ -274,7 +276,7 @@ class _DiarySettingsState extends State<DiarySettings> {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: getDiarySettings(
-            term: '',
+            term: widget.initialTerm,
             calories: calories,
             protein: protein,
             settings: settings,

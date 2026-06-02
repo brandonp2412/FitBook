@@ -108,11 +108,11 @@ class App extends StatelessWidget {
             useMaterial3: true,
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
-                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+                TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
               },
             ),
           ),
@@ -130,11 +130,11 @@ class App extends StatelessWidget {
             ),
             pageTransitionsTheme: const PageTransitionsTheme(
               builders: {
-                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+                TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
               },
             ),
           ),

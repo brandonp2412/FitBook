@@ -102,18 +102,17 @@ class GraphPageState extends State<GraphPage>
                   },
                 );
 
-                final groupByDropdown = DropdownButtonFormField(
-                  decoration: const InputDecoration(labelText: 'Group by'),
-                  initialValue: groupBy,
-                  items: const [
-                    DropdownMenuItem(value: Period.day, child: Text("Day")),
-                    DropdownMenuItem(value: Period.week, child: Text("Week")),
-                    DropdownMenuItem(value: Period.month, child: Text("Month")),
-                    DropdownMenuItem(value: Period.year, child: Text("Year")),
+                final groupByChips = SegmentedButton<Period>(
+                  segments: const [
+                    ButtonSegment(value: Period.day, label: Text("Day")),
+                    ButtonSegment(value: Period.week, label: Text("Week")),
+                    ButtonSegment(value: Period.month, label: Text("Month")),
+                    ButtonSegment(value: Period.year, label: Text("Year")),
                   ],
-                  onChanged: (value) {
+                  selected: {groupBy},
+                  onSelectionChanged: (value) {
                     setState(() {
-                      groupBy = value!;
+                      groupBy = value.first;
                     });
                   },
                 );
@@ -148,7 +147,7 @@ class GraphPageState extends State<GraphPage>
                         children: [
                           Expanded(child: metricDropdown),
                           const SizedBox(width: 8),
-                          Expanded(child: groupByDropdown),
+                          Expanded(child: groupByChips),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -166,7 +165,7 @@ class GraphPageState extends State<GraphPage>
                   children: [
                     metricDropdown,
                     const SizedBox(height: 16),
-                    groupByDropdown,
+                    groupByChips,
                     const SizedBox(height: 8),
                     Row(
                       children: [

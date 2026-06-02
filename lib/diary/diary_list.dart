@@ -175,6 +175,8 @@ class _DiaryListState extends State<DiaryList> {
         final foodName = diaryFood.name;
         final previous = index > 0 ? widget.diaryFoods[index - 1] : null;
         final selected = widget.selected.contains(diaryFood.entryId);
+        final previousSelected =
+            previous != null && widget.selected.contains(previous.entryId);
         final showDivider = previous != null &&
             !isSameDay(
               previous.created,
@@ -243,7 +245,10 @@ class _DiaryListState extends State<DiaryList> {
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const DiarySettings()),
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const DiarySettings(initialTerm: 'daily'),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -310,29 +315,34 @@ class _DiaryListState extends State<DiaryList> {
           }
         }
 
+        final dividerSelected = selected && previousSelected;
+        final dividerHighlightColor =
+            Theme.of(context).colorScheme.primary.withValues(alpha: .08);
+
         return Column(
           children: [
-            if (statsRow != null) statsRow,
-            if (showDivider)
-              Row(
-                children: [
-                  const Expanded(child: Divider()),
-                  const Icon(Icons.today),
-                  Text(
-                    DateFormat(settings.shortDateFormat)
-                        .format(previous.created),
-                  ),
-                  const Expanded(child: Divider()),
-                ],
+            if (statsRow != null)
+              Container(
+                color: dividerSelected ? dividerHighlightColor : null,
+                child: statsRow,
               ),
-            Container(
+            if (showDivider)
+              Container(
+                color: dividerSelected ? dividerHighlightColor : null,
+                child: Row(
+                  children: [
+                    const Expanded(child: Divider()),
+                    const Icon(Icons.today),
+                    Text(
+                      DateFormat(settings.shortDateFormat)
+                          .format(previous.created),
+                    ),
+                    const Expanded(child: Divider()),
+                  ],
+                ),
+              ),
+            DecoratedBox(
               decoration: BoxDecoration(
-                color: selected
-                    ? Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withValues(alpha: .08)
-                    : Colors.transparent,
                 border: Border.all(
                   color: selected
                       ? Theme.of(context)
@@ -344,6 +354,12 @@ class _DiaryListState extends State<DiaryList> {
                 ),
               ),
               child: ListTile(
+                tileColor: selected
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: .08)
+                    : null,
                 leading: image,
                 title: Text("$foodName$suffix"),
                 subtitle: Text(
@@ -567,7 +583,9 @@ class _DiaryListState extends State<DiaryList> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const DiarySettings()),
+          MaterialPageRoute(
+            builder: (context) => const DiarySettings(initialTerm: 'daily'),
+          ),
         ),
         child: Wrap(
           alignment: WrapAlignment.center,

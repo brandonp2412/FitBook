@@ -89,14 +89,8 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
 
             return Column(
               children: [
-                Container(
+                DecoratedBox(
                   decoration: BoxDecoration(
-                    color: widget.selected.contains(weight.id)
-                        ? Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: .08)
-                        : Colors.transparent,
                     border: Border.all(
                       color: widget.selected.contains(weight.id)
                           ? Theme.of(context)
@@ -108,6 +102,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                     ),
                   ),
                   child: ListTile(
+                    tileColor: widget.selected.contains(weight.id)
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: .08)
+                        : null,
                     leading: leading,
                     title: Text(
                       "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
