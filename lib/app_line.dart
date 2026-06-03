@@ -43,7 +43,6 @@ class _AppLineState extends State<AppLine> {
   late Stream<List<GraphData>> stream;
   late Setting settings;
   bool showTrend = false;
-  bool showAverage = true;
 
   Map<String, double> _calcTrend(List<GraphData> data) {
     if (data.length < 2) return {'slope': 0.0, 'intercept': 0.0};
@@ -404,12 +403,9 @@ class _AppLineState extends State<AppLine> {
 
         final rows = snapshot.data!;
         List<FlSpot> spots = [];
-        var avg = 0.0;
         for (var index = 0; index < rows.length; index++) {
           spots.add(FlSpot(index.toDouble(), rows[index].val));
-          avg += rows[index].val;
         }
-        avg /= spots.length;
 
         List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
 
@@ -467,11 +463,6 @@ class _AppLineState extends State<AppLine> {
                             y: goal.toDouble(),
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
-                        if (showAverage && spots.isNotEmpty)
-                          HorizontalLine(
-                            y: avg,
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
                       ],
                     ),
                     titlesData: FlTitlesData(
@@ -517,32 +508,6 @@ class _AppLineState extends State<AppLine> {
                     contentPadding: EdgeInsets.zero,
                     minLeadingWidth: 0,
                     titleAlignment: ListTileTitleAlignment.center,
-                    title: const Text("Average"),
-                    subtitle: Text(
-                      "${formatter.format(avg)} ${rows.first.unit}",
-                    ),
-                    onTap: () => setState(() => showAverage = !showAverage),
-                    leading: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: showAverage
-                            ? Theme.of(context).colorScheme.tertiary
-                            : Colors.transparent,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.tertiary,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    minLeadingWidth: 0,
-                    titleAlignment: ListTileTitleAlignment.center,
                     title: const Text("Trend"),
                     subtitle: Text(_getTrendText(rows)),
                     onTap: () => setState(() => showTrend = !showTrend),
@@ -562,6 +527,7 @@ class _AppLineState extends State<AppLine> {
                     ),
                   ),
                 ),
+                const Expanded(child: SizedBox()),
               ],
             ),
             if (goal > 0)

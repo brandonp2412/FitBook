@@ -103,6 +103,7 @@ class GraphPageState extends State<GraphPage>
                 );
 
                 final groupByChips = SegmentedButton<Period>(
+                  showSelectedIcon: false,
                   segments: const [
                     ButtonSegment(value: Period.day, label: Text("Day")),
                     ButtonSegment(value: Period.week, label: Text("Week")),

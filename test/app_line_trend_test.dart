@@ -60,7 +60,6 @@ void main() async {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Average'), findsOneWidget);
       expect(find.text('Trend'), findsOneWidget);
 
       await tester.tap(find.text('Trend'));
