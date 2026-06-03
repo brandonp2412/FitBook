@@ -62,6 +62,7 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
         borderRadius: BorderRadius.circular(24),
       ),
       action: action ?? defaultAction,
+      persist: false,
     ),
   );
 }
