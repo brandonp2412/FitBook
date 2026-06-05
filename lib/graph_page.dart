@@ -49,6 +49,8 @@ class GraphPageState extends State<GraphPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final settings = context.watch<SettingsState>().value;
     final fields =
         settings.fields?.split(',').where((field) => field.isNotEmpty) ??
@@ -57,23 +59,39 @@ class GraphPageState extends State<GraphPage>
         fields.where((field) => !excludedFields.contains(field));
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView(
-          shrinkWrap: true,
-          controller: scrollCtrl,
-          children: [
-            LayoutBuilder(
+      body: ListView(
+        controller: scrollCtrl,
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+        children: [
+          _SectionCard(
+            child: LayoutBuilder(
               builder: (context, constraints) {
                 final isWide = constraints.maxWidth > 600;
 
                 final metricDropdown = DropdownButtonFormField(
-                  decoration: const InputDecoration(labelText: 'Metric'),
+                  decoration: InputDecoration(
+                    labelText: 'Metric',
+                    isDense: true,
+                    filled: true,
+                    fillColor: colorScheme.surface,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 14,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.outlineVariant),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   initialValue: filteredFields.contains(metric) ||
                           metric == 'calories' ||
                           metric == 'body-weight'
                       ? metric
                       : null,
+                  borderRadius: BorderRadius.circular(12),
                   items: [
                     DropdownMenuItem(
                       value: db.foods.calories.name,
@@ -104,6 +122,9 @@ class GraphPageState extends State<GraphPage>
 
                 final groupByChips = SegmentedButton<Period>(
                   showSelectedIcon: false,
+                  style: SegmentedButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                  ),
                   segments: const [
                     ButtonSegment(value: Period.day, label: Text("Day")),
                     ButtonSegment(value: Period.week, label: Text("Week")),
@@ -118,43 +139,58 @@ class GraphPageState extends State<GraphPage>
                   },
                 );
 
-                final startTile = ListTile(
-                  title: const Text('Start date'),
-                  subtitle: start != null
-                      ? Text(
-                          DateFormat(settings.shortDateFormat).format(start!),
-                        )
-                      : Text(settings.shortDateFormat),
-                  onLongPress: () => setState(() => start = null),
-                  trailing: const Icon(Icons.calendar_today),
-                  onTap: () => _selectStart(),
+                final startTile = _DateField(
+                  label: 'Start date',
+                  value: start,
+                  hint: settings.shortDateFormat,
+                  onTap: _selectStart,
+                  onClear: () => setState(() => start = null),
                 );
 
-                final stopTile = ListTile(
-                  title: const Text('Stop date'),
-                  subtitle: end != null
-                      ? Text(DateFormat(settings.shortDateFormat).format(end!))
-                      : Text(settings.shortDateFormat),
-                  onLongPress: () => setState(() => end = null),
-                  trailing: const Icon(Icons.calendar_today),
-                  onTap: () => _selectEnd(),
+                final stopTile = _DateField(
+                  label: 'Stop date',
+                  value: end,
+                  hint: settings.shortDateFormat,
+                  onTap: _selectEnd,
+                  onClear: () => setState(() => end = null),
+                );
+
+                final groupByLabel = Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Group by',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 );
 
                 if (isWide) {
                   return material.Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(child: metricDropdown),
-                          const SizedBox(width: 8),
-                          Expanded(child: groupByChips),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: material.Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                groupByLabel,
+                                const SizedBox(height: 6),
+                                groupByChips,
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
                           Expanded(child: startTile),
+                          const SizedBox(width: 12),
                           Expanded(child: stopTile),
                         ],
                       ),
@@ -163,14 +199,18 @@ class GraphPageState extends State<GraphPage>
                 }
 
                 return material.Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     metricDropdown,
                     const SizedBox(height: 16),
-                    groupByChips,
-                    const SizedBox(height: 8),
+                    groupByLabel,
+                    const SizedBox(height: 6),
+                    SizedBox(width: double.infinity, child: groupByChips),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(child: startTile),
+                        const SizedBox(width: 12),
                         Expanded(child: stopTile),
                       ],
                     ),
@@ -178,21 +218,43 @@ class GraphPageState extends State<GraphPage>
                 );
               },
             ),
-            material.Column(
+          ),
+          const SizedBox(height: 12),
+          _SectionCard(
+            child: material.Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                material.Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    "Limit (${settings.limit})",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Data points',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '${settings.limit}',
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Slider(
                   value: settings.limit.toDouble(),
-                  inactiveColor: Theme.of(context)
-                      .colorScheme
-                      .primary
-                      .withValues(alpha: 0.24),
+                  inactiveColor: colorScheme.primary.withValues(alpha: 0.24),
                   min: 10,
                   max: 100,
                   onChanged: (value) {
@@ -205,16 +267,17 @@ class GraphPageState extends State<GraphPage>
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            AppLine(
+          ),
+          const SizedBox(height: 12),
+          _SectionCard(
+            child: AppLine(
               metric: metric,
               groupBy: groupBy,
               start: start,
               end: end,
             ),
-            const SizedBox(height: 72),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: AnimatedFab(
         onTap: () {
@@ -259,5 +322,109 @@ class GraphPageState extends State<GraphPage>
       setState(() {
         start = pickedDate.toLocal();
       });
+  }
+}
+
+/// A tonal surface card matching the app's card language, used to group the
+/// graph controls and chart into distinct visual sections.
+class _SectionCard extends StatelessWidget {
+  final Widget child;
+
+  const _SectionCard({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Card(
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      color: colorScheme.surfaceContainerHigh,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.6),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: child,
+      ),
+    );
+  }
+}
+
+/// A tappable filled control that displays a labelled date, with the formatted
+/// value or a placeholder hint. Long-press clears the date.
+class _DateField extends StatelessWidget {
+  final String label;
+  final DateTime? value;
+  final String hint;
+  final VoidCallback onTap;
+  final VoidCallback onClear;
+
+  const _DateField({
+    required this.label,
+    required this.value,
+    required this.hint,
+    required this.onTap,
+    required this.onClear,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final hasValue = value != null;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      onLongPress: onClear,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: colorScheme.outlineVariant),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.calendar_today,
+              size: 18,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: material.Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    hasValue ? DateFormat(hint).format(value!) : hint,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: hasValue
+                          ? colorScheme.onSurface
+                          : colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                      fontWeight:
+                          hasValue ? FontWeight.w600 : FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
