@@ -166,7 +166,9 @@ class _DiaryFiltersState extends State<DiaryFilters> {
           ),
           TextButton(
             onPressed: () {
-              context.read<DiaryState>().foodGroup = groupCtrl.text;
+              final group = groupCtrl.text;
+              context.read<DiaryState>().foodGroup =
+                  group.isEmpty ? null : group;
               Navigator.of(dialogContext).pop();
             },
             child: const Text('Done'),
