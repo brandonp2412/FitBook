@@ -3,7 +3,6 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -171,85 +170,79 @@ class _QuickAddPageState extends State<QuickAddPage> {
           "Quick add",
         ),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16.0),
-        child: material.Column(
-          children: [
-            TextField(
-              autofocus: true,
-              controller: cal,
-              decoration: const InputDecoration(label: Text("Calories")),
-              keyboardType: TextInputType.number,
-              onTap: () => selectAll(cal),
-              onSubmitted: (value) => save(),
-              onChanged: (value) {
-                setState(() {
-                  kj.text = formatter.format(formatter.parse(value) * 4.184);
-                });
-              },
+        children: [
+          TextField(
+            autofocus: true,
+            controller: cal,
+            decoration: const InputDecoration(label: Text("Calories")),
+            keyboardType: TextInputType.number,
+            onTap: () => selectAll(cal),
+            onSubmitted: (value) => save(),
+            onChanged: (value) {
+              setState(() {
+                kj.text = formatter.format(formatter.parse(value) * 4.184);
+              });
+            },
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: kj,
+            decoration: InputDecoration(
+              labelText: 'Kilojoules',
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: kj,
-              decoration: InputDecoration(
-                labelText: 'Kilojoules',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onChanged: (value) {
-                setState(() {
-                  cal.text = formatter.format(formatter.parse(value) / 4.184);
-                });
-              },
-              onSubmitted: (value) => selectAll(protein),
-              onTap: () => selectAll(kj),
-              textInputAction: TextInputAction.next,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onChanged: (value) {
+              setState(() {
+                cal.text = formatter.format(formatter.parse(value) / 4.184);
+              });
+            },
+            onSubmitted: (value) => selectAll(protein),
+            onTap: () => selectAll(kj),
+            textInputAction: TextInputAction.next,
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: protein,
+            decoration: InputDecoration(
+              labelText: 'Protein',
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: protein,
-              decoration: InputDecoration(
-                labelText: 'Protein',
-              ),
-              onTap: () => selectAll(protein),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (value) => selectAll(carb),
-              textInputAction: TextInputAction.next,
+            onTap: () => selectAll(protein),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (value) => selectAll(carb),
+            textInputAction: TextInputAction.next,
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: carb,
+            decoration: InputDecoration(
+              labelText: 'Carbs',
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: carb,
-              decoration: InputDecoration(
-                labelText: 'Carbs',
-              ),
-              onTap: () => selectAll(carb),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textInputAction: TextInputAction.next,
-              onSubmitted: (value) => selectAll(fat),
+            onTap: () => selectAll(carb),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textInputAction: TextInputAction.next,
+            onSubmitted: (value) => selectAll(fat),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: fat,
+            decoration: InputDecoration(
+              labelText: 'Fat',
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: fat,
-              decoration: InputDecoration(
-                labelText: 'Fat',
-              ),
-              onTap: () => selectAll(fat),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (value) => save(),
+            onTap: () => selectAll(fat),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (value) => save(),
+          ),
+          ListTile(
+            title: const Text('Created date'),
+            subtitle: Text(
+              DateFormat(settings.longDateFormat).format(created),
             ),
-            ListTile(
-              title: const Text('Created date'),
-              subtitle: Text(
-                DateFormat(settings.longDateFormat).format(created),
-              ),
-              trailing: const Icon(Icons.calendar_today),
-              onTap: () => pickDate(),
-            ),
-          ],
-        ),
+            trailing: const Icon(Icons.calendar_today),
+            onTap: () => pickDate(),
+          ),
+        ],
       ),
       floatingActionButton: AnimatedFab(
         onTap: save,
