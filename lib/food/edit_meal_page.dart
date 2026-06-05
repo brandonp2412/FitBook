@@ -139,6 +139,7 @@ class _EditMealPageState extends State<EditMealPage> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (ctx) => _FoodPickerSheet(
+        excludedIds: mealFoods.map((e) => e.foodId).toSet(),
         onPicked: (food) {
           if (mealFoods.any((e) => e.foodId == food.id)) return;
           setState(
@@ -516,8 +517,9 @@ class _FoodEntryCard extends StatelessWidget {
 
 class _FoodPickerSheet extends StatefulWidget {
   final Function(Food) onPicked;
+  final Set<int> excludedIds;
 
-  const _FoodPickerSheet({required this.onPicked});
+  const _FoodPickerSheet({required this.onPicked, required this.excludedIds});
 
   @override
   State<_FoodPickerSheet> createState() => _FoodPickerSheetState();
@@ -546,6 +548,8 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
         (t) => OrderingTerm(expression: t.created, mode: OrderingMode.desc),
       ])
       ..limit(100);
+    if (widget.excludedIds.isNotEmpty)
+      q = q..where((t) => t.id.isNotIn(widget.excludedIds));
     if (searchCtrl.text.isNotEmpty)
       q = q..where((t) => t.name.contains(searchCtrl.text.toLowerCase()));
     setState(() => stream = q.watch());
