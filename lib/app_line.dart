@@ -497,71 +497,106 @@ class _AppLineState extends State<AppLine> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 16.0,
-            ),
+            const SizedBox(height: 12.0),
             Row(
+              mainAxisAlignment: goal > 0
+                  ? MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    minLeadingWidth: 0,
-                    titleAlignment: ListTileTitleAlignment.center,
-                    title: const Text("Trend"),
-                    subtitle: Text(_getTrendText(rows)),
-                    onTap: () => setState(() => showTrend = !showTrend),
-                    leading: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: showTrend
-                            ? Theme.of(context).colorScheme.secondary
-                            : Colors.transparent,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.secondary,
-                          width: 2,
-                        ),
+                _statTile(
+                  leading: Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      color: showTrend
+                          ? Theme.of(context).colorScheme.secondary
+                          : Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.secondary,
+                        width: 2,
                       ),
                     ),
                   ),
+                  label: "Trend",
+                  value: _getTrendText(rows),
+                  onTap: () => setState(() => showTrend = !showTrend),
                 ),
                 if (goal > 0)
-                  Expanded(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      minLeadingWidth: 0,
-                      onTap: () {
-                        if (widget.metric == 'body-weight')
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => WeightSettings(),
-                            ),
-                          );
-                        else
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DiarySettings(),
-                            ),
-                          );
-                      },
-                      title: const Text("Goal"),
-                      subtitle: Text(
-                        "${formatter.format(goal)} ${rows.first.unit}",
-                      ),
-                      leading: Icon(
-                        Icons.flag,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                  _statTile(
+                    leading: Icon(
+                      Icons.flag,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
-                  )
-                else
-                  const Expanded(child: SizedBox()),
+                    label: "Goal",
+                    value: "${formatter.format(goal)} ${rows.first.unit}",
+                    onTap: () {
+                      if (widget.metric == 'body-weight')
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => WeightSettings(),
+                          ),
+                        );
+                      else
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DiarySettings(),
+                          ),
+                        );
+                    },
+                  ),
               ],
             ),
           ],
         );
       },
+    );
+  }
+
+  /// A compact, tappable stat shown beneath the chart (trend or goal): a leading
+  /// indicator next to a stacked label and value, sized to its content so the
+  /// pair can be centered as a group.
+  Widget _statTile({
+    required Widget leading,
+    required String label,
+    required String value,
+    required VoidCallback onTap,
+  }) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            leading,
+            const SizedBox(width: 10),
+            material.Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  value,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 

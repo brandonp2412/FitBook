@@ -120,7 +120,7 @@ void main() async {
             .descendant(
               of: find.ancestor(
                 of: find.text('Trend'),
-                matching: find.byType(ListTile),
+                matching: find.byType(InkWell),
               ),
               matching: find.byType(Text),
             )
@@ -183,7 +183,7 @@ void main() async {
             .descendant(
               of: find.ancestor(
                 of: find.text('Trend'),
-                matching: find.byType(ListTile),
+                matching: find.byType(InkWell),
               ),
               matching: find.byType(Text),
             )
