@@ -526,12 +526,7 @@ class _AppLineState extends State<AppLine> {
                     ),
                   ),
                 ),
-                const Expanded(child: SizedBox()),
-              ],
-            ),
-            if (goal > 0)
-              Row(
-                children: [
+                if (goal > 0)
                   Expanded(
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
@@ -559,10 +554,11 @@ class _AppLineState extends State<AppLine> {
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                  ),
+                  )
+                else
                   const Expanded(child: SizedBox()),
-                ],
-              ),
+              ],
+            ),
           ],
         );
       },

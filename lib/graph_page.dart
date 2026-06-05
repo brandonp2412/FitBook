@@ -114,6 +114,25 @@ class GraphPageState extends State<GraphPage>
               ],
             ),
             const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: SegmentedButton<Period>(
+                showSelectedIcon: false,
+                style: SegmentedButton.styleFrom(
+                  visualDensity: VisualDensity.compact,
+                ),
+                segments: const [
+                  ButtonSegment(value: Period.day, label: Text("Day")),
+                  ButtonSegment(value: Period.week, label: Text("Week")),
+                  ButtonSegment(value: Period.month, label: Text("Month")),
+                  ButtonSegment(value: Period.year, label: Text("Year")),
+                ],
+                selected: {groupBy},
+                onSelectionChanged: (value) {
+                  setState(() => groupBy = value.first);
+                },
+              ),
+            ),
             Expanded(
               child: AppLine(
                 metric: metric,
@@ -159,37 +178,6 @@ class GraphPageState extends State<GraphPage>
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    label('Group by'),
-                    SizedBox(
-                      width: double.infinity,
-                      child: SegmentedButton<Period>(
-                        showSelectedIcon: false,
-                        style: SegmentedButton.styleFrom(
-                          visualDensity: VisualDensity.compact,
-                        ),
-                        segments: const [
-                          ButtonSegment(value: Period.day, label: Text("Day")),
-                          ButtonSegment(
-                            value: Period.week,
-                            label: Text("Week"),
-                          ),
-                          ButtonSegment(
-                            value: Period.month,
-                            label: Text("Month"),
-                          ),
-                          ButtonSegment(
-                            value: Period.year,
-                            label: Text("Year"),
-                          ),
-                        ],
-                        selected: {groupBy},
-                        onSelectionChanged: (value) {
-                          setState(() => groupBy = value.first);
-                          setSheetState(() {});
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
                     label('Date range'),
                     Row(
                       children: [
