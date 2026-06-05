@@ -219,54 +219,62 @@ class WeightCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    final accent = isToday ? colorScheme.primary : colorScheme.onSurfaceVariant;
+    final hasImage = showImages && weight.image?.isNotEmpty == true;
+
     return Card(
-      elevation: isSelected ? 8 : 2,
-      shadowColor:
-          isSelected ? colorScheme.primary.withValues(alpha: 0.3) : null,
+      clipBehavior: Clip.antiAlias,
+      elevation: isSelected ? 6 : 0,
+      shadowColor: colorScheme.primary.withValues(alpha: 0.4),
+      color: isSelected
+          ? colorScheme.primaryContainer.withValues(alpha: 0.35)
+          : colorScheme.surfaceContainerHigh,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: isSelected
-            ? BorderSide(color: colorScheme.primary, width: 2)
-            : BorderSide.none,
+        side: BorderSide(
+          color: isSelected
+              ? colorScheme.primary
+              : colorScheme.outlineVariant.withValues(alpha: 0.6),
+          width: isSelected ? 2 : 1,
+        ),
       ),
       child: InkWell(
         onTap: onTap,
         onLongPress: onLongPress,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: isSelected
-                ? LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      colorScheme.primary.withValues(alpha: 0.1),
-                      colorScheme.primary.withValues(alpha: 0.05),
-                    ],
-                  )
-                : null,
-          ),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Text(
-                      "${weight.amount.toStringAsFixed(1)} ${weight.unit}",
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: isToday ? colorScheme.primary : null,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          weight.amount.toStringAsFixed(1),
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            height: 1.0,
+                            color: isToday ? colorScheme.primary : null,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          weight.unit,
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  AnimatedScale(
-                    scale: isSelected ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 200),
-                    child: Container(
+                  if (isSelected)
+                    Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: colorScheme.primary,
@@ -277,126 +285,101 @@ class WeightCard extends StatelessWidget {
                         color: colorScheme.onPrimary,
                         size: 16,
                       ),
+                    )
+                  else if (isToday)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        'Today',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                  ),
                 ],
               ),
-              const SizedBox(height: 12),
-              if (showImages && weight.image?.isNotEmpty == true)
+              if (hasImage) ...[
+                const SizedBox(height: 12),
                 Expanded(
-                  flex: 2,
-                  child: Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(bottom: 12),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: colorScheme.surfaceContainerHighest,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(weight.image!),
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.broken_image_outlined,
-                                color: colorScheme.onSurfaceVariant,
-                                size: 24,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Image error',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: colorScheme.onSurfaceVariant,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      File(weight.image!),
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: colorScheme.surfaceContainerHighest,
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.broken_image_outlined,
+                          color: colorScheme.onSurfaceVariant,
+                          size: 24,
                         ),
                       ),
                     ),
                   ),
-                )
-              else
+                ),
+              ] else
                 const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isToday
-                      ? colorScheme.primary.withValues(alpha: 0.15)
-                      : colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      isToday ? Icons.today : Icons.calendar_today,
-                      size: 14,
-                      color: isToday
-                          ? colorScheme.primary
-                          : colorScheme.onSurfaceVariant,
-                    ),
-                    const SizedBox(width: 4),
-                    Flexible(
-                      child: Text(
-                        _formatDateForCard(weight.created, dateFormat),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontWeight: isToday ? FontWeight.bold : null,
-                          color: isToday
-                              ? colorScheme.primary
-                              : colorScheme.onSurfaceVariant,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 12),
+              Divider(
+                height: 1,
+                thickness: 1,
+                color: colorScheme.outlineVariant.withValues(alpha: 0.4),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isToday
-                      ? colorScheme.primary.withValues(alpha: 0.15)
-                      : colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      size: 14,
-                      color: isToday
-                          ? colorScheme.primary
-                          : colorScheme.onSurfaceVariant,
-                    ),
-                    const SizedBox(width: 4),
-                    Flexible(
-                      child: Text(
-                        DateFormat('hh:mm a').format(weight.created),
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontWeight: isToday ? FontWeight.bold : null,
-                          color: isToday
-                              ? colorScheme.primary
-                              : colorScheme.onSurfaceVariant,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+              _footerLine(
+                theme,
+                icon: isToday ? Icons.today : Icons.calendar_today,
+                color: accent,
+                text: _formatDateForCard(weight.created, dateFormat),
+                bold: isToday,
+              ),
+              const SizedBox(height: 4),
+              _footerLine(
+                theme,
+                icon: Icons.schedule,
+                color: colorScheme.onSurfaceVariant,
+                text: DateFormat('hh:mm a').format(weight.created),
+                bold: false,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _footerLine(
+    ThemeData theme, {
+    required IconData icon,
+    required Color color,
+    required String text,
+    required bool bold,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, size: 14, color: color),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            text,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: color,
+              fontWeight: bold ? FontWeight.w600 : null,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 
