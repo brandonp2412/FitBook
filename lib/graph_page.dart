@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_line.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
@@ -26,8 +25,6 @@ class GraphPageState extends State<GraphPage>
   Period groupBy = Period.day;
   DateTime? start;
   DateTime? end;
-
-  final ScrollController scrollCtrl = ScrollController();
 
   @override
   void initState() {
@@ -58,241 +55,239 @@ class GraphPageState extends State<GraphPage>
     final filteredFields =
         fields.where((field) => !excludedFields.contains(field));
 
+    final metricValue = filteredFields.contains(metric) ||
+            metric == 'calories' ||
+            metric == 'body-weight'
+        ? metric
+        : null;
+
     return Scaffold(
-      body: ListView(
-        controller: scrollCtrl,
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
-        children: [
-          _SectionCard(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final isWide = constraints.maxWidth > 600;
-
-                final metricDropdown = DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Metric',
-                    isDense: true,
-                    filled: true,
-                    fillColor: colorScheme.surface,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 14,
-                    ),
-                    enabledBorder: OutlineInputBorder(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+        child: material.Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: metricValue,
+                      isExpanded: true,
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: colorScheme.outlineVariant),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  initialValue: filteredFields.contains(metric) ||
-                          metric == 'calories' ||
-                          metric == 'body-weight'
-                      ? metric
-                      : null,
-                  borderRadius: BorderRadius.circular(12),
-                  items: [
-                    DropdownMenuItem(
-                      value: db.foods.calories.name,
-                      child: Text("Calories"),
-                    ),
-                    DropdownMenuItem(
-                      value: 'body-weight',
-                      child: Text("Body weight"),
-                    ),
-                    ...filteredFields.map(
-                      (field) => DropdownMenuItem(
-                        value: field,
-                        child: Text(sentenceCase(field)),
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: colorScheme.onSurface,
                       ),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      metric = value!;
-                    });
-                    db.settings.update().write(
-                          SettingsCompanion(
-                            lastGraph: Value(metric.toString()),
+                      items: [
+                        DropdownMenuItem(
+                          value: db.foods.calories.name,
+                          child: const Text("Calories"),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'body-weight',
+                          child: Text("Body weight"),
+                        ),
+                        ...filteredFields.map(
+                          (field) => DropdownMenuItem(
+                            value: field,
+                            child: Text(sentenceCase(field)),
                           ),
-                        );
-                  },
-                );
-
-                final groupByChips = SegmentedButton<Period>(
-                  showSelectedIcon: false,
-                  style: SegmentedButton.styleFrom(
-                    visualDensity: VisualDensity.compact,
+                        ),
+                      ],
+                      onChanged: (value) {
+                        if (value == null) return;
+                        setState(() => metric = value);
+                        db.settings.update().write(
+                              SettingsCompanion(lastGraph: Value(metric)),
+                            );
+                      },
+                    ),
                   ),
-                  segments: const [
-                    ButtonSegment(value: Period.day, label: Text("Day")),
-                    ButtonSegment(value: Period.week, label: Text("Week")),
-                    ButtonSegment(value: Period.month, label: Text("Month")),
-                    ButtonSegment(value: Period.year, label: Text("Year")),
-                  ],
-                  selected: {groupBy},
-                  onSelectionChanged: (value) {
-                    setState(() {
-                      groupBy = value.first;
-                    });
-                  },
-                );
+                ),
+                const SizedBox(width: 8),
+                IconButton.filledTonal(
+                  icon: const Icon(Icons.tune),
+                  tooltip: 'Options',
+                  onPressed: _showOptions,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: AppLine(
+                metric: metric,
+                groupBy: groupBy,
+                start: start,
+                end: end,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-                final startTile = _DateField(
-                  label: 'Start date',
-                  value: start,
-                  hint: settings.shortDateFormat,
-                  onTap: _selectStart,
-                  onClear: () => setState(() => start = null),
-                );
+  void _showOptions() {
+    final pageContext = context;
 
-                final stopTile = _DateField(
-                  label: 'Stop date',
-                  value: end,
-                  hint: settings.shortDateFormat,
-                  onTap: _selectEnd,
-                  onClear: () => setState(() => end = null),
-                );
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        return StatefulBuilder(
+          builder: (sheetContext, setSheetState) {
+            final theme = Theme.of(sheetContext);
+            final colorScheme = theme.colorScheme;
+            final settings = pageContext.read<SettingsState>().value;
 
-                final groupByLabel = Align(
-                  alignment: Alignment.centerLeft,
+            Widget label(String text) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Group by',
-                    style: theme.textTheme.labelMedium?.copyWith(
+                    text,
+                    style: theme.textTheme.labelLarge?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 );
 
-                if (isWide) {
-                  return material.Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: metricDropdown),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: material.Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                groupByLabel,
-                                const SizedBox(height: 6),
-                                groupByChips,
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(child: startTile),
-                          const SizedBox(width: 12),
-                          Expanded(child: stopTile),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-
-                return material.Column(
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: material.Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    metricDropdown,
-                    const SizedBox(height: 16),
-                    groupByLabel,
-                    const SizedBox(height: 6),
-                    SizedBox(width: double.infinity, child: groupByChips),
-                    const SizedBox(height: 16),
+                    label('Group by'),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SegmentedButton<Period>(
+                        showSelectedIcon: false,
+                        style: SegmentedButton.styleFrom(
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        segments: const [
+                          ButtonSegment(value: Period.day, label: Text("Day")),
+                          ButtonSegment(
+                            value: Period.week,
+                            label: Text("Week"),
+                          ),
+                          ButtonSegment(
+                            value: Period.month,
+                            label: Text("Month"),
+                          ),
+                          ButtonSegment(
+                            value: Period.year,
+                            label: Text("Year"),
+                          ),
+                        ],
+                        selected: {groupBy},
+                        onSelectionChanged: (value) {
+                          setState(() => groupBy = value.first);
+                          setSheetState(() {});
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    label('Date range'),
                     Row(
                       children: [
-                        Expanded(child: startTile),
+                        Expanded(
+                          child: _DateField(
+                            label: 'Start date',
+                            value: start,
+                            hint: settings.shortDateFormat,
+                            onTap: () async {
+                              await _selectStart();
+                              setSheetState(() {});
+                            },
+                            onClear: () {
+                              setState(() => start = null);
+                              setSheetState(() {});
+                            },
+                          ),
+                        ),
                         const SizedBox(width: 12),
-                        Expanded(child: stopTile),
+                        Expanded(
+                          child: _DateField(
+                            label: 'Stop date',
+                            value: end,
+                            hint: settings.shortDateFormat,
+                            onTap: () async {
+                              await _selectEnd();
+                              setSheetState(() {});
+                            },
+                            onClear: () {
+                              setState(() => end = null);
+                              setSheetState(() {});
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                  ],
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 12),
-          _SectionCard(
-            child: material.Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Data points',
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '${settings.limit}',
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Slider(
-                  value: settings.limit.toDouble(),
-                  inactiveColor: colorScheme.primary.withValues(alpha: 0.24),
-                  min: 10,
-                  max: 100,
-                  onChanged: (value) {
-                    db.settings.update().write(
-                          SettingsCompanion(
-                            limit: Value(value.toInt()),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        label('Data points'),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
                           ),
-                        );
-                  },
+                          decoration: BoxDecoration(
+                            color: colorScheme.primary.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            '${settings.limit}',
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Slider(
+                      value: settings.limit.toDouble(),
+                      inactiveColor:
+                          colorScheme.primary.withValues(alpha: 0.24),
+                      min: 10,
+                      max: 100,
+                      onChanged: (value) {
+                        db.settings.update().write(
+                              SettingsCompanion(limit: Value(value.toInt())),
+                            );
+                        setSheetState(() {});
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.tune),
+                        label: const Text('Customize fields'),
+                        onPressed: () {
+                          Navigator.pop(sheetContext);
+                          Navigator.of(pageContext)
+                              .push(
+                                MaterialPageRoute(
+                                  builder: (context) => FieldsPicker(),
+                                ),
+                              )
+                              .then((_) => setState(() {}));
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          _SectionCard(
-            child: AppLine(
-              metric: metric,
-              groupBy: groupBy,
-              start: start,
-              end: end,
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: AnimatedFab(
-        onTap: () {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => FieldsPicker(),
-                ),
-              )
-              .then((_) => setState(() {}));
-        },
-        label: "Fields",
-        icon: Icons.settings,
-        scroll: scrollCtrl,
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -322,35 +317,6 @@ class GraphPageState extends State<GraphPage>
       setState(() {
         start = pickedDate.toLocal();
       });
-  }
-}
-
-/// A tonal surface card matching the app's card language, used to group the
-/// graph controls and chart into distinct visual sections.
-class _SectionCard extends StatelessWidget {
-  final Widget child;
-
-  const _SectionCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 0,
-      color: colorScheme.surfaceContainerHigh,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.6),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: child,
-      ),
-    );
   }
 }
 
