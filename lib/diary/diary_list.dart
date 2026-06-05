@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
@@ -146,7 +147,12 @@ class _DiaryListState extends State<DiaryList> {
     double cardWidth,
   ) {
     return ListView.builder(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.only(
+        top: appSearchHeight + 12,
+        left: 12,
+        right: 12,
+        bottom: 12,
+      ),
       controller: widget.ctrl,
       itemCount: _dayGroups.length,
       itemBuilder: (context, index) {
@@ -167,7 +173,8 @@ class _DiaryListState extends State<DiaryList> {
     final width = MediaQuery.of(context).size.width;
     final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return ListView.builder(
-      padding: EdgeInsets.only(top: 8, left: hPad, right: hPad),
+      padding:
+          EdgeInsets.only(top: appSearchHeight + 8, left: hPad, right: hPad),
       controller: widget.ctrl,
       itemCount: widget.diaryFoods.length,
       itemBuilder: (context, index) {

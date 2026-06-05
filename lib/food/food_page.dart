@@ -241,135 +241,151 @@ GROUP BY meal_foods.meal
                     });
                   }
 
-                  return material.Column(
+                  return Stack(
                     children: [
-                      AppSearch(
-                        ctrl: searchCtrl,
-                        onChange: (value) {
-                          setState(() {
-                            search = value;
-                          });
-                          setStream();
-                          setMealStream();
-                        },
-                        filter: FoodFilters(
-                          groupCtrl: groupCtrl,
-                          servingUnit: _servingUnit,
-                          servingSizeGtController: gtController,
-                          servingSizeLtController: ltController,
-                          onChange: ({
-                            foodGroup,
-                            servingUnit,
-                          }) {
-                            setState(() {
-                              _servingUnit = servingUnit;
-                            });
-                            setStream();
-                          },
-                        ),
-                        onClear: () => setState(() {
-                          selected.clear();
-                          selectedMeals.clear();
-                        }),
-                        onDelete: () async {
-                          final selectedCopy = selected.toList();
-                          final selectedMealsCopy = selectedMeals.toList();
-                          setState(() {
-                            selected.clear();
-                            selectedMeals.clear();
-                          });
-                          if (selectedCopy.isNotEmpty)
-                            await (db.delete(db.foods)
-                                  ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                                .go();
-                          if (selectedMealsCopy.isNotEmpty) {
-                            await (db.delete(db.diaries)
-                                  ..where(
-                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                  ))
-                                .go();
-                            await (db.delete(db.mealFoods)
-                                  ..where(
-                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                  ))
-                                .go();
-                            await (db.delete(db.meals)
-                                  ..where(
-                                    (tbl) => tbl.id.isIn(selectedMealsCopy),
-                                  ))
-                                .go();
-                          }
-                        },
-                        onSelect: () => setState(() {
-                          selected.addAll(foods.map((food) => food.id.value));
-                        }),
-                        selected: _allSelected,
-                        onEdit: () async {
-                          if (selected.isEmpty) return;
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditFoodsPage(
-                                ids: selected.toList(),
+                      material.Column(
+                        children: [
+                          if (items.isEmpty)
+                            const Padding(
+                              padding: EdgeInsets.only(top: appSearchHeight),
+                              child: ListTile(
+                                title: Text("No food yet."),
+                                subtitle:
+                                    Text("Tap the plus button to add foods."),
                               ),
                             ),
-                          );
-                          setState(() {
-                            selected.clear();
-                          });
-                        },
-                        onFavorite: () async {
-                          if (selected.isEmpty) return;
-                          final first = await (db.foods.select()
-                                ..where((tbl) => tbl.id.equals(selected.first)))
-                              .getSingle();
-                          await (db.foods.update()
-                                ..where((tbl) => tbl.id.isIn(selected)))
-                              .write(
-                            FoodsCompanion(
-                              favorite:
-                                  Value(first.favorite == true ? false : true),
+                          FoodList(
+                            ctrl: scrollCtrl,
+                            items: items,
+                            mealCalories: mealCalories,
+                            selected: selected,
+                            selectedMeals: selectedMeals,
+                            onSavedNew: () => scrollCtrl.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
                             ),
-                          );
-                          setState(() {
-                            selected.clear();
-                          });
-                        },
+                            onSelect: (id) {
+                              if (selected.contains(id))
+                                setState(() => selected.remove(id));
+                              else
+                                setState(() => selected.add(id));
+                            },
+                            onMealSelect: (id) {
+                              if (selectedMeals.contains(id))
+                                setState(() => selectedMeals.remove(id));
+                              else
+                                setState(() => selectedMeals.add(id));
+                            },
+                            onNext: () async {
+                              setState(() {
+                                limit += 10;
+                              });
+                              setStream();
+                            },
+                          ),
+                        ],
                       ),
-                      if (items.isEmpty)
-                        const ListTile(
-                          title: Text("No food yet."),
-                          subtitle: Text("Tap the plus button to add foods."),
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: AppSearch(
+                          ctrl: searchCtrl,
+                          onChange: (value) {
+                            setState(() {
+                              search = value;
+                            });
+                            setStream();
+                            setMealStream();
+                          },
+                          filter: FoodFilters(
+                            groupCtrl: groupCtrl,
+                            servingUnit: _servingUnit,
+                            servingSizeGtController: gtController,
+                            servingSizeLtController: ltController,
+                            onChange: ({
+                              foodGroup,
+                              servingUnit,
+                            }) {
+                              setState(() {
+                                _servingUnit = servingUnit;
+                              });
+                              setStream();
+                            },
+                          ),
+                          onClear: () => setState(() {
+                            selected.clear();
+                            selectedMeals.clear();
+                          }),
+                          onDelete: () async {
+                            final selectedCopy = selected.toList();
+                            final selectedMealsCopy = selectedMeals.toList();
+                            setState(() {
+                              selected.clear();
+                              selectedMeals.clear();
+                            });
+                            if (selectedCopy.isNotEmpty)
+                              await (db.delete(db.foods)
+                                    ..where((tbl) => tbl.id.isIn(selectedCopy)))
+                                  .go();
+                            if (selectedMealsCopy.isNotEmpty) {
+                              await (db.delete(db.diaries)
+                                    ..where(
+                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                    ))
+                                  .go();
+                              await (db.delete(db.mealFoods)
+                                    ..where(
+                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                    ))
+                                  .go();
+                              await (db.delete(db.meals)
+                                    ..where(
+                                      (tbl) => tbl.id.isIn(selectedMealsCopy),
+                                    ))
+                                  .go();
+                            }
+                          },
+                          onSelect: () => setState(() {
+                            selected.addAll(foods.map((food) => food.id.value));
+                          }),
+                          selected: _allSelected,
+                          onEdit: () async {
+                            if (selected.isEmpty) return;
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditFoodsPage(
+                                  ids: selected.toList(),
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              selected.clear();
+                            });
+                          },
+                          onFavorite: () async {
+                            if (selected.isEmpty) return;
+                            final first = await (db.foods.select()
+                                  ..where(
+                                    (tbl) => tbl.id.equals(selected.first),
+                                  ))
+                                .getSingle();
+                            await (db.foods.update()
+                                  ..where((tbl) => tbl.id.isIn(selected)))
+                                .write(
+                              FoodsCompanion(
+                                favorite: Value(
+                                  first.favorite == true ? false : true,
+                                ),
+                              ),
+                            );
+                            setState(() {
+                              selected.clear();
+                            });
+                          },
                         ),
-                      FoodList(
-                        ctrl: scrollCtrl,
-                        items: items,
-                        mealCalories: mealCalories,
-                        selected: selected,
-                        selectedMeals: selectedMeals,
-                        onSavedNew: () => scrollCtrl.animateTo(
-                          0,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeOut,
-                        ),
-                        onSelect: (id) {
-                          if (selected.contains(id))
-                            setState(() => selected.remove(id));
-                          else
-                            setState(() => selected.add(id));
-                        },
-                        onMealSelect: (id) {
-                          if (selectedMeals.contains(id))
-                            setState(() => selectedMeals.remove(id));
-                          else
-                            setState(() => selectedMeals.add(id));
-                        },
-                        onNext: () async {
-                          setState(() {
-                            limit += 10;
-                          });
-                          setStream();
-                        },
                       ),
                     ],
                   );

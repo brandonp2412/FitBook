@@ -61,91 +61,105 @@ class DiaryPageState extends State<DiaryPage> {
 
           final entryFoods = snapshot.data ?? [];
 
-          return material.Column(
+          return Stack(
             children: [
-              AppSearch(
-                ctrl: searchController,
-                filter: const DiaryFilters(),
-                onChange: (value) {
-                  entriesState.search = value;
-                },
-                onClear: () => setState(() {
-                  selected.clear();
-                }),
-                onDelete: () async {
-                  final selectedCopy = selected.toList();
-                  setState(() {
-                    selected.clear();
-                  });
-                  await (db.delete(db.diaries)
-                        ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                      .go();
-                },
-                onSelect: () => setState(() {
-                  selected.addAll(
-                    entryFoods.map((entryFood) => entryFood.entryId),
-                  );
-                }),
-                selected: selected,
-                onFavorite: () async {
-                  final diaries = await (db.diaries.selectOnly()
-                        ..addColumns([db.diaries.id, db.diaries.food])
-                        ..where(db.diaries.id.isIn(selected)))
-                      .get();
-                  final foodIds =
-                      diaries.map((entry) => entry.read(db.diaries.food)!);
-                  await (db.foods.update()
-                        ..where((tbl) => tbl.id.isIn(foodIds)))
-                      .write(const FoodsCompanion(favorite: Value(true)));
-                  setState(() {
-                    selected.clear();
-                  });
-                },
-                onEdit: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditDiariesPage(
-                        diaryIds: selected.toList(),
+              material.Column(
+                children: [
+                  if (snapshot.data?.isEmpty == true)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: appSearchHeight + 16,
+                        left: 16,
+                        right: 16,
+                        bottom: 16,
+                      ),
+                      child: ListTile(
+                        title: const Text("No entries today."),
+                        subtitle:
+                            const Text("Tap here to start logging your food."),
+                        onTap: () => navigatorKey.currentState!.push(
+                          MaterialPageRoute(
+                            builder: (context) => const EditDiaryPage(),
+                          ),
+                        ),
                       ),
                     ),
-                  );
-                  setState(() {
-                    selected.clear();
-                  });
-                },
-              ),
-              if (snapshot.data?.isEmpty == true)
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ListTile(
-                    title: const Text("No entries today."),
-                    subtitle:
-                        const Text("Tap here to start logging your food."),
-                    onTap: () => navigatorKey.currentState!.push(
-                      MaterialPageRoute(
-                        builder: (context) => const EditDiaryPage(),
-                      ),
-                    ),
+                  DiaryList(
+                    ctrl: scrollCtrl,
+                    diaryFoods: entryFoods,
+                    selected: selected,
+                    onSelect: (id) {
+                      if (selected.contains(id))
+                        setState(() {
+                          selected.remove(id);
+                        });
+                      else
+                        setState(() {
+                          selected.add(id);
+                        });
+                    },
+                    onNext: () async {
+                      entriesState.limit += 100;
+                    },
                   ),
+                ],
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppSearch(
+                  ctrl: searchController,
+                  filter: const DiaryFilters(),
+                  onChange: (value) {
+                    entriesState.search = value;
+                  },
+                  onClear: () => setState(() {
+                    selected.clear();
+                  }),
+                  onDelete: () async {
+                    final selectedCopy = selected.toList();
+                    setState(() {
+                      selected.clear();
+                    });
+                    await (db.delete(db.diaries)
+                          ..where((tbl) => tbl.id.isIn(selectedCopy)))
+                        .go();
+                  },
+                  onSelect: () => setState(() {
+                    selected.addAll(
+                      entryFoods.map((entryFood) => entryFood.entryId),
+                    );
+                  }),
+                  selected: selected,
+                  onFavorite: () async {
+                    final diaries = await (db.diaries.selectOnly()
+                          ..addColumns([db.diaries.id, db.diaries.food])
+                          ..where(db.diaries.id.isIn(selected)))
+                        .get();
+                    final foodIds =
+                        diaries.map((entry) => entry.read(db.diaries.food)!);
+                    await (db.foods.update()
+                          ..where((tbl) => tbl.id.isIn(foodIds)))
+                        .write(const FoodsCompanion(favorite: Value(true)));
+                    setState(() {
+                      selected.clear();
+                    });
+                  },
+                  onEdit: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditDiariesPage(
+                          diaryIds: selected.toList(),
+                        ),
+                      ),
+                    );
+                    setState(() {
+                      selected.clear();
+                    });
+                  },
                 ),
-              DiaryList(
-                ctrl: scrollCtrl,
-                diaryFoods: entryFoods,
-                selected: selected,
-                onSelect: (id) {
-                  if (selected.contains(id))
-                    setState(() {
-                      selected.remove(id);
-                    });
-                  else
-                    setState(() {
-                      selected.add(id);
-                    });
-                },
-                onNext: () async {
-                  entriesState.limit += 100;
-                },
               ),
             ],
           );

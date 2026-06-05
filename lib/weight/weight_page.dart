@@ -83,81 +83,93 @@ class WeightPageState extends State<WeightPage>
           if (snapshot.hasError) return ErrorWidget(snapshot.error!);
           final weights = snapshot.data ?? [];
 
-          return material.Column(
+          return Stack(
             children: [
-              AppSearch(
-                ctrl: searchController,
-                onChange: (value) {
-                  setState(() {
-                    search = value;
-                  });
-                  _setStream();
-                },
-                onClear: () => setState(() {
-                  selected.clear();
-                }),
-                onDelete: () async {
-                  final selectedCopy = selected.toList();
-                  setState(() {
-                    selected.clear();
-                  });
-                  await (db.delete(db.weights)
-                        ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                      .go();
-                },
-                onSelect: () => setState(() {
-                  selected.addAll(
-                    weights.map((weight) => weight.id),
-                  );
-                }),
-                selected: selected,
-                onFavorite: () {},
-                onEdit: () async {
-                  final weight = weights.firstWhere(
-                    (element) => element.id == selected.first,
-                  );
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditWeightPage(
-                        weight: weight.toCompanion(false),
+              material.Column(
+                children: [
+                  if (snapshot.data?.isEmpty == true)
+                    const Padding(
+                      padding: EdgeInsets.only(top: appSearchHeight),
+                      child: ListTile(
+                        title: Text("No weights found"),
+                        subtitle: Text(
+                          "Tap the plus button to start logging your weight.",
+                        ),
                       ),
                     ),
-                  );
-                  setState(() {
-                    selected.clear();
-                  });
-                },
-              ),
-              if (snapshot.data?.isEmpty == true)
-                const ListTile(
-                  title: Text("No weights found"),
-                  subtitle: Text(
-                    "Tap the plus button to start logging your weight.",
+                  WeightList(
+                    ctrl: scrollCtrl,
+                    weights: weights,
+                    selected: selected,
+                    onSelect: (id) {
+                      if (selected.contains(id))
+                        setState(() {
+                          selected.remove(id);
+                        });
+                      else
+                        setState(() {
+                          selected.add(id);
+                        });
+                    },
+                    onNext: () async {
+                      final result = await stream.first;
+                      if (result.length <= limit) return;
+                      setState(() {
+                        limit += 10;
+                      });
+                      _setStream();
+                    },
                   ),
+                ],
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppSearch(
+                  ctrl: searchController,
+                  onChange: (value) {
+                    setState(() {
+                      search = value;
+                    });
+                    _setStream();
+                  },
+                  onClear: () => setState(() {
+                    selected.clear();
+                  }),
+                  onDelete: () async {
+                    final selectedCopy = selected.toList();
+                    setState(() {
+                      selected.clear();
+                    });
+                    await (db.delete(db.weights)
+                          ..where((tbl) => tbl.id.isIn(selectedCopy)))
+                        .go();
+                  },
+                  onSelect: () => setState(() {
+                    selected.addAll(
+                      weights.map((weight) => weight.id),
+                    );
+                  }),
+                  selected: selected,
+                  onFavorite: () {},
+                  onEdit: () async {
+                    final weight = weights.firstWhere(
+                      (element) => element.id == selected.first,
+                    );
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditWeightPage(
+                          weight: weight.toCompanion(false),
+                        ),
+                      ),
+                    );
+                    setState(() {
+                      selected.clear();
+                    });
+                  },
                 ),
-              WeightList(
-                ctrl: scrollCtrl,
-                weights: weights,
-                selected: selected,
-                onSelect: (id) {
-                  if (selected.contains(id))
-                    setState(() {
-                      selected.remove(id);
-                    });
-                  else
-                    setState(() {
-                      selected.add(id);
-                    });
-                },
-                onNext: () async {
-                  final result = await stream.first;
-                  if (result.length <= limit) return;
-                  setState(() {
-                    limit += 10;
-                  });
-                  _setStream();
-                },
               ),
             ],
           );

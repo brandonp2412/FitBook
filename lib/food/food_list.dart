@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
@@ -70,7 +71,8 @@ class _FoodListState extends State<FoodList> {
     final hPad = width > 800 ? (width - 800) / 2 : 0.0;
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.only(top: 8, left: hPad, right: hPad),
+        padding:
+            EdgeInsets.only(top: appSearchHeight + 8, left: hPad, right: hPad),
         controller: widget.ctrl,
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
