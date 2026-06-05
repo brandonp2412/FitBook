@@ -1,13 +1,16 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditMealPage extends StatefulWidget {
   final int? id;
@@ -555,9 +558,51 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
     setState(() => stream = q.watch());
   }
 
+  Widget _thumbnail(Food food, bool showImages) {
+    final theme = Theme.of(context);
+    final placeholder = Icon(
+      Icons.restaurant,
+      size: 22,
+      color: theme.colorScheme.onPrimaryContainer,
+    );
+
+    Widget content = placeholder;
+    if (showImages) {
+      if (food.imageFile?.isNotEmpty == true)
+        content = Image.file(
+          File(food.imageFile!),
+          width: 44,
+          height: 44,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => placeholder,
+        );
+      else if (food.smallImage?.isNotEmpty == true)
+        content = CachedNetworkImage(
+          imageUrl: food.smallImage!,
+          width: 44,
+          height: 44,
+          fit: BoxFit.cover,
+          errorWidget: (_, __, ___) => placeholder,
+        );
+    }
+
+    return Container(
+      width: 44,
+      height: 44,
+      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: content,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final showImages = context.watch<SettingsState>().value.showImages;
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
       child: Column(
@@ -607,19 +652,20 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
                   itemBuilder: (ctx, i) {
                     final food = foods[i];
                     return ListTile(
-                      leading: food.favorite == true
-                          ? Icon(
-                              Icons.favorite,
-                              size: 16,
-                              color: theme.colorScheme.primary,
-                            )
-                          : null,
+                      leading: _thumbnail(food, showImages),
                       title: Text(food.name),
                       subtitle: Text(
                         '${food.calories?.toStringAsFixed(0) ?? 0} kcal'
                         ' · ${food.servingSize?.toStringAsFixed(0) ?? 1}'
                         ' ${food.servingUnit ?? 'serving'}',
                       ),
+                      trailing: food.favorite == true
+                          ? Icon(
+                              Icons.favorite,
+                              size: 16,
+                              color: theme.colorScheme.primary,
+                            )
+                          : null,
                       onTap: () {
                         widget.onPicked(food);
                         Navigator.pop(ctx);
