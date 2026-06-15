@@ -81,13 +81,11 @@ void saveWeight(
   toast(context, message);
 }
 
-/// Shows [EditWeightPage] in a modal bottom sheet.
+/// Shows the full [EditWeightPage] editor in a modal bottom sheet.
 ///
-/// A bottom sheet and the keyboard both rise from the same bottom edge, so
-/// requesting focus immediately (see [EditWeightPage]'s initState) lets them
-/// compound into a single upward motion instead of fighting. This avoids the
-/// stutter of the old full-page route, where the page slid over a [Scaffold]
-/// that was simultaneously resizing for the keyboard inset.
+/// Unlike [showQuickAddWeight], the field is not focused automatically; the user
+/// opts into each field they want to change. Reached by tapping an existing
+/// weight or the expand action of the quick-add sheet.
 Future<void> showEditWeight(
   BuildContext context,
   WeightsCompanion weight, {
@@ -223,7 +221,6 @@ class EditWeightPage extends StatefulWidget {
 
 class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
-  final FocusNode _valueFocusNode = FocusNode();
 
   String unit = 'kg';
   String convertTo = 'kg';
@@ -243,16 +240,11 @@ class _EditWeightPageState extends State<EditWeightPage> {
       valueController.text = widget.weight.amount.value.toStringAsFixed(2);
     else if (widget.initialValue != null)
       valueController.text = widget.initialValue!;
-
-    if (!widget.weight.id.present)
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _valueFocusNode.requestFocus(),
-      );
   }
 
   @override
   void dispose() {
-    _valueFocusNode.dispose();
+    valueController.dispose();
     super.dispose();
   }
 
@@ -348,7 +340,6 @@ class _EditWeightPageState extends State<EditWeightPage> {
                   children: [
                     TextFormField(
                       controller: valueController,
-                      focusNode: _valueFocusNode,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(labelText: 'Weight ($unit)'),
