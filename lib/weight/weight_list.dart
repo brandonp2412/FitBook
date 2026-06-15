@@ -131,14 +131,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                     onLongPress: () => widget.onSelect(weight.id),
                     onTap: () {
                       if (widget.selected.isEmpty) {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          showDragHandle: true,
-                          builder: (context) => EditWeightPage(
-                            weight: weight.toCompanion(false),
-                          ),
-                        );
+                        showEditWeight(context, weight.toCompanion(false));
                       } else {
                         widget.onSelect(weight.id);
                       }
@@ -179,14 +172,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
               dateFormat: settings.shortDateFormat,
               onTap: () {
                 if (widget.selected.isEmpty) {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    showDragHandle: true,
-                    builder: (context) => EditWeightPage(
-                      weight: weight.toCompanion(false),
-                    ),
-                  );
+                  showEditWeight(context, weight.toCompanion(false));
                 } else {
                   widget.onSelect(weight.id);
                 }

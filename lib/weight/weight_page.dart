@@ -157,14 +157,7 @@ class WeightPageState extends State<WeightPage>
                     final weight = weights.firstWhere(
                       (element) => element.id == selected.first,
                     );
-                    await showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      showDragHandle: true,
-                      builder: (context) => EditWeightPage(
-                        weight: weight.toCompanion(false),
-                      ),
-                    );
+                    await showEditWeight(context, weight.toCompanion(false));
                     setState(() {
                       selected.clear();
                     });
@@ -193,14 +186,7 @@ class WeightPageState extends State<WeightPage>
                   unit: Value(snapshot.data!.firstOrNull!.unit),
                 );
 
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                showDragHandle: true,
-                builder: (context) => EditWeightPage(
-                  weight: weight,
-                ),
-              );
+              showEditWeight(context, weight);
             },
             label: 'Add',
             icon: Icons.add,
