@@ -23,13 +23,11 @@ void main() async {
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: Scaffold(
-            body: EditWeightPage(
-              weight: WeightsCompanion.insert(
-                amount: 0,
-                created: DateTime.now(),
-                unit: 'kg',
-              ),
+          home: EditWeightPage(
+            weight: WeightsCompanion.insert(
+              amount: 0,
+              created: DateTime.now(),
+              unit: 'kg',
             ),
           ),
         ),
@@ -70,10 +68,8 @@ void main() async {
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: Scaffold(
-            body: EditWeightPage(
-              weight: weight,
-            ),
+          home: EditWeightPage(
+            weight: weight,
           ),
         ),
       ),

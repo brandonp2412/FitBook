@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:drift/drift.dart' as drift;
 import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -81,7 +82,7 @@ void saveWeight(
   toast(context, message);
 }
 
-/// Shows the full [EditWeightPage] editor in a modal bottom sheet.
+/// Pushes the full [EditWeightPage] editor as a page route.
 ///
 /// Unlike [showQuickAddWeight], the field is not focused automatically; the user
 /// opts into each field they want to change. Reached by tapping an existing
@@ -91,13 +92,12 @@ Future<void> showEditWeight(
   WeightsCompanion weight, {
   String? initialValue,
 }) {
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    builder: (context) => EditWeightPage(
-      weight: weight,
-      initialValue: initialValue,
+  return Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => EditWeightPage(
+        weight: weight,
+        initialValue: initialValue,
+      ),
     ),
   );
 }
@@ -304,173 +304,155 @@ class _EditWeightPageState extends State<EditWeightPage> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.weight.id.present ? "Edit weight" : "Add weight"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              SharePlus.instance.share(
+                ShareParams(
+                  text: "I just weighed ${valueController.text} $unit!",
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Form(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: ListView(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      widget.weight.id.present ? "Edit weight" : "Add weight",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.share),
-                    onPressed: () {
-                      SharePlus.instance.share(
-                        ShareParams(
-                          text: "I just weighed ${valueController.text} $unit!",
-                        ),
-                      );
-                    },
-                  ),
-                ],
+              TextFormField(
+                controller: valueController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(labelText: 'Weight ($unit)'),
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter weight' : null,
+                onTap: () => selectAll(valueController),
+                onFieldSubmitted: (value) => save(),
               ),
-              Form(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: valueController,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      decoration: InputDecoration(labelText: 'Weight ($unit)'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter weight' : null,
-                      onTap: () => selectAll(valueController),
-                      onFieldSubmitted: (value) => save(),
-                    ),
-                    TextFormField(
-                      controller: TextEditingController(
-                        text:
-                            "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
-                      ),
-                      decoration:
-                          const InputDecoration(labelText: 'Last weight'),
-                      enabled: false,
-                    ),
-                    const SizedBox(height: 8.0),
-                    ListTile(
-                      title: Text("Unit ($unit)"),
-                      leading: unit == 'kg'
-                          ? const Icon(Icons.straighten)
-                          : const Icon(Icons.square_foot),
-                      onTap: () => setState(() {
-                        unit = unit == 'kg' ? 'lb' : 'kg';
-                        convertTo = unit;
-                      }),
-                      trailing: Switch(
-                        value: unit == 'kg',
-                        onChanged: (value) => setState(() {
-                          if (value)
-                            unit = 'kg';
-                          else
-                            unit = 'lb';
-                          convertTo = unit;
-                        }),
-                      ),
-                    ),
-                    ListTile(
-                      title: convertTo == unit
-                          ? Text("Keep unit as $unit")
-                          : Text("Convert to $convertTo"),
-                      leading: const Icon(Icons.conveyor_belt),
-                      onTap: () {
-                        setState(() {
-                          convertTo = convertTo == 'kg' ? 'lb' : 'kg';
-                        });
-                        db.settings.update().write(
-                              SettingsCompanion(
-                                convertWeight: drift.Value(convertTo),
-                              ),
-                            );
-                      },
-                      trailing: Switch(
-                        value: convertTo == 'kg',
-                        onChanged: (value) {
-                          setState(() {
-                            if (value)
-                              convertTo = 'kg';
-                            else
-                              convertTo = 'lb';
-                          });
-
-                          db.settings.update().write(
-                                SettingsCompanion(
-                                  convertWeight: drift.Value(convertTo),
-                                ),
-                              );
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text('Created Date'),
-                      subtitle: Selector<SettingsState, String>(
-                        selector: (p0, settings) =>
-                            settings.value.longDateFormat,
-                        builder: (context, longDateFormat, child) =>
-                            Text(DateFormat(longDateFormat).format(created)),
-                      ),
-                      trailing: const Icon(Icons.calendar_today),
-                      onTap: () => _selectDate(),
-                    ),
-                    if (image?.isNotEmpty == true && settings.showImages)
-                      SizedBox(
-                        height: 200,
-                        child: Image.file(
-                          File(image!),
-                          errorBuilder: (context, error, stackTrace) =>
-                              TextButton.icon(
-                            onPressed: () {},
-                            label: const Text('Image error'),
-                            icon: const Icon(Icons.error),
-                          ),
-                        ),
-                      ),
-                    if (settings.showImages) ...[
-                      const SizedBox(height: 8),
-                      TextButton.icon(
-                        icon: const Icon(Icons.image),
-                        label: const Text('Set image'),
-                        onPressed: () async {
-                          FilePickerResult? result =
-                              await FilePicker.pickFiles(type: FileType.image);
-                          final path = result?.files.single.path;
-                          if (path == null) return;
-                          setState(() {
-                            image = path;
-                          });
-                        },
-                      ),
-                    ],
-                    if (image != null && settings.showImages)
-                      TextButton.icon(
-                        icon: const Icon(Icons.delete),
-                        label: const Text("Remove image"),
-                        onPressed: () => setState(() {
-                          image = null;
-                        }),
-                      ),
-                    const SizedBox(height: 8),
-                    FilledButton.icon(
-                      onPressed: save,
-                      icon: const Icon(Icons.save),
-                      label: const Text("Save"),
-                    ),
-                  ],
+              TextFormField(
+                controller: TextEditingController(
+                  text:
+                      "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
+                ),
+                decoration: const InputDecoration(labelText: 'Last weight'),
+                enabled: false,
+              ),
+              const SizedBox(height: 8.0),
+              ListTile(
+                title: Text("Unit ($unit)"),
+                leading: unit == 'kg'
+                    ? const Icon(Icons.straighten)
+                    : const Icon(Icons.square_foot),
+                onTap: () => setState(() {
+                  unit = unit == 'kg' ? 'lb' : 'kg';
+                  convertTo = unit;
+                }),
+                trailing: Switch(
+                  value: unit == 'kg',
+                  onChanged: (value) => setState(() {
+                    if (value)
+                      unit = 'kg';
+                    else
+                      unit = 'lb';
+                    convertTo = unit;
+                  }),
                 ),
               ),
+              ListTile(
+                title: convertTo == unit
+                    ? Text("Keep unit as $unit")
+                    : Text("Convert to $convertTo"),
+                leading: const Icon(Icons.conveyor_belt),
+                onTap: () {
+                  setState(() {
+                    convertTo = convertTo == 'kg' ? 'lb' : 'kg';
+                  });
+                  db.settings.update().write(
+                        SettingsCompanion(
+                          convertWeight: drift.Value(convertTo),
+                        ),
+                      );
+                },
+                trailing: Switch(
+                  value: convertTo == 'kg',
+                  onChanged: (value) {
+                    setState(() {
+                      if (value)
+                        convertTo = 'kg';
+                      else
+                        convertTo = 'lb';
+                    });
+
+                    db.settings.update().write(
+                          SettingsCompanion(
+                            convertWeight: drift.Value(convertTo),
+                          ),
+                        );
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('Created Date'),
+                subtitle: Selector<SettingsState, String>(
+                  selector: (p0, settings) => settings.value.longDateFormat,
+                  builder: (context, longDateFormat, child) =>
+                      Text(DateFormat(longDateFormat).format(created)),
+                ),
+                trailing: const Icon(Icons.calendar_today),
+                onTap: () => _selectDate(),
+              ),
+              if (image?.isNotEmpty == true && settings.showImages)
+                SizedBox(
+                  height: 200,
+                  child: Image.file(
+                    File(image!),
+                    errorBuilder: (context, error, stackTrace) =>
+                        TextButton.icon(
+                      onPressed: () {},
+                      label: const Text('Image error'),
+                      icon: const Icon(Icons.error),
+                    ),
+                  ),
+                ),
+              if (settings.showImages) ...[
+                const SizedBox(height: 8),
+                TextButton.icon(
+                  icon: const Icon(Icons.image),
+                  label: const Text('Set image'),
+                  onPressed: () async {
+                    FilePickerResult? result =
+                        await FilePicker.pickFiles(type: FileType.image);
+                    final path = result?.files.single.path;
+                    if (path == null) return;
+                    setState(() {
+                      image = path;
+                    });
+                  },
+                ),
+              ],
+              if (image != null && settings.showImages)
+                TextButton.icon(
+                  icon: const Icon(Icons.delete),
+                  label: const Text("Remove image"),
+                  onPressed: () => setState(() {
+                    image = null;
+                  }),
+                ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: AnimatedFab(
+        onTap: save,
+        label: "Save",
+        icon: Icons.save,
+        scroll: ScrollController(),
       ),
     );
   }
