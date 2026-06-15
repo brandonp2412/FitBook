@@ -183,14 +183,46 @@ void main() async {
       expect(find.text('No weights found'), findsOne);
       await tester.tap(find.text('Add'));
       await tester.pumpAndSettle();
-      expect(find.text('Add weight'), findsOne);
       await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
-      await tester.tap(find.text('Save'));
+      await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pumpAndSettle();
-      expect(find.text('Add weight'), findsNothing);
 
       final weight = await (db.weights.select()).getSingle();
       expect(weight.amount, equals(61));
+
+      await db.close();
+    },
+  );
+
+  testWidgets(
+    'WeightPage quick add expands to full editor',
+    (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => settingsState),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
+          ],
+          child: const MaterialApp(
+            home: WeightPage(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Add'));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '72');
+      await tester.tap(find.byTooltip('More options'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Add weight'), findsOne);
+      expect(find.text('72'), findsOne);
+      expect(find.text('Save'), findsOne);
 
       await db.close();
     },

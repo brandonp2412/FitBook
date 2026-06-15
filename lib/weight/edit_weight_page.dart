@@ -13,6 +13,74 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+/// Persists [amount]/[unit] for [original], inserting when it has no id and
+/// updating otherwise, applying the kg/lb conversion implied by [convertTo].
+///
+/// Also runs the auto-calculated macro targets and positive-reinforcement
+/// toast so every entry point (quick add and the full editor) behaves the same.
+void saveWeight(
+  BuildContext context, {
+  required WeightsCompanion original,
+  required double amount,
+  required String unit,
+  String? convertTo,
+  DateTime? created,
+  String? image,
+}) {
+  convertTo ??= unit;
+  if (unit == 'kg' && convertTo == 'lb') {
+    amount *= 2.20462262185;
+    unit = 'lb';
+  }
+  if (unit == 'lb' && convertTo == 'kg') {
+    amount /= 2.20462262185;
+    unit = 'kg';
+  }
+
+  if (original.id.present)
+    (db.weights.update()..where((u) => u.id.equals(original.id.value))).write(
+      WeightsCompanion(
+        unit: drift.Value(unit),
+        amount: drift.Value(amount),
+        created: drift.Value(created ?? original.created.value),
+        image: drift.Value(image),
+      ),
+    );
+  else
+    db.weights.insertOne(
+      WeightsCompanion.insert(
+        created: DateTime.now(),
+        unit: unit,
+        amount: amount,
+        image: drift.Value(image),
+      ),
+    );
+
+  final settings = context.read<SettingsState>().value;
+  if (settings.autoCalc) {
+    final macros = getMacros(amount, unit);
+    db.settings.update().write(
+          SettingsCompanion(
+            dailyCalories: drift.Value(macros.calories.toInt()),
+            dailyCarb: drift.Value(macros.carb.toInt()),
+            dailyFat: drift.Value(macros.fat.toInt()),
+            dailyProtein: drift.Value(macros.protein.toInt()),
+          ),
+        );
+  }
+
+  if (settings.targetWeight == null) return;
+  if (!settings.positiveReinforcement) return;
+  final show =
+      shouldNotify(amount, original.amount.value, settings.targetWeight!);
+  if (!show) return;
+  final random = Random();
+  final message =
+      positiveReinforcements[random.nextInt(positiveReinforcements.length)];
+
+  toast(context, message);
+}
+
 /// Shows [EditWeightPage] in a modal bottom sheet.
 ///
 /// A bottom sheet and the keyboard both rise from the same bottom edge, so
@@ -20,21 +88,133 @@ import 'package:share_plus/share_plus.dart';
 /// compound into a single upward motion instead of fighting. This avoids the
 /// stutter of the old full-page route, where the page slid over a [Scaffold]
 /// that was simultaneously resizing for the keyboard inset.
-Future<void> showEditWeight(BuildContext context, WeightsCompanion weight) {
+Future<void> showEditWeight(
+  BuildContext context,
+  WeightsCompanion weight, {
+  String? initialValue,
+}) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    builder: (context) => EditWeightPage(weight: weight),
+    builder: (context) => EditWeightPage(
+      weight: weight,
+      initialValue: initialValue,
+    ),
   );
+}
+
+/// Shows a compact [QuickAddWeight] sheet that logs a new weight from a single
+/// field, then hands off to the full [showEditWeight] editor if the user taps
+/// expand (carrying whatever they typed across).
+Future<void> showQuickAddWeight(
+  BuildContext context,
+  WeightsCompanion weight,
+) async {
+  final result = await showModalBottomSheet<({String value, bool expand})>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (context) => QuickAddWeight(weight: weight),
+  );
+  if (result == null || !context.mounted) return;
+
+  if (result.expand)
+    await showEditWeight(context, weight, initialValue: result.value);
+  else
+    saveWeight(
+      context,
+      original: weight,
+      amount: double.parse(result.value),
+      unit: weight.unit.value,
+    );
+}
+
+/// A single-field bottom sheet for logging a weight quickly.
+///
+/// Submitting the field (enter) pops with `expand: false` and the typed value;
+/// the expand action pops with `expand: true` so the caller can open the full
+/// editor. Validation happens here so the caller only ever sees a parseable
+/// value.
+class QuickAddWeight extends StatefulWidget {
+  final WeightsCompanion weight;
+
+  const QuickAddWeight({
+    super.key,
+    required this.weight,
+  });
+
+  @override
+  State<QuickAddWeight> createState() => _QuickAddWeightState();
+}
+
+class _QuickAddWeightState extends State<QuickAddWeight> {
+  final TextEditingController valueController = TextEditingController();
+  final FocusNode _valueFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _valueFocusNode.requestFocus(),
+    );
+  }
+
+  @override
+  void dispose() {
+    valueController.dispose();
+    _valueFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (double.tryParse(valueController.text) == null) return;
+    Navigator.pop(context, (value: valueController.text, expand: false));
+  }
+
+  void _expand() {
+    Navigator.pop(context, (value: valueController.text, expand: true));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final unit = widget.weight.unit.value;
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: TextField(
+          controller: valueController,
+          focusNode: _valueFocusNode,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => _submit(),
+          decoration: InputDecoration(
+            labelText: 'Weight ($unit)',
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.tune),
+              tooltip: 'More options',
+              onPressed: _expand,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class EditWeightPage extends StatefulWidget {
   final WeightsCompanion weight;
+  final String? initialValue;
 
   const EditWeightPage({
     super.key,
     required this.weight,
+    this.initialValue,
   });
 
   @override
@@ -61,6 +241,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
     if (widget.weight.id.present)
       valueController.text = widget.weight.amount.value.toStringAsFixed(2);
+    else if (widget.initialValue != null)
+      valueController.text = widget.initialValue!;
 
     if (!widget.weight.id.present)
       WidgetsBinding.instance.addPostFrameCallback(
@@ -113,64 +295,17 @@ class _EditWeightPageState extends State<EditWeightPage> {
     }
   }
 
-  Future<void> save() async {
+  void save() {
     Navigator.of(context).pop();
-    var amount = double.parse(valueController.text);
-    if (unit == 'kg' && convertTo == 'lb') {
-      amount *= 2.20462262185;
-      unit = 'lb';
-    }
-    if (unit == 'lb' && convertTo == 'kg') {
-      amount /= 2.20462262185;
-      unit = 'kg';
-    }
-
-    if (widget.weight.id.present)
-      (db.weights.update()..where((u) => u.id.equals(widget.weight.id.value)))
-          .write(
-        WeightsCompanion(
-          unit: drift.Value(unit),
-          amount: drift.Value(amount),
-          created: drift.Value(created),
-          image: drift.Value(image),
-        ),
-      );
-    else
-      db.weights.insertOne(
-        WeightsCompanion.insert(
-          created: DateTime.now(),
-          unit: unit,
-          amount: amount,
-          image: drift.Value(image),
-        ),
-      );
-
-    final settings = context.read<SettingsState>().value;
-    if (settings.autoCalc) {
-      final macros = getMacros(amount, unit);
-      db.settings.update().write(
-            SettingsCompanion(
-              dailyCalories: drift.Value(macros.calories.toInt()),
-              dailyCarb: drift.Value(macros.carb.toInt()),
-              dailyFat: drift.Value(macros.fat.toInt()),
-              dailyProtein: drift.Value(macros.protein.toInt()),
-            ),
-          );
-    }
-
-    if (settings.targetWeight == null) return;
-    if (!settings.positiveReinforcement) return;
-    final show = shouldNotify(
-      amount,
-      widget.weight.amount.value,
-      settings.targetWeight!,
+    saveWeight(
+      context,
+      original: widget.weight,
+      amount: double.parse(valueController.text),
+      unit: unit,
+      convertTo: convertTo,
+      created: created,
+      image: image,
     );
-    if (!show) return;
-    final random = Random();
-    final message =
-        positiveReinforcements[random.nextInt(positiveReinforcements.length)];
-
-    toast(context, message);
   }
 
   @override
