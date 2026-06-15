@@ -157,12 +157,12 @@ class WeightPageState extends State<WeightPage>
                     final weight = weights.firstWhere(
                       (element) => element.id == selected.first,
                     );
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditWeightPage(
-                          weight: weight.toCompanion(false),
-                        ),
+                    await showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      builder: (context) => EditWeightPage(
+                        weight: weight.toCompanion(false),
                       ),
                     );
                     setState(() {
@@ -193,11 +193,12 @@ class WeightPageState extends State<WeightPage>
                   unit: Value(snapshot.data!.firstOrNull!.unit),
                 );
 
-              navigatorKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (context) => EditWeightPage(
-                    weight: weight,
-                  ),
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                showDragHandle: true,
+                builder: (context) => EditWeightPage(
+                  weight: weight,
                 ),
               );
             },

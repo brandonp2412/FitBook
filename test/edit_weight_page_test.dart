@@ -23,11 +23,13 @@ void main() async {
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditWeightPage(
-            weight: WeightsCompanion.insert(
-              amount: 0,
-              created: DateTime.now(),
-              unit: 'kg',
+          home: Scaffold(
+            body: EditWeightPage(
+              weight: WeightsCompanion.insert(
+                amount: 0,
+                created: DateTime.now(),
+                unit: 'kg',
+              ),
             ),
           ),
         ),
@@ -39,7 +41,7 @@ void main() async {
     expect(find.text('Weight (kg)'), findsOne);
 
     await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '100');
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
     expect(find.text('Add weight'), findsNothing);
 
@@ -68,8 +70,10 @@ void main() async {
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: MaterialApp(
-          home: EditWeightPage(
-            weight: weight,
+          home: Scaffold(
+            body: EditWeightPage(
+              weight: weight,
+            ),
           ),
         ),
       ),
@@ -80,7 +84,7 @@ void main() async {
     expect(find.text('Weight (kg)'), findsOne);
 
     await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '200');
-    await tester.tap(find.byTooltip('Save'));
+    await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
     expect(find.text('Edit weight'), findsNothing);
 

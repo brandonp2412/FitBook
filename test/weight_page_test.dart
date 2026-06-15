@@ -95,7 +95,7 @@ void main() async {
       expect(find.text('Edit weight'), findsOne);
 
       await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
-      await tester.tap(find.byTooltip('Save'));
+      await tester.tap(find.text('Save'));
       await tester.pumpAndSettle();
       expect(find.text('61.00 kg'), findsOne);
 
@@ -185,7 +185,7 @@ void main() async {
       await tester.pumpAndSettle();
       expect(find.text('Add weight'), findsOne);
       await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '61');
-      await tester.tap(find.byTooltip('Save'));
+      await tester.tap(find.text('Save'));
       await tester.pumpAndSettle();
       expect(find.text('Add weight'), findsNothing);
 

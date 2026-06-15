@@ -2,9 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart' as drift;
-import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -30,7 +28,6 @@ class EditWeightPage extends StatefulWidget {
 class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
   final FocusNode _valueFocusNode = FocusNode();
-  Animation<double>? _routeAnimation;
 
   String unit = 'kg';
   String convertTo = 'kg';
@@ -41,53 +38,22 @@ class _EditWeightPageState extends State<EditWeightPage> {
   void initState() {
     super.initState();
     selectAll(valueController);
-    setState(() {
-      unit = widget.weight.unit.value;
-      convertTo = widget.weight.unit.value;
-      created = widget.weight.created.value;
-      image = widget.weight.image.value;
-    });
+    unit = widget.weight.unit.value;
+    convertTo = widget.weight.unit.value;
+    created = widget.weight.created.value;
+    image = widget.weight.image.value;
 
     if (widget.weight.id.present)
-      setState(() {
-        valueController.text = widget.weight.amount.value.toStringAsFixed(2);
-      });
-  }
+      valueController.text = widget.weight.amount.value.toStringAsFixed(2);
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_routeAnimation == null) {
-      _routeAnimation = ModalRoute.of(context)?.animation;
-      _routeAnimation?.addStatusListener(_onRouteAnimationStatus);
-
-      if (!widget.weight.id.present) {
-        if (_routeAnimation == null ||
-            _routeAnimation!.status == AnimationStatus.completed) {
-          _valueFocusNode.requestFocus();
-        } else {
-          void onReady(AnimationStatus status) {
-            if (status == AnimationStatus.completed) {
-              _routeAnimation?.removeStatusListener(onReady);
-              if (mounted) _valueFocusNode.requestFocus();
-            }
-          }
-
-          _routeAnimation!.addStatusListener(onReady);
-        }
-      }
-    }
-  }
-
-  void _onRouteAnimationStatus(AnimationStatus status) {
-    if (status == AnimationStatus.reverse) {
-      FocusManager.instance.primaryFocus?.unfocus();
-    }
+    if (!widget.weight.id.present)
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _valueFocusNode.requestFocus(),
+      );
   }
 
   @override
   void dispose() {
-    _routeAnimation?.removeStatusListener(_onRouteAnimationStatus);
     _valueFocusNode.dispose();
     super.dispose();
   }
@@ -147,10 +113,10 @@ class _EditWeightPageState extends State<EditWeightPage> {
       (db.weights.update()..where((u) => u.id.equals(widget.weight.id.value)))
           .write(
         WeightsCompanion(
-          unit: Value(unit),
-          amount: Value(amount),
-          created: Value(created),
-          image: Value(image),
+          unit: drift.Value(unit),
+          amount: drift.Value(amount),
+          created: drift.Value(created),
+          image: drift.Value(image),
         ),
       );
     else
@@ -159,7 +125,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
           created: DateTime.now(),
           unit: unit,
           amount: amount,
-          image: Value(image),
+          image: drift.Value(image),
         ),
       );
 
@@ -168,10 +134,10 @@ class _EditWeightPageState extends State<EditWeightPage> {
       final macros = getMacros(amount, unit);
       db.settings.update().write(
             SettingsCompanion(
-              dailyCalories: Value(macros.calories.toInt()),
-              dailyCarb: Value(macros.carb.toInt()),
-              dailyFat: Value(macros.fat.toInt()),
-              dailyProtein: Value(macros.protein.toInt()),
+              dailyCalories: drift.Value(macros.calories.toInt()),
+              dailyCarb: drift.Value(macros.carb.toInt()),
+              dailyFat: drift.Value(macros.fat.toInt()),
+              dailyProtein: drift.Value(macros.protein.toInt()),
             ),
           );
     }
@@ -195,156 +161,172 @@ class _EditWeightPageState extends State<EditWeightPage> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.weight.id.present ? "Edit weight" : "Add weight"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {
-              SharePlus.instance.share(
-                ShareParams(
-                  text: "I just weighed ${valueController.text} $unit!",
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Form(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: valueController,
-                focusNode: _valueFocusNode,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(labelText: 'Weight ($unit)'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter weight' : null,
-                onTap: () => selectAll(valueController),
-                onFieldSubmitted: (value) => save(),
-              ),
-              TextFormField(
-                controller: TextEditingController(
-                  text:
-                      "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
-                ),
-                decoration: const InputDecoration(labelText: 'Last weight'),
-                enabled: false,
-              ),
-              const SizedBox(height: 8.0),
-              ListTile(
-                title: Text("Unit ($unit)"),
-                leading: unit == 'kg'
-                    ? const Icon(Icons.straighten)
-                    : const Icon(Icons.square_foot),
-                onTap: () => setState(() {
-                  unit = unit == 'kg' ? 'lb' : 'kg';
-                  convertTo = unit;
-                }),
-                trailing: Switch(
-                  value: unit == 'kg',
-                  onChanged: (value) => setState(() {
-                    if (value)
-                      unit = 'kg';
-                    else
-                      unit = 'lb';
-                    convertTo = unit;
-                  }),
-                ),
-              ),
-              ListTile(
-                title: convertTo == unit
-                    ? Text("Keep unit as $unit")
-                    : Text("Convert to $convertTo"),
-                leading: const Icon(Icons.conveyor_belt),
-                onTap: () {
-                  setState(() {
-                    convertTo = convertTo == 'kg' ? 'lb' : 'kg';
-                  });
-                  db.settings.update().write(
-                        SettingsCompanion(
-                          convertWeight: Value(convertTo),
-                        ),
-                      );
-                },
-                trailing: Switch(
-                  value: convertTo == 'kg',
-                  onChanged: (value) {
-                    setState(() {
-                      if (value)
-                        convertTo = 'kg';
-                      else
-                        convertTo = 'lb';
-                    });
-
-                    db.settings.update().write(
-                          SettingsCompanion(
-                            convertWeight: Value(convertTo),
-                          ),
-                        );
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Created Date'),
-                subtitle: Selector<SettingsState, String>(
-                  selector: (p0, settings) => settings.value.longDateFormat,
-                  builder: (context, longDateFormat, child) =>
-                      Text(DateFormat(longDateFormat).format(created)),
-                ),
-                trailing: const Icon(Icons.calendar_today),
-                onTap: () => _selectDate(),
-              ),
-              if (image?.isNotEmpty == true && settings.showImages)
-                SizedBox(
-                  height: 200,
-                  child: Image.file(
-                    File(image!),
-                    errorBuilder: (context, error, stackTrace) =>
-                        TextButton.icon(
-                      onPressed: () {},
-                      label: const Text('Image error'),
-                      icon: const Icon(Icons.error),
-                    ),
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.weight.id.present ? "Edit weight" : "Add weight",
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-              if (settings.showImages) ...[
-                const SizedBox(height: 8),
-                TextButton.icon(
-                  icon: const Icon(Icons.image),
-                  label: const Text('Set image'),
-                  onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.pickFiles(type: FileType.image);
-                    final path = result?.files.single.path;
-                    if (path == null) return;
-                    setState(() {
-                      image = path;
-                    });
+                IconButton(
+                  icon: const Icon(Icons.share),
+                  onPressed: () {
+                    SharePlus.instance.share(
+                      ShareParams(
+                        text: "I just weighed ${valueController.text} $unit!",
+                      ),
+                    );
                   },
                 ),
               ],
-              if (image != null && settings.showImages)
-                TextButton.icon(
-                  icon: const Icon(Icons.delete),
-                  label: const Text("Remove image"),
-                  onPressed: () => setState(() {
-                    image = null;
-                  }),
-                ),
-            ],
-          ),
+            ),
+            Form(
+              child: ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  TextFormField(
+                    controller: valueController,
+                    focusNode: _valueFocusNode,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    decoration: InputDecoration(labelText: 'Weight ($unit)'),
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter weight' : null,
+                    onTap: () => selectAll(valueController),
+                    onFieldSubmitted: (value) => save(),
+                  ),
+                  TextFormField(
+                    controller: TextEditingController(
+                      text:
+                          "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
+                    ),
+                    decoration: const InputDecoration(labelText: 'Last weight'),
+                    enabled: false,
+                  ),
+                  const SizedBox(height: 8.0),
+                  ListTile(
+                    title: Text("Unit ($unit)"),
+                    leading: unit == 'kg'
+                        ? const Icon(Icons.straighten)
+                        : const Icon(Icons.square_foot),
+                    onTap: () => setState(() {
+                      unit = unit == 'kg' ? 'lb' : 'kg';
+                      convertTo = unit;
+                    }),
+                    trailing: Switch(
+                      value: unit == 'kg',
+                      onChanged: (value) => setState(() {
+                        if (value)
+                          unit = 'kg';
+                        else
+                          unit = 'lb';
+                        convertTo = unit;
+                      }),
+                    ),
+                  ),
+                  ListTile(
+                    title: convertTo == unit
+                        ? Text("Keep unit as $unit")
+                        : Text("Convert to $convertTo"),
+                    leading: const Icon(Icons.conveyor_belt),
+                    onTap: () {
+                      setState(() {
+                        convertTo = convertTo == 'kg' ? 'lb' : 'kg';
+                      });
+                      db.settings.update().write(
+                            SettingsCompanion(
+                              convertWeight: drift.Value(convertTo),
+                            ),
+                          );
+                    },
+                    trailing: Switch(
+                      value: convertTo == 'kg',
+                      onChanged: (value) {
+                        setState(() {
+                          if (value)
+                            convertTo = 'kg';
+                          else
+                            convertTo = 'lb';
+                        });
+
+                        db.settings.update().write(
+                              SettingsCompanion(
+                                convertWeight: drift.Value(convertTo),
+                              ),
+                            );
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Created Date'),
+                    subtitle: Selector<SettingsState, String>(
+                      selector: (p0, settings) => settings.value.longDateFormat,
+                      builder: (context, longDateFormat, child) =>
+                          Text(DateFormat(longDateFormat).format(created)),
+                    ),
+                    trailing: const Icon(Icons.calendar_today),
+                    onTap: () => _selectDate(),
+                  ),
+                  if (image?.isNotEmpty == true && settings.showImages)
+                    SizedBox(
+                      height: 200,
+                      child: Image.file(
+                        File(image!),
+                        errorBuilder: (context, error, stackTrace) =>
+                            TextButton.icon(
+                          onPressed: () {},
+                          label: const Text('Image error'),
+                          icon: const Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                  if (settings.showImages) ...[
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      icon: const Icon(Icons.image),
+                      label: const Text('Set image'),
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.pickFiles(type: FileType.image);
+                        final path = result?.files.single.path;
+                        if (path == null) return;
+                        setState(() {
+                          image = path;
+                        });
+                      },
+                    ),
+                  ],
+                  if (image != null && settings.showImages)
+                    TextButton.icon(
+                      icon: const Icon(Icons.delete),
+                      label: const Text("Remove image"),
+                      onPressed: () => setState(() {
+                        image = null;
+                      }),
+                    ),
+                  const SizedBox(height: 8),
+                  FilledButton.icon(
+                    onPressed: save,
+                    icon: const Icon(Icons.save),
+                    label: const Text("Save"),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: AnimatedFab(
-        onTap: save,
-        label: "Save",
-        icon: Icons.save,
-        scroll: ScrollController(),
       ),
     );
   }
