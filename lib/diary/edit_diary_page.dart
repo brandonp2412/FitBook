@@ -515,11 +515,10 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   void setImage() async {
-    FilePickerResult? result = await FilePicker.pickFiles(
+    final file = await FilePicker.pickFile(
       type: FileType.image,
-      allowMultiple: false,
     );
-    final path = result?.files.single.path;
+    final path = file?.path;
     if (path == null) return;
     setState(() {
       imageFile = path;

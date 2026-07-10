@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:csv/csv.dart' show ListToCsvConverter;
+import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
@@ -63,8 +63,8 @@ class _ExportDataState extends State<ExportData> {
                           entry.unit,
                         ]);
                       }
-                      const codec = ListToCsvConverter(eol: '\n');
-                      final csv = codec.convert(csvData);
+                      final codec = Csv(lineDelimiter: '\n');
+                      final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
                       await FilePicker.saveFile(
                         fileName: 'diary.csv',
@@ -220,8 +220,8 @@ class _ExportDataState extends State<ExportData> {
                         ]);
                       }
 
-                      const codec = ListToCsvConverter(eol: '\n');
-                      final csv = codec.convert(csvData);
+                      final codec = Csv(lineDelimiter: '\n');
+                      final csv = codec.encode(csvData);
                       final bytes = Uint8List.fromList(csv.codeUnits);
                       await FilePicker.saveFile(
                         fileName: 'foods.csv',

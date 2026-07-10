@@ -8919,7 +8919,7 @@ final class $$FoodsTableReferences
   static MultiTypedResultKey<$DiariesTable, List<Diary>> _diariesRefsTable(
           _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.diaries,
-          aliasName: $_aliasNameGenerator(db.foods.id, db.diaries.food));
+          aliasName: 'foods__id__diaries__food');
 
   $$DiariesTableProcessedTableManager get diariesRefs {
     final manager = $$DiariesTableTableManager($_db, $_db.diaries)
@@ -8933,7 +8933,7 @@ final class $$FoodsTableReferences
   static MultiTypedResultKey<$MealFoodsTable, List<MealFood>>
       _mealFoodsRefsTable(_$AppDatabase db) =>
           MultiTypedResultKey.fromTable(db.mealFoods,
-              aliasName: $_aliasNameGenerator(db.foods.id, db.mealFoods.food));
+              aliasName: 'foods__id__meal_foods__food');
 
   $$MealFoodsTableProcessedTableManager get mealFoodsRefs {
     final manager = $$MealFoodsTableTableManager($_db, $_db.mealFoods)
@@ -10905,7 +10905,7 @@ final class $$MealsTableReferences
   static MultiTypedResultKey<$DiariesTable, List<Diary>> _diariesRefsTable(
           _$AppDatabase db) =>
       MultiTypedResultKey.fromTable(db.diaries,
-          aliasName: $_aliasNameGenerator(db.meals.id, db.diaries.meal));
+          aliasName: 'meals__id__diaries__meal');
 
   $$DiariesTableProcessedTableManager get diariesRefs {
     final manager = $$DiariesTableTableManager($_db, $_db.diaries)
@@ -10919,7 +10919,7 @@ final class $$MealsTableReferences
   static MultiTypedResultKey<$MealFoodsTable, List<MealFood>>
       _mealFoodsRefsTable(_$AppDatabase db) =>
           MultiTypedResultKey.fromTable(db.mealFoods,
-              aliasName: $_aliasNameGenerator(db.meals.id, db.mealFoods.meal));
+              aliasName: 'meals__id__meal_foods__meal');
 
   $$MealFoodsTableProcessedTableManager get mealFoodsRefs {
     final manager = $$MealFoodsTableTableManager($_db, $_db.mealFoods)
@@ -11217,7 +11217,7 @@ final class $$DiariesTableReferences
   $$DiariesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $FoodsTable _foodTable(_$AppDatabase db) =>
-      db.foods.createAlias($_aliasNameGenerator(db.diaries.food, db.foods.id));
+      db.foods.createAlias('diaries__food__foods__id');
 
   $$FoodsTableProcessedTableManager? get food {
     final $_column = $_itemColumn<int>('food');
@@ -11231,7 +11231,7 @@ final class $$DiariesTableReferences
   }
 
   static $MealsTable _mealTable(_$AppDatabase db) =>
-      db.meals.createAlias($_aliasNameGenerator(db.diaries.meal, db.meals.id));
+      db.meals.createAlias('diaries__meal__meals__id');
 
   $$MealsTableProcessedTableManager? get meal {
     final $_column = $_itemColumn<int>('meal');
@@ -12462,8 +12462,8 @@ final class $$MealFoodsTableReferences
     extends BaseReferences<_$AppDatabase, $MealFoodsTable, MealFood> {
   $$MealFoodsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $MealsTable _mealTable(_$AppDatabase db) => db.meals
-      .createAlias($_aliasNameGenerator(db.mealFoods.meal, db.meals.id));
+  static $MealsTable _mealTable(_$AppDatabase db) =>
+      db.meals.createAlias('meal_foods__meal__meals__id');
 
   $$MealsTableProcessedTableManager get meal {
     final $_column = $_itemColumn<int>('meal')!;
@@ -12476,8 +12476,8 @@ final class $$MealFoodsTableReferences
         manager.$state.copyWith(prefetchedData: [item]));
   }
 
-  static $FoodsTable _foodTable(_$AppDatabase db) => db.foods
-      .createAlias($_aliasNameGenerator(db.mealFoods.food, db.foods.id));
+  static $FoodsTable _foodTable(_$AppDatabase db) =>
+      db.foods.createAlias('meal_foods__food__foods__id');
 
   $$FoodsTableProcessedTableManager get food {
     final $_column = $_itemColumn<int>('food')!;
