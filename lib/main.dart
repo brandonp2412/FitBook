@@ -230,26 +230,35 @@ class _HomePageState extends State<HomePage> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: SafeArea(
-        child: PageView(
-          controller: _pageController,
-          physics: scrollableTabs
-              ? const AlwaysScrollableScrollPhysics()
-              : const NeverScrollableScrollPhysics(),
-          onPageChanged: (i) => setState(() => _currentIndex = i),
-          children: tabs.map(_buildTabPage).toList(),
+        child: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              physics: scrollableTabs
+                  ? const AlwaysScrollableScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+              onPageChanged: (i) => setState(() => _currentIndex = i),
+              children: tabs.map(_buildTabPage).toList(),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomNav(
+                tabs: tabs,
+                currentIndex: _currentIndex,
+                onTap: (i) {
+                  _pageController.animateToPage(
+                    i,
+                    duration: const Duration(milliseconds: 350),
+                    curve: Curves.easeOutCubic,
+                  );
+                  setState(() => _currentIndex = i);
+                },
+              ),
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: BottomNav(
-        tabs: tabs,
-        currentIndex: _currentIndex,
-        onTap: (i) {
-          _pageController.animateToPage(
-            i,
-            duration: const Duration(milliseconds: 350),
-            curve: Curves.easeOutCubic,
-          );
-          setState(() => _currentIndex = i);
-        },
       ),
     );
   }
