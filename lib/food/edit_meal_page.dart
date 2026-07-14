@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -139,6 +140,7 @@ class _EditMealPageState extends State<EditMealPage> {
   Future<void> _pickFood() async {
     await showModalBottomSheet(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       showDragHandle: true,
       builder: (ctx) => _FoodPickerSheet(
@@ -319,23 +321,29 @@ class _EditMealPageState extends State<EditMealPage> {
                 );
               },
             ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.small(
-            heroTag: 'addFood',
-            tooltip: 'Add food',
-            onPressed: _pickFood,
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 8),
-          AnimatedFab(
-            onTap: _save,
-            label: 'Save',
-            icon: Icons.save,
-            scroll: scrollCtrl,
-          ),
-        ],
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton.small(
+              heroTag: 'addFood',
+              tooltip: 'Add food',
+              onPressed: _pickFood,
+              child: const Icon(Icons.add),
+            ),
+            const SizedBox(height: 8),
+            AnimatedFab(
+              onTap: _save,
+              label: 'Save',
+              icon: Icons.save,
+              scroll: scrollCtrl,
+            ),
+          ],
+        ),
       ),
     );
   }

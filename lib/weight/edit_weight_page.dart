@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:drift/drift.dart' as drift;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -111,6 +112,7 @@ Future<void> showQuickAddWeight(
 ) async {
   final result = await showModalBottomSheet<({String value, bool expand})>(
     context: context,
+    useRootNavigator: true,
     isScrollControlled: true,
     showDragHandle: true,
     builder: (context) => QuickAddWeight(weight: weight),
@@ -448,11 +450,17 @@ class _EditWeightPageState extends State<EditWeightPage> {
           ),
         ),
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: save,
-        label: "Save",
-        icon: Icons.save,
-        scroll: ScrollController(),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: AnimatedFab(
+          onTap: save,
+          label: "Save",
+          icon: Icons.save,
+          scroll: ScrollController(),
+        ),
       ),
     );
   }

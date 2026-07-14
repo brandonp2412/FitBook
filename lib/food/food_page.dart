@@ -9,6 +9,7 @@ import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -395,41 +396,48 @@ GROUP BY meal_foods.meal
           );
         },
       ),
-      floatingActionButton: material.Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.small(
-            heroTag: 'addMeal',
-            tooltip: 'Add meal',
-            onPressed: () {
-              navKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (context) => const EditMealPage(),
-                ),
-              );
-            },
-            child: const Icon(Icons.restaurant),
-          ),
-          const SizedBox(height: 8),
-          AnimatedFab(
-            onTap: () async {
-              navKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (context) => EditFoodPage(
-                    onSavedNew: () => scrollCtrl.animateTo(
-                      0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: material.Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton.small(
+              heroTag: 'addMeal',
+              tooltip: 'Add meal',
+              onPressed: () {
+                navKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const EditMealPage(),
+                  ),
+                );
+              },
+              child: const Icon(Icons.restaurant),
+            ),
+            const SizedBox(height: 8),
+            AnimatedFab(
+              onTap: () async {
+                navKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => EditFoodPage(
+                      onSavedNew: () => scrollCtrl.animateTo(
+                        0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-            label: 'Add',
-            icon: Icons.add,
-            scroll: scrollCtrl,
-          ),
-        ],
+                );
+              },
+              label: 'Add',
+              icon: Icons.add,
+              scroll: scrollCtrl,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -244,11 +245,17 @@ class _QuickAddPageState extends State<QuickAddPage> {
           ),
         ],
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: save,
-        label: 'Save',
-        icon: Icons.save,
-        scroll: ScrollController(),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: AnimatedFab(
+          onTap: save,
+          label: 'Save',
+          icon: Icons.save,
+          scroll: ScrollController(),
+        ),
       ),
     );
   }

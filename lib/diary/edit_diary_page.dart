@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Table;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -1084,11 +1085,17 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         ),
       ),
       floatingActionButton: (selectedFood != null || _selectedMealId != null)
-          ? AnimatedFab(
-              onTap: save,
-              label: 'Save',
-              icon: Icons.save,
-              scroll: scrollCtrl,
+          ? Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.paddingOf(context).bottom +
+                    BottomNav.totalOverlayHeight,
+              ),
+              child: AnimatedFab(
+                onTap: save,
+                label: 'Save',
+                icon: Icons.save,
+                scroll: scrollCtrl,
+              ),
             )
           : null,
     );

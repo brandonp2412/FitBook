@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/main.dart';
@@ -525,26 +526,32 @@ class _EditFoodPageState extends State<EditFoodPage> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.id != null) ...[
-            FloatingActionButton.small(
-              heroTag: 'saveAs',
-              tooltip: 'Save as new copy',
-              onPressed: saveAs,
-              child: const Icon(Icons.save_as),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.id != null) ...[
+              FloatingActionButton.small(
+                heroTag: 'saveAs',
+                tooltip: 'Save as new copy',
+                onPressed: saveAs,
+                child: const Icon(Icons.save_as),
+              ),
+              const SizedBox(height: 8),
+            ],
+            AnimatedFab(
+              onTap: save,
+              label: 'Save',
+              icon: Icons.save,
+              scroll: scrollCtrl,
             ),
-            const SizedBox(height: 8),
           ],
-          AnimatedFab(
-            onTap: save,
-            label: 'Save',
-            icon: Icons.save,
-            scroll: scrollCtrl,
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
@@ -138,11 +139,17 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
           ],
         ),
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: () => save(),
-        icon: Icons.save,
-        label: 'Save',
-        scroll: scrollCtrl,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: AnimatedFab(
+          onTap: () => save(),
+          icon: Icons.save,
+          label: 'Save',
+          scroll: scrollCtrl,
+        ),
       ),
     );
   }

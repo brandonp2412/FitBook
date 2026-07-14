@@ -5,6 +5,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
@@ -168,31 +169,37 @@ class WeightPageState extends State<WeightPage>
           );
         },
       ),
-      floatingActionButton: StreamBuilder(
-        stream: stream,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) throw Exception(snapshot.error);
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: StreamBuilder(
+          stream: stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) throw Exception(snapshot.error);
 
-          return AnimatedFab(
-            onTap: () async {
-              var weight = WeightsCompanion.insert(
-                amount: 0.0,
-                created: DateTime.now(),
-                unit: 'kg',
-              );
-              if (snapshot.data?.firstOrNull != null)
-                weight = weight.copyWith(
-                  amount: Value(snapshot.data!.firstOrNull!.amount),
-                  unit: Value(snapshot.data!.firstOrNull!.unit),
+            return AnimatedFab(
+              onTap: () async {
+                var weight = WeightsCompanion.insert(
+                  amount: 0.0,
+                  created: DateTime.now(),
+                  unit: 'kg',
                 );
+                if (snapshot.data?.firstOrNull != null)
+                  weight = weight.copyWith(
+                    amount: Value(snapshot.data!.firstOrNull!.amount),
+                    unit: Value(snapshot.data!.firstOrNull!.unit),
+                  );
 
-              showQuickAddWeight(context, weight);
-            },
-            label: 'Add',
-            icon: Icons.add,
-            scroll: scrollCtrl,
-          );
-        },
+                showQuickAddWeight(context, weight);
+              },
+              label: 'Add',
+              icon: Icons.add,
+              scroll: scrollCtrl,
+            );
+          },
+        ),
       ),
     );
   }

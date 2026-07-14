@@ -165,8 +165,7 @@ class _AppSearchState extends State<AppSearch> {
                               title: const Text('Settings'),
                               onTap: () {
                                 Navigator.pop(context);
-                                Navigator.push(
-                                  context,
+                                Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                     builder: (context) => const SettingsPage(),
                                   ),

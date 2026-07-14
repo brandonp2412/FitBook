@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -472,11 +473,17 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
           ],
         ),
       ),
-      floatingActionButton: AnimatedFab(
-        onTap: () => _save(),
-        icon: Icons.save,
-        label: 'Save',
-        scroll: scrollCtrl,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: AnimatedFab(
+          onTap: () => _save(),
+          icon: Icons.save,
+          label: 'Save',
+          scroll: scrollCtrl,
+        ),
       ),
     );
   }

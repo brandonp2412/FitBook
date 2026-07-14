@@ -152,6 +152,7 @@ class GraphPageState extends State<GraphPage>
 
     showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
       showDragHandle: true,
       isScrollControlled: true,
       builder: (sheetContext) {

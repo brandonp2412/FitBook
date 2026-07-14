@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatelessWidget {
+  static const double totalOverlayHeight = 60 +
+      16; // container height + top padding + bottom padding (excl. system inset)
+
   final List<String> tabs;
   final int currentIndex;
   final Function(int) onTap;

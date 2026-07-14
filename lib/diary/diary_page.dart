@@ -9,6 +9,7 @@ import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -165,35 +166,42 @@ class DiaryPageState extends State<DiaryPage> {
           );
         },
       ),
-      floatingActionButton: material.Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.small(
-            heroTag: 'quickAdd',
-            tooltip: 'Quick-add',
-            onPressed: () {
-              navigatorKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (context) => const QuickAddPage(),
-                ),
-              );
-            },
-            child: const Icon(Icons.electric_bolt),
-          ),
-          const SizedBox(height: 8),
-          AnimatedFab(
-            onTap: () async {
-              navigatorKey.currentState!.push(
-                MaterialPageRoute(
-                  builder: (context) => const EditDiaryPage(),
-                ),
-              );
-            },
-            label: 'Add',
-            icon: Icons.add,
-            scroll: scrollCtrl,
-          ),
-        ],
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
+        child: material.Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton.small(
+              heroTag: 'quickAdd',
+              tooltip: 'Quick-add',
+              onPressed: () {
+                navigatorKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const QuickAddPage(),
+                  ),
+                );
+              },
+              child: const Icon(Icons.electric_bolt),
+            ),
+            const SizedBox(height: 8),
+            AnimatedFab(
+              onTap: () async {
+                navigatorKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const EditDiaryPage(),
+                  ),
+                );
+              },
+              label: 'Add',
+              icon: Icons.add,
+              scroll: scrollCtrl,
+            ),
+          ],
+        ),
       ),
     );
   }
