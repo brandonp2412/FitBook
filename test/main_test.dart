@@ -26,9 +26,9 @@ void main() async {
 
     expect(find.text('No entries today.'), findsOne);
     expect(find.text('Diary'), findsOne);
-    expect(find.text('Graph'), findsOne);
-    expect(find.text('Food'), findsOne);
-    expect(find.text('Weight'), findsOne);
+    expect(find.bySemanticsLabel('Graph'), findsOne);
+    expect(find.bySemanticsLabel('Food'), findsOne);
+    expect(find.bySemanticsLabel('Weight'), findsOne);
 
     await tester.tap(find.byTooltip('Show menu'));
     await tester.pumpAndSettle();

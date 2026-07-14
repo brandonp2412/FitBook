@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/failed_migrations_page.dart';
 import 'package:fit_book/diary/diary_page.dart';
@@ -157,6 +158,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _pageController = PageController();
+  var _currentIndex = 0;
+
   Widget _buildTabPage(String tab) {
     switch (tab) {
       case 'DiaryPage':
@@ -170,16 +174,6 @@ class _HomePageState extends State<HomePage> {
       default:
         return ErrorWidget('Invalid tab settings.');
     }
-  }
-
-  Tab _buildTabWidget(String tab) {
-    return switch (tab) {
-      'DiaryPage' => const Tab(icon: Icon(Icons.date_range), text: "Diary"),
-      'GraphPage' => const Tab(icon: Icon(Icons.insights), text: "Graph"),
-      'FoodPage' => const Tab(icon: Icon(Icons.restaurant), text: "Food"),
-      'WeightPage' => const Tab(icon: Icon(Icons.scale), text: "Weight"),
-      _ => const Tab(icon: Icon(Icons.error), text: "Error"),
-    };
   }
 
   @override
@@ -218,6 +212,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final tabsSetting = context
         .select<SettingsState, String>((settings) => settings.value.tabs);
@@ -226,29 +226,30 @@ class _HomePageState extends State<HomePage> {
       (settings) => settings.value.scrollableTabs,
     );
 
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: SafeArea(
-          child: TabBarView(
-            physics: scrollableTabs
-                ? const AlwaysScrollableScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            children: tabs.map(_buildTabPage).toList(),
-          ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          physics: scrollableTabs
+              ? const AlwaysScrollableScrollPhysics()
+              : const NeverScrollableScrollPhysics(),
+          onPageChanged: (i) => setState(() => _currentIndex = i),
+          children: tabs.map(_buildTabPage).toList(),
         ),
-        bottomNavigationBar: Material(
-          color: Theme.of(context).colorScheme.surface,
-          child: SafeArea(
-            top: false,
-            child: TabBar(
-              dividerColor: Colors.transparent,
-              tabs: tabs.map(_buildTabWidget).toList(),
-            ),
-          ),
-        ),
+      ),
+      bottomNavigationBar: BottomNav(
+        tabs: tabs,
+        currentIndex: _currentIndex,
+        onTap: (i) {
+          _pageController.animateToPage(
+            i,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOutCubic,
+          );
+          setState(() => _currentIndex = i);
+        },
       ),
     );
   }
