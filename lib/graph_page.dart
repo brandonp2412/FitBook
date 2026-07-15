@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/app_line.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/settings.dart';
@@ -63,7 +64,12 @@ class GraphPageState extends State<GraphPage>
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+        padding: EdgeInsets.fromLTRB(
+          16,
+          12,
+          16,
+          MediaQuery.paddingOf(context).bottom + BottomNav.totalOverlayHeight,
+        ),
         child: material.Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fit_book/app_search.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -69,7 +70,11 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
     if (settings.compactWeights) {
       return Expanded(
         child: ListView.builder(
-          padding: const EdgeInsets.only(top: appSearchHeight + 8),
+          padding: EdgeInsets.only(
+            top: appSearchHeight + 8,
+            bottom: MediaQuery.paddingOf(context).bottom +
+                BottomNav.totalOverlayHeight,
+          ),
           controller: widget.ctrl,
           itemCount: widget.weights.length,
           itemBuilder: (context, index) {
@@ -146,11 +151,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
     } else {
       return Expanded(
         child: GridView.builder(
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: appSearchHeight + 12,
             left: 12,
             right: 12,
-            bottom: 12,
+            bottom: MediaQuery.paddingOf(context).bottom +
+                BottomNav.totalOverlayHeight,
           ),
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
