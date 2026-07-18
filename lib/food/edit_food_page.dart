@@ -15,6 +15,7 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -241,9 +242,36 @@ class _EditFoodPageState extends State<EditFoodPage> {
     FilePickerResult? result = await FilePicker.pickFiles(type: FileType.image);
     final path = result?.files.single.path;
     if (path == null) return;
+    final docsDir = (await getApplicationDocumentsDirectory()).path;
+    final fileName = 'food_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final destPath = '$docsDir/$fileName';
+    await File(path).copy(destPath);
     setState(() {
-      imgFile = path;
+      imgFile = destPath;
     });
+  }
+
+  Widget _per100gChip(ThemeData theme, String label, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: theme.colorScheme.primary),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -437,6 +465,74 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ),
             ],
             const SizedBox(height: 16),
+            Builder(
+              builder: (context) {
+                final size = double.tryParse(sizeCtrl.text) ?? 100;
+                if (size <= 0) return const SizedBox.shrink();
+                final cal = ((double.tryParse(calCtrl.text) ?? 0) * 100 / size)
+                    .toStringAsFixed(1);
+                final prot =
+                    ((double.tryParse(controllers['protein_g']?.text ?? '0') ??
+                                0) *
+                            100 /
+                            size)
+                        .toStringAsFixed(1);
+                final fat =
+                    ((double.tryParse(controllers['fat_g']?.text ?? '0') ?? 0) *
+                            100 /
+                            size)
+                        .toStringAsFixed(1);
+                final carb = ((double.tryParse(
+                                controllers['carbohydrate_g']?.text ?? '0') ??
+                            0) *
+                        100 /
+                        size)
+                    .toStringAsFixed(1);
+                final fiber =
+                    ((double.tryParse(controllers['fiber_g']?.text ?? '0') ??
+                                0) *
+                            100 /
+                            size)
+                        .toStringAsFixed(1);
+                final theme = Theme.of(context);
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surfaceContainerHigh,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: theme.colorScheme.outlineVariant),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Per 100g',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 4,
+                        children: [
+                          _per100gChip(
+                              theme, '$cal kcal', Icons.local_fire_department),
+                          _per100gChip(
+                              theme, '${prot}g protein', Icons.fitness_center),
+                          _per100gChip(theme, '${fat}g fat', Icons.water_drop),
+                          _per100gChip(theme, '${carb}g carbs', Icons.grain),
+                          _per100gChip(theme, '${fiber}g fiber', Icons.spa),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
             Wrap(
               alignment: WrapAlignment.center,
               children: [
@@ -455,12 +551,17 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     label: const Text('Set image'),
                     onPressed: setImage,
                   ),
-                if (settings.showImages && imgFile?.isNotEmpty == true)
+                if (settings.showImages &&
+                    (imgFile?.isNotEmpty == true ||
+                        smallImg?.isNotEmpty == true ||
+                        bigImg?.isNotEmpty == true))
                   TextButton.icon(
                     icon: const Icon(Icons.delete),
                     label: const Text("Remove image"),
                     onPressed: () => setState(() {
                       imgFile = null;
+                      smallImg = null;
+                      bigImg = null;
                     }),
                   ),
                 TextButton.icon(

@@ -12,6 +12,7 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -302,6 +303,19 @@ class _EditWeightPageState extends State<EditWeightPage> {
     );
   }
 
+  Future<void> _pickImage() async {
+    FilePickerResult? result = await FilePicker.pickFiles(type: FileType.image);
+    final path = result?.files.single.path;
+    if (path == null) return;
+    final docsDir = (await getApplicationDocumentsDirectory()).path;
+    final fileName = 'weight_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final destPath = '$docsDir/$fileName';
+    await File(path).copy(destPath);
+    setState(() {
+      image = destPath;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
@@ -427,15 +441,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 TextButton.icon(
                   icon: const Icon(Icons.image),
                   label: const Text('Set image'),
-                  onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.pickFiles(type: FileType.image);
-                    final path = result?.files.single.path;
-                    if (path == null) return;
-                    setState(() {
-                      image = path;
-                    });
-                  },
+                  onPressed: _pickImage,
                 ),
               ],
               if (image != null && settings.showImages)

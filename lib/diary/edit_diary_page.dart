@@ -14,6 +14,7 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -521,8 +522,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     );
     final path = file?.path;
     if (path == null) return;
+    final docsDir = (await getApplicationDocumentsDirectory()).path;
+    final fileName = 'diary_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final destPath = '$docsDir/$fileName';
+    await File(path).copy(destPath);
     setState(() {
-      imageFile = path;
+      imageFile = destPath;
       foodDirty = true;
     });
   }

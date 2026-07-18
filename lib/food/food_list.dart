@@ -131,21 +131,33 @@ class _FoodListState extends State<FoodList> {
                   : null,
               leading: image,
               title: Text(food.name.value),
-              subtitle: Row(
-                children: [
-                  Text(
-                    "${formatter.format(food.calories.value ?? 0)} kcal",
-                  ),
-                  if (food.favorite.value == true) ...[
-                    const SizedBox(width: 6),
-                    Icon(
-                      Icons.favorite,
-                      size: 12,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+              subtitle: () {
+                final cal = food.calories.value ?? 0;
+                final size = food.servingSize.value ?? 100;
+                final calPer100g = size > 0 ? cal * 100 / size : cal;
+                return Row(
+                  children: [
+                    Text("${formatter.format(cal)} kcal"),
+                    if ((size - 100).abs() > 0.5)
+                      Text(
+                        " · ${formatter.format(calPer100g)}/100g",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                      ),
+                    if (food.favorite.value == true) ...[
+                      const SizedBox(width: 6),
+                      Icon(
+                        Icons.favorite,
+                        size: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ],
                   ],
-                ],
-              ),
+                );
+              }(),
               trailing: Stack(
                 children: [
                   AnimatedScale(

@@ -11,6 +11,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 class EditMealPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MealFoodEntry {
   final int foodId;
   final String foodName;
   final double? calories;
+  final double? protein;
   final double servingSize;
   final TextEditingController quantityCtrl;
   String unit;
@@ -34,6 +36,7 @@ class _MealFoodEntry {
     required this.foodId,
     required this.foodName,
     this.calories,
+    this.protein,
     double? servingSize,
     required double quantity,
     required this.unit,
@@ -87,6 +90,7 @@ class _EditMealPageState extends State<EditMealPage> {
           foodId: mf.food,
           foodName: food.name,
           calories: food.calories,
+          protein: food.proteinG,
           servingSize: food.servingSize,
           quantity: mf.quantity,
           unit: mf.unit,
@@ -134,7 +138,13 @@ class _EditMealPageState extends State<EditMealPage> {
   Future<void> _pickImage() async {
     final result = await FilePicker.pickFiles(type: FileType.image);
     if (result == null) return;
-    setState(() => _imageFile = result.files.single.path);
+    final path = result.files.single.path;
+    if (path == null) return;
+    final docsDir = (await getApplicationDocumentsDirectory()).path;
+    final fileName = 'meal_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final destPath = '$docsDir/$fileName';
+    await File(path).copy(destPath);
+    setState(() => _imageFile = destPath);
   }
 
   Future<void> _pickFood() async {
@@ -153,6 +163,7 @@ class _EditMealPageState extends State<EditMealPage> {
                 foodId: food.id,
                 foodName: food.name,
                 calories: food.calories,
+                protein: food.proteinG,
                 servingSize: food.servingSize,
                 quantity: 1,
                 unit: 'serving',
@@ -181,13 +192,34 @@ class _EditMealPageState extends State<EditMealPage> {
     return (e.calories ?? 0) * qtyInGrams / e.servingSize;
   }
 
+  double _entryProtein(_MealFoodEntry e) {
+    final qty = double.tryParse(e.quantityCtrl.text) ?? 1;
+    final qtyInGrams = switch (e.unit) {
+      'serving' => qty * e.servingSize,
+      'grams' || 'milliliters' => qty,
+      'milligrams' => qty / 1000.0,
+      'ounces' => qty * 28.35,
+      'pounds' => qty * 453.592,
+      'cups' => qty * 250.0,
+      'tablespoons' => qty * 15.0,
+      'teaspoons' => qty * 5.0,
+      'liters' => qty * 1000.0,
+      _ => qty,
+    };
+    return (e.protein ?? 0) * qtyInGrams / e.servingSize;
+  }
+
   double get _totalCalories =>
       mealFoods.fold(0, (sum, e) => sum + _entryCalories(e));
+
+  double get _totalProtein =>
+      mealFoods.fold(0, (sum, e) => sum + _entryProtein(e));
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final totalCal = _totalCalories;
+    final totalProt = _totalProtein;
 
     return Scaffold(
       appBar: AppBar(
@@ -197,33 +229,67 @@ class _EditMealPageState extends State<EditMealPage> {
                 preferredSize: const Size.fromHeight(40),
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.local_fire_department,
-                          size: 16,
-                          color: theme.colorScheme.onPrimaryContainer,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 6,
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${totalCal.toStringAsFixed(0)} kcal total',
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.onPrimaryContainer,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.local_fire_department,
+                              size: 16,
+                              color: theme.colorScheme.onPrimaryContainer,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '${totalCal.toStringAsFixed(0)} kcal',
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: theme.colorScheme.onPrimaryContainer,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.tertiaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.fitness_center,
+                              size: 16,
+                              color: theme.colorScheme.onTertiaryContainer,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '${totalProt.toStringAsFixed(0)}g protein',
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: theme.colorScheme.onTertiaryContainer,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -378,6 +444,7 @@ class _FoodEntryCard extends StatelessWidget {
       _ => qty,
     };
     final cal = (entry.calories ?? 0) * qtyInGrams / entry.servingSize;
+    final prot = (entry.protein ?? 0) * qtyInGrams / entry.servingSize;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -500,22 +567,38 @@ class _FoodEntryCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    '${cal.toStringAsFixed(0)} kcal',
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: colorScheme.primary,
-                      fontWeight: FontWeight.w600,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '${cal.toStringAsFixed(0)} kcal',
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                  ),
+                    if ((entry.protein ?? 0) > 0)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4, left: 4),
+                        child: Text(
+                          '${prot.toStringAsFixed(1)}g protein',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: colorScheme.tertiary,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
