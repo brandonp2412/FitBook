@@ -1086,6 +1086,10 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 ),
               ],
             ],
+            SizedBox(
+              height: MediaQuery.paddingOf(context).bottom +
+                  BottomNav.totalOverlayHeight,
+            ),
           ],
         ),
       ),

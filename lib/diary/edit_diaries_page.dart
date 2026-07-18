@@ -470,6 +470,10 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
               trailing: const Icon(Icons.calendar_today),
               onTap: () => pickDate(),
             ),
+            SizedBox(
+              height: MediaQuery.paddingOf(context).bottom +
+                  BottomNav.totalOverlayHeight,
+            ),
           ],
         ),
       ),

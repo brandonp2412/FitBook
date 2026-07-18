@@ -1,6 +1,7 @@
 import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -77,6 +78,10 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     if (cards)
       return Expanded(
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.paddingOf(context).bottom +
+                BottomNav.totalOverlayHeight,
+          ),
           child: Wrap(
             alignment: WrapAlignment.center,
             spacing: 8.0,
@@ -91,6 +96,10 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       );
     return Expanded(
       child: ListView.builder(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+        ),
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
@@ -222,10 +231,16 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       ),
       floatingActionButton: kIsWeb
           ? null
-          : FloatingActionButton.extended(
-              label: const Text("Scan barcode"),
-              onPressed: scan,
-              icon: const Icon(Icons.barcode_reader),
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.paddingOf(context).bottom +
+                    BottomNav.totalOverlayHeight,
+              ),
+              child: FloatingActionButton.extended(
+                label: const Text("Scan barcode"),
+                onPressed: scan,
+                icon: const Icon(Icons.barcode_reader),
+              ),
             ),
     );
   }

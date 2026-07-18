@@ -452,6 +452,10 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     image = null;
                   }),
                 ),
+              SizedBox(
+                height: MediaQuery.paddingOf(context).bottom +
+                    BottomNav.totalOverlayHeight,
+              ),
             ],
           ),
         ),

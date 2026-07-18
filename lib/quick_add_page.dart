@@ -243,6 +243,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
             trailing: const Icon(Icons.calendar_today),
             onTap: () => pickDate(),
           ),
+          SizedBox(
+            height: MediaQuery.paddingOf(context).bottom +
+                BottomNav.totalOverlayHeight,
+          ),
         ],
       ),
       floatingActionButton: Padding(

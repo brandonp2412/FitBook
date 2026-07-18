@@ -483,7 +483,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
                             size)
                         .toStringAsFixed(1);
                 final carb = ((double.tryParse(
-                                controllers['carbohydrate_g']?.text ?? '0') ??
+                              controllers['carbohydrate_g']?.text ?? '0',
+                            ) ??
                             0) *
                         100 /
                         size)
@@ -519,9 +520,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
                         runSpacing: 4,
                         children: [
                           _per100gChip(
-                              theme, '$cal kcal', Icons.local_fire_department),
+                            theme,
+                            '$cal kcal',
+                            Icons.local_fire_department,
+                          ),
                           _per100gChip(
-                              theme, '${prot}g protein', Icons.fitness_center),
+                            theme,
+                            '${prot}g protein',
+                            Icons.fitness_center,
+                          ),
                           _per100gChip(theme, '${fat}g fat', Icons.water_drop),
                           _per100gChip(theme, '${carb}g carbs', Icons.grain),
                           _per100gChip(theme, '${fiber}g fiber', Icons.spa),
@@ -623,6 +630,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       InputDecoration(labelText: sentenceCase(entry.key)),
                 );
               },
+            ),
+            SizedBox(
+              height: MediaQuery.paddingOf(context).bottom +
+                  BottomNav.totalOverlayHeight,
             ),
           ],
         ),

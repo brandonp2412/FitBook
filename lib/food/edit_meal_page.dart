@@ -299,7 +299,13 @@ class _EditMealPageState extends State<EditMealPage> {
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               controller: scrollCtrl,
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+              padding: EdgeInsets.fromLTRB(
+                16,
+                16,
+                16,
+                MediaQuery.paddingOf(context).bottom +
+                    BottomNav.totalOverlayHeight,
+              ),
               itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
               itemBuilder: (ctx, i) {
                 if (i == 0)

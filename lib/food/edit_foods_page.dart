@@ -136,6 +136,10 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
                 });
               },
             ),
+            SizedBox(
+              height: MediaQuery.paddingOf(context).bottom +
+                  BottomNav.totalOverlayHeight,
+            ),
           ],
         ),
       ),
