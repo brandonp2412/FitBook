@@ -11,6 +11,7 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+    apply plugin: 'kotlin-android'
 }
 subprojects {
     project.evaluationDependsOn(':app')
