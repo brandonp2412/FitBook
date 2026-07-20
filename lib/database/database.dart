@@ -78,29 +78,46 @@ class AppDatabase extends _$AppDatabase {
           }
 
           if (from < 50 && to >= 50) {
-            await m.database.customStatement(
-              'ALTER TABLE settings ADD COLUMN graphs_start_at_zero INTEGER NOT NULL DEFAULT 0',
-            );
+            // Some restored/dirty databases already carry this column from a
+            // partially-applied prior migration; ignore duplicate-column
+            // errors instead of crashing the whole upgrade.
+            await m.database
+                .customStatement(
+                  'ALTER TABLE settings ADD COLUMN graphs_start_at_zero INTEGER NOT NULL DEFAULT 0',
+                )
+                .catchError((_) {});
           }
 
           if (from < 49 && to >= 49) {
-            await m.database.customStatement('''
-              CREATE TABLE diaries_new (
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                food INTEGER REFERENCES foods(id),
-                meal INTEGER REFERENCES meals(id),
-                created INTEGER NOT NULL,
-                quantity REAL NOT NULL,
-                unit TEXT NOT NULL
-              )
-            ''');
-            await m.database.customStatement(
-              'INSERT INTO diaries_new SELECT id, food, NULL, created, quantity, unit FROM diaries',
+            final diariesColumns = await m.database
+                .customSelect("PRAGMA table_info('diaries')")
+                .get();
+            final alreadyMigrated = diariesColumns.any(
+              (row) => row.data['name'] == 'meal',
             );
-            await m.database.customStatement('DROP TABLE diaries');
-            await m.database.customStatement(
-              'ALTER TABLE diaries_new RENAME TO diaries',
-            );
+
+            if (!alreadyMigrated) {
+              await m.database.customStatement(
+                'DROP TABLE IF EXISTS diaries_new',
+              );
+              await m.database.customStatement('''
+                CREATE TABLE diaries_new (
+                  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                  food INTEGER REFERENCES foods(id),
+                  meal INTEGER REFERENCES meals(id),
+                  created INTEGER NOT NULL,
+                  quantity REAL NOT NULL,
+                  unit TEXT NOT NULL
+                )
+              ''');
+              await m.database.customStatement(
+                'INSERT INTO diaries_new SELECT id, food, NULL, created, quantity, unit FROM diaries',
+              );
+              await m.database.customStatement('DROP TABLE diaries');
+              await m.database.customStatement(
+                'ALTER TABLE diaries_new RENAME TO diaries',
+              );
+            }
           }
         });
 

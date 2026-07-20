@@ -35,7 +35,7 @@ class FoodList extends StatefulWidget {
   final ValueChanged<int>? onMealSelect;
   final VoidCallback onNext;
   final ScrollController ctrl;
-  final Map<int, double> mealCalories;
+  final Map<int, ({double calories, double protein})> mealCalories;
 
   /// Called after a new food is created (save-as or add-new), so the parent
   /// can scroll back to the top of the list.
@@ -267,11 +267,14 @@ class _FoodListState extends State<FoodList> {
             : null,
         leading: leading,
         title: Text(meal.name),
-        subtitle: Text(
-          widget.mealCalories.containsKey(meal.id)
-              ? '${formatter.format(widget.mealCalories[meal.id])} kcal'
-              : 'Meal',
-        ),
+        subtitle: () {
+          final totals = widget.mealCalories[meal.id];
+          if (totals == null) return const Text('Meal');
+          return Text(
+            '${formatter.format(totals.calories)} kcal'
+            '${totals.protein > 0 ? " · ${formatter.format(totals.protein)}g protein" : ""}',
+          );
+        }(),
         trailing: selected
             ? Checkbox(
                 value: true,

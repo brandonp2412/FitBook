@@ -24,7 +24,7 @@ class FoodPage extends StatefulWidget {
 class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   late Stream<List<TypedResult>> stream;
   late Stream<List<Meal>> mealStream;
-  late Stream<Map<int, double>> mealCaloriesStream;
+  late Stream<Map<int, ({double calories, double protein})>> mealCaloriesStream;
 
   final TextEditingController searchCtrl = TextEditingController();
   final groupCtrl = TextEditingController();
@@ -157,7 +157,24 @@ SUM(
   END
   * COALESCE(foods.calories, 0)
   / NULLIF(COALESCE(foods.serving_size, 100), 0)
-) AS total_cal
+) AS total_cal,
+SUM(
+  CASE
+    WHEN meal_foods.unit = 'serving'
+      THEN meal_foods.quantity * COALESCE(foods.serving_size, 100)
+    WHEN meal_foods.unit IN ('grams', 'milliliters') THEN meal_foods.quantity
+    WHEN meal_foods.unit = 'milligrams' THEN meal_foods.quantity / 1000.0
+    WHEN meal_foods.unit = 'ounces' THEN meal_foods.quantity * 28.35
+    WHEN meal_foods.unit = 'pounds' THEN meal_foods.quantity * 453.592
+    WHEN meal_foods.unit = 'cups' THEN meal_foods.quantity * 250.0
+    WHEN meal_foods.unit = 'tablespoons' THEN meal_foods.quantity * 15.0
+    WHEN meal_foods.unit = 'teaspoons' THEN meal_foods.quantity * 5.0
+    WHEN meal_foods.unit = 'liters' THEN meal_foods.quantity * 1000.0
+    ELSE meal_foods.quantity
+  END
+  * COALESCE(foods.protein_g, 0)
+  / NULLIF(COALESCE(foods.serving_size, 100), 0)
+) AS total_protein
 FROM meal_foods
 INNER JOIN foods ON foods.id = meal_foods.food
 GROUP BY meal_foods.meal
@@ -168,7 +185,10 @@ GROUP BY meal_foods.meal
           .map(
             (rows) => {
               for (final row in rows)
-                row.read<int>('meal'): row.read<double>('total_cal'),
+                row.read<int>('meal'): (
+                  calories: row.read<double>('total_cal'),
+                  protein: row.read<double>('total_protein'),
+                ),
             },
           );
     });
@@ -213,7 +233,7 @@ GROUP BY meal_foods.meal
 
   Scaffold _foodsPage() {
     return Scaffold(
-      body: StreamBuilder<Map<int, double>>(
+      body: StreamBuilder<Map<int, ({double calories, double protein})>>(
         stream: mealCaloriesStream,
         builder: (context, calSnapshot) {
           final mealCalories = calSnapshot.data ?? {};
