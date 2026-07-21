@@ -21,7 +21,7 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 ext {
-    compileSdkVersion = 33
-    targetSdkVersion = 33
+    compileSdkVersion = 36
+    targetSdkVersion = 36
     appCompatVersion = "1.4.2"
 }

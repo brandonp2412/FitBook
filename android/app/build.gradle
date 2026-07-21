@@ -105,6 +105,6 @@ flutter {
 
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.2.20"))
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
