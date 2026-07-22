@@ -277,10 +277,10 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: "84688491040b0ceb26575709a84d701c84ad4df4d8aff020adf6d85f155fb0dd"
+      sha256: "6cc0b623c0e83f7080524d8396e9301b1d78b9c66a4fdceeb0f798211303254c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.34.2"
+    version: "2.34.0"
   drift_dev:
     dependency: "direct dev"
     description:
