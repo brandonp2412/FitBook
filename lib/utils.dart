@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:drift/drift.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
@@ -98,6 +99,61 @@ bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
       date1.day == date2.day;
+}
+
+/// Groups per-row `(created, value)` entries into local-calendar-day buckets
+/// (matching the day grouping used by the Diary page), then rolls those days
+/// up into the requested [period]. Week/month/year buckets are averaged
+/// across the number of days within the bucket that have data, mirroring the
+/// previous SQL `SUM(...) / COUNT(DISTINCT day)` behavior. Returns at most
+/// [limit] of the most recent buckets, ordered oldest to newest.
+List<({DateTime created, double val})> bucketGraphData(
+  List<({DateTime created, double value})> entries,
+  Period period,
+  int limit,
+) {
+  DateTime dayKey(DateTime date) => DateTime(date.year, date.month, date.day);
+
+  final dayTotals = <DateTime, double>{};
+  for (final entry in entries) {
+    final key = dayKey(entry.created);
+    dayTotals[key] = (dayTotals[key] ?? 0.0) + entry.value;
+  }
+
+  DateTime periodKey(DateTime day) {
+    switch (period) {
+      case Period.week:
+        return day.subtract(Duration(days: day.weekday - 1));
+      case Period.month:
+        return DateTime(day.year, day.month);
+      case Period.year:
+        return DateTime(day.year);
+      case Period.day:
+        return day;
+    }
+  }
+
+  final periodSums = <DateTime, double>{};
+  final periodDayCounts = <DateTime, int>{};
+  for (final day in dayTotals.entries) {
+    final key = periodKey(day.key);
+    periodSums[key] = (periodSums[key] ?? 0.0) + day.value;
+    periodDayCounts[key] = (periodDayCounts[key] ?? 0) + 1;
+  }
+
+  final sortedKeys = periodSums.keys.toList()..sort();
+  final limitedKeys = sortedKeys.length > limit
+      ? sortedKeys.sublist(sortedKeys.length - limit)
+      : sortedKeys;
+
+  return limitedKeys
+      .map(
+        (key) => (
+          created: key,
+          val: periodSums[key]! / periodDayCounts[key]!,
+        ),
+      )
+      .toList();
 }
 
 double convertFromGrams(double qtyInGrams, String targetUnit) {

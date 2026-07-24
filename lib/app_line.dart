@@ -152,8 +152,6 @@ class _AppLineState extends State<AppLine> {
   }
 
   void _setStream() {
-    final fields = context.read<SettingsState>().value.fields?.split(',') ?? [];
-
     // Returns a SQL expression for a nutrient field that handles both food and
     // meal diary entries. Meal entries (diaries.food IS NULL) use a correlated
     // subquery that sums the nutrient across all meal_foods components.
@@ -230,36 +228,6 @@ class _AppLineState extends State<AppLine> {
       END
     ''';
 
-    Map<String, CustomExpression> metricCols = {
-      'calories': CustomExpression<double>(
-        'SUM(${mealAwareFieldExpr('calories')})',
-        watchedTables: {db.foods, db.diaries},
-      ),
-    };
-
-    for (final field in fields) {
-      metricCols[field] = CustomExpression<double>(
-        'SUM(${mealAwareFieldExpr(field)})',
-        watchedTables: {db.foods, db.diaries},
-      );
-    }
-
-    if (widget.groupBy != Period.day) {
-      metricCols['calories'] = CustomExpression<double>(
-        '''SUM(${mealAwareFieldExpr('calories')}) /
-           COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
-        watchedTables: {db.foods, db.diaries},
-      );
-
-      for (final field in fields) {
-        metricCols[field] = CustomExpression<double>(
-          '''SUM(${mealAwareFieldExpr(field)}) /
-             COUNT(DISTINCT date(diaries.created, 'unixepoch'))''',
-          watchedTables: {db.foods, db.diaries},
-        );
-      }
-    }
-
     if (widget.metric == 'body-weight') {
       final createdCol = getCreated('weights');
       stream = (db.weights.selectOnly()
@@ -301,22 +269,17 @@ class _AppLineState extends State<AppLine> {
                 .toList(),
           );
     } else {
-      final createdCol = getCreated('diaries');
+      final valueCol = CustomExpression<double>(
+        mealAwareFieldExpr(widget.metric),
+        watchedTables: {db.foods, db.diaries},
+      );
+
       stream = (db.diaries.selectOnly()
-            ..addColumns([
-              db.diaries.created,
-              ...metricCols.values,
-            ])
+            ..addColumns([db.diaries.created, valueCol])
             ..join([
               leftOuterJoin(
                 db.foods,
                 db.diaries.food.equalsExp(db.foods.id),
-              ),
-            ])
-            ..orderBy([
-              OrderingTerm(
-                expression: db.diaries.created,
-                mode: OrderingMode.desc,
               ),
             ])
             ..where(
@@ -328,21 +291,26 @@ class _AppLineState extends State<AppLine> {
               db.diaries.created.isSmallerOrEqualValue(
                 widget.end ?? DateTime.now().add(const Duration(days: 1)),
               ),
-            )
-            ..groupBy([createdCol])
-            ..limit(settings.limit))
+            ))
           .watch()
           .map((results) {
-        return results
-            .map((result) {
-              final created = result.read(db.diaries.created)!.toLocal();
-              double val =
-                  (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
-              String unit = nutrientUnit(widget.metric);
-              return GraphData(created: created, val: val, unit: unit);
-            })
-            .toList()
-            .reversed
+        final entries = results
+            .map(
+              (result) => (
+                created: result.read(db.diaries.created)!.toLocal(),
+                value: result.read(valueCol) ?? 0.0,
+              ),
+            )
+            .toList();
+        final unit = nutrientUnit(widget.metric);
+        return bucketGraphData(entries, widget.groupBy, settings.limit)
+            .map(
+              (bucket) => GraphData(
+                created: bucket.created,
+                val: bucket.val,
+                unit: unit,
+              ),
+            )
             .toList();
       });
     }
