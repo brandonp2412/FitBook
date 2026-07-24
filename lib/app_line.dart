@@ -5,6 +5,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/diary_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/weight_settings.dart';
+import 'package:fit_book/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -122,20 +123,29 @@ class _AppLineState extends State<AppLine> {
   }
 
   Expression<String> getCreated(String table) {
+    // SQLite's 'localtime' modifier relies on the platform's own timezone
+    // database, which is unreliable/UTC-only on Android and iOS. Compute the
+    // offset in Dart (which correctly resolves the device timezone) instead,
+    // so day/week/month/year buckets line up with the Dart-side grouping
+    // used by the Diary page.
+    final offset = DateTime.now().timeZoneOffset;
+    final offsetModifier =
+        "${offset.isNegative ? '-' : '+'}${offset.inMinutes.abs()} minutes";
+
     Expression<String> createdCol = CustomExpression<String>(
-      "STRFTIME('%Y-%m-%d', DATE($table.created, 'unixepoch', 'localtime'))",
+      "STRFTIME('%Y-%m-%d', $table.created, 'unixepoch', '$offsetModifier')",
     );
     if (widget.groupBy == Period.month)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m', DATE($table.created, 'unixepoch', 'localtime'))",
+        "STRFTIME('%Y-%m', $table.created, 'unixepoch', '$offsetModifier')",
       );
     else if (widget.groupBy == Period.week)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m-%W', DATE($table.created, 'unixepoch', 'localtime'))",
+        "STRFTIME('%Y-%m-%W', $table.created, 'unixepoch', '$offsetModifier')",
       );
     else if (widget.groupBy == Period.year)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y', DATE($table.created, 'unixepoch', 'localtime'))",
+        "STRFTIME('%Y', $table.created, 'unixepoch', '$offsetModifier')",
       );
     return createdCol;
   }
@@ -327,7 +337,7 @@ class _AppLineState extends State<AppLine> {
               final created = result.read(db.diaries.created)!.toLocal();
               double val =
                   (result.read(metricCols[widget.metric]!) ?? 0.0) as double;
-              String unit = widget.metric == 'calories' ? 'kcal' : 'g';
+              String unit = nutrientUnit(widget.metric);
               return GraphData(created: created, val: val, unit: unit);
             })
             .toList()

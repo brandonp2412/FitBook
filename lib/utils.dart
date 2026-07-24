@@ -85,6 +85,15 @@ String getShortUnit(String unit) {
   return shortUnits[unit.toLowerCase()] ?? unit;
 }
 
+String nutrientUnit(String field) {
+  if (field == 'calories') return 'kcal';
+  if (field.endsWith('_iu_iu') || field.endsWith('_iu')) return 'IU';
+  if (field.endsWith('_mcg')) return 'mcg';
+  if (field.endsWith('_mg')) return 'mg';
+  if (field.endsWith('_g')) return 'g';
+  return '';
+}
+
 bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
