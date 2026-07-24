@@ -123,29 +123,20 @@ class _AppLineState extends State<AppLine> {
   }
 
   Expression<String> getCreated(String table) {
-    // SQLite's 'localtime' modifier relies on the platform's own timezone
-    // database, which is unreliable/UTC-only on Android and iOS. Compute the
-    // offset in Dart (which correctly resolves the device timezone) instead,
-    // so day/week/month/year buckets line up with the Dart-side grouping
-    // used by the Diary page.
-    final offset = DateTime.now().timeZoneOffset;
-    final offsetModifier =
-        "${offset.isNegative ? '-' : '+'}${offset.inMinutes.abs()} minutes";
-
     Expression<String> createdCol = CustomExpression<String>(
-      "STRFTIME('%Y-%m-%d', $table.created, 'unixepoch', '$offsetModifier')",
+      "STRFTIME('%Y-%m-%d', $table.created, 'unixepoch', 'localtime')",
     );
     if (widget.groupBy == Period.month)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m', $table.created, 'unixepoch', '$offsetModifier')",
+        "STRFTIME('%Y-%m', $table.created, 'unixepoch', 'localtime')",
       );
     else if (widget.groupBy == Period.week)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m-%W', $table.created, 'unixepoch', '$offsetModifier')",
+        "STRFTIME('%Y-%m-%W', $table.created, 'unixepoch', 'localtime')",
       );
     else if (widget.groupBy == Period.year)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y', $table.created, 'unixepoch', '$offsetModifier')",
+        "STRFTIME('%Y', $table.created, 'unixepoch', 'localtime')",
       );
     return createdCol;
   }
