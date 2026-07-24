@@ -123,20 +123,30 @@ class _AppLineState extends State<AppLine> {
   }
 
   Expression<String> getCreated(String table) {
+    // SQLite's 'localtime' modifier doesn't consult a timezone database; it
+    // just asks the OS for the current UTC offset, which is unreliable across
+    // platforms (https://sqlite.org/lang_datefunc.html). Compute the offset
+    // in Dart, which resolves the device timezone through Flutter's platform
+    // channel, so day/week/month/year buckets line up with the Dart-side
+    // grouping used by the Diary page.
+    final offset = DateTime.now().timeZoneOffset;
+    final offsetModifier =
+        "${offset.isNegative ? '-' : '+'}${offset.inMinutes.abs()} minutes";
+
     Expression<String> createdCol = CustomExpression<String>(
-      "STRFTIME('%Y-%m-%d', $table.created, 'unixepoch', 'localtime')",
+      "STRFTIME('%Y-%m-%d', $table.created, 'unixepoch', '$offsetModifier')",
     );
     if (widget.groupBy == Period.month)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m', $table.created, 'unixepoch', 'localtime')",
+        "STRFTIME('%Y-%m', $table.created, 'unixepoch', '$offsetModifier')",
       );
     else if (widget.groupBy == Period.week)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y-%m-%W', $table.created, 'unixepoch', 'localtime')",
+        "STRFTIME('%Y-%m-%W', $table.created, 'unixepoch', '$offsetModifier')",
       );
     else if (widget.groupBy == Period.year)
       createdCol = CustomExpression<String>(
-        "STRFTIME('%Y', $table.created, 'unixepoch', 'localtime')",
+        "STRFTIME('%Y', $table.created, 'unixepoch', '$offsetModifier')",
       );
     return createdCol;
   }
