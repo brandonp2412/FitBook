@@ -194,6 +194,97 @@ jobs:
             build/app/outputs/flutter-apk/fitbook.apk
             build/app/outputs/bundle/release/app-release.aab
 
+  verify-reproducibility:
+    needs: [version-bump, build-android]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
+      - name: Create brandon user directory structure (match F-Droid)
+        run: |
+          sudo mkdir -p /home/brandon
+          sudo chown $USER -R /home/brandon
+
+      - name: Move project to F-Droid location
+        run: |
+          cd ..
+          mv ${{ github.event.repository.name }} /home/brandon/fitbook
+
+      - name: Setup Flutter from submodule and get dependencies
+        working-directory: /home/brandon/fitbook
+        run: |
+          git submodule update --init --recursive flutter
+          echo "/home/brandon/fitbook/flutter/bin" >> $GITHUB_PATH
+          export PUB_CACHE=$(pwd)/.pub-cache
+          echo "PUB_CACHE=$(pwd)/.pub-cache" >> $GITHUB_ENV
+          flutter/bin/flutter config --no-analytics
+          flutter/bin/flutter pub get
+
+      - name: Strip non-deterministic build IDs from jni native library
+        working-directory: /home/brandon/fitbook
+        run: |
+          sed -i -e 's/-Wl,/-Wl,--build-id=none,/' \
+            .pub-cache/hosted/pub.dev/jni-*/src/CMakeLists.txt
+
+      - name: Decode Android keystore
+        working-directory: /home/brandon/fitbook
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Rebuild android independently
+        working-directory: /home/brandon/fitbook
+        run: |
+          echo "storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=keystore.jks" >> android/key.properties
+
+          # Same invocations as build-android, so the only difference between
+          # the two builds is the runner/checkout instance itself.
+          flutter build apk --release --split-per-abi --target-platform android-x64
+          flutter build apk --release --split-per-abi --target-platform android-arm64
+          flutter build apk --release --split-per-abi --target-platform android-arm
+
+      - name: Download reference build-android artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: android-builds
+          path: reference-build
+
+      - name: Compare rebuilt APKs against build-android output
+        working-directory: /home/brandon/fitbook
+        run: |
+          status=0
+          for apk in build/app/outputs/flutter-apk/app-*-release.apk; do
+            name=$(basename "$apk")
+            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/$name"
+
+            if [ ! -f "$reference" ]; then
+              echo "::error::No reference artifact found for $name"
+              status=1
+              continue
+            fi
+
+            rebuilt_sha=$(sha256sum "$apk" | cut -d' ' -f1)
+            reference_sha=$(sha256sum "$reference" | cut -d' ' -f1)
+
+            if [ "$rebuilt_sha" != "$reference_sha" ]; then
+              echo "::error::$name is not reproducible: build-android=$reference_sha rebuild=$rebuilt_sha"
+              status=1
+            else
+              echo "$name reproducible: $rebuilt_sha"
+            fi
+          done
+          exit $status
+
   build-linux:
     needs: version-bump
     runs-on: ubuntu-latest
@@ -308,7 +399,14 @@ jobs:
         uses: actions/deploy-pages@v4
 
   create-github-release:
-    needs: [version-bump, build-android, build-linux, build-windows]
+    needs:
+      [
+        version-bump,
+        build-android,
+        verify-reproducibility,
+        build-linux,
+        build-windows,
+      ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
