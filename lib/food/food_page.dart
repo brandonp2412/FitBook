@@ -10,6 +10,7 @@ import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -141,40 +142,8 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
           .customSelect(
             """
 SELECT meal_foods.meal,
-SUM(
-  CASE
-    WHEN meal_foods.unit = 'serving'
-      THEN meal_foods.quantity * COALESCE(foods.serving_size, 100)
-    WHEN meal_foods.unit IN ('grams', 'milliliters') THEN meal_foods.quantity
-    WHEN meal_foods.unit = 'milligrams' THEN meal_foods.quantity / 1000.0
-    WHEN meal_foods.unit = 'ounces' THEN meal_foods.quantity * 28.35
-    WHEN meal_foods.unit = 'pounds' THEN meal_foods.quantity * 453.592
-    WHEN meal_foods.unit = 'cups' THEN meal_foods.quantity * 250.0
-    WHEN meal_foods.unit = 'tablespoons' THEN meal_foods.quantity * 15.0
-    WHEN meal_foods.unit = 'teaspoons' THEN meal_foods.quantity * 5.0
-    WHEN meal_foods.unit = 'liters' THEN meal_foods.quantity * 1000.0
-    ELSE meal_foods.quantity
-  END
-  * COALESCE(foods.calories, 0)
-  / NULLIF(COALESCE(foods.serving_size, 100), 0)
-) AS total_cal,
-SUM(
-  CASE
-    WHEN meal_foods.unit = 'serving'
-      THEN meal_foods.quantity * COALESCE(foods.serving_size, 100)
-    WHEN meal_foods.unit IN ('grams', 'milliliters') THEN meal_foods.quantity
-    WHEN meal_foods.unit = 'milligrams' THEN meal_foods.quantity / 1000.0
-    WHEN meal_foods.unit = 'ounces' THEN meal_foods.quantity * 28.35
-    WHEN meal_foods.unit = 'pounds' THEN meal_foods.quantity * 453.592
-    WHEN meal_foods.unit = 'cups' THEN meal_foods.quantity * 250.0
-    WHEN meal_foods.unit = 'tablespoons' THEN meal_foods.quantity * 15.0
-    WHEN meal_foods.unit = 'teaspoons' THEN meal_foods.quantity * 5.0
-    WHEN meal_foods.unit = 'liters' THEN meal_foods.quantity * 1000.0
-    ELSE meal_foods.quantity
-  END
-  * COALESCE(foods.protein_g, 0)
-  / NULLIF(COALESCE(foods.serving_size, 100), 0)
-) AS total_protein
+${mealFoodsFieldSumSql('calories')} AS total_cal,
+${mealFoodsFieldSumSql('protein_g')} AS total_protein
 FROM meal_foods
 INNER JOIN foods ON foods.id = meal_foods.food
 GROUP BY meal_foods.meal

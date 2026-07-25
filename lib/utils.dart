@@ -261,6 +261,84 @@ double convertToGrams(double qty, String unit) {
   return qty * factor;
 }
 
+/// SQL CASE expression converting a food row's serving_size/serving_unit
+/// into grams. [foodsTable] lets callers target either the top-level
+/// `foods` table or a joined alias (e.g. `mf_f` for meal-food components).
+String servingGramsSql(String foodsTable) => '''
+  CASE
+    WHEN $foodsTable.serving_size IS NULL THEN 100
+    WHEN $foodsTable.serving_unit IS NULL THEN $foodsTable.serving_size
+    WHEN $foodsTable.serving_unit = 'ounces' THEN $foodsTable.serving_size * 28.35
+    WHEN $foodsTable.serving_unit = 'grams' THEN $foodsTable.serving_size
+    WHEN $foodsTable.serving_unit = 'milliliters' THEN $foodsTable.serving_size
+    WHEN $foodsTable.serving_unit = 'cups' THEN $foodsTable.serving_size * 250
+    WHEN $foodsTable.serving_unit = 'tablespoons' THEN $foodsTable.serving_size * 15
+    WHEN $foodsTable.serving_unit = 'teaspoons' THEN $foodsTable.serving_size * 5
+    WHEN $foodsTable.serving_unit = 'pounds' THEN $foodsTable.serving_size * 453.592
+    WHEN $foodsTable.serving_unit = 'serving' THEN $foodsTable.serving_size
+    ELSE 100
+  END
+''';
+
+/// SQL CASE expression converting an entry row's quantity/unit into grams.
+/// [entryTable] carries `quantity`/`unit` (e.g. `diaries` or `meal_foods`);
+/// [foodsTable] is the joined foods row used to resolve serving size when
+/// `unit = 'serving'`.
+String entryQuantityInGramsSql(String entryTable, String foodsTable) => '''
+  CASE
+    WHEN $entryTable.unit = 'serving'
+      THEN $entryTable.quantity * (${servingGramsSql(foodsTable)})
+    WHEN $entryTable.unit IN ('grams', 'milliliters') THEN $entryTable.quantity
+    WHEN $entryTable.unit = 'milligrams' THEN $entryTable.quantity / 1000
+    WHEN $entryTable.unit = 'cups' THEN $entryTable.quantity * 250
+    WHEN $entryTable.unit = 'tablespoons' THEN $entryTable.quantity * 15
+    WHEN $entryTable.unit = 'teaspoons' THEN $entryTable.quantity * 5
+    WHEN $entryTable.unit = 'ounces' THEN $entryTable.quantity * 28.35
+    WHEN $entryTable.unit = 'pounds' THEN $entryTable.quantity * 453.592
+    WHEN $entryTable.unit = 'liters' THEN $entryTable.quantity * 1000
+    WHEN $entryTable.unit = 'kilojoules' THEN $entryTable.quantity / 4.184
+    ELSE $entryTable.quantity
+  END
+''';
+
+/// SQL expression summing [field] across a meal's component meal_foods rows,
+/// converting each component's quantity/unit to grams and scaling by its
+/// food's nutrient-per-serving value. Used both as a top-level `GROUP BY`
+/// aggregate and as a correlated-subquery aggregate via [mealFoodsTable]/
+/// [foodsTable] aliases.
+String mealFoodsFieldSumSql(
+  String field, {
+  String mealFoodsTable = 'meal_foods',
+  String foodsTable = 'foods',
+}) =>
+    '''
+  SUM(
+    (${entryQuantityInGramsSql(mealFoodsTable, foodsTable)})
+    * COALESCE($foodsTable.$field, 0.0)
+    / NULLIF((${servingGramsSql(foodsTable)}), 0.0)
+  )
+''';
+
+/// SQL CASE expression for a diary row's nutrient [field], handling both
+/// standalone food entries and meal entries (which sum across the meal's
+/// component foods). Assumes the query joins `diaries` with `foods` on
+/// `diaries.food`.
+String mealAwareFieldExpr(String field) => '''
+  CASE
+    WHEN diaries.meal IS NOT NULL THEN
+      diaries.quantity * COALESCE((
+        SELECT ${mealFoodsFieldSumSql(field, mealFoodsTable: 'mf', foodsTable: 'mf_f')}
+        FROM meal_foods AS mf
+        JOIN foods AS mf_f ON mf_f.id = mf.food
+        WHERE mf.meal = diaries.meal
+      ), 0.0)
+    ELSE
+      (${entryQuantityInGramsSql('diaries', 'foods')})
+      * COALESCE(foods.$field, 0.0)
+      / NULLIF((${servingGramsSql('foods')}), 0.0)
+  END
+''';
+
 void selectAll(TextEditingController ctrl) {
   ctrl.selection = TextSelection(
     baseOffset: 0,
