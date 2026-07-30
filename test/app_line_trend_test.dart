@@ -65,7 +65,7 @@ void main() async {
       await tester.tap(find.text('Trend'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('-4.67 kg'), findsOneWidget);
+      expect(find.textContaining('-3.50 kg'), findsOneWidget);
 
       await db.close();
     });
@@ -283,7 +283,7 @@ void main() async {
       await tester.tap(find.text('Trend'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('-933.33 kcal'), findsOneWidget);
+      expect(find.textContaining('-700.00 kcal'), findsOneWidget);
 
       await db.close();
     });

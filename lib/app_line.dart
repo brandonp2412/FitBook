@@ -41,21 +41,33 @@ class AppLine extends StatefulWidget {
 class _AppLineState extends State<AppLine> {
   final formatter = NumberFormat('#,##0.00');
 
+  static const int _smoothWindow = 7;
+
   late Stream<List<GraphData>> stream;
   late Setting settings;
   bool showTrend = false;
+  bool showSmooth = false;
 
+  /// Least-squares regression of `val` against days elapsed since the
+  /// earliest entry. Using elapsed days (rather than index position) keeps
+  /// the slope correct when entries aren't evenly spaced in time.
   Map<String, double> _calcTrend(List<GraphData> data) {
-    if (data.length < 2) return {'slope': 0.0, 'intercept': 0.0};
+    if (data.length < 2) {
+      return {
+        'slope': 0.0,
+        'intercept': data.isNotEmpty ? data.first.val : 0.0,
+      };
+    }
 
     final sortedData = List<GraphData>.from(data)
       ..sort((a, b) => a.created.compareTo(b.created));
+    final firstCreated = sortedData.first.created;
     double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
-    int n = sortedData.length;
+    final n = sortedData.length;
 
-    for (int i = 0; i < n; i++) {
-      double x = i.toDouble();
-      double y = sortedData[i].val;
+    for (final row in sortedData) {
+      final x = row.created.difference(firstCreated).inDays.toDouble();
+      final y = row.val;
       sumX += x;
       sumY += y;
       sumXY += x * y;
@@ -67,8 +79,8 @@ class _AppLineState extends State<AppLine> {
       return {'slope': 0.0, 'intercept': sumY / n};
     }
 
-    double slope = (n * sumXY - sumX * sumY) / denominator;
-    double intercept = (sumY - slope * sumX) / n;
+    final slope = (n * sumXY - sumX * sumY) / denominator;
+    final intercept = (sumY - slope * sumX) / n;
 
     return {'slope': slope, 'intercept': intercept};
   }
@@ -76,20 +88,9 @@ class _AppLineState extends State<AppLine> {
   String _getTrendText(List<GraphData> data) {
     if (data.length < 2) return "0.00 ${data.first.unit}";
 
-    final sortedData = List<GraphData>.from(data)
-      ..sort((a, b) => a.created.compareTo(b.created));
-    final trend = _calcTrend(sortedData);
-    double slope = trend['slope']!;
+    final slopePerWeek = _calcTrend(data)['slope']! * 7;
 
-    double daysSpan = sortedData.last.created
-        .difference(sortedData.first.created)
-        .inDays
-        .toDouble();
-    if (daysSpan == 0) daysSpan = 1;
-
-    double slopePerWeek = slope * (7.0 * data.length / daysSpan);
-
-    String sign = slopePerWeek >= 0 ? "+" : "";
+    final sign = slopePerWeek >= 0 ? "+" : "";
     return "$sign${formatter.format(slopePerWeek)} ${data.first.unit}";
   }
 
@@ -97,16 +98,44 @@ class _AppLineState extends State<AppLine> {
     if (data.length < 2) return [];
 
     final trend = _calcTrend(data);
-    double slope = trend['slope']!;
-    double intercept = trend['intercept']!;
+    final slope = trend['slope']!;
+    final intercept = trend['intercept']!;
+    final firstCreated = (List<GraphData>.from(data)
+          ..sort((a, b) => a.created.compareTo(b.created)))
+        .first
+        .created;
 
-    List<FlSpot> trendSpots = [];
+    final trendSpots = <FlSpot>[];
     for (int i = 0; i < data.length; i++) {
-      double trendVal = slope * i.toDouble() + intercept;
+      final days = data[i].created.difference(firstCreated).inDays.toDouble();
+      final trendVal = slope * days + intercept;
       trendSpots.add(FlSpot(i.toDouble(), trendVal));
     }
 
     return trendSpots;
+  }
+
+  /// Trailing rolling average of `val`, one output per input point, using up
+  /// to `window` of the preceding points (fewer near the start of the list).
+  List<double> _rollingAverage(List<double> values, int window) {
+    final result = <double>[];
+    for (int i = 0; i < values.length; i++) {
+      final start = (i - window + 1).clamp(0, i);
+      final slice = values.sublist(start, i + 1);
+      result.add(slice.reduce((a, b) => a + b) / slice.length);
+    }
+    return result;
+  }
+
+  List<FlSpot> _getSmoothSpots(List<GraphData> data) {
+    final smoothed = _rollingAverage(
+      data.map((row) => row.val).toList(),
+      _smoothWindow,
+    );
+    return [
+      for (int i = 0; i < smoothed.length; i++)
+        FlSpot(i.toDouble(), smoothed[i]),
+    ];
   }
 
   @override
@@ -305,10 +334,12 @@ class _AppLineState extends State<AppLine> {
         ];
 
         final rows = snapshot.data!;
-        List<FlSpot> spots = [];
-        for (var index = 0; index < rows.length; index++) {
-          spots.add(FlSpot(index.toDouble(), rows[index].val));
-        }
+        List<FlSpot> spots = showSmooth
+            ? _getSmoothSpots(rows)
+            : [
+                for (var index = 0; index < rows.length; index++)
+                  FlSpot(index.toDouble(), rows[index].val),
+              ];
 
         List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
 
@@ -402,9 +433,7 @@ class _AppLineState extends State<AppLine> {
             ),
             const SizedBox(height: 12.0),
             Row(
-              mainAxisAlignment: goal > 0
-                  ? MainAxisAlignment.spaceEvenly
-                  : MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _statTile(
                   leading: Container(
@@ -424,6 +453,25 @@ class _AppLineState extends State<AppLine> {
                   label: "Trend",
                   value: _getTrendText(rows),
                   onTap: () => setState(() => showTrend = !showTrend),
+                ),
+                _statTile(
+                  leading: Container(
+                    width: 14,
+                    height: 14,
+                    decoration: BoxDecoration(
+                      color: showSmooth
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  label: "Smooth",
+                  value: "$_smoothWindow pt avg",
+                  onTap: () => setState(() => showSmooth = !showSmooth),
                 ),
                 if (goal > 0)
                   _statTile(
