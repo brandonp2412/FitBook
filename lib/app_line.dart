@@ -334,14 +334,13 @@ class _AppLineState extends State<AppLine> {
         ];
 
         final rows = snapshot.data!;
-        List<FlSpot> spots = showSmooth
-            ? _getSmoothSpots(rows)
-            : [
-                for (var index = 0; index < rows.length; index++)
-                  FlSpot(index.toDouble(), rows[index].val),
-              ];
+        List<FlSpot> spots = [
+          for (var index = 0; index < rows.length; index++)
+            FlSpot(index.toDouble(), rows[index].val),
+        ];
 
         List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
+        List<FlSpot> smoothSpots = showSmooth ? _getSmoothSpots(rows) : [];
 
         List<LineChartBarData> lineBars = [
           LineChartBarData(
@@ -371,6 +370,23 @@ class _AppLineState extends State<AppLine> {
               spots: trendSpots,
               isCurved: false,
               color: Theme.of(context).colorScheme.secondary,
+              barWidth: 2,
+              isStrokeCapRound: true,
+              dotData: const FlDotData(
+                show: false,
+              ),
+              belowBarData: BarAreaData(show: false),
+            ),
+          );
+        }
+
+        if (showSmooth && smoothSpots.isNotEmpty) {
+          lineBars.add(
+            LineChartBarData(
+              spots: smoothSpots,
+              isCurved: sel.curveLines,
+              preventCurveOverShooting: true,
+              color: Theme.of(context).colorScheme.tertiary,
               barWidth: 2,
               isStrokeCapRound: true,
               dotData: const FlDotData(
@@ -460,11 +476,11 @@ class _AppLineState extends State<AppLine> {
                     height: 14,
                     decoration: BoxDecoration(
                       color: showSmooth
-                          ? Theme.of(context).colorScheme.primary
+                          ? Theme.of(context).colorScheme.tertiary
                           : Colors.transparent,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.tertiary,
                         width: 2,
                       ),
                     ),
