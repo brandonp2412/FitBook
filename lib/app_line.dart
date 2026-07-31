@@ -455,8 +455,11 @@ class _AppLineState extends State<AppLine> {
                   leading: Checkbox(
                     value: showTrend,
                     onChanged: (_) => setState(() => showTrend = !showTrend),
-                    fillColor: WidgetStateProperty.all(
-                      Theme.of(context).colorScheme.secondary,
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                     ),
                   ),
                   label: "Trend",
@@ -467,8 +470,11 @@ class _AppLineState extends State<AppLine> {
                   leading: Checkbox(
                     value: showSmooth,
                     onChanged: (_) => setState(() => showSmooth = !showSmooth),
-                    fillColor: WidgetStateProperty.all(
-                      Theme.of(context).colorScheme.tertiary,
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.tertiary
+                          : null,
                     ),
                   ),
                   label: "Smooth",
