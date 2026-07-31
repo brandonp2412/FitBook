@@ -452,18 +452,11 @@ class _AppLineState extends State<AppLine> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _statTile(
-                  leading: Container(
-                    width: 14,
-                    height: 14,
-                    decoration: BoxDecoration(
-                      color: showTrend
-                          ? Theme.of(context).colorScheme.secondary
-                          : Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.secondary,
-                        width: 2,
-                      ),
+                  leading: Checkbox(
+                    value: showTrend,
+                    onChanged: (_) => setState(() => showTrend = !showTrend),
+                    fillColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                   label: "Trend",
@@ -471,18 +464,11 @@ class _AppLineState extends State<AppLine> {
                   onTap: () => setState(() => showTrend = !showTrend),
                 ),
                 _statTile(
-                  leading: Container(
-                    width: 14,
-                    height: 14,
-                    decoration: BoxDecoration(
-                      color: showSmooth
-                          ? Theme.of(context).colorScheme.tertiary
-                          : Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        width: 2,
-                      ),
+                  leading: Checkbox(
+                    value: showSmooth,
+                    onChanged: (_) => setState(() => showSmooth = !showSmooth),
+                    fillColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                   label: "Smooth",
