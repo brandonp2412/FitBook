@@ -139,7 +139,11 @@ class GraphPageState extends State<GraphPage>
                 },
               ),
             ),
-            Expanded(
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: 200,
+                maxHeight: 350,
+              ),
               child: AppLine(
                 metric: metric,
                 groupBy: groupBy,
