@@ -5,6 +5,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
+import 'package:fit_book/weight/weight_variants.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class WeightPage extends StatefulWidget {
   State<WeightPage> createState() => WeightPageState();
 }
 
+const double _variantBarHeight = 48;
+
 class WeightPageState extends State<WeightPage>
     with AutomaticKeepAliveClientMixin {
   final Set<int> selected = {};
@@ -25,6 +28,7 @@ class WeightPageState extends State<WeightPage>
 
   String search = '';
   int limit = 100;
+  WeightVariant _variant = WeightVariant.timeline;
   late Stream<List<Weight>> stream;
 
   @override
@@ -102,6 +106,8 @@ class WeightPageState extends State<WeightPage>
                     ctrl: scrollCtrl,
                     weights: weights,
                     selected: selected,
+                    variant: _variant,
+                    extraTopPadding: _variantBarHeight,
                     onSelect: (id) {
                       if (selected.contains(id))
                         setState(() {
@@ -163,6 +169,37 @@ class WeightPageState extends State<WeightPage>
                       selected.clear();
                     });
                   },
+                ),
+              ),
+              Positioned(
+                top: appSearchHeight,
+                left: 16,
+                right: 16,
+                child: SizedBox(
+                  height: _variantBarHeight,
+                  child: Row(
+                    children: WeightVariant.values.map((v) {
+                      final active = _variant == v;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: ChoiceChip(
+                          label: Text(
+                            v.label,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: active ? FontWeight.w600 : null,
+                            ),
+                          ),
+                          selected: active,
+                          onSelected: (_) => setState(() => _variant = v),
+                          visualDensity: VisualDensity.compact,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ],
