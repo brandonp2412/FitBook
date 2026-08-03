@@ -68,121 +68,128 @@ class _FoodListState extends State<FoodList> {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsState>().value;
+
+    final children = <Widget>[];
+    for (var i = 0; i < widget.items.length; i++) {
+      final item = widget.items[i];
+
+      if (item is Meal) {
+        children.add(
+          KeyedSubtree(
+            key: ValueKey('meal_${item.id}'),
+            child: _buildMealTile(context, item),
+          ),
+        );
+        continue;
+      }
+
+      final food = item as FoodsCompanion;
+      final selected = widget.selected.contains(food.id.value);
+      final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
+
+      Widget? image;
+      if (settings.showImages) {
+        if (food.imageFile.value?.isNotEmpty == true)
+          image = Image.file(
+            File(food.imageFile.value!),
+            errorBuilder: (context, error, stackTrace) =>
+                const SizedBox.shrink(),
+          );
+        else if (food.smallImage.value?.isNotEmpty == true)
+          image = material.SizedBox(
+            height: 80,
+            width: 50,
+            child: CachedNetworkImage(imageUrl: food.smallImage.value!),
+          );
+      }
+
+      children.add(
+        ListTile(
+          tileColor: selected
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+              : null,
+          leading: image,
+          title: Text(food.name.value),
+          subtitle: () {
+            final cal = food.calories.value ?? 0;
+            final size = food.servingSize.value ?? 100;
+            final calPer100g = size > 0 ? cal * 100 / size : cal;
+            return Row(
+              children: [
+                Text("${formatter.format(cal)} kcal"),
+                if ((size - 100).abs() > 0.5)
+                  Text(
+                    " · ${formatter.format(calPer100g)}/100g",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                if (food.favorite.value == true) ...[
+                  const SizedBox(width: 6),
+                  Icon(
+                    Icons.favorite,
+                    size: 12,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ],
+              ],
+            );
+          }(),
+          trailing: Stack(
+            children: [
+              AnimatedScale(
+                duration: const Duration(milliseconds: 150),
+                scale: selected ? 0.0 : 1.0,
+                child: Visibility(
+                  visible: !selected,
+                  child: Text(
+                    "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              AnimatedScale(
+                duration: const Duration(milliseconds: 150),
+                scale: selected ? 1.0 : 0.0,
+                child: Visibility(
+                  visible: selected,
+                  child: Checkbox(
+                    value: selected,
+                    onChanged: (_) => widget.onSelect(food.id.value),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          onLongPress: () => widget.onSelect(food.id.value),
+          onTap: () {
+            if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditFoodPage(
+                    id: food.id.value,
+                    onSavedNew: widget.onSavedNew,
+                  ),
+                ),
+              );
+            else
+              widget.onSelect(food.id.value);
+          },
+        ),
+      );
+    }
+
     return Expanded(
-      child: ListView.builder(
+      child: ListView(
         padding: EdgeInsets.only(
-          top: appSearchHeight + 8,
+          top: appSearchHeight,
           bottom: MediaQuery.paddingOf(context).bottom +
               BottomNav.totalOverlayHeight,
         ),
         controller: widget.ctrl,
-        itemCount: widget.items.length,
-        itemBuilder: (context, index) {
-          final item = widget.items[index];
-
-          if (item is Meal) {
-            return KeyedSubtree(
-              key: ValueKey('meal_${item.id}'),
-              child: _buildMealTile(context, item),
-            );
-          }
-
-          final food = item as FoodsCompanion;
-          final selected = widget.selected.contains(food.id.value);
-          final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
-          final settings = context.watch<SettingsState>().value;
-
-          Widget? image;
-          if (settings.showImages) {
-            if (food.imageFile.value?.isNotEmpty == true)
-              image = Image.file(
-                File(food.imageFile.value!),
-                errorBuilder: (context, error, stackTrace) =>
-                    const SizedBox.shrink(),
-              );
-            else if (food.smallImage.value?.isNotEmpty == true)
-              image = material.SizedBox(
-                height: 80,
-                width: 50,
-                child: CachedNetworkImage(imageUrl: food.smallImage.value!),
-              );
-          }
-
-          return ListTile(
-            tileColor: selected
-                ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
-                : null,
-            leading: image,
-            title: Text(food.name.value),
-            subtitle: () {
-              final cal = food.calories.value ?? 0;
-              final size = food.servingSize.value ?? 100;
-              final calPer100g = size > 0 ? cal * 100 / size : cal;
-              return Row(
-                children: [
-                  Text("${formatter.format(cal)} kcal"),
-                  if ((size - 100).abs() > 0.5)
-                    Text(
-                      " · ${formatter.format(calPer100g)}/100g",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                    ),
-                  if (food.favorite.value == true) ...[
-                    const SizedBox(width: 6),
-                    Icon(
-                      Icons.favorite,
-                      size: 12,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ],
-                ],
-              );
-            }(),
-            trailing: Stack(
-              children: [
-                AnimatedScale(
-                  duration: const Duration(milliseconds: 150),
-                  scale: selected ? 0.0 : 1.0,
-                  child: Visibility(
-                    visible: !selected,
-                    child: Text(
-                      "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ),
-                AnimatedScale(
-                  duration: const Duration(milliseconds: 150),
-                  scale: selected ? 1.0 : 0.0,
-                  child: Visibility(
-                    visible: selected,
-                    child: Checkbox(
-                      value: selected,
-                      onChanged: (_) => widget.onSelect(food.id.value),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            onLongPress: () => widget.onSelect(food.id.value),
-            onTap: () {
-              if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditFoodPage(
-                      id: food.id.value,
-                      onSavedNew: widget.onSavedNew,
-                    ),
-                  ),
-                );
-              else
-                widget.onSelect(food.id.value);
-            },
-          );
-        },
+        children: children,
       ),
     );
   }
