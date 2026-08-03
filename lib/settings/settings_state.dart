@@ -9,8 +9,6 @@ class SettingsState extends ChangeNotifier {
   late Setting value;
   late StreamSubscription subscription;
 
-  bool get compactDiary => value.compactDiary;
-
   SettingsState(Setting settings) {
     value = settings;
     setSubscription();
