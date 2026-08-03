@@ -1,5 +1,5 @@
 import 'package:fit_book/diary/diary_food.dart';
-import 'package:fit_book/diary/diary_variants/diary_food_thumbnail.dart';
+import 'package:fit_book/diary/diary_food_thumbnail.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
