@@ -79,6 +79,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   Food? selectedFood;
   int? _selectedMealId;
   String? imageFile;
+  String? bigImage;
   List<_SearchResult> searchResults = [];
   final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
 
@@ -183,6 +184,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
 
       setState(() {
         imageFile = food.imageFile;
+        bigImage = food.bigImage;
         barcode.text = food.barcode ?? "";
         nameController.text = food.name;
         selectedFood = food;
@@ -588,11 +590,13 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ),
           ),
         );
-      if (food.smallImage?.isNotEmpty == true)
+      if (food.smallImage?.isNotEmpty == true ||
+          food.bigImage?.isNotEmpty == true)
         return SizedBox(
           height: 48,
           width: 48,
-          child: CachedNetworkImage(imageUrl: food.smallImage!),
+          child:
+              CachedNetworkImage(imageUrl: food.bigImage ?? food.smallImage!),
         );
     }
     return const SizedBox(
@@ -657,6 +661,37 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         child: ListView(
           controller: scrollCtrl,
           children: [
+            if (settings.showImages && !kIsWeb) ...[
+              bigImage?.isNotEmpty == true || imageFile?.isNotEmpty == true
+                  ? InkWell(
+                      onTap: setImage,
+                      onLongPress: () => setState(() {
+                        imageFile = null;
+                        bigImage = null;
+                        foodDirty = true;
+                      }),
+                      child: SizedBox(
+                        height: 200,
+                        child: imageFile != null
+                            ? Image.file(
+                                File(imageFile!),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    TextButton.icon(
+                                  onPressed: setImage,
+                                  label: const Text('Image error'),
+                                  icon: const Icon(Icons.error),
+                                ),
+                              )
+                            : CachedNetworkImage(imageUrl: bigImage!),
+                      ),
+                    )
+                  : TextButton.icon(
+                      icon: const Icon(Icons.image),
+                      label: const Text('Set image'),
+                      onPressed: setImage,
+                    ),
+              const SizedBox(height: 8),
+            ],
             TextField(
               key: const Key('name_field'),
               controller: nameController,
@@ -934,40 +969,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                if (imageFile?.isNotEmpty == true &&
-                    settings.showImages &&
-                    !kIsWeb) ...[
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 200,
-                    child: Image.file(
-                      File(imageFile!),
-                      errorBuilder: (context, error, stackTrace) =>
-                          TextButton.icon(
-                        onPressed: setImage,
-                        label: const Text('Image error'),
-                        icon: const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                ],
-                if (settings.showImages && imageFile == null) ...[
-                  const SizedBox(height: 8),
-                  TextButton.icon(
-                    icon: const Icon(Icons.image),
-                    label: const Text('Set image'),
-                    onPressed: setImage,
-                  ),
-                ],
-                if (imageFile != null && settings.showImages)
-                  TextButton.icon(
-                    icon: const Icon(Icons.delete),
-                    label: const Text("Remove image"),
-                    onPressed: () => setState(() {
-                      imageFile = null;
-                      foodDirty = true;
-                    }),
-                  ),
                 const SizedBox(height: 32),
                 Row(
                   children: [
