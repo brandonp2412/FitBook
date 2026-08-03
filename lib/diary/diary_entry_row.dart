@@ -38,6 +38,9 @@ class DiaryEntryRow extends StatelessWidget {
         food.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? '0';
 
     return ListTile(
+      tileColor: isSelected
+          ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+          : null,
       dense: dense,
       leading: DiaryFoodThumbnail(food: food, showImages: showImages),
       title: Text('${food.name}$suffix'),
@@ -45,7 +48,6 @@ class DiaryEntryRow extends StatelessWidget {
       trailing: isSelected
           ? Icon(Icons.check_circle, color: colorScheme.primary)
           : Text(trailingUnit ? '$kcal kcal' : kcal),
-      selected: isSelected,
       onTap: onTap,
       onLongPress: onLongPress,
     );
