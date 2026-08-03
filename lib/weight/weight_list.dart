@@ -6,7 +6,6 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
-import 'package:fit_book/weight/weight_variants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +18,6 @@ class WeightList extends StatefulWidget {
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
-    this.variant = WeightVariant.timeline,
-    this.extraTopPadding = 0,
   });
 
   final List<Weight> weights;
@@ -28,8 +25,6 @@ class WeightList extends StatefulWidget {
   final ValueChanged<int> onSelect;
   final VoidCallback onNext;
   final ScrollController ctrl;
-  final WeightVariant variant;
-  final double extraTopPadding;
 
   @override
   State<WeightList> createState() => _WeightListState();
@@ -73,19 +68,85 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
     final settings = context.watch<SettingsState>().value;
 
     if (settings.compactWeights) {
-      return buildWeightVariant(
-        widget.variant,
-        weights: widget.weights,
-        selected: widget.selected,
-        onSelect: widget.onSelect,
-        ctrl: widget.ctrl,
-        onNext: widget.onNext,
-        bottomPadding:
-            MediaQuery.paddingOf(context).bottom + BottomNav.totalOverlayHeight,
-        extraTopPadding: widget.extraTopPadding,
-        now: now,
-        settings: settings,
-        context: context,
+      return Expanded(
+        child: ListView.builder(
+          padding: EdgeInsets.only(
+            top: appSearchHeight + 8,
+            bottom: MediaQuery.paddingOf(context).bottom +
+                BottomNav.totalOverlayHeight,
+          ),
+          controller: widget.ctrl,
+          itemCount: widget.weights.length,
+          itemBuilder: (context, index) {
+            final weight = widget.weights[index];
+            final isToday = isSameDay(weight.created, now);
+            Widget? leading;
+
+            if (settings.showImages && weight.image?.isNotEmpty == true) {
+              leading = Image.file(
+                File(weight.image!),
+                errorBuilder: (context, error, stackTrace) => TextButton.icon(
+                  onPressed: () {},
+                  label: const Text('Image error'),
+                  icon: const Icon(Icons.error),
+                ),
+              );
+            }
+
+            return Column(
+              children: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: widget.selected.contains(weight.id)
+                          ? Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withValues(alpha: 0.3)
+                          : Colors.transparent,
+                      width: 1,
+                    ),
+                  ),
+                  child: ListTile(
+                    tileColor: widget.selected.contains(weight.id)
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: .08)
+                        : null,
+                    leading: leading,
+                    title: Text(
+                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
+                    ),
+                    trailing: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                      opacity: widget.selected.contains(weight.id) ? 1.0 : 0.0,
+                      child: Checkbox(
+                        value: widget.selected.contains(weight.id),
+                        onChanged: (_) => widget.onSelect(weight.id),
+                      ),
+                    ),
+                    subtitle: Text(
+                      DateFormat(settings.longDateFormat)
+                          .format(weight.created),
+                      style: isToday
+                          ? const TextStyle(fontWeight: FontWeight.bold)
+                          : null,
+                    ),
+                    onLongPress: () => widget.onSelect(weight.id),
+                    onTap: () {
+                      if (widget.selected.isEmpty) {
+                        showEditWeight(context, weight.toCompanion(false));
+                      } else {
+                        widget.onSelect(weight.id);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       );
     } else {
       return Expanded(
