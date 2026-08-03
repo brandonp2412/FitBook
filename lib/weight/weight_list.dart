@@ -6,6 +6,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
+import 'package:fit_book/weight/weight_variants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,8 @@ class WeightList extends StatefulWidget {
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
+    this.variant = WeightVariant.defaultView,
+    this.extraTopPadding = 0,
   });
 
   final List<Weight> weights;
@@ -25,6 +28,8 @@ class WeightList extends StatefulWidget {
   final ValueChanged<int> onSelect;
   final VoidCallback onNext;
   final ScrollController ctrl;
+  final WeightVariant variant;
+  final double extraTopPadding;
 
   @override
   State<WeightList> createState() => _WeightListState();
@@ -67,11 +72,29 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
+    if (widget.variant != WeightVariant.defaultView) {
+      return buildWeightVariant(
+        widget.variant,
+        VariantProps(
+          context: context,
+          weights: widget.weights,
+          selected: widget.selected,
+          onSelect: widget.onSelect,
+          ctrl: widget.ctrl,
+          bottomPadding: MediaQuery.paddingOf(context).bottom +
+              BottomNav.totalOverlayHeight,
+          topPadding: widget.extraTopPadding,
+          now: now,
+          settings: settings,
+        ),
+      );
+    }
+
     if (settings.compactWeights) {
       return Expanded(
         child: ListView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + 8,
+            top: appSearchHeight + widget.extraTopPadding + 8,
             bottom: MediaQuery.paddingOf(context).bottom +
                 BottomNav.totalOverlayHeight,
           ),
@@ -152,7 +175,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       return Expanded(
         child: GridView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + 12,
+            top: appSearchHeight + widget.extraTopPadding + 12,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
