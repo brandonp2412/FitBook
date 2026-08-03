@@ -126,7 +126,7 @@ class _DiaryListState extends State<DiaryList> {
             today.stats.cals,
             settings.dailyCalories!,
             'kcal',
-            Colors.orange.shade300,
+            Theme.of(context).colorScheme.primary,
           ),
         if (settings.dailyProtein != null)
           goalBar(
@@ -135,7 +135,7 @@ class _DiaryListState extends State<DiaryList> {
             today.stats.protein,
             settings.dailyProtein!,
             'g',
-            Colors.blue.shade300,
+            Theme.of(context).colorScheme.secondary,
           ),
         if (settings.dailyCarb != null)
           goalBar(
@@ -144,7 +144,7 @@ class _DiaryListState extends State<DiaryList> {
             today.stats.carb,
             settings.dailyCarb!,
             'g',
-            Colors.green.shade300,
+            Theme.of(context).colorScheme.tertiary,
           ),
         if (settings.dailyFat != null)
           goalBar(
@@ -153,7 +153,7 @@ class _DiaryListState extends State<DiaryList> {
             today.stats.fat,
             settings.dailyFat!,
             'g',
-            Colors.purple.shade300,
+            Theme.of(context).colorScheme.onPrimaryFixedVariant,
           ),
         if (settings.dailyFiber != null)
           goalBar(
@@ -162,7 +162,7 @@ class _DiaryListState extends State<DiaryList> {
             today.stats.fiber,
             settings.dailyFiber!,
             'g',
-            Colors.brown.shade300,
+            Theme.of(context).colorScheme.shadow,
           ),
       ];
 
