@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Table;
-import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
@@ -13,8 +12,8 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -48,8 +47,15 @@ class _SearchResult {
 
 class EditDiaryPage extends StatefulWidget {
   final int? id;
+  final Food? initialFood;
+  final String? initialBarcode;
 
-  const EditDiaryPage({super.key, this.id});
+  const EditDiaryPage({
+    super.key,
+    this.id,
+    this.initialFood,
+    this.initialBarcode,
+  });
 
   @override
   State<EditDiaryPage> createState() => _EditDiaryPageState();
@@ -150,6 +156,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   void initState() {
     super.initState();
     _performSearch('');
+
+    if (widget.initialFood != null) {
+      barcode.text = widget.initialFood!.barcode ?? '';
+      _applyFood(widget.initialFood!);
+    } else if (widget.initialBarcode != null) {
+      barcode.text = widget.initialBarcode!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) toast(context, 'Barcode not found. Save to insert.');
+      });
+    }
 
     if (widget.id == null) return;
 
@@ -518,16 +534,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     Navigator.pop(context);
   }
 
-  void setImage() async {
-    final file = await FilePicker.pickFile(
-      type: FileType.image,
-    );
-    final path = file?.path;
-    if (path == null) return;
-    final docsDir = (await getApplicationDocumentsDirectory()).path;
-    final fileName = 'diary_${DateTime.now().millisecondsSinceEpoch}.jpg';
-    final destPath = '$docsDir/$fileName';
-    await File(path).copy(destPath);
+  void setImage({ImageSource? source}) async {
+    final destPath = await pickAndSaveImage('diary', source: source);
+    if (destPath == null) return;
     setState(() {
       imageFile = destPath;
       foodDirty = true;
@@ -664,12 +673,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             if (settings.showImages && !kIsWeb) ...[
               bigImage?.isNotEmpty == true || imageFile?.isNotEmpty == true
                   ? InkWell(
-                      onTap: setImage,
-                      onLongPress: () => setState(() {
-                        imageFile = null;
-                        bigImage = null;
-                        foodDirty = true;
-                      }),
+                      onTap: () => showImageOptionsSheet(
+                        context: context,
+                        onReplace: setImage,
+                        onCamera: () => setImage(source: ImageSource.camera),
+                        onDelete: () => setState(() {
+                          imageFile = null;
+                          bigImage = null;
+                          foodDirty = true;
+                        }),
+                      ),
                       child: SizedBox(
                         height: 200,
                         child: imageFile != null
@@ -685,10 +698,20 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                             : CachedNetworkImage(imageUrl: bigImage!),
                       ),
                     )
-                  : TextButton.icon(
-                      icon: const Icon(Icons.image),
-                      label: const Text('Set image'),
-                      onPressed: setImage,
+                  : Wrap(
+                      spacing: 8,
+                      children: [
+                        TextButton.icon(
+                          icon: const Icon(Icons.image),
+                          label: const Text('Set image'),
+                          onPressed: setImage,
+                        ),
+                        TextButton.icon(
+                          icon: const Icon(Icons.camera_alt),
+                          label: const Text('Take photo'),
+                          onPressed: () => setImage(source: ImageSource.camera),
+                        ),
+                      ],
                     ),
               const SizedBox(height: 8),
             ],
@@ -713,19 +736,45 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                           _performSearch('');
                         },
                       )
-                    : IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () async {
-                          final Food? food = await Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SearchOpenFoodFacts(
-                                terms: nameController.text,
-                              ),
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!kIsWeb)
+                            IconButton(
+                              icon: const Icon(Icons.barcode_reader),
+                              onPressed: () async {
+                                final result = await performBarcodeScan(
+                                  context,
+                                );
+                                if (!context.mounted) return;
+                                if (result.food != null) {
+                                  barcode.text = result.food!.barcode ?? '';
+                                  _applyFood(result.food!);
+                                } else if (result.barcode != null) {
+                                  barcode.text = result.barcode!;
+                                  toast(
+                                    context,
+                                    'Barcode not found. Save to insert.',
+                                  );
+                                }
+                              },
                             ),
-                          );
-                          if (food == null) return;
-                          _applyFood(food);
-                        },
+                          IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () async {
+                              final Food? food =
+                                  await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchOpenFoodFacts(
+                                    terms: nameController.text,
+                                  ),
+                                ),
+                              );
+                              if (food == null) return;
+                              _applyFood(food);
+                            },
+                          ),
+                        ],
                       ),
               ),
               textCapitalization: TextCapitalization.sentences,

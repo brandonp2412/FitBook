@@ -1,10 +1,14 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Macros {
   final double protein;
@@ -64,6 +68,64 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
       ),
       action: action ?? defaultAction,
       persist: false,
+    ),
+  );
+}
+
+Future<String?> pickAndSaveImage(String prefix, {ImageSource? source}) async {
+  String? path;
+  if (source == null) {
+    final file = await FilePicker.pickFile(type: FileType.image);
+    path = file?.path;
+  } else {
+    path = (await ImagePicker().pickImage(source: source))?.path;
+  }
+  if (path == null) return null;
+
+  final docsDir = (await getApplicationDocumentsDirectory()).path;
+  final destPath =
+      '$docsDir/${prefix}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+  await File(path).copy(destPath);
+  return destPath;
+}
+
+Future<void> showImageOptionsSheet({
+  required BuildContext context,
+  required VoidCallback onReplace,
+  required VoidCallback onCamera,
+  required VoidCallback onDelete,
+}) {
+  return showModalBottomSheet(
+    context: context,
+    builder: (ctx) => SafeArea(
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.photo_library),
+            title: const Text('Replace image'),
+            onTap: () {
+              Navigator.pop(ctx);
+              onReplace();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.camera_alt),
+            title: const Text('Take photo'),
+            onTap: () {
+              Navigator.pop(ctx);
+              onCamera();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text('Delete image'),
+            onTap: () {
+              Navigator.pop(ctx);
+              onDelete();
+            },
+          ),
+        ],
+      ),
     ),
   );
 }

@@ -5,6 +5,7 @@ class AnimatedFab extends StatefulWidget {
   final String label;
   final ScrollController scroll;
   final IconData icon;
+  final bool showTooltip;
 
   const AnimatedFab({
     super.key,
@@ -12,6 +13,7 @@ class AnimatedFab extends StatefulWidget {
     required this.label,
     required this.scroll,
     required this.icon,
+    this.showTooltip = true,
   });
 
   @override
@@ -45,23 +47,25 @@ class _AnimatedFabState extends State<AnimatedFab> {
 
   @override
   Widget build(BuildContext context) {
+    final fab = FloatingActionButton.extended(
+      tooltip: widget.showTooltip ? widget.label : null,
+      onPressed: widget.onTap,
+      heroTag: null,
+      label: AnimatedOpacity(
+        duration: const Duration(milliseconds: 200),
+        opacity: extend ? 1.0 : 0.0,
+        child: Text(widget.label),
+      ),
+      icon: Icon(widget.icon),
+      isExtended: extend,
+    );
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       width: extend ? 100 : 56,
       height: 56,
-      child: FloatingActionButton.extended(
-        tooltip: widget.label,
-        onPressed: widget.onTap,
-        heroTag: null,
-        label: AnimatedOpacity(
-          duration: const Duration(milliseconds: 200),
-          opacity: extend ? 1.0 : 0.0,
-          child: Text(widget.label),
-        ),
-        icon: Icon(widget.icon),
-        isExtended: extend,
-      ),
+      child:
+          widget.showTooltip ? fab : Semantics(label: widget.label, child: fab),
     );
   }
 }

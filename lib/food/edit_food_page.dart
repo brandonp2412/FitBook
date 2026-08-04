@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
-import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
@@ -14,8 +13,8 @@ import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -26,8 +25,14 @@ class EditFoodPage extends StatefulWidget {
   /// Called after a new food row is created (save-as or first-time add), so
   /// the caller can scroll the food list back to the top.
   final VoidCallback? onSavedNew;
+  final String? initialBarcode;
 
-  const EditFoodPage({super.key, this.id, this.onSavedNew});
+  const EditFoodPage({
+    super.key,
+    this.id,
+    this.onSavedNew,
+    this.initialBarcode,
+  });
 
   @override
   State<EditFoodPage> createState() => _EditFoodPageState();
@@ -65,6 +70,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
     else if (unit == 'grams') sizeCtrl.text = '100';
 
     _favorite = settings.favoriteNew;
+
+    if (widget.initialBarcode != null) {
+      barcodeCtrl.text = widget.initialBarcode!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) toast(context, 'Barcode not found. Save to insert.');
+      });
+    }
+
     if (widget.id == null) return;
 
     (db.foods.select()..where((u) => u.id.equals(widget.id!)))
@@ -238,14 +251,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (mounted) Navigator.pop(context);
   }
 
-  void setImage() async {
-    FilePickerResult? result = await FilePicker.pickFiles(type: FileType.image);
-    final path = result?.files.single.path;
-    if (path == null) return;
-    final docsDir = (await getApplicationDocumentsDirectory()).path;
-    final fileName = 'food_${DateTime.now().millisecondsSinceEpoch}.jpg';
-    final destPath = '$docsDir/$fileName';
-    await File(path).copy(destPath);
+  void setImage({ImageSource? source}) async {
+    final destPath = await pickAndSaveImage('food', source: source);
+    if (destPath == null) return;
     setState(() {
       imgFile = destPath;
     });
@@ -438,31 +446,53 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ),
-            if ((smallImg?.isNotEmpty == true || bigImg?.isNotEmpty == true) &&
-                settings.showImages &&
-                imgFile == null) ...[
+            if (settings.showImages) ...[
               const SizedBox(height: 16),
-              SizedBox(
-                height: 80,
-                width: 50,
-                child: CachedNetworkImage(
-                  imageUrl: smallImg ?? bigImg!,
-                ),
-              ),
-            ],
-            if (imgFile?.isNotEmpty == true && settings.showImages) ...[
-              const SizedBox(height: 16),
-              GestureDetector(
-                onTap: setImage,
-                child: Image.file(
-                  File(imgFile!),
-                  errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                    onPressed: setImage,
-                    label: const Text('Image error'),
-                    icon: const Icon(Icons.error),
+              if (imgFile?.isNotEmpty == true ||
+                  smallImg?.isNotEmpty == true ||
+                  bigImg?.isNotEmpty == true)
+                InkWell(
+                  onTap: () => showImageOptionsSheet(
+                    context: context,
+                    onReplace: setImage,
+                    onCamera: () => setImage(source: ImageSource.camera),
+                    onDelete: () => setState(() {
+                      imgFile = null;
+                      smallImg = null;
+                      bigImg = null;
+                    }),
                   ),
+                  child: SizedBox(
+                    height: 200,
+                    child: imgFile != null
+                        ? Image.file(
+                            File(imgFile!),
+                            errorBuilder: (context, error, stackTrace) =>
+                                TextButton.icon(
+                              onPressed: setImage,
+                              label: const Text('Image error'),
+                              icon: const Icon(Icons.error),
+                            ),
+                          )
+                        : CachedNetworkImage(imageUrl: smallImg ?? bigImg!),
+                  ),
+                )
+              else
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    TextButton.icon(
+                      icon: const Icon(Icons.image),
+                      label: const Text('Set image'),
+                      onPressed: setImage,
+                    ),
+                    TextButton.icon(
+                      icon: const Icon(Icons.camera_alt),
+                      label: const Text('Take photo'),
+                      onPressed: () => setImage(source: ImageSource.camera),
+                    ),
+                  ],
                 ),
-              ),
             ],
             const SizedBox(height: 16),
             Builder(
@@ -552,25 +582,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   label: const Text("Create meal"),
                   icon: const Icon(Icons.restaurant),
                 ),
-                if (settings.showImages)
-                  TextButton.icon(
-                    icon: const Icon(Icons.image),
-                    label: const Text('Set image'),
-                    onPressed: setImage,
-                  ),
-                if (settings.showImages &&
-                    (imgFile?.isNotEmpty == true ||
-                        smallImg?.isNotEmpty == true ||
-                        bigImg?.isNotEmpty == true))
-                  TextButton.icon(
-                    icon: const Icon(Icons.delete),
-                    label: const Text("Remove image"),
-                    onPressed: () => setState(() {
-                      imgFile = null;
-                      smallImg = null;
-                      bigImg = null;
-                    }),
-                  ),
                 TextButton.icon(
                   icon: const Icon(Icons.search),
                   label: const Text("OpenFoodFacts"),

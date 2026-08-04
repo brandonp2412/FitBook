@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_filters.dart';
@@ -10,6 +9,8 @@ import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/scan_barcode.dart';
+import 'package:fit_book/speed_dial_fab.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -171,34 +172,50 @@ class DiaryPageState extends State<DiaryPage> {
           bottom: MediaQuery.paddingOf(context).bottom +
               BottomNav.totalOverlayHeight,
         ),
-        child: material.Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton.small(
-              heroTag: 'quickAdd',
-              tooltip: 'Quick-add',
-              onPressed: () {
+        child: SpeedDialFab(
+          onTap: () {
+            navigatorKey.currentState!.push(
+              MaterialPageRoute(
+                builder: (context) => const EditDiaryPage(),
+              ),
+            );
+          },
+          label: 'Add',
+          icon: Icons.add,
+          scroll: scrollCtrl,
+          actions: [
+            SpeedDialAction(
+              icon: Icons.electric_bolt,
+              label: 'Quick-add',
+              onSelected: () {
                 navigatorKey.currentState!.push(
                   MaterialPageRoute(
                     builder: (context) => const QuickAddPage(),
                   ),
                 );
               },
-              child: const Icon(Icons.electric_bolt),
             ),
-            const SizedBox(height: 8),
-            AnimatedFab(
-              onTap: () async {
-                navigatorKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => const EditDiaryPage(),
-                  ),
-                );
+            SpeedDialAction(
+              icon: Icons.barcode_reader,
+              label: 'Scan barcode',
+              onSelected: () async {
+                final result = await performBarcodeScan(context);
+                if (result.food != null) {
+                  navigatorKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditDiaryPage(initialFood: result.food),
+                    ),
+                  );
+                } else if (result.barcode != null) {
+                  navigatorKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditDiaryPage(initialBarcode: result.barcode),
+                    ),
+                  );
+                }
               },
-              label: 'Add',
-              icon: Icons.add,
-              scroll: scrollCtrl,
             ),
           ],
         ),

@@ -27,6 +27,24 @@ Future<void> settle(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+/// Simulates long-pressing the [SpeedDialFab] with tooltip [fabTooltip],
+/// dragging to the satellite action labelled [actionLabel], and releasing.
+Future<void> triggerSpeedDial(
+  WidgetTester tester,
+  String fabTooltip,
+  String actionLabel,
+) async {
+  final gesture = await tester.startGesture(
+    tester.getCenter(find.bySemanticsLabel(fabTooltip).first),
+  );
+  await tester.pump(const Duration(milliseconds: 700));
+  await tester.pump();
+  await gesture.moveTo(tester.getCenter(find.text(actionLabel)));
+  await tester.pump();
+  await gesture.up();
+  await settle(tester);
+}
+
 void main() {
   testWidgets('Create meal appears in food list with meal icon',
       (WidgetTester tester) async {
@@ -43,9 +61,8 @@ void main() {
     await tester.pumpWidget(_wrap(const FoodPage(), settingsState));
     await settle(tester);
 
-    // Tap the "Add meal" small FAB (tooltip: 'Add meal')
-    await tester.tap(find.byTooltip('Add meal'));
-    await settle(tester);
+    // Long-press the "Add" speed-dial FAB and release over "Add meal"
+    await triggerSpeedDial(tester, 'Add', 'Add meal');
 
     expect(find.text('Create meal'), findsOne);
 

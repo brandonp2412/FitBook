@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
@@ -10,6 +9,8 @@ import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/scan_barcode.dart';
+import 'package:fit_book/speed_dial_fab.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -390,40 +391,55 @@ GROUP BY meal_foods.meal
           bottom: MediaQuery.paddingOf(context).bottom +
               BottomNav.totalOverlayHeight,
         ),
-        child: material.Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton.small(
-              heroTag: 'addMeal',
-              tooltip: 'Add meal',
-              onPressed: () {
+        child: SpeedDialFab(
+          onTap: () {
+            navKey.currentState!.push(
+              MaterialPageRoute(
+                builder: (context) => EditFoodPage(
+                  onSavedNew: () => scrollCtrl.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  ),
+                ),
+              ),
+            );
+          },
+          label: 'Add',
+          icon: Icons.add,
+          scroll: scrollCtrl,
+          actions: [
+            SpeedDialAction(
+              icon: Icons.restaurant,
+              label: 'Add meal',
+              onSelected: () {
                 navKey.currentState!.push(
                   MaterialPageRoute(
                     builder: (context) => const EditMealPage(),
                   ),
                 );
               },
-              child: const Icon(Icons.restaurant),
             ),
-            const SizedBox(height: 8),
-            AnimatedFab(
-              onTap: () async {
-                navKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => EditFoodPage(
-                      onSavedNew: () => scrollCtrl.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      ),
+            SpeedDialAction(
+              icon: Icons.barcode_reader,
+              label: 'Scan barcode',
+              onSelected: () async {
+                final result = await performBarcodeScan(context);
+                if (result.food != null) {
+                  navKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => EditFoodPage(id: result.food!.id),
                     ),
-                  ),
-                );
+                  );
+                } else if (result.barcode != null) {
+                  navKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          EditFoodPage(initialBarcode: result.barcode),
+                    ),
+                  );
+                }
               },
-              label: 'Add',
-              icon: Icons.add,
-              scroll: scrollCtrl,
             ),
           ],
         ),
