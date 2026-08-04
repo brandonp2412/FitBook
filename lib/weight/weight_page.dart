@@ -5,12 +5,9 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
-import 'package:fit_book/weight/weight_variants.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-
-const double _variantBarHeight = 44;
 
 class WeightPage extends StatefulWidget {
   const WeightPage({super.key});
@@ -29,7 +26,6 @@ class WeightPageState extends State<WeightPage>
   String search = '';
   int limit = 100;
   late Stream<List<Weight>> stream;
-  WeightVariant variant = WeightVariant.defaultView;
 
   @override
   void initState() {
@@ -95,7 +91,7 @@ class WeightPageState extends State<WeightPage>
                   if (snapshot.data?.isEmpty == true)
                     const Padding(
                       padding: EdgeInsets.only(
-                        top: appSearchHeight + _variantBarHeight,
+                        top: appSearchHeight,
                       ),
                       child: ListTile(
                         title: Text("No weights found"),
@@ -108,8 +104,6 @@ class WeightPageState extends State<WeightPage>
                     ctrl: scrollCtrl,
                     weights: weights,
                     selected: selected,
-                    variant: variant,
-                    extraTopPadding: _variantBarHeight,
                     onSelect: (id) {
                       if (selected.contains(id))
                         setState(() {
@@ -173,16 +167,6 @@ class WeightPageState extends State<WeightPage>
                   },
                 ),
               ),
-              Positioned(
-                top: appSearchHeight,
-                left: 0,
-                right: 0,
-                height: _variantBarHeight,
-                child: _VariantBar(
-                  variant: variant,
-                  onChanged: (v) => setState(() => variant = v),
-                ),
-              ),
             ],
           );
         },
@@ -224,42 +208,4 @@ class WeightPageState extends State<WeightPage>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class _VariantBar extends StatelessWidget {
-  const _VariantBar({required this.variant, required this.onChanged});
-
-  final WeightVariant variant;
-  final ValueChanged<WeightVariant> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colorScheme.surface.withValues(alpha: 0.96),
-        border: Border(
-          bottom: BorderSide(
-            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
-          ),
-        ),
-      ),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        children: [
-          for (final v in WeightVariant.values)
-            Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: ChoiceChip(
-                label: Text(v.label),
-                selected: variant == v,
-                onSelected: (_) => onChanged(v),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
 }

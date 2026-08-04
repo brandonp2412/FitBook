@@ -204,7 +204,7 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
       ),
     if ('weight stat cards'.contains(term))
       Tooltip(
-        message: 'Show weight entries as stat cards with sparklines '
+        message: 'Show weight entries as a grid of stat cards '
             'instead of the default list',
         child: ListTile(
           title: const Text('Weight stat cards'),

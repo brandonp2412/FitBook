@@ -6,10 +6,24 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
-import 'package:fit_book/weight/weight_variants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+/// Formatted, signed change versus the next-older entry, or null at the
+/// oldest entry or when the change rounds to zero.
+String? weightDeltaLabel(List<Weight> weights, int index) {
+  if (index >= weights.length - 1) return null;
+  final delta = weights[index].amount - weights[index + 1].amount;
+  if (delta.abs() < 0.01) return null;
+  final sign = delta > 0 ? '▲' : '▼';
+  return '$sign${delta.abs().toStringAsFixed(1)}';
+}
+
+bool weightDeltaIsUp(String delta) => delta.startsWith('▲');
+
+Color weightDeltaColor(ColorScheme colorScheme, String delta) =>
+    weightDeltaIsUp(delta) ? colorScheme.tertiary : colorScheme.secondary;
 
 class WeightList extends StatefulWidget {
   const WeightList({
@@ -19,7 +33,6 @@ class WeightList extends StatefulWidget {
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
-    this.variant = WeightVariant.defaultView,
     this.extraTopPadding = 0,
   });
 
@@ -28,7 +41,6 @@ class WeightList extends StatefulWidget {
   final ValueChanged<int> onSelect;
   final VoidCallback onNext;
   final ScrollController ctrl;
-  final WeightVariant variant;
   final double extraTopPadding;
 
   @override
@@ -71,24 +83,6 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
-
-    if (widget.variant != WeightVariant.defaultView) {
-      return buildWeightVariant(
-        widget.variant,
-        VariantProps(
-          context: context,
-          weights: widget.weights,
-          selected: widget.selected,
-          onSelect: widget.onSelect,
-          ctrl: widget.ctrl,
-          bottomPadding: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
-          topPadding: widget.extraTopPadding,
-          now: now,
-          settings: settings,
-        ),
-      );
-    }
 
     if (settings.compactWeights) {
       final theme = Theme.of(context);
