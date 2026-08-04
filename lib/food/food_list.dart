@@ -1,14 +1,11 @@
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
+import 'package:fit_book/food/food_item_row.dart';
+import 'package:fit_book/food/meal_row.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:fit_book/utils.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -71,98 +68,45 @@ class _FoodListState extends State<FoodList> {
     final settings = context.watch<SettingsState>().value;
 
     final children = <Widget>[];
-    for (var i = 0; i < widget.items.length; i++) {
-      final item = widget.items[i];
-
+    for (final item in widget.items) {
       if (item is Meal) {
         children.add(
           KeyedSubtree(
             key: ValueKey('meal_${item.id}'),
-            child: _buildMealTile(context, item),
+            child: MealRow(
+              meal: item,
+              isSelected: widget.selectedMeals.contains(item.id),
+              showImages: settings.showImages,
+              formatter: formatter,
+              totals: widget.mealCalories[item.id],
+              onTap: () {
+                if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditMealPage(id: item.id),
+                    ),
+                  );
+                else
+                  widget.onMealSelect?.call(item.id);
+              },
+              onLongPress: () => widget.onMealSelect?.call(item.id),
+              onCheckboxChanged: (_) => widget.onMealSelect?.call(item.id),
+            ),
           ),
         );
         continue;
       }
 
       final food = item as FoodsCompanion;
-      final selected = widget.selected.contains(food.id.value);
-      final shortUnit = getShortUnit(food.servingUnit.value ?? 'grams');
-
-      Widget? image;
-      if (settings.showImages) {
-        if (food.imageFile.value?.isNotEmpty == true)
-          image = Image.file(
-            File(food.imageFile.value!),
-            errorBuilder: (context, error, stackTrace) =>
-                const SizedBox.shrink(),
-          );
-        else if (food.smallImage.value?.isNotEmpty == true)
-          image = material.SizedBox(
-            height: 80,
-            width: 50,
-            child: CachedNetworkImage(imageUrl: food.smallImage.value!),
-          );
-      }
+      final isSelected = widget.selected.contains(food.id.value);
 
       children.add(
-        ListTile(
-          tileColor: selected
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
-              : null,
-          leading: image,
-          title: Text(food.name.value),
-          subtitle: () {
-            final cal = food.calories.value ?? 0;
-            final size = food.servingSize.value ?? 100;
-            final calPer100g = size > 0 ? cal * 100 / size : cal;
-            return Row(
-              children: [
-                Text("${formatter.format(cal)} kcal"),
-                if ((size - 100).abs() > 0.5)
-                  Text(
-                    " · ${formatter.format(calPer100g)}/100g",
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                  ),
-                if (food.favorite.value == true) ...[
-                  const SizedBox(width: 6),
-                  Icon(
-                    Icons.favorite,
-                    size: 12,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ],
-              ],
-            );
-          }(),
-          trailing: Stack(
-            children: [
-              AnimatedScale(
-                duration: const Duration(milliseconds: 150),
-                scale: selected ? 0.0 : 1.0,
-                child: Visibility(
-                  visible: !selected,
-                  child: Text(
-                    "${food.servingSize.value?.toInt() ?? "100"} $shortUnit",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-              AnimatedScale(
-                duration: const Duration(milliseconds: 150),
-                scale: selected ? 1.0 : 0.0,
-                child: Visibility(
-                  visible: selected,
-                  child: Checkbox(
-                    value: selected,
-                    onChanged: (_) => widget.onSelect(food.id.value),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          onLongPress: () => widget.onSelect(food.id.value),
+        FoodItemRow(
+          food: food,
+          isSelected: isSelected,
+          showImages: settings.showImages,
+          formatter: formatter,
           onTap: () {
             if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
               Navigator.push(
@@ -177,6 +121,8 @@ class _FoodListState extends State<FoodList> {
             else
               widget.onSelect(food.id.value);
           },
+          onLongPress: () => widget.onSelect(food.id.value),
+          onCheckboxChanged: (_) => widget.onSelect(food.id.value),
         ),
       );
     }
@@ -190,97 +136,6 @@ class _FoodListState extends State<FoodList> {
         ),
         controller: widget.ctrl,
         children: children,
-      ),
-    );
-  }
-
-  Widget _buildMealTile(BuildContext context, Meal meal) {
-    final selected = widget.selectedMeals.contains(meal.id);
-    final settings = context.watch<SettingsState>().value;
-
-    Widget leading;
-    if (settings.showImages && meal.imageFile?.isNotEmpty == true) {
-      leading = Stack(
-        clipBehavior: Clip.none,
-        children: [
-          SizedBox(
-            height: 48,
-            width: 48,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.file(
-                File(meal.imageFile!),
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Icon(
-                  Icons.restaurant,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: -4,
-            bottom: -4,
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                shape: BoxShape.circle,
-              ),
-              child:
-                  const Icon(Icons.restaurant, size: 10, color: Colors.white),
-            ),
-          ),
-        ],
-      );
-    } else {
-      leading = Icon(
-        Icons.restaurant,
-        color: Theme.of(context).colorScheme.primary,
-      );
-    }
-
-    return material.DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: selected
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
-              : Colors.transparent,
-          width: 1,
-        ),
-      ),
-      child: ListTile(
-        tileColor: selected
-            ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
-            : null,
-        leading: leading,
-        title: Text(meal.name),
-        subtitle: () {
-          final totals = widget.mealCalories[meal.id];
-          if (totals == null) return const Text('Meal');
-          return Text(
-            '${formatter.format(totals.calories)} kcal'
-            '${totals.protein > 0 ? " · ${formatter.format(totals.protein)}g protein" : ""}',
-          );
-        }(),
-        trailing: selected
-            ? Checkbox(
-                value: true,
-                onChanged: (_) => widget.onMealSelect?.call(meal.id),
-              )
-            : null,
-        onLongPress: () => widget.onMealSelect?.call(meal.id),
-        onTap: () {
-          if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditMealPage(id: meal.id),
-              ),
-            );
-          else
-            widget.onMealSelect?.call(meal.id);
-        },
       ),
     );
   }
