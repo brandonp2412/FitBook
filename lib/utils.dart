@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
@@ -97,6 +97,7 @@ Future<void> showImageOptionsSheet({
 }) {
   return showModalBottomSheet(
     context: context,
+    useRootNavigator: true,
     builder: (ctx) => SafeArea(
       child: Wrap(
         children: [
