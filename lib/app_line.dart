@@ -43,6 +43,8 @@ class _AppLineState extends State<AppLine> {
 
   late Stream<List<GraphData>> stream;
   late Setting settings;
+  bool showMain = true;
+  bool showGoal = true;
   bool showTrend = false;
   bool showSmooth = false;
 
@@ -340,27 +342,31 @@ class _AppLineState extends State<AppLine> {
         List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
         List<FlSpot> smoothSpots = showSmooth ? _getSmoothSpots(rows) : [];
 
-        List<LineChartBarData> lineBars = [
-          LineChartBarData(
-            spots: spots,
-            isCurved: sel.curveLines,
-            preventCurveOverShooting: true,
-            color: Theme.of(context).colorScheme.primary,
-            barWidth: 3,
-            isStrokeCapRound: true,
-            dotData: const FlDotData(
-              show: false,
-            ),
-            belowBarData: BarAreaData(
-              show: true,
-              gradient: LinearGradient(
-                colors: gradColors
-                    .map((color) => color.withValues(alpha: 0.3))
-                    .toList(),
+        List<LineChartBarData> lineBars = [];
+
+        if (showMain) {
+          lineBars.add(
+            LineChartBarData(
+              spots: spots,
+              isCurved: sel.curveLines,
+              preventCurveOverShooting: true,
+              color: Theme.of(context).colorScheme.primary,
+              barWidth: 3,
+              isStrokeCapRound: true,
+              dotData: const FlDotData(
+                show: false,
+              ),
+              belowBarData: BarAreaData(
+                show: true,
+                gradient: LinearGradient(
+                  colors: gradColors
+                      .map((color) => color.withValues(alpha: 0.3))
+                      .toList(),
+                ),
               ),
             ),
-          ),
-        ];
+          );
+        }
 
         if (showTrend && trendSpots.isNotEmpty) {
           lineBars.add(
@@ -405,7 +411,7 @@ class _AppLineState extends State<AppLine> {
                     minY: sel.graphsStartAtZero ? 0 : null,
                     extraLinesData: ExtraLinesData(
                       horizontalLines: [
-                        if (goal > 0)
+                        if (goal > 0 && showGoal)
                           HorizontalLine(
                             y: goal.toDouble(),
                             color: Theme.of(context).colorScheme.onSurface,
@@ -446,9 +452,46 @@ class _AppLineState extends State<AppLine> {
               ),
             ),
             const SizedBox(height: 12.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Wrap(
+              alignment: WrapAlignment.spaceEvenly,
               children: [
+                _statTile(
+                  leading: Checkbox(
+                    value: showMain,
+                    onChanged: (_) => setState(() => showMain = !showMain),
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.primary
+                          : null,
+                    ),
+                  ),
+                  label: "Value",
+                  value:
+                      "${formatter.format(rows.last.val)} ${rows.first.unit}",
+                  onTap: () => setState(() => showMain = !showMain),
+                ),
+                _statTile(
+                  leading: Checkbox(
+                    value: showGoal,
+                    onChanged: goal > 0
+                        ? (_) => setState(() => showGoal = !showGoal)
+                        : null,
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.onSurface
+                          : null,
+                    ),
+                  ),
+                  label: "Goal",
+                  value: goal > 0
+                      ? "${formatter.format(goal)} ${rows.first.unit}"
+                      : "Not set",
+                  onTap: goal > 0
+                      ? () => setState(() => showGoal = !showGoal)
+                      : () {},
+                ),
                 _statTile(
                   leading: Checkbox(
                     value: showTrend,
