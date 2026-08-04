@@ -91,10 +91,15 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
     }
 
     if (settings.compactWeights) {
+      final theme = Theme.of(context);
+      final colorScheme = theme.colorScheme;
+
       return Expanded(
         child: ListView.builder(
           padding: EdgeInsets.only(
             top: appSearchHeight + widget.extraTopPadding + 8,
+            left: 12,
+            right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
                 BottomNav.totalOverlayHeight,
           ),
@@ -103,70 +108,103 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
           itemBuilder: (context, index) {
             final weight = widget.weights[index];
             final isToday = isSameDay(weight.created, now);
-            Widget? leading;
+            final isSelected = widget.selected.contains(weight.id);
+            final delta = weightDeltaLabel(widget.weights, index);
 
-            if (settings.showImages && weight.image?.isNotEmpty == true) {
-              leading = Image.file(
-                File(weight.image!),
-                errorBuilder: (context, error, stackTrace) => TextButton.icon(
-                  onPressed: () {},
-                  label: const Text('Image error'),
-                  icon: const Icon(Icons.error),
+            return InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                if (widget.selected.isEmpty) {
+                  showEditWeight(context, weight.toCompanion(false));
+                } else {
+                  widget.onSelect(weight.id);
+                }
+              },
+              onLongPress: () => widget.onSelect(weight.id),
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? colorScheme.primary.withValues(alpha: 0.08)
+                      : null,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              );
-            }
-
-            return Column(
-              children: [
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: widget.selected.contains(weight.id)
-                          ? Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withValues(alpha: 0.3)
-                          : Colors.transparent,
-                      width: 1,
-                    ),
-                  ),
-                  child: ListTile(
-                    tileColor: widget.selected.contains(weight.id)
-                        ? Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: .08)
-                        : null,
-                    leading: leading,
-                    title: Text(
-                      "${weight.amount.toStringAsFixed(2)} ${weight.unit}",
-                    ),
-                    trailing: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: widget.selected.contains(weight.id) ? 1.0 : 0.0,
-                      child: Checkbox(
-                        value: widget.selected.contains(weight.id),
-                        onChanged: (_) => widget.onSelect(weight.id),
+                child: Row(
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(minWidth: 64),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 9,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isToday
+                            ? colorScheme.primary
+                            : colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        '${weight.amount.toStringAsFixed(1)}${weight.unit}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w700,
+                          color: isToday ? colorScheme.onPrimary : null,
+                        ),
                       ),
                     ),
-                    subtitle: Text(
-                      DateFormat(settings.longDateFormat)
-                          .format(weight.created),
-                      style: isToday
-                          ? const TextStyle(fontWeight: FontWeight.bold)
-                          : null,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isToday
+                                ? 'Today'
+                                : DateFormat(settings.shortDateFormat)
+                                    .format(weight.created),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: isToday ? FontWeight.w700 : null,
+                              color: isToday ? colorScheme.primary : null,
+                            ),
+                          ),
+                          Text(
+                            DateFormat('hh:mm a').format(weight.created),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    onLongPress: () => widget.onSelect(weight.id),
-                    onTap: () {
-                      if (widget.selected.isEmpty) {
-                        showEditWeight(context, weight.toCompanion(false));
-                      } else {
-                        widget.onSelect(weight.id);
-                      }
-                    },
-                  ),
+                    if (delta != null) ...[
+                      Text(
+                        delta,
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontFamily: 'monospace',
+                          fontWeight: FontWeight.w700,
+                          color: weightDeltaColor(colorScheme, delta),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    if (isSelected)
+                      Icon(
+                        Icons.check_circle,
+                        size: 18,
+                        color: colorScheme.primary,
+                      )
+                    else if (widget.selected.isNotEmpty)
+                      Icon(
+                        Icons.circle_outlined,
+                        size: 18,
+                        color: colorScheme.outlineVariant,
+                      ),
+                  ],
                 ),
-              ],
+              ),
             );
           },
         ),

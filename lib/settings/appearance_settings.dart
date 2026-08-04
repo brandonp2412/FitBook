@@ -202,11 +202,12 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
           ),
         ),
       ),
-    if ('compact weights'.contains(term))
+    if ('weight stat cards'.contains(term))
       Tooltip(
-        message: 'Use a compact list display for weights',
+        message: 'Show weight entries as stat cards with sparklines '
+            'instead of the default list',
         child: ListTile(
-          title: const Text('Compact weights display'),
+          title: const Text('Weight stat cards'),
           leading: settings.value.compactWeights
               ? const Icon(Icons.list)
               : const Icon(Icons.grid_view),
@@ -216,10 +217,10 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
                 ),
               ),
           trailing: Switch(
-            value: settings.value.compactWeights,
+            value: !settings.value.compactWeights,
             onChanged: (value) => db.settings.update().write(
                   SettingsCompanion(
-                    compactWeights: Value(value),
+                    compactWeights: Value(!value),
                   ),
                 ),
           ),

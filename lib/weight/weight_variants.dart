@@ -30,7 +30,7 @@ extension WeightVariantLabel on WeightVariant {
 
 /// The formatted, signed change versus the next-older entry in [weights],
 /// or null when there is no older entry or the change rounds to zero.
-String? _deltaLabel(List<Weight> weights, int index) {
+String? weightDeltaLabel(List<Weight> weights, int index) {
   if (index >= weights.length - 1) return null;
   final delta = weights[index].amount - weights[index + 1].amount;
   if (delta.abs() < 0.01) return null;
@@ -38,7 +38,11 @@ String? _deltaLabel(List<Weight> weights, int index) {
   return '$sign${delta.abs().toStringAsFixed(1)}';
 }
 
-bool _deltaIsUp(String delta) => delta.startsWith('▲');
+bool weightDeltaIsUp(String delta) => delta.startsWith('▲');
+
+/// Theme-relevant color for a delta label produced by [weightDeltaLabel].
+Color weightDeltaColor(ColorScheme colorScheme, String delta) =>
+    weightDeltaIsUp(delta) ? colorScheme.tertiary : colorScheme.secondary;
 
 class VariantProps {
   const VariantProps({
@@ -110,7 +114,7 @@ Widget _buildLedger(VariantProps p) {
         final weight = p.weights[index];
         final isToday = isSameDay(weight.created, p.now);
         final isSelected = p.selected.contains(weight.id);
-        final delta = _deltaLabel(p.weights, index);
+        final delta = weightDeltaLabel(p.weights, index);
 
         return DecoratedBox(
           decoration: BoxDecoration(
@@ -183,9 +187,7 @@ Widget _buildLedger(VariantProps p) {
                           color: delta == null
                               ? colorScheme.onSurfaceVariant
                                   .withValues(alpha: 0.5)
-                              : _deltaIsUp(delta)
-                                  ? Colors.red.shade400
-                                  : Colors.green.shade600,
+                              : weightDeltaColor(colorScheme, delta),
                         ),
                       ),
                     ),
@@ -473,7 +475,7 @@ Widget _buildStatCards(VariantProps p) {
         final weight = p.weights[index];
         final isToday = isSameDay(weight.created, p.now);
         final isSelected = p.selected.contains(weight.id);
-        final delta = _deltaLabel(p.weights, index);
+        final delta = weightDeltaLabel(p.weights, index);
         final sparkColor = isToday
             ? colorScheme.primary
             : colorScheme.onSurfaceVariant.withValues(alpha: 0.5);
@@ -529,9 +531,8 @@ Widget _buildStatCards(VariantProps p) {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                (_deltaIsUp(delta) ? Colors.red : Colors.green)
-                                    .withValues(alpha: 0.14),
+                            color: weightDeltaColor(colorScheme, delta)
+                                .withValues(alpha: 0.14),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -539,9 +540,7 @@ Widget _buildStatCards(VariantProps p) {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
-                              color: _deltaIsUp(delta)
-                                  ? Colors.red.shade400
-                                  : Colors.green.shade600,
+                              color: weightDeltaColor(colorScheme, delta),
                             ),
                           ),
                         ),
