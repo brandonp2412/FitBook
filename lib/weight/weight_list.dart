@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
@@ -204,10 +202,13 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
         ),
       );
     } else {
+      final theme = Theme.of(context);
+      final colorScheme = theme.colorScheme;
+
       return Expanded(
         child: GridView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding + 12,
+            top: appSearchHeight + widget.extraTopPadding + 8,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
@@ -216,29 +217,110 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 190,
-            mainAxisExtent: 140,
-            mainAxisSpacing: 8,
+            mainAxisExtent: 128,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
           ),
           itemCount: widget.weights.length,
           itemBuilder: (context, index) {
             final weight = widget.weights[index];
             final isToday = isSameDay(weight.created, now);
             final isSelected = widget.selected.contains(weight.id);
+            final delta = weightDeltaLabel(widget.weights, index);
+            final sparkColor = isToday
+                ? colorScheme.primary
+                : colorScheme.onSurfaceVariant.withValues(alpha: 0.5);
 
-            return WeightCard(
-              weight: weight,
-              isToday: isToday,
-              isSelected: isSelected,
-              showImages: settings.showImages,
-              dateFormat: settings.shortDateFormat,
-              onTap: () {
-                if (widget.selected.isEmpty) {
-                  showEditWeight(context, weight.toCompanion(false));
-                } else {
-                  widget.onSelect(weight.id);
-                }
-              },
-              onLongPress: () => widget.onSelect(weight.id),
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: isToday
+                    ? colorScheme.primary.withValues(alpha: 0.1)
+                    : colorScheme.surfaceContainerHigh,
+                borderRadius: BorderRadius.circular(14),
+                border: isSelected
+                    ? Border.all(color: colorScheme.primary, width: 2)
+                    : null,
+              ),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                onTap: () {
+                  if (widget.selected.isEmpty) {
+                    showEditWeight(context, weight.toCompanion(false));
+                  } else {
+                    widget.onSelect(weight.id);
+                  }
+                },
+                onLongPress: () => widget.onSelect(weight.id),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  weight.amount.toStringAsFixed(1),
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.0,
+                                    color: isToday ? colorScheme.primary : null,
+                                  ),
+                                ),
+                                Text(
+                                  '${weight.unit.toUpperCase()}${isToday ? ' · TODAY' : ''}',
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                    letterSpacing: 0.4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (delta != null)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: weightDeltaColor(colorScheme, delta)
+                                    .withValues(alpha: 0.14),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                delta,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  color: weightDeltaColor(colorScheme, delta),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      _Spark(
+                        values: _sparkValues(widget.weights, index),
+                        color: sparkColor,
+                      ),
+                      Text(
+                        isToday
+                            ? 'Today'
+                            : DateFormat(
+                                settings.shortDateFormat,
+                              ).format(weight.created),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         ),
@@ -247,203 +329,68 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   }
 }
 
-class WeightCard extends StatelessWidget {
-  const WeightCard({
-    super.key,
-    required this.weight,
-    required this.isToday,
-    required this.isSelected,
-    required this.showImages,
-    required this.dateFormat,
-    required this.onTap,
-    required this.onLongPress,
-  });
+List<double> _sparkValues(List<Weight> weights, int index) {
+  final start = (index - 2).clamp(0, weights.length);
+  final end = (index + 3).clamp(0, weights.length);
+  final slice = weights.sublist(start, end).reversed.map((w) => w.amount);
+  final values = slice.toList();
+  return values.length >= 2
+      ? values
+      : [weights[index].amount, weights[index].amount];
+}
 
-  final Weight weight;
-  final bool isToday;
-  final bool isSelected;
-  final bool showImages;
-  final String dateFormat;
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
+class _Spark extends StatelessWidget {
+  const _Spark({required this.values, required this.color});
+
+  final List<double> values;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    return SizedBox(
+      height: 22,
+      width: double.infinity,
+      child: CustomPaint(painter: _SparkPainter(values, color)),
+    );
+  }
+}
 
-    final accent = isToday ? colorScheme.primary : colorScheme.onSurfaceVariant;
-    final hasImage = showImages && weight.image?.isNotEmpty == true;
+class _SparkPainter extends CustomPainter {
+  _SparkPainter(this.values, this.color);
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      elevation: isSelected ? 6 : 0,
-      shadowColor: colorScheme.primary.withValues(alpha: 0.4),
-      color: isSelected
-          ? colorScheme.primaryContainer.withValues(alpha: 0.35)
-          : colorScheme.surfaceContainerHigh,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: isSelected
-              ? colorScheme.primary
-              : colorScheme.outlineVariant.withValues(alpha: 0.6),
-          width: isSelected ? 2 : 1,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          weight.amount.toStringAsFixed(1),
-                          style: theme.textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            height: 1.0,
-                            color: isToday ? colorScheme.primary : null,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          weight.unit,
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (isSelected)
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.check,
-                        color: colorScheme.onPrimary,
-                        size: 16,
-                      ),
-                    )
-                  else if (isToday)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        'Today',
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              if (hasImage) ...[
-                const SizedBox(height: 12),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      File(weight.image!),
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: colorScheme.surfaceContainerHighest,
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Icons.broken_image_outlined,
-                          color: colorScheme.onSurfaceVariant,
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ] else
-                const Spacer(),
-              const SizedBox(height: 12),
-              Divider(
-                height: 1,
-                thickness: 1,
-                color: colorScheme.outlineVariant.withValues(alpha: 0.4),
-              ),
-              const SizedBox(height: 8),
-              _footerLine(
-                theme,
-                icon: isToday ? Icons.today : Icons.calendar_today,
-                color: accent,
-                text: _formatDateForCard(weight.created, dateFormat),
-                bold: isToday,
-              ),
-              const SizedBox(height: 4),
-              _footerLine(
-                theme,
-                icon: Icons.schedule,
-                color: colorScheme.onSurfaceVariant,
-                text: DateFormat('hh:mm a').format(weight.created),
-                bold: false,
-              ),
-            ],
-          ),
-        ),
-      ),
+  final List<double> values;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final minValue = values.reduce((a, b) => a < b ? a : b);
+    final maxValue = values.reduce((a, b) => a > b ? a : b);
+    final range =
+        (maxValue - minValue).abs() < 0.01 ? 1.0 : maxValue - minValue;
+
+    final path = Path();
+    for (var i = 0; i < values.length; i++) {
+      final x = size.width * i / (values.length - 1);
+      final y = size.height - (values[i] - minValue) / range * size.height;
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = color
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
     );
   }
 
-  Widget _footerLine(
-    ThemeData theme, {
-    required IconData icon,
-    required Color color,
-    required String text,
-    required bool bold,
-  }) {
-    return Row(
-      children: [
-        Icon(icon, size: 14, color: color),
-        const SizedBox(width: 6),
-        Expanded(
-          child: Text(
-            text,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: color,
-              fontWeight: bold ? FontWeight.w600 : null,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
-    );
-  }
-
-  String _formatDateForCard(DateTime date, String format) {
-    // Use a more compact format for cards
-    final now = DateTime.now();
-    if (isSameDay(date, now)) return 'Today';
-    if (isSameDay(date, now.subtract(const Duration(days: 1))))
-      return 'Yesterday';
-
-    // For cards, use a shorter format
-    return DateFormat(format).format(date);
-  }
+  @override
+  bool shouldRepaint(covariant _SparkPainter oldDelegate) =>
+      oldDelegate.values != values || oldDelegate.color != color;
 }
