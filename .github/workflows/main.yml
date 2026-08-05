@@ -230,20 +230,12 @@ jobs:
           sed -i -e 's/-Wl,/-Wl,--build-id=none,/' \
             .pub-cache/hosted/pub.dev/jni-*/src/CMakeLists.txt
 
-      - name: Decode Android keystore
-        working-directory: /home/brandon/fitbook
-        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
-
-      - name: Rebuild android independently
+      - name: Rebuild android independently (unsigned, matching F-Droid)
         working-directory: /home/brandon/fitbook
         run: |
-          echo "storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=keystore.jks" >> android/key.properties
-
-          # Same invocations as build-android, so the only difference between
-          # the two builds is the runner/checkout instance itself.
+          # No key.properties: AGP's signingConfigs.release resolves to all-null
+          # properties, so the release build type produces a genuinely unsigned
+          # APK — matching F-Droid's buildserver, which never has the signing key.
           flutter build apk --release --split-per-abi --target-platform android-x64
           flutter build apk --release --split-per-abi --target-platform android-arm64
           flutter build apk --release --split-per-abi --target-platform android-arm
@@ -254,31 +246,64 @@ jobs:
           name: android-builds
           path: reference-build
 
-      - name: Compare rebuilt APKs against build-android output
+      - name: Install apksigcopier
+        run: |
+          pipx install apksigcopier
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          APKSIGNER_DIR=$(dirname "$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)")
+          echo "$APKSIGNER_DIR" >> $GITHUB_PATH
+
+      - name: Compare rebuilt APKs against build-android output (F-Droid method)
         working-directory: /home/brandon/fitbook
         run: |
+          # Mirrors fdroidserver's actual reproducibility check: copy the
+          # signature from the officially signed reference APK onto the
+          # unsigned rebuild and verify it with apksigner. This only succeeds
+          # if the rebuilt content is byte-identical to what was originally
+          # signed, since APK Signature Scheme v2/v3 covers all APK bytes
+          # outside the signing block itself.
           status=0
-          for apk in build/app/outputs/flutter-apk/app-*-release.apk; do
-            name=$(basename "$apk")
-            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/$name"
+          for abi in x86_64 armeabi-v7a arm64-v8a; do
+            rebuilt=$(ls build/app/outputs/flutter-apk/app-${abi}-release*.apk 2>/dev/null || true)
+            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
 
-            if [ ! -f "$reference" ]; then
-              echo "::error::No reference artifact found for $name"
+            if [ ! -f "$reference" ] || [ -z "$rebuilt" ]; then
+              echo "::error::Missing artifact for $abi (reference=$reference rebuilt=$rebuilt)"
               status=1
               continue
             fi
 
-            rebuilt_sha=$(sha256sum "$apk" | cut -d' ' -f1)
-            reference_sha=$(sha256sum "$reference" | cut -d' ' -f1)
-
-            if [ "$rebuilt_sha" != "$reference_sha" ]; then
-              echo "::error::$name is not reproducible: build-android=$reference_sha rebuild=$rebuilt_sha"
-              status=1
+            if apksigcopier compare --unsigned "$reference" "$rebuilt"; then
+              echo "$abi reproducible"
             else
-              echo "$name reproducible: $rebuilt_sha"
+              echo "::error::$abi is not reproducible (apksigcopier compare failed)"
+              status=1
             fi
           done
           exit $status
+
+      - name: Diagnose non-reproducible APKs with diffoscope
+        if: failure()
+        working-directory: /home/brandon/fitbook
+        run: |
+          sudo apt-get update && sudo apt-get install -y diffoscope
+          mkdir -p diffoscope-report
+          for abi in x86_64 armeabi-v7a arm64-v8a; do
+            rebuilt=$(ls build/app/outputs/flutter-apk/app-${abi}-release*.apk 2>/dev/null || true)
+            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
+            [ -f "$reference" ] && [ -n "$rebuilt" ] || continue
+            diffoscope --max-report-size 20000000 --max-diff-block-lines 256 \
+              --html "diffoscope-report/${abi}.html" --text "diffoscope-report/${abi}.txt" \
+              "$reference" "$rebuilt" || true
+          done
+
+      - name: Upload diffoscope diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          retention-days: 7
+          name: diffoscope-report
+          path: /home/brandon/fitbook/diffoscope-report
 
   build-linux:
     needs: version-bump
