@@ -17,7 +17,7 @@ class DiaryEntryRow extends StatelessWidget {
     required this.onLongPress,
     required this.showImages,
     this.trailingUnit = false,
-    this.dense = true,
+    this.dense = false,
   });
 
   final DiaryFood food;
