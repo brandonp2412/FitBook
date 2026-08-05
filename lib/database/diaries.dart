@@ -2,6 +2,18 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/foods.dart';
 import 'package:fit_book/database/meals.dart';
 
+@TableIndex(
+  name: 'diaries_created_idx',
+  columns: {IndexedColumn(#created, orderBy: OrderingMode.desc)},
+)
+@TableIndex(
+  name: 'diaries_food_created_idx',
+  columns: {
+    #food,
+    IndexedColumn(#created, orderBy: OrderingMode.desc),
+  },
+)
+@TableIndex(name: 'diaries_meal_idx', columns: {#meal})
 class Diaries extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get food => integer().nullable().references(Foods, #id)();

@@ -8649,12 +8649,46 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $SettingsTable settings = $SettingsTable(this);
   late final $MetadataTable metadata = $MetadataTable(this);
   late final $MealFoodsTable mealFoods = $MealFoodsTable(this);
+  late final Index foodsFavoriteCreatedIdx = Index('foods_favorite_created_idx',
+      'CREATE INDEX foods_favorite_created_idx ON foods (favorite DESC, created DESC)');
+  late final Index foodsBarcodeIdx = Index(
+      'foods_barcode_idx', 'CREATE INDEX foods_barcode_idx ON foods (barcode)');
+  late final Index diariesCreatedIdx = Index('diaries_created_idx',
+      'CREATE INDEX diaries_created_idx ON diaries (created DESC)');
+  late final Index diariesFoodCreatedIdx = Index('diaries_food_created_idx',
+      'CREATE INDEX diaries_food_created_idx ON diaries (food, created DESC)');
+  late final Index diariesMealIdx = Index(
+      'diaries_meal_idx', 'CREATE INDEX diaries_meal_idx ON diaries (meal)');
+  late final Index weightsCreatedIdx = Index('weights_created_idx',
+      'CREATE INDEX weights_created_idx ON weights (created DESC)');
+  late final Index mealsCreatedIdx = Index('meals_created_idx',
+      'CREATE INDEX meals_created_idx ON meals (created DESC)');
+  late final Index mealFoodsMealIdx = Index('meal_foods_meal_idx',
+      'CREATE INDEX meal_foods_meal_idx ON meal_foods (meal)');
+  late final Index mealFoodsFoodIdx = Index('meal_foods_food_idx',
+      'CREATE INDEX meal_foods_food_idx ON meal_foods (food)');
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [foods, meals, diaries, weights, settings, metadata, mealFoods];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        foods,
+        meals,
+        diaries,
+        weights,
+        settings,
+        metadata,
+        mealFoods,
+        foodsFavoriteCreatedIdx,
+        foodsBarcodeIdx,
+        diariesCreatedIdx,
+        diariesFoodCreatedIdx,
+        diariesMealIdx,
+        weightsCreatedIdx,
+        mealsCreatedIdx,
+        mealFoodsMealIdx,
+        mealFoodsFoodIdx
+      ];
 }
 
 typedef $$FoodsTableCreateCompanionBuilder = FoodsCompanion Function({

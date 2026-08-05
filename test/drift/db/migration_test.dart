@@ -37,6 +37,34 @@ void main() {
     }
   });
 
+  test('migration from v48 creates query indexes', () async {
+    final schema = await verifier.schemaAt(48);
+    final db = AppDatabase(executor: schema.newConnection());
+
+    final indexes = await db.customSelect('''
+      SELECT name
+      FROM sqlite_master
+      WHERE type = 'index' AND name LIKE '%_idx'
+    ''').get();
+
+    expect(
+      indexes.map((row) => row.read<String>('name')).toSet(),
+      containsAll({
+        'foods_favorite_created_idx',
+        'foods_barcode_idx',
+        'diaries_created_idx',
+        'diaries_food_created_idx',
+        'diaries_meal_idx',
+        'weights_created_idx',
+        'meals_created_idx',
+        'meal_foods_meal_idx',
+        'meal_foods_food_idx',
+      }),
+    );
+
+    await db.close();
+  });
+
   // The following template shows how to write tests ensuring your migrations
   // preserve existing data.
   // Testing this can be useful for migrations that change existing columns

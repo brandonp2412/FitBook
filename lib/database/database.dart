@@ -65,60 +65,12 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('PRAGMA foreign_keys = OFF');
 
         await transaction(() async {
-          // runMigrationSteps only knows steps up to v48; cap the range so it
-          // does not throw "unknown migration from 48" when upgrading to v49+.
-          final stepTo = to < 49 ? to : 48;
-          if (from < stepTo) {
-            await VersionedSchema.runMigrationSteps(
-              migrator: m,
-              from: from,
-              to: stepTo,
-              steps: _upgrade,
-            );
-          }
-
-          if (from < 50 && to >= 50) {
-            // Some restored/dirty databases already carry this column from a
-            // partially-applied prior migration; ignore duplicate-column
-            // errors instead of crashing the whole upgrade.
-            await m.database
-                .customStatement(
-                  'ALTER TABLE settings ADD COLUMN graphs_start_at_zero INTEGER NOT NULL DEFAULT 0',
-                )
-                .catchError((_) {});
-          }
-
-          if (from < 49 && to >= 49) {
-            final diariesColumns = await m.database
-                .customSelect("PRAGMA table_info('diaries')")
-                .get();
-            final alreadyMigrated = diariesColumns.any(
-              (row) => row.data['name'] == 'meal',
-            );
-
-            if (!alreadyMigrated) {
-              await m.database.customStatement(
-                'DROP TABLE IF EXISTS diaries_new',
-              );
-              await m.database.customStatement('''
-                CREATE TABLE diaries_new (
-                  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                  food INTEGER REFERENCES foods(id),
-                  meal INTEGER REFERENCES meals(id),
-                  created INTEGER NOT NULL,
-                  quantity REAL NOT NULL,
-                  unit TEXT NOT NULL
-                )
-              ''');
-              await m.database.customStatement(
-                'INSERT INTO diaries_new SELECT id, food, NULL, created, quantity, unit FROM diaries',
-              );
-              await m.database.customStatement('DROP TABLE diaries');
-              await m.database.customStatement(
-                'ALTER TABLE diaries_new RENAME TO diaries',
-              );
-            }
-          }
+          await VersionedSchema.runMigrationSteps(
+            migrator: m,
+            from: from,
+            to: to,
+            steps: _upgrade,
+          );
         });
 
         // TODO: Un-comment this (drift upgrade broke validations)
@@ -427,8 +379,28 @@ WHERE name = 'Quick-add'
     from47To48: (Migrator m, Schema48 schema) async {
       await m.addColumn(schema.meals, schema.meals.imageFile);
     },
+    from48To49: (Migrator m, Schema49 schema) async {
+      await m.addColumn(schema.diaries, schema.diaries.meal);
+    },
+    from49To50: (Migrator m, Schema50 schema) async {
+      await m.addColumn(
+        schema.settings,
+        schema.settings.graphsStartAtZero,
+      );
+    },
+    from50To51: (Migrator m, Schema51 schema) async {
+      await m.createIndex(schema.foodsFavoriteCreatedIdx);
+      await m.createIndex(schema.foodsBarcodeIdx);
+      await m.createIndex(schema.diariesCreatedIdx);
+      await m.createIndex(schema.diariesFoodCreatedIdx);
+      await m.createIndex(schema.diariesMealIdx);
+      await m.createIndex(schema.weightsCreatedIdx);
+      await m.createIndex(schema.mealsCreatedIdx);
+      await m.createIndex(schema.mealFoodsMealIdx);
+      await m.createIndex(schema.mealFoodsFoodIdx);
+    },
   );
 
   @override
-  int get schemaVersion => 50;
+  int get schemaVersion => 51;
 }

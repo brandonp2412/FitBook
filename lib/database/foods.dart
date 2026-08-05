@@ -1,5 +1,13 @@
 import 'package:drift/drift.dart';
 
+@TableIndex(
+  name: 'foods_favorite_created_idx',
+  columns: {
+    IndexedColumn(#favorite, orderBy: OrderingMode.desc),
+    IndexedColumn(#created, orderBy: OrderingMode.desc),
+  },
+)
+@TableIndex(name: 'foods_barcode_idx', columns: {#barcode})
 class Foods extends Table {
   TextColumn get barcode => text().nullable()();
   RealColumn get addedSugarG => real().nullable()();
