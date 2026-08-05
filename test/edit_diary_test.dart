@@ -73,6 +73,8 @@ void main() async {
     await tester.pump();
     expect(find.text('41'), findsOne);
 
+    tester.testTextInput.hide();
+    await tester.pumpAndSettle();
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pump();
     expect(find.text('Add diary entry'), findsNothing);
