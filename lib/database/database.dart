@@ -73,21 +73,16 @@ class AppDatabase extends _$AppDatabase {
           );
         });
 
-        // TODO: Un-comment this (drift upgrade broke validations)
-        // if (kDebugMode) {
-        //   final wrongForeignKeys =
-        //       await customSelect('PRAGMA foreign_key_check').get();
-        //   assert(
-        //     wrongForeignKeys.isEmpty,
-        //     '${wrongForeignKeys.map((e) => e.data)}',
-        //   );
-        // }
+        if (kDebugMode) {
+          final wrongForeignKeys =
+              await customSelect('PRAGMA foreign_key_check').get();
+          assert(
+            wrongForeignKeys.isEmpty,
+            '${wrongForeignKeys.map((e) => e.data)}',
+          );
+        }
 
         await customStatement('PRAGMA foreign_keys = ON');
-      },
-      beforeOpen: (details) async {
-        // TODO: Un-comment this (drift upgrade broke validations)
-        // if (kDebugMode) await validateDatabaseSchema();
       },
     );
   }
