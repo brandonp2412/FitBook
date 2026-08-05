@@ -482,6 +482,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     final date = created ?? DateTime.now();
 
     if (_selectedMealId != null) {
+      if (foodDirty) {
+        await (db.meals.update()
+              ..where((meal) => meal.id.equals(_selectedMealId!)))
+            .write(MealsCompanion(imageFile: Value(imageFile)));
+      }
+
       if (widget.id == null)
         await db.into(db.diaries).insert(
               DiariesCompanion.insert(

@@ -264,6 +264,57 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('Editing a meal diary entry persists its image change',
+      (WidgetTester tester) async {
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(showImages: Value(true)),
+        );
+    final settings = await db.settings.select().getSingle();
+    final settingsState = SettingsState(settings);
+
+    final mealId = await db.meals.insertOne(
+      MealsCompanion.insert(
+        name: 'Breakfast Bowl',
+        created: DateTime.now(),
+        imageFile: const Value('/tmp/breakfast.jpg'),
+      ),
+    );
+    final entryId = await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        meal: Value(mealId),
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is InkWell &&
+            widget.child is SizedBox &&
+            (widget.child as SizedBox).height == 200,
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Delete image'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    final updatedMeal = await (db.meals.select()
+          ..where((meal) => meal.id.equals(mealId)))
+        .getSingle();
+    expect(updatedMeal.imageFile, isNull);
+
+    await db.close();
+  });
+
   testWidgets(
       'Editing a food diary entry persists quantity change to the database',
       (WidgetTester tester) async {
