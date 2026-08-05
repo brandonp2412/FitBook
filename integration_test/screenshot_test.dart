@@ -216,7 +216,7 @@ Future<void> appWrapper() async {
   runApp(app.appProviders(settingsState));
 }
 
-BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
+BuildContext getBuildContext(WidgetTester tester, TabBarState tabBarState) {
   switch (tabBarState) {
     case TabBarState.diary:
       return (tester.state(find.byType(DiaryPage)) as DiaryPageState)
@@ -228,16 +228,19 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState? tabBarState) {
       return (tester.state(find.byType(FoodPage)) as FoodPageState)
           .navKey
           .currentContext!;
-    case null:
-      break;
     case TabBarState.weights:
       return (tester.state(find.byType(WeightPage)) as WeightPageState)
           .navigatorKey
           .currentContext!;
   }
-
-  return tester.element(find.byType(TabBarView));
 }
+
+String bottomNavKey(TabBarState tabBarState) => switch (tabBarState) {
+      TabBarState.diary => 'DiaryPage',
+      TabBarState.graph => 'GraphPage',
+      TabBarState.foods => 'FoodPage',
+      TabBarState.weights => 'WeightPage',
+    };
 
 void navigateTo({required BuildContext context, required Widget page}) {
   Navigator.of(context).push(
@@ -258,9 +261,7 @@ Future<void> generateScreenshot({
   await appWrapper();
   await tester.pumpAndSettle();
 
-  final controllerState = getBuildContext(tester, null);
-  // ignore: use_build_context_synchronously
-  DefaultTabController.of(controllerState).index = tabBarState.index;
+  await tester.tap(find.byKey(Key(bottomNavKey(tabBarState))));
   await tester.pumpAndSettle();
 
   if (navigateToPage != null) {
