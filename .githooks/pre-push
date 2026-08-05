@@ -13,6 +13,12 @@ remote_name="$1"
 repo_root=$(git rev-parse --show-toplevel)
 cd "$repo_root"
 
+# Git supplies the refs it plans to update on stdin. Preserve them before
+# invoking Flutter/Dart tooling, since any child process is otherwise free to
+# consume stdin and leave the replacement-push loop with no refs to push.
+ref_updates=$(mktemp)
+trap 'rm -f "$ref_updates"' EXIT
+cat >"$ref_updates"
 
 echo "== pre-push: running checks =="
 if ! ./scripts/check.sh; then
@@ -27,13 +33,31 @@ if ! git diff --quiet || [ -n "$(git status --porcelain)" ]; then
   git commit -m "chore: auto-fix formatting/lint/generated client [pre-push]"
 
   echo "== pre-push: pushing auto-fix commit =="
+  current_ref=$(git symbolic-ref -q HEAD || true)
+  replacement_ref_found=0
+  refspecs=()
   while read -r local_ref _ remote_ref _; do
     [ -z "$local_ref" ] && continue
-    git push --no-verify "$remote_name" "HEAD:$remote_ref"
-  done
+    if [ "$local_ref" = "$current_ref" ]; then
+      refspecs+=("HEAD:$remote_ref")
+      replacement_ref_found=1
+    elif [ "$local_ref" = "(delete)" ]; then
+      refspecs+=(":$remote_ref")
+    else
+      refspecs+=("$local_ref:$remote_ref")
+    fi
+  done <"$ref_updates"
+
+  if [ "$replacement_ref_found" -eq 0 ]; then
+    echo "pre-push: the checked-out branch was not part of this push; the auto-fix commit was not pushed." >&2
+    exit 1
+  fi
+
+  git push --no-verify "$remote_name" "${refspecs[@]}"
 
   echo
-  echo "pre-push: committed and pushed auto-fixes for you. The original push was replaced by that commit." >&2
+  echo "pre-push: committed and pushed auto-fixes for you." >&2
+  echo "pre-push: the outer push will report failure because it still refers to the pre-fix commit; no retry is needed." >&2
   exit 1
 fi
 
