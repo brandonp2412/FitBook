@@ -11,10 +11,6 @@ only="${3:-}"
 
 echo "Running screenshot tests on Android device $device..."
 
-# Clean stale Kotlin compilation state that can cause
-# "cannot find symbol" errors for plugin classes in GeneratedPluginRegistrant.java
-(cd android && ./gradlew clean)
-
 export FITBOOK_DEVICE_TYPE="$device_type"
 
 dart_define=()

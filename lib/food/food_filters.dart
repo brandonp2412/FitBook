@@ -56,108 +56,162 @@ class _FoodFiltersState extends State<FoodFilters> {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Filter Foods'),
-        content: SingleChildScrollView(
-          child: material.Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Autocomplete<String>(
-                optionsMaxHeight: 300,
-                optionsBuilder: (value) async {
-                  if (value.text.isEmpty) return [];
-                  final results = await (db.foods.selectOnly()
-                        ..where(
-                          db.foods.foodGroup.like('%${value.text}%') &
-                              db.foods.foodGroup.isNotNull(),
-                        )
-                        ..addColumns([db.foods.foodGroup])
-                        ..groupBy([db.foods.foodGroup]))
-                      .get();
-                  return results
-                      .map((result) => result.read(db.foods.foodGroup)!);
-                },
-                onSelected: (option) async {
-                  widget.groupCtrl.text = option;
-                  widget.onChange(
-                    foodGroup: option,
-                    servingUnit: _servingUnit,
-                  );
-                },
-                fieldViewBuilder: (
-                  BuildContext context,
-                  TextEditingController textEditingController,
-                  FocusNode focusNode,
-                  VoidCallback onFieldSubmitted,
-                ) {
-                  controller = textEditingController;
-                  controller.text = widget.groupCtrl.text;
-                  return TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Food group',
-                      hintText: 'Fruit',
-                    ),
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    textCapitalization: TextCapitalization.sentences,
-                    onFieldSubmitted: (String value) {
-                      widget.onChange(
-                        foodGroup: value,
-                        servingUnit: _servingUnit,
-                      );
-                    },
-                    textInputAction: TextInputAction.next,
-                  );
-                },
-              ),
-              DropdownButtonFormField<String>(
-                initialValue: _servingUnit,
-                decoration: const InputDecoration(
-                  labelText: 'Serving unit',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+        icon: const Icon(Icons.tune),
+        title: const Text('Filter foods'),
+        contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+        content: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 440),
+          child: SingleChildScrollView(
+            child: material.Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Narrow the list using any combination of filters.',
+                  style: Theme.of(dialogContext).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(dialogContext)
+                            .colorScheme
+                            .onSurfaceVariant,
+                      ),
                 ),
-                items: unitOptions.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _servingUnit = newValue;
-                  });
-                  widget.onChange(
-                    foodGroup: widget.groupCtrl.text,
-                    servingUnit: newValue,
-                  );
-                },
-              ),
-              SizedBox(height: 8),
-              TextField(
-                controller: widget.servingSizeGtController,
-                onChanged: (value) => widget.onChange(
-                  foodGroup: widget.groupCtrl.text,
-                  servingUnit: _servingUnit,
+                const SizedBox(height: 24),
+                const _SectionLabel(
+                  icon: Icons.restaurant_menu,
+                  title: 'Food details',
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Serving size greater than",
-                  prefixIcon: Icon(Icons.chevron_right),
+                const SizedBox(height: 12),
+                Autocomplete<String>(
+                  optionsMaxHeight: 300,
+                  optionsBuilder: (value) async {
+                    if (value.text.isEmpty) return [];
+                    final results = await (db.foods.selectOnly()
+                          ..where(
+                            db.foods.foodGroup.like('%${value.text}%') &
+                                db.foods.foodGroup.isNotNull(),
+                          )
+                          ..addColumns([db.foods.foodGroup])
+                          ..groupBy([db.foods.foodGroup]))
+                        .get();
+                    return results
+                        .map((result) => result.read(db.foods.foodGroup)!);
+                  },
+                  onSelected: (option) async {
+                    widget.groupCtrl.text = option;
+                    widget.onChange(
+                      foodGroup: option,
+                      servingUnit: _servingUnit,
+                    );
+                  },
+                  fieldViewBuilder: (
+                    BuildContext context,
+                    TextEditingController textEditingController,
+                    FocusNode focusNode,
+                    VoidCallback onFieldSubmitted,
+                  ) {
+                    controller = textEditingController;
+                    controller.text = widget.groupCtrl.text;
+                    return TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Food group',
+                        hintText: 'e.g. Fruit',
+                        prefixIcon: Icon(Icons.category_outlined),
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: textEditingController,
+                      focusNode: focusNode,
+                      textCapitalization: TextCapitalization.sentences,
+                      onFieldSubmitted: (String value) {
+                        widget.onChange(
+                          foodGroup: value,
+                          servingUnit: _servingUnit,
+                        );
+                      },
+                      textInputAction: TextInputAction.next,
+                    );
+                  },
                 ),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 8),
-              TextField(
-                controller: widget.servingSizeLtController,
-                onChanged: (value) => widget.onChange(
-                  foodGroup: widget.groupCtrl.text,
-                  servingUnit: _servingUnit,
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  initialValue: _servingUnit,
+                  isExpanded: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Serving unit',
+                    prefixIcon: Icon(Icons.straighten),
+                    border: OutlineInputBorder(),
+                  ),
+                  items: unitOptions.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _servingUnit = newValue;
+                    });
+                    widget.onChange(
+                      foodGroup: widget.groupCtrl.text,
+                      servingUnit: newValue,
+                    );
+                  },
                 ),
-                decoration: const InputDecoration(
-                  labelText: "Serving size less than",
-                  prefixIcon: Icon(Icons.chevron_left),
+                const SizedBox(height: 24),
+                const _SectionLabel(
+                  icon: Icons.numbers,
+                  title: 'Serving size',
                 ),
-                keyboardType: TextInputType.number,
-              ),
-            ],
+                const SizedBox(height: 4),
+                Text(
+                  'Set a minimum, maximum, or both.',
+                  style: Theme.of(dialogContext).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(dialogContext)
+                            .colorScheme
+                            .onSurfaceVariant,
+                      ),
+                ),
+                const SizedBox(height: 12),
+                if (MediaQuery.sizeOf(dialogContext).width < 500)
+                  material.Column(
+                    children: [
+                      _ServingSizeField(
+                        controller: widget.servingSizeGtController,
+                        label: 'Minimum',
+                        hint: 'No minimum',
+                        onChanged: _notifyChange,
+                      ),
+                      const SizedBox(height: 12),
+                      _ServingSizeField(
+                        controller: widget.servingSizeLtController,
+                        label: 'Maximum',
+                        hint: 'No maximum',
+                        onChanged: _notifyChange,
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _ServingSizeField(
+                          controller: widget.servingSizeGtController,
+                          label: 'Minimum',
+                          hint: 'No minimum',
+                          onChanged: _notifyChange,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _ServingSizeField(
+                          controller: widget.servingSizeLtController,
+                          label: 'Maximum',
+                          hint: 'No maximum',
+                          onChanged: _notifyChange,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -177,7 +231,7 @@ class _FoodFiltersState extends State<FoodFilters> {
             },
             child: const Text('Clear All'),
           ),
-          TextButton(
+          FilledButton(
             onPressed: () {
               final groupChanged = controller.text != widget.groupCtrl.text;
               widget.groupCtrl.text = controller.text;
@@ -196,6 +250,13 @@ class _FoodFiltersState extends State<FoodFilters> {
     );
   }
 
+  void _notifyChange(String value) {
+    widget.onChange(
+      foodGroup: widget.groupCtrl.text,
+      servingUnit: _servingUnit,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Badge.count(
@@ -207,6 +268,60 @@ class _FoodFiltersState extends State<FoodFilters> {
         icon: const Icon(Icons.filter_list),
         onPressed: _showFilterDialog,
       ),
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  const _SectionLabel({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: colorScheme.primary),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ServingSizeField extends StatelessWidget {
+  const _ServingSizeField({
+    required this.controller,
+    required this.label,
+    required this.hint,
+    required this.onChanged,
+  });
+
+  final TextEditingController controller;
+  final String label;
+  final String hint;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        border: const OutlineInputBorder(),
+      ),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
     );
   }
 }
