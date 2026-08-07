@@ -320,14 +320,14 @@ class AppDatabase extends _$AppDatabase {
     },
     from37To38: (Migrator m, Schema38 schema) async {
       await m.database.customUpdate("""
-UPDATE foods SET 
-  protein_g = 0,
-  fat_g = 0,
-  carbohydrate_g = 0,
-  sodium_mg = 0,
-  fiber_g = 0
-WHERE name = 'Quick-add'
-""");
+        UPDATE foods SET 
+          protein_g = 0,
+          fat_g = 0,
+          carbohydrate_g = 0,
+          sodium_mg = 0,
+          fiber_g = 0
+        WHERE name = 'Quick-add'
+      """);
     },
     from38To39: (Migrator m, Schema39 schema) async {
       await m.database.customUpdate("""UPDATE settings 
