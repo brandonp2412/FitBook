@@ -141,8 +141,8 @@ class GraphPageState extends State<GraphPage>
             ),
             ConstrainedBox(
               constraints: const BoxConstraints(
-                minHeight: 200,
-                maxHeight: 350,
+                minHeight: 300,
+                maxHeight: 450,
               ),
               child: AppLine(
                 metric: metric,
