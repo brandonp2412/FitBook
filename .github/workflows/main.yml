@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths-ignore:
       - "pubspec.yaml"
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -33,6 +35,7 @@ jobs:
         run: ./scripts/check.sh
 
   version-bump:
+    if: github.event_name == 'push'
     needs: quality-checks
     runs-on: ubuntu-latest
     permissions:
