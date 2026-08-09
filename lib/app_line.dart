@@ -401,6 +401,35 @@ class _AppLineState extends State<AppLine> {
           );
         }
 
+        // fl_chart derives its bounds from line-bar spots, not extra lines.
+        // Extend the relevant bound when the goal is visible so the goal line
+        // remains inside the graph rather than being drawn beyond its edge.
+        final visibleSpots =
+            lineBars.isEmpty ? spots : lineBars.expand((bar) => bar.spots);
+        double? lowestVisibleValue;
+        double? highestVisibleValue;
+        for (final spot in visibleSpots) {
+          lowestVisibleValue = lowestVisibleValue == null
+              ? spot.y
+              : spot.y < lowestVisibleValue
+                  ? spot.y
+                  : lowestVisibleValue;
+          highestVisibleValue = highestVisibleValue == null
+              ? spot.y
+              : spot.y > highestVisibleValue
+                  ? spot.y
+                  : highestVisibleValue;
+        }
+        final shouldIncludeGoal =
+            showGoal && goal > 0 && highestVisibleValue != null;
+        final minY = sel.graphsStartAtZero
+            ? 0.0
+            : shouldIncludeGoal && goal < lowestVisibleValue!
+                ? goal
+                : null;
+        final maxY =
+            shouldIncludeGoal && goal > highestVisibleValue ? goal : null;
+
         return material.Column(
           children: [
             Expanded(
@@ -408,7 +437,8 @@ class _AppLineState extends State<AppLine> {
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: LineChart(
                   LineChartData(
-                    minY: sel.graphsStartAtZero ? 0 : null,
+                    minY: minY,
+                    maxY: maxY,
                     extraLinesData: ExtraLinesData(
                       horizontalLines: [
                         if (goal > 0 && showGoal)
