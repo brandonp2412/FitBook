@@ -70,88 +70,90 @@ class GraphPageState extends State<GraphPage>
           16,
           MediaQuery.paddingOf(context).bottom + BottomNav.totalOverlayHeight,
         ),
-        child: material.Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: metricValue,
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(12),
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: colorScheme.onSurface,
-                      ),
-                      items: [
-                        DropdownMenuItem(
-                          value: db.foods.calories.name,
-                          child: const Text("Calories"),
+        child: SingleChildScrollView(
+          child: material.Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: metricValue,
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(12),
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: colorScheme.onSurface,
                         ),
-                        const DropdownMenuItem(
-                          value: 'body-weight',
-                          child: Text("Body weight"),
-                        ),
-                        ...filteredFields.map(
-                          (field) => DropdownMenuItem(
-                            value: field,
-                            child: Text(sentenceCase(field)),
+                        items: [
+                          DropdownMenuItem(
+                            value: db.foods.calories.name,
+                            child: const Text("Calories"),
                           ),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        if (value == null) return;
-                        setState(() => metric = value);
-                        db.settings.update().write(
-                              SettingsCompanion(lastGraph: Value(metric)),
-                            );
-                      },
+                          const DropdownMenuItem(
+                            value: 'body-weight',
+                            child: Text("Body weight"),
+                          ),
+                          ...filteredFields.map(
+                            (field) => DropdownMenuItem(
+                              value: field,
+                              child: Text(sentenceCase(field)),
+                            ),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setState(() => metric = value);
+                          db.settings.update().write(
+                                SettingsCompanion(lastGraph: Value(metric)),
+                              );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                IconButton.filledTonal(
-                  icon: const Icon(Icons.tune),
-                  tooltip: 'Options',
-                  onPressed: _showOptions,
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: SegmentedButton<Period>(
-                showSelectedIcon: false,
-                style: SegmentedButton.styleFrom(
-                  visualDensity: VisualDensity.compact,
-                ),
-                segments: const [
-                  ButtonSegment(value: Period.day, label: Text("Day")),
-                  ButtonSegment(value: Period.week, label: Text("Week")),
-                  ButtonSegment(value: Period.month, label: Text("Month")),
-                  ButtonSegment(value: Period.year, label: Text("Year")),
+                  const SizedBox(width: 8),
+                  IconButton.filledTonal(
+                    icon: const Icon(Icons.tune),
+                    tooltip: 'Options',
+                    onPressed: _showOptions,
+                  ),
                 ],
-                selected: {groupBy},
-                onSelectionChanged: (value) {
-                  setState(() => groupBy = value.first);
-                },
               ),
-            ),
-            ConstrainedBox(
-              constraints: const BoxConstraints(
-                minHeight: 300,
-                maxHeight: 450,
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<Period>(
+                  showSelectedIcon: false,
+                  style: SegmentedButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  segments: const [
+                    ButtonSegment(value: Period.day, label: Text("Day")),
+                    ButtonSegment(value: Period.week, label: Text("Week")),
+                    ButtonSegment(value: Period.month, label: Text("Month")),
+                    ButtonSegment(value: Period.year, label: Text("Year")),
+                  ],
+                  selected: {groupBy},
+                  onSelectionChanged: (value) {
+                    setState(() => groupBy = value.first);
+                  },
+                ),
               ),
-              child: AppLine(
-                metric: metric,
-                groupBy: groupBy,
-                start: start,
-                end: end,
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 300,
+                  maxHeight: 450,
+                ),
+                child: AppLine(
+                  metric: metric,
+                  groupBy: groupBy,
+                  start: start,
+                  end: end,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
