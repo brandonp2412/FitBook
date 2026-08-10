@@ -697,12 +697,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                             ? Image.file(
                                 File(imageFile!),
                                 cacheWidth: 400,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    TextButton.icon(
-                                  onPressed: setImage,
-                                  label: const Text('Image error'),
-                                  icon: const Icon(Icons.error),
-                                ),
+                                errorBuilder: (context, error, stackTrace) {
+                                  print(error);
+                                  print(stackTrace);
+
+                                  return TextButton.icon(
+                                    onPressed: setImage,
+                                    label: const Text('Image error'),
+                                    icon: const Icon(Icons.error),
+                                  );
+                                },
                               )
                             : CachedNetworkImage(imageUrl: bigImage!),
                       ),

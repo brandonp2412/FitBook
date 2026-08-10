@@ -311,6 +311,7 @@ double convertToGrams(double qty, String unit) {
     'teaspoons': 5.0,
     'ounces': 28.35,
     'pounds': 453.592,
+    'kilograms': 1000.0,
     'liters': 1000.0,
     'kilojoules': 1.0 / 4.184,
   };
@@ -322,6 +323,50 @@ double convertToGrams(double qty, String unit) {
   final factor = conversionFactors[unit];
   if (factor == null) throw Exception('Unit not recognized');
   return qty * factor;
+}
+
+/// Resolves a food's configured serving size to grams. A legacy `serving`
+/// unit is treated as a gram weight, matching the historic database model.
+double servingGrams(double servingSize, String servingUnit) {
+  if (servingSize <= 0) return 0;
+  if (servingUnit == 'serving') return servingSize;
+  try {
+    return convertToGrams(servingSize, servingUnit);
+  } on Exception {
+    return servingSize;
+  }
+}
+
+/// Returns a nutrient value normalized to 100 grams, or `null` when the
+/// serving unit does not describe a weight/volume that can be converted to
+/// grams (for example `serving` or `unit`).
+double? valuePer100g({
+  required double value,
+  required double servingSize,
+  required String servingUnit,
+}) {
+  if (servingSize <= 0) return null;
+  const gramConvertibleUnits = {
+    'grams',
+    'milliliters',
+    'milligrams',
+    'cups',
+    'tablespoons',
+    'teaspoons',
+    'ounces',
+    'pounds',
+    'kilograms',
+    'liters',
+  };
+  if (!gramConvertibleUnits.contains(servingUnit)) return null;
+
+  try {
+    final servingGrams = convertToGrams(servingSize, servingUnit);
+    if (servingGrams <= 0) return null;
+    return value * 100 / servingGrams;
+  } on Exception {
+    return null;
+  }
 }
 
 /// SQL CASE expression converting a food row's serving_size/serving_unit
@@ -366,7 +411,7 @@ String entryQuantityInGramsSql(String entryTable, String foodsTable) => '''
 
 /// SQL expression summing [field] across a meal's component meal_foods rows,
 /// converting each component's quantity/unit to grams and scaling by its
-/// food's nutrient-per-serving value. Used both as a top-level `GROUP BY`
+/// food's nutrient-per-100g value. Used both as a top-level `GROUP BY`
 /// aggregate and as a correlated-subquery aggregate via [mealFoodsTable]/
 /// [foodsTable] aliases.
 String mealFoodsFieldSumSql(

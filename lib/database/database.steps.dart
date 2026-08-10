@@ -14972,6 +14972,8 @@ i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema49 schema) from48To49,
   required Future<void> Function(i1.Migrator m, Schema50 schema) from49To50,
   required Future<void> Function(i1.Migrator m, Schema51 schema) from50To51,
+  required Future<void> Function(i1.Migrator m, Schema51 schema) from51To52,
+  required Future<void> Function(i1.Migrator m, Schema51 schema) from52To53,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -15220,6 +15222,16 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from50To51(migrator, schema);
         return 51;
+      case 51:
+        final schema = Schema51(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from51To52(migrator, schema);
+        return 52;
+      case 52:
+        final schema = Schema51(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from52To53(migrator, schema);
+        return 53;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -15276,6 +15288,8 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema49 schema) from48To49,
   required Future<void> Function(i1.Migrator m, Schema50 schema) from49To50,
   required Future<void> Function(i1.Migrator m, Schema51 schema) from50To51,
+  required Future<void> Function(i1.Migrator m, Schema51 schema) from51To52,
+  required Future<void> Function(i1.Migrator m, Schema51 schema) from52To53,
 }) =>
     i0.VersionedSchema.stepByStepHelper(
         step: migrationSteps(
@@ -15328,4 +15342,6 @@ i1.OnUpgrade stepByStep({
       from48To49: from48To49,
       from49To50: from49To50,
       from50To51: from50To51,
+      from51To52: from51To52,
+      from52To53: from52To53,
     ));

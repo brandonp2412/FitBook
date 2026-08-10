@@ -259,29 +259,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
     });
   }
 
-  Widget _per100gChip(ThemeData theme, String label, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: theme.colorScheme.primary),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
@@ -394,7 +371,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(labelText: 'Serving size'),
+                    decoration: const InputDecoration(
+                      labelText: 'Serving size',
+                    ),
                     controller: sizeCtrl,
                     onTap: () => selectAll(sizeCtrl),
                     textInputAction: TextInputAction.next,
@@ -404,8 +383,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     initialValue: unit,
-                    decoration:
-                        const InputDecoration(labelText: 'Serving unit'),
+                    decoration: const InputDecoration(
+                      labelText: 'Serving unit',
+                    ),
                     items: unitOptions.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -495,81 +475,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   ],
                 ),
             ],
-            const SizedBox(height: 16),
-            Builder(
-              builder: (context) {
-                final size = double.tryParse(sizeCtrl.text) ?? 100;
-                if (size <= 0) return const SizedBox.shrink();
-                final cal = ((double.tryParse(calCtrl.text) ?? 0) * 100 / size)
-                    .toStringAsFixed(1);
-                final prot =
-                    ((double.tryParse(controllers['protein_g']?.text ?? '0') ??
-                                0) *
-                            100 /
-                            size)
-                        .toStringAsFixed(1);
-                final fat =
-                    ((double.tryParse(controllers['fat_g']?.text ?? '0') ?? 0) *
-                            100 /
-                            size)
-                        .toStringAsFixed(1);
-                final carb = ((double.tryParse(
-                              controllers['carbohydrate_g']?.text ?? '0',
-                            ) ??
-                            0) *
-                        100 /
-                        size)
-                    .toStringAsFixed(1);
-                final fiber =
-                    ((double.tryParse(controllers['fiber_g']?.text ?? '0') ??
-                                0) *
-                            100 /
-                            size)
-                        .toStringAsFixed(1);
-                final theme = Theme.of(context);
-                return Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHigh,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: theme.colorScheme.outlineVariant),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Per 100g',
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          color: theme.colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Wrap(
-                        spacing: 12,
-                        runSpacing: 4,
-                        children: [
-                          _per100gChip(
-                            theme,
-                            '$cal kcal',
-                            Icons.local_fire_department,
-                          ),
-                          _per100gChip(
-                            theme,
-                            '${prot}g protein',
-                            Icons.fitness_center,
-                          ),
-                          _per100gChip(theme, '${fat}g fat', Icons.water_drop),
-                          _per100gChip(theme, '${carb}g carbs', Icons.grain),
-                          _per100gChip(theme, '${fiber}g fiber', Icons.spa),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
             const SizedBox(height: 16),
             Wrap(
               alignment: WrapAlignment.center,

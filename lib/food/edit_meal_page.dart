@@ -29,6 +29,7 @@ class _MealFoodEntry {
   final double? calories;
   final double? protein;
   final double servingSize;
+  final String servingUnit;
   final TextEditingController quantityCtrl;
   String unit;
 
@@ -38,6 +39,7 @@ class _MealFoodEntry {
     this.calories,
     this.protein,
     double? servingSize,
+    required this.servingUnit,
     required double quantity,
     required this.unit,
   })  : servingSize = servingSize ?? 100.0,
@@ -92,6 +94,7 @@ class _EditMealPageState extends State<EditMealPage> {
           calories: food.calories,
           protein: food.proteinG,
           servingSize: food.servingSize,
+          servingUnit: food.servingUnit ?? 'grams',
           quantity: mf.quantity,
           unit: mf.unit,
         );
@@ -165,6 +168,7 @@ class _EditMealPageState extends State<EditMealPage> {
                 calories: food.calories,
                 protein: food.proteinG,
                 servingSize: food.servingSize,
+                servingUnit: food.servingUnit ?? 'grams',
                 quantity: 1,
                 unit: 'serving',
               ),
@@ -754,9 +758,7 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
                       leading: _thumbnail(food, showImages),
                       title: Text(food.name),
                       subtitle: Text(
-                        '${food.calories?.toStringAsFixed(0) ?? 0} kcal'
-                        ' · ${food.servingSize?.toStringAsFixed(0) ?? 1}'
-                        ' ${food.servingUnit ?? 'serving'}',
+                        '${food.calories?.toStringAsFixed(0) ?? 0} kcal / 100g',
                       ),
                       trailing: food.favorite == true
                           ? Icon(

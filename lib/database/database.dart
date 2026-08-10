@@ -84,6 +84,27 @@ class AppDatabase extends _$AppDatabase {
 
         await customStatement('PRAGMA foreign_keys = ON');
       },
+      beforeOpen: (details) async {
+        // A device that already attempted the 51 -> 52 migration may have
+        // reached schema 52 before its old orphaned rows were reported. Make
+        // the repair idempotent so that database can recover on the next app
+        // launch as well.
+        await customUpdate('''
+          UPDATE diaries SET food = NULL
+          WHERE food IS NOT NULL
+            AND NOT EXISTS (SELECT 1 FROM foods WHERE foods.id = diaries.food)
+        ''');
+        await customUpdate('''
+          UPDATE diaries SET meal = NULL
+          WHERE meal IS NOT NULL
+            AND NOT EXISTS (SELECT 1 FROM meals WHERE meals.id = diaries.meal)
+        ''');
+        await customUpdate('''
+          DELETE FROM meal_foods
+          WHERE NOT EXISTS (SELECT 1 FROM foods WHERE foods.id = meal_foods.food)
+             OR NOT EXISTS (SELECT 1 FROM meals WHERE meals.id = meal_foods.meal)
+        ''');
+      },
     );
   }
 
@@ -394,8 +415,126 @@ class AppDatabase extends _$AppDatabase {
       await m.createIndex(schema.mealFoodsMealIdx);
       await m.createIndex(schema.mealFoodsFoodIdx);
     },
+    from51To52: (Migrator m, Schema51 schema) async {
+      // Older versions allowed food/meal deletes to leave orphaned diary rows.
+      // Keep those diary records, but clear the broken optional relationship so
+      // the foreign-key audit after this migration can succeed.
+      await m.database.customUpdate('''
+        UPDATE diaries SET food = NULL
+        WHERE food IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM foods WHERE foods.id = diaries.food)
+      ''');
+      await m.database.customUpdate('''
+        UPDATE diaries SET meal = NULL
+        WHERE meal IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM meals WHERE meals.id = diaries.meal)
+      ''');
+      await m.database.customUpdate('''
+        DELETE FROM meal_foods
+        WHERE NOT EXISTS (SELECT 1 FROM foods WHERE foods.id = meal_foods.food)
+           OR NOT EXISTS (SELECT 1 FROM meals WHERE meals.id = meal_foods.meal)
+      ''');
+
+      // Nutrients used to be stored per configured serving. Normalize every
+      // nutrient column so food values are consistently per 100g; serving
+      // size/unit remain only for resolving diary and meal servings.
+      const nonNutrientColumns = {
+        'id',
+        'serving_size',
+        '_200_calorie_weight_g',
+        'serving_weight_1_g',
+        'serving_weight_2_g',
+        'serving_weight_3_g',
+        'serving_weight_4_g',
+        'serving_weight_5_g',
+        'serving_weight_6_g',
+        'serving_weight_7_g',
+        'serving_weight_8_g',
+        'serving_weight_9_g',
+      };
+      final columns =
+          await m.database.customSelect('PRAGMA table_info(foods)').get();
+      final nutrientColumns = columns
+          .where(
+            (column) =>
+                column.read<String>('type').toUpperCase() == 'REAL' &&
+                !nonNutrientColumns.contains(column.read<String>('name')),
+          )
+          .map((column) => column.read<String>('name'));
+      const servingGrams = '''CASE
+        WHEN serving_size IS NULL THEN 100
+        WHEN serving_unit IS NULL THEN serving_size
+        WHEN serving_unit = 'ounces' THEN serving_size * 28.35
+        WHEN serving_unit = 'grams' THEN serving_size
+        WHEN serving_unit = 'milliliters' THEN serving_size
+        WHEN serving_unit = 'milligrams' THEN serving_size / 1000.0
+        WHEN serving_unit = 'cups' THEN serving_size * 250
+        WHEN serving_unit = 'tablespoons' THEN serving_size * 15
+        WHEN serving_unit = 'teaspoons' THEN serving_size * 5
+        WHEN serving_unit = 'pounds' THEN serving_size * 453.592
+        WHEN serving_unit = 'kilograms' THEN serving_size * 1000
+        WHEN serving_unit = 'liters' THEN serving_size * 1000
+        WHEN serving_unit = 'serving' THEN serving_size
+        ELSE 100
+      END''';
+      for (final column in nutrientColumns) {
+        await m.database.customUpdate(
+          'UPDATE foods SET "$column" = "$column" * 100.0 '
+          '/ NULLIF(($servingGrams), 0.0) WHERE "$column" IS NOT NULL',
+        );
+      }
+    },
+    from52To53: (Migrator m, Schema51 schema) async {
+      // Version 52 incorrectly normalized existing nutrient values. Apply the
+      // exact inverse so all existing foods return to their original values.
+      const nonNutrientColumns = {
+        'id',
+        'serving_size',
+        '_200_calorie_weight_g',
+        'serving_weight_1_g',
+        'serving_weight_2_g',
+        'serving_weight_3_g',
+        'serving_weight_4_g',
+        'serving_weight_5_g',
+        'serving_weight_6_g',
+        'serving_weight_7_g',
+        'serving_weight_8_g',
+        'serving_weight_9_g',
+      };
+      final columns =
+          await m.database.customSelect('PRAGMA table_info(foods)').get();
+      final nutrientColumns = columns
+          .where(
+            (column) =>
+                column.read<String>('type').toUpperCase() == 'REAL' &&
+                !nonNutrientColumns.contains(column.read<String>('name')),
+          )
+          .map((column) => column.read<String>('name'));
+      const servingGrams = '''CASE
+        WHEN serving_size IS NULL THEN 100
+        WHEN serving_unit IS NULL THEN serving_size
+        WHEN serving_unit = 'ounces' THEN serving_size * 28.35
+        WHEN serving_unit = 'grams' THEN serving_size
+        WHEN serving_unit = 'milliliters' THEN serving_size
+        WHEN serving_unit = 'milligrams' THEN serving_size / 1000.0
+        WHEN serving_unit = 'cups' THEN serving_size * 250
+        WHEN serving_unit = 'tablespoons' THEN serving_size * 15
+        WHEN serving_unit = 'teaspoons' THEN serving_size * 5
+        WHEN serving_unit = 'pounds' THEN serving_size * 453.592
+        WHEN serving_unit = 'kilograms' THEN serving_size * 1000
+        WHEN serving_unit = 'liters' THEN serving_size * 1000
+        WHEN serving_unit = 'serving' THEN serving_size
+        ELSE 100
+      END''';
+      for (final column in nutrientColumns) {
+        await m.database.customUpdate(
+          'UPDATE foods SET "$column" = "$column" * ($servingGrams) '
+          '/ 100.0 WHERE "$column" IS NOT NULL',
+        );
+      }
+    },
   );
 
   @override
-  int get schemaVersion => 51;
+  int get schemaVersion => 53;
 }
