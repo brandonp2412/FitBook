@@ -567,7 +567,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             borderRadius: BorderRadius.circular(6),
             child: Image.file(
               File(imageFile!),
-              cacheWidth: 64,
+              cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Center(
                 child: Icon(
@@ -601,7 +601,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             borderRadius: BorderRadius.circular(6),
             child: Image.file(
               File(food.imageFile!),
-              cacheWidth: 64,
+              cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
@@ -696,7 +696,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         child: imageFile != null
                             ? Image.file(
                                 File(imageFile!),
-                                cacheWidth: 400,
+                                cacheWidth: (MediaQuery.sizeOf(context).width *
+                                        MediaQuery.devicePixelRatioOf(context))
+                                    .round(),
                                 errorBuilder: (context, error, stackTrace) {
                                   print(error);
                                   print(stackTrace);

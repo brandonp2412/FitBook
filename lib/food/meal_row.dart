@@ -41,7 +41,8 @@ class MealRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
               child: Image.file(
                 File(meal.imageFile!),
-                cacheWidth: 64,
+                cacheWidth:
+                    (48 * MediaQuery.devicePixelRatioOf(context)).round(),
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => Icon(
                   Icons.restaurant,

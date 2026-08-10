@@ -339,7 +339,9 @@ class _EditMealPageState extends State<EditMealPage> {
                             borderRadius: BorderRadius.circular(8),
                             child: Image.file(
                               File(_imageFile!),
-                              cacheWidth: 400,
+                              cacheWidth: (MediaQuery.sizeOf(context).width *
+                                      MediaQuery.devicePixelRatioOf(context))
+                                  .round(),
                               height: 160,
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -673,7 +675,7 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
       if (food.imageFile?.isNotEmpty == true)
         content = Image.file(
           File(food.imageFile!),
-          cacheWidth: 64,
+          cacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
           width: 44,
           height: 44,
           fit: BoxFit.cover,

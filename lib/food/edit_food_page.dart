@@ -447,7 +447,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     child: imgFile != null
                         ? Image.file(
                             File(imgFile!),
-                            cacheWidth: 400,
+                            cacheWidth: (MediaQuery.sizeOf(context).width *
+                                    MediaQuery.devicePixelRatioOf(context))
+                                .round(),
                             errorBuilder: (context, error, stackTrace) =>
                                 TextButton.icon(
                               onPressed: setImage,

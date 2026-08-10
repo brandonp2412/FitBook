@@ -428,7 +428,9 @@ class _EditWeightPageState extends State<EditWeightPage> {
                   height: 200,
                   child: Image.file(
                     File(image!),
-                    cacheWidth: 400,
+                    cacheWidth: (MediaQuery.sizeOf(context).width *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .round(),
                     errorBuilder: (context, error, stackTrace) =>
                         TextButton.icon(
                       onPressed: () {},

@@ -33,7 +33,7 @@ class FoodItemRow extends StatelessWidget {
       if (food.imageFile.value?.isNotEmpty == true)
         image = Image.file(
           File(food.imageFile.value!),
-          cacheWidth: 64,
+          cacheWidth: (50 * MediaQuery.devicePixelRatioOf(context)).round(),
           errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
         );
       else if (food.smallImage.value?.isNotEmpty == true)
