@@ -29,6 +29,7 @@ class DiaryFoodThumbnail extends StatelessWidget {
       if (food.imageFile?.isNotEmpty == true) {
         image = Image.file(
           File(food.imageFile!),
+          cacheWidth: 64,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) =>
               _placeholder(colorScheme),

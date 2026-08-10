@@ -567,6 +567,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             borderRadius: BorderRadius.circular(6),
             child: Image.file(
               File(imageFile!),
+              cacheWidth: 64,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Center(
                 child: Icon(
@@ -600,6 +601,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             borderRadius: BorderRadius.circular(6),
             child: Image.file(
               File(food.imageFile!),
+              cacheWidth: 64,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
@@ -694,6 +696,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         child: imageFile != null
                             ? Image.file(
                                 File(imageFile!),
+                                cacheWidth: 400,
                                 errorBuilder: (context, error, stackTrace) =>
                                     TextButton.icon(
                                   onPressed: setImage,

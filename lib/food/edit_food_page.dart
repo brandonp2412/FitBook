@@ -467,6 +467,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     child: imgFile != null
                         ? Image.file(
                             File(imgFile!),
+                            cacheWidth: 400,
                             errorBuilder: (context, error, stackTrace) =>
                                 TextButton.icon(
                               onPressed: setImage,
