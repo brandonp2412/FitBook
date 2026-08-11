@@ -345,6 +345,9 @@ class _EditMealPageState extends State<EditMealPage> {
                               height: 160,
                               width: double.infinity,
                               fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Icon(Icons.broken_image_outlined),
+                              ),
                             ),
                           ),
                         ),

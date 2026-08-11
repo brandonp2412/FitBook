@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/database/database.dart';
-import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,19 +27,23 @@ class FoodItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     Widget? image;
     if (showImages) {
       if (food.imageFile.value?.isNotEmpty == true)
         image = Image.file(
           File(food.imageFile.value!),
           cacheWidth: (50 * MediaQuery.devicePixelRatioOf(context)).round(),
-          errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) =>
+              _placeholder(colorScheme),
         );
       else if (food.smallImage.value?.isNotEmpty == true)
-        image = material.SizedBox(
-          height: 80,
-          width: 50,
-          child: CachedNetworkImage(imageUrl: food.smallImage.value!),
+        image = CachedNetworkImage(
+          imageUrl: food.smallImage.value!,
+          fit: BoxFit.cover,
+          placeholder: (_, __) => _placeholder(colorScheme),
+          errorWidget: (_, __, ___) => _placeholder(colorScheme),
         );
     }
 
@@ -48,7 +51,18 @@ class FoodItemRow extends StatelessWidget {
       tileColor: isSelected
           ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
           : null,
-      leading: image,
+      leading: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: colorScheme.surfaceContainerHighest,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: image ?? _placeholder(colorScheme),
+        ),
+      ),
       title: Text(food.name.value),
       subtitle: () {
         return Row(
@@ -72,4 +86,9 @@ class FoodItemRow extends StatelessWidget {
       onLongPress: onLongPress,
     );
   }
+
+  Widget _placeholder(ColorScheme colorScheme) => Container(
+        color: colorScheme.surfaceContainerHighest,
+        child: Icon(Icons.restaurant, color: colorScheme.onSurfaceVariant),
+      );
 }

@@ -700,9 +700,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                                         MediaQuery.devicePixelRatioOf(context))
                                     .round(),
                                 errorBuilder: (context, error, stackTrace) {
-                                  print(error);
-                                  print(stackTrace);
-
                                   return TextButton.icon(
                                     onPressed: setImage,
                                     label: const Text('Image error'),

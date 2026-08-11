@@ -45,6 +45,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   String? imgFile;
   String? smallImg;
   String? bigImg;
+  DateTime? created;
   final formatter = NumberFormat('#,##0.00');
   final calCtrl = TextEditingController(text: "0");
   final barcodeCtrl = TextEditingController();
@@ -95,6 +96,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         imgFile = food.imageFile;
         smallImg = food.smallImage;
         bigImg = food.bigImage;
+        created = food.created;
         calCtrl.text = food.calories?.toStringAsFixed(2) ?? '';
         kjCtrl.text = food.calories == null
             ? ''
@@ -164,7 +166,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
       calories: Value(double.tryParse(calCtrl.text)),
       servingUnit: Value(unit),
       servingSize: Value(double.parse(sizeCtrl.text)),
-      created: Value(DateTime.now()),
+      // Editing a food must not change its position in the foods list.
+      created: id == null ? Value(DateTime.now()) : Value<DateTime?>(created),
     );
 
     var columns = food.toColumns(false);
@@ -259,6 +262,66 @@ class _EditFoodPageState extends State<EditFoodPage> {
     });
   }
 
+  Widget _imageSection() {
+    if (!settings.showImages) return const SizedBox.shrink();
+
+    final hasImage = imgFile?.isNotEmpty == true ||
+        smallImg?.isNotEmpty == true ||
+        bigImg?.isNotEmpty == true;
+
+    return Column(
+      children: [
+        if (hasImage)
+          InkWell(
+            onTap: () => showImageOptionsSheet(
+              context: context,
+              onReplace: setImage,
+              onCamera: () => setImage(source: ImageSource.camera),
+              onDelete: () => setState(() {
+                imgFile = null;
+                smallImg = null;
+                bigImg = null;
+              }),
+            ),
+            child: SizedBox(
+              height: 200,
+              child: imgFile != null
+                  ? Image.file(
+                      File(imgFile!),
+                      cacheWidth: (MediaQuery.sizeOf(context).width *
+                              MediaQuery.devicePixelRatioOf(context))
+                          .round(),
+                      errorBuilder: (context, error, stackTrace) =>
+                          TextButton.icon(
+                        onPressed: setImage,
+                        label: const Text('Image error'),
+                        icon: const Icon(Icons.error),
+                      ),
+                    )
+                  : CachedNetworkImage(imageUrl: smallImg ?? bigImg!),
+            ),
+          )
+        else
+          Wrap(
+            spacing: 8,
+            children: [
+              TextButton.icon(
+                icon: const Icon(Icons.image),
+                label: const Text('Set image'),
+                onPressed: setImage,
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.camera_alt),
+                label: const Text('Take photo'),
+                onPressed: () => setImage(source: ImageSource.camera),
+              ),
+            ],
+          ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
@@ -317,6 +380,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
         child: ListView(
           controller: scrollCtrl,
           children: [
+            _imageSection(),
             TextField(
               controller: nameCtrl,
               textCapitalization: TextCapitalization.sentences,
@@ -426,58 +490,6 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ),
-            if (settings.showImages) ...[
-              const SizedBox(height: 16),
-              if (imgFile?.isNotEmpty == true ||
-                  smallImg?.isNotEmpty == true ||
-                  bigImg?.isNotEmpty == true)
-                InkWell(
-                  onTap: () => showImageOptionsSheet(
-                    context: context,
-                    onReplace: setImage,
-                    onCamera: () => setImage(source: ImageSource.camera),
-                    onDelete: () => setState(() {
-                      imgFile = null;
-                      smallImg = null;
-                      bigImg = null;
-                    }),
-                  ),
-                  child: SizedBox(
-                    height: 200,
-                    child: imgFile != null
-                        ? Image.file(
-                            File(imgFile!),
-                            cacheWidth: (MediaQuery.sizeOf(context).width *
-                                    MediaQuery.devicePixelRatioOf(context))
-                                .round(),
-                            errorBuilder: (context, error, stackTrace) =>
-                                TextButton.icon(
-                              onPressed: setImage,
-                              label: const Text('Image error'),
-                              icon: const Icon(Icons.error),
-                            ),
-                          )
-                        : CachedNetworkImage(imageUrl: smallImg ?? bigImg!),
-                  ),
-                )
-              else
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    TextButton.icon(
-                      icon: const Icon(Icons.image),
-                      label: const Text('Set image'),
-                      onPressed: setImage,
-                    ),
-                    TextButton.icon(
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Text('Take photo'),
-                      onPressed: () => setImage(source: ImageSource.camera),
-                    ),
-                  ],
-                ),
-            ],
-            const SizedBox(height: 16),
             Wrap(
               alignment: WrapAlignment.center,
               children: [

@@ -10,6 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+/// A food plus the latest diary entry that used it. The food page uses this
+/// to keep a stable creation-date ordering while breaking ties by use.
+class FoodListFood {
+  const FoodListFood({required this.food, this.lastDiaryEntry});
+
+  final FoodsCompanion food;
+  final DateTime? lastDiaryEntry;
+}
+
 class FoodList extends StatefulWidget {
   const FoodList({
     super.key,
@@ -24,7 +33,7 @@ class FoodList extends StatefulWidget {
     this.onSavedNew,
   });
 
-  /// Combined list of [FoodsCompanion] and [Meal] objects, already sorted.
+  /// Combined list of [FoodListFood] and [Meal] objects, already sorted.
   final List<Object> items;
   final Set<int> selected;
   final Set<int> selectedMeals;
@@ -98,7 +107,7 @@ class _FoodListState extends State<FoodList> {
         continue;
       }
 
-      final food = item as FoodsCompanion;
+      final food = (item as FoodListFood).food;
       final isSelected = widget.selected.contains(food.id.value);
 
       children.add(
@@ -130,7 +139,7 @@ class _FoodListState extends State<FoodList> {
     return Expanded(
       child: ListView(
         padding: EdgeInsets.only(
-          top: appSearchHeight,
+          top: appSearchHeight + 16,
           bottom: MediaQuery.paddingOf(context).bottom +
               BottomNav.totalOverlayHeight,
         ),

@@ -54,7 +54,10 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   }
 
   void setStream() {
-    var query = (db.foods.selectOnly()
+    final lastDiaryEntry = db.diaries.created.max();
+    var query = (db.foods.selectOnly().join([
+      leftOuterJoin(db.diaries, db.diaries.food.equalsExp(db.foods.id)),
+    ])
       ..addColumns([
         db.foods.id,
         db.foods.name,
@@ -65,7 +68,9 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         db.foods.smallImage,
         db.foods.imageFile,
         db.foods.created,
+        lastDiaryEntry,
       ])
+      ..groupBy([db.foods.id])
       ..limit(limit));
 
     if (search.isNotEmpty) {
@@ -89,18 +94,16 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
             expression: db.foods.created,
             mode: OrderingMode.desc,
           ),
+          OrderingTerm(expression: lastDiaryEntry, mode: OrderingMode.desc),
         ]);
     } else {
       query = query
         ..orderBy([
           OrderingTerm(
-            expression: db.foods.favorite,
-            mode: OrderingMode.desc,
-          ),
-          OrderingTerm(
             expression: db.foods.created,
             mode: OrderingMode.desc,
           ),
+          OrderingTerm(expression: lastDiaryEntry, mode: OrderingMode.desc),
         ]);
     }
     if (groupCtrl.text.isNotEmpty)
@@ -164,18 +167,21 @@ GROUP BY meal_foods.meal
     });
   }
 
-  List<FoodsCompanion> resultsToCompanions(List<TypedResult> results) => results
+  List<FoodListFood> resultsToCompanions(List<TypedResult> results) => results
       .map(
-        (result) => FoodsCompanion(
-          id: Value(result.read(db.foods.id)!),
-          name: Value(result.read(db.foods.name)!),
-          calories: Value(result.read(db.foods.calories)),
-          favorite: Value(result.read(db.foods.favorite)),
-          servingSize: Value(result.read(db.foods.servingSize)),
-          servingUnit: Value(result.read(db.foods.servingUnit)),
-          imageFile: Value(result.read(db.foods.imageFile)),
-          smallImage: Value(result.read(db.foods.smallImage)),
-          created: Value(result.read(db.foods.created)),
+        (result) => FoodListFood(
+          food: FoodsCompanion(
+            id: Value(result.read(db.foods.id)!),
+            name: Value(result.read(db.foods.name)!),
+            calories: Value(result.read(db.foods.calories)),
+            favorite: Value(result.read(db.foods.favorite)),
+            servingSize: Value(result.read(db.foods.servingSize)),
+            servingUnit: Value(result.read(db.foods.servingUnit)),
+            imageFile: Value(result.read(db.foods.imageFile)),
+            smallImage: Value(result.read(db.foods.smallImage)),
+            created: Value(result.read(db.foods.created)),
+          ),
+          lastDiaryEntry: result.read(db.diaries.created.max()),
         ),
       )
       .toList();
@@ -222,13 +228,22 @@ GROUP BY meal_foods.meal
                     items.sort((a, b) {
                       final aDate = (a is Meal
                               ? a.created
-                              : (a as FoodsCompanion).created.value) ??
+                              : (a as FoodListFood).food.created.value) ??
                           DateTime(0);
                       final bDate = (b is Meal
                               ? b.created
-                              : (b as FoodsCompanion).created.value) ??
+                              : (b as FoodListFood).food.created.value) ??
                           DateTime(0);
-                      return bDate.compareTo(aDate);
+                      final createdComparison = bDate.compareTo(aDate);
+                      if (createdComparison != 0) return createdComparison;
+
+                      final aLastEntry =
+                          a is FoodListFood ? a.lastDiaryEntry : null;
+                      final bLastEntry =
+                          b is FoodListFood ? b.lastDiaryEntry : null;
+                      return (bLastEntry ?? DateTime(0)).compareTo(
+                        aLastEntry ?? DateTime(0),
+                      );
                     });
                   }
 
@@ -339,7 +354,9 @@ GROUP BY meal_foods.meal
                             }
                           },
                           onSelect: () => setState(() {
-                            selected.addAll(foods.map((food) => food.id.value));
+                            selected.addAll(
+                              foods.map((food) => food.food.id.value),
+                            );
                           }),
                           selected: _allSelected,
                           onEdit: () async {
