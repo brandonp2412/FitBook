@@ -14,6 +14,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'backup_archive.dart';
+
 double? _parseDouble(dynamic val) =>
     val is String ? double.tryParse(val) : val as double?;
 
@@ -239,15 +241,35 @@ class _ImportDataState extends State<ImportData> {
     FilePickerResult? result = await FilePicker.pickFiles();
     if (result == null) return;
 
-    File sourceFile = File(result.files.single.path!);
+    final selectedFile = File(result.files.single.path!);
     final dbFolder = await getApplicationDocumentsDirectory();
-    await db.close();
-    await sourceFile.copy(p.join(dbFolder.path, 'fitbook.sqlite'));
-    db = AppDatabase();
-    if (!widget.pageContext.mounted) return;
-    Navigator.pop(widget.pageContext);
-    entriesState.limit = 100;
-    settingsState.setSubscription();
+    final tempDirectory = await getTemporaryDirectory();
+    final workingDirectory = await tempDirectory.createTemp(
+      'fitbook-import-',
+    );
+    setState(() => importing = true);
+    try {
+      final sourceFile = p.extension(selectedFile.path).toLowerCase() == '.zip'
+          ? await extractBackupArchive(
+              archiveFile: selectedFile,
+              workingDirectory: workingDirectory,
+              documentsDirectory: dbFolder,
+            )
+          : selectedFile;
+      await db.close();
+      try {
+        await sourceFile.copy(p.join(dbFolder.path, backupDatabaseName));
+      } finally {
+        db = AppDatabase();
+      }
+      if (!widget.pageContext.mounted) return;
+      Navigator.pop(widget.pageContext);
+      entriesState.limit = 100;
+      settingsState.setSubscription();
+    } finally {
+      await workingDirectory.delete(recursive: true);
+      if (mounted) setState(() => importing = false);
+    }
   }
 
   Future<void> _importEntries(BuildContext context) async {
@@ -311,7 +333,7 @@ class _ImportDataState extends State<ImportData> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Database'),
+                    title: const Text('Backup'),
                     onTap: () => _importDatabase(context),
                   ),
                 ],

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,6 +6,8 @@ import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+
+import 'backup_archive.dart';
 
 class ExportData extends StatefulWidget {
   const ExportData({
@@ -238,17 +238,30 @@ class _ExportDataState extends State<ExportData> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Database'),
+                    title: const Text('Backup'),
                     onTap: () async {
                       Navigator.pop(context);
-                      final dbFolder = await getApplicationDocumentsDirectory();
-                      final file =
-                          File(p.join(dbFolder.path, 'fitbook.sqlite'));
-                      final bytes = await file.readAsBytes();
-                      await FilePicker.saveFile(
-                        fileName: 'fitbook.sqlite',
-                        bytes: bytes,
+                      setState(() => exporting = true);
+                      final tempDirectory = await getTemporaryDirectory();
+                      final workingDirectory = await tempDirectory.createTemp(
+                        'fitbook-export-',
                       );
+                      try {
+                        final dbFolder =
+                            await getApplicationDocumentsDirectory();
+                        final archive = await createBackupArchive(
+                          databasePath:
+                              p.join(dbFolder.path, backupDatabaseName),
+                          workingDirectory: workingDirectory,
+                        );
+                        await FilePicker.saveFile(
+                          fileName: 'fitbook-backup.zip',
+                          bytes: await archive.readAsBytes(),
+                        );
+                      } finally {
+                        await workingDirectory.delete(recursive: true);
+                        if (mounted) setState(() => exporting = false);
+                      }
                     },
                   ),
                 ],
