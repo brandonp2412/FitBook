@@ -1,5 +1,6 @@
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/diary/diary_entry_actions.dart';
 import 'package:fit_book/diary/diary_entry_row.dart';
 import 'package:fit_book/diary/diary_food.dart';
@@ -96,7 +97,12 @@ class _DiaryListState extends State<DiaryList> {
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
                 Text(
-                  '${current.toStringAsFixed(0)} / $target $unit',
+                  _summaryText(
+                    settings.diarySummary,
+                    current: current,
+                    target: target,
+                    unit: unit,
+                  ),
                   style: theme.textTheme.labelSmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),
@@ -166,7 +172,10 @@ class _DiaryListState extends State<DiaryList> {
           ),
       ];
 
-      if (bars.isEmpty) return const SizedBox.shrink();
+      if (bars.isEmpty ||
+          settings.diarySummary == DiarySummary.none.toString()) {
+        return const SizedBox.shrink();
+      }
 
       return Padding(
         padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
@@ -213,5 +222,26 @@ class _DiaryListState extends State<DiaryList> {
         children: children,
       ),
     );
+  }
+
+  String _summaryText(
+    String setting, {
+    required double current,
+    required int target,
+    required String unit,
+  }) {
+    final currentText = current.toStringAsFixed(0);
+    final remainingText = (target - current).toStringAsFixed(0);
+    switch (setting) {
+      case 'DiarySummary.remaining':
+        return '$remainingText $unit remaining';
+      case 'DiarySummary.both':
+        return '$remainingText remaining ($target $unit)';
+      case 'DiarySummary.none':
+        return '';
+      case 'DiarySummary.division':
+      default:
+        return '$currentText / $target $unit';
+    }
   }
 }
