@@ -88,7 +88,11 @@ class AppDatabase extends _$AppDatabase {
         // A device that already attempted the 51 -> 52 migration may have
         // reached schema 52 before its old orphaned rows were reported. Make
         // the repair idempotent so that database can recover on the next app
-        // launch as well.
+        // launch as well. Historical schema verification also invokes this
+        // callback, so don't refer to tables or columns introduced after the
+        // schema currently being opened.
+        if (details.versionNow < 52) return;
+
         await customUpdate('''
           UPDATE diaries SET food = NULL
           WHERE food IS NOT NULL
