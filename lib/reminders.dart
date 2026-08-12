@@ -10,11 +10,11 @@ import 'package:workmanager/workmanager.dart';
 
 Timer? timer;
 
-void setupReminders() {
+void setupReminders({bool requestPermission = true}) {
   if (kIsWeb) return;
 
   if (Platform.isAndroid || Platform.isIOS) {
-    Permission.notification.request();
+    if (requestPermission) Permission.notification.request();
     Workmanager().initialize(doMobileReminders);
     Workmanager().registerPeriodicTask(
       "reminders",
@@ -27,6 +27,45 @@ void setupReminders() {
       (timer) => doDesktopReminders(),
     );
   }
+}
+
+/// Explains the reminder schedule the first time reminders are enabled.
+Future<void> notifyRemindersEnabled() async {
+  if (kIsWeb) return;
+
+  if (Platform.isAndroid || Platform.isIOS) {
+    final permission = await Permission.notification.request();
+    if (!permission.isGranted) return;
+  }
+
+  const darwin = DarwinInitializationSettings();
+  const android = AndroidInitializationSettings('@drawable/nutrition');
+  const linux =
+      LinuxInitializationSettings(defaultActionName: 'Open notification');
+  const init = InitializationSettings(
+    android: android,
+    iOS: darwin,
+    macOS: darwin,
+    linux: linux,
+  );
+  final plugin = FlutterLocalNotificationsPlugin();
+  await plugin.initialize(settings: init);
+  await plugin.show(
+    id: 0,
+    title: 'Meal reminders enabled',
+    body:
+        "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
+    notificationDetails: const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'reminder-settings',
+        'Reminder settings',
+        channelDescription: 'Notifications explaining FitBook reminders',
+      ),
+      iOS: DarwinNotificationDetails(),
+      macOS: DarwinNotificationDetails(),
+      linux: LinuxNotificationDetails(),
+    ),
+  );
 }
 
 Future<void> doDesktopReminders() async {

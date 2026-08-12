@@ -8,12 +8,14 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void setReminders(bool value) {
-  db.settings.update().write(SettingsCompanion(reminders: Value(value)));
-  if (value)
-    setupReminders();
-  else
+Future<void> setReminders(bool value) async {
+  await db.settings.update().write(SettingsCompanion(reminders: Value(value)));
+  if (value) {
+    setupReminders(requestPermission: false);
+    await notifyRemindersEnabled();
+  } else {
     cancelReminders();
+  }
 }
 
 List<Widget> getDiarySettings({

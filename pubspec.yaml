@@ -36,12 +36,22 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
+  patrol: ^4.8.0
   flutter_lints: ^6.0.0
   build_runner: ^2.4.8
   flutter_launcher_icons: ^0.14.3
   msix: ^3.16.7
   drift_dev: ^2.24.0
   test: ^1.25.8
+
+patrol:
+  app_name: FitBook
+  test_directory: patrol_test
+  android:
+    package_name: com.presley.fit_book
+  ios:
+    bundle_id: com.presley.fitbook
+
 flutter:
   uses-material-design: true
   assets:

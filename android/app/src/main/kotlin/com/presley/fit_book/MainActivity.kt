@@ -11,6 +11,8 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
+    private var pendingPickResult: MethodChannel.Result? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -35,9 +37,9 @@ class MainActivity: FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        data?.data?.also { uri ->
-            if (requestCode != WRITE_REQUEST_CODE) return
+        if (requestCode != WRITE_REQUEST_CODE) return
 
+        data?.data?.also { uri ->
             val contentResolver = applicationContext.contentResolver
             val takeFlags: Int =
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
@@ -52,6 +54,9 @@ class MainActivity: FlutterActivity() {
             db.update("settings", values, null, null)
             db.close()
         }
+
+        pendingPickResult?.success(data?.data?.toString())
+        pendingPickResult = null
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -64,7 +69,19 @@ class MainActivity: FlutterActivity() {
             when (call.method) {
                 "pick" -> {
                     val dbPath = call.argument<String>("dbPath")!!
+                    pendingPickResult = result
                     pick(dbPath)
+                }
+
+                // Lets E2E tests run the same receiver that the daily alarm invokes.
+                // Keeping this debug-only prevents production callers from forcing backups.
+                "runBackupNow" -> {
+                    if (!BuildConfig.DEBUG) {
+                        result.notImplemented()
+                        return@setMethodCallHandler
+                    }
+                    sendBroadcast(Intent(this, BackupReceiver::class.java))
+                    result.success(null)
                 }
 
                 else -> {
