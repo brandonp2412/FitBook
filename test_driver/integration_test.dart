@@ -9,7 +9,11 @@ Future<void> main() async => await integrationDriver(
           throw "FITBOOK_DEVICE_TYPE must be set, so integration driver knows where to save screenshots.";
         final isIos = Platform.environment["FITBOOK_IS_IOS"];
         File imgFile;
-        if (isIos != null)
+        if (deviceType == 'desktop')
+          imgFile = await File(
+            'fastlane/screenshots/en-US/$name.png',
+          ).create(recursive: true);
+        else if (isIos != null)
           imgFile = await File(
             'fastlane/screenshots/$deviceType-$name.png',
           ).create(recursive: true);
