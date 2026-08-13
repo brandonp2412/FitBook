@@ -43,6 +43,7 @@ jobs:
     outputs:
       version: ${{ steps.bump.outputs.version }}
       build_number: ${{ steps.bump.outputs.build_number }}
+      commit_sha: ${{ steps.release.outputs.commit_sha }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -101,10 +102,12 @@ jobs:
           cp "$CHANGELOG_FILE" "assets/changelogs/$(date +%s).txt"
 
       - name: Commit and push version bump
+        id: release
         run: |
           git add pubspec.yaml fastlane/metadata assets/changelogs
           git commit -m "Release ${{ steps.bump.outputs.version }} [skip ci]"
           git push origin main
+          echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create and push tag
         run: |
@@ -117,7 +120,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ needs.version-bump.outputs.commit_sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
@@ -145,12 +148,6 @@ jobs:
           echo "PUB_CACHE=$(pwd)/.pub-cache" >> $GITHUB_ENV
           flutter/bin/flutter config --no-analytics
           flutter/bin/flutter pub get
-
-      - name: Strip non-deterministic build IDs from jni native library
-        working-directory: /home/brandon/fitbook
-        run: |
-          sed -i -e 's/-Wl,/-Wl,--build-id=none,/' \
-            .pub-cache/hosted/pub.dev/jni-*/src/CMakeLists.txt
 
       - name: Decode Android keystore
         working-directory: /home/brandon/fitbook
@@ -192,121 +189,127 @@ jobs:
   verify-reproducibility:
     needs: [version-bump, build-android]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - abi: x86_64
+            suffix: 1
+          - abi: armeabi-v7a
+            suffix: 2
+          - abi: arm64-v8a
+            suffix: 3
+    container:
+      image: registry.gitlab.com/fdroid/fdroidserver:buildserver
     steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: "zulu"
-          java-version: "17"
-
-      - name: Create brandon user directory structure (match F-Droid)
+      - name: Fetch F-Droid production tooling and metadata
         run: |
-          sudo mkdir -p /home/brandon
-          sudo chown $USER -R /home/brandon
+          git clone --depth 1 https://gitlab.com/fdroid/fdroidserver.git /opt/fdroidserver
+          git clone --depth 1 https://gitlab.com/fdroid/fdroiddata.git /opt/fdroiddata
+          echo "/opt/fdroidserver" >> $GITHUB_PATH
+          echo "PYTHONPATH=/opt/fdroidserver:/opt/fdroidserver/examples" >> $GITHUB_ENV
+          echo "fdroidserver $(git -C /opt/fdroidserver rev-parse HEAD)"
+          echo "fdroiddata $(git -C /opt/fdroiddata rev-parse HEAD)"
 
-      - name: Move project to F-Droid location
+      - name: Generate the recipe F-Droid will use for this release
+        working-directory: /opt/fdroiddata
         run: |
-          cd ..
-          mv ${{ github.event.repository.name }} /home/brandon/fitbook
-          # JavaScript actions start in GITHUB_WORKSPACE even when their
-          # inputs point elsewhere. Keep that working directory present.
-          mkdir -p "$GITHUB_WORKSPACE"
+          fdroid checkupdates --auto com.presley.fit_book
+          version='${{ needs.version-bump.outputs.version }}'
+          build='${{ needs.version-bump.outputs.build_number }}'
+          grep -q "versionName: $version" metadata/com.presley.fit_book.yml
+          grep -q "versionCode: ${build}${{ matrix.suffix }}" \
+            metadata/com.presley.fit_book.yml
 
-      - name: Setup Flutter from submodule and get dependencies
-        working-directory: /home/brandon/fitbook
-        run: |
-          git submodule update --init --recursive flutter
-          echo "/home/brandon/fitbook/flutter/bin" >> $GITHUB_PATH
-          export PUB_CACHE=$(pwd)/.pub-cache
-          echo "PUB_CACHE=$(pwd)/.pub-cache" >> $GITHUB_ENV
-          flutter/bin/flutter config --no-analytics
-          flutter/bin/flutter pub get
-
-      - name: Strip non-deterministic build IDs from jni native library
-        working-directory: /home/brandon/fitbook
-        run: |
-          sed -i -e 's/-Wl,/-Wl,--build-id=none,/' \
-            .pub-cache/hosted/pub.dev/jni-*/src/CMakeLists.txt
-
-      - name: Rebuild android independently (unsigned, matching F-Droid)
-        working-directory: /home/brandon/fitbook
-        run: |
-          # No key.properties: AGP's signingConfigs.release resolves to all-null
-          # properties, so the release build type produces a genuinely unsigned
-          # APK — matching F-Droid's buildserver, which never has the signing key.
-          flutter build apk --release --split-per-abi --target-platform android-x64
-          flutter build apk --release --split-per-abi --target-platform android-arm64
-          flutter build apk --release --split-per-abi --target-platform android-arm
-
-      - name: Download reference build-android artifacts
+      - name: Download signed release APKs
         uses: actions/download-artifact@v5
         with:
           name: android-builds
           path: reference-build
 
+      - name: Build with F-Droid's buildserver image and generated recipes
+        working-directory: /opt/fdroiddata
+        run: |
+          # The distributable buildserver image has the same provisioned OS but
+          # leaves large Android packages empty. Install the versions present on
+          # the production buildserver; the recipe installs CMake itself.
+          sdkmanager \
+            'platform-tools' \
+            'platforms;android-36' \
+            'build-tools;35.0.0' \
+            'ndk;28.2.13676358'
+
+          # Production downloads these URLs from the GitHub release. That
+          # release is created later in this workflow, so serve the identical
+          # signed artifacts locally while fdroidserver performs its own check.
+          sed -i \
+            's#https://github.com/brandonp2412/FitBook/releases/download/%v/#http://127.0.0.1:8000/#' \
+            metadata/com.presley.fit_book.yml
+          python3 -m http.server 8000 \
+            --directory "$GITHUB_WORKSPACE/reference-build/flutter-apk" &
+          reference_server_pid=$!
+          trap 'kill "$reference_server_pid"' EXIT
+
+          mkdir -p build logs repo tmp unsigned /home/vagrant/.android
+          chown -R vagrant /opt/fdroiddata /opt/fdroidserver /home/vagrant
+          build='${{ needs.version-bump.outputs.build_number }}'
+          sudo --preserve-env --user vagrant \
+            env HOME=/home/vagrant \
+            env GRADLE_USER_HOME=/home/vagrant/.gradle \
+            env PATH="/opt/fdroidserver:$PATH" \
+            env PYTHONPATH="$PYTHONPATH" \
+            fdroid build --verbose --on-server --no-tarball \
+              "com.presley.fit_book:${build}${{ matrix.suffix }}"
+
       - name: Install apksigcopier
         run: |
+          apt-get update
+          apt-get install -y pipx
           pipx install apksigcopier
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "/root/.local/bin" >> $GITHUB_PATH
           APKSIGNER_DIR=$(dirname "$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)")
           echo "$APKSIGNER_DIR" >> $GITHUB_PATH
 
-      - name: Compare rebuilt APKs against build-android output (F-Droid method)
-        working-directory: /home/brandon/fitbook
+      - name: Compare F-Droid rebuilds against signed release APKs
+        working-directory: /opt/fdroiddata
         run: |
-          # Mirrors fdroidserver's actual reproducibility check: copy the
-          # signature from the officially signed reference APK onto the
-          # unsigned rebuild and verify it with apksigner. This only succeeds
-          # if the rebuilt content is byte-identical to what was originally
-          # signed, since APK Signature Scheme v2/v3 covers all APK bytes
-          # outside the signing block itself.
-          status=0
-          for abi in x86_64 armeabi-v7a arm64-v8a; do
-            rebuilt=$(ls build/app/outputs/flutter-apk/app-${abi}-release*.apk 2>/dev/null || true)
-            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
+          build='${{ needs.version-bump.outputs.build_number }}'
+          abi='${{ matrix.abi }}'
+          vercode="${build}${{ matrix.suffix }}"
+          rebuilt="unsigned/com.presley.fit_book_${vercode}.apk"
+          reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
 
-            if [ ! -f "$reference" ] || [ -z "$rebuilt" ]; then
-              echo "::error::Missing artifact for $abi (reference=$reference rebuilt=$rebuilt)"
-              status=1
-              continue
-            fi
+          if [ ! -f "$reference" ] || [ ! -f "$rebuilt" ]; then
+            echo "::error::Missing artifact for $abi (reference=$reference rebuilt=$rebuilt)"
+            exit 1
+          fi
 
-            if apksigcopier compare --unsigned "$reference" "$rebuilt"; then
-              echo "$abi reproducible"
-            else
-              echo "::error::$abi is not reproducible (apksigcopier compare failed)"
-              status=1
-            fi
-          done
-          exit $status
+          apksigcopier compare --unsigned "$reference" "$rebuilt"
+          echo "$abi reproducible"
 
       - name: Diagnose non-reproducible APKs with diffoscope
         if: failure()
-        working-directory: /home/brandon/fitbook
+        working-directory: /opt/fdroiddata
         run: |
-          sudo apt-get update && sudo apt-get install -y diffoscope
+          apt-get update && apt-get install -y diffoscope
           mkdir -p diffoscope-report
-          for abi in x86_64 armeabi-v7a arm64-v8a; do
-            rebuilt=$(ls build/app/outputs/flutter-apk/app-${abi}-release*.apk 2>/dev/null || true)
-            reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
-            [ -f "$reference" ] && [ -n "$rebuilt" ] || continue
-            diffoscope --max-report-size 20000000 --max-diff-block-lines 256 \
-              --html "diffoscope-report/${abi}.html" --text "diffoscope-report/${abi}.txt" \
-              "$reference" "$rebuilt" || true
-          done
+          build='${{ needs.version-bump.outputs.build_number }}'
+          abi='${{ matrix.abi }}'
+          vercode="${build}${{ matrix.suffix }}"
+          rebuilt="unsigned/com.presley.fit_book_${vercode}.apk"
+          reference="${GITHUB_WORKSPACE}/reference-build/flutter-apk/app-${abi}-release.apk"
+          [ -f "$reference" ] && [ -f "$rebuilt" ] || exit 0
+          diffoscope --max-report-size 20000000 --max-diff-block-lines 256 \
+            --html "diffoscope-report/${abi}.html" --text "diffoscope-report/${abi}.txt" \
+            "$reference" "$rebuilt" || true
 
       - name: Upload diffoscope diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           retention-days: 7
-          name: diffoscope-report
-          path: /home/brandon/fitbook/diffoscope-report
+          name: diffoscope-report-${{ matrix.abi }}
+          path: /opt/fdroiddata/diffoscope-report
 
   build-linux:
     needs: version-bump

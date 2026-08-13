@@ -12,6 +12,20 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     apply plugin: 'kotlin-android'
+
+    plugins.withId('com.android.library') {
+        if (project.name == 'jni') {
+            android {
+                defaultConfig {
+                    externalNativeBuild {
+                        cmake {
+                            arguments '-DCMAKE_SHARED_LINKER_FLAGS=-Wl,--build-id=none'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 subprojects {
     project.evaluationDependsOn(':app')
