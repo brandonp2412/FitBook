@@ -1,15 +1,14 @@
-import 'package:barcode_scan2/platform_wrapper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class SearchOpenFoodFacts extends StatefulWidget {
@@ -113,52 +112,9 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   Future<void> scan() async {
-    final status = await Permission.camera.request();
-    if (!status.isGranted) return;
-
-    final scan = await BarcodeScanner.scan();
-    final barcode = scan.rawContent;
-    if (barcode.isEmpty) return;
-
-    var food = await (db.foods.select()
-          ..where((tbl) => tbl.barcode.equals(barcode))
-          ..limit(1))
-        .getSingleOrNull();
+    final result = await performBarcodeScan(context);
     if (!mounted) return;
-    if (food != null) return Navigator.of(context).pop(food);
-
-    setState(() {
-      searching = true;
-    });
-    SearchResult search = await OpenFoodAPIClient.searchProducts(
-      null,
-      ProductSearchQueryConfiguration(
-        parametersList: [BarcodeParameter(barcode)],
-        version: ProductQueryVersion.v3,
-      ),
-    ).catchError(() => const SearchResult());
-    setState(() {
-      searching = false;
-    });
-
-    if (!mounted) return;
-    if (search.products == null || search.products!.isEmpty)
-      return Navigator.of(context).pop(food);
-
-    if (!mounted) return;
-    final settings = context.read<SettingsState>().value;
-    var companion = mapOpenFoodFacts(search.products!.first, settings.foodUnit);
-    companion = companion.copyWith(
-      favorite: Value(settings.favoriteNew),
-      created: Value(DateTime.now()),
-      barcode: Value(barcode),
-    );
-
-    final id = await db.foods.insertOne(
-      companion.copyWith(created: Value(DateTime.now())),
-    );
-    food = await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
-    if (mounted) Navigator.of(context).pop(food);
+    if (result.food != null) Navigator.of(context).pop(result.food);
   }
 
   @override
