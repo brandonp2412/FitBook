@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:path/path.dart' as p;
-import 'package:sqlite3/sqlite3.dart';
+
+import 'backup_database.dart';
 
 const backupDatabaseName = 'fitbook.sqlite';
 
@@ -18,7 +19,7 @@ Future<File> createBackupArchive({
 }) async {
   final databaseCopy = File(p.join(workingDirectory.path, backupDatabaseName));
   final escapedPath = databaseCopy.path.replaceAll("'", "''");
-  final source = sqlite3.open(databasePath);
+  final source = openBackupDatabase(databasePath);
   try {
     source.execute("VACUUM INTO '$escapedPath'");
   } finally {
@@ -27,7 +28,7 @@ Future<File> createBackupArchive({
 
   final imagePaths = <String, String>{};
   final existingImages = <String, String>{};
-  final backup = sqlite3.open(databaseCopy.path);
+  final backup = openBackupDatabase(databaseCopy.path);
   try {
     for (final (table, column) in _imageColumns) {
       if (!_hasColumn(backup, table, column)) continue;
@@ -99,7 +100,7 @@ Future<File> extractBackupArchive({
     throw const FormatException('Backup does not contain fitbook.sqlite');
   }
 
-  final imported = sqlite3.open(databaseFile.path);
+  final imported = openBackupDatabase(databaseFile.path);
   try {
     for (final (table, column) in _imageColumns) {
       if (!_hasColumn(imported, table, column)) continue;
@@ -125,7 +126,7 @@ Future<File> extractBackupArchive({
   return databaseFile;
 }
 
-bool _hasColumn(Database database, String table, String column) {
+bool _hasColumn(BackupDatabase database, String table, String column) {
   final tableExists = database.select(
     'SELECT 1 FROM sqlite_master WHERE type = \'table\' AND name = ?',
     [table],
