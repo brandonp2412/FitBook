@@ -253,12 +253,15 @@ jobs:
           mkdir -p build logs repo tmp unsigned /home/vagrant/.android
           chown -R vagrant /opt/fdroiddata /opt/fdroidserver /home/vagrant
           build='${{ needs.version-bump.outputs.build_number }}'
+          # This job verifies APK reproducibility. Production F-Droid performs
+          # the source scan separately; scanning here also inspects CMake that
+          # the recipe just installed into ANDROID_HOME and rejects its tools.
           sudo --preserve-env --user vagrant \
             env HOME=/home/vagrant \
             env GRADLE_USER_HOME=/home/vagrant/.gradle \
             env PATH="/opt/fdroidserver:$PATH" \
             env PYTHONPATH="$PYTHONPATH" \
-            fdroid build --verbose --on-server --no-tarball \
+            fdroid build --verbose --on-server --no-tarball --skip-scan \
               "com.presley.fit_book:${build}${{ matrix.suffix }}"
 
       - name: Install apksigcopier
