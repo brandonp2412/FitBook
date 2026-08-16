@@ -85,132 +85,23 @@ void saveWeight(
 }
 
 /// Pushes the full [EditWeightPage] editor as a page route.
-///
-/// Unlike [showQuickAddWeight], the field is not focused automatically; the user
-/// opts into each field they want to change. Reached by tapping an existing
-/// weight or the expand action of the quick-add sheet.
 Future<void> showEditWeight(
   BuildContext context,
-  WeightsCompanion weight, {
-  String? initialValue,
-}) {
+  WeightsCompanion weight,
+) {
   return Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (context) => EditWeightPage(
-        weight: weight,
-        initialValue: initialValue,
-      ),
+      builder: (context) => EditWeightPage(weight: weight),
     ),
   );
 }
 
-/// Shows a compact [QuickAddWeight] sheet that logs a new weight from a single
-/// field, then hands off to the full [showEditWeight] editor if the user taps
-/// expand (carrying whatever they typed across).
-Future<void> showQuickAddWeight(
-  BuildContext context,
-  WeightsCompanion weight,
-) async {
-  final result = await showModalBottomSheet<({String value, bool expand})>(
-    context: context,
-    useRootNavigator: true,
-    isScrollControlled: true,
-    showDragHandle: true,
-    builder: (context) => QuickAddWeight(weight: weight),
-  );
-  if (result == null || !context.mounted) return;
-
-  if (result.expand)
-    await showEditWeight(context, weight, initialValue: result.value);
-  else
-    saveWeight(
-      context,
-      original: weight,
-      amount: double.parse(result.value),
-      unit: weight.unit.value,
-    );
-}
-
-/// A single-field bottom sheet for logging a weight quickly.
-///
-/// Submitting the field (enter) pops with `expand: false` and the typed value;
-/// the expand action pops with `expand: true` so the caller can open the full
-/// editor. Validation happens here so the caller only ever sees a parseable
-/// value.
-class QuickAddWeight extends StatefulWidget {
-  final WeightsCompanion weight;
-
-  const QuickAddWeight({
-    super.key,
-    required this.weight,
-  });
-
-  @override
-  State<QuickAddWeight> createState() => _QuickAddWeightState();
-}
-
-class _QuickAddWeightState extends State<QuickAddWeight> {
-  final TextEditingController valueController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    valueController.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    if (double.tryParse(valueController.text) == null) return;
-    Navigator.pop(context, (value: valueController.text, expand: false));
-  }
-
-  void _expand() {
-    Navigator.pop(context, (value: valueController.text, expand: true));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final unit = widget.weight.unit.value;
-
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-        ),
-        child: TextField(
-          controller: valueController,
-          autofocus: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          textInputAction: TextInputAction.done,
-          onSubmitted: (_) => _submit(),
-          decoration: InputDecoration(
-            labelText: 'Weight ($unit)',
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.tune),
-              tooltip: 'More options',
-              onPressed: _expand,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class EditWeightPage extends StatefulWidget {
   final WeightsCompanion weight;
-  final String? initialValue;
 
   const EditWeightPage({
     super.key,
     required this.weight,
-    this.initialValue,
   });
 
   @override
@@ -236,8 +127,6 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
     if (widget.weight.id.present)
       valueController.text = widget.weight.amount.value.toStringAsFixed(2);
-    else if (widget.initialValue != null)
-      valueController.text = widget.initialValue!;
   }
 
   @override
@@ -337,6 +226,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
           child: ListView(
             children: [
               TextFormField(
+                autofocus: !widget.weight.id.present,
                 controller: valueController,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
