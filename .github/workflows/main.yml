@@ -221,6 +221,12 @@ jobs:
           grep -q "versionCode: ${build}${{ matrix.suffix }}" \
             metadata/com.presley.fit_book.yml
 
+          # The verification build skips source scanning because production
+          # F-Droid performs it separately. fdroidserver rejects --skip-scan
+          # while any scandelete directive remains, so remove those directives
+          # from this ephemeral metadata copy only.
+          sed -i '/^    scandelete:/,+2d' metadata/com.presley.fit_book.yml
+
       - name: Download signed release APKs
         uses: actions/download-artifact@v5
         with:
