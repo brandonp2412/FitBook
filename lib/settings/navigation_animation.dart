@@ -61,6 +61,12 @@ class _NoPageTransitionsBuilder extends PageTransitionsBuilder {
   const _NoPageTransitionsBuilder();
 
   @override
+  Duration get transitionDuration => Duration.zero;
+
+  @override
+  Duration get reverseTransitionDuration => Duration.zero;
+
+  @override
   Widget buildTransitions<T>(
     PageRoute<T> route,
     BuildContext context,

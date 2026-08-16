@@ -194,7 +194,7 @@ class WeightPageState extends State<WeightPage>
                     unit: Value(snapshot.data!.firstOrNull!.unit),
                   );
 
-                showQuickAddWeight(context, weight);
+                showEditWeight(context, weight);
               },
               label: 'Add',
               icon: Icons.add,
