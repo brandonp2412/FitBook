@@ -70,7 +70,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
   final fiber = TextEditingController(text: "0");
-  final nameFocusNode = FocusNode();
   final quantityNode = FocusNode();
   final caloriesNode = FocusNode();
   final barcode = TextEditingController();
@@ -132,7 +131,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       _transitionListenerAdded = true;
       final animation = ModalRoute.of(context)?.animation;
       if (animation == null || animation.status == AnimationStatus.completed) {
-        _onTransitionComplete();
       } else {
         animation.addStatusListener(_onRouteAnimation);
       }
@@ -144,12 +142,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       ModalRoute.of(context)
           ?.animation
           ?.removeStatusListener(_onRouteAnimation);
-      if (mounted) _onTransitionComplete();
     }
-  }
-
-  void _onTransitionComplete() {
-    if (widget.id == null) nameFocusNode.requestFocus();
   }
 
   @override
@@ -223,7 +216,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   @override
   void dispose() {
     nameController.dispose();
-    nameFocusNode.dispose();
     super.dispose();
   }
 
@@ -730,7 +722,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             TextField(
               key: const Key('name_field'),
               controller: nameController,
-              focusNode: nameFocusNode,
+              autofocus: widget.id == null,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelText: 'Name',

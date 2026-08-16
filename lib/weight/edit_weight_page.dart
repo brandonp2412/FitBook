@@ -151,20 +151,15 @@ class QuickAddWeight extends StatefulWidget {
 
 class _QuickAddWeightState extends State<QuickAddWeight> {
   final TextEditingController valueController = TextEditingController();
-  final FocusNode _valueFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _valueFocusNode.requestFocus(),
-    );
   }
 
   @override
   void dispose() {
     valueController.dispose();
-    _valueFocusNode.dispose();
     super.dispose();
   }
 
@@ -190,7 +185,7 @@ class _QuickAddWeightState extends State<QuickAddWeight> {
         ),
         child: TextField(
           controller: valueController,
-          focusNode: _valueFocusNode,
+          autofocus: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           textInputAction: TextInputAction.done,
           onSubmitted: (_) => _submit(),
