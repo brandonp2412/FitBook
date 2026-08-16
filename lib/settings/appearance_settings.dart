@@ -95,44 +95,6 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
           ),
         ),
       ),
-    if ('long date format'.contains(term))
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: DropdownButtonFormField<String>(
-          initialValue: settings.value.longDateFormat,
-          items: longFormats.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(longDateFormat: Value(value!)),
-              ),
-          decoration: InputDecoration(
-            labelText: 'Long date format ($longExample)',
-          ),
-        ),
-      ),
-    if ('short date format'.contains(term))
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: DropdownButtonFormField<String>(
-          initialValue: settings.value.shortDateFormat,
-          items: shortFormats.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(shortDateFormat: Value(value!)),
-              ),
-          decoration: InputDecoration(
-            labelText: 'Short date format ($shortExample)',
-          ),
-        ),
-      ),
     if ('system color scheme'.contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -156,29 +118,6 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
                     ),
                   ),
             ),
-          ),
-        ),
-      ),
-    if ('navigation animation transitions'.contains(term))
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: DropdownButtonFormField<String>(
-          initialValue: NavigationAnimation.fromValue(
-            settings.value.navigationAnimation,
-          ).value,
-          items: NavigationAnimation.values
-              .map(
-                (animation) => DropdownMenuItem(
-                  value: animation.value,
-                  child: Text(animation.label),
-                ),
-              )
-              .toList(),
-          onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(navigationAnimation: Value(value!)),
-              ),
-          decoration: const InputDecoration(
-            labelText: 'Navigation animation',
           ),
         ),
       ),
@@ -268,6 +207,67 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
                     graphsStartAtZero: Value(value),
                   ),
                 ),
+          ),
+        ),
+      ),
+    if ('navigation animation transitions'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: DropdownButtonFormField<String>(
+          initialValue: NavigationAnimation.fromValue(
+            settings.value.navigationAnimation,
+          ).value,
+          items: NavigationAnimation.values
+              .map(
+                (animation) => DropdownMenuItem(
+                  value: animation.value,
+                  child: Text(animation.label),
+                ),
+              )
+              .toList(),
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(navigationAnimation: Value(value!)),
+              ),
+          decoration: const InputDecoration(
+            labelText: 'Navigation animation',
+          ),
+        ),
+      ),
+    if ('long date format'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: DropdownButtonFormField<String>(
+          initialValue: settings.value.longDateFormat,
+          items: longFormats.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(longDateFormat: Value(value!)),
+              ),
+          decoration: InputDecoration(
+            labelText: 'Long date format ($longExample)',
+          ),
+        ),
+      ),
+    if ('short date format'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: DropdownButtonFormField<String>(
+          initialValue: settings.value.shortDateFormat,
+          items: shortFormats.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(shortDateFormat: Value(value!)),
+              ),
+          decoration: InputDecoration(
+            labelText: 'Short date format ($shortExample)',
           ),
         ),
       ),
