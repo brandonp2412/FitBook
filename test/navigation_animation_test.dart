@@ -16,4 +16,14 @@ void main() {
       expect(theme.builders[platform], isA<ZoomPageTransitionsBuilder>());
     }
   });
+
+  test('none has no push or pop transition duration', () {
+    final theme = navigationTransitionsTheme('none');
+
+    for (final platform in TargetPlatform.values) {
+      final builder = theme.builders[platform]!;
+      expect(builder.transitionDuration, Duration.zero);
+      expect(builder.reverseTransitionDuration, Duration.zero);
+    }
+  });
 }
