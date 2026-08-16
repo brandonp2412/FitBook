@@ -264,6 +264,8 @@ jobs:
           # the recipe just installed into ANDROID_HOME and rejects its tools.
           sudo --preserve-env --user vagrant \
             env HOME=/home/vagrant \
+            env ANDROID_HOME="$ANDROID_HOME" \
+            env ANDROID_SDK_ROOT="$ANDROID_HOME" \
             env GRADLE_USER_HOME=/home/vagrant/.gradle \
             env PATH="/opt/fdroidserver:$PATH" \
             env PYTHONPATH="$PYTHONPATH" \
