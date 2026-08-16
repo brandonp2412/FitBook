@@ -227,6 +227,12 @@ jobs:
           # from this ephemeral metadata copy only.
           sed -i '/^    scandelete:/,+2d' metadata/com.presley.fit_book.yml
 
+          # The signed APK is a workflow artifact until the release job runs,
+          # so fdroidserver cannot download it through the recipe's Binaries
+          # URL. The explicit apksigcopier comparison below remains the hard
+          # reproducibility gate.
+          sed -i '/^Binaries:/d' metadata/com.presley.fit_book.yml
+
       - name: Download signed release APKs
         uses: actions/download-artifact@v5
         with:
@@ -244,17 +250,6 @@ jobs:
             'platforms;android-36' \
             'build-tools;35.0.0' \
             'ndk;28.2.13676358'
-
-          # Production downloads these URLs from the GitHub release. That
-          # release is created later in this workflow, so serve the identical
-          # signed artifacts locally while fdroidserver performs its own check.
-          sed -i \
-            's#https://github.com/brandonp2412/FitBook/releases/download/%v/#http://127.0.0.1:8000/#' \
-            metadata/com.presley.fit_book.yml
-          python3 -m http.server 8000 \
-            --directory "$GITHUB_WORKSPACE/reference-build/flutter-apk" &
-          reference_server_pid=$!
-          trap 'kill "$reference_server_pid"' EXIT
 
           mkdir -p build logs repo tmp unsigned /home/vagrant/.android
           chown -R vagrant /opt/fdroiddata /opt/fdroidserver /home/vagrant
