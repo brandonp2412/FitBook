@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/settings/navigation_animation.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -155,6 +156,29 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
                     ),
                   ),
             ),
+          ),
+        ),
+      ),
+    if ('navigation animation transitions'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: DropdownButtonFormField<String>(
+          initialValue: NavigationAnimation.fromValue(
+            settings.value.navigationAnimation,
+          ).value,
+          items: NavigationAnimation.values
+              .map(
+                (animation) => DropdownMenuItem(
+                  value: animation.value,
+                  child: Text(animation.label),
+                ),
+              )
+              .toList(),
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(navigationAnimation: Value(value!)),
+              ),
+          decoration: const InputDecoration(
+            labelText: 'Navigation animation',
           ),
         ),
       ),

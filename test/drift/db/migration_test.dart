@@ -61,6 +61,12 @@ void main() {
         'meal_foods_food_idx',
       }),
     );
+    final settingsColumns =
+        await db.customSelect('PRAGMA table_info(settings)').get();
+    expect(
+      settingsColumns.map((row) => row.read<String>('name')),
+      contains('navigation_animation'),
+    );
 
     await db.close();
   });

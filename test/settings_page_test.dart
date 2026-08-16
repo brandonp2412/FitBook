@@ -83,6 +83,7 @@ void main() async {
     await tester.tap(find.text('Appearance'));
     await tester.pumpAndSettle();
     expect(find.text('System'), findsOne);
+    expect(find.text('Navigation animation'), findsOne);
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
 

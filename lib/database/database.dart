@@ -537,8 +537,14 @@ class AppDatabase extends _$AppDatabase {
         );
       }
     },
+    from53To54: (Migrator m, Schema51 schema) async {
+      await m.database.customStatement(
+        "ALTER TABLE settings ADD COLUMN navigation_animation "
+        "TEXT NOT NULL DEFAULT 'fade'",
+      );
+    },
   );
 
   @override
-  int get schemaVersion => 53;
+  int get schemaVersion => 54;
 }

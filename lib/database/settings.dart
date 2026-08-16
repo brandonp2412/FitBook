@@ -46,6 +46,8 @@ class Settings extends Table {
   RealColumn get targetWeight => real().nullable()();
   IntColumn get limit => integer().withDefault(const Constant(30))();
   TextColumn get themeMode => text()();
+  TextColumn get navigationAnimation =>
+      text().withDefault(const Constant('fade'))();
   TextColumn get backupPath => text().nullable()();
   TextColumn get convertWeight => text().nullable()();
   BoolColumn get scrollableTabs =>

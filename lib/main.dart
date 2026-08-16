@@ -9,6 +9,7 @@ import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/navigation_animation.dart';
 import 'package:fit_book/settings/whats_new.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/weight_page.dart';
@@ -107,15 +108,8 @@ class App extends StatelessWidget {
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',
             useMaterial3: true,
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
-              },
-            ),
+            pageTransitionsTheme:
+                navigationTransitionsTheme(settings.navigationAnimation),
           ),
           darkTheme: ThemeData(
             colorScheme:
@@ -129,15 +123,8 @@ class App extends StatelessWidget {
             inputDecorationTheme: const InputDecorationTheme(
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
-                TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
-              },
-            ),
+            pageTransitionsTheme:
+                navigationTransitionsTheme(settings.navigationAnimation),
           ),
           themeMode: settings.themeMode == 'ThemeMode.amoled'
               ? ThemeMode.dark
