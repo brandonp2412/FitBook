@@ -10,18 +10,18 @@ cd "$repo_root"
 
 # F-Droid builds with --enforce-lockfile. Do the same here so an SDK/submodule
 # change cannot silently rewrite pubspec.lock in CI and fail only downstream.
-flutter pub get --enforce-lockfile
-dart run build_runner build
+flutter/bin/flutter pub get --enforce-lockfile
+flutter/bin/dart run build_runner build
 
 echo "== formatting =="
-dart format lib test
+flutter/bin/dart format lib test
 
 echo "== applying auto-fixes =="
-dart fix --apply lib
-dart fix --apply test
+flutter/bin/dart fix --apply lib
+flutter/bin/dart fix --apply test
 
 echo "== analyzing =="
-flutter analyze lib test
+flutter/bin/flutter analyze lib test
 
 echo "== testing =="
-flutter test
+flutter/bin/flutter test

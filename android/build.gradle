@@ -14,7 +14,7 @@ subprojects {
     apply plugin: 'kotlin-android'
 
     plugins.withId('com.android.library') {
-        if (project.name == 'jni') {
+        if (project.name in ['flutter_zxing', 'jni']) {
             android {
                 defaultConfig {
                     externalNativeBuild {

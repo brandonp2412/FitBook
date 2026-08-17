@@ -6,7 +6,7 @@ cd $CI_PRIMARY_REPOSITORY_PATH
 export PATH="$PATH:$(pwd)/flutter/bin"
 
 flutter precache --ios
-flutter pub get
+flutter/bin/flutter pub get --enforce-lockfile
 
 HOMEBREW_NO_AUTO_UPDATE=1
 brew install cocoapods

@@ -9,7 +9,7 @@ HOMEBREW_NO_AUTO_UPDATE=1
 brew install cocoapods
 
 flutter precache --macos
-flutter pub get
+flutter/bin/flutter pub get --enforce-lockfile
 flutter build macos
 
 cd macos && pod install
