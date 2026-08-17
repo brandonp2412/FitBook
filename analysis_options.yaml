@@ -2,6 +2,9 @@ analyzer:
   errors:
     argument_type_not_assignable_to_error_handler: ignore
     invalid_return_type_for_catch_error: ignore
+  exclude: 
+  - "flutter/**"
+
 include: package:flutter_lints/flutter.yaml
 
 linter:
