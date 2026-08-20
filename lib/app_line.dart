@@ -342,9 +342,13 @@ class _AppLineState extends State<AppLine> {
         List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
         List<FlSpot> smoothSpots = showSmooth ? _getSmoothSpots(rows) : [];
 
-        List<LineChartBarData> lineBars = [];
+        final lineBars = <LineChartBarData>[];
+        // Keep this in the same order as lineBarsData so each tooltip can use
+        // the same color as its series checkbox and line.
+        final seriesColors = <Color>[];
 
         if (showMain) {
+          seriesColors.add(Theme.of(context).colorScheme.primary);
           lineBars.add(
             LineChartBarData(
               spots: spots,
@@ -369,6 +373,7 @@ class _AppLineState extends State<AppLine> {
         }
 
         if (showTrend && trendSpots.isNotEmpty) {
+          seriesColors.add(Theme.of(context).colorScheme.secondary);
           lineBars.add(
             LineChartBarData(
               spots: trendSpots,
@@ -385,6 +390,7 @@ class _AppLineState extends State<AppLine> {
         }
 
         if (showSmooth && smoothSpots.isNotEmpty) {
+          seriesColors.add(Theme.of(context).colorScheme.tertiary);
           lineBars.add(
             LineChartBarData(
               spots: smoothSpots,
@@ -472,8 +478,12 @@ class _AppLineState extends State<AppLine> {
                       ),
                     ),
                     lineTouchData: LineTouchData(
-                      touchTooltipData:
-                          _tooltipData(context, rows, rows.first.unit),
+                      touchTooltipData: _tooltipData(
+                        context,
+                        rows,
+                        rows.first.unit,
+                        seriesColors,
+                      ),
                     ),
                     lineBarsData: lineBars,
                     gridData: const FlGridData(show: false),
@@ -645,20 +655,23 @@ class _AppLineState extends State<AppLine> {
     BuildContext context,
     List<GraphData> rows,
     String unit,
+    List<Color> seriesColors,
   ) {
     return LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
-        if (touchedSpots.isEmpty) return [];
         return touchedSpots.map(
           (spot) {
-            if (spot.barIndex != 0) return null;
+            if (spot.barIndex >= seriesColors.length ||
+                spot.spotIndex >= rows.length) {
+              return null;
+            }
             final row = rows.elementAt(spot.spotIndex);
             final dateStr =
                 DateFormat(settings.shortDateFormat).format(row.created);
             return LineTooltipItem(
-              "${formatter.format(row.val)} $unit\n$dateStr",
-              TextStyle(color: Theme.of(context).textTheme.bodyLarge!.color),
+              "${formatter.format(spot.y)} $unit\n$dateStr",
+              TextStyle(color: seriesColors[spot.barIndex]),
             );
           },
         ).toList();
