@@ -58,6 +58,7 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
+          chmod +x flutter/bin/*
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
           flutter/bin/flutter config --no-analytics
 
@@ -105,6 +106,7 @@ jobs:
       - name: Setup Flutter from submodule
         run: |
           git submodule update --init --recursive flutter
+          chmod +x flutter/bin/*
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
           flutter/bin/flutter config --no-analytics
 
@@ -113,7 +115,7 @@ jobs:
 
       - name: Install Patrol CLI
         run: |
-          dart pub global activate patrol_cli 4.6.1
+          dart pub global activate patrol_cli 4.7.0
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       - name: Enable KVM
