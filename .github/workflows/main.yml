@@ -115,7 +115,7 @@ jobs:
 
       - name: Install Patrol CLI
         run: |
-          dart pub global activate patrol_cli 4.7.0
+          dart pub global activate patrol_cli 4.8.0
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       - name: Enable KVM
@@ -436,7 +436,7 @@ jobs:
         uses: actions/download-artifact@v5
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version-bump.outputs.version }}
           name: ${{ needs.version-bump.outputs.version }}
