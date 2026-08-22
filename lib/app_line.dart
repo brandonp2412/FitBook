@@ -686,21 +686,32 @@ class _AppLineState extends State<AppLine> {
     return LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
-        return touchedSpots.map(
-          (spot) {
-            if (spot.barIndex >= seriesColors.length ||
-                spot.spotIndex >= rows.length) {
-              return null;
-            }
-            final row = rows.elementAt(spot.spotIndex);
-            final dateStr =
-                DateFormat(settings.shortDateFormat).format(row.created);
-            return LineTooltipItem(
-              "${formatter.format(spot.y)} $unit\n$dateStr",
-              TextStyle(color: seriesColors[spot.barIndex]),
-            );
-          },
-        ).toList();
+        if (touchedSpots.isEmpty) return const [];
+
+        // Several series can have a point at the same cursor position. Show
+        // only the topmost one, while keeping its series-specific color.
+        var highestSpotIndex = 0;
+        for (var index = 1; index < touchedSpots.length; index++) {
+          if (touchedSpots[index].y > touchedSpots[highestSpotIndex].y) {
+            highestSpotIndex = index;
+          }
+        }
+
+        return List.generate(touchedSpots.length, (index) {
+          final spot = touchedSpots[index];
+          if (index != highestSpotIndex ||
+              spot.barIndex >= seriesColors.length ||
+              spot.spotIndex >= rows.length) {
+            return null;
+          }
+          final row = rows.elementAt(spot.spotIndex);
+          final dateStr =
+              DateFormat(settings.shortDateFormat).format(row.created);
+          return LineTooltipItem(
+            "${formatter.format(spot.y)} $unit\n$dateStr",
+            TextStyle(color: seriesColors[spot.barIndex]),
+          );
+        });
       },
     );
   }
