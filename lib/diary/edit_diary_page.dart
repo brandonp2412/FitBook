@@ -148,6 +148,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   @override
   void initState() {
     super.initState();
+    if (unit == 'serving') quantity.text = '1';
     _performSearch('');
 
     if (widget.initialFood != null) {
@@ -322,6 +323,25 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     _loadMealNutrients(meal.id);
     quantityNode.requestFocus();
     selectAll(quantity);
+  }
+
+  Future<void> _repeatEntry() async {
+    if (_selectedMealId == null && selectedFood == null) return;
+
+    final qty = double.tryParse(quantity.text) ?? 1.0;
+    await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        food:
+            selectedFood == null ? const Value(null) : Value(selectedFood!.id),
+        meal: _selectedMealId == null
+            ? const Value(null)
+            : Value(_selectedMealId!),
+        created: DateTime.now(),
+        quantity: qty,
+        unit: unit,
+      ),
+    );
+    if (mounted) Navigator.pop(context);
   }
 
   void _applyFood(Food food, {double? lastQuantity, String? lastUnit}) {
@@ -632,6 +652,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         actions: [
           if (widget.id != null)
             IconButton(
+              icon: const Icon(Icons.repeat),
+              tooltip: 'Repeat entry',
+              onPressed: _repeatEntry,
+            ),
+          if (widget.id != null)
+            IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
                 await showDialog(
@@ -816,7 +842,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               TextField(
                 controller: quantity,
                 focusNode: quantityNode,
-                decoration: const InputDecoration(label: Text("Quantity")),
+                decoration: InputDecoration(
+                  label: const Text('Quantity'),
+                  suffixText: _selectedMealId != null
+                      ? '${formatter.format(_mealCalsPerServing * _num(quantity))} kcal'
+                      : '${formatter.format(entryCalories)} kcal',
+                ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onTap: () => quantity.selection = TextSelection(
                   baseOffset: 0,

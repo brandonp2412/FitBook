@@ -48,6 +48,41 @@ class _AppLineState extends State<AppLine> {
   bool showTrend = false;
   bool showSmooth = false;
 
+  @override
+  void initState() {
+    super.initState();
+    settings = context.read<SettingsState>().value;
+    final selected = settings.graphSeries.split(',');
+    showMain = selected.contains('value');
+    showGoal = selected.contains('goal');
+    showTrend = selected.contains('trend');
+    showSmooth = selected.contains('smooth');
+    _setStream();
+  }
+
+  void _updateSeries({
+    bool? value,
+    bool? goal,
+    bool? trend,
+    bool? smooth,
+  }) {
+    setState(() {
+      showMain = value ?? showMain;
+      showGoal = goal ?? showGoal;
+      showTrend = trend ?? showTrend;
+      showSmooth = smooth ?? showSmooth;
+    });
+    final series = [
+      if (showMain) 'value',
+      if (showGoal) 'goal',
+      if (showTrend) 'trend',
+      if (showSmooth) 'smooth',
+    ];
+    db.settings.update().write(
+          SettingsCompanion(graphSeries: Value(series.join(','))),
+        );
+  }
+
   /// Least-squares regression of `val` against days elapsed since the
   /// earliest entry. Using elapsed days (rather than index position) keeps
   /// the slope correct when entries aren't evenly spaced in time.
@@ -141,13 +176,6 @@ class _AppLineState extends State<AppLine> {
   @override
   void didUpdateWidget(covariant AppLine oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _setStream();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    settings = context.read<SettingsState>().value;
     _setStream();
   }
 
@@ -498,7 +526,7 @@ class _AppLineState extends State<AppLine> {
                 _statTile(
                   leading: Checkbox(
                     value: showMain,
-                    onChanged: (_) => setState(() => showMain = !showMain),
+                    onChanged: (value) => _updateSeries(value: value),
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     fillColor: WidgetStateProperty.resolveWith<Color?>(
                       (states) => states.contains(WidgetState.selected)
@@ -509,14 +537,13 @@ class _AppLineState extends State<AppLine> {
                   label: "Value",
                   value:
                       "${formatter.format(rows.last.val)} ${rows.first.unit}",
-                  onTap: () => setState(() => showMain = !showMain),
+                  onTap: () => _updateSeries(value: !showMain),
                 ),
                 _statTile(
                   leading: Checkbox(
                     value: showGoal,
-                    onChanged: goal > 0
-                        ? (_) => setState(() => showGoal = !showGoal)
-                        : null,
+                    onChanged:
+                        goal > 0 ? (value) => _updateSeries(goal: value) : null,
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     fillColor: WidgetStateProperty.resolveWith<Color?>(
                       (states) => states.contains(WidgetState.selected)
@@ -528,14 +555,13 @@ class _AppLineState extends State<AppLine> {
                   value: goal > 0
                       ? "${formatter.format(goal)} ${rows.first.unit}"
                       : "Not set",
-                  onTap: goal > 0
-                      ? () => setState(() => showGoal = !showGoal)
-                      : () {},
+                  onTap:
+                      goal > 0 ? () => _updateSeries(goal: !showGoal) : () {},
                 ),
                 _statTile(
                   leading: Checkbox(
                     value: showTrend,
-                    onChanged: (_) => setState(() => showTrend = !showTrend),
+                    onChanged: (value) => _updateSeries(trend: value),
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     fillColor: WidgetStateProperty.resolveWith<Color?>(
                       (states) => states.contains(WidgetState.selected)
@@ -545,12 +571,12 @@ class _AppLineState extends State<AppLine> {
                   ),
                   label: "Trend",
                   value: _getTrendText(rows),
-                  onTap: () => setState(() => showTrend = !showTrend),
+                  onTap: () => _updateSeries(trend: !showTrend),
                 ),
                 _statTile(
                   leading: Checkbox(
                     value: showSmooth,
-                    onChanged: (_) => setState(() => showSmooth = !showSmooth),
+                    onChanged: (value) => _updateSeries(smooth: value),
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     fillColor: WidgetStateProperty.resolveWith<Color?>(
                       (states) => states.contains(WidgetState.selected)
@@ -560,7 +586,7 @@ class _AppLineState extends State<AppLine> {
                   ),
                   label: "Smooth",
                   value: "$_smoothWindow pt avg",
-                  onTap: () => setState(() => showSmooth = !showSmooth),
+                  onTap: () => _updateSeries(smooth: !showSmooth),
                 ),
               ],
             ),

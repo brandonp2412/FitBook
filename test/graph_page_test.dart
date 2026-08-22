@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/graph_page.dart';
@@ -192,6 +193,31 @@ void main() async {
     await tester.tap(find.text('Body weight'));
     await tester.pumpAndSettle();
     expect(find.byType(LineChart), findsOne);
+
+    await db.close();
+  });
+
+  testWidgets('GraphPage defaults calories to weekly',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: GraphPage()),
+      ),
+    );
+    await tester.pump();
+
+    final periodPicker = tester.widget<SegmentedButton<Period>>(
+      find.byType(SegmentedButton<Period>),
+    );
+    expect(periodPicker.selected, {Period.week});
 
     await db.close();
   });

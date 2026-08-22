@@ -23,7 +23,7 @@ class GraphPage extends StatefulWidget {
 class GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
   String metric = 'calories';
-  Period groupBy = Period.day;
+  Period groupBy = Period.week;
   DateTime? start;
   DateTime? end;
 

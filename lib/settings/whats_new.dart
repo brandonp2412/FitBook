@@ -18,6 +18,19 @@ class Changelog {
   Changelog({required this.name, required this.content, required this.created});
 }
 
+// Some historical changelogs were created on Windows and use .NET/Windows
+// ticks (100-nanosecond intervals since 1601), while current releases use
+// Unix seconds.
+DateTime changelogDateFromTimestamp(int timestamp) {
+  const windowsEpochInTicks = 116444736000000000;
+  const ticksPerMillisecond = 10000;
+
+  final milliseconds = timestamp >= windowsEpochInTicks
+      ? (timestamp - windowsEpochInTicks) ~/ ticksPerMillisecond
+      : timestamp * Duration.millisecondsPerSecond;
+  return DateTime.fromMillisecondsSinceEpoch(milliseconds);
+}
+
 class _WhatsNewState extends State<WhatsNew> {
   List<Changelog> changelogs = [];
 
@@ -48,7 +61,9 @@ class _WhatsNewState extends State<WhatsNew> {
       final bName = b.split('/').last.split('.').first;
       final aNum = int.tryParse(aName) ?? 0;
       final bNum = int.tryParse(bName) ?? 0;
-      return bNum.compareTo(aNum);
+      return changelogDateFromTimestamp(
+        bNum,
+      ).compareTo(changelogDateFromTimestamp(aNum));
     });
 
     final result = <Changelog>[];
@@ -65,7 +80,7 @@ class _WhatsNewState extends State<WhatsNew> {
           Changelog(
             name: filename,
             created: DateFormat.yMMMd().format(
-              DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+              changelogDateFromTimestamp(timestamp),
             ),
             content: content,
           ),

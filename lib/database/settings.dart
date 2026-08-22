@@ -57,4 +57,6 @@ class Settings extends Table {
       boolean().withDefault(const Constant(true))();
   BoolColumn get graphsStartAtZero =>
       boolean().withDefault(const Constant(false))();
+  TextColumn get graphSeries =>
+      text().withDefault(const Constant('value,goal'))();
 }

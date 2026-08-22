@@ -543,8 +543,14 @@ class AppDatabase extends _$AppDatabase {
         "TEXT NOT NULL DEFAULT 'fade'",
       );
     },
+    from54To55: (Migrator m, Schema51 schema) async {
+      await m.database.customStatement(
+        "ALTER TABLE settings ADD COLUMN graph_series "
+        "TEXT NOT NULL DEFAULT 'value,goal'",
+      );
+    },
   );
 
   @override
-  int get schemaVersion => 54;
+  int get schemaVersion => 55;
 }

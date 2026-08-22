@@ -360,4 +360,59 @@ void main() async {
 
     await db.close();
   });
+
+  testWidgets('EditDiary defaults a serving quantity to one',
+      (WidgetTester tester) async {
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(entryUnit: Value('serving')),
+        );
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(name: 'Soup', calories: const Value(120)),
+    );
+    final food = await (db.foods.select()..where((f) => f.id.equals(foodId)))
+        .getSingle();
+
+    await tester.pumpWidget(
+      _wrap(EditDiaryPage(initialFood: food), settingsState),
+    );
+    await tester.pumpAndSettle();
+
+    final quantity = tester.widget<TextField>(find.byType(TextField).at(1));
+    expect(quantity.controller!.text, '1');
+
+    await db.close();
+  });
+
+  testWidgets('Repeat entry logs the same meal again',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final mealId = await db.meals.insertOne(
+      MealsCompanion.insert(name: 'Lunch', created: DateTime.now()),
+    );
+    final entryId = await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        meal: Value(mealId),
+        created: DateTime(2020),
+        quantity: 2,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Repeat entry'));
+    await tester.pumpAndSettle();
+
+    final entries = await db.diaries.select().get();
+    expect(entries, hasLength(2));
+    final repeated = entries.singleWhere((entry) => entry.id != entryId);
+    expect(repeated.meal, mealId);
+    expect(repeated.quantity, 2);
+    expect(repeated.unit, 'serving');
+
+    await db.close();
+  });
 }

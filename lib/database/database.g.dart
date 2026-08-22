@@ -6867,6 +6867,14 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("graphs_start_at_zero" IN (0, 1))'),
       defaultValue: const Constant(false));
+  static const VerificationMeta _graphSeriesMeta =
+      const VerificationMeta('graphSeries');
+  @override
+  late final GeneratedColumn<String> graphSeries = GeneratedColumn<String>(
+      'graph_series', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('value,goal'));
   @override
   List<GeneratedColumn> get $columns => [
         curveLines,
@@ -6904,7 +6912,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         scrollableTabs,
         compactDiary,
         compactWeights,
-        graphsStartAtZero
+        graphsStartAtZero,
+        graphSeries
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -7125,6 +7134,12 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           graphsStartAtZero.isAcceptableOrUnknown(
               data['graphs_start_at_zero']!, _graphsStartAtZeroMeta));
     }
+    if (data.containsKey('graph_series')) {
+      context.handle(
+          _graphSeriesMeta,
+          graphSeries.isAcceptableOrUnknown(
+              data['graph_series']!, _graphSeriesMeta));
+    }
     return context;
   }
 
@@ -7206,6 +7221,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.bool, data['${effectivePrefix}compact_weights'])!,
       graphsStartAtZero: attachedDatabase.typeMapping.read(
           DriftSqlType.bool, data['${effectivePrefix}graphs_start_at_zero'])!,
+      graphSeries: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}graph_series'])!,
     );
   }
 
@@ -7252,6 +7269,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool compactDiary;
   final bool compactWeights;
   final bool graphsStartAtZero;
+  final String graphSeries;
   const Setting(
       {required this.curveLines,
       required this.autoCalc,
@@ -7288,7 +7306,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.scrollableTabs,
       required this.compactDiary,
       required this.compactWeights,
-      required this.graphsStartAtZero});
+      required this.graphsStartAtZero,
+      required this.graphSeries});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -7350,6 +7369,7 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['compact_diary'] = Variable<bool>(compactDiary);
     map['compact_weights'] = Variable<bool>(compactWeights);
     map['graphs_start_at_zero'] = Variable<bool>(graphsStartAtZero);
+    map['graph_series'] = Variable<String>(graphSeries);
     return map;
   }
 
@@ -7412,6 +7432,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       compactDiary: Value(compactDiary),
       compactWeights: Value(compactWeights),
       graphsStartAtZero: Value(graphsStartAtZero),
+      graphSeries: Value(graphSeries),
     );
   }
 
@@ -7458,6 +7479,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       compactDiary: serializer.fromJson<bool>(json['compactDiary']),
       compactWeights: serializer.fromJson<bool>(json['compactWeights']),
       graphsStartAtZero: serializer.fromJson<bool>(json['graphsStartAtZero']),
+      graphSeries: serializer.fromJson<String>(json['graphSeries']),
     );
   }
   @override
@@ -7500,6 +7522,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       'compactDiary': serializer.toJson<bool>(compactDiary),
       'compactWeights': serializer.toJson<bool>(compactWeights),
       'graphsStartAtZero': serializer.toJson<bool>(graphsStartAtZero),
+      'graphSeries': serializer.toJson<String>(graphSeries),
     };
   }
 
@@ -7539,7 +7562,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           bool? scrollableTabs,
           bool? compactDiary,
           bool? compactWeights,
-          bool? graphsStartAtZero}) =>
+          bool? graphsStartAtZero,
+          String? graphSeries}) =>
       Setting(
         curveLines: curveLines ?? this.curveLines,
         autoCalc: autoCalc ?? this.autoCalc,
@@ -7582,6 +7606,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         compactDiary: compactDiary ?? this.compactDiary,
         compactWeights: compactWeights ?? this.compactWeights,
         graphsStartAtZero: graphsStartAtZero ?? this.graphsStartAtZero,
+        graphSeries: graphSeries ?? this.graphSeries,
       );
   Setting copyWithCompanion(SettingsCompanion data) {
     return Setting(
@@ -7660,6 +7685,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       graphsStartAtZero: data.graphsStartAtZero.present
           ? data.graphsStartAtZero.value
           : this.graphsStartAtZero,
+      graphSeries:
+          data.graphSeries.present ? data.graphSeries.value : this.graphSeries,
     );
   }
 
@@ -7701,7 +7728,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('scrollableTabs: $scrollableTabs, ')
           ..write('compactDiary: $compactDiary, ')
           ..write('compactWeights: $compactWeights, ')
-          ..write('graphsStartAtZero: $graphsStartAtZero')
+          ..write('graphsStartAtZero: $graphsStartAtZero, ')
+          ..write('graphSeries: $graphSeries')
           ..write(')'))
         .toString();
   }
@@ -7743,7 +7771,8 @@ class Setting extends DataClass implements Insertable<Setting> {
         scrollableTabs,
         compactDiary,
         compactWeights,
-        graphsStartAtZero
+        graphsStartAtZero,
+        graphSeries
       ]);
   @override
   bool operator ==(Object other) =>
@@ -7784,7 +7813,8 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.scrollableTabs == this.scrollableTabs &&
           other.compactDiary == this.compactDiary &&
           other.compactWeights == this.compactWeights &&
-          other.graphsStartAtZero == this.graphsStartAtZero);
+          other.graphsStartAtZero == this.graphsStartAtZero &&
+          other.graphSeries == this.graphSeries);
 }
 
 class SettingsCompanion extends UpdateCompanion<Setting> {
@@ -7824,6 +7854,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> compactDiary;
   final Value<bool> compactWeights;
   final Value<bool> graphsStartAtZero;
+  final Value<String> graphSeries;
   const SettingsCompanion({
     this.curveLines = const Value.absent(),
     this.autoCalc = const Value.absent(),
@@ -7861,6 +7892,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.compactDiary = const Value.absent(),
     this.compactWeights = const Value.absent(),
     this.graphsStartAtZero = const Value.absent(),
+    this.graphSeries = const Value.absent(),
   });
   SettingsCompanion.insert({
     this.curveLines = const Value.absent(),
@@ -7899,6 +7931,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.compactDiary = const Value.absent(),
     this.compactWeights = const Value.absent(),
     this.graphsStartAtZero = const Value.absent(),
+    this.graphSeries = const Value.absent(),
   })  : diarySummary = Value(diarySummary),
         entryUnit = Value(entryUnit),
         favoriteNew = Value(favoriteNew),
@@ -7946,6 +7979,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? compactDiary,
     Expression<bool>? compactWeights,
     Expression<bool>? graphsStartAtZero,
+    Expression<String>? graphSeries,
   }) {
     return RawValuesInsertable({
       if (curveLines != null) 'curve_lines': curveLines,
@@ -7987,6 +8021,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (compactDiary != null) 'compact_diary': compactDiary,
       if (compactWeights != null) 'compact_weights': compactWeights,
       if (graphsStartAtZero != null) 'graphs_start_at_zero': graphsStartAtZero,
+      if (graphSeries != null) 'graph_series': graphSeries,
     });
   }
 
@@ -8026,7 +8061,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<bool>? scrollableTabs,
       Value<bool>? compactDiary,
       Value<bool>? compactWeights,
-      Value<bool>? graphsStartAtZero}) {
+      Value<bool>? graphsStartAtZero,
+      Value<String>? graphSeries}) {
     return SettingsCompanion(
       curveLines: curveLines ?? this.curveLines,
       autoCalc: autoCalc ?? this.autoCalc,
@@ -8065,6 +8101,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       compactDiary: compactDiary ?? this.compactDiary,
       compactWeights: compactWeights ?? this.compactWeights,
       graphsStartAtZero: graphsStartAtZero ?? this.graphsStartAtZero,
+      graphSeries: graphSeries ?? this.graphSeries,
     );
   }
 
@@ -8180,6 +8217,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (graphsStartAtZero.present) {
       map['graphs_start_at_zero'] = Variable<bool>(graphsStartAtZero.value);
     }
+    if (graphSeries.present) {
+      map['graph_series'] = Variable<String>(graphSeries.value);
+    }
     return map;
   }
 
@@ -8221,7 +8261,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('scrollableTabs: $scrollableTabs, ')
           ..write('compactDiary: $compactDiary, ')
           ..write('compactWeights: $compactWeights, ')
-          ..write('graphsStartAtZero: $graphsStartAtZero')
+          ..write('graphsStartAtZero: $graphsStartAtZero, ')
+          ..write('graphSeries: $graphSeries')
           ..write(')'))
         .toString();
   }
@@ -11821,6 +11862,7 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   Value<bool> compactDiary,
   Value<bool> compactWeights,
   Value<bool> graphsStartAtZero,
+  Value<String> graphSeries,
 });
 typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> curveLines,
@@ -11859,6 +11901,7 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> compactDiary,
   Value<bool> compactWeights,
   Value<bool> graphsStartAtZero,
+  Value<String> graphSeries,
 });
 
 class $$SettingsTableFilterComposer
@@ -11986,6 +12029,9 @@ class $$SettingsTableFilterComposer
   ColumnFilters<bool> get graphsStartAtZero => $composableBuilder(
       column: $table.graphsStartAtZero,
       builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get graphSeries => $composableBuilder(
+      column: $table.graphSeries, builder: (column) => ColumnFilters(column));
 }
 
 class $$SettingsTableOrderingComposer
@@ -12120,6 +12166,9 @@ class $$SettingsTableOrderingComposer
   ColumnOrderings<bool> get graphsStartAtZero => $composableBuilder(
       column: $table.graphsStartAtZero,
       builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get graphSeries => $composableBuilder(
+      column: $table.graphSeries, builder: (column) => ColumnOrderings(column));
 }
 
 class $$SettingsTableAnnotationComposer
@@ -12238,6 +12287,9 @@ class $$SettingsTableAnnotationComposer
 
   GeneratedColumn<bool> get graphsStartAtZero => $composableBuilder(
       column: $table.graphsStartAtZero, builder: (column) => column);
+
+  GeneratedColumn<String> get graphSeries => $composableBuilder(
+      column: $table.graphSeries, builder: (column) => column);
 }
 
 class $$SettingsTableTableManager extends RootTableManager<
@@ -12299,6 +12351,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> compactDiary = const Value.absent(),
             Value<bool> compactWeights = const Value.absent(),
             Value<bool> graphsStartAtZero = const Value.absent(),
+            Value<String> graphSeries = const Value.absent(),
           }) =>
               SettingsCompanion(
             curveLines: curveLines,
@@ -12337,6 +12390,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             compactDiary: compactDiary,
             compactWeights: compactWeights,
             graphsStartAtZero: graphsStartAtZero,
+            graphSeries: graphSeries,
           ),
           createCompanionCallback: ({
             Value<bool> curveLines = const Value.absent(),
@@ -12375,6 +12429,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<bool> compactDiary = const Value.absent(),
             Value<bool> compactWeights = const Value.absent(),
             Value<bool> graphsStartAtZero = const Value.absent(),
+            Value<String> graphSeries = const Value.absent(),
           }) =>
               SettingsCompanion.insert(
             curveLines: curveLines,
@@ -12413,6 +12468,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             compactDiary: compactDiary,
             compactWeights: compactWeights,
             graphsStartAtZero: graphsStartAtZero,
+            graphSeries: graphSeries,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
