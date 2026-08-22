@@ -115,7 +115,7 @@ jobs:
 
       - name: Install Patrol CLI
         run: |
-          dart pub global activate patrol_cli 4.7.0
+          dart pub global activate patrol_cli 4.6.1
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       - name: Enable KVM
