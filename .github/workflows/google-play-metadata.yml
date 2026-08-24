@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: google-play-metadata
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   upload:
