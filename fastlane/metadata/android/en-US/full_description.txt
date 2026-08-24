@@ -1,7 +1,18 @@
-Never fear being tracked, or served ads with FitBook. Our app is completely free and open source. 
+Track food, calories, macros, and weight without giving up control of your data.
 
-- Visualize your weight progress with beautiful graphs
-- Search OpenFoodFacts for all your favorite snacks
-- Customize absolutely everything to your hearts desires
+FitBook is an offline-friendly calorie counter and nutrition tracker for logging meals, understanding macro intake, and following your progress over time. Start with a built-in food database, add your own foods, or use OpenFoodFacts when you choose to connect.
 
-https://github.com/brandonp2412/FitBook
+TRACK WHAT MATTERS
+
+• Log meals and daily calorie intake
+• Follow macronutrients over time
+• Record weight and view progress graphs
+• Search a built-in database of thousands of foods
+• Scan barcodes and search OpenFoodFacts for food information
+• Customise the tracker to fit the way you eat
+
+OFFLINE-FIRST AND PRIVATE
+
+FitBook works without an account and keeps your data on your device. Internet access is optional for OpenFoodFacts searches and barcode lookup. The app is open source and does not serve advertising.
+
+FitBook helps you organise food and nutrition information; it is not a substitute for medical advice from a qualified professional.
