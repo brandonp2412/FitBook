@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' hide Column;
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class BarcodeScanResult {
 Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
   final status = await Permission.camera.request();
   if (!status.isGranted) {
+    talker.warning('Camera permission denied for barcode scan');
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Camera permission is required to scan.')),
@@ -38,14 +40,19 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
     MaterialPageRoute(builder: (_) => const _BarcodeScannerPage()),
   );
   if (barcode == null || barcode.isEmpty) {
+    talker.debug('Barcode scan cancelled');
     return const BarcodeScanResult.cancelled();
   }
+  talker.info('Scanned barcode');
 
   var food = await (db.foods.select()
         ..where((tbl) => tbl.barcode.equals(barcode))
         ..limit(1))
       .getSingleOrNull();
-  if (food != null) return BarcodeScanResult.food(food);
+  if (food != null) {
+    talker.debug('Found scanned food in local database');
+    return BarcodeScanResult.food(food);
+  }
 
   Product? product;
   try {
@@ -56,11 +63,13 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
       ),
     ).timeout(const Duration(seconds: 10));
     product = result.product;
-  } catch (_) {
+  } catch (error, stackTrace) {
+    talker.handle(error, stackTrace, 'Open Food Facts barcode lookup failed');
     // A failed lookup should still return the scanned barcode for manual entry.
   }
 
   if (product == null) {
+    talker.info('No product found for scanned barcode');
     return BarcodeScanResult.barcode(barcode);
   }
 
@@ -74,6 +83,7 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
   );
 
   final id = await db.foods.insertOne(companion);
+  talker.info('Saved scanned Open Food Facts product to local database');
   food = await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
   return BarcodeScanResult.food(food);
 }

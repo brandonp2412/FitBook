@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -40,6 +41,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     setState(() {
       searching = true;
     });
+    talker.info('Searching Open Food Facts');
 
     try {
       final search = await OpenFoodAPIClient.searchProducts(
@@ -54,6 +56,14 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       setState(() {
         products = search.products ?? [];
       });
+      talker.info(
+        'Open Food Facts search completed with ${products.length} results',
+      );
+    } catch (error, stackTrace) {
+      talker.handle(error, stackTrace, 'Open Food Facts search failed');
+      if (mounted) {
+        setState(() => products = []);
+      }
     } finally {
       if (mounted)
         setState(() {

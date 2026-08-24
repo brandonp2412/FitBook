@@ -8,6 +8,7 @@ import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,9 @@ void saveWeight(
   DateTime? created,
   String? image,
 }) {
+  talker.info(
+    original.id.present ? 'Updated weight entry' : 'Created weight entry',
+  );
   convertTo ??= unit;
   if (unit == 'kg' && convertTo == 'lb') {
     amount *= 2.20462262185;

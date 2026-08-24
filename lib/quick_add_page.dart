@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             unit: Value('serving'),
           ),
         );
+    talker.info('Saved quick-add diary entry');
   }
 
   Future<void> pickDate() async {

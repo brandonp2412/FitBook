@@ -7,6 +7,7 @@ import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/fields_picker.dart';
@@ -191,6 +192,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   Future<void> saveAs() async {
     final columns = _buildFoodColumns();
     await db.into(db.foods).insert(RawValuesInsertable(columns));
+    talker.info('Saved food as a new record');
     if (!mounted) return;
     Navigator.pop(context);
     widget.onSavedNew?.call();
@@ -206,6 +208,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
       id = await db.into(db.foods).insert(RawValuesInsertable(columns));
       widget.onSavedNew?.call();
     }
+    talker.info(
+      widget.id == null ? 'Created food record' : 'Updated food record',
+    );
 
     final matches = await (db.foods.select()
           ..where(

@@ -8,6 +8,7 @@ import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -134,6 +135,7 @@ class _EditMealPageState extends State<EditMealPage> {
         ),
       );
     }
+    talker.info('Saved meal with ${mealFoods.length} foods');
 
     if (mounted) Navigator.pop(context);
   }

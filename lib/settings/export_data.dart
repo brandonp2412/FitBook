@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -70,6 +71,9 @@ class _ExportDataState extends State<ExportData> {
                         await FilePicker.saveFile(
                           fileName: 'diary.csv',
                           bytes: bytes,
+                        );
+                        talker.info(
+                          'Exported ${diaries.length} diary entries to CSV',
                         );
                       } finally {
                         if (mounted)
@@ -228,6 +232,7 @@ class _ExportDataState extends State<ExportData> {
                           fileName: 'foods.csv',
                           bytes: bytes,
                         );
+                        talker.info('Exported ${foods.length} foods to CSV');
                       } finally {
                         if (mounted)
                           setState(() {
@@ -258,6 +263,7 @@ class _ExportDataState extends State<ExportData> {
                           fileName: 'fitbook-backup.zip',
                           bytes: await archive.readAsBytes(),
                         );
+                        talker.info('Exported FitBook database backup');
                       } finally {
                         await workingDirectory.delete(recursive: true);
                         if (mounted) setState(() => exporting = false);

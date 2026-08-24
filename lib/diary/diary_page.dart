@@ -7,6 +7,7 @@ import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -57,7 +58,11 @@ class DiaryPageState extends State<DiaryPage> {
         stream: entriesState.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            debugPrint(snapshot.stackTrace.toString());
+            talker.handle(
+              snapshot.error!,
+              snapshot.stackTrace,
+              'Unable to load diary entries',
+            );
             return ErrorWidget(snapshot.error!);
           }
 

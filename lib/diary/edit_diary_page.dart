@@ -6,6 +6,7 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -341,6 +342,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         unit: unit,
       ),
     );
+    talker.info('Repeated diary entry');
     if (mounted) Navigator.pop(context);
   }
 
@@ -522,6 +524,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         );
       if (!mounted) return;
       Navigator.pop(context);
+      talker.info(
+        widget.id == null
+            ? 'Created meal diary entry'
+            : 'Updated meal diary entry',
+      );
       return;
     }
 
@@ -548,6 +555,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           unit: Value(unit),
         ),
       );
+    talker.info(
+      widget.id == null
+          ? 'Created food diary entry'
+          : 'Updated food diary entry',
+    );
     if (!mounted) return;
     Navigator.pop(context);
   }

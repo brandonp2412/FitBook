@@ -10,6 +10,7 @@ import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -40,32 +41,47 @@ void main() {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       await CrashLogger.install(fileName: 'fitbook-crash.log');
+      installTalkerErrorHandlers();
+      talker.info('Starting FitBook');
 
       Setting settings;
       try {
         settings = await (db.settings.select()).getSingle();
       } catch (error) {
+        talker.handle(error, StackTrace.current, 'Database migration failed');
         return runApp(FailedMigrationsPage(error: error));
       }
 
       final state = SettingsState(settings);
+      talker.info('Loaded application settings');
 
       (settings.reminders ? setupReminders : cancelReminders)();
 
       runApp(appProviders(state));
 
-      final pkgInfo = await PackageInfo.fromPlatform();
-      OpenFoodAPIConfiguration.userAgent = UserAgent(
-        name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
-        url: 'https://github.com/brandonp2412/FitBook',
-      );
-      OpenFoodAPIConfiguration.globalUser = User(
-        userId: state.value.offLogin ?? '',
-        password: state.value.offPassword ?? '',
-      );
+      try {
+        final pkgInfo = await PackageInfo.fromPlatform();
+        OpenFoodAPIConfiguration.userAgent = UserAgent(
+          name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
+          url: 'https://github.com/brandonp2412/FitBook',
+        );
+        OpenFoodAPIConfiguration.globalUser = User(
+          userId: state.value.offLogin ?? '',
+          password: state.value.offPassword ?? '',
+        );
+        talker.info('Configured Open Food Facts client for ${pkgInfo.version}');
+      } catch (error, stackTrace) {
+        talker.handle(
+          error,
+          stackTrace,
+          'Unable to configure Open Food Facts client',
+        );
+      }
     },
-    (error, stack) =>
-        CrashLogger.instance?.record(error, stack, context: 'zone'),
+    (error, stack) {
+      talker.handle(error, stack, 'Uncaught zone error');
+      CrashLogger.instance?.record(error, stack, context: 'zone');
+    },
   );
 }
 
@@ -201,6 +217,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
 
+      talker.info('Detected FitBook update to ${pkg.version}');
       if (mounted)
         toast(
           context,
@@ -214,6 +231,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         );
+    }).catchError((error, stackTrace) {
+      talker.handle(error, stackTrace, 'Unable to check FitBook version');
     });
   }
 

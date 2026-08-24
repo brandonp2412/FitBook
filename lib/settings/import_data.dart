@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -207,13 +208,15 @@ class _ImportDataState extends State<ImportData> {
 
       await db.foods.deleteAll();
       await db.foods.insertAll(foods);
+      talker.info('Imported ${foods.length} foods from CSV');
       if (widget.pageContext.mounted)
         Navigator.pushNamedAndRemoveUntil(
           widget.pageContext,
           '/',
           (_) => false,
         );
-    } catch (error) {
+    } catch (error, stackTrace) {
+      talker.handle(error, stackTrace, 'Failed to import foods CSV');
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -263,6 +266,7 @@ class _ImportDataState extends State<ImportData> {
         db = AppDatabase();
       }
       if (!widget.pageContext.mounted) return;
+      talker.info('Imported FitBook database backup');
       Navigator.pop(widget.pageContext);
       entriesState.limit = 100;
       settingsState.setSubscription();
@@ -303,6 +307,7 @@ class _ImportDataState extends State<ImportData> {
 
     await db.diaries.deleteAll();
     await db.diaries.insertAll(diaries);
+    talker.info('Imported ${diaries.length} diary entries from CSV');
     if (widget.pageContext.mounted)
       Navigator.pushNamedAndRemoveUntil(
         widget.pageContext,

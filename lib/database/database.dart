@@ -13,6 +13,7 @@ import 'package:fit_book/database/meals.dart';
 import 'package:fit_book/database/metadata.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
+import 'package:fit_book/logging.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
@@ -37,6 +38,7 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
+        talker.info('Creating FitBook database');
         await m.createAll();
 
         final blob = await rootBundle.load('assets/food-data.zip');
@@ -59,8 +61,12 @@ class AppDatabase extends _$AppDatabase {
         await db.foods.insertAll(insertables);
 
         await settings.insertOne(defaultSettings);
+        talker.info(
+          'Created FitBook database with ${insertables.length} starter foods',
+        );
       },
       onUpgrade: (m, from, to) async {
+        talker.info('Migrating FitBook database from v$from to v$to');
         // Following the advice from https://drift.simonbinder.eu/Migrations/api/#general-tips
         await customStatement('PRAGMA foreign_keys = OFF');
 
@@ -83,8 +89,10 @@ class AppDatabase extends _$AppDatabase {
         }
 
         await customStatement('PRAGMA foreign_keys = ON');
+        talker.info('Migrated FitBook database to v$to');
       },
       beforeOpen: (details) async {
+        talker.debug('Opening FitBook database schema v${details.versionNow}');
         // A device that already attempted the 51 -> 52 migration may have
         // reached schema 52 before its old orphaned rows were reported. Make
         // the repair idempotent so that database can recover on the next app
