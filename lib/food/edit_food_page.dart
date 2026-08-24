@@ -53,6 +53,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   final nameCtrl = TextEditingController();
   final kjCtrl = TextEditingController(text: "0");
   final sizeCtrl = TextEditingController(text: "1");
+  final nameFocusNode = FocusNode();
   late SettingsState settingsState;
   final scrollCtrl = ScrollController();
 
@@ -72,6 +73,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
     else if (unit == 'grams') sizeCtrl.text = '100';
 
     _favorite = settings.favoriteNew;
+
+    if (widget.id == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) nameFocusNode.requestFocus();
+      });
+    }
 
     if (widget.initialBarcode != null) {
       barcodeCtrl.text = widget.initialBarcode!;
@@ -114,15 +121,11 @@ class _EditFoodPageState extends State<EditFoodPage> {
         ? db.foods.$columns.map((column) => column.name)
         : settings.fields!.split(',');
 
-    final food = await (db.foods.select()
-          ..where(
-            (u) => widget.id != null
-                ? u.id.equals(widget.id!)
-                : CustomExpression('true'),
-          )
-          ..limit(1))
-        .getSingle();
-    final columns = food.toColumns(true);
+    final columns = widget.id == null
+        ? <String, Expression<Object>>{}
+        : (await (db.foods.select()..where((u) => u.id.equals(widget.id!)))
+                .getSingle())
+            .toColumns(true);
 
     Map<String, TextEditingController> newControllers = {};
 
@@ -135,7 +138,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
         newControllers[field] =
             TextEditingController(text: expression.value.toString());
       else
-        newControllers[field] = TextEditingController();
+        newControllers[field] = TextEditingController(
+          text: db.foods.$columns
+                      .firstWhere((column) => column.name == field)
+                      .type ==
+                  DriftSqlType.double
+              ? '0'
+              : '',
+        );
     }
 
     for (final entry in controllers.entries) {
@@ -151,6 +161,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   void dispose() {
     super.dispose();
+    nameFocusNode.dispose();
     for (final controller in controllers.values) {
       controller.dispose();
     }
@@ -303,7 +314,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                         icon: const Icon(Icons.error),
                       ),
                     )
-                  : CachedNetworkImage(imageUrl: smallImg ?? bigImg!),
+                  : CachedNetworkImage(
+                      imageUrl: smallImg ?? bigImg!,
+                      fit: BoxFit.cover,
+                      placeholder: (_, __) => const SizedBox.expand(),
+                      errorWidget: (_, __, ___) => const SizedBox.expand(),
+                    ),
             ),
           )
         else
@@ -388,6 +404,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             _imageSection(),
             TextField(
               controller: nameCtrl,
+              focusNode: nameFocusNode,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelText: 'Name',

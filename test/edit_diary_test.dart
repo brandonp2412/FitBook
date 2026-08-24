@@ -329,7 +329,7 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Repeat entry logs the same meal again',
+  testWidgets('Repeat entry schedules the same meal again',
       (WidgetTester tester) async {
     await mockTests();
     final settingsState = SettingsState(await db.settings.select().getSingle());
@@ -349,10 +349,13 @@ void main() async {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Repeat entry'));
     await tester.pumpAndSettle();
+    expect(find.text('Repeat entry'), findsOneWidget);
+    await tester.tap(find.text('Schedule'));
+    await tester.pumpAndSettle();
 
     final entries = await db.diaries.select().get();
-    expect(entries, hasLength(2));
-    final repeated = entries.singleWhere((entry) => entry.id != entryId);
+    expect(entries.length, greaterThan(2));
+    final repeated = entries.firstWhere((entry) => entry.id != entryId);
     expect(repeated.meal, mealId);
     expect(repeated.quantity, 2);
     expect(repeated.unit, 'serving');

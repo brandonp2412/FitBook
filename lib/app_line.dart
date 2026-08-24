@@ -249,6 +249,58 @@ class _AppLineState extends State<AppLine> {
                 .reversed
                 .toList(),
           );
+    } else if (widget.metric == 'calories-per-body-weight') {
+      stream = db
+          .customSelect(
+            '''
+              SELECT diaries.created AS created,
+                ${mealAwareFieldExpr('calories')} AS calories,
+                (SELECT amount * CASE unit WHEN 'lb' THEN 0.453592 ELSE 1 END
+                 FROM weights WHERE weights.created <= diaries.created
+                 ORDER BY weights.created DESC LIMIT 1) AS body_weight
+              FROM diaries LEFT JOIN foods ON diaries.food = foods.id
+              WHERE diaries.created >= ? AND diaries.created <= ?
+              ORDER BY diaries.created ASC
+            ''',
+            variables: [
+              Variable(widget.start ?? DateTime(0)),
+              Variable(
+                widget.end ?? DateTime.now().add(const Duration(days: 1)),
+              ),
+            ],
+            readsFrom: {db.diaries, db.foods, db.mealFoods, db.weights},
+          )
+          .watch()
+          .map((rows) {
+            final calories = <DateTime, double>{};
+            final weights = <DateTime, double>{};
+            for (final row in rows) {
+              final created = row.read<DateTime>('created').toLocal();
+              final day = DateTime(created.year, created.month, created.day);
+              calories[day] =
+                  (calories[day] ?? 0) + row.read<double>('calories');
+              final weight = row.readNullable<double>('body_weight');
+              if (weight != null && weight > 0) weights[day] = weight;
+            }
+            final values = calories.entries
+                .where((entry) => weights.containsKey(entry.key))
+                .map(
+                  (entry) => (
+                    created: entry.key,
+                    value: entry.value / weights[entry.key]!,
+                  ),
+                )
+                .toList();
+            return bucketGraphData(values, widget.groupBy, settings.limit)
+                .map(
+                  (bucket) => GraphData(
+                    created: bucket.created,
+                    val: bucket.val,
+                    unit: 'kcal/kg',
+                  ),
+                )
+                .toList();
+          });
     } else {
       final valueCol = CustomExpression<double>(
         mealAwareFieldExpr(widget.metric),

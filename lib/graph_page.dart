@@ -58,7 +58,8 @@ class GraphPageState extends State<GraphPage>
 
     final metricValue = filteredFields.contains(metric) ||
             metric == 'calories' ||
-            metric == 'body-weight'
+            metric == 'body-weight' ||
+            metric == 'calories-per-body-weight'
         ? metric
         : null;
 
@@ -94,6 +95,10 @@ class GraphPageState extends State<GraphPage>
                           const DropdownMenuItem(
                             value: 'body-weight',
                             child: Text("Body weight"),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'calories-per-body-weight',
+                            child: Text('Calories / body weight'),
                           ),
                           ...filteredFields.map(
                             (field) => DropdownMenuItem(

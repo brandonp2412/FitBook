@@ -6,6 +6,7 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/diary/repeat_entry_page.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
@@ -326,24 +327,23 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     selectAll(quantity);
   }
 
-  Future<void> _repeatEntry() async {
+  Future<void> _openRepeatConfiguration() async {
     if (_selectedMealId == null && selectedFood == null) return;
-
-    final qty = double.tryParse(quantity.text) ?? 1.0;
-    await db.diaries.insertOne(
-      DiariesCompanion.insert(
-        food:
-            selectedFood == null ? const Value(null) : Value(selectedFood!.id),
-        meal: _selectedMealId == null
-            ? const Value(null)
-            : Value(_selectedMealId!),
-        created: DateTime.now(),
-        quantity: qty,
-        unit: unit,
+    final count = await Navigator.of(context).push<int>(
+      MaterialPageRoute(
+        builder: (context) => RepeatEntryPage(
+          foodId: selectedFood?.id,
+          mealId: _selectedMealId,
+          quantity: double.tryParse(quantity.text) ?? 1.0,
+          unit: unit,
+          initialDate: created ?? DateTime.now(),
+        ),
       ),
     );
-    talker.info('Repeated diary entry');
-    if (mounted) Navigator.pop(context);
+    if (count != null && mounted) {
+      talker.info('Scheduled $count repeated diary entries');
+      Navigator.pop(context);
+    }
   }
 
   void _applyFood(Food food, {double? lastQuantity, String? lastUnit}) {
@@ -666,7 +666,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             IconButton(
               icon: const Icon(Icons.repeat),
               tooltip: 'Repeat entry',
-              onPressed: _repeatEntry,
+              onPressed: _openRepeatConfiguration,
             ),
           if (widget.id != null)
             IconButton(
@@ -737,7 +737,13 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                                   );
                                 },
                               )
-                            : CachedNetworkImage(imageUrl: bigImage!),
+                            : CachedNetworkImage(
+                                imageUrl: bigImage!,
+                                fit: BoxFit.cover,
+                                placeholder: (_, __) => const SizedBox.expand(),
+                                errorWidget: (_, __, ___) =>
+                                    const SizedBox.expand(),
+                              ),
                       ),
                     )
                   : Wrap(
