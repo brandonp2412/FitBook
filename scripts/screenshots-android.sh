@@ -20,10 +20,7 @@ if [ -n "$only" ]; then
     echo "Capturing only: $only"
 fi
 
-# --profile is required: Flutter's framework-level assertion bug in
-# PipelineOwner.flushSemantics can fire spuriously during integration tests.
-# Profile mode skips Dart asserts, bypassing it.
-flutter drive --profile \
+flutter drive \
     --driver=test_driver/integration_test.dart \
     --target=integration_test/screenshot_test.dart \
     "${dart_define[@]}" \

@@ -139,6 +139,7 @@ class App extends StatelessWidget {
 
         return MaterialApp(
           title: 'FitBook',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',

@@ -63,7 +63,8 @@ if ! curl -s -o /dev/null http://localhost:4444/status; then
     fi
 fi
 
-# Run Flutter drive command targeting Chrome
+# Flutter web integration tests cannot reliably establish their DWDS connection
+# in debug mode: https://github.com/flutter/flutter/issues/181357
 flutter drive --profile --driver=test_driver/integration_test.dart \
     --target=integration_test/screenshot_test.dart \
     "${dart_define[@]}" \

@@ -20,7 +20,7 @@ drive_log=$(mktemp)
 drive_status=0
 # Keep a wedged emulator from holding the workflow open indefinitely. The
 # screenshot suite normally completes in roughly 10 minutes on CI.
-timeout --foreground -k 30 1200 flutter drive --profile \
+timeout --foreground -k 30 1200 flutter drive \
   --driver=test_driver/integration_test.dart \
   --target=integration_test/screenshot_test.dart \
   -d "emulator-$EMULATOR_PORT" >"$drive_log" 2>&1 || drive_status=$?
