@@ -16,6 +16,18 @@ screenshot_dir="fastlane/metadata/android/en-US/images/$FITBOOK_DEVICE_TYPE"
 rm -rf "$screenshot_dir"
 mkdir -p "$screenshot_dir"
 
+if [ -n "${FITBOOK_SCREEN_SIZE:-}" ]; then
+  case "$FITBOOK_SCREEN_SIZE" in
+    *[!0-9x]* | *x | x*)
+      echo "Invalid FITBOOK_SCREEN_SIZE: $FITBOOK_SCREEN_SIZE" >&2
+      exit 1
+      ;;
+  esac
+
+  adb -s "emulator-$EMULATOR_PORT" shell wm size "$FITBOOK_SCREEN_SIZE"
+  expected_dimensions=$(printf '%s' "$FITBOOK_SCREEN_SIZE" | sed 's/x/ x /')
+fi
+
 drive_log=$(mktemp)
 drive_status=0
 # Keep a wedged emulator from holding the workflow open indefinitely. The
@@ -35,9 +47,15 @@ fi
 cat "$drive_log"
 
 for number in $(seq 1 8); do
-  if [ ! -s "$screenshot_dir/${number}_en-US.png" ]; then
+  screenshot="$screenshot_dir/${number}_en-US.png"
+  if [ ! -s "$screenshot" ]; then
     echo "Missing generated screenshot: ${number}_en-US.png" >&2
     [ "$drive_status" -ne 0 ] && exit "$drive_status"
+    exit 1
+  fi
+
+  if [ -n "${FITBOOK_SCREEN_SIZE:-}" ] && ! file "$screenshot" | grep -Fq " $expected_dimensions,"; then
+    echo "Screenshot has unexpected dimensions: $(file "$screenshot")" >&2
     exit 1
   fi
 done
