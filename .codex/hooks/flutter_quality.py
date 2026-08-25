@@ -69,7 +69,18 @@ if state_path.is_file() and state_path.read_text().strip() == before:
 
 checks = [
     ("dart fix --apply", [dart, "fix", "--apply"]),
-    ("dart format .", [dart, "format", "."]),
+    (
+        "dart format project sources",
+        [
+            dart,
+            "format",
+            "integration_test",
+            "lib",
+            "patrol_test",
+            "test",
+            "test_driver",
+        ],
+    ),
     ("flutter analyze", [flutter, "analyze"]),
 ]
 failures: list[str] = []
