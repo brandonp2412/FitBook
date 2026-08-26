@@ -22,7 +22,7 @@ class GraphPage extends StatefulWidget {
 
 class GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
-  String metric = 'calories-and-body-weight';
+  String metric = 'calories';
   Period groupBy = Period.week;
   DateTime? start;
   DateTime? end;
@@ -37,7 +37,6 @@ class GraphPageState extends State<GraphPage>
       if (settings.fields == null) ...defaultFields,
       'calories',
       'body-weight',
-      'calories-and-body-weight',
     };
     if (fields.contains(settings.lastGraph))
       setState(() {
@@ -62,8 +61,7 @@ class GraphPageState extends State<GraphPage>
 
     final metricValue = filteredFields.contains(metric) ||
             metric == 'calories' ||
-            metric == 'body-weight' ||
-            metric == 'calories-and-body-weight'
+            metric == 'body-weight'
         ? metric
         : null;
 
@@ -92,10 +90,6 @@ class GraphPageState extends State<GraphPage>
                           color: colorScheme.onSurface,
                         ),
                         items: [
-                          DropdownMenuItem(
-                            value: 'calories-and-body-weight',
-                            child: const Text('Calories & body weight'),
-                          ),
                           DropdownMenuItem(
                             value: db.foods.calories.name,
                             child: const Text('Calories'),

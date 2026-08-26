@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
@@ -16,15 +14,11 @@ class GraphData {
   final DateTime created;
   final double val;
   final String unit;
-  final double? secondaryVal;
-  final String? secondaryUnit;
 
   GraphData({
     required this.created,
     required this.val,
     required this.unit,
-    this.secondaryVal,
-    this.secondaryUnit,
   });
 }
 
@@ -219,78 +213,7 @@ class _AppLineState extends State<AppLine> {
   }
 
   void _setStream() {
-    if (widget.metric == 'calories-and-body-weight') {
-      stream = db
-          .customSelect(
-            '''
-              SELECT diaries.created AS created,
-                ${mealAwareFieldExpr('calories')} AS calories,
-                (SELECT amount
-                 FROM weights WHERE weights.created <= diaries.created
-                 ORDER BY weights.created DESC LIMIT 1) AS body_weight,
-                (SELECT unit
-                 FROM weights WHERE weights.created <= diaries.created
-                 ORDER BY weights.created DESC LIMIT 1) AS weight_unit
-              FROM diaries LEFT JOIN foods ON diaries.food = foods.id
-              WHERE diaries.created >= ? AND diaries.created <= ?
-              ORDER BY diaries.created ASC
-            ''',
-            variables: [
-              Variable(widget.start ?? DateTime(0)),
-              Variable(
-                widget.end ?? DateTime.now().add(const Duration(days: 1)),
-              ),
-            ],
-            readsFrom: {db.diaries, db.foods, db.mealFoods, db.weights},
-          )
-          .watch()
-          .map((rows) {
-            final calories = <DateTime, double>{};
-            final weights = <DateTime, ({double value, String unit})>{};
-            for (final row in rows) {
-              final created = row.read<DateTime>('created').toLocal();
-              final day = DateTime(created.year, created.month, created.day);
-              calories[day] =
-                  (calories[day] ?? 0) + row.read<double>('calories');
-              final weight = row.readNullable<double>('body_weight');
-              final unit = row.readNullable<String>('weight_unit');
-              if (weight != null && unit != null) {
-                weights[day] = (value: weight, unit: unit);
-              }
-            }
-            final calorieBuckets = bucketGraphData(
-              calories.entries
-                  .map((entry) => (created: entry.key, value: entry.value))
-                  .toList(),
-              widget.groupBy,
-              settings.limit,
-            );
-            final weightBuckets = bucketGraphData(
-              weights.entries
-                  .map(
-                    (entry) => (created: entry.key, value: entry.value.value),
-                  )
-                  .toList(),
-              widget.groupBy,
-              settings.limit,
-            );
-            final weightsByBucket = {
-              for (final bucket in weightBuckets) bucket.created: bucket.val,
-            };
-            final weightUnit = weights.values.firstOrNull?.unit;
-            return calorieBuckets
-                .map(
-                  (bucket) => GraphData(
-                    created: bucket.created,
-                    val: bucket.val,
-                    unit: 'kcal',
-                    secondaryVal: weightsByBucket[bucket.created],
-                    secondaryUnit: weightUnit,
-                  ),
-                )
-                .toList();
-          });
-    } else if (widget.metric == 'body-weight') {
+    if (widget.metric == 'body-weight') {
       final createdCol = getCreated('weights');
       stream = (db.weights.selectOnly()
             ..orderBy([
@@ -409,7 +332,6 @@ class _AppLineState extends State<AppLine> {
 
     switch (widget.metric) {
       case 'calories':
-      case 'calories-and-body-weight':
         goal = (sel.dailyCalories ?? 0).toDouble();
         break;
       case 'protein':
@@ -447,50 +369,18 @@ class _AppLineState extends State<AppLine> {
         ];
 
         final rows = snapshot.data!;
-        final isCombined = widget.metric == 'calories-and-body-weight';
         List<FlSpot> spots = [
           for (var index = 0; index < rows.length; index++)
             FlSpot(index.toDouble(), rows[index].val),
         ];
 
-        List<FlSpot> trendSpots =
-            showTrend && !isCombined ? _getTrendSpots(rows) : [];
-        List<FlSpot> smoothSpots =
-            showSmooth && !isCombined ? _getSmoothSpots(rows) : [];
+        List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
+        List<FlSpot> smoothSpots = showSmooth ? _getSmoothSpots(rows) : [];
 
         final lineBars = <LineChartBarData>[];
         // Keep this in the same order as lineBarsData so each tooltip can use
         // the same color as its series checkbox and line.
         final seriesColors = <Color>[];
-
-        final secondaryValues = rows
-            .where((row) => row.secondaryVal != null)
-            .map((row) => row.secondaryVal!)
-            .toList();
-        final primaryMin = rows.map((row) => row.val).reduce(math.min);
-        final primaryMax = rows.map((row) => row.val).reduce(math.max);
-        final primaryScaleMin = sel.graphsStartAtZero
-            ? 0.0
-            : goal > 0
-                ? math.min(primaryMin, goal)
-                : primaryMin;
-        final primaryScaleMax =
-            goal > 0 ? math.max(primaryMax, goal) : primaryMax;
-        final secondaryMin =
-            secondaryValues.isEmpty ? 0.0 : secondaryValues.reduce(math.min);
-        final secondaryMax =
-            secondaryValues.isEmpty ? 0.0 : secondaryValues.reduce(math.max);
-        final primaryRange = primaryScaleMax == primaryScaleMin
-            ? 1.0
-            : primaryScaleMax - primaryScaleMin;
-        final secondaryRange =
-            secondaryMax == secondaryMin ? 1.0 : secondaryMax - secondaryMin;
-        double scaleSecondary(double value) =>
-            primaryScaleMin +
-            (value - secondaryMin) / secondaryRange * primaryRange;
-        double unscaleSecondary(double value) =>
-            secondaryMin +
-            (value - primaryScaleMin) / primaryRange * secondaryRange;
 
         if (showMain) {
           seriesColors.add(Theme.of(context).colorScheme.primary);
@@ -513,29 +403,6 @@ class _AppLineState extends State<AppLine> {
                       .toList(),
                 ),
               ),
-            ),
-          );
-        }
-
-        if (isCombined && secondaryValues.isNotEmpty) {
-          seriesColors.add(Theme.of(context).colorScheme.secondary);
-          lineBars.add(
-            LineChartBarData(
-              spots: [
-                for (var index = 0; index < rows.length; index++)
-                  if (rows[index].secondaryVal != null)
-                    FlSpot(
-                      index.toDouble(),
-                      scaleSecondary(rows[index].secondaryVal!),
-                    ),
-              ],
-              isCurved: sel.curveLines,
-              preventCurveOverShooting: true,
-              color: Theme.of(context).colorScheme.secondary,
-              barWidth: 3,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(show: false),
             ),
           );
         }
@@ -626,18 +493,8 @@ class _AppLineState extends State<AppLine> {
                       topTitles: const AxisTitles(
                         sideTitles: SideTitles(showTitles: false),
                       ),
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: isCombined && secondaryValues.isNotEmpty,
-                          reservedSize: 42,
-                          getTitlesWidget: (value, meta) => SideTitleWidget(
-                            meta: meta,
-                            child: Text(
-                              unscaleSecondary(value).toStringAsFixed(1),
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          ),
-                        ),
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
                       ),
                       leftTitles: const AxisTitles(
                         sideTitles: SideTitles(
@@ -661,7 +518,6 @@ class _AppLineState extends State<AppLine> {
                         rows,
                         rows.first.unit,
                         seriesColors,
-                        isCombined: isCombined,
                       ),
                     ),
                     lineBarsData: lineBars,
@@ -687,7 +543,7 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: isCombined ? 'Calories' : 'Value',
+                  label: 'Value',
                   value:
                       "${formatter.format(rows.last.val)} ${rows.first.unit}",
                   onTap: () => _updateSeries(value: !showMain),
@@ -704,70 +560,43 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: isCombined ? 'Calorie goal' : 'Goal',
+                  label: 'Goal',
                   value: goal > 0
                       ? "${formatter.format(goal)} ${rows.first.unit}"
                       : "Not set",
                   onTap:
                       goal > 0 ? () => _updateSeries(goal: !showGoal) : () {},
                 ),
-                if (isCombined && secondaryValues.isNotEmpty) ...[
-                  _statTile(
-                    leading: Icon(
-                      Icons.show_chart,
-                      size: 20,
-                      color: Theme.of(context).colorScheme.secondary,
+                _statTile(
+                  leading: Checkbox(
+                    value: showTrend,
+                    onChanged: (value) => _updateSeries(trend: value),
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                     ),
-                    label: 'Body weight',
-                    value:
-                        '${formatter.format(secondaryValues.last)} ${rows.first.secondaryUnit}',
-                    onTap: () {},
                   ),
-                  _statTile(
-                    leading: Icon(
-                      Icons.flag_outlined,
-                      size: 20,
-                      color: Theme.of(context).colorScheme.onSurface,
+                  label: "Trend",
+                  value: _getTrendText(rows),
+                  onTap: () => _updateSeries(trend: !showTrend),
+                ),
+                _statTile(
+                  leading: Checkbox(
+                    value: showSmooth,
+                    onChanged: (value) => _updateSeries(smooth: value),
+                    checkColor: Theme.of(context).colorScheme.onPrimary,
+                    fillColor: WidgetStateProperty.resolveWith<Color?>(
+                      (states) => states.contains(WidgetState.selected)
+                          ? Theme.of(context).colorScheme.tertiary
+                          : null,
                     ),
-                    label: 'Weight goal',
-                    value: sel.targetWeight != null
-                        ? '${formatter.format(sel.targetWeight)} ${rows.first.secondaryUnit}'
-                        : 'Not set',
-                    onTap: () {},
                   ),
-                ],
-                if (!isCombined) ...[
-                  _statTile(
-                    leading: Checkbox(
-                      value: showTrend,
-                      onChanged: (value) => _updateSeries(trend: value),
-                      checkColor: Theme.of(context).colorScheme.onPrimary,
-                      fillColor: WidgetStateProperty.resolveWith<Color?>(
-                        (states) => states.contains(WidgetState.selected)
-                            ? Theme.of(context).colorScheme.secondary
-                            : null,
-                      ),
-                    ),
-                    label: "Trend",
-                    value: _getTrendText(rows),
-                    onTap: () => _updateSeries(trend: !showTrend),
-                  ),
-                  _statTile(
-                    leading: Checkbox(
-                      value: showSmooth,
-                      onChanged: (value) => _updateSeries(smooth: value),
-                      checkColor: Theme.of(context).colorScheme.onPrimary,
-                      fillColor: WidgetStateProperty.resolveWith<Color?>(
-                        (states) => states.contains(WidgetState.selected)
-                            ? Theme.of(context).colorScheme.tertiary
-                            : null,
-                      ),
-                    ),
-                    label: "Smooth",
-                    value: "$_smoothWindow pt avg",
-                    onTap: () => _updateSeries(smooth: !showSmooth),
-                  ),
-                ],
+                  label: "Smooth",
+                  value: "$_smoothWindow pt avg",
+                  onTap: () => _updateSeries(smooth: !showSmooth),
+                ),
               ],
             ),
           ],
@@ -861,31 +690,12 @@ class _AppLineState extends State<AppLine> {
     BuildContext context,
     List<GraphData> rows,
     String unit,
-    List<Color> seriesColors, {
-    required bool isCombined,
-  }) {
+    List<Color> seriesColors,
+  ) {
     return LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
       getTooltipItems: (touchedSpots) {
         if (touchedSpots.isEmpty) return const [];
-
-        if (isCombined) {
-          final spotIndex = touchedSpots.first.x.round();
-          if (spotIndex >= rows.length) return const [];
-          final row = rows[spotIndex];
-          final dateStr =
-              DateFormat(settings.shortDateFormat).format(row.created);
-          final weightText = row.secondaryVal == null
-              ? ''
-              : '\n${formatter.format(row.secondaryVal)} ${row.secondaryUnit}';
-          return [
-            LineTooltipItem(
-              '${formatter.format(row.val)} $unit$weightText\n$dateStr',
-              TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-            for (var index = 1; index < touchedSpots.length; index++) null,
-          ];
-        }
 
         // Several series can have a point at the same cursor position. Show
         // only the topmost one, while keeping its series-specific color.
