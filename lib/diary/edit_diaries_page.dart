@@ -467,7 +467,6 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                 DateFormat(settings.longDateFormat)
                     .format(created ?? DateTime.now()),
               ),
-              trailing: const Icon(Icons.calendar_today),
               onTap: () => pickDate(),
             ),
             SizedBox(

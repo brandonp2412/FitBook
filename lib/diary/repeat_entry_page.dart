@@ -101,7 +101,6 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
               subtitle: Text(
                 MaterialLocalizations.of(context).formatMediumDate(_startDate),
               ),
-              trailing: const Icon(Icons.calendar_today),
               onTap: () async {
                 final date = await showDatePicker(
                   context: context,
@@ -116,7 +115,6 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
               contentPadding: EdgeInsets.zero,
               title: const Text('Time of day'),
               subtitle: Text(_time.format(context)),
-              trailing: const Icon(Icons.schedule),
               onTap: () async {
                 final time =
                     await showTimePicker(context: context, initialTime: _time);

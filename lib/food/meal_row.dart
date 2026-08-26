@@ -15,7 +15,6 @@ class MealRow extends StatelessWidget {
     required this.totals,
     required this.onTap,
     required this.onLongPress,
-    required this.onCheckboxChanged,
   });
 
   final Meal meal;
@@ -25,7 +24,6 @@ class MealRow extends StatelessWidget {
   final ({double calories, double protein})? totals;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
-  final ValueChanged<bool?> onCheckboxChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +92,6 @@ class MealRow extends StatelessWidget {
                 '${formatter.format(totals!.calories)} kcal'
                 '${totals!.protein > 0 ? " · ${formatter.format(totals!.protein)}g protein" : ""}',
               ),
-        trailing: isSelected
-            ? Checkbox(value: true, onChanged: onCheckboxChanged)
-            : null,
         onTap: onTap,
         onLongPress: onLongPress,
       ),

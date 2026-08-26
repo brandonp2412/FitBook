@@ -14,7 +14,6 @@ class FoodItemRow extends StatelessWidget {
     required this.formatter,
     required this.onTap,
     required this.onLongPress,
-    required this.onCheckboxChanged,
   });
 
   final FoodsCompanion food;
@@ -23,7 +22,6 @@ class FoodItemRow extends StatelessWidget {
   final NumberFormat formatter;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
-  final ValueChanged<bool?> onCheckboxChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +77,6 @@ class FoodItemRow extends StatelessWidget {
           ],
         );
       }(),
-      trailing: isSelected
-          ? Checkbox(value: isSelected, onChanged: onCheckboxChanged)
-          : null,
       onTap: onTap,
       onLongPress: onLongPress,
     );

@@ -767,13 +767,6 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
                       subtitle: Text(
                         '${food.calories?.toStringAsFixed(0) ?? 0} kcal / 100g',
                       ),
-                      trailing: food.favorite == true
-                          ? Icon(
-                              Icons.favorite,
-                              size: 16,
-                              color: theme.colorScheme.primary,
-                            )
-                          : null,
                       onTap: () {
                         widget.onPicked(food);
                         Navigator.pop(ctx);

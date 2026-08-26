@@ -28,7 +28,6 @@ class DiaryEntryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final suffix = food.unit == 'serving' && food.quantity > 1
         ? ' x${food.quantity.toInt()}'
         : '';
@@ -45,9 +44,6 @@ class DiaryEntryRow extends StatelessWidget {
       subtitle: Text(
         '$kcal kcal · ${DateFormat('h:mm a').format(food.created)}',
       ),
-      trailing: isSelected
-          ? Icon(Icons.check_circle, color: colorScheme.primary)
-          : null,
       onTap: onTap,
       onLongPress: onLongPress,
     );

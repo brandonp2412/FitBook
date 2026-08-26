@@ -100,7 +100,6 @@ class _FoodListState extends State<FoodList> {
                   widget.onMealSelect?.call(item.id);
               },
               onLongPress: () => widget.onMealSelect?.call(item.id),
-              onCheckboxChanged: (_) => widget.onMealSelect?.call(item.id),
             ),
           ),
         );
@@ -131,7 +130,6 @@ class _FoodListState extends State<FoodList> {
               widget.onSelect(food.id.value);
           },
           onLongPress: () => widget.onSelect(food.id.value),
-          onCheckboxChanged: (_) => widget.onSelect(food.id.value),
         ),
       );
     }

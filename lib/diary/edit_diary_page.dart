@@ -906,7 +906,6 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   DateFormat(settings.longDateFormat)
                       .format(created ?? DateTime.now()),
                 ),
-                trailing: const Icon(Icons.calendar_today),
                 onTap: () => pickDate(),
               ),
               if (_selectedMealId == null && !kIsWeb)

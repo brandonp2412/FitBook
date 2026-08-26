@@ -309,7 +309,6 @@ class _EditWeightPageState extends State<EditWeightPage> {
                   builder: (context, longDateFormat, child) =>
                       Text(DateFormat(longDateFormat).format(created)),
                 ),
-                trailing: const Icon(Icons.calendar_today),
                 onTap: () => _selectDate(),
               ),
               if (image?.isNotEmpty == true && settings.showImages)

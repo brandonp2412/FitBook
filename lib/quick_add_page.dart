@@ -242,7 +242,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
             subtitle: Text(
               DateFormat(settings.longDateFormat).format(created),
             ),
-            trailing: const Icon(Icons.calendar_today),
             onTap: () => pickDate(),
           ),
           SizedBox(
