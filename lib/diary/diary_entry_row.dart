@@ -16,7 +16,6 @@ class DiaryEntryRow extends StatelessWidget {
     required this.onTap,
     required this.onLongPress,
     required this.showImages,
-    this.trailingUnit = false,
     this.dense = false,
   });
 
@@ -25,7 +24,6 @@ class DiaryEntryRow extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
   final bool showImages;
-  final bool trailingUnit;
   final bool dense;
 
   @override
@@ -44,10 +42,12 @@ class DiaryEntryRow extends StatelessWidget {
       dense: dense,
       leading: DiaryFoodThumbnail(food: food, showImages: showImages),
       title: Text('${food.name}$suffix'),
-      subtitle: Text(DateFormat('h:mm a').format(food.created)),
+      subtitle: Text(
+        '$kcal kcal · ${DateFormat('h:mm a').format(food.created)}',
+      ),
       trailing: isSelected
           ? Icon(Icons.check_circle, color: colorScheme.primary)
-          : Text(trailingUnit ? '$kcal kcal' : kcal),
+          : null,
       onTap: onTap,
       onLongPress: onLongPress,
     );

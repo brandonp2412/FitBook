@@ -22,7 +22,7 @@ class GraphPage extends StatefulWidget {
 
 class GraphPageState extends State<GraphPage>
     with AutomaticKeepAliveClientMixin {
-  String metric = 'calories';
+  String metric = 'calories-and-body-weight';
   Period groupBy = Period.week;
   DateTime? start;
   DateTime? end;
@@ -33,8 +33,7 @@ class GraphPageState extends State<GraphPage>
     final settings = context.read<SettingsState>().value;
 
     final fields = settings.fields?.split(',') ?? defaultFields;
-    fields.add('calories');
-    fields.add('body-weight');
+    fields.add('calories-and-body-weight');
     if (fields.contains(settings.lastGraph))
       setState(() {
         metric = settings.lastGraph;
@@ -56,12 +55,10 @@ class GraphPageState extends State<GraphPage>
     final filteredFields =
         fields.where((field) => !excludedFields.contains(field));
 
-    final metricValue = filteredFields.contains(metric) ||
-            metric == 'calories' ||
-            metric == 'body-weight' ||
-            metric == 'calories-per-body-weight'
-        ? metric
-        : null;
+    final metricValue =
+        filteredFields.contains(metric) || metric == 'calories-and-body-weight'
+            ? metric
+            : null;
 
     return Scaffold(
       body: Padding(
@@ -89,16 +86,8 @@ class GraphPageState extends State<GraphPage>
                         ),
                         items: [
                           DropdownMenuItem(
-                            value: db.foods.calories.name,
-                            child: const Text("Calories"),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'body-weight',
-                            child: Text("Body weight"),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'calories-per-body-weight',
-                            child: Text('Calories / body weight'),
+                            value: 'calories-and-body-weight',
+                            child: const Text('Calories & body weight'),
                           ),
                           ...filteredFields.map(
                             (field) => DropdownMenuItem(
