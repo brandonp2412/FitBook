@@ -32,8 +32,13 @@ class GraphPageState extends State<GraphPage>
     super.initState();
     final settings = context.read<SettingsState>().value;
 
-    final fields = settings.fields?.split(',') ?? defaultFields;
-    fields.add('calories-and-body-weight');
+    final fields = {
+      ...?settings.fields?.split(','),
+      if (settings.fields == null) ...defaultFields,
+      'calories',
+      'body-weight',
+      'calories-and-body-weight',
+    };
     if (fields.contains(settings.lastGraph))
       setState(() {
         metric = settings.lastGraph;
@@ -55,10 +60,12 @@ class GraphPageState extends State<GraphPage>
     final filteredFields =
         fields.where((field) => !excludedFields.contains(field));
 
-    final metricValue =
-        filteredFields.contains(metric) || metric == 'calories-and-body-weight'
-            ? metric
-            : null;
+    final metricValue = filteredFields.contains(metric) ||
+            metric == 'calories' ||
+            metric == 'body-weight' ||
+            metric == 'calories-and-body-weight'
+        ? metric
+        : null;
 
     return Scaffold(
       body: Padding(
@@ -88,6 +95,14 @@ class GraphPageState extends State<GraphPage>
                           DropdownMenuItem(
                             value: 'calories-and-body-weight',
                             child: const Text('Calories & body weight'),
+                          ),
+                          DropdownMenuItem(
+                            value: db.foods.calories.name,
+                            child: const Text('Calories'),
+                          ),
+                          const DropdownMenuItem(
+                            value: 'body-weight',
+                            child: Text('Body weight'),
                           ),
                           ...filteredFields.map(
                             (field) => DropdownMenuItem(

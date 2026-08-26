@@ -218,6 +218,66 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('GraphPage retains calories and body weight graphs',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+    final now = DateTime.now();
+
+    await db.weights.insertOne(
+      WeightsCompanion.insert(created: now, unit: 'kg', amount: 75),
+    );
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Test food',
+        calories: const Value(500),
+      ),
+    );
+    await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        food: Value(foodId),
+        created: now,
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: GraphPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Calories & body weight'));
+    await tester.pump();
+    expect(find.text('Calories'), findsWidgets);
+    expect(find.text('Body weight'), findsWidgets);
+
+    await tester.tap(find.text('Calories').last);
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<LineChart>(find.byType(LineChart)).data.lineBarsData,
+      hasLength(1),
+    );
+
+    await tester.tap(find.byType(DropdownButton<String>));
+    await tester.pump();
+    await tester.tap(find.text('Body weight'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<LineChart>(find.byType(LineChart)).data.lineBarsData,
+      hasLength(1),
+    );
+
+    await db.close();
+  });
+
   testWidgets('GraphPage defaults combined graph to weekly',
       (WidgetTester tester) async {
     await mockTests();
