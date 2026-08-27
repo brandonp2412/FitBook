@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/appearance_settings.dart';
