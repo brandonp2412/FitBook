@@ -125,6 +125,7 @@ Future<void> showImageOptionsSheet({
             title: const Text('Delete image'),
             onTap: () {
               Navigator.pop(ctx);
+              onDelete();
             },
           ),
         ],
