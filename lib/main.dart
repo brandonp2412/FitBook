@@ -148,19 +148,21 @@ class _HomePageState extends State<HomePage> {
   final _pageController = PageController();
   var _currentIndex = 0;
 
-  Widget _buildTabPage(String tab) {
-    switch (tab) {
-      case 'DiaryPage':
-        return const DiaryPage();
-      case 'GraphPage':
-        return const GraphPage();
-      case 'FoodPage':
-        return const FoodPage();
-      case 'WeightPage':
-        return const WeightPage();
-      default:
-        return ErrorWidget('Invalid tab settings.');
-    }
+  Widget _buildTabPage(String tab, int index) {
+    final page = switch (tab) {
+      'DiaryPage' => const DiaryPage(),
+      'GraphPage' => const GraphPage(),
+      'FoodPage' => const FoodPage(),
+      'WeightPage' => const WeightPage(),
+      _ => ErrorWidget('Invalid tab settings.'),
+    };
+
+    // Prevent animations in retained/offscreen pages from consuming frame
+    // budget while another page is being dragged or animated into view.
+    return TickerMode(
+      enabled: index == _currentIndex,
+      child: page,
+    );
   }
 
   @override
@@ -225,7 +227,10 @@ class _HomePageState extends State<HomePage> {
                   ? const AlwaysScrollableScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
               onPageChanged: (i) => setState(() => _currentIndex = i),
-              children: tabs.map(_buildTabPage).toList(),
+              children: [
+                for (final entry in tabs.asMap().entries)
+                  _buildTabPage(entry.value, entry.key),
+              ],
             ),
             Positioned(
               bottom: 0,
