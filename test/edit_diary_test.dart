@@ -18,13 +18,20 @@ Widget _wrap(Widget child, SettingsState settingsState) => MultiProvider(
       child: MaterialApp(home: child),
     );
 
+Finder _fieldStarting(String label) => find.byWidgetPredicate(
+      (widget) =>
+          widget is TextField &&
+          widget.decoration?.labelText?.startsWith(label) == true,
+    );
+
 void main() async {
-  testWidgets('EditDiary updates', (WidgetTester tester) async {
+  testWidgets('EditDiary persists nutrient updates',
+      (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    final foodId = await (db.foods.insertOne(
+    final foodId = await db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Hamburger',
         calories: const Value(240),
@@ -32,52 +39,33 @@ void main() async {
         carbohydrateG: const Value(3),
         fatG: const Value(4),
       ),
-    ));
-    final entryId = await (db.diaries.insertOne(
+    );
+    final entryId = await db.diaries.insertOne(
       DiariesCompanion.insert(
         food: Value(foodId),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
       ),
-    ));
+    );
 
     await tester.pumpWidget(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => DiaryState()),
-        ],
-        child: MaterialApp(
-          home: EditDiaryPage(
-            id: entryId,
-          ),
-        ),
-      ),
+      _wrap(EditDiaryPage(id: entryId), settingsState),
     );
-    await tester.pump();
-    expect(find.text('Edit diary entry'), findsOne);
-    expect(find.text('Hamburger'), findsOne);
+    await tester.pumpAndSettle();
 
-    await tester.enterText(
-      find.bySemanticsLabel('Calories (per 100.0 g)'),
-      '601',
-    );
-    await tester.pump();
-    expect(find.text('601'), findsOne);
-
-    await tester.enterText(
-      find.bySemanticsLabel('Protein (per 100.0 g)'),
-      '41',
-    );
-    await tester.pump();
-    expect(find.text('41'), findsOne);
-
+    await tester.enterText(_fieldStarting('Calories'), '601');
+    await tester.enterText(_fieldStarting('Protein'), '41');
     tester.testTextInput.hide();
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(FloatingActionButton));
-    await tester.pump();
-    expect(find.text('Add diary entry'), findsNothing);
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    final savedFood = await (db.foods.select()
+          ..where((food) => food.id.equals(foodId)))
+        .getSingle();
+    expect(savedFood.calories, 601);
+    expect(savedFood.proteinG, 41);
 
     await db.close();
   });
@@ -88,10 +76,9 @@ void main() async {
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    // 1. Create a Food in the database with specific servingSize and servingUnit
-    const double initialServingSize = 250.0;
-    const String initialServingUnit = 'ml';
-    final foodId = await (db.foods.insertOne(
+    const initialServingSize = 250.0;
+    const initialServingUnit = 'ml';
+    final foodId = await db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Pure Premium Orange Juice Calcium And Vitamin D No Pulp',
         calories: const Value(110),
@@ -101,67 +88,41 @@ void main() async {
         carbohydrateG: const Value(3),
         fatG: const Value(4),
       ),
-    ));
-    final entryId = await (db.diaries.insertOne(
+    );
+    final entryId = await db.diaries.insertOne(
       DiariesCompanion.insert(
         food: Value(foodId),
         created: DateTime.now(),
         quantity: 1,
         unit: 'serving',
       ),
-    ));
+    );
 
     await tester.pumpWidget(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => settingsState),
-          ChangeNotifierProvider(create: (context) => DiaryState()),
-        ],
-        child: MaterialApp(
-          home: EditDiaryPage(
-            id: entryId,
-          ),
-        ),
-      ),
+      _wrap(EditDiaryPage(id: entryId), settingsState),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Edit diary entry'), findsOne);
-    expect(
-      find.text('Pure Premium Orange Juice Calcium And Vitamin D No Pulp'),
-      findsOne,
-    );
 
-    // 2. Change the quantity in the quantity text field
-    const String newQuantity = '3.5';
+    const newQuantity = '3.5';
     await tester.enterText(find.bySemanticsLabel('Quantity'), newQuantity);
-    await tester.pumpAndSettle();
-
-    // 3. Change the name to trigger the 'foodDirty' and new food insertion logic
-    final Finder nameField = find.bySemanticsLabel('Name');
     await tester.enterText(
-      nameField,
+      find.byKey(const Key('name_field')),
       'Pure Premium Orange Juice Calcium And Vitamin D No Pulp (Edited)',
     );
     await tester.pump();
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
 
-    // 4. Tap the save button
-    await tester.tap(find.byType(FloatingActionButton));
-    await tester.pumpAndSettle(); // Wait for navigation to complete
-
-    // 5. Query the database for the saved food and entry
     final updatedEntry = await (db.diaries.select()
-          ..where((e) => e.id.equals(entryId)))
+          ..where((entry) => entry.id.equals(entryId)))
         .getSingle();
     final savedFood = await (db.foods.select()
-          ..where((f) => f.id.equals(updatedEntry.food!)))
+          ..where((food) => food.id.equals(updatedEntry.food!)))
         .getSingle();
 
-    // 6. Assert that the saved food's servingSize and servingUnit are still the original values
-    expect(savedFood.servingSize, equals(initialServingSize));
-    expect(savedFood.servingUnit, equals(initialServingUnit));
-
-    // 7. Assert that the entry quantity is the new quantity entered by the user
-    expect(updatedEntry.quantity, equals(double.parse(newQuantity)));
+    expect(savedFood.servingSize, initialServingSize);
+    expect(savedFood.servingUnit, initialServingUnit);
+    expect(updatedEntry.quantity, double.parse(newQuantity));
 
     await db.close();
   });
@@ -179,13 +140,9 @@ void main() async {
 
     await tester.pumpWidget(_wrap(const EditDiaryPage(), settingsState));
     await tester.pumpAndSettle();
-    expect(find.text('Add diary entry'), findsOne);
 
-    // Search for the meal by typing in the name field
     await tester.enterText(find.byKey(const Key('name_field')), 'Chicken');
     await tester.pumpAndSettle();
-
-    // Tap the 'Meal' subtitle result (the meal tile)
     await tester.tap(
       find
           .ancestor(
@@ -195,15 +152,11 @@ void main() async {
           .first,
     );
     await tester.pumpAndSettle();
-
-    expect(find.text('Chicken Bowl'), findsOne);
-
-    // Save
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final entries = await db.diaries.select().get();
-    expect(entries.length, 1);
+    expect(entries, hasLength(1));
     expect(entries.first.meal, mealId);
     expect(entries.first.food, isNull);
 
@@ -234,16 +187,10 @@ void main() async {
     await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
     await tester.pumpAndSettle();
 
-    expect(find.text('Edit diary entry'), findsOne);
-    expect(find.text('Breakfast Bowl'), findsOne);
-
-    // Clear and type to search for the second meal
     await tester.tap(find.byIcon(Icons.close));
     await tester.pumpAndSettle();
-
     await tester.enterText(find.byKey(const Key('name_field')), 'Lunch');
     await tester.pumpAndSettle();
-
     await tester.tap(
       find
           .ancestor(
@@ -253,12 +200,11 @@ void main() async {
           .first,
     );
     await tester.pumpAndSettle();
-
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final updated = await (db.diaries.select()
-          ..where((t) => t.id.equals(entryId)))
+          ..where((entry) => entry.id.equals(entryId)))
         .getSingle();
     expect(updated.meal, meal2Id);
     expect(updated.food, isNull);
@@ -294,19 +240,16 @@ void main() async {
     await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
     await tester.pumpAndSettle();
 
-    await tester.tap(
-      find.byWidgetPredicate(
-        (widget) =>
-            widget is InkWell &&
-            widget.child is SizedBox &&
-            (widget.child as SizedBox).height == 200,
-      ),
+    final imageTarget = find.ancestor(
+      of: find.text('Image error'),
+      matching: find.byType(InkWell),
     );
+    expect(imageTarget, findsOne);
+    await tester.tap(imageTarget);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Delete image'));
     await tester.pumpAndSettle();
-
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final updatedMeal = await (db.meals.select()
@@ -343,17 +286,13 @@ void main() async {
     await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
     await tester.pumpAndSettle();
 
-    expect(find.text('Edit diary entry'), findsOne);
-    expect(find.text('Oatmeal'), findsOne);
-
     await tester.enterText(find.bySemanticsLabel('Quantity'), '250');
     await tester.pump();
-
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
     final updated = await (db.diaries.select()
-          ..where((t) => t.id.equals(entryId)))
+          ..where((entry) => entry.id.equals(entryId)))
         .getSingle();
     expect(updated.quantity, 250.0);
     expect(updated.food, foodId);
@@ -379,7 +318,9 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    final quantity = tester.widget<TextField>(find.byType(TextField).at(1));
+    final quantity = tester.widget<TextField>(
+      find.bySemanticsLabel('Quantity'),
+    );
     expect(quantity.controller!.text, '1');
 
     await db.close();
