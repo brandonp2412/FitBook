@@ -149,18 +149,17 @@ class _HomePageState extends State<HomePage> {
   var _currentIndex = 0;
 
   Widget _buildTabPage(String tab) {
-    switch (tab) {
-      case 'DiaryPage':
-        return const DiaryPage();
-      case 'GraphPage':
-        return const GraphPage();
-      case 'FoodPage':
-        return const FoodPage();
-      case 'WeightPage':
-        return const WeightPage();
-      default:
-        return ErrorWidget('Invalid tab settings.');
-    }
+    final page = switch (tab) {
+      'DiaryPage' => const DiaryPage(),
+      'GraphPage' => const GraphPage(),
+      'FoodPage' => const FoodPage(),
+      'WeightPage' => const WeightPage(),
+      _ => ErrorWidget('Invalid tab settings.'),
+    };
+
+    // Keep expensive page painting in separate layers so movement of the
+    // PageView does not force unrelated content inside each page to repaint.
+    return RepaintBoundary(child: page);
   }
 
   @override
