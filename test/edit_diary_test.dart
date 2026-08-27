@@ -318,8 +318,13 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    final quantity = tester.widget<TextField>(_fieldStarting('Quantity'));
-    expect(quantity.controller!.text, '1');
+    final quantity = tester.widget<EditableText>(
+      find.descendant(
+        of: find.bySemanticsLabel('Quantity'),
+        matching: find.byType(EditableText),
+      ),
+    );
+    expect(quantity.controller.text, '1');
 
     await db.close();
   });
