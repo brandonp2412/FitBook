@@ -98,7 +98,11 @@ class GraphPageState extends State<GraphPage>
                           ...filteredFields.map(
                             (field) => DropdownMenuItem(
                               value: field,
-                              child: Text(sentenceCase(field)),
+                              child: Text(
+                                field == db.foods.proteinG.name
+                                    ? 'Protein'
+                                    : sentenceCase(field),
+                              ),
                             ),
                           ),
                         ],
