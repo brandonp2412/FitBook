@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:drift/drift.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/crash_logger.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/failed_migrations_page.dart';
 import 'package:fit_book/diary/diary_page.dart';
@@ -8,8 +11,8 @@ import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/reminders.dart';
-import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/whats_new.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/weight_page.dart';
@@ -19,34 +22,50 @@ import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-AppDatabase db = AppDatabase();
+final ValueNotifier<int> dbVersion = ValueNotifier<int>(0);
+AppDatabase _db = AppDatabase();
+
+AppDatabase get db => _db;
+
+set db(AppDatabase value) {
+  _db = value;
+  dbVersion.value++;
+}
+
 MethodChannel androidChannel =
     const MethodChannel("com.presley.fit_book/android");
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await CrashLogger.install(fileName: 'fitbook-crash.log');
 
-  Setting settings;
-  try {
-    settings = await (db.settings.select()).getSingle();
-  } catch (error) {
-    return runApp(FailedMigrationsPage(error: error));
-  }
+      Setting settings;
+      try {
+        settings = await (db.settings.select()).getSingle();
+      } catch (error) {
+        return runApp(FailedMigrationsPage(error: error));
+      }
 
-  final state = SettingsState(settings);
+      final state = SettingsState(settings);
 
-  (settings.reminders ? setupReminders : cancelReminders)();
+      (settings.reminders ? setupReminders : cancelReminders)();
 
-  runApp(appProviders(state));
+      runApp(appProviders(state));
 
-  final pkgInfo = await PackageInfo.fromPlatform();
-  OpenFoodAPIConfiguration.userAgent = UserAgent(
-    name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
-    url: 'https://github.com/brandonp2412/FitBook',
-  );
-  OpenFoodAPIConfiguration.globalUser = User(
-    userId: state.value.offLogin ?? '',
-    password: state.value.offPassword ?? '',
+      final pkgInfo = await PackageInfo.fromPlatform();
+      OpenFoodAPIConfiguration.userAgent = UserAgent(
+        name: '${pkgInfo.appName}/${pkgInfo.version} (brandon@presley.nz)',
+        url: 'https://github.com/brandonp2412/FitBook',
+      );
+      OpenFoodAPIConfiguration.globalUser = User(
+        userId: state.value.offLogin ?? '',
+        password: state.value.offPassword ?? '',
+      );
+    },
+    (error, stack) =>
+        CrashLogger.instance?.record(error, stack, context: 'zone'),
   );
 }
 
@@ -219,13 +238,17 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            PageView(
-              controller: _pageController,
-              physics: scrollableTabs
-                  ? const AlwaysScrollableScrollPhysics()
-                  : const NeverScrollableScrollPhysics(),
-              onPageChanged: (i) => setState(() => _currentIndex = i),
-              children: tabs.map(_buildTabPage).toList(),
+            ValueListenableBuilder<int>(
+              valueListenable: dbVersion,
+              builder: (context, generation, child) => PageView(
+                key: ValueKey(generation),
+                controller: _pageController,
+                physics: scrollableTabs
+                    ? const AlwaysScrollableScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
+                onPageChanged: (i) => setState(() => _currentIndex = i),
+                children: tabs.map(_buildTabPage).toList(),
+              ),
             ),
             Positioned(
               bottom: 0,
