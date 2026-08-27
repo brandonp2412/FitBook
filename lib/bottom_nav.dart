@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatelessWidget {
-  /// Fixed visual footprint of the 60px pill plus 16px padding on each side.
-  /// The system bottom inset is applied separately in [build].
-  static const double totalOverlayHeight = 60 + 32;
+  static const double totalOverlayHeight = 60 +
+      16; // container height + top padding + bottom padding (excl. system inset)
 
   final List<String> tabs;
   final int currentIndex;
-  final ValueChanged<int> onTap;
-  final void Function(BuildContext, String)? onLongPress;
+  final Function(int) onTap;
+  final Function(BuildContext, String)? onLongPress;
 
   const BottomNav({
     super.key,
@@ -22,6 +21,10 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final systemBottomInset = MediaQuery.paddingOf(context).bottom;
+    final availableItemWidth = MediaQuery.sizeOf(context).width - 44;
+    final itemWidth = tabs.isEmpty
+        ? 78.0
+        : (availableItemWidth / tabs.length).clamp(64.0, 78.0);
 
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 16, 16, systemBottomInset + 16),
@@ -61,18 +64,16 @@ class BottomNav extends StatelessWidget {
                       ? () => onLongPress!(context, tab)
                       : null,
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 350),
-                    curve: Curves.easeOutCubic,
+                    duration: const Duration(milliseconds: 180),
+                    curve: Curves.easeOut,
+                    width: itemWidth,
                     height: 48,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isSelected ? 16 : 12,
-                    ),
                     decoration: BoxDecoration(
                       color: isSelected ? color.primary : Colors.transparent,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           _getIconForTab(tab),
@@ -80,22 +81,23 @@ class BottomNav extends StatelessWidget {
                           size: 24,
                           semanticLabel: label,
                         ),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 350),
-                          curve: Curves.easeOutCubic,
-                          child: isSelected
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    label,
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: color.onPrimary),
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
+                        const SizedBox(width: 4),
+                        SizedBox(
+                          width: itemWidth - 32,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 120),
+                            opacity: isSelected ? 1 : 0,
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              softWrap: false,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(color: color.onPrimary),
+                            ),
+                          ),
                         ),
                       ],
                     ),
