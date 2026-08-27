@@ -331,15 +331,18 @@ class _AppLineState extends State<AppLine> {
         goal = (sel.dailyCalories ?? 0).toDouble();
         break;
       case 'protein':
+      case 'protein_g':
         goal = (sel.dailyProtein ?? 0).toDouble();
         break;
       case 'body-weight':
         goal = sel.targetWeight ?? 0;
         break;
       case 'fat':
+      case 'fat_g':
         goal = (sel.dailyFat ?? 0).toDouble();
         break;
       case 'carbs':
+      case 'carbohydrate_g':
         goal = (sel.dailyCarb ?? 0).toDouble();
         break;
     }
