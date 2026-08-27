@@ -79,11 +79,11 @@ void main() async {
     await tester.pump();
     await tester.tap(find.text('Calories'));
     await tester.pump();
-    await tester.tap(find.text('Protein g'));
+    await tester.tap(find.text('Protein'));
     await tester.pumpAndSettle();
     expect(find.byType(LineChart), findsOne);
 
-    await tester.tap(find.text('Protein g'));
+    await tester.tap(find.text('Protein'));
     await tester.pump();
     await tester.tap(find.text('Fat g'));
     await tester.pumpAndSettle();
