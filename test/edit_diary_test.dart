@@ -241,7 +241,7 @@ void main() async {
     await tester.pumpAndSettle();
 
     final imageTarget = find.ancestor(
-      of: find.text('Image error'),
+      of: find.byType(Image),
       matching: find.byType(InkWell),
     );
     expect(imageTarget, findsOne);
@@ -318,9 +318,7 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    final quantity = tester.widget<TextField>(
-      find.bySemanticsLabel('Quantity'),
-    );
+    final quantity = tester.widget<TextField>(_fieldStarting('Quantity'));
     expect(quantity.controller!.text, '1');
 
     await db.close();
