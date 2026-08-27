@@ -40,8 +40,8 @@ class _DiaryListState extends State<DiaryList> {
 
   @override
   void dispose() {
-    super.dispose();
     widget.ctrl.removeListener(_scrollListener);
+    super.dispose();
   }
 
   void _scrollListener() {
@@ -186,19 +186,26 @@ class _DiaryListState extends State<DiaryList> {
     final days = groupByDay(widget.diaryFoods);
     final today = days.isEmpty ? null : days.first;
 
-    final children = <Widget>[
-      if (today != null) goalBars(context, today),
-    ];
+    // Store cheap builders instead of eagerly constructing every row widget.
+    // ListView.builder only invokes these for visible/near-visible children,
+    // which reduces build/layout work while the diary page slides onscreen.
+    final itemBuilders = <WidgetBuilder>[];
+    if (today != null) {
+      itemBuilders.add((context) => goalBars(context, today));
+    }
 
     DiaryFood? previous;
     for (final food in widget.diaryFoods) {
       final showDayDivider =
           previous != null && !isSameDay(previous.created, food.created);
 
-      if (showDayDivider) children.add(dayDivider(context, food.created));
+      if (showDayDivider) {
+        final date = food.created;
+        itemBuilders.add((context) => dayDivider(context, date));
+      }
 
-      children.add(
-        DiaryEntryRow(
+      itemBuilders.add(
+        (context) => DiaryEntryRow(
           food: food,
           isSelected: widget.selected.contains(food.entryId),
           onTap: () =>
@@ -212,14 +219,15 @@ class _DiaryListState extends State<DiaryList> {
     }
 
     return Expanded(
-      child: ListView(
+      child: ListView.builder(
         padding: EdgeInsets.only(
           top: appSearchHeight,
           bottom: MediaQuery.paddingOf(context).bottom +
               BottomNav.totalOverlayHeight,
         ),
         controller: widget.ctrl,
-        children: children,
+        itemCount: itemBuilders.length,
+        itemBuilder: (context, index) => itemBuilders[index](context),
       ),
     );
   }
