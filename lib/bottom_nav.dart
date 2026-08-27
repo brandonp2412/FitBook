@@ -60,18 +60,16 @@ class BottomNav extends StatelessWidget {
                       ? () => onLongPress!(context, tab)
                       : null,
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 350),
-                    curve: Curves.easeOutCubic,
+                    duration: const Duration(milliseconds: 180),
+                    curve: Curves.easeOut,
+                    width: 78,
                     height: 48,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isSelected ? 16 : 12,
-                    ),
                     decoration: BoxDecoration(
                       color: isSelected ? color.primary : Colors.transparent,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           _getIconForTab(tab),
@@ -79,22 +77,23 @@ class BottomNav extends StatelessWidget {
                           size: 24,
                           semanticLabel: label,
                         ),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 350),
-                          curve: Curves.easeOutCubic,
-                          child: isSelected
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    label,
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(color: color.onPrimary),
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
+                        const SizedBox(width: 4),
+                        SizedBox(
+                          width: 42,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 120),
+                            opacity: isSelected ? 1 : 0,
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              softWrap: false,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
+                                  ?.copyWith(color: color.onPrimary),
+                            ),
+                          ),
                         ),
                       ],
                     ),
