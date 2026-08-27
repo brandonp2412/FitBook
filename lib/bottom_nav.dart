@@ -21,6 +21,10 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final systemBottomInset = MediaQuery.paddingOf(context).bottom;
+    final availableItemWidth = MediaQuery.sizeOf(context).width - 44;
+    final itemWidth = tabs.isEmpty
+        ? 78.0
+        : (availableItemWidth / tabs.length).clamp(64.0, 78.0);
 
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 16, 16, systemBottomInset + 16),
@@ -62,7 +66,7 @@ class BottomNav extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 180),
                     curve: Curves.easeOut,
-                    width: 78,
+                    width: itemWidth,
                     height: 48,
                     decoration: BoxDecoration(
                       color: isSelected ? color.primary : Colors.transparent,
@@ -79,7 +83,7 @@ class BottomNav extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         SizedBox(
-                          width: 42,
+                          width: itemWidth - 32,
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 120),
                             opacity: isSelected ? 1 : 0,
