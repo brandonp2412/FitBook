@@ -533,6 +533,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  frisbee_flutter_foundation:
+    dependency: "direct main"
+    description:
+      path: "packages/flutter_foundation"
+      ref: "2e2711a67022d0f69b63512a2320fc69a4ab4b1e"
+      resolved-ref: "2e2711a67022d0f69b63512a2320fc69a4ab4b1e"
+      url: "https://github.com/brandonp2412/Flexify.git"
+    source: git
+    version: "0.1.0"
   frontend_server_client:
     dependency: transitive
     description:
