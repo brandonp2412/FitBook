@@ -12,6 +12,23 @@ import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
 
+Future<void> _selectMetric(WidgetTester tester, String metric) async {
+  final picker = tester.widget<DropdownButton<String>>(
+    find.byType(DropdownButton<String>),
+  );
+  expect(picker.items!.map((item) => item.value), contains(metric));
+  picker.onChanged!(metric);
+  await tester.pumpAndSettle();
+  expect(
+    tester
+        .widget<DropdownButton<String>>(
+          find.byType(DropdownButton<String>),
+        )
+        .value,
+    metric,
+  );
+}
+
 void main() async {
   testWidgets('GraphPage diaries', (WidgetTester tester) async {
     await mockTests();
@@ -76,24 +93,16 @@ void main() async {
         ),
       ),
     );
-    await tester.pump();
-    await tester.tap(find.text('Calories'));
-    await tester.pump();
-    await tester.tap(find.text('Protein g'));
     await tester.pumpAndSettle();
-    expect(find.byType(LineChart), findsOne);
 
-    await tester.tap(find.text('Protein g'));
-    await tester.pump();
-    await tester.tap(find.text('Fat g'));
-    await tester.pumpAndSettle();
-    expect(find.byType(LineChart), findsOne);
-
-    await tester.tap(find.text('Fat g'));
-    await tester.pump();
-    await tester.tap(find.text('Carbohydrate g'));
-    await tester.pumpAndSettle();
-    expect(find.byType(LineChart), findsOne);
+    for (final metric in [
+      db.foods.proteinG.name,
+      db.foods.fatG.name,
+      db.foods.carbohydrateG.name,
+    ]) {
+      await _selectMetric(tester, metric);
+      expect(find.byType(LineChart), findsOne);
+    }
 
     await db.close();
   });
