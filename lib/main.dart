@@ -212,8 +212,7 @@ class _HomePageState extends State<HomePage> {
   bool _onPageScroll(ScrollNotification notification) {
     if (notification is ScrollStartNotification && !_isPageTransitioning) {
       setState(() => _isPageTransitioning = true);
-    } else if (notification is ScrollEndNotification &&
-        _isPageTransitioning) {
+    } else if (notification is ScrollEndNotification && _isPageTransitioning) {
       setState(() => _isPageTransitioning = false);
     }
     return false;
