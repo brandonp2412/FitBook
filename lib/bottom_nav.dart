@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatelessWidget {
-  /// Fixed visual footprint of the 60px pill plus 16px padding on each side.
+  /// Fixed visual footprint of the 60px pill plus its 16px bottom padding.
   /// The system bottom inset is applied separately in [build].
-  static const double totalOverlayHeight = 60 + 32;
+  static const double totalOverlayHeight = 60 + 16;
 
   final List<String> tabs;
   final int currentIndex;

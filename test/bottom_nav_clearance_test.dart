@@ -42,6 +42,10 @@ Future<void> _expectFieldsClearBottomNav(WidgetTester tester) async {
 }
 
 void main() async {
+  test('FAB clearance uses the bottom navigation visual footprint', () {
+    expect(BottomNav.totalOverlayHeight, 76);
+  });
+
   testWidgets('EditFoodPage fields scroll past the bottom nav',
       (WidgetTester tester) async {
     await mockTests();
