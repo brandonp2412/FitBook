@@ -183,8 +183,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _pageController = PageController();
   var _currentIndex = 0;
+  var _isPageTransitioning = false;
 
-  Widget _buildTabPage(String tab) {
+  Widget _pageForTab(String tab) {
     switch (tab) {
       case 'DiaryPage':
         return const DiaryPage();
@@ -197,6 +198,25 @@ class _HomePageState extends State<HomePage> {
       default:
         return ErrorWidget('Invalid tab settings.');
     }
+  }
+
+  Widget _buildTabPage(String tab, int index) {
+    return RepaintBoundary(
+      child: TickerMode(
+        enabled: !_isPageTransitioning && index == _currentIndex,
+        child: _pageForTab(tab),
+      ),
+    );
+  }
+
+  bool _onPageScroll(ScrollNotification notification) {
+    if (notification is ScrollStartNotification && !_isPageTransitioning) {
+      setState(() => _isPageTransitioning = true);
+    } else if (notification is ScrollEndNotification &&
+        _isPageTransitioning) {
+      setState(() => _isPageTransitioning = false);
+    }
+    return false;
   }
 
   @override
@@ -260,14 +280,20 @@ class _HomePageState extends State<HomePage> {
           children: [
             ValueListenableBuilder<int>(
               valueListenable: dbVersion,
-              builder: (context, generation, child) => PageView(
-                key: ValueKey(generation),
-                controller: _pageController,
-                physics: scrollableTabs
-                    ? const AlwaysScrollableScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                onPageChanged: (i) => setState(() => _currentIndex = i),
-                children: tabs.map(_buildTabPage).toList(),
+              builder: (context, generation, child) =>
+                  NotificationListener<ScrollNotification>(
+                onNotification: _onPageScroll,
+                child: PageView.builder(
+                  key: ValueKey(generation),
+                  controller: _pageController,
+                  physics: scrollableTabs
+                      ? const AlwaysScrollableScrollPhysics()
+                      : const NeverScrollableScrollPhysics(),
+                  itemCount: tabs.length,
+                  onPageChanged: (i) => setState(() => _currentIndex = i),
+                  itemBuilder: (context, index) =>
+                      _buildTabPage(tabs[index], index),
+                ),
               ),
             ),
             Positioned(
