@@ -139,19 +139,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
-          script: |
-            for attempt in 1 2; do
-              echo "Patrol attempt $attempt of 2"
-              if timeout --signal=TERM --kill-after=30s 18m patrol test -t patrol_test/device_features_test.dart; then
-                exit 0
-              fi
-              if [ "$attempt" -lt 2 ]; then
-                echo "Patrol attempt $attempt failed or hung; retrying from a clean app state"
-                adb shell pm clear com.presley.fit_book || true
-                adb wait-for-device
-              fi
-            done
-            exit 1
+          script: bash ./scripts/ci-patrol.sh
 
   version-bump:
     if: github.event_name == 'push'
