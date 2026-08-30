@@ -21,13 +21,15 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
       - name: Configure Google Play credentials
+        env:
+          GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
         run: |
-          mkdir -p ~/.config
-          printf '%s' '${{ secrets.GOOGLE_PLAY_JSON_KEY }}' > ~/.config/googlePlay.json
+          printf '%s' "$GOOGLE_PLAY_JSON_KEY" > "$RUNNER_TEMP/googlePlay.json"
+          echo "GOOGLE_PLAY_JSON_KEY_FILE=$RUNNER_TEMP/googlePlay.json" >> "$GITHUB_ENV"
       - run: bundle exec fastlane android metadata track:production
