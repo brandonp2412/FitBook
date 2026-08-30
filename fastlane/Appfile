@@ -1,2 +1,4 @@
-json_key_file("/home/brandon/.config/googlePlay.json")
+json_key_file(
+  ENV.fetch("GOOGLE_PLAY_JSON_KEY_FILE", File.expand_path("~/.config/googlePlay.json"))
+)
 package_name("com.presley.fit_book")
