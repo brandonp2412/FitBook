@@ -7,7 +7,6 @@ on:
       - "pubspec.yaml"
   pull_request:
     branches: [main]
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

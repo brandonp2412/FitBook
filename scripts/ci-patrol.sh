@@ -4,6 +4,8 @@ set -uo pipefail
 last_status=1
 for attempt in 1 2; do
   echo "Patrol attempt $attempt of 2"
+  adb shell pm clear com.google.android.documentsui || true
+  adb shell pm clear com.android.documentsui || true
   timeout --signal=TERM --kill-after=30s 18m patrol test -t patrol_test/device_features_test.dart
   last_status=$?
   if [ "$last_status" -eq 0 ]; then

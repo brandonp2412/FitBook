@@ -6,6 +6,31 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
+Future<void> _waitForNotification({
+  required PatrolIntegrationTester $,
+  required String title,
+  String? content,
+}) async {
+  final deadline = DateTime.now().add(const Duration(seconds: 15));
+  while (DateTime.now().isBefore(deadline)) {
+    final notifications = await $.platform.mobile.getNotifications();
+    if (notifications.any(
+      (notification) =>
+          notification.title == title &&
+          (content == null || notification.content == content),
+    )) {
+      return;
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+  }
+
+  fail(
+    content == null
+        ? 'Notification not found: $title'
+        : 'Notification not found: $title — $content',
+  );
+}
+
 void main() {
   patrolTest(
     'automatic backup writes an archive and posts a device notification',
@@ -50,7 +75,9 @@ void main() {
       );
       await $.platform.android.allowPermission();
 
-      if (await $.platform.mobile.isPermissionDialogVisible()) {
+      if (await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 5),
+      )) {
         await $.platform.mobile.grantPermissionWhenInUse();
       }
 
@@ -60,28 +87,21 @@ void main() {
         isTrue,
       );
 
-      await $.platform.mobile.openNotifications();
-      await $.platform.android.waitUntilVisible(
-        const AndroidSelector(text: 'Automatic backups enabled'),
-        timeout: const Duration(seconds: 10),
+      await _waitForNotification(
+        $: $,
+        title: 'Automatic backups enabled',
+        content:
+            'FitBook will automatically back up your data and images to the selected folder each day.',
       );
-      await $.platform.android.waitUntilVisible(
-        const AndroidSelector(
-          text:
-              'FitBook will automatically back up your data and images to the selected folder each day.',
-        ),
-        timeout: const Duration(seconds: 10),
-      );
-      await $.platform.android.pressBack();
 
       // Invoke the production BackupReceiver without waiting for its 2am alarm.
       const channel = MethodChannel('com.presley.fit_book/android');
       await channel.invokeMethod<void>('runBackupNow');
       await Future<void>.delayed(const Duration(seconds: 3));
 
-      await $.platform.mobile.openNotifications();
-      await $.platform.android.tap(
-        const AndroidSelector(text: 'Backed up data and images'),
+      await _waitForNotification(
+        $: $,
+        title: 'Backed up data and images',
       );
     },
   );
@@ -104,7 +124,9 @@ void main() {
         isTrue,
       );
 
-      if (await $.platform.mobile.isPermissionDialogVisible()) {
+      if (await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 5),
+      )) {
         await $.platform.mobile.grantPermissionWhenInUse();
       }
 
@@ -114,19 +136,12 @@ void main() {
         isTrue,
       );
 
-      await $.platform.mobile.openNotifications();
-      await $.platform.android.waitUntilVisible(
-        const AndroidSelector(text: 'Meal reminders enabled'),
-        timeout: const Duration(seconds: 10),
+      await _waitForNotification(
+        $: $,
+        title: 'Meal reminders enabled',
+        content:
+            "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
       );
-      await $.platform.android.waitUntilVisible(
-        const AndroidSelector(
-          text:
-              "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
-        ),
-        timeout: const Duration(seconds: 10),
-      );
-      await $.platform.android.pressBack();
 
       await $('Reminders').scrollTo().tap();
       await $.pumpAndSettle();
@@ -151,7 +166,9 @@ void main() {
       await $('Diary').tap();
       await $('Reminders').scrollTo().tap();
 
-      if (await $.platform.mobile.isPermissionDialogVisible()) {
+      if (await $.platform.mobile.isPermissionDialogVisible(
+        timeout: const Duration(seconds: 5),
+      )) {
         await $.platform.mobile.grantPermissionWhenInUse();
       }
       await $.pumpAndSettle();
