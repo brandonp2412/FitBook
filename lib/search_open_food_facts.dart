@@ -25,6 +25,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   List<Product> products = [];
   bool searching = false;
+  bool hasSearched = false;
   bool cards = true;
 
   @override
@@ -37,9 +38,18 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   Future<void> search(String term) async {
-    if (term.isEmpty) return;
+    final trimmed = term.trim();
+    if (trimmed.isEmpty) {
+      setState(() {
+        products = [];
+        searching = false;
+        hasSearched = false;
+      });
+      return;
+    }
     setState(() {
       searching = true;
+      hasSearched = true;
     });
     talker.info('Searching Open Food Facts');
 
@@ -48,7 +58,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         null,
         ProductSearchQueryConfiguration(
           parametersList: [
-            SearchTerms(terms: [term]),
+            SearchTerms(terms: [trimmed]),
           ],
           version: ProductQueryVersion.v3,
         ),
@@ -74,12 +84,50 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   Widget productsBuilder(BuildContext context, String foodUnit) {
     if (searching)
-      return const material.Padding(
-        padding: EdgeInsets.all(8.0),
-        child: CircularProgressIndicator(),
+      return const Expanded(
+        child: Center(child: CircularProgressIndicator()),
       );
     if (products.isEmpty == true)
-      return const ListTile(title: Text("No products found"));
+      return Expanded(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: material.Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  hasSearched
+                      ? Icons.search_off_rounded
+                      : Icons.manage_search_rounded,
+                  size: 56,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  hasSearched
+                      ? 'No matching products'
+                      : 'Search Open Food Facts',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  hasSearched
+                      ? 'Try another name or scan a barcode.'
+                      : 'Enter a food name above, then submit to search.',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
     PerSize perSize = PerSize.oneHundredGrams;
     if (foodUnit == 'serving') perSize = PerSize.serving;
@@ -160,6 +208,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                         setState(() {
                           products = [];
                           searching = false;
+                          hasSearched = false;
                         });
                       },
                       icon: const Icon(Icons.clear),

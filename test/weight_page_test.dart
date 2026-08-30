@@ -47,6 +47,8 @@ void main() async {
 
     await tester.longPress(find.textContaining('60'));
     await tester.pumpAndSettle();
+    expect(find.byIcon(Icons.check_circle), findsNothing);
+    expect(find.byIcon(Icons.circle_outlined), findsNothing);
     await tester.tap(find.textContaining('70'));
     await tester.tap(find.textContaining('80'));
     await tester.tap(find.byTooltip('Delete'));
@@ -55,6 +57,39 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(await db.weights.select().get(), isEmpty);
+
+    await db.close();
+  });
+
+  testWidgets('Weight cards align directly below the search bar',
+      (WidgetTester tester) async {
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(compactWeights: Value(false)),
+        );
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+
+    await db.weights.insertOne(
+      WeightsCompanion.insert(
+        created: DateTime.now(),
+        unit: 'kg',
+        amount: 75,
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: WeightPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final grid = tester.widget<GridView>(find.byType(GridView));
+    expect((grid.padding! as EdgeInsets).top, 72);
 
     await db.close();
   });

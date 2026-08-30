@@ -19,6 +19,52 @@ Future<Food> _foodForDiary(int diaryId) async {
 }
 
 void main() async {
+  testWidgets('Diary search can create and log a missing food',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: DiaryPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('No entries today.'), findsOneWidget);
+    await tester.enterText(find.byType(SearchBar), 'Dragonfruit bowl');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add "Dragonfruit bowl" to your diary'), findsOneWidget);
+    expect(find.text('No entries today.'), findsNothing);
+
+    await tester.tap(find.text('Add "Dragonfruit bowl" to your diary'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add food to diary'), findsOneWidget);
+    final nameField = tester.widget<TextField>(
+      find.byKey(const Key('name_field')),
+    );
+    expect(nameField.controller!.text, 'Dragonfruit bowl');
+
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    final createdFood = await (db.foods.select()
+          ..where((food) => food.name.equals('Dragonfruit bowl')))
+        .getSingle();
+    final diaries = await db.diaries.select().get();
+    expect(diaries, hasLength(1));
+    expect(diaries.single.food, createdFood.id);
+
+    await db.close();
+  });
+
   testWidgets('DiaryPage persists create, edit and delete flows',
       (WidgetTester tester) async {
     await mockTests();

@@ -89,7 +89,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       return Expanded(
         child: ListView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding + 8,
+            top: appSearchHeight + widget.extraTopPadding,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
@@ -171,7 +171,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                         ],
                       ),
                     ),
-                    if (delta != null) ...[
+                    if (delta != null)
                       Text(
                         delta,
                         style: theme.textTheme.labelMedium?.copyWith(
@@ -179,20 +179,6 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                           fontWeight: FontWeight.w700,
                           color: weightDeltaColor(colorScheme, delta),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    if (isSelected)
-                      Icon(
-                        Icons.check_circle,
-                        size: 18,
-                        color: colorScheme.primary,
-                      )
-                    else if (widget.selected.isNotEmpty)
-                      Icon(
-                        Icons.circle_outlined,
-                        size: 18,
-                        color: colorScheme.outlineVariant,
                       ),
                   ],
                 ),
@@ -208,7 +194,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       return Expanded(
         child: GridView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding + 8,
+            top: appSearchHeight + widget.extraTopPadding,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +

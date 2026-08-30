@@ -51,12 +51,14 @@ class EditDiaryPage extends StatefulWidget {
   final int? id;
   final Food? initialFood;
   final String? initialBarcode;
+  final String? initialName;
 
   const EditDiaryPage({
     super.key,
     this.id,
     this.initialFood,
     this.initialBarcode,
+    this.initialName,
   });
 
   @override
@@ -83,6 +85,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
 
   DateTime? created;
   bool foodDirty = false;
+  bool _creatingFood = false;
   Food? selectedFood;
   int? _selectedMealId;
   String? imageFile;
@@ -151,6 +154,15 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   void initState() {
     super.initState();
     if (unit == 'serving') quantity.text = '1';
+
+    final initialName = widget.initialName?.trim();
+    if (widget.id == null &&
+        widget.initialFood == null &&
+        initialName?.isNotEmpty == true) {
+      nameController.text = initialName!;
+      _creatingFood = true;
+      foodDirty = true;
+    }
     _performSearch('');
 
     if (widget.initialFood != null) {
@@ -315,6 +327,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
 
   void _applyMeal(Meal meal) {
     setState(() {
+      _creatingFood = false;
       _selectedMealId = meal.id;
       selectedFood = null;
       nameController.text = meal.name;
@@ -348,6 +361,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
 
   void _applyFood(Food food, {double? lastQuantity, String? lastUnit}) {
     setState(() {
+      _creatingFood = false;
       foodDirty = false;
       selectedFood = food;
       nameController.text = food.name;
@@ -654,12 +668,17 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     final shortUnit =
         getShortUnit(selectedFood?.servingUnit ?? settings.foodUnit);
     final servingSize = selectedFood?.servingSize ?? 100;
-    final showList = selectedFood == null && _selectedMealId == null;
+    final showList =
+        selectedFood == null && _selectedMealId == null && !_creatingFood;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.id == null ? 'Add diary entry' : 'Edit diary entry',
+          widget.id != null
+              ? 'Edit diary entry'
+              : _creatingFood
+                  ? 'Add food to diary'
+                  : 'Add diary entry',
         ),
         actions: [
           if (widget.id != null)
@@ -747,6 +766,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       ),
                     )
                   : Wrap(
+                      alignment: WrapAlignment.center,
                       spacing: 8,
                       children: [
                         TextButton.icon(
@@ -827,12 +847,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ),
               textCapitalization: TextCapitalization.sentences,
               onChanged: (value) {
-                if (selectedFood == null) {
-                  _performSearch(value);
-                } else {
+                if (_creatingFood || selectedFood != null) {
                   setState(() {
                     foodDirty = true;
                   });
+                } else {
+                  _performSearch(value);
                 }
               },
             ),
@@ -1195,7 +1215,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           ],
         ),
       ),
-      floatingActionButton: (selectedFood != null || _selectedMealId != null)
+      floatingActionButton: (selectedFood != null ||
+              _selectedMealId != null ||
+              (_creatingFood && nameController.text.trim().isNotEmpty))
           ? Padding(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.paddingOf(context).bottom +

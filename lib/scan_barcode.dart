@@ -36,7 +36,7 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
   }
 
   if (!context.mounted) return const BarcodeScanResult.cancelled();
-  final barcode = await Navigator.of(context).push<String>(
+  final barcode = await Navigator.of(context, rootNavigator: true).push<String>(
     MaterialPageRoute(builder: (_) => const _BarcodeScannerPage()),
   );
   if (barcode == null || barcode.isEmpty) {

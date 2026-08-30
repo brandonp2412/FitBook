@@ -25,6 +25,30 @@ Finder _fieldStarting(String label) => find.byWidgetPredicate(
     );
 
 void main() async {
+  testWidgets('EditDiary centers image action buttons',
+      (WidgetTester tester) async {
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(showImages: Value(true)),
+        );
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+
+    await tester.pumpWidget(_wrap(const EditDiaryPage(), settingsState));
+    await tester.pumpAndSettle();
+
+    final wrap = find.ancestor(
+      of: find.text('Set image'),
+      matching: find.byType(Wrap),
+    );
+    expect(wrap, findsOneWidget);
+    expect(
+      tester.getCenter(wrap).dx,
+      closeTo(tester.getCenter(find.byType(Scaffold)).dx, 0.5),
+    );
+
+    await db.close();
+  });
+
   testWidgets('EditDiary persists nutrient updates',
       (WidgetTester tester) async {
     await mockTests();

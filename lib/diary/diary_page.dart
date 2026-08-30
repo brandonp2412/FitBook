@@ -67,48 +67,100 @@ class DiaryPageState extends State<DiaryPage> {
           }
 
           final entryFoods = snapshot.data ?? [];
+          final searchTerm = entriesState.search.trim();
 
           return Stack(
             children: [
               material.Column(
                 children: [
-                  if (snapshot.data?.isEmpty == true)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: appSearchHeight + 16,
-                        left: 16,
-                        right: 16,
-                        bottom: 16,
-                      ),
-                      child: ListTile(
-                        title: const Text("No entries today."),
-                        subtitle:
-                            const Text("Tap here to start logging your food."),
-                        onTap: () => navigatorKey.currentState!.push(
-                          MaterialPageRoute(
-                            builder: (context) => const EditDiaryPage(),
+                  if (entryFoods.isEmpty)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: appSearchHeight,
+                          left: 24,
+                          right: 24,
+                        ),
+                        child: Center(
+                          child: Semantics(
+                            button: true,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(24),
+                              onTap: () => navigatorKey.currentState!.push(
+                                MaterialPageRoute(
+                                  builder: (context) => searchTerm.isEmpty
+                                      ? const EditDiaryPage()
+                                      : EditDiaryPage(initialName: searchTerm),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: material.Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      searchTerm.isEmpty
+                                          ? Icons.restaurant_menu_rounded
+                                          : Icons.add_circle_outline_rounded,
+                                      size: 56,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      searchTerm.isEmpty
+                                          ? 'No entries today.'
+                                          : 'Add "$searchTerm" to your diary',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      searchTerm.isEmpty
+                                          ? 'Tap to start logging food.'
+                                          : 'No matching diary entries. Tap to create this food and log it.',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurfaceVariant,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
+                    )
+                  else
+                    DiaryList(
+                      ctrl: scrollCtrl,
+                      diaryFoods: entryFoods,
+                      selected: selected,
+                      onSelect: (id) {
+                        if (selected.contains(id))
+                          setState(() {
+                            selected.remove(id);
+                          });
+                        else
+                          setState(() {
+                            selected.add(id);
+                          });
+                      },
+                      onNext: () async {
+                        entriesState.limit += 100;
+                      },
                     ),
-                  DiaryList(
-                    ctrl: scrollCtrl,
-                    diaryFoods: entryFoods,
-                    selected: selected,
-                    onSelect: (id) {
-                      if (selected.contains(id))
-                        setState(() {
-                          selected.remove(id);
-                        });
-                      else
-                        setState(() {
-                          selected.add(id);
-                        });
-                    },
-                    onNext: () async {
-                      entriesState.limit += 100;
-                    },
-                  ),
                 ],
               ),
               Positioned(
