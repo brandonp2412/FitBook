@@ -61,7 +61,37 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Weight cards align directly below the search bar',
+  testWidgets('Compact weight rows keep their original search bar gap',
+      (WidgetTester tester) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+
+    await db.weights.insertOne(
+      WeightsCompanion.insert(
+        created: DateTime.now(),
+        unit: 'kg',
+        amount: 75,
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: WeightPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final list = tester.widget<ListView>(find.byType(ListView));
+    expect((list.padding! as EdgeInsets).top, 80);
+
+    await db.close();
+  });
+
+  testWidgets('Weight stat cards use the standard search bar gap',
       (WidgetTester tester) async {
     await mockTests();
     await db.settings.update().write(
@@ -89,7 +119,7 @@ void main() async {
     await tester.pumpAndSettle();
 
     final grid = tester.widget<GridView>(find.byType(GridView));
-    expect((grid.padding! as EdgeInsets).top, 72);
+    expect((grid.padding! as EdgeInsets).top, 88);
 
     await db.close();
   });

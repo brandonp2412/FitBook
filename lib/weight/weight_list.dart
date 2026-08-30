@@ -89,7 +89,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       return Expanded(
         child: ListView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding,
+            top: appSearchHeight + widget.extraTopPadding + 8,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
@@ -194,7 +194,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       return Expanded(
         child: GridView.builder(
           padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding,
+            top: appSearchHeight + widget.extraTopPadding + 16,
             left: 12,
             right: 12,
             bottom: MediaQuery.paddingOf(context).bottom +
