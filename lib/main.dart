@@ -13,6 +13,7 @@ import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
+import 'package:fit_book/settings/settings_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/whats_new.dart';
 import 'package:fit_book/utils.dart';
@@ -256,44 +257,70 @@ class _HomePageState extends State<HomePage> {
       (settings) => settings.value.scrollableTabs,
     );
 
+    void selectTab(int index) {
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOutCubic,
+      );
+      setState(() => _currentIndex = index);
+    }
+
+    Widget pages() => ValueListenableBuilder<int>(
+          valueListenable: dbVersion,
+          builder: (context, generation, child) => PageView.builder(
+            key: ValueKey(generation),
+            controller: _pageController,
+            physics: scrollableTabs
+                ? const AlwaysScrollableScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
+            itemCount: tabs.length,
+            onPageChanged: (i) => setState(() => _currentIndex = i),
+            itemBuilder: (context, index) => _buildTabPage(tabs[index], index),
+          ),
+        );
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: SafeArea(
-        child: Stack(
-          children: [
-            ValueListenableBuilder<int>(
-              valueListenable: dbVersion,
-              builder: (context, generation, child) => PageView.builder(
-                key: ValueKey(generation),
-                controller: _pageController,
-                physics: scrollableTabs
-                    ? const AlwaysScrollableScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: tabs.length,
-                onPageChanged: (i) => setState(() => _currentIndex = i),
-                itemBuilder: (context, index) =>
-                    _buildTabPage(tabs[index], index),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: BottomNav(
-                tabs: tabs,
-                currentIndex: _currentIndex,
-                onTap: (i) {
-                  _pageController.animateToPage(
-                    i,
-                    duration: const Duration(milliseconds: 350),
-                    curve: Curves.easeOutCubic,
-                  );
-                  setState(() => _currentIndex = i);
-                },
-              ),
-            ),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final wide = constraints.maxWidth >= largeScreenBreakpoint;
+            if (wide) {
+              return Row(
+                children: [
+                  SideNav(
+                    tabs: tabs,
+                    currentIndex: _currentIndex,
+                    onTap: selectTab,
+                    onOpenSettings: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: pages()),
+                ],
+              );
+            }
+
+            return Stack(
+              children: [
+                pages(),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: BottomNav(
+                    tabs: tabs,
+                    currentIndex: _currentIndex,
+                    onTap: selectTab,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

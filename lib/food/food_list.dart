@@ -138,8 +138,7 @@ class _FoodListState extends State<FoodList> {
       child: ListView(
         padding: EdgeInsets.only(
           top: appSearchHeight + 16,
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         controller: widget.ctrl,
         children: children,

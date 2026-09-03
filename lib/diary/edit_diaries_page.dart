@@ -469,17 +469,13 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
               ),
               onTap: () => pickDate(),
             ),
-            SizedBox(
-              height: MediaQuery.paddingOf(context).bottom +
-                  BottomNav.totalOverlayHeight,
-            ),
+            SizedBox(height: navigationBottomClearance(context)),
           ],
         ),
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: AnimatedFab(
           onTap: () => _save(),

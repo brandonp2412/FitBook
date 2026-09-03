@@ -19,6 +19,7 @@ class DiaryList extends StatefulWidget {
     required this.onSelect,
     required this.onNext,
     required this.ctrl,
+    this.showGoalSummary = true,
   });
 
   final List<DiaryFood> diaryFoods;
@@ -26,6 +27,7 @@ class DiaryList extends StatefulWidget {
   final Set<int> selected;
   final ValueChanged<int> onSelect;
   final VoidCallback onNext;
+  final bool showGoalSummary;
 
   @override
   State<DiaryList> createState() => _DiaryListState();
@@ -187,7 +189,7 @@ class _DiaryListState extends State<DiaryList> {
     final today = days.isEmpty ? null : days.first;
 
     final children = <Widget>[
-      if (today != null) goalBars(context, today),
+      if (today != null && widget.showGoalSummary) goalBars(context, today),
     ];
 
     DiaryFood? previous;
@@ -215,8 +217,7 @@ class _DiaryListState extends State<DiaryList> {
       child: ListView(
         padding: EdgeInsets.only(
           top: appSearchHeight,
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         controller: widget.ctrl,
         children: children,

@@ -66,100 +66,111 @@ class GraphPageState extends State<GraphPage>
         : null;
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          16,
-          12,
-          16,
-          MediaQuery.paddingOf(context).bottom + BottomNav.totalOverlayHeight,
-        ),
-        child: SingleChildScrollView(
-          child: material.Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: metricValue,
-                        isExpanded: true,
-                        borderRadius: BorderRadius.circular(12),
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.onSurface,
-                        ),
-                        items: [
-                          DropdownMenuItem(
-                            value: db.foods.calories.name,
-                            child: const Text('Calories'),
+      body: AdaptivePageBody(
+        maxWidth: 1200,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            24,
+            20,
+            24,
+            navigationBottomClearance(context),
+          ),
+          child: SingleChildScrollView(
+            child: material.Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: metricValue,
+                          isExpanded: true,
+                          borderRadius: BorderRadius.circular(12),
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: colorScheme.onSurface,
                           ),
-                          const DropdownMenuItem(
-                            value: 'body-weight',
-                            child: Text('Body weight'),
-                          ),
-                          ...filteredFields.map(
-                            (field) => DropdownMenuItem(
-                              value: field,
-                              child: Text(
-                                field == db.foods.proteinG.name
-                                    ? 'Protein'
-                                    : sentenceCase(field),
+                          items: [
+                            DropdownMenuItem(
+                              value: db.foods.calories.name,
+                              child: const Text('Calories'),
+                            ),
+                            const DropdownMenuItem(
+                              value: 'body-weight',
+                              child: Text('Body weight'),
+                            ),
+                            ...filteredFields.map(
+                              (field) => DropdownMenuItem(
+                                value: field,
+                                child: Text(
+                                  field == db.foods.proteinG.name
+                                      ? 'Protein'
+                                      : sentenceCase(field),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          if (value == null) return;
-                          setState(() => metric = value);
-                          db.settings.update().write(
-                                SettingsCompanion(lastGraph: Value(metric)),
-                              );
-                        },
+                          ],
+                          onChanged: (value) {
+                            if (value == null) return;
+                            setState(() => metric = value);
+                            db.settings.update().write(
+                                  SettingsCompanion(lastGraph: Value(metric)),
+                                );
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton.filledTonal(
+                      icon: const Icon(Icons.tune),
+                      tooltip: 'Options',
+                      onPressed: _showOptions,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: SegmentedButton<Period>(
+                    showSelectedIcon: false,
+                    style: SegmentedButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                    ),
+                    segments: const [
+                      ButtonSegment(value: Period.day, label: Text("Day")),
+                      ButtonSegment(value: Period.week, label: Text("Week")),
+                      ButtonSegment(value: Period.month, label: Text("Month")),
+                      ButtonSegment(value: Period.year, label: Text("Year")),
+                    ],
+                    selected: {groupBy},
+                    onSelectionChanged: (value) {
+                      setState(() => groupBy = value.first);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Card(
+                  margin: EdgeInsets.zero,
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: usesSideNavigation(context) ? 440 : 300,
+                        maxHeight: usesSideNavigation(context) ? 620 : 450,
+                      ),
+                      child: AppLine(
+                        metric: metric,
+                        groupBy: groupBy,
+                        start: start,
+                        end: end,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  IconButton.filledTonal(
-                    icon: const Icon(Icons.tune),
-                    tooltip: 'Options',
-                    onPressed: _showOptions,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: SegmentedButton<Period>(
-                  showSelectedIcon: false,
-                  style: SegmentedButton.styleFrom(
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  segments: const [
-                    ButtonSegment(value: Period.day, label: Text("Day")),
-                    ButtonSegment(value: Period.week, label: Text("Week")),
-                    ButtonSegment(value: Period.month, label: Text("Month")),
-                    ButtonSegment(value: Period.year, label: Text("Year")),
-                  ],
-                  selected: {groupBy},
-                  onSelectionChanged: (value) {
-                    setState(() => groupBy = value.first);
-                  },
                 ),
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: 300,
-                  maxHeight: 450,
-                ),
-                child: AppLine(
-                  metric: metric,
-                  groupBy: groupBy,
-                  start: start,
-                  end: end,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

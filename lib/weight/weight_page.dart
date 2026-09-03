@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/app_line.dart';
 import 'package:fit_book/app_search.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
@@ -84,15 +86,13 @@ class WeightPageState extends State<WeightPage>
           if (snapshot.hasError) return ErrorWidget(snapshot.error!);
           final weights = snapshot.data ?? [];
 
-          return Stack(
+          final listPane = Stack(
             children: [
               material.Column(
                 children: [
                   if (snapshot.data?.isEmpty == true)
                     const Padding(
-                      padding: EdgeInsets.only(
-                        top: appSearchHeight,
-                      ),
+                      padding: EdgeInsets.only(top: appSearchHeight),
                       child: ListTile(
                         title: Text("No weights found"),
                         subtitle: Text(
@@ -105,21 +105,16 @@ class WeightPageState extends State<WeightPage>
                     weights: weights,
                     selected: selected,
                     onSelect: (id) {
-                      if (selected.contains(id))
-                        setState(() {
-                          selected.remove(id);
-                        });
-                      else
-                        setState(() {
-                          selected.add(id);
-                        });
+                      if (selected.contains(id)) {
+                        setState(() => selected.remove(id));
+                      } else {
+                        setState(() => selected.add(id));
+                      }
                     },
                     onNext: () async {
                       final result = await stream.first;
                       if (result.length <= limit) return;
-                      setState(() {
-                        limit += 10;
-                      });
+                      setState(() => limit += 10);
                       _setStream();
                     },
                   ),
@@ -132,28 +127,20 @@ class WeightPageState extends State<WeightPage>
                 child: AppSearch(
                   ctrl: searchController,
                   onChange: (value) {
-                    setState(() {
-                      search = value;
-                    });
+                    setState(() => search = value);
                     _setStream();
                   },
-                  onClear: () => setState(() {
-                    selected.clear();
-                  }),
+                  onClear: () => setState(() => selected.clear()),
                   onDelete: () async {
                     final selectedCopy = selected.toList();
-                    setState(() {
-                      selected.clear();
-                    });
+                    setState(() => selected.clear());
                     await (db.delete(db.weights)
                           ..where((tbl) => tbl.id.isIn(selectedCopy)))
                         .go();
                   },
-                  onSelect: () => setState(() {
-                    selected.addAll(
-                      weights.map((weight) => weight.id),
-                    );
-                  }),
+                  onSelect: () => setState(
+                    () => selected.addAll(weights.map((weight) => weight.id)),
+                  ),
                   selected: selected,
                   onFavorite: () {},
                   onEdit: () async {
@@ -161,20 +148,93 @@ class WeightPageState extends State<WeightPage>
                       (element) => element.id == selected.first,
                     );
                     await showEditWeight(context, weight.toCompanion(false));
-                    setState(() {
-                      selected.clear();
-                    });
+                    setState(() => selected.clear());
                   },
                 ),
               ),
             ],
           );
+
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < largeScreenBreakpoint) return listPane;
+
+              final theme = Theme.of(context);
+              final colorScheme = theme.colorScheme;
+              final current = weights.firstOrNull;
+
+              return AdaptivePageBody(
+                maxWidth: 1320,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(width: 430, child: listPane),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Card(
+                          margin: EdgeInsets.zero,
+                          clipBehavior: Clip.antiAlias,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
+                            child: material.Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Weight trend',
+                                        style: theme.textTheme.titleLarge
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    if (current != null)
+                                      Text(
+                                        '${current.amount.toStringAsFixed(1)} ${current.unit}',
+                                        style: theme.textTheme.headlineSmall
+                                            ?.copyWith(
+                                          color: colorScheme.primary,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Recent measurements and overall direction',
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                const Expanded(
+                                  child: AppLine(
+                                    metric: 'body-weight',
+                                    groupBy: Period.week,
+                                    start: null,
+                                    end: null,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
         },
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: StreamBuilder(
           stream: stream,

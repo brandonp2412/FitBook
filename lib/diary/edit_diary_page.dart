@@ -722,8 +722,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: AdaptiveFormSurface(
+        maxWidth: 980,
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -1208,10 +1208,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 ),
               ],
             ],
-            SizedBox(
-              height: MediaQuery.paddingOf(context).bottom +
-                  BottomNav.totalOverlayHeight,
-            ),
+            SizedBox(height: navigationBottomClearance(context)),
           ],
         ),
       ),
@@ -1220,8 +1217,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               (_creatingFood && nameController.text.trim().isNotEmpty))
           ? Padding(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.paddingOf(context).bottom +
-                    BottomNav.totalOverlayHeight,
+                bottom: navigationBottomClearance(context),
               ),
               child: AnimatedFab(
                 onTap: save,

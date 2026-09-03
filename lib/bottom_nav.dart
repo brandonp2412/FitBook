@@ -1,5 +1,108 @@
 import 'package:flutter/material.dart';
 
+const double largeScreenBreakpoint = 900;
+const double extendedRailBreakpoint = 1200;
+
+bool usesSideNavigation(BuildContext context) =>
+    MediaQuery.sizeOf(context).width >= largeScreenBreakpoint;
+
+double navigationBottomClearance(BuildContext context) =>
+    usesSideNavigation(context)
+        ? MediaQuery.paddingOf(context).bottom + 16
+        : MediaQuery.paddingOf(context).bottom + BottomNav.totalOverlayHeight;
+
+IconData iconForTab(String tab) {
+  switch (tab) {
+    case 'DiaryPage':
+      return Icons.date_range;
+    case 'GraphPage':
+      return Icons.insights;
+    case 'FoodPage':
+      return Icons.restaurant;
+    case 'WeightPage':
+      return Icons.scale;
+    default:
+      return Icons.error_rounded;
+  }
+}
+
+String labelForTab(String tab) {
+  switch (tab) {
+    case 'DiaryPage':
+      return 'Diary';
+    case 'GraphPage':
+      return 'Graph';
+    case 'FoodPage':
+      return 'Food';
+    case 'WeightPage':
+      return 'Weight';
+    default:
+      return 'Error';
+  }
+}
+
+class AdaptivePageBody extends StatelessWidget {
+  const AdaptivePageBody({
+    super.key,
+    required this.child,
+    this.maxWidth = 1100,
+    this.alignment = Alignment.topCenter,
+  });
+
+  final Widget child;
+  final double maxWidth;
+  final Alignment alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) => Align(
+        alignment: alignment,
+        child: SizedBox(
+          width:
+              constraints.maxWidth < maxWidth ? constraints.maxWidth : maxWidth,
+          height: constraints.maxHeight,
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class AdaptiveFormSurface extends StatelessWidget {
+  const AdaptiveFormSurface({
+    super.key,
+    required this.child,
+    this.maxWidth = 820,
+  });
+
+  final Widget child;
+  final double maxWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final wide = usesSideNavigation(context);
+    final content = wide
+        ? Card(
+            margin: EdgeInsets.zero,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: child,
+            ),
+          )
+        : child;
+
+    return AdaptivePageBody(
+      maxWidth: maxWidth,
+      child: Padding(
+        padding: EdgeInsets.all(wide ? 24 : 16),
+        child: content,
+      ),
+    );
+  }
+}
+
 class BottomNav extends StatelessWidget {
   /// Fixed visual footprint of the 60px pill plus its 16px bottom padding.
   /// The system bottom inset is applied separately in [build].
@@ -47,7 +150,7 @@ class BottomNav extends StatelessWidget {
               final index = entry.key;
               final tab = entry.value;
               final isSelected = index == currentIndex;
-              final label = _getLabelForTab(tab);
+              final label = labelForTab(tab);
 
               return Semantics(
                 label: label,
@@ -75,7 +178,7 @@ class BottomNav extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          _getIconForTab(tab),
+                          iconForTab(tab),
                           color: isSelected ? color.onPrimary : color.onSurface,
                           size: 24,
                           semanticLabel: label,
@@ -108,34 +211,95 @@ class BottomNav extends StatelessWidget {
       ),
     );
   }
+}
 
-  IconData _getIconForTab(String tab) {
-    switch (tab) {
-      case 'DiaryPage':
-        return Icons.date_range;
-      case 'GraphPage':
-        return Icons.insights;
-      case 'FoodPage':
-        return Icons.restaurant;
-      case 'WeightPage':
-        return Icons.scale;
-      default:
-        return Icons.error_rounded;
-    }
-  }
+class SideNav extends StatelessWidget {
+  const SideNav({
+    super.key,
+    required this.tabs,
+    required this.currentIndex,
+    required this.onTap,
+    required this.onOpenSettings,
+  });
 
-  String _getLabelForTab(String tab) {
-    switch (tab) {
-      case 'DiaryPage':
-        return 'Diary';
-      case 'GraphPage':
-        return 'Graph';
-      case 'FoodPage':
-        return 'Food';
-      case 'WeightPage':
-        return 'Weight';
-      default:
-        return 'Error';
-    }
+  final List<String> tabs;
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  final VoidCallback onOpenSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final extended = MediaQuery.sizeOf(context).width >= extendedRailBreakpoint;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow,
+        border: Border(
+          right: BorderSide(color: colorScheme.outlineVariant),
+        ),
+      ),
+      child: NavigationRail(
+        extended: extended,
+        minExtendedWidth: 220,
+        selectedIndex: currentIndex,
+        groupAlignment: -0.35,
+        labelType: extended
+            ? NavigationRailLabelType.none
+            : NavigationRailLabelType.all,
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 12, bottom: 24),
+          child: extended
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.menu_book_rounded, color: colorScheme.primary),
+                    const SizedBox(width: 12),
+                    Text(
+                      'FitBook',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ],
+                )
+              : Icon(
+                  Icons.menu_book_rounded,
+                  color: colorScheme.primary,
+                  size: 30,
+                ),
+        ),
+        trailing: Expanded(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: extended
+                  ? FilledButton.tonalIcon(
+                      onPressed: onOpenSettings,
+                      icon: const Icon(Icons.settings_outlined),
+                      label: const Text('Settings'),
+                    )
+                  : IconButton.filledTonal(
+                      onPressed: onOpenSettings,
+                      tooltip: 'Settings',
+                      icon: const Icon(Icons.settings_outlined),
+                    ),
+            ),
+          ),
+        ),
+        onDestinationSelected: onTap,
+        destinations: tabs
+            .map(
+              (tab) => NavigationRailDestination(
+                icon: Icon(iconForTab(tab)),
+                selectedIcon: Icon(iconForTab(tab)),
+                label: Text(labelForTab(tab), key: Key(tab)),
+              ),
+            )
+            .toList(),
+      ),
+    );
   }
 }

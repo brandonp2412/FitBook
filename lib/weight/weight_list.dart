@@ -92,8 +92,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             top: appSearchHeight + widget.extraTopPadding + 8,
             left: 12,
             right: 12,
-            bottom: MediaQuery.paddingOf(context).bottom +
-                BottomNav.totalOverlayHeight,
+            bottom: navigationBottomClearance(context),
           ),
           controller: widget.ctrl,
           itemCount: widget.weights.length,
@@ -197,8 +196,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             top: appSearchHeight + widget.extraTopPadding + 16,
             left: 12,
             right: 12,
-            bottom: MediaQuery.paddingOf(context).bottom +
-                BottomNav.totalOverlayHeight,
+            bottom: navigationBottomClearance(context),
           ),
           controller: widget.ctrl,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

@@ -396,8 +396,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: AdaptiveFormSurface(
+        maxWidth: 980,
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -584,17 +584,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 );
               },
             ),
-            SizedBox(
-              height: MediaQuery.paddingOf(context).bottom +
-                  BottomNav.totalOverlayHeight,
-            ),
+            SizedBox(height: navigationBottomClearance(context)),
           ],
         ),
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

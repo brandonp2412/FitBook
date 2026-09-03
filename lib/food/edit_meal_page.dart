@@ -309,8 +309,7 @@ class _EditMealPageState extends State<EditMealPage> {
                 16,
                 16,
                 16,
-                MediaQuery.paddingOf(context).bottom +
-                    BottomNav.totalOverlayHeight,
+                navigationBottomClearance(context),
               ),
               itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
               itemBuilder: (ctx, i) {
@@ -407,8 +406,7 @@ class _EditMealPageState extends State<EditMealPage> {
             ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

@@ -136,8 +136,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       return Expanded(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.paddingOf(context).bottom +
-                BottomNav.totalOverlayHeight,
+            bottom: navigationBottomClearance(context),
           ),
           child: Wrap(
             alignment: WrapAlignment.center,
@@ -154,8 +153,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     return Expanded(
       child: ListView.builder(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
@@ -248,8 +246,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           ? null
           : Padding(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.paddingOf(context).bottom +
-                    BottomNav.totalOverlayHeight,
+                bottom: navigationBottomClearance(context),
               ),
               child: FloatingActionButton.extended(
                 label: const Text("Scan barcode"),

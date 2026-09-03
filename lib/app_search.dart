@@ -79,131 +79,143 @@ class _AppSearchState extends State<AppSearch> {
 
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-      child: SearchBar(
-        hintText: "Search...",
-        controller: widget.ctrl,
-        padding: WidgetStateProperty.all(
-          const EdgeInsets.only(right: 8.0),
-        ),
-        textCapitalization: TextCapitalization.sentences,
-        onChanged: widget.onChange,
-        leading: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 150),
-          transitionBuilder: (child, animation) =>
-              ScaleTransition(scale: animation, child: child),
-          child: widget.selected.isEmpty && widget.ctrl?.text.isEmpty == true
-              ? const Padding(
-                  padding: EdgeInsets.only(left: 16.0, right: 8.0),
-                  child: Icon(Icons.search),
-                )
-              : IconButton(
-                  onPressed: () {
-                    widget.onClear();
-                    widget.ctrl?.text = '';
-                    widget.onChange('');
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                  tooltip: 'Clear',
-                  padding: const EdgeInsets.only(
-                    left: 16.0,
-                    right: 8.0,
-                  ),
-                ),
-        ),
-        trailing: [
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 150),
-            child: trailingMain,
-            transitionBuilder: (child, animation) =>
-                ScaleTransition(scale: animation, child: child),
-          ),
-          Badge.count(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            count: widget.selected.length,
-            isLabelVisible: widget.selected.isNotEmpty,
-            child: Builder(
-              builder: (BuildContext badgeContext) {
-                return IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  tooltip: 'Show menu',
-                  onPressed: () async {
-                    final RenderBox button =
-                        badgeContext.findRenderObject() as RenderBox;
-                    final RenderBox overlay = Navigator.of(context)
-                        .overlay!
-                        .context
-                        .findRenderObject() as RenderBox;
-                    final RelativeRect position = RelativeRect.fromRect(
-                      Rect.fromPoints(
-                        button.localToGlobal(Offset.zero, ancestor: overlay),
-                        button.localToGlobal(
-                          button.size.bottomRight(Offset.zero),
-                          ancestor: overlay,
-                        ),
-                      ),
-                      Offset.zero & overlay.size,
-                    );
-
-                    await showMenu(
-                      context: context,
-                      position: position,
-                      items: [
-                        PopupMenuItem(
-                          child: ListTile(
-                            leading: const Icon(Icons.done_all),
-                            title: const Text('Select all'),
-                            onTap: () {
-                              Navigator.pop(context);
-                              widget.onSelect();
-                            },
-                          ),
-                        ),
-                        if (widget.selected.isEmpty) ...[
-                          PopupMenuItem(
-                            child: ListTile(
-                              leading: const Icon(Icons.settings),
-                              title: const Text('Settings'),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const SettingsPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                        if (widget.selected.isNotEmpty) ...[
-                          PopupMenuItem(
-                            child: ListTile(
-                              leading: const Icon(Icons.edit),
-                              title: const Text('Edit'),
-                              onTap: () {
-                                Navigator.pop(context);
-                                widget.onEdit();
-                              },
-                            ),
-                          ),
-                          PopupMenuItem(
-                            child: ListTile(
-                              leading: const Icon(Icons.favorite_outline),
-                              title: const Text('Favorite'),
-                              onTap: () {
-                                Navigator.pop(context);
-                                widget.onFavorite();
-                              },
-                            ),
-                          ),
-                        ],
-                      ],
-                    );
-                  },
-                );
-              },
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: SearchBar(
+            hintText: "Search...",
+            controller: widget.ctrl,
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.only(right: 8.0),
             ),
+            textCapitalization: TextCapitalization.sentences,
+            onChanged: widget.onChange,
+            leading: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 150),
+              transitionBuilder: (child, animation) =>
+                  ScaleTransition(scale: animation, child: child),
+              child:
+                  widget.selected.isEmpty && widget.ctrl?.text.isEmpty == true
+                      ? const Padding(
+                          padding: EdgeInsets.only(left: 16.0, right: 8.0),
+                          child: Icon(Icons.search),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            widget.onClear();
+                            widget.ctrl?.text = '';
+                            widget.onChange('');
+                          },
+                          icon: const Icon(Icons.arrow_back),
+                          tooltip: 'Clear',
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 8.0,
+                          ),
+                        ),
+            ),
+            trailing: [
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                child: trailingMain,
+                transitionBuilder: (child, animation) =>
+                    ScaleTransition(scale: animation, child: child),
+              ),
+              Badge.count(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                count: widget.selected.length,
+                isLabelVisible: widget.selected.isNotEmpty,
+                child: Builder(
+                  builder: (BuildContext badgeContext) {
+                    return IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      tooltip: 'Show menu',
+                      onPressed: () async {
+                        final RenderBox button =
+                            badgeContext.findRenderObject() as RenderBox;
+                        final RenderBox overlay = Navigator.of(context)
+                            .overlay!
+                            .context
+                            .findRenderObject() as RenderBox;
+                        final RelativeRect position = RelativeRect.fromRect(
+                          Rect.fromPoints(
+                            button.localToGlobal(
+                              Offset.zero,
+                              ancestor: overlay,
+                            ),
+                            button.localToGlobal(
+                              button.size.bottomRight(Offset.zero),
+                              ancestor: overlay,
+                            ),
+                          ),
+                          Offset.zero & overlay.size,
+                        );
+
+                        await showMenu(
+                          context: context,
+                          position: position,
+                          items: [
+                            PopupMenuItem(
+                              child: ListTile(
+                                leading: const Icon(Icons.done_all),
+                                title: const Text('Select all'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  widget.onSelect();
+                                },
+                              ),
+                            ),
+                            if (widget.selected.isEmpty) ...[
+                              PopupMenuItem(
+                                child: ListTile(
+                                  leading: const Icon(Icons.settings),
+                                  title: const Text('Settings'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SettingsPage(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                            if (widget.selected.isNotEmpty) ...[
+                              PopupMenuItem(
+                                child: ListTile(
+                                  leading: const Icon(Icons.edit),
+                                  title: const Text('Edit'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    widget.onEdit();
+                                  },
+                                ),
+                              ),
+                              PopupMenuItem(
+                                child: ListTile(
+                                  leading: const Icon(Icons.favorite_outline),
+                                  title: const Text('Favorite'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    widget.onFavorite();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

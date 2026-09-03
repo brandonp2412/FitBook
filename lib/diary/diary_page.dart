@@ -4,6 +4,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_filters.dart';
 import 'package:fit_book/diary/diary_list.dart';
 import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/diary/diary_stats_utils.dart';
 import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
@@ -11,6 +12,7 @@ import 'package:fit_book/logging.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/scan_barcode.dart';
+import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/speed_dial_fab.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
@@ -31,6 +33,99 @@ class DiaryPageState extends State<DiaryPage> {
   late var entriesState = context.read<DiaryState>();
   late final TextEditingController searchController =
       TextEditingController(text: entriesState.search);
+
+  Widget _summaryCard(BuildContext context, DayGroup day, Setting settings) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+
+    Widget metric(String label, double value, int? target, String unit) {
+      final progress = target == null || target <= 0
+          ? null
+          : (value / target).clamp(0.0, 1.0);
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 18),
+        child: material.Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    label,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: colors.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+                Text(
+                  target == null
+                      ? '${value.toStringAsFixed(0)} $unit'
+                      : '${value.toStringAsFixed(0)} / $target $unit',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+            if (progress != null) ...[
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 6,
+                  backgroundColor: colors.surfaceContainerHighest,
+                ),
+              ),
+            ],
+          ],
+        ),
+      );
+    }
+
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(22),
+        child: material.Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isToday(day.day) ? "Today's progress" : 'Latest day',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${day.foods.length} logged ${day.foods.length == 1 ? 'entry' : 'entries'}',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 24),
+            metric('Calories', day.stats.cals, settings.dailyCalories, 'kcal'),
+            metric('Protein', day.stats.protein, settings.dailyProtein, 'g'),
+            metric('Carbs', day.stats.carb, settings.dailyCarb, 'g'),
+            metric('Fat', day.stats.fat, settings.dailyFat, 'g'),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: () => navigatorKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const EditDiaryPage(),
+                  ),
+                ),
+                icon: const Icon(Icons.add),
+                label: const Text('Add diary entry'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +164,8 @@ class DiaryPageState extends State<DiaryPage> {
           final entryFoods = snapshot.data ?? [];
           final searchTerm = entriesState.search.trim();
 
-          return Stack(
+          final wide = usesSideNavigation(context);
+          final listStack = Stack(
             children: [
               material.Column(
                 children: [
@@ -90,7 +186,9 @@ class DiaryPageState extends State<DiaryPage> {
                                 MaterialPageRoute(
                                   builder: (context) => searchTerm.isEmpty
                                       ? const EditDiaryPage()
-                                      : EditDiaryPage(initialName: searchTerm),
+                                      : EditDiaryPage(
+                                          initialName: searchTerm,
+                                        ),
                                 ),
                               ),
                               child: Padding(
@@ -146,6 +244,7 @@ class DiaryPageState extends State<DiaryPage> {
                     DiaryList(
                       ctrl: scrollCtrl,
                       diaryFoods: entryFoods,
+                      showGoalSummary: !wide,
                       selected: selected,
                       onSelect: (id) {
                         if (selected.contains(id))
@@ -222,12 +321,35 @@ class DiaryPageState extends State<DiaryPage> {
               ),
             ],
           );
+
+          if (!wide || entryFoods.isEmpty) {
+            return AdaptivePageBody(maxWidth: 1040, child: listStack);
+          }
+
+          final day = groupByDay(entryFoods).first;
+          final appSettings = context.watch<SettingsState>().value;
+          return AdaptivePageBody(
+            maxWidth: 1320,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: listStack),
+                  const SizedBox(width: 16),
+                  SizedBox(
+                    width: 320,
+                    child: _summaryCard(context, day, appSettings),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: SpeedDialFab(
           onTap: () {

@@ -308,10 +308,6 @@ void main() {
         binding: binding,
         tester: tester,
         screenshotName: '2_en-US',
-        navigateToPage: (context) async => navigateTo(
-          context: context,
-          page: const GraphPage(),
-        ),
         tabBarState: TabBarState.graph,
       ),
     );

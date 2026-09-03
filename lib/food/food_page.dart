@@ -188,6 +188,117 @@ GROUP BY meal_foods.meal
 
   Set<int> get _allSelected => {...selected, ...selectedMeals};
 
+  Widget _libraryPanel(
+    BuildContext context, {
+    required List<FoodListFood> foods,
+    required List<Meal> meals,
+  }) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    final recent = foods.take(4).toList();
+
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(22),
+        child: material.Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Food library',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${foods.length} foods · ${meals.length} meals',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 24),
+            if (recent.isNotEmpty) ...[
+              Text(
+                'Recently used',
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: colors.onSurfaceVariant,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...recent.map(
+                (item) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  dense: true,
+                  leading: const Icon(Icons.restaurant_outlined),
+                  title: Text(item.food.name.value),
+                  trailing: item.food.calories.value == null
+                      ? null
+                      : Text(
+                          '${item.food.calories.value!.toStringAsFixed(0)} kcal',
+                        ),
+                  onTap: () => navKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => EditFoodPage(
+                        id: item.food.id.value,
+                        onSavedNew: () => scrollCtrl.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(height: 32),
+            ],
+            Text(
+              'Quick actions',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: colors.onSurfaceVariant,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: () => navKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => EditFoodPage(
+                      onSavedNew: () => scrollCtrl.animateTo(
+                        0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      ),
+                    ),
+                  ),
+                ),
+                icon: const Icon(Icons.add),
+                label: const Text('Add food'),
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => navKey.currentState!.push(
+                  MaterialPageRoute(
+                    builder: (context) => const EditMealPage(),
+                  ),
+                ),
+                icon: const Icon(Icons.restaurant_menu),
+                label: const Text('Create meal'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -247,7 +358,7 @@ GROUP BY meal_foods.meal
                     });
                   }
 
-                  return Stack(
+                  final listStack = Stack(
                     children: [
                       material.Column(
                         children: [
@@ -333,7 +444,9 @@ GROUP BY meal_foods.meal
                             });
                             if (selectedCopy.isNotEmpty)
                               await (db.delete(db.foods)
-                                    ..where((tbl) => tbl.id.isIn(selectedCopy)))
+                                    ..where(
+                                      (tbl) => tbl.id.isIn(selectedCopy),
+                                    ))
                                   .go();
                             if (selectedMealsCopy.isNotEmpty) {
                               await (db.delete(db.diaries)
@@ -397,6 +510,32 @@ GROUP BY meal_foods.meal
                       ),
                     ],
                   );
+
+                  if (!usesSideNavigation(context)) {
+                    return AdaptivePageBody(maxWidth: 1040, child: listStack);
+                  }
+
+                  return AdaptivePageBody(
+                    maxWidth: 1320,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: listStack),
+                          const SizedBox(width: 16),
+                          SizedBox(
+                            width: 320,
+                            child: _libraryPanel(
+                              context,
+                              foods: foods,
+                              meals: meals,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
               );
             },
@@ -405,8 +544,7 @@ GROUP BY meal_foods.meal
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: SpeedDialFab(
           onTap: () {

@@ -224,9 +224,9 @@ class _EditWeightPageState extends State<EditWeightPage> {
           ),
         ],
       ),
-      body: Form(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+      body: AdaptiveFormSurface(
+        maxWidth: 820,
+        child: Form(
           child: ListView(
             children: [
               TextFormField(
@@ -343,18 +343,14 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     image = null;
                   }),
                 ),
-              SizedBox(
-                height: MediaQuery.paddingOf(context).bottom +
-                    BottomNav.totalOverlayHeight,
-              ),
+              SizedBox(height: navigationBottomClearance(context)),
             ],
           ),
         ),
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom +
-              BottomNav.totalOverlayHeight,
+          bottom: navigationBottomClearance(context),
         ),
         child: AnimatedFab(
           onTap: save,
