@@ -33,7 +33,10 @@ void main() async {
     await tester.pumpWidget(_wrap(await _settingsState()));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.bySemanticsLabel('Search...'), 'Weight');
+    await tester.enterText(
+      find.bySemanticsLabel('Search settings...'),
+      'Weight',
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Weight'), findsOne);

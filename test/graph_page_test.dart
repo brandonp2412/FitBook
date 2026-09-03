@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/app_line.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
@@ -206,6 +208,92 @@ void main() async {
     expect(
       tester.widget<LineChart>(find.byType(LineChart)).data.lineBarsData,
       hasLength(1),
+    );
+
+    await db.close();
+  });
+
+  testWidgets('GraphPage keeps the original mobile graph layout',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: GraphPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AdaptivePageBody), findsNothing);
+    expect(find.byType(Card), findsNothing);
+    expect(tester.widget<AppLine>(find.byType(AppLine)).maxBottomTitles, null);
+
+    await db.close();
+  });
+
+  testWidgets('GraphPage limits desktop x-axis labels',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Desktop graph food',
+        calories: const Value(100),
+      ),
+    );
+    final now = DateTime.now();
+    await db.diaries.insertAll(
+      List.generate(
+        20,
+        (index) => DiariesCompanion.insert(
+          food: Value(foodId),
+          created: now.subtract(Duration(days: index * 7)),
+          quantity: 1,
+          unit: 'serving',
+        ),
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const MaterialApp(home: GraphPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AdaptivePageBody), findsOne);
+    expect(tester.widget<AppLine>(find.byType(AppLine)).maxBottomTitles, 8);
+    expect(find.byType(LineChart), findsOne);
+    expect(
+      tester
+          .widget<LineChart>(find.byType(LineChart))
+          .data
+          .titlesData
+          .bottomTitles
+          .sideTitles
+          .interval,
+      greaterThan(1),
     );
 
     await db.close();

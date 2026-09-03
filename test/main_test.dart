@@ -34,7 +34,10 @@ void main() async {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.bySemanticsLabel('Search...'), 'System');
+    await tester.enterText(
+      find.bySemanticsLabel('Search settings...'),
+      'System',
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('System color scheme'));
     await tester.pumpAndSettle();

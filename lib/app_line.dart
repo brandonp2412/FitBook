@@ -27,6 +27,7 @@ class AppLine extends StatefulWidget {
   final Period groupBy;
   final DateTime? start;
   final DateTime? end;
+  final int? maxBottomTitles;
 
   const AppLine({
     super.key,
@@ -34,6 +35,7 @@ class AppLine extends StatefulWidget {
     required this.groupBy,
     this.start,
     this.end,
+    this.maxBottomTitles,
   });
 
   @override
@@ -470,6 +472,11 @@ class _AppLineState extends State<AppLine> {
                 : null;
         final maxY =
             shouldIncludeGoal && goal > highestVisibleValue ? goal : null;
+        final maxBottomTitles = widget.maxBottomTitles;
+        final bottomTitleInterval =
+            maxBottomTitles == null || rows.length <= maxBottomTitles
+                ? 1.0
+                : (rows.length / maxBottomTitles).ceilToDouble();
 
         return material.Column(
           children: [
@@ -506,7 +513,7 @@ class _AppLineState extends State<AppLine> {
                         sideTitles: SideTitles(
                           showTitles: true,
                           reservedSize: 27,
-                          interval: 1,
+                          interval: bottomTitleInterval,
                           getTitlesWidget: (value, meta) =>
                               _bottomTitleWidgets(value, meta, rows),
                         ),
