@@ -86,4 +86,3 @@ msix_config:
   trim_logo: false
   publisher: CN=BB0811CB-EED5-441C-BE1B-D31F391F76DE
   store: true
-  capabilities: internetClient
