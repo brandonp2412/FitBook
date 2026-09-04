@@ -45,6 +45,7 @@ void main() {
         isTrue,
       );
     },
+    tags: 'backup',
   );
 
   patrolTest(
