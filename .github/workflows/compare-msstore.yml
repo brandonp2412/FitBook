@@ -37,9 +37,13 @@ jobs:
           FITBOOK_ID: ${{ secrets.PRODUCT_ID }}
           QUITTER_ID: 9PKVZWDG3FGC
         run: |
-          Write-Host "=== FITBOOK ==="
+          Write-Host "=== FITBOOK APP ==="
+          msstore apps get $env:FITBOOK_ID --verbose
+          Write-Host "=== FITBOOK SUBMISSION ==="
           msstore submission get $env:FITBOOK_ID
           msstore submission status $env:FITBOOK_ID
-          Write-Host "=== QUITTER ==="
+          Write-Host "=== QUITTER APP ==="
+          msstore apps get $env:QUITTER_ID --verbose
+          Write-Host "=== QUITTER SUBMISSION ==="
           msstore submission get $env:QUITTER_ID
           msstore submission status $env:QUITTER_ID
