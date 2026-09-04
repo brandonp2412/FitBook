@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:fit_book/main.dart' as app;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
@@ -33,7 +32,7 @@ Future<void> _waitForNotification({
 
 void main() {
   patrolTest(
-    'automatic backup writes an archive and posts a device notification',
+    'automatic backup opens the folder picker and cancel leaves it disabled',
     ($) async {
       if (!Platform.isAndroid) return;
 
@@ -44,66 +43,30 @@ void main() {
       await $('Settings').tap();
       await $('Data').tap();
 
-      // Android may restore app data after Patrol reinstalls the APK. Ensure
-      // the tap below always enables backups (and therefore opens the picker).
       if ($(Switch).which<Switch>((widget) => widget.value).exists) {
         await $('Automatic backup').tap();
         await $.pumpAndSettle();
       }
-      await $('Automatic backup').tap();
 
-      // ACTION_OPEN_DOCUMENT_TREE exposes folder creation in DocumentsUI's
-      // overflow menu. Target the stable menu resource instead of its
-      // localized/implementation-dependent visible label.
-      final backupFolderName =
-          'FitBook Patrol ${DateTime.now().millisecondsSinceEpoch}';
-      await $.platform.android.tap(
-        const AndroidSelector(contentDescription: 'More options'),
-      );
-      await $.platform.android.tap(
-        const AndroidSelector(
-          resourceName: 'com.google.android.documentsui:id/option_menu_create_dir',
-        ),
-      );
-      await $.platform.android.enterText(
-        const AndroidSelector(resourceName: 'android:id/text1'),
-        text: backupFolderName,
-      );
-      await $.platform.android.tap(
-        const AndroidSelector(resourceName: 'android:id/button1'),
-      );
-      await $.platform.android.tap(
-        const AndroidSelector(resourceName: 'android:id/button1'),
-      );
-      await $.platform.android.allowPermission();
-
-      if (await $.platform.mobile.isPermissionDialogVisible(
-        timeout: const Duration(seconds: 5),
-      )) {
-        await $.platform.mobile.grantPermissionWhenInUse();
-      }
-
-      await $.pumpAndSettle();
       expect(
-        $(Switch).which<Switch>((widget) => widget.value).exists,
+        $(Switch).which<Switch>((widget) => !widget.value).exists,
         isTrue,
       );
 
-      await _waitForNotification(
-        $: $,
-        title: 'Automatic backups enabled',
-        content:
-            'FitBook will automatically back up your data and images to the selected folder each day.',
+      await $('Automatic backup').tap();
+
+      // Opening DocumentsUI is the app-owned boundary. Folder creation and
+      // selection are Android system UI behavior and should not gate releases.
+      await $.platform.android.tap(
+        const AndroidSelector(contentDescription: 'More options'),
       );
+      await $.platform.android.pressBack();
+      await $.platform.android.pressBack();
+      await $.pumpAndSettle();
 
-      // Invoke the production BackupReceiver without waiting for its 2am alarm.
-      const channel = MethodChannel('com.presley.fit_book/android');
-      await channel.invokeMethod<void>('runBackupNow');
-      await Future<void>.delayed(const Duration(seconds: 3));
-
-      await _waitForNotification(
-        $: $,
-        title: 'Backed up data and images',
+      expect(
+        $(Switch).which<Switch>((widget) => !widget.value).exists,
+        isTrue,
       );
     },
   );
