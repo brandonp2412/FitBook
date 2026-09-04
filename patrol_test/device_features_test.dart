@@ -55,15 +55,13 @@ void main() {
 
       await $('Automatic backup').tap();
 
-      // Opening DocumentsUI is the app-owned boundary. Folder creation and
-      // selection are Android system UI behavior and should not gate releases.
-      await $.platform.android.tap(
-        const AndroidSelector(contentDescription: 'More options'),
-      );
-      await $.platform.android.pressBack();
+      // Back must dismiss ACTION_OPEN_DOCUMENT_TREE and return to this same
+      // Flutter route. If the picker never opened, Back would pop Data settings
+      // instead and the assertions below would fail.
       await $.platform.android.pressBack();
       await $.pumpAndSettle();
 
+      expect($('Automatic backup').exists, isTrue);
       expect(
         $(Switch).which<Switch>((widget) => !widget.value).exists,
         isTrue,
