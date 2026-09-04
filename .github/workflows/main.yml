@@ -481,7 +481,6 @@ jobs:
     needs: [version-bump, build-windows]
     runs-on: windows-latest
     permissions:
-      actions: write
       contents: read
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -528,9 +527,8 @@ jobs:
           }
 
           $package = $packages[0]
-          $packageDirectory = $package.Directory.FullName
           Write-Host "Publishing $($package.FullName) to Microsoft Store product $env:PRODUCT_ID"
-          & msstore publish . --inputDirectory $packageDirectory --appId $env:PRODUCT_ID --packageRolloutPercentage 100
+          & msstore publish . --inputFile $package.FullName --appId $env:PRODUCT_ID
           if ($LASTEXITCODE -ne 0) {
             throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
           }
@@ -541,23 +539,6 @@ jobs:
             throw "Microsoft Store submission status verification failed with exit code $LASTEXITCODE."
           }
 
-      - name: Start Microsoft Store finalization checks
-        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const workflowId = 'finalize-msstore-rollout.yml';
-            await github.rest.actions.enableWorkflow({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: workflowId,
-            });
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: workflowId,
-              ref: 'main',
-            });
 
   virustotal:
     needs: [create-github-release, version-bump]
