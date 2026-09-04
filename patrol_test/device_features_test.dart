@@ -52,13 +52,16 @@ void main() {
       }
       await $('Automatic backup').tap();
 
-      // Android's Storage Access Framework owns this screen. Create a fresh
-      // folder in the current location so the test never depends on a
-      // particular standard folder such as Download.
+      // ACTION_OPEN_DOCUMENT_TREE exposes folder creation in the overflow
+      // menu on current DocumentsUI builds. Open the menu first, then select
+      // the visible menu item instead of looking for a toolbar icon.
       final backupFolderName =
           'FitBook Patrol ${DateTime.now().millisecondsSinceEpoch}';
       await $.platform.android.tap(
-        const AndroidSelector(contentDescription: 'New folder'),
+        const AndroidSelector(contentDescription: 'More options'),
+      );
+      await $.platform.android.tap(
+        const AndroidSelector(text: 'New folder'),
       );
       await $.platform.android.enterText(
         const AndroidSelector(resourceName: 'android:id/text1'),
