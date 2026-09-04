@@ -1,0 +1,77 @@
+name: Prove Microsoft Store package-only update
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: windows-latest
+    steps:
+      - name: Omit Pricing V2 module and commit pending package draft
+        shell: pwsh
+        env:
+          PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          $token = Invoke-RestMethod `
+            -Method Post `
+            -Uri "https://login.microsoftonline.com/$env:TENANT_ID/oauth2/token" `
+            -ContentType "application/x-www-form-urlencoded" `
+            -Body @{
+              grant_type = "client_credentials"
+              client_id = $env:CLIENT_ID
+              client_secret = $env:CLIENT_SECRET
+              resource = "https://manage.devcenter.microsoft.com"
+            }
+          $headers = @{ Authorization = "Bearer $($token.access_token)" }
+          $appUrl = "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:PRODUCT_ID"
+          $app = Invoke-RestMethod -Headers $headers -Uri $appUrl
+          $submissionId = $app.pendingApplicationSubmission.id
+          if ([string]::IsNullOrWhiteSpace($submissionId)) {
+            throw "No pending Microsoft Store submission exists to test."
+          }
+
+          $submissionUrl = "$appUrl/submissions/$submissionId"
+          $submission = Invoke-RestMethod -Headers $headers -Uri $submissionUrl
+          Write-Host "Pending submission $submissionId status=$($submission.status) pricingV2=$($submission.pricing.isAdvancedPricingModel)"
+          if ($submission.status -ne "PendingCommit") {
+            throw "Expected PendingCommit after no-commit upload, got $($submission.status)."
+          }
+
+          $submission.PSObject.Properties.Remove("pricing")
+          $body = $submission | ConvertTo-Json -Depth 30 -Compress
+          $updated = Invoke-RestMethod `
+            -Method Put `
+            -Headers $headers `
+            -ContentType "application/json" `
+            -Body $body `
+            -Uri $submissionUrl
+          Write-Host "Package-only update accepted; returned status=$($updated.status)."
+
+          $commit = Invoke-RestMethod `
+            -Method Post `
+            -Headers $headers `
+            -Uri "$submissionUrl/commit"
+          Write-Host "Commit started: $($commit.status)"
+
+          $deadline = (Get-Date).AddMinutes(10)
+          do {
+            Start-Sleep -Seconds 30
+            $status = Invoke-RestMethod -Headers $headers -Uri "$submissionUrl/status"
+            Write-Host "Submission status: $($status.status)"
+            if ($status.status -in @("CommitFailed", "PreProcessingFailed", "CertificationFailed", "ReleaseFailed", "PublishFailed")) {
+              $details = $status.statusDetails | ConvertTo-Json -Depth 12 -Compress
+              throw "Microsoft Store submission failed: $($status.status) $details"
+            }
+            if ($status.status -notin @("PendingCommit", "CommitStarted")) {
+              Write-Host "Microsoft Store commit accepted: $($status.status)"
+              exit 0
+            }
+          } while ((Get-Date) -lt $deadline)
+
+          throw "Timed out waiting for Microsoft Store to accept the package-only submission commit."
