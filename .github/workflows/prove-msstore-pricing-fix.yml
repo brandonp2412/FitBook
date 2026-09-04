@@ -1,0 +1,128 @@
+name: Prove Microsoft Store pricing fix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Setup Flutter from submodule
+        run: |
+          git submodule update --init --recursive flutter
+          echo "$env:GITHUB_WORKSPACE\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          flutter\bin\flutter config --no-analytics
+
+      - name: Get Flutter dependencies
+        run: flutter\bin\flutter pub get --enforce-lockfile
+
+      - name: Build MSIX
+        run: flutter pub run msix:create
+
+      - name: Setup .NET 9.0
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Setup Microsoft Store CLI
+        uses: microsoft/setup-msstore-cli@3b2ec9136230357ce9abc02b9d056626fb248d3f # v1
+
+      - name: Configure Microsoft Store CLI
+        env:
+          MSSTORE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          MSSTORE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          MSSTORE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          MSSTORE_SELLER_ID: ${{ secrets.MSSTORE_SELLER_ID }}
+        run: msstore reconfigure --tenantId $env:MSSTORE_TENANT_ID --clientId $env:MSSTORE_CLIENT_ID --clientSecret $env:MSSTORE_CLIENT_SECRET --sellerId $env:MSSTORE_SELLER_ID
+
+      - name: Upload draft without committing
+        shell: pwsh
+        env:
+          PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+        run: |
+          $packages = @(Get-ChildItem -Path "build/windows/x64/runner/Release" -Filter "*.msix" -File -Recurse)
+          if ($packages.Count -ne 1) {
+            throw "Expected exactly one generated MSIX package, found $($packages.Count)."
+          }
+          $packageDirectory = $packages[0].Directory.FullName
+          & msstore publish . --inputDirectory $packageDirectory --appId $env:PRODUCT_ID --noCommit
+          if ($LASTEXITCODE -ne 0) {
+            throw "Microsoft Store draft upload failed with exit code $LASTEXITCODE."
+          }
+
+      - name: Restore Pricing Version 2 and commit
+        shell: pwsh
+        env:
+          PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          $token = Invoke-RestMethod `
+            -Method Post `
+            -Uri "https://login.microsoftonline.com/$env:TENANT_ID/oauth2/token" `
+            -ContentType "application/x-www-form-urlencoded" `
+            -Body @{
+              grant_type = "client_credentials"
+              client_id = $env:CLIENT_ID
+              client_secret = $env:CLIENT_SECRET
+              resource = "https://manage.devcenter.microsoft.com"
+            }
+          $headers = @{ Authorization = "Bearer $($token.access_token)" }
+          $appUrl = "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:PRODUCT_ID"
+          $app = Invoke-RestMethod -Headers $headers -Uri $appUrl
+          $submissionId = $app.pendingApplicationSubmission.id
+          if ([string]::IsNullOrWhiteSpace($submissionId)) {
+            throw "No pending Microsoft Store submission exists after package upload."
+          }
+
+          $submissionUrl = "$appUrl/submissions/$submissionId"
+          $submission = Invoke-RestMethod -Headers $headers -Uri $submissionUrl
+          Write-Host "Draft pricing before repair: advanced=$($submission.pricing.isAdvancedPricingModel), priceId=$($submission.pricing.priceId)"
+          if ($submission.pricing.isAdvancedPricingModel -eq $true) {
+            Write-Host "Draft already retained Pricing Version 2."
+          } else {
+            $submission.pricing.isAdvancedPricingModel = $true
+            $body = $submission | ConvertTo-Json -Depth 30 -Compress
+            $submission = Invoke-RestMethod `
+              -Method Put `
+              -Headers $headers `
+              -ContentType "application/json" `
+              -Body $body `
+              -Uri $submissionUrl
+            Write-Host "Draft pricing after repair: advanced=$($submission.pricing.isAdvancedPricingModel), priceId=$($submission.pricing.priceId)"
+            if ($submission.pricing.isAdvancedPricingModel -ne $true) {
+              throw "Microsoft Store did not retain the Pricing Version 2 repair."
+            }
+          }
+
+          $commit = Invoke-RestMethod `
+            -Method Post `
+            -Headers $headers `
+            -Uri "$submissionUrl/commit"
+          Write-Host "Commit started: $($commit.status)"
+
+          $deadline = (Get-Date).AddMinutes(10)
+          do {
+            Start-Sleep -Seconds 30
+            $status = Invoke-RestMethod -Headers $headers -Uri "$submissionUrl/status"
+            Write-Host "Submission status: $($status.status)"
+            if ($status.status -in @("CommitFailed", "PreProcessingFailed", "CertificationFailed", "ReleaseFailed", "PublishFailed")) {
+              $details = $status.statusDetails | ConvertTo-Json -Depth 12 -Compress
+              throw "Microsoft Store submission failed: $($status.status) $details"
+            }
+            if ($status.status -notin @("PendingCommit", "CommitStarted")) {
+              Write-Host "Microsoft Store commit accepted: $($status.status)"
+              exit 0
+            }
+          } while ((Get-Date) -lt $deadline)
+
+          throw "Timed out waiting for Microsoft Store to accept the submission commit."
