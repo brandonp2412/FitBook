@@ -30,12 +30,32 @@ fi
 
 drive_log=$(mktemp)
 drive_status=0
-# Keep a wedged emulator from holding the workflow open indefinitely. The
-# screenshot suite normally completes in roughly 10 minutes on CI.
-timeout --foreground -k 30 1200 flutter drive \
-  --driver=test_driver/integration_test.dart \
-  --target=integration_test/screenshot_test.dart \
-  -d "emulator-$EMULATOR_PORT" >"$drive_log" 2>&1 || drive_status=$?
+
+run_drive() {
+  drive_status=0
+  # Keep a wedged emulator from holding the workflow open indefinitely. The
+  # screenshot suite normally completes in roughly 10 minutes on CI.
+  timeout --foreground -k 30 1200 flutter drive \
+    --driver=test_driver/integration_test.dart \
+    --target=integration_test/screenshot_test.dart \
+    -d "emulator-$EMULATOR_PORT" >"$drive_log" 2>&1 || drive_status=$?
+}
+
+run_drive
+
+if [ "$drive_status" -ne 0 ] && grep -Eq "Service has disappeared|device offline" "$drive_log"; then
+  cat "$drive_log"
+  echo "Flutter driver lost the emulator; reconnecting ADB and retrying screenshots once" >&2
+
+  adb reconnect offline || true
+  if timeout 90 adb -s "emulator-$EMULATOR_PORT" wait-for-device; then
+    rm -rf "$screenshot_dir"
+    mkdir -p "$screenshot_dir"
+    run_drive
+  else
+    echo "Emulator did not recover within 90 seconds" >&2
+  fi
+fi
 
 if [ "$drive_status" -eq 124 ]; then
   echo "flutter drive timed out after 20 minutes; collecting emulator diagnostics" >&2
