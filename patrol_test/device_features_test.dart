@@ -52,29 +52,28 @@ void main() {
       }
       await $('Automatic backup').tap();
 
-      // ACTION_OPEN_DOCUMENT_TREE exposes folder creation in the overflow
-      // menu on current DocumentsUI builds. Open the menu first, then select
-      // the visible menu item instead of looking for a toolbar icon.
+      // ACTION_OPEN_DOCUMENT_TREE exposes folder creation in DocumentsUI's
+      // overflow menu. Target the stable menu resource instead of its
+      // localized/implementation-dependent visible label.
       final backupFolderName =
           'FitBook Patrol ${DateTime.now().millisecondsSinceEpoch}';
       await $.platform.android.tap(
         const AndroidSelector(contentDescription: 'More options'),
       );
       await $.platform.android.tap(
-        const AndroidSelector(text: 'New folder'),
+        const AndroidSelector(
+          resourceName: 'com.google.android.documentsui:id/option_menu_create_dir',
+        ),
       );
       await $.platform.android.enterText(
         const AndroidSelector(resourceName: 'android:id/text1'),
         text: backupFolderName,
       );
       await $.platform.android.tap(
-        const AndroidSelector(text: 'OK', resourceName: 'android:id/button1'),
+        const AndroidSelector(resourceName: 'android:id/button1'),
       );
       await $.platform.android.tap(
-        const AndroidSelector(
-          text: 'USE THIS FOLDER',
-          resourceName: 'android:id/button1',
-        ),
+        const AndroidSelector(resourceName: 'android:id/button1'),
       );
       await $.platform.android.allowPermission();
 
