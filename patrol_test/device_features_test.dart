@@ -34,7 +34,10 @@ void main() {
       // Flutter route. If the picker never opened, Back would pop Data settings
       // instead and the assertions below would fail.
       await $.platform.android.pressBack();
-      await $.pumpAndSettle();
+      // Native document picker cancellation can leave Android framework work
+      // scheduled indefinitely on headless emulators, so do a bounded pump
+      // instead of waiting for the entire app to become globally idle.
+      await $.pump(const Duration(seconds: 1));
 
       expect($('Automatic backup').exists, isTrue);
       expect(
