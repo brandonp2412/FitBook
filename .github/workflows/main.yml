@@ -516,7 +516,7 @@ jobs:
           MSSTORE_SELLER_ID: ${{ secrets.MSSTORE_SELLER_ID }}
         run: msstore reconfigure --tenantId $env:MSSTORE_TENANT_ID --clientId $env:MSSTORE_CLIENT_ID --clientSecret $env:MSSTORE_CLIENT_SECRET --sellerId $env:MSSTORE_SELLER_ID
 
-      - name: Finalize active Microsoft Store package rollout
+      - name: Prepare Microsoft Store for submission
         shell: pwsh
         env:
           PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
@@ -538,11 +538,32 @@ jobs:
             }
           $headers = @{ Authorization = "Bearer $($token.access_token)" }
           $appUrl = "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:PRODUCT_ID"
+          $failedStatuses = @("CommitFailed", "PreProcessingFailed", "CertificationFailed", "ReleaseFailed", "PublishFailed")
+          $pendingDeadline = (Get-Date).AddMinutes(45)
+
+          while ($true) {
+            $app = Invoke-RestMethod -Headers $headers -Uri $appUrl
+            $pendingId = $app.pendingApplicationSubmission.id
+            if ([string]::IsNullOrWhiteSpace($pendingId)) {
+              break
+            }
+
+            $pending = Invoke-RestMethod -Headers $headers -Uri "$appUrl/submissions/$pendingId"
+            Write-Host "Existing Store submission $pendingId status=$($pending.status)"
+            if ($pending.status -in $failedStatuses) {
+              Write-Host "Existing submission is failed; msstore will replace it."
+              break
+            }
+            if ((Get-Date) -ge $pendingDeadline) {
+              throw "Timed out waiting for the existing Microsoft Store submission to finish."
+            }
+            Start-Sleep -Seconds 30
+          }
+
           $app = Invoke-RestMethod -Headers $headers -Uri $appUrl
           $submissionId = $app.lastPublishedApplicationSubmission.id
-
           if ([string]::IsNullOrWhiteSpace($submissionId)) {
-            Write-Host "No published Store submission exists yet; nothing to finalize."
+            Write-Host "No published Store submission exists yet; no rollout to finalize."
             exit 0
           }
 
