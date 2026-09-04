@@ -47,7 +47,7 @@ jobs:
 
           function Show-Submission([string]$Label, [string]$SubmissionId) {
             if ([string]::IsNullOrWhiteSpace($SubmissionId)) {
-              Write-Host "=== $Label: none ==="
+              Write-Host "=== ${Label}: none ==="
               return
             }
             $submission = Invoke-RestMethod `
