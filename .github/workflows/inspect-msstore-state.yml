@@ -1,0 +1,112 @@
+name: Inspect Microsoft Store state
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - name: Inspect classic Store submissions
+        shell: pwsh
+        env:
+          PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          SELLER_ID: ${{ secrets.MSSTORE_SELLER_ID }}
+        run: |
+          $token = Invoke-RestMethod `
+            -Method Post `
+            -Uri "https://login.microsoftonline.com/$env:TENANT_ID/oauth2/token" `
+            -ContentType "application/x-www-form-urlencoded" `
+            -Body @{
+              grant_type = "client_credentials"
+              client_id = $env:CLIENT_ID
+              client_secret = $env:CLIENT_SECRET
+              resource = "https://manage.devcenter.microsoft.com"
+            }
+          $headers = @{ Authorization = "Bearer $($token.access_token)" }
+          $app = Invoke-RestMethod `
+            -Headers $headers `
+            -Uri "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:PRODUCT_ID"
+
+          [pscustomobject]@{
+            PrimaryName = $app.primaryName
+            PackageFamilyName = $app.packageFamilyName
+            PackageIdentityName = $app.packageIdentityName
+            PublisherName = $app.publisherName
+            FirstPublishedDate = $app.firstPublishedDate
+            PendingSubmissionId = $app.pendingApplicationSubmission.id
+            LastPublishedSubmissionId = $app.lastPublishedApplicationSubmission.id
+            HasAdvancedListingPermission = $app.hasAdvancedListingPermission
+          } | ConvertTo-Json -Depth 6
+
+          function Show-Submission([string]$Label, [string]$SubmissionId) {
+            if ([string]::IsNullOrWhiteSpace($SubmissionId)) {
+              Write-Host "=== $Label: none ==="
+              return
+            }
+            $submission = Invoke-RestMethod `
+              -Headers $headers `
+              -Uri "https://manage.devcenter.microsoft.com/v1.0/my/applications/$env:PRODUCT_ID/submissions/$SubmissionId"
+            Write-Host "=== $Label ==="
+            [pscustomobject]@{
+              Id = $submission.id
+              FriendlyName = $submission.friendlyName
+              Status = $submission.status
+              StatusDetails = $submission.statusDetails
+              Pricing = $submission.pricing
+              Visibility = $submission.visibility
+              TargetPublishMode = $submission.targetPublishMode
+              HardwarePreferences = $submission.hardwarePreferences
+              ApplicationPackages = $submission.applicationPackages
+              PackageDeliveryOptions = $submission.packageDeliveryOptions
+              AllowMicrosoftDecideAppAvailabilityToFutureDeviceFamilies = $submission.allowMicrosoftDecideAppAvailabilityToFutureDeviceFamilies
+              AllowTargetFutureDeviceFamilies = $submission.allowTargetFutureDeviceFamilies
+              EnterpriseLicensing = $submission.enterpriseLicensing
+              Listing = $submission.listings.'en-us'.baseListing | Select-Object title, shortDescription, description, privacyPolicy, supportContact, websiteUrl, releaseNotes
+            } | ConvertTo-Json -Depth 12
+          }
+
+          Show-Submission "LAST PUBLISHED" $app.lastPublishedApplicationSubmission.id
+          Show-Submission "PENDING" $app.pendingApplicationSubmission.id
+
+      - name: Inspect current Store metadata API
+        shell: pwsh
+        continue-on-error: true
+        env:
+          PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+          TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          SELLER_ID: ${{ secrets.MSSTORE_SELLER_ID }}
+        run: |
+          $token = Invoke-RestMethod `
+            -Method Post `
+            -Uri "https://login.microsoftonline.com/$env:TENANT_ID/oauth2/v2.0/token" `
+            -ContentType "application/x-www-form-urlencoded" `
+            -Body @{
+              grant_type = "client_credentials"
+              client_id = $env:CLIENT_ID
+              client_secret = $env:CLIENT_SECRET
+              scope = "https://api.store.microsoft.com/.default"
+            }
+          $headers = @{
+            Authorization = "Bearer $($token.access_token)"
+            "X-Seller-Account-Id" = $env:SELLER_ID
+          }
+          foreach ($module in @("availability", "properties", "listings")) {
+            Write-Host "=== CURRENT API $module ==="
+            try {
+              $result = Invoke-RestMethod `
+                -Headers $headers `
+                -Uri "https://api.store.microsoft.com/submission/v1/product/$env:PRODUCT_ID/metadata/$module?includelanguagelist=true"
+              $result | ConvertTo-Json -Depth 12
+            } catch {
+              Write-Host $_.Exception.Message
+            }
+          }
