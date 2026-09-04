@@ -370,7 +370,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: main
+          ref: ${{ needs.version-bump.outputs.commit_sha }}
           persist-credentials: false
 
       - name: Setup Flutter from submodule
@@ -486,7 +486,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: main
+          ref: ${{ needs.version-bump.outputs.commit_sha }}
           persist-credentials: false
 
       - name: Setup Flutter from submodule
@@ -518,21 +518,29 @@ jobs:
         run: msstore reconfigure --tenantId $env:MSSTORE_TENANT_ID --clientId $env:MSSTORE_CLIENT_ID --clientSecret $env:MSSTORE_CLIENT_SECRET --sellerId $env:MSSTORE_SELLER_ID
 
       - name: Publish to Microsoft Store
-        id: publish_msstore
         shell: pwsh
         env:
           PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
         run: |
-          msstore publish --inputDirectory build/windows/x64/runner/Release --appId $env:PRODUCT_ID --packageRolloutPercentage 100
-          if ($LASTEXITCODE -eq 0) {
-            "published=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          } else {
-            "published=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-            Write-Warning "Microsoft Store publish failed; preserving the existing non-blocking release behavior."
+          $packages = @(Get-ChildItem -Path "build/windows/x64/runner/Release" -Filter "*.msix" -File -Recurse)
+          if ($packages.Count -ne 1) {
+            throw "Expected exactly one generated MSIX package, found $($packages.Count)."
+          }
+
+          $package = $packages[0]
+          Write-Host "Publishing $($package.FullName) to Microsoft Store product $env:PRODUCT_ID"
+          & msstore publish . --inputFile $package.FullName --appId $env:PRODUCT_ID --packageRolloutPercentage 100
+          if ($LASTEXITCODE -ne 0) {
+            throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
+          }
+
+          Write-Host "Verifying Microsoft Store submission status"
+          & msstore submission status $env:PRODUCT_ID
+          if ($LASTEXITCODE -ne 0) {
+            throw "Microsoft Store submission status verification failed with exit code $LASTEXITCODE."
           }
 
       - name: Start Microsoft Store finalization checks
-        if: steps.publish_msstore.outputs.published == 'true'
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
