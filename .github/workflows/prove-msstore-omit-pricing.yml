@@ -43,7 +43,7 @@ jobs:
             throw "Expected PendingCommit after no-commit upload, got $($submission.status)."
           }
 
-          $submission.PSObject.Properties.Remove("pricing")
+          $submission.pricing.PSObject.Properties.Remove("isAdvancedPricingModel")
           $body = $submission | ConvertTo-Json -Depth 30 -Compress
           $updated = Invoke-RestMethod `
             -Method Put `
