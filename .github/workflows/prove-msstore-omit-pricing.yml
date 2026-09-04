@@ -56,6 +56,7 @@ jobs:
           $commit = Invoke-RestMethod `
             -Method Post `
             -Headers $headers `
+            -ContentType "application/json" `
             -Uri "$submissionUrl/commit"
           Write-Host "Commit started: $($commit.status)"
 
