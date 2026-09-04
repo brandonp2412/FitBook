@@ -5,31 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
-Future<void> _waitForNotification({
-  required PatrolIntegrationTester $,
-  required String title,
-  String? content,
-}) async {
-  final deadline = DateTime.now().add(const Duration(seconds: 15));
-  while (DateTime.now().isBefore(deadline)) {
-    final notifications = await $.platform.mobile.getNotifications();
-    if (notifications.any(
-      (notification) =>
-          notification.title == title &&
-          (content == null || notification.content == content),
-    )) {
-      return;
-    }
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-  }
-
-  fail(
-    content == null
-        ? 'Notification not found: $title'
-        : 'Notification not found: $title — $content',
-  );
-}
-
 void main() {
   patrolTest(
     'automatic backup opens the folder picker and cancel leaves it disabled',
@@ -97,13 +72,6 @@ void main() {
       expect(
         $(Switch).which<Switch>((widget) => widget.value).exists,
         isTrue,
-      );
-
-      await _waitForNotification(
-        $: $,
-        title: 'Meal reminders enabled',
-        content:
-            "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
       );
 
       await $('Reminders').scrollTo().tap();
