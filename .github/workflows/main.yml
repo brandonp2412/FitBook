@@ -528,8 +528,9 @@ jobs:
           }
 
           $package = $packages[0]
+          $packageDirectory = $package.Directory.FullName
           Write-Host "Publishing $($package.FullName) to Microsoft Store product $env:PRODUCT_ID"
-          & msstore publish . --inputFile $package.FullName --appId $env:PRODUCT_ID --packageRolloutPercentage 100
+          & msstore publish . --inputDirectory $packageDirectory --appId $env:PRODUCT_ID --packageRolloutPercentage 100
           if ($LASTEXITCODE -ne 0) {
             throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
           }
