@@ -2,7 +2,11 @@ name: Deploy privacy policy Pages
 
 on:
   push:
-    branches: [privacy-pages-deploy-fitbook]
+    branches: [main]
+    paths:
+      - docs/privacy-policy.html
+      - .github/workflows/privacy-pages-deploy.yml
+  workflow_dispatch:
 
 permissions:
   contents: read
