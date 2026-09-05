@@ -56,24 +56,23 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
 
   void setStream() {
     final lastDiaryEntry = db.diaries.created.max();
-    var query =
-        (db.foods.selectOnly().join([
-            leftOuterJoin(db.diaries, db.diaries.food.equalsExp(db.foods.id)),
-          ])
-          ..addColumns([
-            db.foods.id,
-            db.foods.name,
-            db.foods.calories,
-            db.foods.favorite,
-            db.foods.servingSize,
-            db.foods.servingUnit,
-            db.foods.smallImage,
-            db.foods.imageFile,
-            db.foods.created,
-            lastDiaryEntry,
-          ])
-          ..groupBy([db.foods.id])
-          ..limit(limit));
+    var query = (db.foods.selectOnly().join([
+      leftOuterJoin(db.diaries, db.diaries.food.equalsExp(db.foods.id)),
+    ])
+      ..addColumns([
+        db.foods.id,
+        db.foods.name,
+        db.foods.calories,
+        db.foods.favorite,
+        db.foods.servingSize,
+        db.foods.servingUnit,
+        db.foods.smallImage,
+        db.foods.imageFile,
+        db.foods.created,
+        lastDiaryEntry,
+      ])
+      ..groupBy([db.foods.id])
+      ..limit(limit));
 
     if (search.isNotEmpty) {
       final searchLower = search.toLowerCase();
@@ -330,25 +329,21 @@ GROUP BY meal_foods.meal
                   final items = <Object>[...meals, ...foods];
                   if (search.isEmpty) {
                     items.sort((a, b) {
-                      final aDate =
-                          (a is Meal
+                      final aDate = (a is Meal
                               ? a.created
                               : (a as FoodListFood).food.created.value) ??
                           DateTime(0);
-                      final bDate =
-                          (b is Meal
+                      final bDate = (b is Meal
                               ? b.created
                               : (b as FoodListFood).food.created.value) ??
                           DateTime(0);
                       final createdComparison = bDate.compareTo(aDate);
                       if (createdComparison != 0) return createdComparison;
 
-                      final aLastEntry = a is FoodListFood
-                          ? a.lastDiaryEntry
-                          : null;
-                      final bLastEntry = b is FoodListFood
-                          ? b.lastDiaryEntry
-                          : null;
+                      final aLastEntry =
+                          a is FoodListFood ? a.lastDiaryEntry : null;
+                      final bLastEntry =
+                          b is FoodListFood ? b.lastDiaryEntry : null;
                       return (bLastEntry ?? DateTime(0)).compareTo(
                         aLastEntry ?? DateTime(0),
                       );
@@ -394,12 +389,12 @@ GROUP BY meal_foods.meal
                                         builder: (context) => EditFoodPage(
                                           onSavedNew: () =>
                                               scrollCtrl.animateTo(
-                                                0,
-                                                duration: const Duration(
-                                                  milliseconds: 300,
-                                                ),
-                                                curve: Curves.easeOut,
-                                              ),
+                                            0,
+                                            duration: const Duration(
+                                              milliseconds: 300,
+                                            ),
+                                            curve: Curves.easeOut,
+                                          ),
                                         ),
                                       ),
                                     );
@@ -481,17 +476,20 @@ GROUP BY meal_foods.meal
                                     ..where((tbl) => tbl.id.isIn(selectedCopy)))
                                   .go();
                             if (selectedMealsCopy.isNotEmpty) {
-                              await (db.delete(db.diaries)..where(
-                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                  ))
+                              await (db.delete(db.diaries)
+                                    ..where(
+                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                    ))
                                   .go();
-                              await (db.delete(db.mealFoods)..where(
-                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                  ))
+                              await (db.delete(db.mealFoods)
+                                    ..where(
+                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                    ))
                                   .go();
-                              await (db.delete(db.meals)..where(
-                                    (tbl) => tbl.id.isIn(selectedMealsCopy),
-                                  ))
+                              await (db.delete(db.meals)
+                                    ..where(
+                                      (tbl) => tbl.id.isIn(selectedMealsCopy),
+                                    ))
                                   .go();
                             }
                           },
@@ -516,20 +514,20 @@ GROUP BY meal_foods.meal
                           },
                           onFavorite: () async {
                             if (selected.isEmpty) return;
-                            final first =
-                                await (db.foods.select()..where(
-                                      (tbl) => tbl.id.equals(selected.first),
-                                    ))
-                                    .getSingle();
+                            final first = await (db.foods.select()
+                                  ..where(
+                                    (tbl) => tbl.id.equals(selected.first),
+                                  ))
+                                .getSingle();
                             await (db.foods.update()
                                   ..where((tbl) => tbl.id.isIn(selected)))
                                 .write(
-                                  FoodsCompanion(
-                                    favorite: Value(
-                                      first.favorite == true ? false : true,
-                                    ),
-                                  ),
-                                );
+                              FoodsCompanion(
+                                favorite: Value(
+                                  first.favorite == true ? false : true,
+                                ),
+                              ),
+                            );
                             setState(() {
                               selected.clear();
                             });

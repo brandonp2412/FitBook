@@ -379,7 +379,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Eggs'), findsNothing);
-    expect(find.text('No foods yet. Tap + to add foods.'), findsOne);
+    expect(find.text('No foods in this meal yet'), findsOne);
 
     // Save with no foods
     await tester.tap(find.byTooltip('Save'));

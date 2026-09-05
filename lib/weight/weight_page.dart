@@ -43,17 +43,16 @@ class WeightPageState extends State<WeightPage>
     );
 
     setState(() {
-      stream =
-          (db.weights.select()
-                ..where((u) => where)
-                ..orderBy([
-                  (u) => OrderingTerm(
+      stream = (db.weights.select()
+            ..where((u) => where)
+            ..orderBy([
+              (u) => OrderingTerm(
                     expression: u.created,
                     mode: OrderingMode.desc,
                   ),
-                ])
-                ..limit(limit))
-              .watch();
+            ])
+            ..limit(limit))
+          .watch();
     });
   }
 
@@ -106,9 +105,8 @@ class WeightPageState extends State<WeightPage>
                           message: search.isEmpty
                               ? 'Log your first weight to start tracking your trend.'
                               : 'Nothing matches “$search”. Clear the search to see all entries.',
-                          actionLabel: search.isEmpty
-                              ? 'Log weight'
-                              : 'Clear search',
+                          actionLabel:
+                              search.isEmpty ? 'Log weight' : 'Clear search',
                           actionIcon: search.isEmpty
                               ? Icons.add_rounded
                               : Icons.close_rounded,
@@ -168,7 +166,8 @@ class WeightPageState extends State<WeightPage>
                     setState(() => selected.clear());
                     await (db.delete(
                       db.weights,
-                    )..where((tbl) => tbl.id.isIn(selectedCopy))).go();
+                    )..where((tbl) => tbl.id.isIn(selectedCopy)))
+                        .go();
                   },
                   onSelect: () => setState(
                     () => selected.addAll(weights.map((weight) => weight.id)),
@@ -220,8 +219,8 @@ class WeightPageState extends State<WeightPage>
                                         'Weight trend',
                                         style: theme.textTheme.titleLarge
                                             ?.copyWith(
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
                                     ),
                                     if (current != null)
@@ -229,9 +228,9 @@ class WeightPageState extends State<WeightPage>
                                         '${current.amount.toStringAsFixed(1)} ${current.unit}',
                                         style: theme.textTheme.headlineSmall
                                             ?.copyWith(
-                                              color: colorScheme.primary,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                          color: colorScheme.primary,
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                   ],
                                 ),

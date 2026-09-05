@@ -92,9 +92,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           icon: hasSearched
               ? Icons.search_off_rounded
               : Icons.manage_search_rounded,
-          title: hasSearched
-              ? 'No matching products'
-              : 'Search Open Food Facts',
+          title:
+              hasSearched ? 'No matching products' : 'Search Open Food Facts',
           message: hasSearched
               ? 'Try another name or scan a barcode.'
               : 'Enter a food name above, then submit to search.',
@@ -234,16 +233,15 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     final id = await db.foods.insertOne(
       companion.copyWith(created: Value(DateTime.now())),
     );
-    final food = await (db.foods.select()..where((u) => u.id.equals(id)))
-        .getSingle();
+    final food =
+        await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
     if (mounted) Navigator.of(context).pop(food);
   }
 
   Widget factCard(Product product, double cals, BuildContext context) {
     String brand = product.brands?.split(',').first ?? '';
-    String title = product.productName != null
-        ? "${product.productName} - "
-        : '';
+    String title =
+        product.productName != null ? "${product.productName} - " : '';
 
     return GestureDetector(
       onTap: () => tap(product),
