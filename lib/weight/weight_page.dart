@@ -4,6 +4,7 @@ import 'package:fit_book/app_line.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
@@ -42,16 +43,17 @@ class WeightPageState extends State<WeightPage>
     );
 
     setState(() {
-      stream = (db.weights.select()
-            ..where((u) => where)
-            ..orderBy([
-              (u) => OrderingTerm(
+      stream =
+          (db.weights.select()
+                ..where((u) => where)
+                ..orderBy([
+                  (u) => OrderingTerm(
                     expression: u.created,
                     mode: OrderingMode.desc,
                   ),
-            ])
-            ..limit(limit))
-          .watch();
+                ])
+                ..limit(limit))
+              .watch();
     });
   }
 
@@ -91,33 +93,63 @@ class WeightPageState extends State<WeightPage>
               material.Column(
                 children: [
                   if (snapshot.data?.isEmpty == true)
-                    const Padding(
-                      padding: EdgeInsets.only(top: appSearchHeight),
-                      child: ListTile(
-                        title: Text("No weights found"),
-                        subtitle: Text(
-                          "Tap the plus button to start logging your weight.",
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: appSearchHeight),
+                        child: AppEmptyState(
+                          icon: search.isEmpty
+                              ? Icons.monitor_weight_outlined
+                              : Icons.search_off_rounded,
+                          title: search.isEmpty
+                              ? 'No weights yet'
+                              : 'No matching weights',
+                          message: search.isEmpty
+                              ? 'Log your first weight to start tracking your trend.'
+                              : 'Nothing matches “$search”. Clear the search to see all entries.',
+                          actionLabel: search.isEmpty
+                              ? 'Log weight'
+                              : 'Clear search',
+                          actionIcon: search.isEmpty
+                              ? Icons.add_rounded
+                              : Icons.close_rounded,
+                          onAction: () {
+                            if (search.isNotEmpty) {
+                              searchController.clear();
+                              setState(() => search = '');
+                              _setStream();
+                              return;
+                            }
+                            showEditWeight(
+                              context,
+                              WeightsCompanion.insert(
+                                amount: 0.0,
+                                created: DateTime.now(),
+                                unit: 'kg',
+                              ),
+                            );
+                          },
                         ),
                       ),
+                    )
+                  else
+                    WeightList(
+                      ctrl: scrollCtrl,
+                      weights: weights,
+                      selected: selected,
+                      onSelect: (id) {
+                        if (selected.contains(id)) {
+                          setState(() => selected.remove(id));
+                        } else {
+                          setState(() => selected.add(id));
+                        }
+                      },
+                      onNext: () async {
+                        final result = await stream.first;
+                        if (result.length <= limit) return;
+                        setState(() => limit += 10);
+                        _setStream();
+                      },
                     ),
-                  WeightList(
-                    ctrl: scrollCtrl,
-                    weights: weights,
-                    selected: selected,
-                    onSelect: (id) {
-                      if (selected.contains(id)) {
-                        setState(() => selected.remove(id));
-                      } else {
-                        setState(() => selected.add(id));
-                      }
-                    },
-                    onNext: () async {
-                      final result = await stream.first;
-                      if (result.length <= limit) return;
-                      setState(() => limit += 10);
-                      _setStream();
-                    },
-                  ),
                 ],
               ),
               Positioned(
@@ -134,9 +166,9 @@ class WeightPageState extends State<WeightPage>
                   onDelete: () async {
                     final selectedCopy = selected.toList();
                     setState(() => selected.clear());
-                    await (db.delete(db.weights)
-                          ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                        .go();
+                    await (db.delete(
+                      db.weights,
+                    )..where((tbl) => tbl.id.isIn(selectedCopy))).go();
                   },
                   onSelect: () => setState(
                     () => selected.addAll(weights.map((weight) => weight.id)),
@@ -188,8 +220,8 @@ class WeightPageState extends State<WeightPage>
                                         'Weight trend',
                                         style: theme.textTheme.titleLarge
                                             ?.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                       ),
                                     ),
                                     if (current != null)
@@ -197,9 +229,9 @@ class WeightPageState extends State<WeightPage>
                                         '${current.amount.toStringAsFixed(1)} ${current.unit}',
                                         style: theme.textTheme.headlineSmall
                                             ?.copyWith(
-                                          color: colorScheme.primary,
-                                          fontWeight: FontWeight.w800,
-                                        ),
+                                              color: colorScheme.primary,
+                                              fontWeight: FontWeight.w800,
+                                            ),
                                       ),
                                   ],
                                 ),
@@ -233,9 +265,7 @@ class WeightPageState extends State<WeightPage>
         },
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
+        padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
         child: StreamBuilder(
           stream: stream,
           builder: (context, snapshot) {

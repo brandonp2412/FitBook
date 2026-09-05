@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_foods_page.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
@@ -55,23 +56,24 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
 
   void setStream() {
     final lastDiaryEntry = db.diaries.created.max();
-    var query = (db.foods.selectOnly().join([
-      leftOuterJoin(db.diaries, db.diaries.food.equalsExp(db.foods.id)),
-    ])
-      ..addColumns([
-        db.foods.id,
-        db.foods.name,
-        db.foods.calories,
-        db.foods.favorite,
-        db.foods.servingSize,
-        db.foods.servingUnit,
-        db.foods.smallImage,
-        db.foods.imageFile,
-        db.foods.created,
-        lastDiaryEntry,
-      ])
-      ..groupBy([db.foods.id])
-      ..limit(limit));
+    var query =
+        (db.foods.selectOnly().join([
+            leftOuterJoin(db.diaries, db.diaries.food.equalsExp(db.foods.id)),
+          ])
+          ..addColumns([
+            db.foods.id,
+            db.foods.name,
+            db.foods.calories,
+            db.foods.favorite,
+            db.foods.servingSize,
+            db.foods.servingUnit,
+            db.foods.smallImage,
+            db.foods.imageFile,
+            db.foods.created,
+            lastDiaryEntry,
+          ])
+          ..groupBy([db.foods.id])
+          ..limit(limit));
 
     if (search.isNotEmpty) {
       final searchLower = search.toLowerCase();
@@ -86,23 +88,14 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
             expression: db.foods.name.lower().like('$searchLower%'),
             mode: OrderingMode.desc,
           ),
-          OrderingTerm(
-            expression: db.foods.favorite,
-            mode: OrderingMode.desc,
-          ),
-          OrderingTerm(
-            expression: db.foods.created,
-            mode: OrderingMode.desc,
-          ),
+          OrderingTerm(expression: db.foods.favorite, mode: OrderingMode.desc),
+          OrderingTerm(expression: db.foods.created, mode: OrderingMode.desc),
           OrderingTerm(expression: lastDiaryEntry, mode: OrderingMode.desc),
         ]);
     } else {
       query = query
         ..orderBy([
-          OrderingTerm(
-            expression: db.foods.created,
-            mode: OrderingMode.desc,
-          ),
+          OrderingTerm(expression: db.foods.created, mode: OrderingMode.desc),
           OrderingTerm(expression: lastDiaryEntry, mode: OrderingMode.desc),
         ]);
     }
@@ -113,14 +106,16 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
     if (gtController.text.isNotEmpty)
       query = query
         ..where(
-          db.foods.servingSize
-              .isBiggerThanValue(double.parse(gtController.text)),
+          db.foods.servingSize.isBiggerThanValue(
+            double.parse(gtController.text),
+          ),
         );
     if (ltController.text.isNotEmpty)
       query = query
         ..where(
-          db.foods.servingSize
-              .isSmallerThanValue(double.parse(ltController.text)),
+          db.foods.servingSize.isSmallerThanValue(
+            double.parse(ltController.text),
+          ),
         );
 
     setState(() {
@@ -285,9 +280,7 @@ GROUP BY meal_foods.meal
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () => navKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => const EditMealPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const EditMealPage()),
                 ),
                 icon: const Icon(Icons.restaurant_menu),
                 label: const Text('Create meal'),
@@ -337,21 +330,25 @@ GROUP BY meal_foods.meal
                   final items = <Object>[...meals, ...foods];
                   if (search.isEmpty) {
                     items.sort((a, b) {
-                      final aDate = (a is Meal
+                      final aDate =
+                          (a is Meal
                               ? a.created
                               : (a as FoodListFood).food.created.value) ??
                           DateTime(0);
-                      final bDate = (b is Meal
+                      final bDate =
+                          (b is Meal
                               ? b.created
                               : (b as FoodListFood).food.created.value) ??
                           DateTime(0);
                       final createdComparison = bDate.compareTo(aDate);
                       if (createdComparison != 0) return createdComparison;
 
-                      final aLastEntry =
-                          a is FoodListFood ? a.lastDiaryEntry : null;
-                      final bLastEntry =
-                          b is FoodListFood ? b.lastDiaryEntry : null;
+                      final aLastEntry = a is FoodListFood
+                          ? a.lastDiaryEntry
+                          : null;
+                      final bLastEntry = b is FoodListFood
+                          ? b.lastDiaryEntry
+                          : null;
                       return (bLastEntry ?? DateTime(0)).compareTo(
                         aLastEntry ?? DateTime(0),
                       );
@@ -363,44 +360,84 @@ GROUP BY meal_foods.meal
                       material.Column(
                         children: [
                           if (items.isEmpty)
-                            const Padding(
-                              padding: EdgeInsets.only(top: appSearchHeight),
-                              child: ListTile(
-                                title: Text("No food yet."),
-                                subtitle:
-                                    Text("Tap the plus button to add foods."),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: appSearchHeight,
+                                ),
+                                child: AppEmptyState(
+                                  icon: search.isEmpty
+                                      ? Icons.restaurant_menu_rounded
+                                      : Icons.search_off_rounded,
+                                  title: search.isEmpty
+                                      ? 'No food yet'
+                                      : 'No matching food',
+                                  message: search.isEmpty
+                                      ? 'Add your first food or meal to start building your library.'
+                                      : 'Nothing matches “$search”. Clear the search to see everything again.',
+                                  actionLabel: search.isEmpty
+                                      ? 'Add food'
+                                      : 'Clear search',
+                                  actionIcon: search.isEmpty
+                                      ? Icons.add_rounded
+                                      : Icons.close_rounded,
+                                  onAction: () {
+                                    if (search.isNotEmpty) {
+                                      searchCtrl.clear();
+                                      setState(() => search = '');
+                                      setStream();
+                                      setMealStream();
+                                      return;
+                                    }
+                                    navKey.currentState!.push(
+                                      MaterialPageRoute(
+                                        builder: (context) => EditFoodPage(
+                                          onSavedNew: () =>
+                                              scrollCtrl.animateTo(
+                                                0,
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                curve: Curves.easeOut,
+                                              ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
+                            )
+                          else
+                            FoodList(
+                              ctrl: scrollCtrl,
+                              items: items,
+                              mealCalories: mealCalories,
+                              selected: selected,
+                              selectedMeals: selectedMeals,
+                              onSavedNew: () => scrollCtrl.animateTo(
+                                0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeOut,
+                              ),
+                              onSelect: (id) {
+                                if (selected.contains(id))
+                                  setState(() => selected.remove(id));
+                                else
+                                  setState(() => selected.add(id));
+                              },
+                              onMealSelect: (id) {
+                                if (selectedMeals.contains(id))
+                                  setState(() => selectedMeals.remove(id));
+                                else
+                                  setState(() => selectedMeals.add(id));
+                              },
+                              onNext: () async {
+                                setState(() {
+                                  limit += 10;
+                                });
+                                setStream();
+                              },
                             ),
-                          FoodList(
-                            ctrl: scrollCtrl,
-                            items: items,
-                            mealCalories: mealCalories,
-                            selected: selected,
-                            selectedMeals: selectedMeals,
-                            onSavedNew: () => scrollCtrl.animateTo(
-                              0,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            ),
-                            onSelect: (id) {
-                              if (selected.contains(id))
-                                setState(() => selected.remove(id));
-                              else
-                                setState(() => selected.add(id));
-                            },
-                            onMealSelect: (id) {
-                              if (selectedMeals.contains(id))
-                                setState(() => selectedMeals.remove(id));
-                              else
-                                setState(() => selectedMeals.add(id));
-                            },
-                            onNext: () async {
-                              setState(() {
-                                limit += 10;
-                              });
-                              setStream();
-                            },
-                          ),
                         ],
                       ),
                       Positioned(
@@ -421,10 +458,7 @@ GROUP BY meal_foods.meal
                             servingUnit: _servingUnit,
                             servingSizeGtController: gtController,
                             servingSizeLtController: ltController,
-                            onChange: ({
-                              foodGroup,
-                              servingUnit,
-                            }) {
+                            onChange: ({foodGroup, servingUnit}) {
                               setState(() {
                                 _servingUnit = servingUnit;
                               });
@@ -444,25 +478,20 @@ GROUP BY meal_foods.meal
                             });
                             if (selectedCopy.isNotEmpty)
                               await (db.delete(db.foods)
-                                    ..where(
-                                      (tbl) => tbl.id.isIn(selectedCopy),
-                                    ))
+                                    ..where((tbl) => tbl.id.isIn(selectedCopy)))
                                   .go();
                             if (selectedMealsCopy.isNotEmpty) {
-                              await (db.delete(db.diaries)
-                                    ..where(
-                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                    ))
+                              await (db.delete(db.diaries)..where(
+                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                  ))
                                   .go();
-                              await (db.delete(db.mealFoods)
-                                    ..where(
-                                      (tbl) => tbl.meal.isIn(selectedMealsCopy),
-                                    ))
+                              await (db.delete(db.mealFoods)..where(
+                                    (tbl) => tbl.meal.isIn(selectedMealsCopy),
+                                  ))
                                   .go();
-                              await (db.delete(db.meals)
-                                    ..where(
-                                      (tbl) => tbl.id.isIn(selectedMealsCopy),
-                                    ))
+                              await (db.delete(db.meals)..where(
+                                    (tbl) => tbl.id.isIn(selectedMealsCopy),
+                                  ))
                                   .go();
                             }
                           },
@@ -477,9 +506,8 @@ GROUP BY meal_foods.meal
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditFoodsPage(
-                                  ids: selected.toList(),
-                                ),
+                                builder: (context) =>
+                                    EditFoodsPage(ids: selected.toList()),
                               ),
                             );
                             setState(() {
@@ -488,20 +516,20 @@ GROUP BY meal_foods.meal
                           },
                           onFavorite: () async {
                             if (selected.isEmpty) return;
-                            final first = await (db.foods.select()
-                                  ..where(
-                                    (tbl) => tbl.id.equals(selected.first),
-                                  ))
-                                .getSingle();
+                            final first =
+                                await (db.foods.select()..where(
+                                      (tbl) => tbl.id.equals(selected.first),
+                                    ))
+                                    .getSingle();
                             await (db.foods.update()
                                   ..where((tbl) => tbl.id.isIn(selected)))
                                 .write(
-                              FoodsCompanion(
-                                favorite: Value(
-                                  first.favorite == true ? false : true,
-                                ),
-                              ),
-                            );
+                                  FoodsCompanion(
+                                    favorite: Value(
+                                      first.favorite == true ? false : true,
+                                    ),
+                                  ),
+                                );
                             setState(() {
                               selected.clear();
                             });
@@ -543,9 +571,7 @@ GROUP BY meal_foods.meal
         },
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
+        padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
         child: SpeedDialFab(
           onTap: () {
             navKey.currentState!.push(
@@ -569,9 +595,7 @@ GROUP BY meal_foods.meal
               label: 'Add meal',
               onSelected: () {
                 navKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => const EditMealPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const EditMealPage()),
                 );
               },
             ),

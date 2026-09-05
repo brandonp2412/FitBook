@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -84,48 +85,22 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   Widget productsBuilder(BuildContext context, String foodUnit) {
     if (searching)
-      return const Expanded(
-        child: Center(child: CircularProgressIndicator()),
-      );
+      return const Expanded(child: Center(child: CircularProgressIndicator()));
     if (products.isEmpty == true)
       return Expanded(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: material.Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  hasSearched
-                      ? Icons.search_off_rounded
-                      : Icons.manage_search_rounded,
-                  size: 56,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  hasSearched
-                      ? 'No matching products'
-                      : 'Search Open Food Facts',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  hasSearched
-                      ? 'Try another name or scan a barcode.'
-                      : 'Enter a food name above, then submit to search.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                ),
-              ],
-            ),
-          ),
+        child: AppEmptyState(
+          icon: hasSearched
+              ? Icons.search_off_rounded
+              : Icons.manage_search_rounded,
+          title: hasSearched
+              ? 'No matching products'
+              : 'Search Open Food Facts',
+          message: hasSearched
+              ? 'Try another name or scan a barcode.'
+              : 'Enter a food name above, then submit to search.',
+          actionLabel: hasSearched ? 'Scan barcode' : null,
+          actionIcon: Icons.barcode_reader,
+          onAction: hasSearched ? scan : null,
         ),
       );
 
@@ -135,9 +110,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     if (cards)
       return Expanded(
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            bottom: navigationBottomClearance(context),
-          ),
+          padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
           child: Wrap(
             alignment: WrapAlignment.center,
             spacing: 8.0,
@@ -152,9 +125,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       );
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
+        padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
@@ -175,13 +146,12 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   @override
   Widget build(BuildContext context) {
-    final foodUnit = context
-        .select<SettingsState, String>((settings) => settings.value.foodUnit);
+    final foodUnit = context.select<SettingsState, String>(
+      (settings) => settings.value.foodUnit,
+    );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Search open food facts"),
-      ),
+      appBar: AppBar(title: const Text("Search open food facts")),
       body: material.Column(
         children: [
           Padding(
@@ -211,10 +181,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       },
                       icon: const Icon(Icons.clear),
                       tooltip: 'Clear',
-                      padding: const EdgeInsets.only(
-                        left: 16.0,
-                        right: 8.0,
-                      ),
+                      padding: const EdgeInsets.only(left: 16.0, right: 8.0),
                     ),
               trailing: [
                 cards
@@ -237,9 +204,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               ],
             ),
           ),
-          Builder(
-            builder: (context) => productsBuilder(context, foodUnit),
-          ),
+          Builder(builder: (context) => productsBuilder(context, foodUnit)),
         ],
       ),
       floatingActionButton: kIsWeb
@@ -266,21 +231,19 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         barcode: Value(product.barcode),
       );
 
-    final id = await db.foods
-        .insertOne(companion.copyWith(created: Value(DateTime.now())));
-    final food =
-        await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
+    final id = await db.foods.insertOne(
+      companion.copyWith(created: Value(DateTime.now())),
+    );
+    final food = await (db.foods.select()..where((u) => u.id.equals(id)))
+        .getSingle();
     if (mounted) Navigator.of(context).pop(food);
   }
 
-  Widget factCard(
-    Product product,
-    double cals,
-    BuildContext context,
-  ) {
+  Widget factCard(Product product, double cals, BuildContext context) {
     String brand = product.brands?.split(',').first ?? '';
-    String title =
-        product.productName != null ? "${product.productName} - " : '';
+    String title = product.productName != null
+        ? "${product.productName} - "
+        : '';
 
     return GestureDetector(
       onTap: () => tap(product),
@@ -301,9 +264,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 padding: const EdgeInsets.all(8.0),
                 child: material.Column(
                   children: [
-                    Text(
-                      '$title$brand ${product.quantity ?? ''}',
-                    ),
+                    Text('$title$brand ${product.quantity ?? ''}'),
                     Text("${cals.toStringAsFixed(2)} kcal"),
                   ],
                 ),

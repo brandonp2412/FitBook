@@ -7,6 +7,7 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -341,7 +342,9 @@ class _EditMealPageState extends State<EditMealPage> {
                             child: Image.file(
                               File(_imageFile!),
                               cacheWidth: (MediaQuery.sizeOf(context).width *
-                                      MediaQuery.devicePixelRatioOf(context))
+                                      MediaQuery.devicePixelRatioOf(
+                                        context,
+                                      ))
                                   .round(),
                               height: 160,
                               width: double.infinity,
@@ -357,8 +360,9 @@ class _EditMealPageState extends State<EditMealPage> {
                           child: IconButton.filled(
                             icon: const Icon(Icons.close),
                             style: IconButton.styleFrom(
-                              backgroundColor:
-                                  Colors.black.withValues(alpha: 0.5),
+                              backgroundColor: Colors.black.withValues(
+                                alpha: 0.5,
+                              ),
                               foregroundColor: Colors.white,
                             ),
                             onPressed: () => setState(() => _imageFile = null),
@@ -376,24 +380,15 @@ class _EditMealPageState extends State<EditMealPage> {
                   );
                 }
                 if (mealFoods.isEmpty)
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 48),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.restaurant_menu,
-                          size: 64,
-                          color: theme.colorScheme.outlineVariant,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          'No foods yet. Tap + to add foods.',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
+                  return SizedBox(
+                    height: 320,
+                    child: AppEmptyState(
+                      icon: Icons.restaurant_menu_rounded,
+                      title: 'No foods in this meal yet',
+                      message: 'Add a food to start building this meal.',
+                      actionLabel: 'Add food',
+                      actionIcon: Icons.add_rounded,
+                      onAction: _pickFood,
                     ),
                   );
                 final idx = i - 2;
@@ -405,9 +400,7 @@ class _EditMealPageState extends State<EditMealPage> {
               },
             ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
+        padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -568,10 +561,7 @@ class _FoodEntryCard extends StatelessWidget {
                         ),
                         items: unitOptions
                             .map(
-                              (u) => DropdownMenuItem(
-                                value: u,
-                                child: Text(u),
-                              ),
+                              (u) => DropdownMenuItem(value: u, child: Text(u)),
                             )
                             .toList(),
                         onChanged: (v) {
@@ -709,7 +699,6 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final showImages = context.watch<SettingsState>().value.showImages;
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
@@ -735,26 +724,24 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
               stream: stream,
               builder: (ctx, snap) {
                 final foods = snap.data ?? [];
-                if (foods.isEmpty)
-                  return Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.search_off,
-                          size: 48,
-                          color: theme.colorScheme.outlineVariant,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'No foods found.',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
+                if (foods.isEmpty) {
+                  final hasQuery = searchCtrl.text.trim().isNotEmpty;
+                  return AppEmptyState(
+                    icon: Icons.search_off_rounded,
+                    title: 'No foods found',
+                    message: hasQuery
+                        ? 'Nothing matches “${searchCtrl.text.trim()}”.'
+                        : 'Add some foods to your library before adding them to a meal.',
+                    actionLabel: hasQuery ? 'Clear search' : null,
+                    actionIcon: Icons.close_rounded,
+                    onAction: hasQuery
+                        ? () {
+                            searchCtrl.clear();
+                            _setStream();
+                          }
+                        : null,
                   );
+                }
                 return ListView.builder(
                   itemCount: foods.length,
                   itemBuilder: (ctx, i) {
