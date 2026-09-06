@@ -11,13 +11,13 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('QuickAdd edit preserves macro-nutrients',
-      (WidgetTester tester) async {
+  testWidgets('QuickAdd edit preserves macro-nutrients', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    // First, create a Quick-add entry with specific macro-nutrients
     final originalFoodId = await db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Quick-add',
@@ -38,45 +38,29 @@ void main() async {
       ),
     );
 
-    // Now edit the entry
     await tester.pumpWidget(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
-          home: QuickAddPage(id: entryId),
-        ),
+        child: MaterialApp(home: QuickAddPage(id: entryId)),
       ),
     );
     await tester.pumpAndSettle();
 
-    // Verify the form is populated with existing values
-    expect(find.text('100.00'), findsOne); // calories
-    expect(find.text('20.00'), findsOne); // protein
-    expect(find.text('30.00'), findsOne); // carbs
-    expect(find.text('10.00'), findsOne); // fat
+    expect(find.text('100.00'), findsOne);
+    expect(find.text('20.00'), findsOne);
+    expect(find.text('30.00'), findsOne);
+    expect(find.text('10.00'), findsOne);
 
-    // Edit the macro-nutrients
-    await tester.enterText(
-      find.widgetWithText(TextField, '20.00'),
-      '25.0',
-    ); // protein
-    await tester.enterText(
-      find.widgetWithText(TextField, '30.00'),
-      '35.0',
-    ); // carbs
-    await tester.enterText(
-      find.widgetWithText(TextField, '10.00'),
-      '15.0',
-    ); // fat
+    await tester.enterText(find.widgetWithText(TextField, '20.00'), '25.0');
+    await tester.enterText(find.widgetWithText(TextField, '30.00'), '35.0');
+    await tester.enterText(find.widgetWithText(TextField, '10.00'), '15.0');
 
-    // Save the changes
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    // Verify the entry was updated
     final updatedEntry = await (db.diaries.select()
           ..where((u) => u.id.equals(entryId)))
         .getSingle();
@@ -85,11 +69,7 @@ void main() async {
           ..where((u) => u.id.equals(updatedEntry.food!)))
         .getSingle();
 
-    // Verify the entry now points to a new food record with updated macro-nutrients
-    expect(
-      updatedEntry.food,
-      isNot(equals(originalFoodId)),
-    ); // Should point to new food
+    expect(updatedEntry.food, isNot(equals(originalFoodId)));
     expect(updatedFood.proteinG, equals(25.0));
     expect(updatedFood.carbohydrateG, equals(35.0));
     expect(updatedFood.fatG, equals(15.0));
@@ -98,13 +78,13 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('QuickAdd edit updates daily macro goals calculation',
-      (WidgetTester tester) async {
+  testWidgets('QuickAdd edit updates daily macro goals calculation', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    // Create a Quick-add entry
     final originalFoodId = await db.foods.insertOne(
       FoodsCompanion.insert(
         name: 'Quick-add',
@@ -125,39 +105,24 @@ void main() async {
       ),
     );
 
-    // Edit the entry with new macro values
     await tester.pumpWidget(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
-          home: QuickAddPage(id: entryId),
-        ),
+        child: MaterialApp(home: QuickAddPage(id: entryId)),
       ),
     );
     await tester.pumpAndSettle();
 
-    // Update macro-nutrients
-    await tester.enterText(
-      find.widgetWithText(TextField, '10.00'),
-      '30.0',
-    ); // protein: 10 -> 30
-    await tester.enterText(
-      find.widgetWithText(TextField, '20.00'),
-      '40.0',
-    ); // carbs: 20 -> 40
-    await tester.enterText(
-      find.widgetWithText(TextField, '5.00'),
-      '15.0',
-    ); // fat: 5 -> 15
+    await tester.enterText(find.widgetWithText(TextField, '10.00'), '30.0');
+    await tester.enterText(find.widgetWithText(TextField, '20.00'), '40.0');
+    await tester.enterText(find.widgetWithText(TextField, '5.00'), '15.0');
 
-    // Save the changes
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    // Calculate new totals
     final newTotals = await (db.diaries.selectOnly().join([
       innerJoin(db.foods, db.diaries.food.equalsExp(db.foods.id)),
     ])
@@ -168,20 +133,14 @@ void main() async {
           ]))
         .getSingle();
 
-    final newProtein = newTotals.read(
-          (db.foods.proteinG * db.diaries.quantity).sum(),
-        ) ??
-        0.0;
-    final newCarbs = newTotals.read(
-          (db.foods.carbohydrateG * db.diaries.quantity).sum(),
-        ) ??
-        0.0;
-    final newFat = newTotals.read(
-          (db.foods.fatG * db.diaries.quantity).sum(),
-        ) ??
-        0.0;
+    final newProtein =
+        newTotals.read((db.foods.proteinG * db.diaries.quantity).sum()) ?? 0.0;
+    final newCarbs =
+        newTotals.read((db.foods.carbohydrateG * db.diaries.quantity).sum()) ??
+            0.0;
+    final newFat =
+        newTotals.read((db.foods.fatG * db.diaries.quantity).sum()) ?? 0.0;
 
-    // Verify the totals reflect the updated macro-nutrients
     expect(newProtein, equals(30.0));
     expect(newCarbs, equals(40.0));
     expect(newFat, equals(15.0));

@@ -13,10 +13,8 @@ void main() {
 
       final listFinder = find.byType(ListView);
 
-      // Measure scroll performance
       await binding.traceAction(
         () async {
-          // Perform scroll
           await tester.fling(listFinder, Offset(0, -300), 1000);
           await tester.pumpAndSettle();
         },

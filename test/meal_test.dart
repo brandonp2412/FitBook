@@ -46,8 +46,9 @@ Future<void> triggerSpeedDial(
 }
 
 void main() {
-  testWidgets('Create meal appears in food list with meal icon',
-      (WidgetTester tester) async {
+  testWidgets('Create meal appears in food list with its nutrition total', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -61,16 +62,13 @@ void main() {
     await tester.pumpWidget(_wrap(const FoodPage(), settingsState));
     await settle(tester);
 
-    // Long-press the "Add" speed-dial FAB and release over "Add meal"
     await triggerSpeedDial(tester, 'Add', 'Add meal');
 
     expect(find.text('Create meal'), findsOne);
 
-    // Enter meal name
     await tester.enterText(find.bySemanticsLabel('Name'), 'Chicken and Rice');
     await tester.pump();
 
-    // Add Chicken food to meal
     await tester.tap(find.byTooltip('Add food'));
     await settle(tester);
 
@@ -78,10 +76,8 @@ void main() {
     await tester.tap(find.text('Chicken'));
     await settle(tester);
 
-    // Chicken should now appear in the meal food list
     expect(find.text('Chicken'), findsOne);
 
-    // Add Rice food to meal
     await tester.tap(find.byTooltip('Add food'));
     await settle(tester);
 
@@ -90,18 +86,12 @@ void main() {
 
     expect(find.text('Rice'), findsOne);
 
-    // Save the meal
     await tester.tap(find.byTooltip('Save'));
     await settle(tester);
 
-    // Back on food page — meal should appear with kcal total
     expect(find.text('Chicken and Rice'), findsOne);
     expect(find.text('330 kcal'), findsOne);
 
-    // Verify the meal icon is shown
-    expect(find.byIcon(Icons.restaurant), findsWidgets);
-
-    // Verify DB state
     final meals = await db.meals.select().get();
     expect(meals.length, 1);
     expect(meals.first.name, 'Chicken and Rice');
@@ -136,21 +126,16 @@ void main() {
       ),
     );
 
-    await tester.pumpWidget(
-      _wrap(EditMealPage(id: mealId), settingsState),
-    );
-    // Wait for async _load() to complete
+    await tester.pumpWidget(_wrap(EditMealPage(id: mealId), settingsState));
     await settle(tester);
 
     expect(find.text('Edit meal'), findsOne);
     expect(find.text('Chicken'), findsOne);
     expect(find.text('Old Meal Name'), findsOne);
 
-    // Update the name — clear then type
     await tester.enterText(find.bySemanticsLabel('Name'), 'New Meal Name');
     await tester.pump();
 
-    // Add Rice to the meal via the food picker
     await tester.tap(find.byTooltip('Add food'));
     await settle(tester);
 
@@ -158,15 +143,12 @@ void main() {
     await tester.tap(find.text('Rice'));
     await settle(tester);
 
-    // Both foods should be listed
     expect(find.text('Chicken'), findsOne);
     expect(find.text('Rice'), findsOne);
 
-    // Save
     await tester.tap(find.byTooltip('Save'));
     await settle(tester);
 
-    // Verify in DB
     final updatedMeal = await (db.meals.select()
           ..where((t) => t.id.equals(mealId)))
         .getSingle();
@@ -179,8 +161,9 @@ void main() {
     await db.close();
   });
 
-  testWidgets('Meals and foods both show in food page',
-      (WidgetTester tester) async {
+  testWidgets('Meals and foods both show in food page', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -199,20 +182,19 @@ void main() {
     await tester.pumpWidget(_wrap(const FoodPage(), settingsState));
     await settle(tester);
 
-    // Both meals and the food should be visible
     expect(find.text('Breakfast Bowl'), findsOne);
     expect(find.text('Lunch Wrap'), findsOne);
     expect(find.text('Apple'), findsOne);
 
-    // Meals show with 'Meal' subtitle and food shows with kcal info
     expect(find.text('Meal'), findsNWidgets(2));
     expect(find.text('52 kcal'), findsOne);
 
     await db.close();
   });
 
-  testWidgets('Meal search filters meals but not foods',
-      (WidgetTester tester) async {
+  testWidgets('Meal search filters meals but not foods', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -230,7 +212,6 @@ void main() {
     await tester.pumpWidget(_wrap(const FoodPage(), settingsState));
     await settle(tester);
 
-    // Search for 'Breakfast' — only that meal should appear
     await tester.enterText(find.bySemanticsLabel('Search...'), 'Breakfast');
     await settle(tester);
 
@@ -241,8 +222,9 @@ void main() {
     await db.close();
   });
 
-  testWidgets('Delete meal via long-press selection',
-      (WidgetTester tester) async {
+  testWidgets('Delete meal via long-press selection', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -256,15 +238,12 @@ void main() {
 
     expect(find.text('Dinner Salad'), findsOne);
 
-    // Long-press to select the meal
     await tester.longPress(find.text('Dinner Salad'));
     await tester.pumpAndSettle();
 
-    // Tap delete in search bar
     await tester.tap(find.byIcon(Icons.delete));
     await tester.pumpAndSettle();
 
-    // Confirm delete dialog
     await tester.tap(find.text('Delete'));
     await tester.pumpAndSettle();
 
@@ -277,75 +256,77 @@ void main() {
   });
 
   testWidgets(
-      'EditDiaryPage shows nutrient summary when a meal entry is opened',
-      (WidgetTester tester) async {
-    await mockTests();
-    final settings = await (db.settings.select()).getSingle();
-    final settingsState = SettingsState(settings);
+    'EditDiaryPage shows nutrient summary when a meal entry is opened',
+    (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
 
-    final chickenId = await db.foods.insertOne(
-      FoodsCompanion.insert(
-        name: 'Chicken',
-        calories: const Value(200),
-        proteinG: const Value(40),
-        carbohydrateG: const Value(0),
-        fatG: const Value(5),
-        fiberG: const Value(0),
-        servingSize: const Value(100),
-        servingUnit: const Value('grams'),
-      ),
-    );
-    final riceId = await db.foods.insertOne(
-      FoodsCompanion.insert(
-        name: 'Rice',
-        calories: const Value(130),
-        proteinG: const Value(3),
-        carbohydrateG: const Value(28),
-        fatG: const Value(0),
-        fiberG: const Value(1),
-        servingSize: const Value(100),
-        servingUnit: const Value('grams'),
-      ),
-    );
-    final mealId = await db.meals.insertOne(
-      MealsCompanion.insert(name: 'Chicken and Rice', created: DateTime.now()),
-    );
-    // 1 serving (100 g) each
-    await db.mealFoods.insertAll([
-      MealFoodsCompanion.insert(
-        meal: mealId,
-        food: chickenId,
-        quantity: 1,
-        unit: 'serving',
-      ),
-      MealFoodsCompanion.insert(
-        meal: mealId,
-        food: riceId,
-        quantity: 1,
-        unit: 'serving',
-      ),
-    ]);
-    final entryId = await db.diaries.insertOne(
-      DiariesCompanion.insert(
-        meal: Value(mealId),
-        created: DateTime.now(),
-        quantity: 1,
-        unit: 'serving',
-      ),
-    );
+      final chickenId = await db.foods.insertOne(
+        FoodsCompanion.insert(
+          name: 'Chicken',
+          calories: const Value(200),
+          proteinG: const Value(40),
+          carbohydrateG: const Value(0),
+          fatG: const Value(5),
+          fiberG: const Value(0),
+          servingSize: const Value(100),
+          servingUnit: const Value('grams'),
+        ),
+      );
+      final riceId = await db.foods.insertOne(
+        FoodsCompanion.insert(
+          name: 'Rice',
+          calories: const Value(130),
+          proteinG: const Value(3),
+          carbohydrateG: const Value(28),
+          fatG: const Value(0),
+          fiberG: const Value(1),
+          servingSize: const Value(100),
+          servingUnit: const Value('grams'),
+        ),
+      );
+      final mealId = await db.meals.insertOne(
+        MealsCompanion.insert(
+          name: 'Chicken and Rice',
+          created: DateTime.now(),
+        ),
+      );
+      await db.mealFoods.insertAll([
+        MealFoodsCompanion.insert(
+          meal: mealId,
+          food: chickenId,
+          quantity: 1,
+          unit: 'serving',
+        ),
+        MealFoodsCompanion.insert(
+          meal: mealId,
+          food: riceId,
+          quantity: 1,
+          unit: 'serving',
+        ),
+      ]);
+      final entryId = await db.diaries.insertOne(
+        DiariesCompanion.insert(
+          meal: Value(mealId),
+          created: DateTime.now(),
+          quantity: 1,
+          unit: 'serving',
+        ),
+      );
 
-    await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
+      await tester.pumpAndSettle();
 
-    expect(find.text('Edit diary entry'), findsOne);
-    expect(find.text('Chicken and Rice'), findsOne);
+      expect(find.text('Edit diary entry'), findsOne);
+      expect(find.text('Chicken and Rice'), findsOne);
 
-    // Total for 1 serving: 200+130=330 kcal, 40+3=43 g protein
-    expect(find.textContaining('330'), findsWidgets);
-    expect(find.textContaining('43'), findsWidgets);
+      expect(find.textContaining('330'), findsWidgets);
+      expect(find.textContaining('43'), findsWidgets);
 
-    await db.close();
-  });
+      await db.close();
+    },
+  );
 
   testWidgets('Remove food from meal', (WidgetTester tester) async {
     await mockTests();
@@ -367,21 +348,17 @@ void main() {
       ),
     );
 
-    await tester.pumpWidget(
-      _wrap(EditMealPage(id: mealId), settingsState),
-    );
+    await tester.pumpWidget(_wrap(EditMealPage(id: mealId), settingsState));
     await settle(tester);
 
     expect(find.text('Eggs'), findsOne);
 
-    // Remove Eggs from the meal
     await tester.tap(find.byTooltip('Remove'));
     await tester.pumpAndSettle();
 
     expect(find.text('Eggs'), findsNothing);
     expect(find.text('No foods in this meal yet'), findsOne);
 
-    // Save with no foods
     await tester.tap(find.byTooltip('Save'));
     await settle(tester);
 

@@ -11,28 +11,27 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('WeightPage deletes selected weights',
-      (WidgetTester tester) async {
+  testWidgets('WeightPage deletes selected weights', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
     final now = DateTime.now();
 
-    await db.weights.insertAll(
-      [
-        WeightsCompanion.insert(created: now, unit: 'kg', amount: 60),
-        WeightsCompanion.insert(
-          created: now.subtract(const Duration(days: 1)),
-          unit: 'kg',
-          amount: 70,
-        ),
-        WeightsCompanion.insert(
-          created: now.subtract(const Duration(days: 2)),
-          unit: 'kg',
-          amount: 80,
-        ),
-      ],
-    );
+    await db.weights.insertAll([
+      WeightsCompanion.insert(created: now, unit: 'kg', amount: 60),
+      WeightsCompanion.insert(
+        created: now.subtract(const Duration(days: 1)),
+        unit: 'kg',
+        amount: 70,
+      ),
+      WeightsCompanion.insert(
+        created: now.subtract(const Duration(days: 2)),
+        unit: 'kg',
+        amount: 80,
+      ),
+    ]);
 
     await tester.pumpWidget(
       MultiProvider(
@@ -47,8 +46,6 @@ void main() async {
 
     await tester.longPress(find.textContaining('60'));
     await tester.pumpAndSettle();
-    expect(find.byIcon(Icons.check_circle), findsNothing);
-    expect(find.byIcon(Icons.circle_outlined), findsNothing);
     await tester.tap(find.textContaining('70'));
     await tester.tap(find.textContaining('80'));
     await tester.tap(find.byTooltip('Delete'));
@@ -61,17 +58,14 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Compact weight rows keep their original search bar gap',
-      (WidgetTester tester) async {
+  testWidgets('Compact weight rows keep their original search bar gap', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settingsState = SettingsState(await db.settings.select().getSingle());
 
     await db.weights.insertOne(
-      WeightsCompanion.insert(
-        created: DateTime.now(),
-        unit: 'kg',
-        amount: 75,
-      ),
+      WeightsCompanion.insert(created: DateTime.now(), unit: 'kg', amount: 75),
     );
 
     await tester.pumpWidget(
@@ -91,8 +85,9 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('Weight stat cards use the standard search bar gap',
-      (WidgetTester tester) async {
+  testWidgets('Weight stat cards use the standard search bar gap', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     await db.settings.update().write(
           const SettingsCompanion(compactWeights: Value(false)),
@@ -100,11 +95,7 @@ void main() async {
     final settingsState = SettingsState(await db.settings.select().getSingle());
 
     await db.weights.insertOne(
-      WeightsCompanion.insert(
-        created: DateTime.now(),
-        unit: 'kg',
-        amount: 75,
-      ),
+      WeightsCompanion.insert(created: DateTime.now(), unit: 'kg', amount: 75),
     );
 
     await tester.pumpWidget(

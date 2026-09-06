@@ -19,8 +19,9 @@ Future<Food> _foodForDiary(int diaryId) async {
 }
 
 void main() async {
-  testWidgets('Diary search can create and log a missing food',
-      (WidgetTester tester) async {
+  testWidgets('Diary search can create and log a missing food', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -47,10 +48,7 @@ void main() async {
     await tester.pumpAndSettle();
 
     expect(find.text('Add food to diary'), findsOneWidget);
-    final nameField = tester.widget<TextField>(
-      find.byKey(const Key('name_field')),
-    );
-    expect(nameField.controller!.text, 'Dragonfruit bowl');
+    expect(find.text('Dragonfruit bowl'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
@@ -65,8 +63,9 @@ void main() async {
     await db.close();
   });
 
-  testWidgets('DiaryPage persists create, edit and delete flows',
-      (WidgetTester tester) async {
+  testWidgets('DiaryPage persists create, edit and delete flows', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -79,10 +78,7 @@ void main() async {
       ),
     );
     await db.foods.insertOne(
-      FoodsCompanion.insert(
-        name: 'Test 4',
-        calories: const Value(100),
-      ),
+      FoodsCompanion.insert(name: 'Test 4', calories: const Value(100)),
     );
 
     final originalDiaryId = await db.diaries.insertOne(
@@ -108,16 +104,13 @@ void main() async {
 
     await tester.tap(find.byType(SpeedDialFab));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('name_field')), findsOne);
+    expect(find.text('Name'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('name_field')), 'Test 4');
     await tester.pumpAndSettle();
     await tester.tap(
       find
-          .ancestor(
-            of: find.text('Test 4'),
-            matching: find.byType(ListTile),
-          )
+          .ancestor(of: find.text('Test 4'), matching: find.byType(ListTile))
           .first,
     );
     await tester.pumpAndSettle();
@@ -126,16 +119,14 @@ void main() async {
 
     final afterCreate = await db.diaries.select().get();
     expect(afterCreate, hasLength(2));
-    final createdDiary =
-        afterCreate.singleWhere((diary) => diary.id != originalDiaryId);
+    final createdDiary = afterCreate.singleWhere(
+      (diary) => diary.id != originalDiaryId,
+    );
     expect((await _foodForDiary(createdDiary.id)).name, 'Test 4');
 
     await tester.tap(find.text('Test 4'));
     await tester.pumpAndSettle();
-    final nameField = tester.widget<TextField>(
-      find.byKey(const Key('name_field')),
-    );
-    expect(nameField.controller!.text, 'Test 4');
+    expect(find.text('Test 4'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('name_field')), 'Test 5');
     await tester.pumpAndSettle();

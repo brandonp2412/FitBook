@@ -43,7 +43,10 @@ void main() async {
     expect(wrap, findsOneWidget);
     expect(
       tester.getCenter(wrap).dx,
-      closeTo(tester.getCenter(find.byType(Scaffold)).dx, 0.5),
+      closeTo(
+        tester.view.physicalSize.width / tester.view.devicePixelRatio / 2,
+        0.5,
+      ),
     );
 
     await db.close();

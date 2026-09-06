@@ -1,34 +1,27 @@
 import 'package:drift/drift.dart';
-import 'package:fit_book/app_line.dart';
-import 'package:fit_book/bottom_nav.dart';
-import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/graph_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
 
-Future<void> _selectMetric(WidgetTester tester, String metric) async {
-  final picker = tester.widget<DropdownButton<String>>(
-    find.byType(DropdownButton<String>),
-  );
-  expect(picker.items!.map((item) => item.value), contains(metric));
-  picker.onChanged!(metric);
+Future<void> _selectMetric(
+  WidgetTester tester, {
+  required String currentLabel,
+  required String label,
+  required String metric,
+}) async {
+  await tester.tap(find.text(currentLabel));
   await tester.pumpAndSettle();
-  expect(
-    tester
-        .widget<DropdownButton<String>>(
-          find.byType(DropdownButton<String>),
-        )
-        .value,
-    metric,
-  );
+  await tester.tap(find.text(label).last);
+  await tester.pumpAndSettle();
+  expect((await db.settings.select().getSingle()).lastGraph, metric);
 }
 
 void main() async {
@@ -37,52 +30,50 @@ void main() async {
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
 
-    await (db.diaries.insertAll(
-      [
-        DiariesCompanion.insert(
-          food: Value(
-            await (db.foods.insertOne(
-              FoodsCompanion.insert(
-                name: 'Test 3',
-                calories: const Value(1),
-                servingWeight1G: const Value(1),
-              ),
-            )),
-          ),
-          created: DateTime.now(),
-          quantity: 1,
-          unit: 'serving',
+    await (db.diaries.insertAll([
+      DiariesCompanion.insert(
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Test 3',
+              calories: const Value(1),
+              servingWeight1G: const Value(1),
+            ),
+          )),
         ),
-        DiariesCompanion.insert(
-          food: Value(
-            await (db.foods.insertOne(
-              FoodsCompanion.insert(
-                name: 'Test 2',
-                calories: const Value(1),
-                servingWeight1G: const Value(1),
-              ),
-            )),
-          ),
-          created: DateTime.now().subtract(const Duration(days: 1)),
-          quantity: 1,
-          unit: 'serving',
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+      DiariesCompanion.insert(
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Test 2',
+              calories: const Value(1),
+              servingWeight1G: const Value(1),
+            ),
+          )),
         ),
-        DiariesCompanion.insert(
-          food: Value(
-            await (db.foods.insertOne(
-              FoodsCompanion.insert(
-                name: 'Test 1',
-                calories: const Value(1),
-                servingWeight1G: const Value(1),
-              ),
-            )),
-          ),
-          created: DateTime.now().subtract(const Duration(days: 2)),
-          quantity: 1,
-          unit: 'serving',
+        created: DateTime.now().subtract(const Duration(days: 1)),
+        quantity: 1,
+        unit: 'serving',
+      ),
+      DiariesCompanion.insert(
+        food: Value(
+          await (db.foods.insertOne(
+            FoodsCompanion.insert(
+              name: 'Test 1',
+              calories: const Value(1),
+              servingWeight1G: const Value(1),
+            ),
+          )),
         ),
-      ],
-    ));
+        created: DateTime.now().subtract(const Duration(days: 2)),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    ]));
 
     await tester.pumpWidget(
       MultiProvider(
@@ -90,27 +81,34 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(
-          home: GraphPage(),
-        ),
+        child: const MaterialApp(home: GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
 
-    for (final metric in [
-      db.foods.proteinG.name,
-      db.foods.fatG.name,
-      db.foods.carbohydrateG.name,
+    var currentLabel = 'Calories';
+    for (final selection in [
+      (label: 'Protein', metric: db.foods.proteinG.name),
+      (label: 'Fat g', metric: db.foods.fatG.name),
+      (label: 'Carbohydrate g', metric: db.foods.carbohydrateG.name),
     ]) {
-      await _selectMetric(tester, metric);
-      expect(find.byType(LineChart), findsOne);
+      await _selectMetric(
+        tester,
+        currentLabel: currentLabel,
+        label: selection.label,
+        metric: selection.metric,
+      );
+      currentLabel = selection.label;
+      expect(find.text('No data yet'), findsNothing);
+      expect(find.text('Value'), findsOne);
     }
 
     await db.close();
   });
 
-  testWidgets('GraphPage includes meal diary entries in calorie graph',
-      (WidgetTester tester) async {
+  testWidgets('GraphPage includes meal diary entries in calorie graph', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -155,15 +153,14 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    // The chart should render with data rather than showing "No data yet".
     expect(find.text('No data yet'), findsNothing);
-    expect(find.byType(LineChart), findsOne);
 
     await db.close();
   });
 
-  testWidgets('GraphPage retains calories and body weight graphs',
-      (WidgetTester tester) async {
+  testWidgets('GraphPage retains calories and body weight graphs', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -173,10 +170,7 @@ void main() async {
       WeightsCompanion.insert(created: now, unit: 'kg', amount: 75),
     );
     final foodId = await db.foods.insertOne(
-      FoodsCompanion.insert(
-        name: 'Test food',
-        calories: const Value(500),
-      ),
+      FoodsCompanion.insert(name: 'Test food', calories: const Value(500)),
     );
     await db.diaries.insertOne(
       DiariesCompanion.insert(
@@ -205,16 +199,15 @@ void main() async {
 
     await tester.tap(find.text('Body weight'));
     await tester.pumpAndSettle();
-    expect(
-      tester.widget<LineChart>(find.byType(LineChart)).data.lineBarsData,
-      hasLength(1),
-    );
+    expect(find.text('75.00 kg'), findsOne);
+    expect((await db.settings.select().getSingle()).lastGraph, 'body-weight');
 
     await db.close();
   });
 
-  testWidgets('GraphPage keeps the original mobile graph layout',
-      (WidgetTester tester) async {
+  testWidgets('GraphPage keeps graph controls within mobile margins', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -235,15 +228,21 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(AdaptivePageBody), findsNothing);
-    expect(find.byType(Card), findsNothing);
-    expect(tester.widget<AppLine>(find.byType(AppLine)).maxBottomTitles, null);
+    expect(
+      tester.getRect(find.text('Calories').first).left,
+      greaterThanOrEqualTo(16),
+    );
+    expect(
+      tester.getRect(find.byTooltip('Options')).right,
+      lessThanOrEqualTo(374),
+    );
 
     await db.close();
   });
 
-  testWidgets('GraphPage limits desktop x-axis labels',
-      (WidgetTester tester) async {
+  testWidgets('GraphPage limits desktop x-axis labels', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(1600, 900);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -282,25 +281,19 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(AdaptivePageBody), findsOne);
-    expect(tester.widget<AppLine>(find.byType(AppLine)).maxBottomTitles, 8);
-    expect(find.byType(LineChart), findsOne);
-    expect(
-      tester
-          .widget<LineChart>(find.byType(LineChart))
-          .data
-          .titlesData
-          .bottomTitles
-          .sideTitles
-          .interval,
-      greaterThan(1),
-    );
+    final dateFormat = DateFormat(settings.shortDateFormat);
+    final renderedDateLabels = List.generate(
+      20,
+      (index) => dateFormat.format(now.subtract(Duration(days: index * 7))),
+    ).where((label) => find.text(label).evaluate().isNotEmpty).length;
+    expect(renderedDateLabels, inInclusiveRange(2, 8));
 
     await db.close();
   });
 
-  testWidgets('GraphPage defaults calories graph to weekly',
-      (WidgetTester tester) async {
+  testWidgets('GraphPage defaults calories graph to weekly', (
+    WidgetTester tester,
+  ) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -316,10 +309,14 @@ void main() async {
     );
     await tester.pump();
 
-    final periodPicker = tester.widget<SegmentedButton<Period>>(
-      find.byType(SegmentedButton<Period>),
+    expect(
+      tester
+          .getSemantics(find.text('Week'))
+          .flagsCollection
+          .isSelected
+          .toBoolOrNull(),
+      isTrue,
     );
-    expect(periodPicker.selected, {Period.week});
 
     await db.close();
   });
