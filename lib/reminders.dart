@@ -13,20 +13,21 @@ Timer? timer;
 void setupReminders({bool requestPermission = true}) {
   if (kIsWeb) return;
 
-  if (Platform.isAndroid || Platform.isIOS) {
-    if (requestPermission) Permission.notification.request();
-    Workmanager().initialize(doMobileReminders);
-    Workmanager().registerPeriodicTask(
-      "reminders",
-      "reminders",
-      frequency: const Duration(hours: 4),
-    );
-  } else {
+  if (!Platform.isAndroid && !Platform.isIOS) {
     timer = Timer.periodic(
       const Duration(hours: 4),
       (timer) => doDesktopReminders(),
     );
+    return;
   }
+
+  if (requestPermission) Permission.notification.request();
+  Workmanager().initialize(doMobileReminders);
+  Workmanager().registerPeriodicTask(
+    "reminders",
+    "reminders",
+    frequency: const Duration(hours: 4),
+  );
 }
 
 /// Explains the reminder schedule the first time reminders are enabled.
@@ -40,8 +41,9 @@ Future<void> notifyRemindersEnabled() async {
 
   const darwin = DarwinInitializationSettings();
   const android = AndroidInitializationSettings('@drawable/nutrition');
-  const linux =
-      LinuxInitializationSettings(defaultActionName: 'Open notification');
+  const linux = LinuxInitializationSettings(
+    defaultActionName: 'Open notification',
+  );
   const init = InitializationSettings(
     android: android,
     iOS: darwin,
@@ -53,8 +55,7 @@ Future<void> notifyRemindersEnabled() async {
   await plugin.show(
     id: 0,
     title: 'Meal reminders enabled',
-    body:
-        "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
+    body: "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
     notificationDetails: const NotificationDetails(
       android: AndroidNotificationDetails(
         'reminder-settings',
@@ -69,54 +70,44 @@ Future<void> notifyRemindersEnabled() async {
 }
 
 Future<void> doDesktopReminders() async {
-  const linux =
-      LinuxInitializationSettings(defaultActionName: 'Open notification');
-  const darwin = DarwinInitializationSettings();
-  const init = InitializationSettings(
-    linux: linux,
-    macOS: darwin,
+  const linux = LinuxInitializationSettings(
+    defaultActionName: 'Open notification',
   );
+  const darwin = DarwinInitializationSettings();
+  const init = InitializationSettings(linux: linux, macOS: darwin);
   final plugin = FlutterLocalNotificationsPlugin();
   await plugin.initialize(settings: init);
 
   final db = AppDatabase();
 
-  final diaries = await (db.diaries.select()
-        ..where(
-          (u) => const CustomExpression(
-            "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-          ),
-        ))
-      .get();
+  final diaries =
+      await (db.diaries.select()..where(
+            (u) => const CustomExpression(
+              "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
+            ),
+          ))
+          .get();
   final now = DateTime.now();
   final hour = now.hour;
 
   if (hour >= 6 && hour < 12) {
-    final entered = diaries
-        .where((entry) => entry.created.hour >= 6 && entry.created.hour < 12);
+    final entered = diaries.where(
+      (entry) => entry.created.hour >= 6 && entry.created.hour < 12,
+    );
     if (entered.isEmpty)
-      await plugin.show(
-        id: 1,
-        title: "Don't forget to log breakfast",
-      );
+      await plugin.show(id: 1, title: "Don't forget to log breakfast");
   } else if (hour >= 12 && hour < 16) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
     );
     if (entered.isEmpty)
-      await plugin.show(
-        id: 2,
-        title: "Don't forget to log lunch",
-      );
+      await plugin.show(id: 2, title: "Don't forget to log lunch");
   } else if (hour >= 16 && hour < 22) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
     );
     if (entered.isEmpty)
-      await plugin.show(
-        id: 3,
-        title: "Don't forget to log dinner",
-      );
+      await plugin.show(id: 3, title: "Don't forget to log dinner");
   }
 }
 
@@ -130,29 +121,24 @@ void cancelReminders() {
 }
 
 /// This is used by WorkManager so you can't reference any external variables.
-@pragma(
-  'vm:entry-point',
-)
+@pragma('vm:entry-point')
 void doMobileReminders() {
   Workmanager().executeTask((task, inputData) async {
     const darwin = DarwinInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/nutrition');
-    const init = InitializationSettings(
-      iOS: darwin,
-      android: android,
-    );
+    const init = InitializationSettings(iOS: darwin, android: android);
     final plugin = FlutterLocalNotificationsPlugin();
     await plugin.initialize(settings: init);
 
     final db = AppDatabase();
 
-    final diaries = await (db.diaries.select()
-          ..where(
-            (u) => const CustomExpression(
-              "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-            ),
-          ))
-        .get();
+    final diaries =
+        await (db.diaries.select()..where(
+              (u) => const CustomExpression(
+                "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
+              ),
+            ))
+            .get();
     final now = DateTime.now();
     final hour = now.hour;
 

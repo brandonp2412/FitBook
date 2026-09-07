@@ -13,12 +13,12 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 Widget _wrap(Widget child, SettingsState settingsState) => MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => settingsState),
-        ChangeNotifierProvider(create: (_) => DiaryState()),
-      ],
-      child: MaterialApp(home: child),
-    );
+  providers: [
+    ChangeNotifierProvider(create: (_) => settingsState),
+    ChangeNotifierProvider(create: (_) => DiaryState()),
+  ],
+  child: MaterialApp(home: child),
+);
 
 /// Pumps enough frames for streams and animations to settle.
 Future<void> settle(WidgetTester tester) async {
@@ -149,9 +149,9 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await settle(tester);
 
-    final updatedMeal = await (db.meals.select()
-          ..where((t) => t.id.equals(mealId)))
-        .getSingle();
+    final updatedMeal =
+        await (db.meals.select()..where((t) => t.id.equals(mealId)))
+            .getSingle();
     expect(updatedMeal.name, 'New Meal Name');
 
     final mealFoods = await db.mealFoods.select().get();
@@ -241,7 +241,7 @@ void main() {
     await tester.longPress(find.text('Dinner Salad'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.delete));
+    await tester.tap(find.byTooltip('Delete'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Delete'));
