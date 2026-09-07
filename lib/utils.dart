@@ -247,10 +247,7 @@ Food convertCustomServing({
   required double qty,
   required String unit,
 }) {
-  // Special case handling for 'serving' unit
   if (unit == 'serving') {
-    // When user selects 'serving', we want to return the full nutritional values
-    // multiplied by the quantity based on the food's original serving size
     return Food(
       id: food.id,
       name: food.name,
@@ -264,28 +261,22 @@ Food convertCustomServing({
     );
   }
 
-  // For other units, proceed with the gram conversion logic
-  // Get the original serving size in grams
   final originalServingSize = food.servingSize ?? 100;
   final originalServingUnit = food.servingUnit ?? 'grams';
 
-  // Convert original serving size to grams, handling 'serving' unit properly
   double originalServingG;
   if (originalServingUnit == 'serving') {
-    // If the original unit is 'serving', treat the serving size as grams
     originalServingG = originalServingSize;
   } else {
     originalServingG = convertToGrams(originalServingSize, originalServingUnit);
   }
 
-  // Calculate per-gram values
   final calsPerGram = (food.calories ?? 0) / originalServingG;
   final proteinPerGram = (food.proteinG ?? 0) / originalServingG;
   final fatPerGram = (food.fatG ?? 0) / originalServingG;
   final carbPerGram = (food.carbohydrateG ?? 0) / originalServingG;
   final fiberPerGram = (food.fiberG ?? 0) / originalServingG;
 
-  // Convert to the requested serving size
   final targetServingG = convertToGrams(qty, unit);
 
   return Food(

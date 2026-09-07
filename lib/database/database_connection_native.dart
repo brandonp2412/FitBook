@@ -21,7 +21,6 @@ QueryExecutor createNativeConnection() {
   });
 }
 
-// Stub for web function to avoid compilation errors
 QueryExecutor createWebConnection() {
   throw UnsupportedError('Web connection not supported on native platforms');
 }
