@@ -630,30 +630,28 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     }
 
     final food = result.food!;
-    if (settings.showImages) {
-      if (food.imageFile?.isNotEmpty == true)
-        return SizedBox(
-          height: 48,
-          width: 48,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.file(
-              File(food.imageFile!),
-              cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-            ),
+    if (settings.showImages && food.imageFile?.isNotEmpty == true)
+      return SizedBox(
+        height: 48,
+        width: 48,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Image.file(
+            File(food.imageFile!),
+            cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
           ),
-        );
-      if (food.smallImage?.isNotEmpty == true ||
-          food.bigImage?.isNotEmpty == true)
-        return SizedBox(
-          height: 48,
-          width: 48,
-          child:
-              CachedNetworkImage(imageUrl: food.bigImage ?? food.smallImage!),
-        );
-    }
+        ),
+      );
+    if (settings.showImages &&
+        (food.smallImage?.isNotEmpty == true ||
+            food.bigImage?.isNotEmpty == true))
+      return SizedBox(
+        height: 48,
+        width: 48,
+        child: CachedNetworkImage(imageUrl: food.bigImage ?? food.smallImage!),
+      );
     return const SizedBox(
       width: 48,
       height: 48,

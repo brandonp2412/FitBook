@@ -132,7 +132,6 @@ void main() async {
         unit: 'serving',
       ),
     );
-    // Add a meal diary entry (food is NULL — previously excluded by innerJoin).
     await db.diaries.insertOne(
       DiariesCompanion.insert(
         meal: Value(mealId),
@@ -282,10 +281,13 @@ void main() async {
     await tester.pumpAndSettle();
 
     final dateFormat = DateFormat(settings.shortDateFormat);
-    final renderedDateLabels = List.generate(
-      20,
-      (index) => dateFormat.format(now.subtract(Duration(days: index * 7))),
-    ).where((label) => find.text(label).evaluate().isNotEmpty).length;
+    final possibleDateLabels = {
+      for (var daysAgo = 0; daysAgo <= 140; daysAgo++)
+        dateFormat.format(now.subtract(Duration(days: daysAgo))),
+    };
+    final renderedDateLabels = possibleDateLabels
+        .where((label) => find.text(label).evaluate().isNotEmpty)
+        .length;
     expect(renderedDateLabels, inInclusiveRange(2, 8));
 
     await db.close();
@@ -307,7 +309,7 @@ void main() async {
         child: const MaterialApp(home: GraphPage()),
       ),
     );
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(
       tester
