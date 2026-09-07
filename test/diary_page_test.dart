@@ -11,6 +11,10 @@ import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
 
+Finder _fieldWithLabel(String label) => find.byWidgetPredicate(
+      (widget) => widget is TextField && widget.decoration?.labelText == label,
+    );
+
 Future<Food> _foodForDiary(int diaryId) async {
   final diary = await (db.diaries.select()..where((d) => d.id.equals(diaryId)))
       .getSingle();
@@ -106,7 +110,7 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.text('Name'), findsOneWidget);
 
-    await tester.enterText(find.byKey(const Key('name_field')), 'Test 4');
+    await tester.enterText(_fieldWithLabel('Name'), 'Test 4');
     await tester.pumpAndSettle();
     await tester.tap(
       find
@@ -128,7 +132,7 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.text('Test 4'), findsOneWidget);
 
-    await tester.enterText(find.byKey(const Key('name_field')), 'Test 5');
+    await tester.enterText(_fieldWithLabel('Name'), 'Test 5');
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();

@@ -793,6 +793,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 hintText: 'Search foods and meals...',
                 suffixIcon: (selectedFood != null || _selectedMealId != null)
                     ? IconButton(
+                        tooltip: 'Clear selection',
                         icon: const Icon(Icons.close),
                         onPressed: () {
                           setState(() {

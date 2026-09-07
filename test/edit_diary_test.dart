@@ -133,7 +133,7 @@ void main() async {
     const newQuantity = '3.5';
     await tester.enterText(find.bySemanticsLabel('Quantity'), newQuantity);
     await tester.enterText(
-      find.byKey(const Key('name_field')),
+      _fieldStarting('Name'),
       'Pure Premium Orange Juice Calcium And Vitamin D No Pulp (Edited)',
     );
     await tester.pump();
@@ -168,7 +168,7 @@ void main() async {
     await tester.pumpWidget(_wrap(const EditDiaryPage(), settingsState));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byKey(const Key('name_field')), 'Chicken');
+    await tester.enterText(_fieldStarting('Name'), 'Chicken');
     await tester.pumpAndSettle();
     await tester.tap(
       find
@@ -214,9 +214,9 @@ void main() async {
     await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.close));
+    await tester.tap(find.byTooltip('Clear selection'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byKey(const Key('name_field')), 'Lunch');
+    await tester.enterText(_fieldStarting('Name'), 'Lunch');
     await tester.pumpAndSettle();
     await tester.tap(
       find
