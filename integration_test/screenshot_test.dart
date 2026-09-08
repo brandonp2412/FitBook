@@ -235,11 +235,11 @@ BuildContext getBuildContext(WidgetTester tester, TabBarState tabBarState) {
   }
 }
 
-String bottomNavKey(TabBarState tabBarState) => switch (tabBarState) {
-      TabBarState.diary => 'DiaryPage',
-      TabBarState.graph => 'GraphPage',
-      TabBarState.foods => 'FoodPage',
-      TabBarState.weights => 'WeightPage',
+String bottomNavLabel(TabBarState tabBarState) => switch (tabBarState) {
+      TabBarState.diary => 'Diary',
+      TabBarState.graph => 'Graph',
+      TabBarState.foods => 'Food',
+      TabBarState.weights => 'Weight',
     };
 
 void navigateTo({required BuildContext context, required Widget page}) {
@@ -261,7 +261,7 @@ Future<void> generateScreenshot({
   await appWrapper();
   await tester.pumpAndSettle();
 
-  await tester.tap(find.byKey(Key(bottomNavKey(tabBarState))));
+  await tester.tap(find.bySemanticsLabel(bottomNavLabel(tabBarState)));
   await tester.pumpAndSettle();
 
   if (navigateToPage != null) {
