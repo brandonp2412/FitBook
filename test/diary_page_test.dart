@@ -4,7 +4,6 @@ import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:fit_book/speed_dial_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +11,8 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 Finder _fieldWithLabel(String label) => find.byWidgetPredicate(
-      (widget) => widget is TextField && widget.decoration?.labelText == label,
-    );
+  (widget) => widget is TextField && widget.decoration?.labelText == label,
+);
 
 Future<Food> _foodForDiary(int diaryId) async {
   final diary = await (db.diaries.select()..where((d) => d.id.equals(diaryId)))
@@ -57,9 +56,10 @@ void main() async {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final createdFood = await (db.foods.select()
-          ..where((food) => food.name.equals('Dragonfruit bowl')))
-        .getSingle();
+    final createdFood =
+        await (db.foods.select()
+              ..where((food) => food.name.equals('Dragonfruit bowl')))
+            .getSingle();
     final diaries = await db.diaries.select().get();
     expect(diaries, hasLength(1));
     expect(diaries.single.food, createdFood.id);
@@ -106,7 +106,7 @@ void main() async {
     await tester.pumpAndSettle();
     expect(find.text('Test 1'), findsOne);
 
-    await tester.tap(find.byType(SpeedDialFab));
+    await tester.tap(find.text('Add'));
     await tester.pumpAndSettle();
     expect(find.text('Name'), findsOneWidget);
 
