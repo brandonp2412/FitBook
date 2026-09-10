@@ -114,6 +114,7 @@ class EditWeightPage extends StatefulWidget {
 
 class _EditWeightPageState extends State<EditWeightPage> {
   final TextEditingController valueController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   String unit = 'kg';
   String convertTo = 'kg';
@@ -179,11 +180,14 @@ class _EditWeightPageState extends State<EditWeightPage> {
   }
 
   void save() {
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    final amount = double.tryParse(valueController.text.trim());
+    if (amount == null) return;
     Navigator.of(context).pop();
     saveWeight(
       context,
       original: widget.weight,
-      amount: double.parse(valueController.text),
+      amount: amount,
       unit: unit,
       convertTo: convertTo,
       created: created,
@@ -227,6 +231,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
       body: AdaptiveFormSurface(
         maxWidth: 820,
         child: Form(
+          key: formKey,
           child: ListView(
             children: [
               TextFormField(
@@ -235,8 +240,15 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(labelText: 'Weight ($unit)'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter weight' : null,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter weight';
+                  }
+                  if (double.tryParse(value.trim()) == null) {
+                    return 'Please enter a valid weight';
+                  }
+                  return null;
+                },
                 onTap: () => selectAll(valueController),
                 onFieldSubmitted: (value) => save(),
               ),

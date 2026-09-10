@@ -49,6 +49,46 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('EditWeightPage rejects invalid weight without closing', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: MaterialApp(
+          home: EditWeightPage(
+            weight: WeightsCompanion.insert(
+              amount: 0,
+              created: DateTime.now(),
+              unit: 'kg',
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.bySemanticsLabel('Weight (kg)'),
+      'not-a-number',
+    );
+    await tester.tap(find.text('Save'));
+    await tester.pump();
+
+    expect(find.text('Please enter a valid weight'), findsOne);
+    expect(find.text('Add weight'), findsOne);
+    expect(await db.weights.select().get(), isEmpty);
+
+    await db.close();
+  });
+
   testWidgets('EditWeightPage edit', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() async {
-  testWidgets('QuickAdd', (WidgetTester tester) async {
+  Future<void> pumpQuickAdd(WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
     final settingsState = SettingsState(settings);
@@ -27,6 +27,10 @@ void main() async {
       ),
     );
     await tester.pump();
+  }
+
+  testWidgets('QuickAdd', (WidgetTester tester) async {
+    await pumpQuickAdd(tester);
     expect(find.text('Quick add'), findsOne);
     await tester.tap(find.bySemanticsLabel('Calories'));
 
@@ -34,6 +38,55 @@ void main() async {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
     expect(find.text('Quick add'), findsNothing);
+
+    await db.close();
+  });
+
+  testWidgets('QuickAdd tolerates empty input while editing', (
+    WidgetTester tester,
+  ) async {
+    await pumpQuickAdd(tester);
+
+    await tester.enterText(find.bySemanticsLabel('Calories'), '');
+    await tester.pump();
+
+    expect(tester.takeException(), equals(null));
+    expect(find.text('Quick add'), findsOne);
+
+    await db.close();
+  });
+
+  testWidgets('QuickAdd saves locale-formatted nutrition values', (
+    WidgetTester tester,
+  ) async {
+    await pumpQuickAdd(tester);
+
+    await tester.enterText(find.bySemanticsLabel('Calories'), '1,200');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    final food = await (db.foods.select()
+          ..where((food) => food.name.equals('Quick-add'))
+          ..orderBy([(food) => OrderingTerm.desc(food.id)])
+          ..limit(1))
+        .getSingle();
+    expect(food.calories, 1200.0);
+    expect(find.text('Quick add'), findsNothing);
+
+    await db.close();
+  });
+
+  testWidgets('QuickAdd rejects invalid nutrition values without closing', (
+    WidgetTester tester,
+  ) async {
+    await pumpQuickAdd(tester);
+
+    await tester.enterText(find.bySemanticsLabel('Calories'), '');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pump();
+
+    expect(find.text('Enter valid nutrition values'), findsOne);
+    expect(find.text('Quick add'), findsOne);
 
     await db.close();
   });
