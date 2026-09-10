@@ -20,6 +20,24 @@ import 'backup_archive.dart';
 double? _parseDouble(dynamic val) =>
     val is String ? double.tryParse(val) : val as double?;
 
+void validateCsvImportRows(
+  List<List<dynamic>> rows, {
+  required int minimumColumns,
+  required String label,
+}) {
+  if (rows.length <= 1) {
+    throw FormatException('$label CSV contains no data rows.');
+  }
+  for (var index = 1; index < rows.length; index++) {
+    final columns = rows[index].length;
+    if (columns < minimumColumns) {
+      throw FormatException(
+        '$label CSV row ${index + 1} has $columns columns; expected at least $minimumColumns.',
+      );
+    }
+  }
+}
+
 class ImportData extends StatefulWidget {
   final BuildContext pageContext;
 
@@ -59,6 +77,7 @@ class _ImportDataState extends State<ImportData> {
 
       final codec = Csv(lineDelimiter: '\n');
       final rows = codec.decode(csv);
+      validateCsvImportRows(rows, minimumColumns: 121, label: 'Foods');
 
       List<FoodsCompanion> foods = [];
       for (final row in rows.skip(1)) {
@@ -305,6 +324,7 @@ class _ImportDataState extends State<ImportData> {
       }
       final codec = Csv(lineDelimiter: '\n');
       final rows = codec.decode(csv);
+      validateCsvImportRows(rows, minimumColumns: 5, label: 'Diary');
 
       final diaries = <DiariesCompanion>[];
       for (final row in rows.skip(1)) {

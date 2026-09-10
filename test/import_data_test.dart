@@ -56,6 +56,33 @@ void main() {
     FilePickerPlatform.instance = originalPicker;
   });
 
+  test('CSV import validation rejects header-only files', () {
+    expect(
+      () => validateCsvImportRows(
+        [
+          ['id', 'name'],
+        ],
+        minimumColumns: 2,
+        label: 'Foods',
+      ),
+      throwsA(isA<FormatException>()),
+    );
+  });
+
+  test('CSV import validation rejects truncated data rows', () {
+    expect(
+      () => validateCsvImportRows(
+        [
+          ['id', 'food', 'created', 'quantity', 'unit'],
+          [1, 2, '2026-09-11'],
+        ],
+        minimumColumns: 5,
+        label: 'Diary',
+      ),
+      throwsA(isA<FormatException>()),
+    );
+  });
+
   testWidgets('cancelling diary import is a no-op', (tester) async {
     FilePickerPlatform.instance = _FakeFilePicker(null);
     await tester.pumpWidget(_app());
