@@ -7,6 +7,35 @@ import 'backup_database.dart';
 
 const backupDatabaseName = 'fitbook.sqlite';
 
+void validateBackupDatabaseFile(File databaseFile) {
+  if (!databaseFile.existsSync()) {
+    throw const FormatException('Backup database file does not exist');
+  }
+
+  BackupDatabase? database;
+  try {
+    database = openBackupDatabase(databaseFile.path);
+    final hasFoods = database.select(
+      "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'foods'",
+    );
+    final hasDiaries = database.select(
+      "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'diaries'",
+    );
+    if (hasFoods.isEmpty || hasDiaries.isEmpty) {
+      throw const FormatException(
+          'Selected file is not a FitBook database backup');
+    }
+    database.select('PRAGMA quick_check');
+  } on FormatException {
+    rethrow;
+  } catch (_) {
+    throw const FormatException(
+        'Selected file is not a FitBook database backup');
+  } finally {
+    database?.close();
+  }
+}
+
 const _imageColumns = <(String, String)>[
   ('foods', 'image_file'),
   ('meals', 'image_file'),
@@ -100,6 +129,7 @@ Future<File> extractBackupArchive({
     throw const FormatException('Backup does not contain fitbook.sqlite');
   }
 
+  validateBackupDatabaseFile(databaseFile);
   final imported = openBackupDatabase(databaseFile.path);
   try {
     for (final (table, column) in _imageColumns) {

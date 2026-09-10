@@ -4,6 +4,13 @@ analyzer:
     invalid_return_type_for_catch_error: ignore
   exclude: 
   - "flutter/**"
+  - build/**
+  - android/**
+  - ios/**
+  - web/**
+  - windows/**
+  - macos/**
+  - linux/**
 
 include: package:flutter_lints/flutter.yaml
 

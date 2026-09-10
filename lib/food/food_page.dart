@@ -102,20 +102,18 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       query = query..where(db.foods.foodGroup.like('%${groupCtrl.text}%'));
     if (_servingUnit != null)
       query = query..where(db.foods.servingUnit.equals(_servingUnit!));
-    if (gtController.text.isNotEmpty)
+    final minimumServingSize = double.tryParse(
+      gtController.text.replaceAll(',', '').trim(),
+    );
+    if (minimumServingSize != null)
       query = query
-        ..where(
-          db.foods.servingSize.isBiggerThanValue(
-            double.parse(gtController.text),
-          ),
-        );
-    if (ltController.text.isNotEmpty)
+        ..where(db.foods.servingSize.isBiggerThanValue(minimumServingSize));
+    final maximumServingSize = double.tryParse(
+      ltController.text.replaceAll(',', '').trim(),
+    );
+    if (maximumServingSize != null)
       query = query
-        ..where(
-          db.foods.servingSize.isSmallerThanValue(
-            double.parse(ltController.text),
-          ),
-        );
+        ..where(db.foods.servingSize.isSmallerThanValue(maximumServingSize));
 
     setState(() {
       stream = query.watch();

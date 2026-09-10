@@ -285,6 +285,7 @@ class _ImportDataState extends State<ImportData> {
               documentsDirectory: dbFolder,
             )
           : selectedFile;
+      validateBackupDatabaseFile(sourceFile);
       await db.close();
       try {
         await sourceFile.copy(p.join(dbFolder.path, backupDatabaseName));

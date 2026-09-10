@@ -168,6 +168,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (mounted) settingsState.removeListener(setCtrls);
   }
 
+  double? _parseNumber(String value) =>
+      double.tryParse(value.replaceAll(',', '').trim());
+
   Map<String, Expression> _buildFoodColumns({int? id}) {
     var food = FoodsCompanion.insert(
       name: nameCtrl.text,
@@ -175,9 +178,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
       imageFile: Value(imgFile),
       smallImage: Value(smallImg),
       bigImage: Value(bigImg),
-      calories: Value(double.tryParse(calCtrl.text)),
+      calories: Value(_parseNumber(calCtrl.text)),
       servingUnit: Value(unit),
-      servingSize: Value(double.parse(sizeCtrl.text)),
+      servingSize: Value(_parseNumber(sizeCtrl.text)),
       // Editing a food must not change its position in the foods list.
       created: id == null ? Value(DateTime.now()) : Value<DateTime?>(created),
     );
@@ -189,7 +192,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       final column = db.foods.$columns.firstWhere((c) => c.name == entry.key);
       Variable value = Variable(entry.value.text);
       if (column.type == DriftSqlType.double)
-        value = Variable(double.tryParse(entry.value.text));
+        value = Variable(_parseNumber(entry.value.text));
       else if (column.type == DriftSqlType.dateTime)
         value = Variable(DateTime.tryParse(entry.value.text));
       columns[entry.key] = value;
@@ -424,8 +427,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      kjCtrl.text =
-                          (double.parse(value) * 4.184).toStringAsFixed(2);
+                      final calories = double.tryParse(
+                        value.replaceAll(',', '').trim(),
+                      );
+                      if (calories == null) {
+                        if (value.trim().isEmpty) kjCtrl.clear();
+                        return;
+                      }
+                      kjCtrl.text = (calories * 4.184).toStringAsFixed(2);
                     },
                     onTap: () => selectAll(calCtrl),
                     onSubmitted: (_) => selectAll(kjCtrl),
@@ -442,9 +451,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      calCtrl.text =
-                          (double.parse(value.replaceAll(r',', '')) / 4.184)
-                              .toStringAsFixed(2);
+                      final kilojoules = double.tryParse(
+                        value.replaceAll(',', '').trim(),
+                      );
+                      if (kilojoules == null) {
+                        if (value.trim().isEmpty) calCtrl.clear();
+                        return;
+                      }
+                      calCtrl.text = (kilojoules / 4.184).toStringAsFixed(2);
                     },
                     onSubmitted: (_) => selectAll(controllers['protein_g']!),
                     onTap: () => selectAll(kjCtrl),
