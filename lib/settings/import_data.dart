@@ -39,12 +39,17 @@ class _ImportDataState extends State<ImportData> {
     Navigator.pop(context);
 
     try {
-      FilePickerResult? result = await FilePicker.pickFiles();
-      setState(() {
-        importing = true;
-      });
+      final result = await FilePicker.pickFiles();
+      if (result == null) return;
+      final path = result.files.single.path;
+      if (path == null) return;
+      if (mounted) {
+        setState(() {
+          importing = true;
+        });
+      }
 
-      File file = File(result!.files.single.path!);
+      final file = File(path);
       String csv;
       try {
         csv = await file.readAsString(encoding: utf8);
@@ -206,8 +211,10 @@ class _ImportDataState extends State<ImportData> {
         );
       }
 
-      await db.foods.deleteAll();
-      await db.foods.insertAll(foods);
+      await db.transaction(() async {
+        await db.foods.deleteAll();
+        await db.foods.insertAll(foods);
+      });
       talker.info('Imported ${foods.length} foods from CSV');
       if (widget.pageContext.mounted)
         Navigator.pushNamedAndRemoveUntil(
@@ -277,43 +284,74 @@ class _ImportDataState extends State<ImportData> {
   }
 
   Future<void> _importEntries(BuildContext context) async {
-    FilePickerResult? result = await FilePicker.pickFiles();
-    setState(() {
-      importing = true;
-    });
-
-    File file = File(result!.files.single.path!);
-    String csv;
-    try {
-      csv = await file.readAsString(encoding: utf8);
-    } catch (error) {
-      csv = await file.readAsString(encoding: latin1);
+    Navigator.pop(context);
+    final result = await FilePicker.pickFiles();
+    if (result == null) return;
+    final path = result.files.single.path;
+    if (path == null) return;
+    if (mounted) {
+      setState(() {
+        importing = true;
+      });
     }
-    final codec = Csv(lineDelimiter: '\n');
-    final rows = codec.decode(csv);
 
-    List<DiariesCompanion> diaries = [];
-    for (final row in rows.skip(1)) {
-      diaries.add(
-        DiariesCompanion(
-          id: Value(row[0]),
-          food: Value(row[1]),
-          created: Value(DateTime.parse(row[2])),
-          quantity: Value(_parseDouble(row[3]) ?? 1.0),
-          unit: Value(row[4]),
+    try {
+      final file = File(path);
+      String csv;
+      try {
+        csv = await file.readAsString(encoding: utf8);
+      } catch (_) {
+        csv = await file.readAsString(encoding: latin1);
+      }
+      final codec = Csv(lineDelimiter: '\n');
+      final rows = codec.decode(csv);
+
+      final diaries = <DiariesCompanion>[];
+      for (final row in rows.skip(1)) {
+        diaries.add(
+          DiariesCompanion(
+            id: Value(row[0]),
+            food: Value(row[1]),
+            created: Value(DateTime.parse(row[2])),
+            quantity: Value(_parseDouble(row[3]) ?? 1.0),
+            unit: Value(row[4]),
+          ),
+        );
+      }
+
+      await db.transaction(() async {
+        await db.diaries.deleteAll();
+        await db.diaries.insertAll(diaries);
+      });
+      talker.info('Imported ${diaries.length} diary entries from CSV');
+      if (widget.pageContext.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          widget.pageContext,
+          '/',
+          (_) => false,
+        );
+      }
+    } catch (error, stackTrace) {
+      talker.handle(error, stackTrace, 'Failed to import diary CSV');
+      if (!widget.pageContext.mounted) return;
+      ScaffoldMessenger.of(widget.pageContext).showSnackBar(
+        SnackBar(
+          content: const Text('Failed to import data'),
+          action: SnackBarAction(
+            label: 'Copy error',
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: error.toString()));
+            },
+          ),
         ),
       );
+    } finally {
+      if (mounted) {
+        setState(() {
+          importing = false;
+        });
+      }
     }
-
-    await db.diaries.deleteAll();
-    await db.diaries.insertAll(diaries);
-    talker.info('Imported ${diaries.length} diary entries from CSV');
-    if (widget.pageContext.mounted)
-      Navigator.pushNamedAndRemoveUntil(
-        widget.pageContext,
-        '/',
-        (_) => false,
-      );
   }
 
   @override
