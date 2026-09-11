@@ -148,8 +148,8 @@ jobs:
           script: bash ./scripts/ci-patrol.sh
 
   version-bump:
-    if: github.event_name == 'push'
     needs: [quality-checks, generate-screenshots, patrol-tests]
+    if: ${{ always() && github.event_name == 'push' && needs.quality-checks.result == 'success' && needs.patrol-tests.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -165,18 +165,21 @@ jobs:
           persist-credentials: false
 
       - name: Download phone screenshots
+        continue-on-error: true
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: screenshots-phoneScreenshots
           path: fastlane/metadata/android/en-US/images/phoneScreenshots
 
       - name: Download seven-inch screenshots
+        continue-on-error: true
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: screenshots-sevenInchScreenshots
           path: fastlane/metadata/android/en-US/images/sevenInchScreenshots
 
       - name: Download ten-inch screenshots
+        continue-on-error: true
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: screenshots-tenInchScreenshots
@@ -452,6 +455,7 @@ jobs:
         build-android,
         build-linux,
         build-windows,
+        publish-google-play,
       ]
     runs-on: ubuntu-latest
     permissions:
@@ -479,6 +483,44 @@ jobs:
             windows-builds/fitbook-windows.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-google-play:
+    needs: [version-bump, build-android]
+    if: ${{ github.ref == 'refs/heads/main' && needs.version-bump.result == 'success' && needs.build-android.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ needs.version-bump.outputs.commit_sha }}
+          persist-credentials: false
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: android-builds
+          path: android-builds
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Configure Google Play credentials
+        env:
+          GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+        run: printf '%s' "$GOOGLE_PLAY_JSON_KEY" > "$RUNNER_TEMP/googlePlay.json"
+
+      - name: Publish Android App Bundle to Google Play
+        run: |
+          bundle exec fastlane supply \
+            --aab android-builds/bundle/release/app-release.aab \
+            --track production \
+            --package_name com.presley.fit_book \
+            --json_key "$RUNNER_TEMP/googlePlay.json" \
+            --release_status completed \
+            --skip_upload_metadata true \
+            --skip_upload_images true \
+            --skip_upload_screenshots true \
+            --skip_upload_changelogs true
 
   deploy-windows-store:
     needs: [version-bump, build-windows]
