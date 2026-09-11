@@ -233,10 +233,12 @@ List<Widget> getDiarySettings({
       ),
     if ('reminders'.contains(term))
       ListTile(
+        key: const Key('remindersTile'),
         leading: const Icon(Icons.notifications),
         title: const Text('Reminders'),
         onTap: () => setReminders(!settings.value.reminders),
         trailing: Switch(
+          key: const Key('remindersSwitch'),
           value: settings.value.reminders,
           onChanged: (value) => setReminders(value),
         ),

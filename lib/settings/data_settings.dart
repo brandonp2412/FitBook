@@ -100,12 +100,14 @@ List<Widget> getDataSettings({
   return [
     if ('automatic backup'.contains(term.toLowerCase()))
       ListTile(
+        key: const Key('automaticBackupTile'),
         title: const Text('Automatic backup'),
         leading: settings.value.automaticBackups
             ? const Icon(Icons.timer)
             : const Icon(Icons.timer_outlined),
         onTap: () => tapBackup(!settings.value.automaticBackups),
         trailing: Switch(
+          key: const Key('automaticBackupSwitch'),
           value: settings.value.automaticBackups,
           onChanged: (value) => tapBackup(value),
         ),

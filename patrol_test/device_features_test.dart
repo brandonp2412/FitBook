@@ -5,6 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
+const _uiTimeout = Duration(seconds: 15);
+const _nativeTimeout = Duration(seconds: 15);
+
+Future<void> _openSettingsSection(
+  PatrolIntegrationTester $,
+  String section,
+) async {
+  await $(Icons.more_vert).waitUntilVisible(timeout: _uiTimeout).tap();
+  await $('Settings').waitUntilVisible(timeout: _uiTimeout).tap();
+  await $(section).waitUntilVisible(timeout: _uiTimeout).tap();
+}
+
+Future<void> _grantPermissionIfShown(PatrolIntegrationTester $) async {
+  if (await $.platform.mobile.isPermissionDialogVisible(
+    timeout: const Duration(seconds: 5),
+  )) {
+    await $.platform.mobile.grantPermissionWhenInUse();
+  }
+}
+
 void main() {
   patrolTest(
     'automatic backup opens the folder picker and cancel leaves it disabled',
@@ -12,38 +32,30 @@ void main() {
       if (!Platform.isAndroid) return;
 
       app.main();
-      await $.pumpAndSettle();
+      await _openSettingsSection($, 'Data');
 
-      await $(Icons.more_vert).tap();
-      await $('Settings').tap();
-      await $('Data').tap();
+      final backupTile = $(#automaticBackupTile);
+      final backupSwitch = $(#automaticBackupSwitch);
+      await backupTile.waitUntilVisible(timeout: _uiTimeout);
 
-      if ($(Switch).which<Switch>((widget) => widget.value).exists) {
-        await $('Automatic backup').tap();
-        await $.pumpAndSettle();
+      if (backupSwitch.which<Switch>((widget) => widget.value).exists) {
+        await backupTile.tap();
+        await backupSwitch
+            .which<Switch>((widget) => !widget.value)
+            .waitUntilExists(timeout: _uiTimeout);
       }
 
-      expect(
-        $(Switch).which<Switch>((widget) => !widget.value).exists,
-        isTrue,
+      await backupTile.tap();
+      await $.platform.android.waitUntilVisible(
+        const AndroidSelector(textContains: 'Use this folder'),
+        timeout: _nativeTimeout,
       );
-
-      await $('Automatic backup').tap();
-
-      // Back must dismiss ACTION_OPEN_DOCUMENT_TREE and return to this same
-      // Flutter route. If the picker never opened, Back would pop Data settings
-      // instead and the assertions below would fail.
       await $.platform.android.pressBack();
-      // Native document picker cancellation can leave Android framework work
-      // scheduled indefinitely on headless emulators, so do a bounded pump
-      // instead of waiting for the entire app to become globally idle.
-      await $.pump(const Duration(seconds: 1));
 
-      expect($('Automatic backup').exists, isTrue);
-      expect(
-        $(Switch).which<Switch>((widget) => !widget.value).exists,
-        isTrue,
-      );
+      await backupTile.waitUntilVisible(timeout: _uiTimeout);
+      await backupSwitch
+          .which<Switch>((widget) => !widget.value)
+          .waitUntilExists(timeout: _uiTimeout);
     },
     tags: 'backup',
   );
@@ -54,73 +66,51 @@ void main() {
       if (!Platform.isAndroid) return;
 
       app.main();
-      await $.pumpAndSettle();
+      await _openSettingsSection($, 'Diary');
 
-      await $(Icons.more_vert).tap();
-      await $('Settings').tap();
-      await $('Diary').tap();
-      await $('Reminders').scrollTo().tap();
+      final remindersTile = $(#remindersTile);
+      final remindersSwitch = $(#remindersSwitch);
+      await remindersTile.scrollTo().tap();
+      await _grantPermissionIfShown($);
+      await remindersSwitch
+          .which<Switch>((widget) => widget.value)
+          .waitUntilExists(timeout: _uiTimeout);
 
-      expect(
-        $(Switch).which<Switch>((widget) => !widget.value).exists,
-        isTrue,
-      );
-
-      if (await $.platform.mobile.isPermissionDialogVisible(
-        timeout: const Duration(seconds: 5),
-      )) {
-        await $.platform.mobile.grantPermissionWhenInUse();
-      }
-
-      await $.pumpAndSettle();
-      expect(
-        $(Switch).which<Switch>((widget) => widget.value).exists,
-        isTrue,
-      );
-
-      await $('Reminders').scrollTo().tap();
-      await $.pumpAndSettle();
-      expect(
-        $(Switch).which<Switch>((widget) => !widget.value).exists,
-        isTrue,
-      );
+      await remindersTile.scrollTo().tap();
+      await remindersSwitch
+          .which<Switch>((widget) => !widget.value)
+          .waitUntilExists(timeout: _uiTimeout);
     },
     tags: 'reminders',
   );
 
   patrolTest(
     'reminders setting persists after reopening diary settings',
-    ($) async {
+    (
+      $,
+    ) async {
       if (!Platform.isAndroid) return;
 
       app.main();
-      await $.pumpAndSettle();
+      await _openSettingsSection($, 'Diary');
 
-      await $(Icons.more_vert).tap();
-      await $('Settings').tap();
-      await $('Diary').tap();
-      await $('Reminders').scrollTo().tap();
-
-      if (await $.platform.mobile.isPermissionDialogVisible(
-        timeout: const Duration(seconds: 5),
-      )) {
-        await $.platform.mobile.grantPermissionWhenInUse();
-      }
-      await $.pumpAndSettle();
+      final remindersTile = $(#remindersTile);
+      final remindersSwitch = $(#remindersSwitch);
+      await remindersTile.scrollTo().tap();
+      await _grantPermissionIfShown($);
+      await remindersSwitch
+          .which<Switch>((widget) => widget.value)
+          .waitUntilExists(timeout: _uiTimeout);
 
       await $.platform.android.pressBack();
       await $.platform.android.pressBack();
-      await $.pumpAndSettle();
+      await $(Icons.more_vert).waitUntilVisible(timeout: _uiTimeout);
 
-      await $(Icons.more_vert).tap();
-      await $('Settings').tap();
-      await $('Diary').tap();
-      await $('Reminders').scrollTo();
-
-      expect(
-        $(Switch).which<Switch>((widget) => widget.value).exists,
-        isTrue,
-      );
+      await _openSettingsSection($, 'Diary');
+      await remindersTile.scrollTo();
+      await remindersSwitch
+          .which<Switch>((widget) => widget.value)
+          .waitUntilExists(timeout: _uiTimeout);
     },
     tags: 'reminders',
   );
