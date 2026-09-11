@@ -28,10 +28,9 @@ class MainActivity: FlutterActivity() {
         scheduleBackups(context)
     }
 
-    private fun pick(path: String) {
-        Log.d("MainActivity.pick", "dbPath=$path")
+    private fun pick() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        activity.startActivityForResult(intent, WRITE_REQUEST_CODE)
+        startActivityForResult(intent, WRITE_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,9 +67,8 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "pick" -> {
-                    val dbPath = call.argument<String>("dbPath")!!
                     pendingPickResult = result
-                    pick(dbPath)
+                    pick()
                 }
 
                 // Lets E2E tests run the same receiver that the daily alarm invokes.

@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart' hide isNull;
-import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/main.dart';
@@ -34,7 +33,8 @@ void main() {
     );
     final kilojoules = find.byWidgetPredicate(
       (widget) =>
-          widget is TextField && widget.decoration?.labelText == 'Kilojoules (kj)',
+          widget is TextField &&
+          widget.decoration?.labelText == 'Kilojoules (kj)',
     );
     final servingSize = find.byWidgetPredicate(
       (widget) =>

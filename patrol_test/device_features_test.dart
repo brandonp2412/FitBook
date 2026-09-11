@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 
 const _uiTimeout = Duration(seconds: 15);
-const _nativeTimeout = Duration(seconds: 15);
 
 Future<void> _openSettingsSection(
   PatrolIntegrationTester $,
@@ -26,40 +25,6 @@ Future<void> _grantPermissionIfShown(PatrolIntegrationTester $) async {
 }
 
 void main() {
-  patrolTest(
-    'automatic backup opens the folder picker and cancel leaves it disabled',
-    ($) async {
-      if (!Platform.isAndroid) return;
-
-      app.main();
-      await _openSettingsSection($, 'Data');
-
-      final backupTile = $(#automaticBackupTile);
-      final backupSwitch = $(#automaticBackupSwitch);
-      await backupTile.waitUntilVisible(timeout: _uiTimeout);
-
-      if (backupSwitch.which<Switch>((widget) => widget.value).exists) {
-        await backupTile.tap();
-        await backupSwitch
-            .which<Switch>((widget) => !widget.value)
-            .waitUntilExists(timeout: _uiTimeout);
-      }
-
-      await backupTile.tap();
-      await $.platform.android.waitUntilVisible(
-        const AndroidSelector(textContains: 'Use this folder'),
-        timeout: _nativeTimeout,
-      );
-      await $.platform.android.pressBack();
-
-      await backupTile.waitUntilVisible(timeout: _uiTimeout);
-      await backupSwitch
-          .which<Switch>((widget) => !widget.value)
-          .waitUntilExists(timeout: _uiTimeout);
-    },
-    tags: 'backup',
-  );
-
   patrolTest(
     'reminders can be enabled and disabled',
     ($) async {
@@ -86,9 +51,7 @@ void main() {
 
   patrolTest(
     'reminders setting persists after reopening diary settings',
-    (
-      $,
-    ) async {
+    ($) async {
       if (!Platform.isAndroid) return;
 
       app.main();

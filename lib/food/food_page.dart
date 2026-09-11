@@ -17,6 +17,10 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Parses a serving-size filter while allowing incomplete numeric input.
+double? parseServingSizeFilter(String value) =>
+    double.tryParse(value.replaceAll(',', '').trim());
+
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
 
@@ -102,15 +106,11 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       query = query..where(db.foods.foodGroup.like('%${groupCtrl.text}%'));
     if (_servingUnit != null)
       query = query..where(db.foods.servingUnit.equals(_servingUnit!));
-    final minimumServingSize = double.tryParse(
-      gtController.text.replaceAll(',', '').trim(),
-    );
+    final minimumServingSize = parseServingSizeFilter(gtController.text);
     if (minimumServingSize != null)
       query = query
         ..where(db.foods.servingSize.isBiggerThanValue(minimumServingSize));
-    final maximumServingSize = double.tryParse(
-      ltController.text.replaceAll(',', '').trim(),
-    );
+    final maximumServingSize = parseServingSizeFilter(ltController.text);
     if (maximumServingSize != null)
       query = query
         ..where(db.foods.servingSize.isSmallerThanValue(maximumServingSize));

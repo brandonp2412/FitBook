@@ -23,14 +23,16 @@ void validateBackupDatabaseFile(File databaseFile) {
     );
     if (hasFoods.isEmpty || hasDiaries.isEmpty) {
       throw const FormatException(
-          'Selected file is not a FitBook database backup');
+        'Selected file is not a FitBook database backup',
+      );
     }
     database.select('PRAGMA quick_check');
   } on FormatException {
     rethrow;
   } catch (_) {
     throw const FormatException(
-        'Selected file is not a FitBook database backup');
+      'Selected file is not a FitBook database backup',
+    );
   } finally {
     database?.close();
   }

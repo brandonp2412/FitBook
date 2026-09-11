@@ -56,31 +56,30 @@ Future<void> notifyAutomaticBackupEnabled() async {
 }
 
 Future<void> tapBackup(bool value) async {
+  if (!value) {
+    await db.settings.update().write(
+          const SettingsCompanion(
+            automaticBackups: Value(false),
+          ),
+        );
+    return;
+  }
+
   await db.settings.update().write(
-        SettingsCompanion(
-          automaticBackups: Value(value),
+        const SettingsCompanion(
+          automaticBackups: Value(false),
         ),
       );
 
-  if (!value) return;
-
   try {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final dbPath = p.join(dbFolder.path, 'flexify.sqlite');
-    final selectedPath = await androidChannel.invokeMethod<String>(
-      'pick',
-      {'dbPath': dbPath},
-    );
+    final selectedPath = await androidChannel.invokeMethod<String>('pick');
+    if (selectedPath == null) return;
 
-    if (selectedPath == null) {
-      await db.settings.update().write(
-            const SettingsCompanion(
-              automaticBackups: Value(false),
-            ),
-          );
-      return;
-    }
-
+    await db.settings.update().write(
+          const SettingsCompanion(
+            automaticBackups: Value(true),
+          ),
+        );
     await notifyAutomaticBackupEnabled();
   } catch (_) {
     await db.settings.update().write(
