@@ -66,6 +66,7 @@ void main() {
           .waitUntilExists(timeout: _uiTimeout);
 
       await $.tester.pageBack();
+      await $('Settings').waitUntilVisible(timeout: _uiTimeout);
       await $.tester.pageBack();
       await $(Icons.more_vert).waitUntilVisible(timeout: _uiTimeout);
 
