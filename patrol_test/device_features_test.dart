@@ -65,8 +65,8 @@ void main() {
           .which<Switch>((widget) => widget.value)
           .waitUntilExists(timeout: _uiTimeout);
 
-      await $.platform.android.pressBack();
-      await $.platform.android.pressBack();
+      await $.tester.pageBack();
+      await $.tester.pageBack();
       await $(Icons.more_vert).waitUntilVisible(timeout: _uiTimeout);
 
       await _openSettingsSection($, 'Diary');
