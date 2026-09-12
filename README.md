@@ -16,19 +16,19 @@ Graph your eating habits with ease!
 
 <a href='https://play.google.com/store/apps/details?id=com.presley.fit_book'><img alt='Get it on Google Play' style="height: 80px !important" src='./docs/get-it-on-google-play.png'/></a>
 <a href="https://f-droid.org/packages/com.presley.fit_book"><img src="./docs/get-it-on-fdroid.png" alt="Get it on F-Droid" style="height: 80px !important"></a>
-<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img src="./docs/download-msstore.svg" style="height: 80px !important"/></a>
+<a href="https://apps.microsoft.com/detail/FitBook%20-%20Calorie%20tracker/9PJJVF8507G0?mode=direct"><img alt="Download FitBook from the Microsoft Store" src="./docs/download-msstore.svg" style="height: 80px !important"/></a>
 
 # Screenshots
 
 <p float="left">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7_en-US.png" height="600">
-    <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/8_en-US.png" height="600">
+    <img alt="FitBook diary screen listing foods and calories consumed during the day" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" height="600">
+    <img alt="FitBook calories graph showing daily calorie totals and goals over time" src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" height="600">
+    <img alt="FitBook settings screen with appearance, diary, food, weight, tabs, and data options" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" height="600">
+    <img alt="FitBook food screen listing diary entries with calorie values" src="fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" height="600">
+    <img alt="FitBook weight history screen showing recorded weights over several dates" src="fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png" height="600">
+    <img alt="FitBook add weight screen with weight, unit, date, and save controls" src="fastlane/metadata/android/en-US/images/phoneScreenshots/6_en-US.png" height="600">
+    <img alt="FitBook edit food screen showing nutrition fields for Coca-Cola" src="fastlane/metadata/android/en-US/images/phoneScreenshots/7_en-US.png" height="600">
+    <img alt="FitBook add diary entry screen for searching and selecting foods" src="fastlane/metadata/android/en-US/images/phoneScreenshots/8_en-US.png" height="600">
 </p>
 
 # Donations
