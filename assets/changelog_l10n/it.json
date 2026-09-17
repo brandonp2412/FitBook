@@ -8,5 +8,13 @@
   "1788551549": "• Ridisegnare l’interfaccia desktop\n• fix: ripristinare il layout dei grafici su mobile",
   "1788536802": "• ci: completare la migrazione delle Actions a Node 24",
   "1788534128": "• ci: aggiornare le Actions ai runtime Node 24",
-  "1788530896": "• ci: serializzare gli invii al Microsoft Store"
+  "1788530896": "• ci: serializzare gli invii al Microsoft Store",
+  "1788524403": "• fix: rimuovere la funzionalità di rete Windows non necessaria",
+  "1788520553": "• ci: usare la directory dei pacchetti Store supportata",
+  "1788518658": "• ci: pubblicare gli aggiornamenti dello Store senza distribuzione graduale",
+  "1788515899": "• Evitare attese di stabilizzazione Patrol senza limite dopo la selezione della cartella\n• Correggere l’argomento di pubblicazione della CLI di Microsoft Store\n• ci: isolare i gruppi di test Patrol instabili\n• ci: riprovare dopo disconnessioni temporanee dell’emulatore per gli screenshot",
+  "1788498371": "• Correggere il test Patrol instabile dei promemoria\n• Nascondere i test di integrazione Linux su dwl\n• Aggiornare la configurazione dell’agente\n• build: supportare la toolchain Android API 37\n• chore: impostare Android API 37 come target\n• ci: rendere la pubblicazione su Microsoft Store resiliente agli errori\n• ci: sincronizzare automaticamente i metadati Play\n• feat: aggiungere ripetizioni configurabili delle voci del diario\n• feat: combinare il grafico di calorie e peso\n• feat: integrare la registrazione con Talker",
+  "1787818904": "• Uniformare le etichette di proteine, fibre e alcol\n• Ridurre le modifiche superflue nei test widget fragili (#132)\n• Ripristinare il callback per eliminare le immagini\n• fix: applicare localmente il rafforzamento di Flutter\n• fix: ripristinare le utility nutrizionali condivise\n• test: allineare i test del diario ai widget attuali\n• test: controllare la quantità del diario tramite testo modificabile",
+  "1787807338": "• Correggere la ricerca dell’obiettivo dei macronutrienti nel grafico\n• Mostrare l’etichetta Proteine senza suffisso dell’unità\n• Aggiornare il test del grafico per l’etichetta Proteine",
+  "1787557753": "• Sincronizzare automaticamente i metadati del Google Play Store (#130)"
 }

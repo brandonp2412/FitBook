@@ -8,5 +8,13 @@
   "1788551549": "• Redesenhar a interface para desktop\n• fix: restaurar o layout dos gráficos no celular",
   "1788536802": "• ci: concluir a migração das Actions para Node 24",
   "1788534128": "• ci: atualizar as Actions para runtimes do Node 24",
-  "1788530896": "• ci: serializar os envios para a Microsoft Store"
+  "1788530896": "• ci: serializar os envios para a Microsoft Store",
+  "1788524403": "• fix: remover a funcionalidade de rede do Windows desnecessária",
+  "1788520553": "• ci: usar o diretório de pacotes da Store compatível",
+  "1788518658": "• ci: publicar atualizações da Store sem implantação gradual",
+  "1788515899": "• Evitar espera de estabilização do Patrol sem limite após selecionar uma pasta\n• Corrigir o argumento de publicação da CLI da Microsoft Store\n• ci: isolar grupos de testes instáveis do Patrol\n• ci: tentar novamente após desconexões transitórias do emulador de capturas de tela",
+  "1788498371": "• Corrigir o teste instável do Patrol para lembretes\n• Ocultar os testes de integração do Linux no dwl\n• Atualizar a configuração do agente\n• build: oferecer suporte à toolchain do Android API 37\n• chore: definir Android API 37 como alvo\n• ci: tornar a publicação na Microsoft Store tolerante a falhas\n• ci: sincronizar automaticamente os metadados do Play\n• feat: adicionar repetições configuráveis de entradas do diário\n• feat: combinar os gráficos de calorias e peso\n• feat: integrar o registro com o Talker",
+  "1787818904": "• Padronizar os rótulos de proteína, fibras e álcool\n• Reduzir alterações desnecessárias em testes de widgets frágeis (#132)\n• Restaurar o callback de exclusão de imagens\n• fix: aplicar localmente o reforço do Flutter\n• fix: restaurar os utilitários de nutrição compartilhados\n• test: alinhar os testes do diário aos widgets atuais\n• test: verificar a quantidade do diário por meio de texto editável",
+  "1787807338": "• Corrigir a busca da meta de macronutrientes no gráfico\n• Exibir o rótulo Proteína sem sufixo de unidade\n• Atualizar o teste do gráfico para o rótulo Proteína",
+  "1787557753": "• Sincronizar automaticamente os metadados da Google Play Store (#130)"
 }

@@ -8,5 +8,13 @@
   "1788551549": "• Rediseñar la interfaz de escritorio\n• fix: restaurar el diseño de gráficos en móvil",
   "1788536802": "• ci: completar la migración de Actions a Node 24",
   "1788534128": "• ci: actualizar las Actions a entornos de ejecución de Node 24",
-  "1788530896": "• ci: serializar los envíos a Microsoft Store"
+  "1788530896": "• ci: serializar los envíos a Microsoft Store",
+  "1788524403": "• fix: eliminar la capacidad de red de Windows innecesaria",
+  "1788520553": "• ci: usar el directorio de paquetes de Store compatible",
+  "1788518658": "• ci: publicar actualizaciones de Store sin despliegue gradual",
+  "1788515899": "• Evitar esperas de estabilización de Patrol sin límite tras elegir una carpeta\n• Corregir el argumento de publicación de la CLI de Microsoft Store\n• ci: aislar los grupos de pruebas inestables de Patrol\n• ci: reintentar desconexiones transitorias del emulador de capturas de pantalla",
+  "1788498371": "• Corregir la prueba inestable de Patrol para recordatorios\n• Ocultar las pruebas de integración de Linux en dwl\n• Actualizar la configuración del agente\n• build: admitir la cadena de herramientas de Android API 37\n• chore: usar Android API 37 como objetivo\n• ci: hacer tolerante a fallos la publicación en Microsoft Store\n• ci: sincronizar automáticamente los metadatos de Play\n• feat: añadir repeticiones configurables de entradas del diario\n• feat: combinar los gráficos de calorías y peso\n• feat: integrar el registro con Talker",
+  "1787818904": "• Normalizar las etiquetas de proteínas, fibra y alcohol\n• Reducir cambios innecesarios en pruebas de widgets frágiles (#132)\n• Restaurar el callback para eliminar imágenes\n• fix: aplicar localmente el endurecimiento de Flutter\n• fix: restaurar las utilidades de nutrición compartidas\n• test: adaptar las pruebas del diario a los widgets actuales\n• test: inspeccionar la cantidad del diario mediante texto editable",
+  "1787807338": "• Corregir la búsqueda del objetivo de macronutrientes en el gráfico\n• Mostrar la etiqueta Proteínas sin sufijo de unidad\n• Actualizar la prueba del gráfico para la etiqueta Proteínas",
+  "1787557753": "• Sincronizar automáticamente los metadatos de Google Play Store (#130)"
 }

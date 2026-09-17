@@ -8,5 +8,13 @@
   "1788551549": "• Repenser l’interface de bureau\n• fix: restaurer la disposition des graphiques sur mobile",
   "1788536802": "• ci: terminer la migration des Actions vers Node 24",
   "1788534128": "• ci: mettre à niveau les Actions vers les environnements Node 24",
-  "1788530896": "• ci: sérialiser les soumissions au Microsoft Store"
+  "1788530896": "• ci: sérialiser les soumissions au Microsoft Store",
+  "1788524403": "• fix: supprimer la capacité réseau Windows inutile",
+  "1788520553": "• ci: utiliser le répertoire de paquets Store pris en charge",
+  "1788518658": "• ci: publier les mises à jour du Store sans déploiement progressif",
+  "1788515899": "• Éviter une attente de stabilisation Patrol sans limite après le sélecteur de dossier\n• Corriger l’argument de publication de la CLI Microsoft Store\n• ci: isoler les groupes de tests Patrol instables\n• ci: réessayer après les déconnexions transitoires de l’émulateur de captures d’écran",
+  "1788498371": "• Corriger le test Patrol instable des rappels\n• Masquer les tests d’intégration Linux sous dwl\n• Mettre à jour la configuration de l’agent\n• build: prendre en charge la chaîne d’outils Android API 37\n• chore: cibler Android API 37\n• ci: rendre la publication sur Microsoft Store tolérante aux échecs\n• ci: synchroniser automatiquement les métadonnées Play\n• feat: ajouter des répétitions configurables des entrées du journal\n• feat: combiner les graphiques de calories et de poids\n• feat: intégrer la journalisation Talker",
+  "1787818904": "• Uniformiser les libellés des protéines, des fibres et de l’alcool\n• Réduire les modifications superflues dans les tests de widgets fragiles (#132)\n• Restaurer le callback de suppression d’image\n• fix: appliquer localement le durcissement Flutter\n• fix: restaurer les utilitaires nutritionnels partagés\n• test: aligner les tests du journal sur les widgets actuels\n• test: inspecter la quantité du journal via le texte modifiable",
+  "1787807338": "• Corriger la recherche de l’objectif de macronutriments du graphique\n• Afficher le libellé Protéines sans suffixe d’unité\n• Mettre à jour le test du graphique pour le libellé Protéines",
+  "1787557753": "• Synchroniser automatiquement les métadonnées du Google Play Store (#130)"
 }

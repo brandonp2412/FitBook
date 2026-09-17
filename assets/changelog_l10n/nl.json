@@ -8,5 +8,13 @@
   "1788551549": "• Desktopinterface opnieuw ontwerpen\n• fix: mobiele grafiekindeling herstellen",
   "1788536802": "• ci: migratie van Actions naar Node 24 afronden",
   "1788534128": "• ci: Actions upgraden naar Node 24-runtimes",
-  "1788530896": "• ci: inzendingen naar de Microsoft Store serialiseren"
+  "1788530896": "• ci: inzendingen naar de Microsoft Store serialiseren",
+  "1788524403": "• fix: onnodige Windows-netwerkfunctionaliteit verwijderen",
+  "1788520553": "• ci: ondersteunde Store-pakketmap gebruiken",
+  "1788518658": "• ci: Store-updates publiceren zonder gefaseerde uitrol",
+  "1788515899": "• Onbeperkt wachten op Patrol-stabilisatie na de mapkiezer voorkomen\n• Publicatieargument van de Microsoft Store CLI corrigeren\n• ci: instabiele Patrol-testgroepen isoleren\n• ci: tijdelijke verbindingsonderbrekingen van de screenshot-emulator opnieuw proberen",
+  "1788498371": "• Instabiele Patrol-test voor herinneringen corrigeren\n• Linux-integratietests op dwl verbergen\n• Agentconfiguratie bijwerken\n• build: Android API 37-toolchain ondersteunen\n• chore: Android API 37 als doel instellen\n• ci: publicatie naar Microsoft Store fouttolerant maken\n• ci: Play-metadata automatisch synchroniseren\n• feat: configureerbare herhalingen van dagboekitems toevoegen\n• feat: calorie- en gewichtsgrafiek combineren\n• feat: Talker-logging integreren",
+  "1787818904": "• Labels voor eiwit, vezels en alcohol uniformeren\n• Onnodige wijzigingen in kwetsbare widgettests verminderen (#132)\n• Callback voor het verwijderen van afbeeldingen herstellen\n• fix: Flutter-verstevigingen lokaal toepassen\n• fix: gedeelde voedingshulpprogramma's herstellen\n• test: dagboektests afstemmen op de huidige widgets\n• test: dagboekhoeveelheid controleren via bewerkbare tekst",
+  "1787807338": "• Ophalen van het macronutriëntendoel in de grafiek corrigeren\n• Label Eiwit zonder eenheidssuffix tonen\n• Grafiektest voor het label Eiwit bijwerken",
+  "1787557753": "• Google Play Store-metadata automatisch synchroniseren (#130)"
 }
