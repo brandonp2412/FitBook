@@ -8,6 +8,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/diary/repeat_entry_page.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -171,7 +172,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     } else if (widget.initialBarcode != null) {
       barcode.text = widget.initialBarcode!;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) toast(context, 'Barcode not found. Save to insert.');
+        if (mounted) toast(context, context.l10n.barcodeNotFoundSaveToInsert);
       });
     }
 
@@ -662,6 +663,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
+    final l10n = context.l10n;
 
     final shortUnit =
         getShortUnit(selectedFood?.servingUnit ?? settings.foodUnit);
@@ -673,16 +675,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       appBar: AppBar(
         title: Text(
           widget.id != null
-              ? 'Edit diary entry'
+              ? l10n.editDiaryEntry
               : _creatingFood
-                  ? 'Add food to diary'
-                  : 'Add diary entry',
+                  ? l10n.addFoodToDiary
+                  : l10n.addDiaryEntry,
         ),
         actions: [
           if (widget.id != null)
             IconButton(
               icon: const Icon(Icons.repeat),
-              tooltip: 'Repeat entry',
+              tooltip: l10n.repeatEntry,
               onPressed: _openRepeatConfiguration,
             ),
           if (widget.id != null)
@@ -693,17 +695,19 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   context: context,
                   builder: (BuildContext dialogContext) {
                     return AlertDialog(
-                      title: const Text('Confirm delete'),
+                      title: Text(dialogContext.l10n.confirmDelete),
                       content: Text(
-                        'Are you sure you want to delete ${selectedFood?.name}?',
+                        dialogContext.l10n.confirmDeleteDiaryEntry(
+                          selectedFood?.name ?? nameController.text,
+                        ),
                       ),
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('Cancel'),
+                          child: Text(dialogContext.l10n.cancel),
                           onPressed: () => Navigator.pop(dialogContext),
                         ),
                         TextButton(
-                          child: const Text('Delete'),
+                          child: Text(dialogContext.l10n.delete),
                           onPressed: () async {
                             Navigator.pop(dialogContext);
                             await db.diaries.deleteWhere(
@@ -749,7 +753,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                                 errorBuilder: (context, error, stackTrace) {
                                   return TextButton.icon(
                                     onPressed: setImage,
-                                    label: const Text('Image error'),
+                                    label: Text(l10n.imageError),
                                     icon: const Icon(Icons.error),
                                   );
                                 },
@@ -769,12 +773,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       children: [
                         TextButton.icon(
                           icon: const Icon(Icons.image),
-                          label: const Text('Set image'),
+                          label: Text(l10n.setImage),
                           onPressed: setImage,
                         ),
                         TextButton.icon(
                           icon: const Icon(Icons.camera_alt),
-                          label: const Text('Take photo'),
+                          label: Text(l10n.takePhoto),
                           onPressed: () => setImage(source: ImageSource.camera),
                         ),
                       ],
@@ -787,11 +791,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               autofocus: widget.id == null,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: 'Name',
-                hintText: 'Search foods and meals...',
+                labelText: l10n.name,
+                hintText: l10n.searchFoodsAndMeals,
                 suffixIcon: (selectedFood != null || _selectedMealId != null)
                     ? IconButton(
-                        tooltip: 'Clear selection',
+                        tooltip: l10n.clearSelection,
                         icon: const Icon(Icons.close),
                         onPressed: () {
                           setState(() {
@@ -821,7 +825,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                                   barcode.text = result.barcode!;
                                   toast(
                                     context,
-                                    'Barcode not found. Save to insert.',
+                                    l10n.barcodeNotFoundSaveToInsert,
                                   );
                                 }
                               },
@@ -863,11 +867,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   leading: _buildResultLeading(result),
                   title: Text(
                     result.type == _ResultType.openFoodFacts
-                        ? 'Search OpenFoodFacts for "${result.name}"'
+                        ? l10n.searchOpenFoodFactsFor(result.name)
                         : result.name,
                   ),
                   subtitle: result.type == _ResultType.meal
-                      ? const Text('Meal')
+                      ? Text(l10n.meal)
                       : result.food?.calories != null
                           ? Text(
                               '${result.food!.calories!.toStringAsFixed(0)} kcal',
@@ -880,7 +884,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 controller: quantity,
                 focusNode: quantityNode,
                 decoration: InputDecoration(
-                  label: const Text('Quantity'),
+                  label: Text(l10n.quantity),
                   suffixText: _selectedMealId != null
                       ? '${formatter.format(_mealCalsPerServing * _num(quantity))} kcal'
                       : '${formatter.format(entryCalories)} kcal',
@@ -899,18 +903,23 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 initialValue: unit,
-                decoration: const InputDecoration(labelText: 'Unit'),
+                decoration: InputDecoration(labelText: l10n.unit),
                 items: unitOptions.map((String value) {
-                  if (value == 'serving' && selectedFood != null)
+                  if (value == 'serving' && selectedFood != null) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text("serving ($servingSize $shortUnit)"),
+                      child: Text(
+                        l10n.servingWithAmountUnit(
+                          formatter.format(servingSize),
+                          shortUnit,
+                        ),
+                      ),
                     );
-                  else
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
+                  }
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(localizedUnit(l10n, value)),
+                  );
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
@@ -920,10 +929,12 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Created date'),
+                title: Text(l10n.createdDate),
                 subtitle: Text(
-                  DateFormat(settings.longDateFormat)
-                      .format(created ?? DateTime.now()),
+                  DateFormat(
+                    settings.longDateFormat,
+                    Localizations.localeOf(context).toLanguageTag(),
+                  ).format(created ?? DateTime.now()),
                 ),
                 onTap: () => pickDate(),
               ),
@@ -933,13 +944,13 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Barcode',
+                    labelText: l10n.barcode,
                     suffixIcon: ScanBarcode(
                       text: true,
                       value: barcode.text,
                       onBarcode: (value) {
                         barcode.text = value;
-                        toast(context, 'Barcode not found. Save to insert.');
+                        toast(context, l10n.barcodeNotFoundSaveToInsert);
                       },
                       onFood: (food) {
                         barcode.text = food.barcode!;
@@ -957,7 +968,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         controller: calories,
                         focusNode: caloriesNode,
                         decoration: InputDecoration(
-                          labelText: 'Calories (per $servingSize $shortUnit)',
+                          labelText: l10n.nutritionPerAmountUnit(
+                            l10n.calories,
+                            formatter.format(servingSize),
+                            shortUnit,
+                          ),
                         ),
                         onTap: () => selectAll(calories),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -980,8 +995,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         child: TextField(
                           controller: kilojoules,
                           decoration: InputDecoration(
-                            labelText:
-                                'Kilojoules (per $servingSize $shortUnit)',
+                            labelText: l10n.nutritionPerAmountUnit(
+                              l10n.kilojoules,
+                              formatter.format(servingSize),
+                              shortUnit,
+                            ),
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
@@ -1008,7 +1026,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       child: TextField(
                         controller: protein,
                         decoration: InputDecoration(
-                          labelText: 'Protein (per $servingSize $shortUnit)',
+                          labelText: l10n.nutritionPerAmountUnit(
+                            l10n.protein,
+                            formatter.format(servingSize),
+                            shortUnit,
+                          ),
                         ),
                         onTap: () => selectAll(protein),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -1028,7 +1050,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       child: TextField(
                         controller: carb,
                         decoration: InputDecoration(
-                          labelText: 'Carbs (per $servingSize $shortUnit)',
+                          labelText: l10n.nutritionPerAmountUnit(
+                            l10n.carbs,
+                            formatter.format(servingSize),
+                            shortUnit,
+                          ),
                         ),
                         onTap: () => selectAll(carb),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -1052,7 +1078,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       child: TextField(
                         controller: fat,
                         decoration: InputDecoration(
-                          labelText: 'Fat (per $servingSize $shortUnit)',
+                          labelText: l10n.nutritionPerAmountUnit(
+                            l10n.fat,
+                            formatter.format(servingSize),
+                            shortUnit,
+                          ),
                         ),
                         onTap: () => selectAll(fat),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -1072,7 +1102,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       child: TextField(
                         controller: fiber,
                         decoration: InputDecoration(
-                          labelText: 'Fiber (per $servingSize $shortUnit)',
+                          labelText: l10n.nutritionPerAmountUnit(
+                            l10n.fiber,
+                            formatter.format(servingSize),
+                            shortUnit,
+                          ),
                         ),
                         onTap: () => selectAll(fiber),
                         keyboardType: const TextInputType.numberWithOptions(
@@ -1094,14 +1128,18 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Calories per ${quantity.text} $shortUnit',
+                        label: l10n.nutritionPerQuantityUnit(
+                          l10n.calories,
+                          quantity.text,
+                          shortUnit,
+                        ),
                         value: '${formatter.format(entryCalories)} kcal',
                       ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Kilojoules',
+                        label: l10n.kilojoules,
                         value: '${formatter.format(entryKJ)} kJ',
                       ),
                     ),
@@ -1112,14 +1150,14 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Protein',
+                        label: l10n.protein,
                         value: '${formatter.format(entryProtein)} g',
                       ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Carbs',
+                        label: l10n.carbs,
                         value: '${formatter.format(entryCarb)} g',
                       ),
                     ),
@@ -1130,14 +1168,14 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Fat',
+                        label: l10n.fat,
                         value: '${formatter.format(entryFat)} g',
                       ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Fiber',
+                        label: l10n.fiber,
                         value: '${formatter.format(entryFiber)} g',
                       ),
                     ),
@@ -1150,7 +1188,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Calories per ${quantity.text} serving',
+                        label: l10n.nutritionPerQuantityUnit(
+                          l10n.calories,
+                          quantity.text,
+                          l10n.unitServing,
+                        ),
                         value:
                             '${formatter.format(_mealCalsPerServing * _num(quantity))} kcal',
                       ),
@@ -1158,7 +1200,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Kilojoules',
+                        label: l10n.kilojoules,
                         value:
                             '${formatter.format(_mealCalsPerServing * _num(quantity) * 4.184)} kJ',
                       ),
@@ -1170,7 +1212,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Protein',
+                        label: l10n.protein,
                         value:
                             '${formatter.format(_mealProteinPerServing * _num(quantity))} g',
                       ),
@@ -1178,7 +1220,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Carbs',
+                        label: l10n.carbs,
                         value:
                             '${formatter.format(_mealCarbPerServing * _num(quantity))} g',
                       ),
@@ -1190,7 +1232,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   children: [
                     Expanded(
                       child: totalCell(
-                        label: 'Fat',
+                        label: l10n.fat,
                         value:
                             '${formatter.format(_mealFatPerServing * _num(quantity))} g',
                       ),
@@ -1198,7 +1240,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: totalCell(
-                        label: 'Fiber',
+                        label: l10n.fiber,
                         value:
                             '${formatter.format(_mealFiberPerServing * _num(quantity))} g',
                       ),
@@ -1220,7 +1262,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ),
               child: AnimatedFab(
                 onTap: save,
-                label: 'Save',
+                label: l10n.save,
                 icon: Icons.save,
                 scroll: scrollCtrl,
               ),

@@ -708,4 +708,105 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get cameraStartFailed => '카메라를 시작할 수 없습니다';
+
+  @override
+  String get editDiaryEntry => '일기 항목 편집';
+
+  @override
+  String get addFoodToDiary => '일기에 음식 추가';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return '‘$name’ 항목을 삭제하시겠습니까?';
+  }
+
+  @override
+  String get imageError => '이미지 오류';
+
+  @override
+  String get setImage => '이미지 설정';
+
+  @override
+  String get name => '이름';
+
+  @override
+  String get searchFoodsAndMeals => '음식 및 식사 검색...';
+
+  @override
+  String get clearSelection => '선택 지우기';
+
+  @override
+  String get barcodeNotFoundSaveToInsert => '바코드를 찾을 수 없습니다. 저장하여 추가하세요.';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return 'OpenFoodFacts에서 \"$name\" 검색';
+  }
+
+  @override
+  String get meal => '식사';
+
+  @override
+  String get quantity => '수량';
+
+  @override
+  String get unit => '단위';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return '1회 제공량 ($amount $unit)';
+  }
+
+  @override
+  String get barcode => '바코드';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$nutrient ($amount $unit당)';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '$nutrient ($quantity $unit당)';
+  }
+
+  @override
+  String get fiber => '식이섬유';
+
+  @override
+  String get unitServing => '1회 제공량';
+
+  @override
+  String get unitGrams => '그램';
+
+  @override
+  String get unitMilliliters => '밀리리터';
+
+  @override
+  String get unitKilojoules => '킬로줄';
+
+  @override
+  String get unitCups => '컵';
+
+  @override
+  String get unitTablespoons => '큰술';
+
+  @override
+  String get unitMilligrams => '밀리그램';
+
+  @override
+  String get unitTeaspoons => '작은술';
+
+  @override
+  String get unitOunces => '온스';
+
+  @override
+  String get unitPounds => '파운드';
+
+  @override
+  String get unitKilograms => '킬로그램';
+
+  @override
+  String get unitLiters => '리터';
 }

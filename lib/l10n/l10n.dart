@@ -21,3 +21,20 @@ String localePreferenceFromLocale(Locale locale) {
       ? locale.languageCode
       : '${locale.languageCode}-$countryCode';
 }
+
+/// Returns a localized display label without changing the persisted unit ID.
+String localizedUnit(AppLocalizations l10n, String unit) => switch (unit) {
+      'serving' => l10n.unitServing,
+      'grams' => l10n.unitGrams,
+      'milliliters' => l10n.unitMilliliters,
+      'kilojoules' => l10n.unitKilojoules,
+      'cups' => l10n.unitCups,
+      'tablespoons' => l10n.unitTablespoons,
+      'milligrams' => l10n.unitMilligrams,
+      'teaspoons' => l10n.unitTeaspoons,
+      'ounces' => l10n.unitOunces,
+      'pounds' => l10n.unitPounds,
+      'kilograms' => l10n.unitKilograms,
+      'liters' => l10n.unitLiters,
+      _ => unit,
+    };

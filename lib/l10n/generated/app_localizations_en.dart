@@ -728,4 +728,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameraStartFailed => 'Could not start the camera';
+
+  @override
+  String get editDiaryEntry => 'Edit diary entry';
+
+  @override
+  String get addFoodToDiary => 'Add food to diary';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return 'Are you sure you want to delete $name?';
+  }
+
+  @override
+  String get imageError => 'Image error';
+
+  @override
+  String get setImage => 'Set image';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get searchFoodsAndMeals => 'Search foods and meals...';
+
+  @override
+  String get clearSelection => 'Clear selection';
+
+  @override
+  String get barcodeNotFoundSaveToInsert =>
+      'Barcode not found. Save to insert.';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return 'Search OpenFoodFacts for \"$name\"';
+  }
+
+  @override
+  String get meal => 'Meal';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get unit => 'Unit';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return 'Serving ($amount $unit)';
+  }
+
+  @override
+  String get barcode => 'Barcode';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$nutrient (per $amount $unit)';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '$nutrient per $quantity $unit';
+  }
+
+  @override
+  String get fiber => 'Fiber';
+
+  @override
+  String get unitServing => 'Serving';
+
+  @override
+  String get unitGrams => 'Grams';
+
+  @override
+  String get unitMilliliters => 'Milliliters';
+
+  @override
+  String get unitKilojoules => 'Kilojoules';
+
+  @override
+  String get unitCups => 'Cups';
+
+  @override
+  String get unitTablespoons => 'Tablespoons';
+
+  @override
+  String get unitMilligrams => 'Milligrams';
+
+  @override
+  String get unitTeaspoons => 'Teaspoons';
+
+  @override
+  String get unitOunces => 'Ounces';
+
+  @override
+  String get unitPounds => 'Pounds';
+
+  @override
+  String get unitKilograms => 'Kilograms';
+
+  @override
+  String get unitLiters => 'Liters';
 }

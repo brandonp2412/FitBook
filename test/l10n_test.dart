@@ -70,6 +70,16 @@ void main() {
       'zh-CN',
     );
   });
+
+  test('unit display labels localize without changing stored identifiers',
+      () async {
+    final spanish = await AppLocalizations.delegate.load(const Locale('es'));
+
+    expect(localizedUnit(spanish, 'serving'), 'Ración');
+    expect(localizedUnit(spanish, 'grams'), 'Gramos');
+    expect(localizedUnit(spanish, 'milliliters'), 'Mililitros');
+    expect(localizedUnit(spanish, 'custom-unit'), 'custom-unit');
+  });
 }
 
 Map<String, dynamic> _readArb(File file) =>

@@ -708,4 +708,105 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cameraStartFailed => 'カメラを起動できませんでした';
+
+  @override
+  String get editDiaryEntry => '日記エントリを編集';
+
+  @override
+  String get addFoodToDiary => '日記に食品を追加';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return '$name を削除しますか？';
+  }
+
+  @override
+  String get imageError => '画像エラー';
+
+  @override
+  String get setImage => '画像を設定';
+
+  @override
+  String get name => '名前';
+
+  @override
+  String get searchFoodsAndMeals => '食品と食事を検索...';
+
+  @override
+  String get clearSelection => '選択をクリア';
+
+  @override
+  String get barcodeNotFoundSaveToInsert => 'バーコードが見つかりません。保存して追加してください。';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return 'OpenFoodFactsで「$name」を検索';
+  }
+
+  @override
+  String get meal => '食事';
+
+  @override
+  String get quantity => '数量';
+
+  @override
+  String get unit => '単位';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return '1食分 ($amount $unit)';
+  }
+
+  @override
+  String get barcode => 'バーコード';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$amount $unitあたりの$nutrient';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '$quantity $unitあたりの$nutrient';
+  }
+
+  @override
+  String get fiber => '食物繊維';
+
+  @override
+  String get unitServing => '1食分';
+
+  @override
+  String get unitGrams => 'グラム';
+
+  @override
+  String get unitMilliliters => 'ミリリットル';
+
+  @override
+  String get unitKilojoules => 'キロジュール';
+
+  @override
+  String get unitCups => 'カップ';
+
+  @override
+  String get unitTablespoons => '大さじ';
+
+  @override
+  String get unitMilligrams => 'ミリグラム';
+
+  @override
+  String get unitTeaspoons => '小さじ';
+
+  @override
+  String get unitOunces => 'オンス';
+
+  @override
+  String get unitPounds => 'ポンド';
+
+  @override
+  String get unitKilograms => 'キログラム';
+
+  @override
+  String get unitLiters => 'リットル';
 }

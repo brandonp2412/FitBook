@@ -703,6 +703,107 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cameraStartFailed => '无法启动相机';
+
+  @override
+  String get editDiaryEntry => '编辑日记条目';
+
+  @override
+  String get addFoodToDiary => '将食物添加到日记';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return '确定要删除 $name 吗？';
+  }
+
+  @override
+  String get imageError => '图片错误';
+
+  @override
+  String get setImage => '设置图片';
+
+  @override
+  String get name => '名称';
+
+  @override
+  String get searchFoodsAndMeals => '搜索食物和餐食...';
+
+  @override
+  String get clearSelection => '清除选择';
+
+  @override
+  String get barcodeNotFoundSaveToInsert => '未找到条形码。保存以添加。';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return '在 OpenFoodFacts 中搜索“$name”';
+  }
+
+  @override
+  String get meal => '餐食';
+
+  @override
+  String get quantity => '数量';
+
+  @override
+  String get unit => '单位';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return '份 ($amount $unit)';
+  }
+
+  @override
+  String get barcode => '条形码';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$nutrient（每 $amount $unit）';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '每 $quantity $unit的$nutrient';
+  }
+
+  @override
+  String get fiber => '膳食纤维';
+
+  @override
+  String get unitServing => '份';
+
+  @override
+  String get unitGrams => '克';
+
+  @override
+  String get unitMilliliters => '毫升';
+
+  @override
+  String get unitKilojoules => '千焦';
+
+  @override
+  String get unitCups => '杯';
+
+  @override
+  String get unitTablespoons => '汤匙';
+
+  @override
+  String get unitMilligrams => '毫克';
+
+  @override
+  String get unitTeaspoons => '茶匙';
+
+  @override
+  String get unitOunces => '盎司';
+
+  @override
+  String get unitPounds => '磅';
+
+  @override
+  String get unitKilograms => '千克';
+
+  @override
+  String get unitLiters => '升';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -1404,4 +1505,105 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get cameraStartFailed => '无法启动相机';
+
+  @override
+  String get editDiaryEntry => '编辑日记条目';
+
+  @override
+  String get addFoodToDiary => '将食物添加到日记';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return '确定要删除 $name 吗？';
+  }
+
+  @override
+  String get imageError => '图片错误';
+
+  @override
+  String get setImage => '设置图片';
+
+  @override
+  String get name => '名称';
+
+  @override
+  String get searchFoodsAndMeals => '搜索食物和餐食...';
+
+  @override
+  String get clearSelection => '清除选择';
+
+  @override
+  String get barcodeNotFoundSaveToInsert => '未找到条形码。保存以添加。';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return '在 OpenFoodFacts 中搜索“$name”';
+  }
+
+  @override
+  String get meal => '餐食';
+
+  @override
+  String get quantity => '数量';
+
+  @override
+  String get unit => '单位';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return '份 ($amount $unit)';
+  }
+
+  @override
+  String get barcode => '条形码';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$nutrient（每 $amount $unit）';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '每 $quantity $unit的$nutrient';
+  }
+
+  @override
+  String get fiber => '膳食纤维';
+
+  @override
+  String get unitServing => '份';
+
+  @override
+  String get unitGrams => '克';
+
+  @override
+  String get unitMilliliters => '毫升';
+
+  @override
+  String get unitKilojoules => '千焦';
+
+  @override
+  String get unitCups => '杯';
+
+  @override
+  String get unitTablespoons => '汤匙';
+
+  @override
+  String get unitMilligrams => '毫克';
+
+  @override
+  String get unitTeaspoons => '茶匙';
+
+  @override
+  String get unitOunces => '盎司';
+
+  @override
+  String get unitPounds => '磅';
+
+  @override
+  String get unitKilograms => '千克';
+
+  @override
+  String get unitLiters => '升';
 }

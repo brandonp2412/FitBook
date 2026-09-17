@@ -1431,6 +1431,187 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not start the camera'**
   String get cameraStartFailed;
+
+  /// No description provided for @editDiaryEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit diary entry'**
+  String get editDiaryEntry;
+
+  /// No description provided for @addFoodToDiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Add food to diary'**
+  String get addFoodToDiary;
+
+  /// No description provided for @confirmDeleteDiaryEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete {name}?'**
+  String confirmDeleteDiaryEntry(String name);
+
+  /// No description provided for @imageError.
+  ///
+  /// In en, this message translates to:
+  /// **'Image error'**
+  String get imageError;
+
+  /// No description provided for @setImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set image'**
+  String get setImage;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @searchFoodsAndMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Search foods and meals...'**
+  String get searchFoodsAndMeals;
+
+  /// No description provided for @clearSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear selection'**
+  String get clearSelection;
+
+  /// No description provided for @barcodeNotFoundSaveToInsert.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode not found. Save to insert.'**
+  String get barcodeNotFoundSaveToInsert;
+
+  /// No description provided for @searchOpenFoodFactsFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Search OpenFoodFacts for \"{name}\"'**
+  String searchOpenFoodFactsFor(String name);
+
+  /// No description provided for @meal.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal'**
+  String get meal;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantity;
+
+  /// No description provided for @unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unit;
+
+  /// No description provided for @servingWithAmountUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving ({amount} {unit})'**
+  String servingWithAmountUnit(String amount, String unit);
+
+  /// No description provided for @barcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get barcode;
+
+  /// No description provided for @nutritionPerAmountUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'{nutrient} (per {amount} {unit})'**
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit);
+
+  /// No description provided for @nutritionPerQuantityUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'{nutrient} per {quantity} {unit}'**
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit);
+
+  /// No description provided for @fiber.
+  ///
+  /// In en, this message translates to:
+  /// **'Fiber'**
+  String get fiber;
+
+  /// No description provided for @unitServing.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving'**
+  String get unitServing;
+
+  /// No description provided for @unitGrams.
+  ///
+  /// In en, this message translates to:
+  /// **'Grams'**
+  String get unitGrams;
+
+  /// No description provided for @unitMilliliters.
+  ///
+  /// In en, this message translates to:
+  /// **'Milliliters'**
+  String get unitMilliliters;
+
+  /// No description provided for @unitKilojoules.
+  ///
+  /// In en, this message translates to:
+  /// **'Kilojoules'**
+  String get unitKilojoules;
+
+  /// No description provided for @unitCups.
+  ///
+  /// In en, this message translates to:
+  /// **'Cups'**
+  String get unitCups;
+
+  /// No description provided for @unitTablespoons.
+  ///
+  /// In en, this message translates to:
+  /// **'Tablespoons'**
+  String get unitTablespoons;
+
+  /// No description provided for @unitMilligrams.
+  ///
+  /// In en, this message translates to:
+  /// **'Milligrams'**
+  String get unitMilligrams;
+
+  /// No description provided for @unitTeaspoons.
+  ///
+  /// In en, this message translates to:
+  /// **'Teaspoons'**
+  String get unitTeaspoons;
+
+  /// No description provided for @unitOunces.
+  ///
+  /// In en, this message translates to:
+  /// **'Ounces'**
+  String get unitOunces;
+
+  /// No description provided for @unitPounds.
+  ///
+  /// In en, this message translates to:
+  /// **'Pounds'**
+  String get unitPounds;
+
+  /// No description provided for @unitKilograms.
+  ///
+  /// In en, this message translates to:
+  /// **'Kilograms'**
+  String get unitKilograms;
+
+  /// No description provided for @unitLiters.
+  ///
+  /// In en, this message translates to:
+  /// **'Liters'**
+  String get unitLiters;
 }
 
 class _AppLocalizationsDelegate

@@ -25,7 +25,7 @@ List<Widget> getFoodSettings({
           items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(localizedUnit(l10n, value)),
             );
           }).toList(),
           onChanged: (value) => db.settings.update().write(
