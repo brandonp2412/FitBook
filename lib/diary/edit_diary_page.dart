@@ -92,7 +92,10 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   String? imageFile;
   String? bigImage;
   List<_SearchResult> searchResults = [];
-  final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
+
+  NumberFormat get formatter => NumberFormat.decimalPattern(
+        localizationsFromPreference(settings.locale).localeName,
+      )..maximumFractionDigits = 2;
 
   double _mealCalsPerServing = 0;
   double _mealProteinPerServing = 0;
@@ -182,7 +185,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         .getSingle()
         .then((entry) async {
       setState(() {
-        quantity.text = entry.quantity.toString();
+        quantity.text = formatter.format(entry.quantity);
         created = entry.created;
         unit = entry.unit;
       });
@@ -507,7 +510,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   Future<void> save() async {
-    final qty = double.tryParse(quantity.text) ?? 1.0;
+    final qty = formatter.tryParse(quantity.text)?.toDouble() ?? 1.0;
     final date = created ?? DateTime.now();
 
     if (_selectedMealId != null) {

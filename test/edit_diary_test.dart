@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' hide isNull;
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,17 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 import 'test_utils.dart';
 
-Widget _wrap(Widget child, SettingsState settingsState) => MultiProvider(
+Widget _wrap(
+  Widget child,
+  SettingsState settingsState, {
+  Locale locale = const Locale('en'),
+}) =>
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => settingsState),
         ChangeNotifierProvider(create: (_) => DiaryState()),
       ],
-      child: localizedApp(home: child),
+      child: localizedApp(home: child, locale: locale),
     );
 
 Finder _fieldStarting(String label) => find.byWidgetPredicate(
@@ -94,6 +100,77 @@ void main() async {
         .getSingle();
     expect(savedFood.calories, 601);
     expect(savedFood.proteinG, 41);
+
+    await db.close();
+  });
+
+  testWidgets('EditDiary formats and parses numbers with the selected locale',
+      (WidgetTester tester) async {
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(locale: Value('de')),
+        );
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Haferflocken',
+        calories: const Value(240.5),
+        proteinG: const Value(20.5),
+      ),
+    );
+    final entryId = await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        food: Value(foodId),
+        created: DateTime.now(),
+        quantity: 1.5,
+        unit: 'serving',
+      ),
+    );
+    final l10n = lookupAppLocalizations(const Locale('de'));
+
+    await tester.pumpWidget(
+      _wrap(
+        EditDiaryPage(id: entryId),
+        settingsState,
+        locale: const Locale('de'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final quantityField = find.bySemanticsLabel(l10n.quantity);
+    final caloriesField = _fieldStarting(l10n.calories);
+    expect(
+      tester
+          .widget<EditableText>(
+            find.descendant(
+              of: quantityField,
+              matching: find.byType(EditableText),
+            ),
+          )
+          .controller
+          .text,
+      '1,5',
+    );
+    expect(
+      tester.widget<TextField>(caloriesField).controller?.text,
+      '240,5',
+    );
+
+    await tester.enterText(quantityField, '2,5');
+    await tester.enterText(caloriesField, '601,5');
+    tester.testTextInput.hide();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip(l10n.save));
+    await tester.pumpAndSettle();
+
+    final updatedEntry = await (db.diaries.select()
+          ..where((entry) => entry.id.equals(entryId)))
+        .getSingle();
+    final updatedFood = await (db.foods.select()
+          ..where((food) => food.id.equals(foodId)))
+        .getSingle();
+    expect(updatedEntry.quantity, 2.5);
+    expect(updatedFood.calories, 601.5);
 
     await db.close();
   });
