@@ -32,4 +32,4 @@
 - [x] Add localization widget/unit tests and locale-switch persistence coverage.
 - [x] Run gen-l10n, dart format, flutter analyze and flutter test cleanly.
 - [x] Validate Android/iOS/desktop platform-visible localized copy where supported.
-- [ ] Final full-app localization audit and release-readiness pass.
+- [x] Final full-app localization audit and release-readiness pass.
