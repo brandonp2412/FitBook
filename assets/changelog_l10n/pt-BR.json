@@ -1,0 +1,12 @@
+{
+  "1789178674": "• Corrigir a navegação de voltar do Patrol nos lembretes\n• Estabilizar o retorno de rota do Patrol nos lembretes\n• fix: estabilizar a navegação adaptável de capturas de tela",
+  "1789171080": "• Tratar importações de dados canceladas e com falha\n• Tornar os testes do Patrol mais robustos contra problemas de temporização\n• Preferir o seletor visível para adicionar no diário\n• Preferir seletores visíveis de abas nas capturas de tela\n• Preservar as correções do FitBook feitas no Nox\n• Evitar falhas com entradas inválidas de nutrição e peso\n• Rejeitar importações CSV vazias ou malformadas\n• Remover o auxiliar quebrado de histórico do esquema\n• fix: publicar versões do FitBook no Google Play\n• fix: estabilizar as verificações de versão do FitBook",
+  "1788825881": "• Preferir controles visíveis do diário nos testes\n• Remover comentários redundantes sobre porções\n• refactor: simplificar a renderização do diário e os testes de gráficos",
+  "1788815894": "• Preferir retornos antecipados e seletores de teste semânticos",
+  "1788762733": "• ci: publicar diretamente as Pages da política de privacidade\n• ci: publicar as Pages da política de privacidade a partir da main\n• fix: hospedar a política de privacidade no GitHub Pages\n• test: verificar o comportamento observável da interface",
+  "1788585443": "• Refinar os estados vazios\n• ci: corrigir regressões do quality gate",
+  "1788551549": "• Redesenhar a interface para desktop\n• fix: restaurar o layout dos gráficos no celular",
+  "1788536802": "• ci: concluir a migração das Actions para Node 24",
+  "1788534128": "• ci: atualizar as Actions para runtimes do Node 24",
+  "1788530896": "• ci: serializar os envios para a Microsoft Store"
+}

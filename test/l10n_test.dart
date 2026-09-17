@@ -43,6 +43,52 @@ void main() {
     }
   });
 
+  test('localized changelog bundles cover the same release entries', () {
+    final directory = Directory('assets/changelog_l10n');
+    final files = directory
+        .listSync()
+        .whereType<File>()
+        .where((file) => file.path.endsWith('.json'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    final expectedLocales = {
+      'de',
+      'es',
+      'fr',
+      'it',
+      'ja',
+      'ko',
+      'nl',
+      'pl',
+      'pt-BR',
+      'zh-CN',
+    };
+
+    expect(
+      files.map((file) => file.uri.pathSegments.last.split('.').first).toSet(),
+      expectedLocales,
+    );
+    final canonical = _readStringMap(files.first);
+    expect(canonical, isNotEmpty);
+
+    for (final file in files) {
+      final translations = _readStringMap(file);
+      expect(
+        translations.keys.toSet(),
+        canonical.keys.toSet(),
+        reason: '${file.path} must cover the same changelog entries',
+      );
+      for (final entry in translations.entries) {
+        expect(entry.value.trim(), isNotEmpty);
+        expect(
+          File('assets/changelogs/${entry.key}.txt').existsSync(),
+          isTrue,
+          reason: '${entry.key} must reference an English changelog asset',
+        );
+      }
+    }
+  });
+
   test('Android platform strings cover every first-wave locale and key', () {
     final base = File('android/app/src/main/res/values/strings.xml');
     final expectedKeys = _androidStringKeys(base);
@@ -234,6 +280,11 @@ void main() {
 
 Map<String, dynamic> _readArb(File file) =>
     jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+
+Map<String, String> _readStringMap(File file) =>
+    (jsonDecode(file.readAsStringSync()) as Map<String, dynamic>).map(
+      (key, value) => MapEntry(key, value as String),
+    );
 
 Map<String, String> _messages(Map<String, dynamic> arb) => {
       for (final entry in arb.entries)

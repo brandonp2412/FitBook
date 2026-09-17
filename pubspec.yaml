@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/
     - assets/changelogs/
+    - assets/changelog_l10n/
 flutter_launcher_icons:
   android: false
   ios: true

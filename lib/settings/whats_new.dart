@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,17 @@ class Changelog {
 // Some historical changelogs were created on Windows and use .NET/Windows
 // ticks (100-nanosecond intervals since 1601), while current releases use
 // Unix seconds.
+List<String> changelogTranslationAssetCandidates(Locale locale) {
+  final languageTag = locale.toLanguageTag();
+  final candidates = <String>[
+    'assets/changelog_l10n/$languageTag.json',
+  ];
+  if (languageTag != locale.languageCode) {
+    candidates.add('assets/changelog_l10n/${locale.languageCode}.json');
+  }
+  return candidates;
+}
+
 DateTime changelogDateFromTimestamp(int timestamp) {
   const windowsEpochInTicks = 116444736000000000;
   const ticksPerMillisecond = 10000;
@@ -35,15 +48,20 @@ DateTime changelogDateFromTimestamp(int timestamp) {
 
 class _WhatsNewState extends State<WhatsNew> {
   List<Changelog> changelogs = [];
+  Locale? _loadedLocale;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final locale = Localizations.localeOf(context);
+    if (_loadedLocale == locale) return;
+    _loadedLocale = locale;
     setChangelogs();
   }
 
   void setChangelogs() async {
     final logs = await getChangelogFiles(context);
+    if (!mounted) return;
     setState(() {
       changelogs = logs;
     });
@@ -51,12 +69,20 @@ class _WhatsNewState extends State<WhatsNew> {
 
   Future<List<Changelog>> getChangelogFiles(BuildContext context) async {
     final assetBundle = DefaultAssetBundle.of(context);
-    final locale = Localizations.localeOf(context).toLanguageTag();
+    final activeLocale = Localizations.localeOf(context);
+    final locale = activeLocale.toLanguageTag();
     final manifest = await AssetManifest.loadFromAssetBundle(assetBundle);
+    final availableAssets = manifest.listAssets().toSet();
+    final translations = await _loadChangelogTranslations(
+      assetBundle,
+      availableAssets,
+      activeLocale,
+    );
 
-    final files = manifest
-        .listAssets()
-        .where((key) => key.startsWith('assets/changelogs/'))
+    final files = availableAssets
+        .where(
+          (key) => RegExp(r'^assets/changelogs/\d+\.txt$').hasMatch(key),
+        )
         .toList();
 
     files.sort((a, b) {
@@ -85,7 +111,7 @@ class _WhatsNewState extends State<WhatsNew> {
             created: DateFormat.yMMMd(locale).format(
               changelogDateFromTimestamp(timestamp),
             ),
-            content: content,
+            content: translations[filename] ?? content,
           ),
         );
       } catch (error, stackTrace) {
@@ -97,6 +123,29 @@ class _WhatsNewState extends State<WhatsNew> {
       }
     }
     return result;
+  }
+
+  Future<Map<String, String>> _loadChangelogTranslations(
+    AssetBundle assetBundle,
+    Set<String> availableAssets,
+    Locale locale,
+  ) async {
+    for (final path in changelogTranslationAssetCandidates(locale)) {
+      if (!availableAssets.contains(path)) continue;
+      try {
+        final json = jsonDecode(await assetBundle.loadString(path));
+        return (json as Map<String, dynamic>).map(
+          (key, value) => MapEntry(key, value as String),
+        );
+      } catch (error, stackTrace) {
+        talker.handle(
+          error,
+          stackTrace,
+          'Unable to load localized changelog asset: $path',
+        );
+      }
+    }
+    return const {};
   }
 
   @override

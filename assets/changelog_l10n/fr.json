@@ -1,0 +1,12 @@
+{
+  "1789178674": "• Corriger la navigation arrière de Patrol pour les rappels\n• Stabiliser le retour de route Patrol pour les rappels\n• fix: stabiliser la navigation adaptative des captures d’écran",
+  "1789171080": "• Gérer les importations de données annulées et échouées\n• Renforcer les tests Patrol contre les problèmes de temporisation\n• Préférer le sélecteur visible d’ajout au journal\n• Préférer les sélecteurs visibles d’onglets pour les captures d’écran\n• Conserver les correctifs FitBook réalisés sur Nox\n• Éviter les plantages dus à des saisies nutritionnelles ou de poids invalides\n• Rejeter les importations CSV vides ou mal formées\n• Supprimer l’assistant défectueux d’historique du schéma\n• fix: publier les versions de FitBook sur Google Play\n• fix: stabiliser les vérifications de version de FitBook",
+  "1788825881": "• Préférer les commandes visibles du journal dans les tests\n• Supprimer les commentaires redondants sur les portions\n• refactor: simplifier le rendu du journal et les tests de graphiques",
+  "1788815894": "• Préférer les retours anticipés et les sélecteurs de test sémantiques",
+  "1788762733": "• ci: déployer directement les Pages de la politique de confidentialité\n• ci: déployer les Pages de la politique de confidentialité depuis main\n• fix: héberger la politique de confidentialité sur GitHub Pages\n• test: vérifier le comportement observable de l’interface",
+  "1788585443": "• Améliorer les états vides\n• ci: corriger les régressions du contrôle qualité",
+  "1788551549": "• Repenser l’interface de bureau\n• fix: restaurer la disposition des graphiques sur mobile",
+  "1788536802": "• ci: terminer la migration des Actions vers Node 24",
+  "1788534128": "• ci: mettre à niveau les Actions vers les environnements Node 24",
+  "1788530896": "• ci: sérialiser les soumissions au Microsoft Store"
+}
