@@ -224,6 +224,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get day => 'Giorno';
 
   @override
+  String get today => 'Oggi';
+
+  @override
   String get week => 'Settimana';
 
   @override

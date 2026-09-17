@@ -17,7 +17,7 @@
 - [ ] Notifications, notification channels, native platform-visible strings, accessibility labels/tooltips.
 
 ## Locale correctness
-- [ ] Locale-aware dates and times; remove English-only formatting assumptions.
+- [x] Locale-aware dates and times; remove English-only formatting assumptions.
 - [ ] Locale-aware numbers, decimal input/display, calories/nutrients/weights and units.
 - [ ] ICU plurals/selects/placeholders for all count- and value-dependent copy.
 - [ ] Keep persisted identifiers, storage/API values, logs/debug copy and user-entered content untranslated.

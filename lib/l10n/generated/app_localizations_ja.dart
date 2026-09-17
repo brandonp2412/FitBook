@@ -217,6 +217,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get day => '日';
 
   @override
+  String get today => '今日';
+
+  @override
   String get week => '週';
 
   @override

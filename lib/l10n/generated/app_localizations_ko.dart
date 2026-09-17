@@ -217,6 +217,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get day => '일';
 
   @override
+  String get today => '오늘';
+
+  @override
   String get week => '주';
 
   @override

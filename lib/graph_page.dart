@@ -11,7 +11,6 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GraphPage extends StatefulWidget {
@@ -521,7 +520,7 @@ class _DateField extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    hasValue ? DateFormat(hint).format(value!) : hint,
+                    hasValue ? formatDisplayDate(context, value!, hint) : hint,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyMedium?.copyWith(

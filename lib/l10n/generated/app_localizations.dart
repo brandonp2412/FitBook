@@ -484,6 +484,12 @@ abstract class AppLocalizations {
   /// **'Day'**
   String get day;
 
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
   /// No description provided for @week.
   ///
   /// In en, this message translates to:

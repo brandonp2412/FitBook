@@ -216,6 +216,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get day => '日';
 
   @override
+  String get today => '今天';
+
+  @override
   String get week => '周';
 
   @override
@@ -1273,6 +1276,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get day => '日';
+
+  @override
+  String get today => '今天';
 
   @override
   String get week => '周';

@@ -931,10 +931,11 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n.createdDate),
                 subtitle: Text(
-                  DateFormat(
+                  formatDisplayDate(
+                    context,
+                    created ?? DateTime.now(),
                     settings.longDateFormat,
-                    Localizations.localeOf(context).toLanguageTag(),
-                  ).format(created ?? DateTime.now()),
+                  ),
                 ),
                 onTap: () => pickDate(),
               ),

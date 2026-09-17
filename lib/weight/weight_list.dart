@@ -1,11 +1,11 @@
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// Formatted, signed change versus the next-older entry, or null at the
@@ -152,16 +152,19 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                         children: [
                           Text(
                             isToday
-                                ? 'Today'
-                                : DateFormat(settings.shortDateFormat)
-                                    .format(weight.created),
+                                ? context.l10n.today
+                                : formatDisplayDate(
+                                    context,
+                                    weight.created,
+                                    settings.shortDateFormat,
+                                  ),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: isToday ? FontWeight.w700 : null,
                               color: isToday ? colorScheme.primary : null,
                             ),
                           ),
                           Text(
-                            DateFormat('hh:mm a').format(weight.created),
+                            formatDisplayTime(context, weight.created),
                             style: theme.textTheme.labelSmall?.copyWith(
                               color: colorScheme.onSurfaceVariant
                                   .withValues(alpha: 0.7),
@@ -256,7 +259,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                                   ),
                                 ),
                                 Text(
-                                  '${weight.unit.toUpperCase()}${isToday ? ' · TODAY' : ''}',
+                                  '${weight.unit.toUpperCase()}${isToday ? ' · ${context.l10n.today.toUpperCase()}' : ''}',
                                   style: theme.textTheme.labelSmall?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                     letterSpacing: 0.4,
@@ -293,10 +296,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                       ),
                       Text(
                         isToday
-                            ? 'Today'
-                            : DateFormat(
+                            ? context.l10n.today
+                            : formatDisplayDate(
+                                context,
+                                weight.created,
                                 settings.shortDateFormat,
-                              ).format(weight.created),
+                              ),
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),

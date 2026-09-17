@@ -222,6 +222,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get day => 'Día';
 
   @override
+  String get today => 'Hoy';
+
+  @override
   String get week => 'Semana';
 
   @override

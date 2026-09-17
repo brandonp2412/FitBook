@@ -5,10 +5,10 @@ import 'package:fit_book/diary/diary_entry_actions.dart';
 import 'package:fit_book/diary/diary_entry_row.dart';
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/diary/diary_stats_utils.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryList extends StatefulWidget {
@@ -64,8 +64,8 @@ class _DiaryListState extends State<DiaryList> {
         padding: const EdgeInsets.fromLTRB(18, 16, 18, 2),
         child: Text(
           isToday(DateTime(date.year, date.month, date.day))
-              ? 'Today'
-              : DateFormat(settings.shortDateFormat).format(date),
+              ? context.l10n.today
+              : formatDisplayDate(context, date, settings.shortDateFormat),
           style: theme.textTheme.labelMedium?.copyWith(
             fontWeight: FontWeight.w600,
             color: theme.colorScheme.onSurface,

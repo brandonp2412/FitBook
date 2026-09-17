@@ -666,7 +666,7 @@ class _AppLineState extends State<AppLine> {
     if (indices.contains(value.toInt())) {
       DateTime createdDate = rows[value.toInt()].created;
       text = Text(
-        DateFormat(settings.shortDateFormat).format(createdDate),
+        formatDisplayDate(context, createdDate, settings.shortDateFormat),
         style: style,
       );
     } else {
@@ -704,9 +704,11 @@ class _AppLineState extends State<AppLine> {
             return null;
           }
           final row = rows.elementAt(spot.spotIndex);
-          final dateStr = DateFormat(
+          final dateStr = formatDisplayDate(
+            context,
+            row.created,
             settings.shortDateFormat,
-          ).format(row.created);
+          );
           return LineTooltipItem(
             "${formatter.format(spot.y)} $unit\n$dateStr",
             TextStyle(color: seriesColors[spot.barIndex]),

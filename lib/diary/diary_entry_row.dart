@@ -1,8 +1,8 @@
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/diary/diary_food_thumbnail.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 /// Shared minimal row used across the decluttered diary variants. Always
 /// leads with the entry's real food thumbnail (see [DiaryFoodThumbnail])
@@ -42,7 +42,7 @@ class DiaryEntryRow extends StatelessWidget {
       leading: DiaryFoodThumbnail(food: food, showImages: showImages),
       title: Text('${food.name}$suffix'),
       subtitle: Text(
-        '$kcal kcal · ${DateFormat('h:mm a').format(food.created)}',
+        '$kcal kcal · ${formatDisplayTime(context, food.created)}',
       ),
       onTap: onTap,
       onLongPress: onLongPress,

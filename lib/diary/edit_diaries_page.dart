@@ -7,7 +7,6 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../database/database.dart';
@@ -469,10 +468,11 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             ListTile(
               title: Text(l10n.createdDate),
               subtitle: Text(
-                DateFormat(
+                formatDisplayDate(
+                  context,
+                  created ?? DateTime.now(),
                   settings.longDateFormat,
-                  Localizations.localeOf(context).toLanguageTag(),
-                ).format(created ?? DateTime.now()),
+                ),
               ),
               onTap: () => pickDate(),
             ),

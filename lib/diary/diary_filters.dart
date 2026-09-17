@@ -3,9 +3,9 @@ import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DiaryFilters extends StatefulWidget {
@@ -88,7 +88,11 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   final shortDateFormat = settingsState.value.shortDateFormat;
                   return state.startDate != null
                       ? Text(
-                          DateFormat(shortDateFormat).format(state.startDate!),
+                          formatDisplayDate(
+                            context,
+                            state.startDate!,
+                            shortDateFormat,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         )
                       : Text(
@@ -123,7 +127,11 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   final shortDateFormat = settingsState.value.shortDateFormat;
                   return state.endDate != null
                       ? Text(
-                          DateFormat(shortDateFormat).format(state.endDate!),
+                          formatDisplayDate(
+                            context,
+                            state.endDate!,
+                            shortDateFormat,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         )
                       : Text(

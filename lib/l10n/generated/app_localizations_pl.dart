@@ -226,6 +226,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get day => 'Dzień';
 
   @override
+  String get today => 'Dzisiaj';
+
+  @override
   String get week => 'Tydzień';
 
   @override

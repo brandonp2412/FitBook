@@ -180,6 +180,11 @@ String formatDisplayDate(
       Localizations.localeOf(context).toLanguageTag(),
     ).format(value);
 
+/// Formats [value] as a locale-appropriate time.
+String formatDisplayTime(BuildContext context, DateTime value) => DateFormat.jm(
+      Localizations.localeOf(context).toLanguageTag(),
+    ).format(value);
+
 /// Formats [value] using the active app locale and fraction-digit bounds.
 String formatDisplayNumber(
   BuildContext context,

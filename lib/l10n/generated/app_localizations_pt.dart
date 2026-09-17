@@ -222,6 +222,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get day => 'Dia';
 
   @override
+  String get today => 'Hoje';
+
+  @override
   String get week => 'Semana';
 
   @override
@@ -1324,6 +1327,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get day => 'Dia';
+
+  @override
+  String get today => 'Hoje';
 
   @override
   String get week => 'Semana';

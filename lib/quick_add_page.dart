@@ -267,10 +267,11 @@ class _QuickAddPageState extends State<QuickAddPage> {
           ListTile(
             title: Text(context.l10n.createdDate),
             subtitle: Text(
-              DateFormat(
+              formatDisplayDate(
+                context,
+                created,
                 settings.longDateFormat,
-                Localizations.localeOf(context).toLanguageTag(),
-              ).format(created),
+              ),
             ),
             onTap: () => pickDate(),
           ),
