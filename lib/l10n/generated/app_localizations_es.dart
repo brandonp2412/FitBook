@@ -616,4 +616,119 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       '¿Seguro que quieres eliminar todas las entradas del diario? Esta acción no se puede deshacer.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Reemplazar imagen';
+
+  @override
+  String get takePhoto => 'Tomar foto';
+
+  @override
+  String get deleteImage => 'Eliminar imagen';
+
+  @override
+  String get filters => 'Filtros';
+
+  @override
+  String get foodGroup => 'Grupo de alimentos';
+
+  @override
+  String get exampleFruit => 'Fruta';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Limpiar ($count)';
+  }
+
+  @override
+  String get done => 'Hecho';
+
+  @override
+  String get showFilters => 'Mostrar filtros';
+
+  @override
+  String get repeatEntry => 'Repetir entrada';
+
+  @override
+  String get timeOfDay => 'Hora del día';
+
+  @override
+  String get everyDay => 'Todos los días';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Crear esta entrada cada día durante el próximo año';
+
+  @override
+  String get repeatOn => 'Repetir el';
+
+  @override
+  String get weekdayMon => 'Lun';
+
+  @override
+  String get weekdayTue => 'Mar';
+
+  @override
+  String get weekdayWed => 'Mié';
+
+  @override
+  String get weekdayThu => 'Jue';
+
+  @override
+  String get weekdayFri => 'Vie';
+
+  @override
+  String get weekdaySat => 'Sáb';
+
+  @override
+  String get weekdaySun => 'Dom';
+
+  @override
+  String get schedule => 'Programar';
+
+  @override
+  String get enterValidNutritionValues =>
+      'Introduce valores nutricionales válidos';
+
+  @override
+  String get quickAddTitle => 'Adición rápida';
+
+  @override
+  String get kilojoules => 'Kilojulios';
+
+  @override
+  String get createdDate => 'Fecha de creación';
+
+  @override
+  String get failedMigrations => 'Migraciones fallidas';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Algo salió mal al crear o actualizar la base de datos. Normalmente se puede solucionar eliminando y volviendo a crear los registros.';
+
+  @override
+  String get errorMessage => 'Mensaje de error:';
+
+  @override
+  String get createIssue => 'Crear incidencia';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Se requiere permiso para usar la cámara y escanear.';
+
+  @override
+  String get scanFoodBarcode => 'Escanear el código de barras de un alimento';
+
+  @override
+  String get holdBarcodeInFrame =>
+      'Mantén el código de barras dentro del marco';
+
+  @override
+  String get pinchToZoom => 'Pellizca para ampliar';
+
+  @override
+  String get cameraStartFailed => 'No se pudo iniciar la cámara';
 }

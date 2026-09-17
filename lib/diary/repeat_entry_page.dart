@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 
@@ -91,13 +92,13 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Repeat entry')),
+        appBar: AppBar(title: Text(context.l10n.repeatEntry)),
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Start date'),
+              title: Text(context.l10n.startDate),
               subtitle: Text(
                 MaterialLocalizations.of(context).formatMediumDate(_startDate),
               ),
@@ -113,7 +114,7 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Time of day'),
+              title: Text(context.l10n.timeOfDay),
               subtitle: Text(_time.format(context)),
               onTap: () async {
                 final time =
@@ -123,28 +124,27 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Every day'),
-              subtitle:
-                  const Text('Create this entry each day for the next year'),
+              title: Text(context.l10n.everyDay),
+              subtitle: Text(context.l10n.repeatEveryDayForYear),
               value: _everyDay,
               onChanged: (value) => setState(() => _everyDay = value),
             ),
             if (!_everyDay) ...[
               const SizedBox(height: 8),
-              const Text('Repeat on'),
+              Text(context.l10n.repeatOn),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 children: List.generate(7, (index) {
                   final weekday = index + 1;
-                  const labels = [
-                    'Mon',
-                    'Tue',
-                    'Wed',
-                    'Thu',
-                    'Fri',
-                    'Sat',
-                    'Sun',
+                  final labels = [
+                    context.l10n.weekdayMon,
+                    context.l10n.weekdayTue,
+                    context.l10n.weekdayWed,
+                    context.l10n.weekdayThu,
+                    context.l10n.weekdayFri,
+                    context.l10n.weekdaySat,
+                    context.l10n.weekdaySun,
                   ];
                   return FilterChip(
                     label: Text(labels[index]),
@@ -164,7 +164,7 @@ class _RepeatEntryPageState extends State<RepeatEntryPage> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: !_everyDay && _weekdays.isEmpty ? null : _save,
           icon: const Icon(Icons.repeat),
-          label: const Text('Schedule'),
+          label: Text(context.l10n.schedule),
         ),
       );
 }

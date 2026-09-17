@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() {
   testWidgets('calorie conversion tolerates cleared numeric fields',
@@ -21,7 +22,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => SettingsState(settings)),
           ChangeNotifierProvider(create: (_) => DiaryState()),
         ],
-        child: const MaterialApp(home: EditFoodPage()),
+        child: localizedApp(home: const EditFoodPage()),
       ),
     );
     await tester.pump();

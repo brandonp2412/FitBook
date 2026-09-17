@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   testWidgets('QuickAdd edit preserves macro-nutrients', (
@@ -44,7 +45,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(home: QuickAddPage(id: entryId)),
+        child: localizedApp(home: QuickAddPage(id: entryId)),
       ),
     );
     await tester.pumpAndSettle();
@@ -111,7 +112,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(home: QuickAddPage(id: entryId)),
+        child: localizedApp(home: QuickAddPage(id: entryId)),
       ),
     );
     await tester.pumpAndSettle();

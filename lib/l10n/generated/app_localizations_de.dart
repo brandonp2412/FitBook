@@ -619,4 +619,117 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Möchtest du wirklich alle Tagebucheinträge löschen? Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Bild ersetzen';
+
+  @override
+  String get takePhoto => 'Foto aufnehmen';
+
+  @override
+  String get deleteImage => 'Bild löschen';
+
+  @override
+  String get filters => 'Filter';
+
+  @override
+  String get foodGroup => 'Lebensmittelgruppe';
+
+  @override
+  String get exampleFruit => 'Obst';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Zurücksetzen ($count)';
+  }
+
+  @override
+  String get done => 'Fertig';
+
+  @override
+  String get showFilters => 'Filter anzeigen';
+
+  @override
+  String get repeatEntry => 'Eintrag wiederholen';
+
+  @override
+  String get timeOfDay => 'Uhrzeit';
+
+  @override
+  String get everyDay => 'Jeden Tag';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Diesen Eintrag im nächsten Jahr jeden Tag erstellen';
+
+  @override
+  String get repeatOn => 'Wiederholen am';
+
+  @override
+  String get weekdayMon => 'Mo';
+
+  @override
+  String get weekdayTue => 'Di';
+
+  @override
+  String get weekdayWed => 'Mi';
+
+  @override
+  String get weekdayThu => 'Do';
+
+  @override
+  String get weekdayFri => 'Fr';
+
+  @override
+  String get weekdaySat => 'Sa';
+
+  @override
+  String get weekdaySun => 'So';
+
+  @override
+  String get schedule => 'Planen';
+
+  @override
+  String get enterValidNutritionValues => 'Gültige Nährwerte eingeben';
+
+  @override
+  String get quickAddTitle => 'Schnelleingabe';
+
+  @override
+  String get kilojoules => 'Kilojoule';
+
+  @override
+  String get createdDate => 'Erstellungsdatum';
+
+  @override
+  String get failedMigrations => 'Fehlgeschlagene Migrationen';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Beim Erstellen oder Aktualisieren deiner Datenbank ist ein Fehler aufgetreten. Normalerweise lässt sich das beheben, indem du deine Einträge löschst und neu erstellst.';
+
+  @override
+  String get errorMessage => 'Fehlermeldung:';
+
+  @override
+  String get createIssue => 'Problem melden';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Zum Scannen ist die Kameraberechtigung erforderlich.';
+
+  @override
+  String get scanFoodBarcode => 'Lebensmittel-Barcode scannen';
+
+  @override
+  String get holdBarcodeInFrame => 'Barcode innerhalb des Rahmens halten';
+
+  @override
+  String get pinchToZoom => 'Zum Zoomen zusammenziehen';
+
+  @override
+  String get cameraStartFailed => 'Kamera konnte nicht gestartet werden';
 }

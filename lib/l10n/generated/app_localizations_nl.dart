@@ -616,4 +616,117 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Weet je zeker dat je alle dagboekitems wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Afbeelding vervangen';
+
+  @override
+  String get takePhoto => 'Foto maken';
+
+  @override
+  String get deleteImage => 'Afbeelding verwijderen';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get foodGroup => 'Voedingsgroep';
+
+  @override
+  String get exampleFruit => 'Fruit';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Wissen ($count)';
+  }
+
+  @override
+  String get done => 'Klaar';
+
+  @override
+  String get showFilters => 'Filters tonen';
+
+  @override
+  String get repeatEntry => 'Invoer herhalen';
+
+  @override
+  String get timeOfDay => 'Tijdstip';
+
+  @override
+  String get everyDay => 'Elke dag';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Maak deze invoer het komende jaar elke dag aan';
+
+  @override
+  String get repeatOn => 'Herhalen op';
+
+  @override
+  String get weekdayMon => 'Ma';
+
+  @override
+  String get weekdayTue => 'Di';
+
+  @override
+  String get weekdayWed => 'Wo';
+
+  @override
+  String get weekdayThu => 'Do';
+
+  @override
+  String get weekdayFri => 'Vr';
+
+  @override
+  String get weekdaySat => 'Za';
+
+  @override
+  String get weekdaySun => 'Zo';
+
+  @override
+  String get schedule => 'Plannen';
+
+  @override
+  String get enterValidNutritionValues => 'Voer geldige voedingswaarden in';
+
+  @override
+  String get quickAddTitle => 'Snel toevoegen';
+
+  @override
+  String get kilojoules => 'Kilojoules';
+
+  @override
+  String get createdDate => 'Aanmaakdatum';
+
+  @override
+  String get failedMigrations => 'Mislukte migraties';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Er ging iets mis bij het maken of bijwerken van de database. Meestal kun je dit oplossen door je records te verwijderen en opnieuw aan te maken.';
+
+  @override
+  String get errorMessage => 'Foutmelding:';
+
+  @override
+  String get createIssue => 'Probleem melden';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Cameratoestemming is vereist om te scannen.';
+
+  @override
+  String get scanFoodBarcode => 'Barcode van een voedingsmiddel scannen';
+
+  @override
+  String get holdBarcodeInFrame => 'Houd de barcode binnen het kader';
+
+  @override
+  String get pinchToZoom => 'Knijp om te zoomen';
+
+  @override
+  String get cameraStartFailed => 'De camera kon niet worden gestart';
 }

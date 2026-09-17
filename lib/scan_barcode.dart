@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart' hide Column;
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -29,7 +30,7 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
     talker.warning('Camera permission denied for barcode scan');
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Camera permission is required to scan.')),
+        SnackBar(content: Text(context.l10n.cameraPermissionRequired)),
       );
     }
     return const BarcodeScanResult.cancelled();
@@ -158,7 +159,7 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
                 child: Column(
                   children: [
                     Text(
-                      'Scan a food barcode',
+                      context.l10n.scanFoodBarcode,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: Colors.white,
@@ -167,15 +168,15 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Hold the barcode inside the frame',
+                    Text(
+                      context.l10n.holdBarcodeInFrame,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white70),
+                      style: const TextStyle(color: Colors.white70),
                     ),
                     const Spacer(),
-                    const Text(
-                      'Pinch to zoom',
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      context.l10n.pinchToZoom,
+                      style: const TextStyle(color: Colors.white70),
                     ),
                   ],
                 ),
@@ -198,14 +199,17 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
                           size: 48,
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Could not start the camera',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        Text(
+                          context.l10n.cameraStartFailed,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         FilledButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Close'),
+                          child: Text(context.l10n.close),
                         ),
                       ],
                     ),
@@ -267,7 +271,7 @@ class _ScanBarcodeState extends State<ScanBarcode> {
       );
     } else if (widget.text == true)
       return TextButton.icon(
-        label: const Text("Scan barcode"),
+        label: Text(context.l10n.scanBarcode),
         onPressed: scan,
         icon: const Icon(Icons.barcode_reader),
       );

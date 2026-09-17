@@ -597,4 +597,115 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deleteAllDiaryConfirm => 'すべての日記の記録を削除しますか？この操作は元に戻せません。';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => '画像を置き換える';
+
+  @override
+  String get takePhoto => '写真を撮る';
+
+  @override
+  String get deleteImage => '画像を削除';
+
+  @override
+  String get filters => 'フィルター';
+
+  @override
+  String get foodGroup => '食品グループ';
+
+  @override
+  String get exampleFruit => '果物';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'クリア（$count）';
+  }
+
+  @override
+  String get done => '完了';
+
+  @override
+  String get showFilters => 'フィルターを表示';
+
+  @override
+  String get repeatEntry => '記録を繰り返す';
+
+  @override
+  String get timeOfDay => '時刻';
+
+  @override
+  String get everyDay => '毎日';
+
+  @override
+  String get repeatEveryDayForYear => '今後1年間、毎日この記録を作成します';
+
+  @override
+  String get repeatOn => '繰り返す曜日';
+
+  @override
+  String get weekdayMon => '月';
+
+  @override
+  String get weekdayTue => '火';
+
+  @override
+  String get weekdayWed => '水';
+
+  @override
+  String get weekdayThu => '木';
+
+  @override
+  String get weekdayFri => '金';
+
+  @override
+  String get weekdaySat => '土';
+
+  @override
+  String get weekdaySun => '日';
+
+  @override
+  String get schedule => 'スケジュール';
+
+  @override
+  String get enterValidNutritionValues => '有効な栄養値を入力してください';
+
+  @override
+  String get quickAddTitle => 'クイック追加';
+
+  @override
+  String get kilojoules => 'キロジュール';
+
+  @override
+  String get createdDate => '作成日';
+
+  @override
+  String get failedMigrations => 'マイグレーションに失敗しました';
+
+  @override
+  String get failedMigrationsDescription =>
+      'データベースの作成またはアップグレード中に問題が発生しました。通常は、記録を削除して作り直すことで修正できます。';
+
+  @override
+  String get errorMessage => 'エラーメッセージ:';
+
+  @override
+  String get createIssue => '問題を報告';
+
+  @override
+  String get cameraPermissionRequired => 'スキャンにはカメラの許可が必要です。';
+
+  @override
+  String get scanFoodBarcode => '食品のバーコードをスキャン';
+
+  @override
+  String get holdBarcodeInFrame => 'バーコードを枠内に合わせてください';
+
+  @override
+  String get pinchToZoom => 'ピンチしてズーム';
+
+  @override
+  String get cameraStartFailed => 'カメラを起動できませんでした';
 }

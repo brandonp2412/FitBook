@@ -615,4 +615,117 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Are you sure you want to delete all diary entries? This action is not reversible.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Replace image';
+
+  @override
+  String get takePhoto => 'Take photo';
+
+  @override
+  String get deleteImage => 'Delete image';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get foodGroup => 'Food group';
+
+  @override
+  String get exampleFruit => 'Fruit';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Clear ($count)';
+  }
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get showFilters => 'Show filters';
+
+  @override
+  String get repeatEntry => 'Repeat entry';
+
+  @override
+  String get timeOfDay => 'Time of day';
+
+  @override
+  String get everyDay => 'Every day';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Create this entry each day for the next year';
+
+  @override
+  String get repeatOn => 'Repeat on';
+
+  @override
+  String get weekdayMon => 'Mon';
+
+  @override
+  String get weekdayTue => 'Tue';
+
+  @override
+  String get weekdayWed => 'Wed';
+
+  @override
+  String get weekdayThu => 'Thu';
+
+  @override
+  String get weekdayFri => 'Fri';
+
+  @override
+  String get weekdaySat => 'Sat';
+
+  @override
+  String get weekdaySun => 'Sun';
+
+  @override
+  String get schedule => 'Schedule';
+
+  @override
+  String get enterValidNutritionValues => 'Enter valid nutrition values';
+
+  @override
+  String get quickAddTitle => 'Quick add';
+
+  @override
+  String get kilojoules => 'Kilojoules';
+
+  @override
+  String get createdDate => 'Created date';
+
+  @override
+  String get failedMigrations => 'Failed migrations';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Something went wrong when creating or upgrading your database. Usually this can be fixed by deleting and re-creating your records.';
+
+  @override
+  String get errorMessage => 'Error message:';
+
+  @override
+  String get createIssue => 'Create issue';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Camera permission is required to scan.';
+
+  @override
+  String get scanFoodBarcode => 'Scan a food barcode';
+
+  @override
+  String get holdBarcodeInFrame => 'Hold the barcode inside the frame';
+
+  @override
+  String get pinchToZoom => 'Pinch to zoom';
+
+  @override
+  String get cameraStartFailed => 'Could not start the camera';
 }

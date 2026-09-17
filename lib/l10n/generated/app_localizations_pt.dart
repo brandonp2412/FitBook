@@ -616,6 +616,121 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Tem a certeza de que pretende eliminar todos os registos do diário? Esta ação não pode ser anulada.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Substituir imagem';
+
+  @override
+  String get takePhoto => 'Tirar fotografia';
+
+  @override
+  String get deleteImage => 'Eliminar imagem';
+
+  @override
+  String get filters => 'Filtros';
+
+  @override
+  String get foodGroup => 'Grupo alimentar';
+
+  @override
+  String get exampleFruit => 'Fruta';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Limpar ($count)';
+  }
+
+  @override
+  String get done => 'Concluído';
+
+  @override
+  String get showFilters => 'Mostrar filtros';
+
+  @override
+  String get repeatEntry => 'Repetir registo';
+
+  @override
+  String get timeOfDay => 'Hora do dia';
+
+  @override
+  String get everyDay => 'Todos os dias';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Criar este registo todos os dias durante o próximo ano';
+
+  @override
+  String get repeatOn => 'Repetir em';
+
+  @override
+  String get weekdayMon => 'Seg';
+
+  @override
+  String get weekdayTue => 'Ter';
+
+  @override
+  String get weekdayWed => 'Qua';
+
+  @override
+  String get weekdayThu => 'Qui';
+
+  @override
+  String get weekdayFri => 'Sex';
+
+  @override
+  String get weekdaySat => 'Sáb';
+
+  @override
+  String get weekdaySun => 'Dom';
+
+  @override
+  String get schedule => 'Agendar';
+
+  @override
+  String get enterValidNutritionValues =>
+      'Introduza valores nutricionais válidos';
+
+  @override
+  String get quickAddTitle => 'Adição rápida';
+
+  @override
+  String get kilojoules => 'Quilojoules';
+
+  @override
+  String get createdDate => 'Data de criação';
+
+  @override
+  String get failedMigrations => 'Migrações falhadas';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Ocorreu um problema ao criar ou atualizar a base de dados. Normalmente, pode corrigi-lo eliminando e voltando a criar os registos.';
+
+  @override
+  String get errorMessage => 'Mensagem de erro:';
+
+  @override
+  String get createIssue => 'Criar ocorrência';
+
+  @override
+  String get cameraPermissionRequired =>
+      'É necessária autorização para usar a câmara e digitalizar.';
+
+  @override
+  String get scanFoodBarcode => 'Digitalizar o código de barras de um alimento';
+
+  @override
+  String get holdBarcodeInFrame =>
+      'Mantenha o código de barras dentro da moldura';
+
+  @override
+  String get pinchToZoom => 'Aperte para ampliar';
+
+  @override
+  String get cameraStartFailed => 'Não foi possível iniciar a câmara';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1229,4 +1344,118 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get deleteAllDiaryConfirm =>
       'Tem certeza de que deseja excluir todos os registros do diário? Esta ação não pode ser desfeita.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Substituir imagem';
+
+  @override
+  String get takePhoto => 'Tirar foto';
+
+  @override
+  String get deleteImage => 'Excluir imagem';
+
+  @override
+  String get filters => 'Filtros';
+
+  @override
+  String get foodGroup => 'Grupo de alimentos';
+
+  @override
+  String get exampleFruit => 'Fruta';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Limpar ($count)';
+  }
+
+  @override
+  String get done => 'Concluído';
+
+  @override
+  String get showFilters => 'Mostrar filtros';
+
+  @override
+  String get repeatEntry => 'Repetir registro';
+
+  @override
+  String get timeOfDay => 'Horário';
+
+  @override
+  String get everyDay => 'Todos os dias';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Criar este registro todos os dias durante o próximo ano';
+
+  @override
+  String get repeatOn => 'Repetir em';
+
+  @override
+  String get weekdayMon => 'Seg';
+
+  @override
+  String get weekdayTue => 'Ter';
+
+  @override
+  String get weekdayWed => 'Qua';
+
+  @override
+  String get weekdayThu => 'Qui';
+
+  @override
+  String get weekdayFri => 'Sex';
+
+  @override
+  String get weekdaySat => 'Sáb';
+
+  @override
+  String get weekdaySun => 'Dom';
+
+  @override
+  String get schedule => 'Agendar';
+
+  @override
+  String get enterValidNutritionValues => 'Insira valores nutricionais válidos';
+
+  @override
+  String get quickAddTitle => 'Adição rápida';
+
+  @override
+  String get kilojoules => 'Quilojoules';
+
+  @override
+  String get createdDate => 'Data de criação';
+
+  @override
+  String get failedMigrations => 'Falha nas migrações';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Ocorreu um problema ao criar ou atualizar o banco de dados. Normalmente, isso pode ser corrigido excluindo e recriando os registros.';
+
+  @override
+  String get errorMessage => 'Mensagem de erro:';
+
+  @override
+  String get createIssue => 'Criar issue';
+
+  @override
+  String get cameraPermissionRequired =>
+      'É necessária permissão para usar a câmera e escanear.';
+
+  @override
+  String get scanFoodBarcode => 'Escanear o código de barras de um alimento';
+
+  @override
+  String get holdBarcodeInFrame =>
+      'Mantenha o código de barras dentro do quadro';
+
+  @override
+  String get pinchToZoom => 'Faça o gesto de pinça para ampliar';
+
+  @override
+  String get cameraStartFailed => 'Não foi possível iniciar a câmera';
 }

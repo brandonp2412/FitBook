@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -104,7 +105,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
         carbohydrateG == null ||
         fatG == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter valid nutrition values')),
+        SnackBar(content: Text(context.l10n.enterValidNutritionValues)),
       );
       return;
     }
@@ -193,9 +194,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Quick add",
-        ),
+        title: Text(context.l10n.quickAddTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -203,7 +202,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           TextField(
             autofocus: true,
             controller: cal,
-            decoration: const InputDecoration(label: Text("Calories")),
+            decoration: InputDecoration(label: Text(context.l10n.calories)),
             keyboardType: TextInputType.number,
             onTap: () => selectAll(cal),
             onSubmitted: (value) => save(),
@@ -219,7 +218,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           TextField(
             controller: kj,
             decoration: InputDecoration(
-              labelText: 'Kilojoules',
+              labelText: context.l10n.kilojoules,
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: (value) {
@@ -237,7 +236,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           TextField(
             controller: protein,
             decoration: InputDecoration(
-              labelText: 'Protein',
+              labelText: context.l10n.protein,
             ),
             onTap: () => selectAll(protein),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -248,7 +247,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           TextField(
             controller: carb,
             decoration: InputDecoration(
-              labelText: 'Carbs',
+              labelText: context.l10n.carbs,
             ),
             onTap: () => selectAll(carb),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -259,16 +258,19 @@ class _QuickAddPageState extends State<QuickAddPage> {
           TextField(
             controller: fat,
             decoration: InputDecoration(
-              labelText: 'Fat',
+              labelText: context.l10n.fat,
             ),
             onTap: () => selectAll(fat),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onSubmitted: (value) => save(),
           ),
           ListTile(
-            title: const Text('Created date'),
+            title: Text(context.l10n.createdDate),
             subtitle: Text(
-              DateFormat(settings.longDateFormat).format(created),
+              DateFormat(
+                settings.longDateFormat,
+                Localizations.localeOf(context).toLanguageTag(),
+              ).format(created),
             ),
             onTap: () => pickDate(),
           ),
@@ -281,7 +283,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
         ),
         child: AnimatedFab(
           onTap: save,
-          label: 'Save',
+          label: context.l10n.save,
           icon: Icons.save,
           scroll: ScrollController(),
         ),

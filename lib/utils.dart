@@ -5,6 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
@@ -56,7 +57,10 @@ String sentenceCase(String value) {
 }
 
 void toast(BuildContext context, String message, [SnackBarAction? action]) {
-  final defaultAction = SnackBarAction(label: 'OK', onPressed: () {});
+  final defaultAction = SnackBarAction(
+    label: context.l10n.ok,
+    onPressed: () {},
+  );
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -103,7 +107,7 @@ Future<void> showImageOptionsSheet({
         children: [
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text('Replace image'),
+            title: Text(ctx.l10n.replaceImage),
             onTap: () {
               Navigator.pop(ctx);
               onReplace();
@@ -111,7 +115,7 @@ Future<void> showImageOptionsSheet({
           ),
           ListTile(
             leading: const Icon(Icons.camera_alt),
-            title: const Text('Take photo'),
+            title: Text(ctx.l10n.takePhoto),
             onTap: () {
               Navigator.pop(ctx);
               onCamera();
@@ -119,7 +123,7 @@ Future<void> showImageOptionsSheet({
           ),
           ListTile(
             leading: const Icon(Icons.delete),
-            title: const Text('Delete image'),
+            title: Text(ctx.l10n.deleteImage),
             onTap: () {
               Navigator.pop(ctx);
               onDelete();

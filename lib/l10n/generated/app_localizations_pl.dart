@@ -624,4 +624,118 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Czy na pewno chcesz usunąć wszystkie wpisy dziennika? Tej operacji nie można cofnąć.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Zastąp obraz';
+
+  @override
+  String get takePhoto => 'Zrób zdjęcie';
+
+  @override
+  String get deleteImage => 'Usuń obraz';
+
+  @override
+  String get filters => 'Filtry';
+
+  @override
+  String get foodGroup => 'Grupa żywności';
+
+  @override
+  String get exampleFruit => 'Owoce';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Wyczyść ($count)';
+  }
+
+  @override
+  String get done => 'Gotowe';
+
+  @override
+  String get showFilters => 'Pokaż filtry';
+
+  @override
+  String get repeatEntry => 'Powtórz wpis';
+
+  @override
+  String get timeOfDay => 'Pora dnia';
+
+  @override
+  String get everyDay => 'Codziennie';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Twórz ten wpis codziennie przez następny rok';
+
+  @override
+  String get repeatOn => 'Powtarzaj w';
+
+  @override
+  String get weekdayMon => 'Pn';
+
+  @override
+  String get weekdayTue => 'Wt';
+
+  @override
+  String get weekdayWed => 'Śr';
+
+  @override
+  String get weekdayThu => 'Czw';
+
+  @override
+  String get weekdayFri => 'Pt';
+
+  @override
+  String get weekdaySat => 'Sob';
+
+  @override
+  String get weekdaySun => 'Nd';
+
+  @override
+  String get schedule => 'Zaplanuj';
+
+  @override
+  String get enterValidNutritionValues =>
+      'Wprowadź prawidłowe wartości odżywcze';
+
+  @override
+  String get quickAddTitle => 'Szybkie dodawanie';
+
+  @override
+  String get kilojoules => 'Kilodżule';
+
+  @override
+  String get createdDate => 'Data utworzenia';
+
+  @override
+  String get failedMigrations => 'Nieudane migracje';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Podczas tworzenia lub aktualizowania bazy danych wystąpił problem. Zwykle można go naprawić, usuwając i ponownie tworząc wpisy.';
+
+  @override
+  String get errorMessage => 'Komunikat o błędzie:';
+
+  @override
+  String get createIssue => 'Zgłoś problem';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Do skanowania wymagane jest uprawnienie do aparatu.';
+
+  @override
+  String get scanFoodBarcode => 'Zeskanuj kod kreskowy produktu';
+
+  @override
+  String get holdBarcodeInFrame => 'Umieść kod kreskowy wewnątrz ramki';
+
+  @override
+  String get pinchToZoom => 'Uszczypnij, aby powiększyć';
+
+  @override
+  String get cameraStartFailed => 'Nie udało się uruchomić aparatu';
 }

@@ -593,6 +593,116 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get deleteAllDiaryConfirm => '确定要删除所有日记记录吗？此操作无法撤销。';
+
+  @override
+  String get ok => '确定';
+
+  @override
+  String get replaceImage => '替换图片';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get deleteImage => '删除图片';
+
+  @override
+  String get filters => '筛选';
+
+  @override
+  String get foodGroup => '食物组';
+
+  @override
+  String get exampleFruit => '水果';
+
+  @override
+  String clearFiltersCount(int count) {
+    return '清除（$count）';
+  }
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get showFilters => '显示筛选条件';
+
+  @override
+  String get repeatEntry => '重复记录';
+
+  @override
+  String get timeOfDay => '时间';
+
+  @override
+  String get everyDay => '每天';
+
+  @override
+  String get repeatEveryDayForYear => '在接下来一年中每天创建此记录';
+
+  @override
+  String get repeatOn => '重复日期';
+
+  @override
+  String get weekdayMon => '周一';
+
+  @override
+  String get weekdayTue => '周二';
+
+  @override
+  String get weekdayWed => '周三';
+
+  @override
+  String get weekdayThu => '周四';
+
+  @override
+  String get weekdayFri => '周五';
+
+  @override
+  String get weekdaySat => '周六';
+
+  @override
+  String get weekdaySun => '周日';
+
+  @override
+  String get schedule => '安排';
+
+  @override
+  String get enterValidNutritionValues => '请输入有效的营养数值';
+
+  @override
+  String get quickAddTitle => '快速添加';
+
+  @override
+  String get kilojoules => '千焦';
+
+  @override
+  String get createdDate => '创建日期';
+
+  @override
+  String get failedMigrations => '迁移失败';
+
+  @override
+  String get failedMigrationsDescription => '创建或升级数据库时出现问题。通常可以通过删除并重新创建记录来修复。';
+
+  @override
+  String get errorMessage => '错误信息：';
+
+  @override
+  String get createIssue => '报告问题';
+
+  @override
+  String get cameraPermissionRequired => '扫描需要相机权限。';
+
+  @override
+  String get scanFoodBarcode => '扫描食物条形码';
+
+  @override
+  String get holdBarcodeInFrame => '将条形码保持在框内';
+
+  @override
+  String get pinchToZoom => '双指捏合缩放';
+
+  @override
+  String get cameraStartFailed => '无法启动相机';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -1184,4 +1294,114 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get deleteAllDiaryConfirm => '确定要删除所有日记记录吗？此操作无法撤销。';
+
+  @override
+  String get ok => '确定';
+
+  @override
+  String get replaceImage => '替换图片';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get deleteImage => '删除图片';
+
+  @override
+  String get filters => '筛选';
+
+  @override
+  String get foodGroup => '食物组';
+
+  @override
+  String get exampleFruit => '水果';
+
+  @override
+  String clearFiltersCount(int count) {
+    return '清除（$count）';
+  }
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get showFilters => '显示筛选条件';
+
+  @override
+  String get repeatEntry => '重复记录';
+
+  @override
+  String get timeOfDay => '时间';
+
+  @override
+  String get everyDay => '每天';
+
+  @override
+  String get repeatEveryDayForYear => '在接下来一年中每天创建此记录';
+
+  @override
+  String get repeatOn => '重复日期';
+
+  @override
+  String get weekdayMon => '周一';
+
+  @override
+  String get weekdayTue => '周二';
+
+  @override
+  String get weekdayWed => '周三';
+
+  @override
+  String get weekdayThu => '周四';
+
+  @override
+  String get weekdayFri => '周五';
+
+  @override
+  String get weekdaySat => '周六';
+
+  @override
+  String get weekdaySun => '周日';
+
+  @override
+  String get schedule => '安排';
+
+  @override
+  String get enterValidNutritionValues => '请输入有效的营养数值';
+
+  @override
+  String get quickAddTitle => '快速添加';
+
+  @override
+  String get kilojoules => '千焦';
+
+  @override
+  String get createdDate => '创建日期';
+
+  @override
+  String get failedMigrations => '迁移失败';
+
+  @override
+  String get failedMigrationsDescription => '创建或升级数据库时出现问题。通常可以通过删除并重新创建记录来修复。';
+
+  @override
+  String get errorMessage => '错误信息：';
+
+  @override
+  String get createIssue => '报告问题';
+
+  @override
+  String get cameraPermissionRequired => '扫描需要相机权限。';
+
+  @override
+  String get scanFoodBarcode => '扫描食物条形码';
+
+  @override
+  String get holdBarcodeInFrame => '将条形码保持在框内';
+
+  @override
+  String get pinchToZoom => '双指捏合缩放';
+
+  @override
+  String get cameraStartFailed => '无法启动相机';
 }

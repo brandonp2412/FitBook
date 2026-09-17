@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/diary/diary_state.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart' as material;
@@ -30,7 +31,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Filters'),
+        title: Text(dialogContext.l10n.filters),
         content: material.Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -63,8 +64,8 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                 groupCtrl.text = context.read<DiaryState>().foodGroup ?? "";
                 return TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Food group',
-                    hintText: 'Fruit',
+                    labelText: context.l10n.foodGroup,
+                    hintText: context.l10n.exampleFruit,
                   ),
                   controller: textEditingController,
                   focusNode: focusNode,
@@ -80,7 +81,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
             const SizedBox(height: 16),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Start date'),
+              title: Text(dialogContext.l10n.startDate),
               subtitle: Consumer<SettingsState>(
                 builder: (context, settingsState, child) {
                   final state = context.watch<DiaryState>();
@@ -115,7 +116,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Stop date'),
+              title: Text(dialogContext.l10n.stopDate),
               subtitle: Consumer<SettingsState>(
                 builder: (context, settingsState, child) {
                   final state = context.watch<DiaryState>();
@@ -159,7 +160,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
             },
             child: Consumer<DiaryState>(
               builder: (context, state, child) => Text(
-                "Clear (${state.filterCount})",
+                context.l10n.clearFiltersCount(state.filterCount),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -171,7 +172,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                   group.isEmpty ? null : group;
               Navigator.of(dialogContext).pop();
             },
-            child: const Text('Done'),
+            child: Text(dialogContext.l10n.done),
           ),
         ],
       ),
@@ -188,7 +189,7 @@ class _DiaryFiltersState extends State<DiaryFilters> {
       isLabelVisible: state.filterCount > 0,
       child: IconButton(
         icon: const Icon(Icons.filter_list),
-        tooltip: 'Show filters',
+        tooltip: context.l10n.showFilters,
         onPressed: _showFiltersDialog,
       ),
     );

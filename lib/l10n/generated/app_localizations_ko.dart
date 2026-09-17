@@ -597,4 +597,115 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deleteAllDiaryConfirm => '모든 일기 기록을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.';
+
+  @override
+  String get ok => '확인';
+
+  @override
+  String get replaceImage => '이미지 바꾸기';
+
+  @override
+  String get takePhoto => '사진 촬영';
+
+  @override
+  String get deleteImage => '이미지 삭제';
+
+  @override
+  String get filters => '필터';
+
+  @override
+  String get foodGroup => '식품군';
+
+  @override
+  String get exampleFruit => '과일';
+
+  @override
+  String clearFiltersCount(int count) {
+    return '지우기 ($count)';
+  }
+
+  @override
+  String get done => '완료';
+
+  @override
+  String get showFilters => '필터 표시';
+
+  @override
+  String get repeatEntry => '기록 반복';
+
+  @override
+  String get timeOfDay => '시간';
+
+  @override
+  String get everyDay => '매일';
+
+  @override
+  String get repeatEveryDayForYear => '앞으로 1년 동안 매일 이 기록을 생성합니다';
+
+  @override
+  String get repeatOn => '반복 요일';
+
+  @override
+  String get weekdayMon => '월';
+
+  @override
+  String get weekdayTue => '화';
+
+  @override
+  String get weekdayWed => '수';
+
+  @override
+  String get weekdayThu => '목';
+
+  @override
+  String get weekdayFri => '금';
+
+  @override
+  String get weekdaySat => '토';
+
+  @override
+  String get weekdaySun => '일';
+
+  @override
+  String get schedule => '예약';
+
+  @override
+  String get enterValidNutritionValues => '올바른 영양 값을 입력하세요';
+
+  @override
+  String get quickAddTitle => '빠른 추가';
+
+  @override
+  String get kilojoules => '킬로줄';
+
+  @override
+  String get createdDate => '생성 날짜';
+
+  @override
+  String get failedMigrations => '마이그레이션 실패';
+
+  @override
+  String get failedMigrationsDescription =>
+      '데이터베이스를 만들거나 업그레이드하는 중 문제가 발생했습니다. 일반적으로 기록을 삭제한 뒤 다시 만들면 해결할 수 있습니다.';
+
+  @override
+  String get errorMessage => '오류 메시지:';
+
+  @override
+  String get createIssue => '문제 신고';
+
+  @override
+  String get cameraPermissionRequired => '스캔하려면 카메라 권한이 필요합니다.';
+
+  @override
+  String get scanFoodBarcode => '식품 바코드 스캔';
+
+  @override
+  String get holdBarcodeInFrame => '바코드를 프레임 안에 맞춰 주세요';
+
+  @override
+  String get pinchToZoom => '손가락을 모아 확대/축소';
+
+  @override
+  String get cameraStartFailed => '카메라를 시작할 수 없습니다';
 }

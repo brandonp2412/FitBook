@@ -617,4 +617,119 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get deleteAllDiaryConfirm =>
       'Vuoi davvero eliminare tutte le voci del diario? Questa azione non può essere annullata.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get replaceImage => 'Sostituisci immagine';
+
+  @override
+  String get takePhoto => 'Scatta foto';
+
+  @override
+  String get deleteImage => 'Elimina immagine';
+
+  @override
+  String get filters => 'Filtri';
+
+  @override
+  String get foodGroup => 'Gruppo alimentare';
+
+  @override
+  String get exampleFruit => 'Frutta';
+
+  @override
+  String clearFiltersCount(int count) {
+    return 'Cancella ($count)';
+  }
+
+  @override
+  String get done => 'Fatto';
+
+  @override
+  String get showFilters => 'Mostra filtri';
+
+  @override
+  String get repeatEntry => 'Ripeti voce';
+
+  @override
+  String get timeOfDay => 'Ora del giorno';
+
+  @override
+  String get everyDay => 'Ogni giorno';
+
+  @override
+  String get repeatEveryDayForYear =>
+      'Crea questa voce ogni giorno per il prossimo anno';
+
+  @override
+  String get repeatOn => 'Ripeti il';
+
+  @override
+  String get weekdayMon => 'Lun';
+
+  @override
+  String get weekdayTue => 'Mar';
+
+  @override
+  String get weekdayWed => 'Mer';
+
+  @override
+  String get weekdayThu => 'Gio';
+
+  @override
+  String get weekdayFri => 'Ven';
+
+  @override
+  String get weekdaySat => 'Sab';
+
+  @override
+  String get weekdaySun => 'Dom';
+
+  @override
+  String get schedule => 'Pianifica';
+
+  @override
+  String get enterValidNutritionValues =>
+      'Inserisci valori nutrizionali validi';
+
+  @override
+  String get quickAddTitle => 'Aggiunta rapida';
+
+  @override
+  String get kilojoules => 'Chilojoule';
+
+  @override
+  String get createdDate => 'Data di creazione';
+
+  @override
+  String get failedMigrations => 'Migrazioni non riuscite';
+
+  @override
+  String get failedMigrationsDescription =>
+      'Si è verificato un problema durante la creazione o l’aggiornamento del database. Di solito puoi risolverlo eliminando e ricreando i record.';
+
+  @override
+  String get errorMessage => 'Messaggio di errore:';
+
+  @override
+  String get createIssue => 'Crea segnalazione';
+
+  @override
+  String get cameraPermissionRequired =>
+      'Per eseguire la scansione è necessaria l’autorizzazione alla fotocamera.';
+
+  @override
+  String get scanFoodBarcode => 'Scansiona il codice a barre di un alimento';
+
+  @override
+  String get holdBarcodeInFrame =>
+      'Mantieni il codice a barre all’interno del riquadro';
+
+  @override
+  String get pinchToZoom => 'Pizzica per zoomare';
+
+  @override
+  String get cameraStartFailed => 'Impossibile avviare la fotocamera';
 }

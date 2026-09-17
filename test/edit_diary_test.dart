@@ -9,13 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 Widget _wrap(Widget child, SettingsState settingsState) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => settingsState),
         ChangeNotifierProvider(create: (_) => DiaryState()),
       ],
-      child: MaterialApp(home: child),
+      child: localizedApp(home: child),
     );
 
 Finder _fieldStarting(String label) => find.byWidgetPredicate(

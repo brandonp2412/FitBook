@@ -1215,6 +1215,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete all diary entries? This action is not reversible.'**
   String get deleteAllDiaryConfirm;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @replaceImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace image'**
+  String get replaceImage;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get takePhoto;
+
+  /// No description provided for @deleteImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete image'**
+  String get deleteImage;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @foodGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Food group'**
+  String get foodGroup;
+
+  /// No description provided for @exampleFruit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fruit'**
+  String get exampleFruit;
+
+  /// No description provided for @clearFiltersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear ({count})'**
+  String clearFiltersCount(int count);
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @showFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Show filters'**
+  String get showFilters;
+
+  /// No description provided for @repeatEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat entry'**
+  String get repeatEntry;
+
+  /// No description provided for @timeOfDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Time of day'**
+  String get timeOfDay;
+
+  /// No description provided for @everyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get everyDay;
+
+  /// No description provided for @repeatEveryDayForYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Create this entry each day for the next year'**
+  String get repeatEveryDayForYear;
+
+  /// No description provided for @repeatOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat on'**
+  String get repeatOn;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekdayFri;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekdaySat;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekdaySun;
+
+  /// No description provided for @schedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get schedule;
+
+  /// No description provided for @enterValidNutritionValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter valid nutrition values'**
+  String get enterValidNutritionValues;
+
+  /// No description provided for @quickAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick add'**
+  String get quickAddTitle;
+
+  /// No description provided for @kilojoules.
+  ///
+  /// In en, this message translates to:
+  /// **'Kilojoules'**
+  String get kilojoules;
+
+  /// No description provided for @createdDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Created date'**
+  String get createdDate;
+
+  /// No description provided for @failedMigrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed migrations'**
+  String get failedMigrations;
+
+  /// No description provided for @failedMigrationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong when creating or upgrading your database. Usually this can be fixed by deleting and re-creating your records.'**
+  String get failedMigrationsDescription;
+
+  /// No description provided for @errorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error message:'**
+  String get errorMessage;
+
+  /// No description provided for @createIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Create issue'**
+  String get createIssue;
+
+  /// No description provided for @cameraPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera permission is required to scan.'**
+  String get cameraPermissionRequired;
+
+  /// No description provided for @scanFoodBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a food barcode'**
+  String get scanFoodBarcode;
+
+  /// No description provided for @holdBarcodeInFrame.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the barcode inside the frame'**
+  String get holdBarcodeInFrame;
+
+  /// No description provided for @pinchToZoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Pinch to zoom'**
+  String get pinchToZoom;
+
+  /// No description provided for @cameraStartFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the camera'**
+  String get cameraStartFailed;
 }
 
 class _AppLocalizationsDelegate

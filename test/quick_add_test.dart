@@ -3,11 +3,11 @@ import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   Future<void> pumpQuickAdd(WidgetTester tester) async {
@@ -21,8 +21,8 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(
-          home: QuickAddPage(),
+        child: localizedApp(
+          home: const QuickAddPage(),
         ),
       ),
     );
