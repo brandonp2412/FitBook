@@ -8,6 +8,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -246,9 +247,9 @@ class _ImportDataState extends State<ImportData> {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Failed to import data"),
+          content: Text(context.l10n.failedImportData),
           action: SnackBarAction(
-            label: 'Copy error',
+            label: context.l10n.copyError,
             onPressed: () {
               Clipboard.setData(ClipboardData(text: error.toString()));
             },
@@ -357,9 +358,9 @@ class _ImportDataState extends State<ImportData> {
       if (!widget.pageContext.mounted) return;
       ScaffoldMessenger.of(widget.pageContext).showSnackBar(
         SnackBar(
-          content: const Text('Failed to import data'),
+          content: Text(widget.pageContext.l10n.failedImportData),
           action: SnackBarAction(
-            label: 'Copy error',
+            label: widget.pageContext.l10n.copyError,
             onPressed: () {
               Clipboard.setData(ClipboardData(text: error.toString()));
             },
@@ -387,17 +388,17 @@ class _ImportDataState extends State<ImportData> {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.date_range),
-                    title: const Text('Diary'),
+                    title: Text(context.l10n.diary),
                     onTap: () => _importEntries(context),
                   ),
                   ListTile(
                     leading: const Icon(Icons.restaurant),
-                    title: const Text('Foods'),
+                    title: Text(context.l10n.foods),
                     onTap: () => _importFoods(context),
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Backup'),
+                    title: Text(context.l10n.backup),
                     onTap: () => _importDatabase(context),
                   ),
                 ],
@@ -409,7 +410,7 @@ class _ImportDataState extends State<ImportData> {
       icon: const Icon(Icons.upload),
       label: importing
           ? const CircularProgressIndicator()
-          : const Text('Import data'),
+          : Text(context.l10n.importData),
     );
   }
 }

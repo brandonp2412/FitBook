@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class DeleteRecordsButton extends StatelessWidget {
   final BuildContext pageContext;
 
-  DeleteRecordsButton({
+  const DeleteRecordsButton({
     super.key,
     required this.pageContext,
   });
@@ -23,19 +23,17 @@ class DeleteRecordsButton extends StatelessWidget {
       context: sheetContext,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Confirm delete'),
-          content: const Text(
-            'Are you sure you want to delete all weights? This action is not reversible.',
-          ),
+          title: Text(dialogContext.l10n.confirmDelete),
+          content: Text(dialogContext.l10n.deleteAllWeightsConfirm),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(dialogContext.l10n.cancel),
               onPressed: () {
                 Navigator.pop(dialogContext);
               },
             ),
             TextButton(
-              child: const Text('Delete'),
+              child: Text(dialogContext.l10n.delete),
               onPressed: () async {
                 Navigator.pop(dialogContext);
                 await db.weights.deleteAll();
@@ -54,20 +52,18 @@ class DeleteRecordsButton extends StatelessWidget {
       context: sheetContext,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
-          content: const Text(
-            'Are you sure you want to delete your database? This action is not reversible and will destroy all your data.',
-          ),
+          title: Text(context.l10n.confirmDelete),
+          content: Text(context.l10n.deleteDatabaseConfirm),
           actions: <Widget>[
             TextButton.icon(
-              label: const Text('Cancel'),
+              label: Text(context.l10n.cancel),
               icon: const Icon(Icons.close),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton.icon(
-              label: const Text('Delete'),
+              label: Text(context.l10n.delete),
               icon: const Icon(Icons.delete),
               onPressed: () async {
                 final dbFolder = await getApplicationDocumentsDirectory();
@@ -98,19 +94,17 @@ class DeleteRecordsButton extends StatelessWidget {
       context: sheetContext,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Confirm delete'),
-          content: const Text(
-            'Are you sure you want to delete all food & diary entries? This action is not reversible.',
-          ),
+          title: Text(dialogContext.l10n.confirmDelete),
+          content: Text(dialogContext.l10n.deleteFoodsAndDiaryConfirm),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(dialogContext.l10n.cancel),
               onPressed: () {
                 Navigator.pop(dialogContext);
               },
             ),
             TextButton(
-              child: const Text('Delete'),
+              child: Text(dialogContext.l10n.delete),
               onPressed: () async {
                 Navigator.pop(dialogContext);
                 await db.diaries.deleteAll();
@@ -123,8 +117,6 @@ class DeleteRecordsButton extends StatelessWidget {
       },
     );
   }
-
-  final formatter = NumberFormat('#,##0');
 
   void deleteUnused(BuildContext sheetContext) {
     Navigator.pop(sheetContext);
@@ -146,22 +138,22 @@ class DeleteRecordsButton extends StatelessWidget {
             .get();
 
         return AlertDialog(
-          title: const Text('Confirm delete'),
+          title: Text(dialogContext.l10n.confirmDelete),
           content: FutureBuilder(
             future: unusedFuture,
             builder: (context, snapshot) => Text(
-              'Are you sure you want to delete ${formatter.format(snapshot.data?.length ?? 0)} unused foods? This action is irreversible',
+              context.l10n.deleteUnusedFoodsConfirm(snapshot.data?.length ?? 0),
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(dialogContext.l10n.cancel),
               onPressed: () {
                 Navigator.pop(dialogContext);
               },
             ),
             TextButton(
-              child: const Text('Delete'),
+              child: Text(dialogContext.l10n.delete),
               onPressed: () async {
                 Navigator.pop(dialogContext);
                 final ids = (await unusedFuture)
@@ -182,19 +174,17 @@ class DeleteRecordsButton extends StatelessWidget {
       context: sheetContext,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Confirm delete'),
-          content: const Text(
-            'Are you sure you want to delete all diary entries? This action is not reversible.',
-          ),
+          title: Text(dialogContext.l10n.confirmDelete),
+          content: Text(dialogContext.l10n.deleteAllDiaryConfirm),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(dialogContext.l10n.cancel),
               onPressed: () {
                 Navigator.pop(dialogContext);
               },
             ),
             TextButton(
-              child: const Text('Delete'),
+              child: Text(dialogContext.l10n.delete),
               onPressed: () async {
                 Navigator.pop(dialogContext);
                 await db.diaries.deleteAll();
@@ -220,27 +210,27 @@ class DeleteRecordsButton extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.date_range),
-                    title: const Text('Diary'),
+                    title: Text(sheetContext.l10n.diary),
                     onTap: () => deleteDiary(sheetContext),
                   ),
                   ListTile(
                     leading: const Icon(Icons.restaurant),
-                    title: const Text('Food'),
+                    title: Text(sheetContext.l10n.food),
                     onTap: () => deleteFoods(sheetContext),
                   ),
                   ListTile(
                     leading: const Icon(Icons.no_meals),
-                    title: const Text('Unused food'),
+                    title: Text(sheetContext.l10n.unusedFood),
                     onTap: () => deleteUnused(sheetContext),
                   ),
                   ListTile(
                     leading: const Icon(Icons.scale),
-                    title: const Text('Weight'),
+                    title: Text(sheetContext.l10n.weight),
                     onTap: () => deleteWeights(sheetContext),
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Database'),
+                    title: Text(sheetContext.l10n.database),
                     onTap: () => deleteDatabase(sheetContext),
                   ),
                 ],
@@ -250,7 +240,7 @@ class DeleteRecordsButton extends StatelessWidget {
         );
       },
       icon: const Icon(Icons.delete),
-      label: const Text('Delete records'),
+      label: Text(context.l10n.deleteRecords),
     );
   }
 }

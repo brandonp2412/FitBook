@@ -7,6 +7,8 @@ import 'package:fit_book/settings/import_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'test_utils.dart';
+
 class _FakeFilePicker extends FilePickerPlatform {
   _FakeFilePicker(this.result);
 
@@ -31,7 +33,7 @@ class _FakeFilePicker extends FilePickerPlatform {
       result;
 }
 
-Widget _app() => MaterialApp(
+Widget _app() => localizedApp(
       home: Scaffold(
         body: Builder(
           builder: (context) => ImportData(pageContext: context),

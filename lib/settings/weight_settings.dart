@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ List<Widget> getWeightSettings({
   required SettingsState settings,
   required TextEditingController targetWeight,
 }) {
+  final l10n = context.l10n;
+
   return [
-    if ('target weight'.contains(term))
+    if (l10n.targetWeight.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextField(
@@ -25,17 +28,17 @@ List<Widget> getWeightSettings({
               ),
           onTap: () => selectAll(targetWeight),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Target weight',
+          decoration: InputDecoration(
+            labelText: l10n.targetWeight,
           ),
         ),
       ),
-    if ('positive reinforcement'.contains(term))
+    if (l10n.positiveReinforcement.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8),
         child: ListTile(
           leading: const Icon(Icons.sentiment_very_satisfied),
-          title: const Text('Positive reinforcement'),
+          title: Text(l10n.positiveReinforcement),
           onTap: () {
             db.settings.update().write(
                   SettingsCompanion(
@@ -44,7 +47,7 @@ List<Widget> getWeightSettings({
                   ),
                 );
             if (!settings.value.positiveReinforcement)
-              toast(context, 'Nice messages will be shown like this!');
+              toast(context, l10n.positiveReinforcementPreview);
           },
           trailing: Switch(
             value: settings.value.positiveReinforcement,
@@ -76,7 +79,7 @@ class _WeightSettingsState extends State<WeightSettings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Weight settings"),
+        title: Text(context.l10n.weightSettings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

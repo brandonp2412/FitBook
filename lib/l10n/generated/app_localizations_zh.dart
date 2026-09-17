@@ -273,6 +273,326 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get appearanceSettings => '外观设置';
+
+  @override
+  String get delete => '删除';
+
+  @override
+  String get confirmDelete => '确认删除';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '确定要删除$count条记录吗？此操作无法撤销。',
+      one: '确定要删除1条记录吗？此操作无法撤销。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get search => '搜索...';
+
+  @override
+  String get clear => '清除';
+
+  @override
+  String get showMenu => '显示菜单';
+
+  @override
+  String get selectAll => '全选';
+
+  @override
+  String get edit => '编辑';
+
+  @override
+  String get favorite => '收藏';
+
+  @override
+  String get atLeastOneTab => '至少需要保留一个标签页';
+
+  @override
+  String get scrollableTabs => '可滚动标签页';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get themeSystem => '系统';
+
+  @override
+  String get themeDark => '深色';
+
+  @override
+  String get themeLight => '浅色';
+
+  @override
+  String get pureBlackAmoled => '纯黑 (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip => '在 AMOLED 屏幕上使用纯黑色';
+
+  @override
+  String get systemColorScheme => '系统配色';
+
+  @override
+  String get systemColorSchemeTooltip => '在应用中使用设备的主色';
+
+  @override
+  String get showImages => '显示图片';
+
+  @override
+  String get showImagesTooltip => '在日记和食物页面选择并显示图片';
+
+  @override
+  String get curveLineGraphs => '曲线折线图';
+
+  @override
+  String get curveLineGraphsTooltip => '在图表页面使用平滑曲线';
+
+  @override
+  String get weightStatCards => '体重统计卡片';
+
+  @override
+  String get weightStatCardsTooltip => '将体重记录显示为统计卡片网格，而不是默认列表';
+
+  @override
+  String get graphsStartAtZero => '图表从零开始';
+
+  @override
+  String get graphsStartAtZeroTooltip => '始终让图表 Y 轴从零开始';
+
+  @override
+  String get navigationAnimation => '导航动画';
+
+  @override
+  String get animationFade => '淡入淡出';
+
+  @override
+  String get animationZoom => '缩放';
+
+  @override
+  String get animationSlide => '滑动';
+
+  @override
+  String get animationRise => '上升';
+
+  @override
+  String get animationNone => '无';
+
+  @override
+  String longDateFormat(String example) {
+    return '长日期格式（$example）';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return '短日期格式（$example）';
+  }
+
+  @override
+  String get diarySettings => '日记设置';
+
+  @override
+  String get diaryUnit => '日记单位';
+
+  @override
+  String get diarySummary => '日记摘要';
+
+  @override
+  String get diarySummaryDivision => '比例 - 当前 / 总计';
+
+  @override
+  String get diarySummaryRemaining => '剩余';
+
+  @override
+  String get diarySummaryBoth => '两者 - 剩余（总计）';
+
+  @override
+  String get diarySummaryNone => '无';
+
+  @override
+  String get dailyCaloriesKcal => '每日热量 (kcal)';
+
+  @override
+  String get dailyProteinG => '每日蛋白质 (g)';
+
+  @override
+  String get dailyFatG => '每日脂肪 (g)';
+
+  @override
+  String get dailyCarbsG => '每日碳水化合物 (g)';
+
+  @override
+  String get dailyFiberG => '每日膳食纤维 (g)';
+
+  @override
+  String get automaticDailies => '自动每日目标';
+
+  @override
+  String get automaticDailiesTooltip => '根据体重自动计算建议的每日热量、蛋白质、脂肪和碳水化合物';
+
+  @override
+  String get selectNameOnSubmit => '保存时选择名称';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get foodSettings => '食物设置';
+
+  @override
+  String get foodUnit => '食物单位';
+
+  @override
+  String get fields => '字段';
+
+  @override
+  String get favoriteNewFoods => '将新食物加入收藏';
+
+  @override
+  String get pickFields => '选择字段';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String get onlySelected => '仅已选择';
+
+  @override
+  String get weightSettings => '体重设置';
+
+  @override
+  String get targetWeight => '目标体重';
+
+  @override
+  String get positiveReinforcement => '积极鼓励';
+
+  @override
+  String get positiveReinforcementPreview => '鼓励消息将像这样显示！';
+
+  @override
+  String get dataSettings => '数据设置';
+
+  @override
+  String get automaticBackup => '自动备份';
+
+  @override
+  String get shareDatabase => '共享数据库';
+
+  @override
+  String get openNotification => '打开通知';
+
+  @override
+  String get automaticBackupsEnabled => '已启用自动备份';
+
+  @override
+  String get automaticBackupBody => 'FitBook 每天会自动将你的数据和图片备份到所选文件夹。';
+
+  @override
+  String get backupSettings => '备份设置';
+
+  @override
+  String get backupSettingsChannelDescription => '关于自动备份的通知';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => '用户名';
+
+  @override
+  String get password => '密码';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get loggedIn => '已登录';
+
+  @override
+  String get about => '关于';
+
+  @override
+  String get version => '版本';
+
+  @override
+  String get whatsNew => '新功能';
+
+  @override
+  String get author => '作者';
+
+  @override
+  String get license => '许可证';
+
+  @override
+  String get donate => '捐赠';
+
+  @override
+  String get supportProject => '帮助支持此项目';
+
+  @override
+  String get leaveReview => '留下评价';
+
+  @override
+  String get rateOnPlayStore => '在 Play 商店评价 FitBook';
+
+  @override
+  String get sourceCode => '源代码';
+
+  @override
+  String get foods => '食物';
+
+  @override
+  String get backup => '备份';
+
+  @override
+  String get exportData => '导出数据';
+
+  @override
+  String get importData => '导入数据';
+
+  @override
+  String get failedImportData => '导入数据失败';
+
+  @override
+  String get copyError => '复制错误';
+
+  @override
+  String get deleteRecords => '删除数据';
+
+  @override
+  String get unusedFood => '未使用的食物';
+
+  @override
+  String get database => '数据库';
+
+  @override
+  String get deleteAllWeightsConfirm => '确定要删除所有体重记录吗？此操作无法撤销。';
+
+  @override
+  String get deleteDatabaseConfirm => '确定要删除数据库吗？此操作无法撤销，并会删除你的所有数据。';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm => '确定要删除所有食物和日记记录吗？此操作无法撤销。';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '确定要删除 $count 个未使用的食物吗？此操作无法撤销。',
+      one: '确定要删除 1 个未使用的食物吗？此操作无法撤销。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm => '确定要删除所有日记记录吗？此操作无法撤销。';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -544,4 +864,324 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get appearanceSettings => '外观设置';
+
+  @override
+  String get delete => '删除';
+
+  @override
+  String get confirmDelete => '确认删除';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '确定要删除$count条记录吗？此操作无法撤销。',
+      one: '确定要删除1条记录吗？此操作无法撤销。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get search => '搜索...';
+
+  @override
+  String get clear => '清除';
+
+  @override
+  String get showMenu => '显示菜单';
+
+  @override
+  String get selectAll => '全选';
+
+  @override
+  String get edit => '编辑';
+
+  @override
+  String get favorite => '收藏';
+
+  @override
+  String get atLeastOneTab => '至少需要保留一个标签页';
+
+  @override
+  String get scrollableTabs => '可滚动标签页';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get themeSystem => '系统';
+
+  @override
+  String get themeDark => '深色';
+
+  @override
+  String get themeLight => '浅色';
+
+  @override
+  String get pureBlackAmoled => '纯黑 (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip => '在 AMOLED 屏幕上使用纯黑色';
+
+  @override
+  String get systemColorScheme => '系统配色';
+
+  @override
+  String get systemColorSchemeTooltip => '在应用中使用设备的主色';
+
+  @override
+  String get showImages => '显示图片';
+
+  @override
+  String get showImagesTooltip => '在日记和食物页面选择并显示图片';
+
+  @override
+  String get curveLineGraphs => '曲线折线图';
+
+  @override
+  String get curveLineGraphsTooltip => '在图表页面使用平滑曲线';
+
+  @override
+  String get weightStatCards => '体重统计卡片';
+
+  @override
+  String get weightStatCardsTooltip => '将体重记录显示为统计卡片网格，而不是默认列表';
+
+  @override
+  String get graphsStartAtZero => '图表从零开始';
+
+  @override
+  String get graphsStartAtZeroTooltip => '始终让图表 Y 轴从零开始';
+
+  @override
+  String get navigationAnimation => '导航动画';
+
+  @override
+  String get animationFade => '淡入淡出';
+
+  @override
+  String get animationZoom => '缩放';
+
+  @override
+  String get animationSlide => '滑动';
+
+  @override
+  String get animationRise => '上升';
+
+  @override
+  String get animationNone => '无';
+
+  @override
+  String longDateFormat(String example) {
+    return '长日期格式（$example）';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return '短日期格式（$example）';
+  }
+
+  @override
+  String get diarySettings => '日记设置';
+
+  @override
+  String get diaryUnit => '日记单位';
+
+  @override
+  String get diarySummary => '日记摘要';
+
+  @override
+  String get diarySummaryDivision => '比例 - 当前 / 总计';
+
+  @override
+  String get diarySummaryRemaining => '剩余';
+
+  @override
+  String get diarySummaryBoth => '两者 - 剩余（总计）';
+
+  @override
+  String get diarySummaryNone => '无';
+
+  @override
+  String get dailyCaloriesKcal => '每日热量 (kcal)';
+
+  @override
+  String get dailyProteinG => '每日蛋白质 (g)';
+
+  @override
+  String get dailyFatG => '每日脂肪 (g)';
+
+  @override
+  String get dailyCarbsG => '每日碳水化合物 (g)';
+
+  @override
+  String get dailyFiberG => '每日膳食纤维 (g)';
+
+  @override
+  String get automaticDailies => '自动每日目标';
+
+  @override
+  String get automaticDailiesTooltip => '根据体重自动计算建议的每日热量、蛋白质、脂肪和碳水化合物';
+
+  @override
+  String get selectNameOnSubmit => '保存时选择名称';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get foodSettings => '食物设置';
+
+  @override
+  String get foodUnit => '食物单位';
+
+  @override
+  String get fields => '字段';
+
+  @override
+  String get favoriteNewFoods => '将新食物加入收藏';
+
+  @override
+  String get pickFields => '选择字段';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String get onlySelected => '仅已选择';
+
+  @override
+  String get weightSettings => '体重设置';
+
+  @override
+  String get targetWeight => '目标体重';
+
+  @override
+  String get positiveReinforcement => '积极鼓励';
+
+  @override
+  String get positiveReinforcementPreview => '鼓励消息将像这样显示！';
+
+  @override
+  String get dataSettings => '数据设置';
+
+  @override
+  String get automaticBackup => '自动备份';
+
+  @override
+  String get shareDatabase => '共享数据库';
+
+  @override
+  String get openNotification => '打开通知';
+
+  @override
+  String get automaticBackupsEnabled => '已启用自动备份';
+
+  @override
+  String get automaticBackupBody => 'FitBook 每天会自动将你的数据和图片备份到所选文件夹。';
+
+  @override
+  String get backupSettings => '备份设置';
+
+  @override
+  String get backupSettingsChannelDescription => '关于自动备份的通知';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => '用户名';
+
+  @override
+  String get password => '密码';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get loggedIn => '已登录';
+
+  @override
+  String get about => '关于';
+
+  @override
+  String get version => '版本';
+
+  @override
+  String get whatsNew => '新功能';
+
+  @override
+  String get author => '作者';
+
+  @override
+  String get license => '许可证';
+
+  @override
+  String get donate => '捐赠';
+
+  @override
+  String get supportProject => '帮助支持此项目';
+
+  @override
+  String get leaveReview => '留下评价';
+
+  @override
+  String get rateOnPlayStore => '在 Play 商店评价 FitBook';
+
+  @override
+  String get sourceCode => '源代码';
+
+  @override
+  String get foods => '食物';
+
+  @override
+  String get backup => '备份';
+
+  @override
+  String get exportData => '导出数据';
+
+  @override
+  String get importData => '导入数据';
+
+  @override
+  String get failedImportData => '导入数据失败';
+
+  @override
+  String get copyError => '复制错误';
+
+  @override
+  String get deleteRecords => '删除数据';
+
+  @override
+  String get unusedFood => '未使用的食物';
+
+  @override
+  String get database => '数据库';
+
+  @override
+  String get deleteAllWeightsConfirm => '确定要删除所有体重记录吗？此操作无法撤销。';
+
+  @override
+  String get deleteDatabaseConfirm => '确定要删除数据库吗？此操作无法撤销，并会删除你的所有数据。';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm => '确定要删除所有食物和日记记录吗？此操作无法撤销。';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '确定要删除 $count 个未使用的食物吗？此操作无法撤销。',
+      one: '确定要删除 1 个未使用的食物吗？此操作无法撤销。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm => '确定要删除所有日记记录吗？此操作无法撤销。';
 }

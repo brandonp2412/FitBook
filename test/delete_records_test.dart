@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   testWidgets('DeleteRecords diary', (WidgetTester tester) async {
@@ -32,7 +33,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: Scaffold(
             body: Builder(
               builder: (context) => DeleteRecordsButton(pageContext: context),
@@ -68,7 +69,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: Scaffold(
             body: Builder(
               builder: (context) => DeleteRecordsButton(pageContext: context),
@@ -110,7 +111,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: Scaffold(
             body: Builder(
               builder: (context) => DeleteRecordsButton(pageContext: context),

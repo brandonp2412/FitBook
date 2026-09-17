@@ -278,4 +278,341 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appearanceSettings => 'Appearance settings';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get confirmDelete => 'Confirm delete';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Are you sure you want to delete $count records? This action is not reversible.',
+      one:
+          'Are you sure you want to delete 1 record? This action is not reversible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get search => 'Search...';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get showMenu => 'Show menu';
+
+  @override
+  String get selectAll => 'Select all';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get favorite => 'Favorite';
+
+  @override
+  String get atLeastOneTab => 'You need at least one tab';
+
+  @override
+  String get scrollableTabs => 'Scrollable tabs';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get pureBlackAmoled => 'Pure black (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip =>
+      'Use pure black colors for AMOLED displays';
+
+  @override
+  String get systemColorScheme => 'System color scheme';
+
+  @override
+  String get systemColorSchemeTooltip =>
+      'Use your device\'s primary color for the app';
+
+  @override
+  String get showImages => 'Show images';
+
+  @override
+  String get showImagesTooltip =>
+      'Pick and display images on the diary and food pages';
+
+  @override
+  String get curveLineGraphs => 'Curve line graphs';
+
+  @override
+  String get curveLineGraphsTooltip => 'Use smooth curves on the graphs page';
+
+  @override
+  String get weightStatCards => 'Weight stat cards';
+
+  @override
+  String get weightStatCardsTooltip =>
+      'Show weight entries as a grid of stat cards instead of the default list';
+
+  @override
+  String get graphsStartAtZero => 'Graphs start at zero';
+
+  @override
+  String get graphsStartAtZeroTooltip =>
+      'Always start the graph y-axis at zero';
+
+  @override
+  String get navigationAnimation => 'Navigation animation';
+
+  @override
+  String get animationFade => 'Fade';
+
+  @override
+  String get animationZoom => 'Zoom';
+
+  @override
+  String get animationSlide => 'Slide';
+
+  @override
+  String get animationRise => 'Rise';
+
+  @override
+  String get animationNone => 'None';
+
+  @override
+  String longDateFormat(String example) {
+    return 'Long date format ($example)';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return 'Short date format ($example)';
+  }
+
+  @override
+  String get diarySettings => 'Diary settings';
+
+  @override
+  String get diaryUnit => 'Diary unit';
+
+  @override
+  String get diarySummary => 'Diary summary';
+
+  @override
+  String get diarySummaryDivision => 'Division - current / total';
+
+  @override
+  String get diarySummaryRemaining => 'Remaining';
+
+  @override
+  String get diarySummaryBoth => 'Both - remaining (total)';
+
+  @override
+  String get diarySummaryNone => 'None';
+
+  @override
+  String get dailyCaloriesKcal => 'Daily calories (kcal)';
+
+  @override
+  String get dailyProteinG => 'Daily protein (g)';
+
+  @override
+  String get dailyFatG => 'Daily fat (g)';
+
+  @override
+  String get dailyCarbsG => 'Daily carbs (g)';
+
+  @override
+  String get dailyFiberG => 'Daily fiber (g)';
+
+  @override
+  String get automaticDailies => 'Automatic daily targets';
+
+  @override
+  String get automaticDailiesTooltip =>
+      'Automatically calculate recommended daily calories, protein, fat and carbs from your body weight';
+
+  @override
+  String get selectNameOnSubmit => 'Select name on submit';
+
+  @override
+  String get reminders => 'Reminders';
+
+  @override
+  String get foodSettings => 'Food settings';
+
+  @override
+  String get foodUnit => 'Food unit';
+
+  @override
+  String get fields => 'Fields';
+
+  @override
+  String get favoriteNewFoods => 'Favorite new foods';
+
+  @override
+  String get pickFields => 'Pick fields';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get onlySelected => 'Only selected';
+
+  @override
+  String get weightSettings => 'Weight settings';
+
+  @override
+  String get targetWeight => 'Target weight';
+
+  @override
+  String get positiveReinforcement => 'Positive reinforcement';
+
+  @override
+  String get positiveReinforcementPreview =>
+      'Encouraging messages will be shown like this!';
+
+  @override
+  String get dataSettings => 'Data settings';
+
+  @override
+  String get automaticBackup => 'Automatic backup';
+
+  @override
+  String get shareDatabase => 'Share database';
+
+  @override
+  String get openNotification => 'Open notification';
+
+  @override
+  String get automaticBackupsEnabled => 'Automatic backups enabled';
+
+  @override
+  String get automaticBackupBody =>
+      'FitBook will automatically back up your data and images to the selected folder each day.';
+
+  @override
+  String get backupSettings => 'Backup settings';
+
+  @override
+  String get backupSettingsChannelDescription =>
+      'Notifications about automatic backups';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get loggedIn => 'Logged in';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get whatsNew => 'What\'s new?';
+
+  @override
+  String get author => 'Author';
+
+  @override
+  String get license => 'License';
+
+  @override
+  String get donate => 'Donate';
+
+  @override
+  String get supportProject => 'Help support this project';
+
+  @override
+  String get leaveReview => 'Leave a review';
+
+  @override
+  String get rateOnPlayStore => 'Rate FitBook on the Play Store';
+
+  @override
+  String get sourceCode => 'Source code';
+
+  @override
+  String get foods => 'Foods';
+
+  @override
+  String get backup => 'Backup';
+
+  @override
+  String get exportData => 'Export data';
+
+  @override
+  String get importData => 'Import data';
+
+  @override
+  String get failedImportData => 'Failed to import data';
+
+  @override
+  String get copyError => 'Copy error';
+
+  @override
+  String get deleteRecords => 'Delete records';
+
+  @override
+  String get unusedFood => 'Unused food';
+
+  @override
+  String get database => 'Database';
+
+  @override
+  String get deleteAllWeightsConfirm =>
+      'Are you sure you want to delete all weights? This action is not reversible.';
+
+  @override
+  String get deleteDatabaseConfirm =>
+      'Are you sure you want to delete your database? This action is not reversible and will destroy all your data.';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm =>
+      'Are you sure you want to delete all food and diary entries? This action is not reversible.';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Are you sure you want to delete $count unused foods? This action is irreversible.',
+      one:
+          'Are you sure you want to delete 1 unused food? This action is irreversible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm =>
+      'Are you sure you want to delete all diary entries? This action is not reversible.';
 }

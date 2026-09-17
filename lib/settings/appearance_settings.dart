@@ -30,16 +30,29 @@ final List<String> longFormats = [
   'yyyy.MM.dd H:mm',
 ];
 
+String _animationLabel(
+  AppLocalizations l10n,
+  NavigationAnimation animation,
+) =>
+    switch (animation) {
+      NavigationAnimation.fade => l10n.animationFade,
+      NavigationAnimation.zoom => l10n.animationZoom,
+      NavigationAnimation.slide => l10n.animationSlide,
+      NavigationAnimation.rise => l10n.animationRise,
+      NavigationAnimation.none => l10n.animationNone,
+    };
+
 List<Widget> getAppearanceSettings(
   BuildContext context,
   String term,
   SettingsState settings,
 ) {
   final l10n = context.l10n;
+  final locale = Localizations.localeOf(context).toLanguageTag();
   final now = DateTime.now();
-  String longExample = DateFormat(settings.value.longDateFormat)
+  String longExample = DateFormat(settings.value.longDateFormat, locale)
       .format(DateTime(now.year, now.month, now.day, 13, 54));
-  String shortExample = DateFormat(settings.value.shortDateFormat)
+  String shortExample = DateFormat(settings.value.shortDateFormat, locale)
       .format(DateTime(now.year, now.month, now.day, 13, 54));
 
   return [
@@ -77,25 +90,27 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('theme'.contains(term))
+    if ('${l10n.themeSystem} ${l10n.themeDark} ${l10n.themeLight}'
+        .toLowerCase()
+        .contains(term))
       Padding(
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
         child: SegmentedButton<String>(
-          segments: const [
+          segments: [
             ButtonSegment(
               value: 'ThemeMode.system',
-              label: Text('System'),
-              icon: Icon(Icons.brightness_auto),
+              label: Text(l10n.themeSystem),
+              icon: const Icon(Icons.brightness_auto),
             ),
             ButtonSegment(
               value: 'ThemeMode.dark',
-              label: Text('Dark'),
-              icon: Icon(Icons.dark_mode),
+              label: Text(l10n.themeDark),
+              icon: const Icon(Icons.dark_mode),
             ),
             ButtonSegment(
               value: 'ThemeMode.light',
-              label: Text('Light'),
-              icon: Icon(Icons.light_mode),
+              label: Text(l10n.themeLight),
+              icon: const Icon(Icons.light_mode),
             ),
           ],
           selected: {
@@ -108,12 +123,12 @@ List<Widget> getAppearanceSettings(
               ),
         ),
       ),
-    if ('pure black amoled'.contains(term))
+    if (l10n.pureBlackAmoled.toLowerCase().contains(term))
       Tooltip(
-        message: 'Use pure black colors for AMOLED displays',
+        message: l10n.pureBlackAmoledTooltip,
         child: ListTile(
           leading: const Icon(Icons.contrast),
-          title: const Text('Pure black (AMOLED)'),
+          title: Text(l10n.pureBlackAmoled),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
                   themeMode: Value(
@@ -135,13 +150,13 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('system color scheme'.contains(term))
+    if (l10n.systemColorScheme.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Tooltip(
-          message: 'Use the primary color of your device for the app',
+          message: l10n.systemColorSchemeTooltip,
           child: ListTile(
-            title: const Text('System color scheme'),
+            title: Text(l10n.systemColorScheme),
             leading: settings.value.systemColors
                 ? const Icon(Icons.color_lens)
                 : const Icon(Icons.color_lens_outlined),
@@ -161,11 +176,11 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('show images'.contains(term))
+    if (l10n.showImages.toLowerCase().contains(term))
       Tooltip(
-        message: 'Pick/display images on the diary and foods page',
+        message: l10n.showImagesTooltip,
         child: ListTile(
-          title: const Text('Show images'),
+          title: Text(l10n.showImages),
           leading: settings.value.showImages
               ? const Icon(Icons.image)
               : const Icon(Icons.image_outlined),
@@ -184,11 +199,11 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('curve line graphs'.contains(term))
+    if (l10n.curveLineGraphs.toLowerCase().contains(term))
       Tooltip(
-        message: 'Use wavy curves in the graphs page',
+        message: l10n.curveLineGraphsTooltip,
         child: ListTile(
-          title: const Text('Curve line graphs'),
+          title: Text(l10n.curveLineGraphs),
           leading: const Icon(Icons.insights),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
@@ -205,12 +220,11 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('weight stat cards'.contains(term))
+    if (l10n.weightStatCards.toLowerCase().contains(term))
       Tooltip(
-        message: 'Show weight entries as a grid of stat cards '
-            'instead of the default list',
+        message: l10n.weightStatCardsTooltip,
         child: ListTile(
-          title: const Text('Weight stat cards'),
+          title: Text(l10n.weightStatCards),
           leading: settings.value.compactWeights
               ? const Icon(Icons.list)
               : const Icon(Icons.grid_view),
@@ -229,11 +243,11 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('graphs start at zero'.contains(term))
+    if (l10n.graphsStartAtZero.toLowerCase().contains(term))
       Tooltip(
-        message: 'Always start the graph y-axis at zero',
+        message: l10n.graphsStartAtZeroTooltip,
         child: ListTile(
-          title: const Text('Graphs start at zero'),
+          title: Text(l10n.graphsStartAtZero),
           leading: const Icon(Icons.vertical_align_bottom),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
@@ -250,7 +264,7 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if ('navigation animation transitions'.contains(term))
+    if (l10n.navigationAnimation.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
@@ -261,19 +275,19 @@ List<Widget> getAppearanceSettings(
               .map(
                 (animation) => DropdownMenuItem(
                   value: animation.value,
-                  child: Text(animation.label),
+                  child: Text(_animationLabel(l10n, animation)),
                 ),
               )
               .toList(),
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(navigationAnimation: Value(value!)),
               ),
-          decoration: const InputDecoration(
-            labelText: 'Navigation animation',
+          decoration: InputDecoration(
+            labelText: l10n.navigationAnimation,
           ),
         ),
       ),
-    if ('long date format'.contains(term))
+    if (l10n.longDateFormat('').toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
@@ -288,11 +302,11 @@ List<Widget> getAppearanceSettings(
                 SettingsCompanion(longDateFormat: Value(value!)),
               ),
           decoration: InputDecoration(
-            labelText: 'Long date format ($longExample)',
+            labelText: l10n.longDateFormat(longExample),
           ),
         ),
       ),
-    if ('short date format'.contains(term))
+    if (l10n.shortDateFormat('').toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: DropdownButtonFormField<String>(
@@ -307,7 +321,7 @@ List<Widget> getAppearanceSettings(
                 SettingsCompanion(shortDateFormat: Value(value!)),
               ),
           decoration: InputDecoration(
-            labelText: 'Short date format ($shortExample)',
+            labelText: l10n.shortDateFormat(shortExample),
           ),
         ),
       ),

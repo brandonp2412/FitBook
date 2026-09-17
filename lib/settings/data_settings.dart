@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/delete_records_button.dart';
 import 'package:fit_book/settings/export_data.dart';
 import 'package:fit_book/settings/import_data.dart';
@@ -17,7 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-Future<void> notifyAutomaticBackupEnabled() async {
+Future<void> notifyAutomaticBackupEnabled(AppLocalizations l10n) async {
   if (kIsWeb) return;
 
   if (Platform.isAndroid || Platform.isIOS) {
@@ -27,9 +28,10 @@ Future<void> notifyAutomaticBackupEnabled() async {
 
   const darwin = DarwinInitializationSettings();
   const android = AndroidInitializationSettings('@drawable/nutrition');
-  const linux =
-      LinuxInitializationSettings(defaultActionName: 'Open notification');
-  const init = InitializationSettings(
+  final linux = LinuxInitializationSettings(
+    defaultActionName: l10n.openNotification,
+  );
+  final init = InitializationSettings(
     android: android,
     iOS: darwin,
     macOS: darwin,
@@ -39,14 +41,13 @@ Future<void> notifyAutomaticBackupEnabled() async {
   await plugin.initialize(settings: init);
   await plugin.show(
     id: 4,
-    title: 'Automatic backups enabled',
-    body:
-        'FitBook will automatically back up your data and images to the selected folder each day.',
-    notificationDetails: const NotificationDetails(
+    title: l10n.automaticBackupsEnabled,
+    body: l10n.automaticBackupBody,
+    notificationDetails: NotificationDetails(
       android: AndroidNotificationDetails(
         'backup-settings',
-        'Backup settings',
-        channelDescription: 'Notifications explaining automatic backups',
+        l10n.backupSettings,
+        channelDescription: l10n.backupSettingsChannelDescription,
       ),
       iOS: DarwinNotificationDetails(),
       macOS: DarwinNotificationDetails(),
@@ -55,7 +56,7 @@ Future<void> notifyAutomaticBackupEnabled() async {
   );
 }
 
-Future<void> tapBackup(bool value) async {
+Future<void> tapBackup(bool value, AppLocalizations l10n) async {
   if (!value) {
     await db.settings.update().write(
           const SettingsCompanion(
@@ -80,7 +81,7 @@ Future<void> tapBackup(bool value) async {
             automaticBackups: Value(true),
           ),
         );
-    await notifyAutomaticBackupEnabled();
+    await notifyAutomaticBackupEnabled(l10n);
   } catch (_) {
     await db.settings.update().write(
           const SettingsCompanion(
@@ -96,39 +97,44 @@ List<Widget> getDataSettings({
   required SettingsState settings,
   required BuildContext context,
 }) {
+  final l10n = context.l10n;
+
   return [
-    if ('automatic backup'.contains(term.toLowerCase()))
+    if (l10n.automaticBackup.toLowerCase().contains(term.toLowerCase()))
       ListTile(
         key: const Key('automaticBackupTile'),
-        title: const Text('Automatic backup'),
+        title: Text(l10n.automaticBackup),
         leading: settings.value.automaticBackups
             ? const Icon(Icons.timer)
             : const Icon(Icons.timer_outlined),
-        onTap: () => tapBackup(!settings.value.automaticBackups),
+        onTap: () => tapBackup(!settings.value.automaticBackups, l10n),
         trailing: Switch(
           key: const Key('automaticBackupSwitch'),
           value: settings.value.automaticBackups,
-          onChanged: (value) => tapBackup(value),
+          onChanged: (value) => tapBackup(value, l10n),
         ),
       ),
-    if ('open food facts'.contains(term)) const OpenFoodFactsLogin(),
+    if (l10n.openFoodFacts.toLowerCase().contains(term))
+      const OpenFoodFactsLogin(),
     const SizedBox(height: 8),
-    if ('share database'.contains(term))
+    if (l10n.shareDatabase.toLowerCase().contains(term))
       TextButton.icon(
         onPressed: () async {
           final dbFolder = await getApplicationDocumentsDirectory();
           final dbPath = p.join(dbFolder.path, 'fitbook.sqlite');
           await SharePlus.instance.share(ShareParams(files: [XFile(dbPath)]));
         },
-        label: const Text("Share database"),
+        label: Text(l10n.shareDatabase),
         icon: const Icon(Icons.share),
       ),
     const SizedBox(height: 8),
-    if ('export data'.contains(term)) const ExportData(),
+    if (l10n.exportData.toLowerCase().contains(term)) const ExportData(),
     const SizedBox(height: 8),
-    if ('import data'.contains(term)) ImportData(pageContext: context),
+    if (l10n.importData.toLowerCase().contains(term))
+      ImportData(pageContext: context),
     const SizedBox(height: 8),
-    if ('delete data'.contains(term)) DeleteRecordsButton(pageContext: context),
+    if (l10n.deleteRecords.toLowerCase().contains(term))
+      DeleteRecordsButton(pageContext: context),
   ];
 }
 
@@ -148,7 +154,7 @@ class _DataSettingsState extends State<DataSettings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Data settings"),
+        title: Text(context.l10n.dataSettings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

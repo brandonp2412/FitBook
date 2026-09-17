@@ -3,6 +3,7 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pick fields"),
+        title: Text(context.l10n.pickFields),
       ),
       body: ListView(
         controller: ctrl,
@@ -40,7 +41,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: SearchBar(
-              hintText: 'Search...',
+              hintText: context.l10n.search,
               onChanged: (value) => setState(() {
                 search = value;
               }),
@@ -62,7 +63,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
                       fields = [];
                     });
                 },
-                label: Text("Select all"),
+                label: Text(context.l10n.selectAll),
                 icon: Icon(Icons.check),
               ),
               TextButton.icon(
@@ -71,7 +72,9 @@ class _FieldsPickerState extends State<FieldsPicker> {
                     showSelected = !showSelected;
                   });
                 },
-                label: showSelected ? Text("All") : Text("Only selected"),
+                label: showSelected
+                    ? Text(context.l10n.all)
+                    : Text(context.l10n.onlySelected),
                 icon: showSelected
                     ? Icon(Icons.visibility)
                     : Icon(Icons.visibility_outlined),
@@ -129,7 +132,7 @@ class _FieldsPickerState extends State<FieldsPicker> {
           Navigator.pop(context);
         },
         icon: Icons.save,
-        label: 'Save',
+        label: context.l10n.save,
         scroll: ctrl,
       ),
     );

@@ -274,4 +274,327 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get appearanceSettings => '外観設定';
+
+  @override
+  String get delete => '削除';
+
+  @override
+  String get confirmDelete => '削除の確認';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count件のレコードを削除しますか？この操作は元に戻せません。',
+      one: '1件のレコードを削除しますか？この操作は元に戻せません。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get search => '検索...';
+
+  @override
+  String get clear => 'クリア';
+
+  @override
+  String get showMenu => 'メニューを表示';
+
+  @override
+  String get selectAll => 'すべて選択';
+
+  @override
+  String get edit => '編集';
+
+  @override
+  String get favorite => 'お気に入り';
+
+  @override
+  String get atLeastOneTab => '少なくとも1つのタブが必要です';
+
+  @override
+  String get scrollableTabs => 'スクロール可能なタブ';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get themeSystem => 'システム';
+
+  @override
+  String get themeDark => 'ダーク';
+
+  @override
+  String get themeLight => 'ライト';
+
+  @override
+  String get pureBlackAmoled => '純黒 (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip => 'AMOLED ディスプレイで純黒を使用します';
+
+  @override
+  String get systemColorScheme => 'システムの配色';
+
+  @override
+  String get systemColorSchemeTooltip => '端末のメインカラーをアプリに使用します';
+
+  @override
+  String get showImages => '画像を表示';
+
+  @override
+  String get showImagesTooltip => '日記と食品ページで画像を選択して表示します';
+
+  @override
+  String get curveLineGraphs => '曲線グラフ';
+
+  @override
+  String get curveLineGraphsTooltip => 'グラフページで滑らかな曲線を使用します';
+
+  @override
+  String get weightStatCards => '体重統計カード';
+
+  @override
+  String get weightStatCardsTooltip => '体重記録を標準の一覧ではなく統計カードのグリッドで表示します';
+
+  @override
+  String get graphsStartAtZero => 'グラフをゼロから開始';
+
+  @override
+  String get graphsStartAtZeroTooltip => 'グラフの Y 軸を常にゼロから開始します';
+
+  @override
+  String get navigationAnimation => 'ナビゲーションアニメーション';
+
+  @override
+  String get animationFade => 'フェード';
+
+  @override
+  String get animationZoom => 'ズーム';
+
+  @override
+  String get animationSlide => 'スライド';
+
+  @override
+  String get animationRise => 'ライズ';
+
+  @override
+  String get animationNone => 'なし';
+
+  @override
+  String longDateFormat(String example) {
+    return '長い日付形式 ($example)';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return '短い日付形式 ($example)';
+  }
+
+  @override
+  String get diarySettings => '日記設定';
+
+  @override
+  String get diaryUnit => '日記の単位';
+
+  @override
+  String get diarySummary => '日記の概要';
+
+  @override
+  String get diarySummaryDivision => '比率 - 現在 / 合計';
+
+  @override
+  String get diarySummaryRemaining => '残り';
+
+  @override
+  String get diarySummaryBoth => '両方 - 残り（合計）';
+
+  @override
+  String get diarySummaryNone => 'なし';
+
+  @override
+  String get dailyCaloriesKcal => '1日のカロリー (kcal)';
+
+  @override
+  String get dailyProteinG => '1日のたんぱく質 (g)';
+
+  @override
+  String get dailyFatG => '1日の脂質 (g)';
+
+  @override
+  String get dailyCarbsG => '1日の炭水化物 (g)';
+
+  @override
+  String get dailyFiberG => '1日の食物繊維 (g)';
+
+  @override
+  String get automaticDailies => '1日の目標を自動計算';
+
+  @override
+  String get automaticDailiesTooltip =>
+      '体重に基づいて推奨される1日のカロリー、たんぱく質、脂質、炭水化物を自動計算します';
+
+  @override
+  String get selectNameOnSubmit => '保存時に名前を選択';
+
+  @override
+  String get reminders => 'リマインダー';
+
+  @override
+  String get foodSettings => '食品設定';
+
+  @override
+  String get foodUnit => '食品の単位';
+
+  @override
+  String get fields => '項目';
+
+  @override
+  String get favoriteNewFoods => '新しい食品をお気に入りに追加';
+
+  @override
+  String get pickFields => '項目を選択';
+
+  @override
+  String get all => 'すべて';
+
+  @override
+  String get onlySelected => '選択済みのみ';
+
+  @override
+  String get weightSettings => '体重設定';
+
+  @override
+  String get targetWeight => '目標体重';
+
+  @override
+  String get positiveReinforcement => 'ポジティブな励まし';
+
+  @override
+  String get positiveReinforcementPreview => '励ましのメッセージはこのように表示されます！';
+
+  @override
+  String get dataSettings => 'データ設定';
+
+  @override
+  String get automaticBackup => '自動バックアップ';
+
+  @override
+  String get shareDatabase => 'データベースを共有';
+
+  @override
+  String get openNotification => '通知を開く';
+
+  @override
+  String get automaticBackupsEnabled => '自動バックアップが有効です';
+
+  @override
+  String get automaticBackupBody =>
+      'FitBook は毎日、データと画像を選択したフォルダーに自動でバックアップします。';
+
+  @override
+  String get backupSettings => 'バックアップ設定';
+
+  @override
+  String get backupSettingsChannelDescription => '自動バックアップに関する通知';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => 'ユーザー名';
+
+  @override
+  String get password => 'パスワード';
+
+  @override
+  String get close => '閉じる';
+
+  @override
+  String get loggedIn => 'ログインしました';
+
+  @override
+  String get about => 'このアプリについて';
+
+  @override
+  String get version => 'バージョン';
+
+  @override
+  String get whatsNew => '新着情報';
+
+  @override
+  String get author => '作者';
+
+  @override
+  String get license => 'ライセンス';
+
+  @override
+  String get donate => '寄付';
+
+  @override
+  String get supportProject => 'このプロジェクトを支援する';
+
+  @override
+  String get leaveReview => 'レビューを書く';
+
+  @override
+  String get rateOnPlayStore => 'Play ストアで FitBook を評価';
+
+  @override
+  String get sourceCode => 'ソースコード';
+
+  @override
+  String get foods => '食品';
+
+  @override
+  String get backup => 'バックアップ';
+
+  @override
+  String get exportData => 'データをエクスポート';
+
+  @override
+  String get importData => 'データをインポート';
+
+  @override
+  String get failedImportData => 'データのインポートに失敗しました';
+
+  @override
+  String get copyError => 'エラーをコピー';
+
+  @override
+  String get deleteRecords => 'データを削除';
+
+  @override
+  String get unusedFood => '未使用の食品';
+
+  @override
+  String get database => 'データベース';
+
+  @override
+  String get deleteAllWeightsConfirm => 'すべての体重記録を削除しますか？この操作は元に戻せません。';
+
+  @override
+  String get deleteDatabaseConfirm =>
+      'データベースを削除しますか？この操作は元に戻せず、すべてのデータが削除されます。';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm => 'すべての食品と日記の記録を削除しますか？この操作は元に戻せません。';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '未使用の食品$count件を削除しますか？この操作は元に戻せません。',
+      one: '未使用の食品1件を削除しますか？この操作は元に戻せません。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm => 'すべての日記の記録を削除しますか？この操作は元に戻せません。';
 }

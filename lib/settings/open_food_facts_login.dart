@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
@@ -44,18 +45,20 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
 
             return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
-                title: const Text("Open food facts"),
+                title: Text(context.l10n.openFoodFacts),
                 content: SingleChildScrollView(
                   child: material.Column(
                     children: [
                       TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Username'),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.username,
+                        ),
                         controller: login,
                       ),
                       TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Password'),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.password,
+                        ),
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
@@ -70,7 +73,7 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.close),
-                    label: const Text("Close"),
+                    label: Text(context.l10n.close),
                   ),
                   TextButton.icon(
                     onPressed: () async {
@@ -99,7 +102,8 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
                           userId: login.text,
                           password: password.text,
                         );
-                        if (context.mounted) toast(context, 'Logged in');
+                        if (context.mounted)
+                          toast(context, context.l10n.loggedIn);
                       } else {
                         if (context.mounted)
                           toast(context, status!.statusVerbose);
@@ -114,7 +118,7 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
                             child: CircularProgressIndicator(),
                           )
                         : const Icon(Icons.save),
-                    label: const Text("Save"),
+                    label: Text(context.l10n.save),
                   ),
                 ],
               ),
@@ -123,7 +127,7 @@ class _OpenFoodFactsLoginState extends State<OpenFoodFactsLogin> {
         );
       },
       icon: const Icon(Icons.fastfood),
-      label: const Text("Open food facts"),
+      label: Text(context.l10n.openFoodFacts),
     );
   }
 }

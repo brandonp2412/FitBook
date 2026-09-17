@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,15 @@ List<Widget> getFoodSettings({
   required SettingsState settings,
   required BuildContext context,
 }) {
+  final l10n = context.l10n;
+
   return [
-    if ('food unit'.contains(term))
+    if (l10n.foodUnit.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: DropdownButtonFormField<String>(
           initialValue: settings.value.foodUnit,
-          decoration: const InputDecoration(labelText: 'Food unit'),
+          decoration: InputDecoration(labelText: l10n.foodUnit),
           items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -30,12 +33,12 @@ List<Widget> getFoodSettings({
               ),
         ),
       ),
-    if ('fields'.contains(term))
+    if (l10n.fields.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: ListTile(
           leading: const Icon(Icons.list),
-          title: const Text('Fields'),
+          title: Text(l10n.fields),
           trailing: Text(
             "(${settings.value.fields?.split(',').length.toString()})",
             style: Theme.of(context).textTheme.bodyLarge,
@@ -47,12 +50,12 @@ List<Widget> getFoodSettings({
           ),
         ),
       ),
-    if ('favorite new foods'.contains(term))
+    if (l10n.favoriteNewFoods.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: ListTile(
           leading: const Icon(Icons.favorite_outline),
-          title: const Text('Favorite new foods'),
+          title: Text(l10n.favoriteNewFoods),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
                   favoriteNew: Value(!settings.value.favoriteNew),
@@ -85,7 +88,7 @@ class _FoodSettingsState extends State<FoodSettings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Food settings"),
+        title: Text(context.l10n.foodSettings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

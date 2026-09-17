@@ -63,6 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
           settingsState,
         ),
         ...getDiarySettings(
+          context: context,
           calories: calories,
           carb: carb,
           fat: fat,

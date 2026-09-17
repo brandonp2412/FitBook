@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -19,6 +20,7 @@ Future<void> setReminders(bool value) async {
 }
 
 List<Widget> getDiarySettings({
+  required BuildContext context,
   required String term,
   required SettingsState settings,
   required TextEditingController calories,
@@ -27,13 +29,15 @@ List<Widget> getDiarySettings({
   required TextEditingController carb,
   required TextEditingController fiber,
 }) {
+  final l10n = context.l10n;
+
   return [
-    if ('diary unit'.contains(term))
+    if (l10n.diaryUnit.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField<String>(
           initialValue: settings.value.entryUnit,
-          decoration: const InputDecoration(labelText: 'Diary unit'),
+          decoration: InputDecoration(labelText: l10n.diaryUnit),
           items: unitOptions.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -45,31 +49,31 @@ List<Widget> getDiarySettings({
               ),
         ),
       ),
-    if ('diary summary'.contains(term))
+    if (l10n.diarySummary.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: DropdownButtonFormField(
           initialValue: settings.value.diarySummary,
-          decoration: const InputDecoration(
-            labelStyle: TextStyle(),
-            labelText: 'Diary summary',
+          decoration: InputDecoration(
+            labelStyle: const TextStyle(),
+            labelText: l10n.diarySummary,
           ),
           items: [
             DropdownMenuItem(
               value: DiarySummary.division.toString(),
-              child: const Text("Division - current / total"),
+              child: Text(l10n.diarySummaryDivision),
             ),
             DropdownMenuItem(
               value: DiarySummary.remaining.toString(),
-              child: const Text("Remaining"),
+              child: Text(l10n.diarySummaryRemaining),
             ),
             DropdownMenuItem(
               value: DiarySummary.both.toString(),
-              child: const Text("Both - remaining (total)"),
+              child: Text(l10n.diarySummaryBoth),
             ),
             DropdownMenuItem(
               value: DiarySummary.none.toString(),
-              child: const Text("None"),
+              child: Text(l10n.diarySummaryNone),
             ),
           ],
           onChanged: (value) => db.settings.update().write(
@@ -77,7 +81,7 @@ List<Widget> getDiarySettings({
               ),
         ),
       ),
-    if ('daily calories'.contains(term))
+    if (l10n.dailyCaloriesKcal.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
@@ -87,12 +91,12 @@ List<Widget> getDiarySettings({
               ),
           onTap: () => selectAll(calories),
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Daily calories (kcal)',
+          decoration: InputDecoration(
+            labelText: l10n.dailyCaloriesKcal,
           ),
         ),
       ),
-    if ('daily protein'.contains(term))
+    if (l10n.dailyProteinG.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
@@ -106,11 +110,11 @@ List<Widget> getDiarySettings({
           onTap: () => selectAll(protein),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            labelText: 'Daily protein (g)',
+            labelText: l10n.dailyProteinG,
           ),
         ),
       ),
-    if ('daily fat'.contains(term))
+    if (l10n.dailyFatG.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
@@ -120,12 +124,12 @@ List<Widget> getDiarySettings({
               ),
           onTap: () => selectAll(fat),
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Daily fat (g)',
+          decoration: InputDecoration(
+            labelText: l10n.dailyFatG,
           ),
         ),
       ),
-    if ('daily carb'.contains(term))
+    if (l10n.dailyCarbsG.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
@@ -135,12 +139,12 @@ List<Widget> getDiarySettings({
               ),
           onTap: () => selectAll(carb),
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Daily carbs (g)',
+          decoration: InputDecoration(
+            labelText: l10n.dailyCarbsG,
           ),
         ),
       ),
-    if ('daily fiber'.contains(term))
+    if (l10n.dailyFiberG.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
         child: TextField(
@@ -150,20 +154,19 @@ List<Widget> getDiarySettings({
               ),
           onTap: () => selectAll(fiber),
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Daily fiber (g)',
+          decoration: InputDecoration(
+            labelText: l10n.dailyFiberG,
           ),
         ),
       ),
-    if ('automatic dailies'.contains(term))
+    if (l10n.automaticDailies.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Tooltip(
-          message:
-              'Automatically calculate your recommended daily calories, protein, fat and carbs based on your body weight',
+          message: l10n.automaticDailiesTooltip,
           child: ListTile(
             leading: const Icon(Icons.auto_mode),
-            title: const Text('Automatic dailies'),
+            title: Text(l10n.automaticDailies),
             onTap: () async {
               final value = !settings.value.autoCalc;
               db.settings.update().write(
@@ -209,12 +212,12 @@ List<Widget> getDiarySettings({
           ),
         ),
       ),
-    if ('select name on submit'.contains(term))
+    if (l10n.selectNameOnSubmit.toLowerCase().contains(term))
       Padding(
         padding: const EdgeInsets.only(top: 8),
         child: ListTile(
           leading: const Icon(Icons.check),
-          title: const Text('Select name on submit'),
+          title: Text(l10n.selectNameOnSubmit),
           onTap: () => db.settings.update().write(
                 SettingsCompanion(
                   selectEntryOnSubmit:
@@ -231,11 +234,11 @@ List<Widget> getDiarySettings({
           ),
         ),
       ),
-    if ('reminders'.contains(term))
+    if (l10n.reminders.toLowerCase().contains(term))
       ListTile(
         key: const Key('remindersTile'),
         leading: const Icon(Icons.notifications),
-        title: const Text('Reminders'),
+        title: Text(l10n.reminders),
         onTap: () => setReminders(!settings.value.reminders),
         trailing: Switch(
           key: const Key('remindersSwitch'),
@@ -274,12 +277,13 @@ class _DiarySettingsState extends State<DiarySettings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Diary settings"),
+        title: Text(context.l10n.diarySettings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: getDiarySettings(
+            context: context,
             term: widget.initialTerm,
             calories: calories,
             protein: protein,

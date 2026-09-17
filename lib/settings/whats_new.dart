@@ -1,4 +1,5 @@
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -49,8 +50,9 @@ class _WhatsNewState extends State<WhatsNew> {
   }
 
   Future<List<Changelog>> getChangelogFiles(BuildContext context) async {
-    final manifest =
-        await AssetManifest.loadFromAssetBundle(DefaultAssetBundle.of(context));
+    final assetBundle = DefaultAssetBundle.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final manifest = await AssetManifest.loadFromAssetBundle(assetBundle);
 
     final files = manifest
         .listAssets()
@@ -80,7 +82,7 @@ class _WhatsNewState extends State<WhatsNew> {
         result.add(
           Changelog(
             name: filename,
-            created: DateFormat.yMMMd().format(
+            created: DateFormat.yMMMd(locale).format(
               changelogDateFromTimestamp(timestamp),
             ),
             content: content,
@@ -101,7 +103,7 @@ class _WhatsNewState extends State<WhatsNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("What's new?"),
+        title: Text(context.l10n.whatsNew),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => ListTile(
@@ -116,7 +118,7 @@ class _WhatsNewState extends State<WhatsNew> {
           const url = 'https://github.com/sponsors/brandonp2412';
           if (await canLaunchUrlString(url)) await launchUrlString(url);
         },
-        label: const Text("Donate"),
+        label: Text(context.l10n.donate),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart' hide isNull;
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/generated/app_localizations_en.dart';
 import 'package:fit_book/settings/data_settings.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'mock_tests.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   setUp(() async {
     await mockTests();
   });
@@ -29,7 +32,7 @@ void main() {
       return null;
     });
 
-    await tapBackup(true);
+    await tapBackup(true, l10n);
 
     final settings = await db.settings.select().getSingle();
     expect(settings.automaticBackups, isFalse);
@@ -43,7 +46,7 @@ void main() {
     });
 
     await expectLater(
-      tapBackup(true),
+      tapBackup(true, l10n),
       throwsA(isA<PlatformException>()),
     );
 
@@ -63,7 +66,7 @@ void main() {
       return null;
     });
 
-    await tapBackup(false);
+    await tapBackup(false, l10n);
 
     final settings = await db.settings.select().getSingle();
     expect(settings.automaticBackups, isFalse);

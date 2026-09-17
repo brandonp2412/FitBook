@@ -257,7 +257,7 @@ class SideNav extends StatelessWidget {
                     Icon(Icons.menu_book_rounded, color: colorScheme.primary),
                     const SizedBox(width: 12),
                     Text(
-                      'FitBook',
+                      context.l10n.appTitle,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge

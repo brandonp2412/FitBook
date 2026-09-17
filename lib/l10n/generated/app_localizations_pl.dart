@@ -280,4 +280,348 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get appearanceSettings => 'Ustawienia wyglądu';
+
+  @override
+  String get delete => 'Usuń';
+
+  @override
+  String get confirmDelete => 'Potwierdź usunięcie';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Czy na pewno chcesz usunąć $count wpisu? Tej operacji nie można cofnąć.',
+      many:
+          'Czy na pewno chcesz usunąć $count wpisów? Tej operacji nie można cofnąć.',
+      few:
+          'Czy na pewno chcesz usunąć $count wpisy? Tej operacji nie można cofnąć.',
+      one: 'Czy na pewno chcesz usunąć 1 wpis? Tej operacji nie można cofnąć.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'Anuluj';
+
+  @override
+  String get search => 'Szukaj...';
+
+  @override
+  String get clear => 'Wyczyść';
+
+  @override
+  String get showMenu => 'Pokaż menu';
+
+  @override
+  String get selectAll => 'Zaznacz wszystko';
+
+  @override
+  String get edit => 'Edytuj';
+
+  @override
+  String get favorite => 'Ulubione';
+
+  @override
+  String get atLeastOneTab => 'Musisz mieć co najmniej jedną kartę';
+
+  @override
+  String get scrollableTabs => 'Przewijane karty';
+
+  @override
+  String get save => 'Zapisz';
+
+  @override
+  String get themeSystem => 'Systemowy';
+
+  @override
+  String get themeDark => 'Ciemny';
+
+  @override
+  String get themeLight => 'Jasny';
+
+  @override
+  String get pureBlackAmoled => 'Czysta czerń (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip =>
+      'Używaj czystej czerni na ekranach AMOLED';
+
+  @override
+  String get systemColorScheme => 'Kolory systemowe';
+
+  @override
+  String get systemColorSchemeTooltip =>
+      'Używaj głównego koloru urządzenia w aplikacji';
+
+  @override
+  String get showImages => 'Pokazuj obrazy';
+
+  @override
+  String get showImagesTooltip =>
+      'Wybieraj i wyświetlaj obrazy na stronach dziennika i produktów';
+
+  @override
+  String get curveLineGraphs => 'Wygładzone wykresy liniowe';
+
+  @override
+  String get curveLineGraphsTooltip =>
+      'Używaj płynnych krzywych na stronie wykresów';
+
+  @override
+  String get weightStatCards => 'Karty statystyk wagi';
+
+  @override
+  String get weightStatCardsTooltip =>
+      'Pokazuj wpisy wagi jako siatkę kart statystyk zamiast domyślnej listy';
+
+  @override
+  String get graphsStartAtZero => 'Wykresy zaczynają się od zera';
+
+  @override
+  String get graphsStartAtZeroTooltip => 'Zawsze zaczynaj oś Y wykresu od zera';
+
+  @override
+  String get navigationAnimation => 'Animacja nawigacji';
+
+  @override
+  String get animationFade => 'Przenikanie';
+
+  @override
+  String get animationZoom => 'Powiększenie';
+
+  @override
+  String get animationSlide => 'Przesunięcie';
+
+  @override
+  String get animationRise => 'Uniesienie';
+
+  @override
+  String get animationNone => 'Brak';
+
+  @override
+  String longDateFormat(String example) {
+    return 'Długi format daty ($example)';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return 'Krótki format daty ($example)';
+  }
+
+  @override
+  String get diarySettings => 'Ustawienia dziennika';
+
+  @override
+  String get diaryUnit => 'Jednostka dziennika';
+
+  @override
+  String get diarySummary => 'Podsumowanie dziennika';
+
+  @override
+  String get diarySummaryDivision => 'Podział - bieżące / razem';
+
+  @override
+  String get diarySummaryRemaining => 'Pozostało';
+
+  @override
+  String get diarySummaryBoth => 'Oba - pozostało (razem)';
+
+  @override
+  String get diarySummaryNone => 'Brak';
+
+  @override
+  String get dailyCaloriesKcal => 'Dzienne kalorie (kcal)';
+
+  @override
+  String get dailyProteinG => 'Dzienne białko (g)';
+
+  @override
+  String get dailyFatG => 'Dzienny tłuszcz (g)';
+
+  @override
+  String get dailyCarbsG => 'Dzienne węglowodany (g)';
+
+  @override
+  String get dailyFiberG => 'Dzienny błonnik (g)';
+
+  @override
+  String get automaticDailies => 'Automatyczne cele dzienne';
+
+  @override
+  String get automaticDailiesTooltip =>
+      'Automatycznie obliczaj zalecane dzienne kalorie, białko, tłuszcz i węglowodany na podstawie masy ciała';
+
+  @override
+  String get selectNameOnSubmit => 'Zaznacz nazwę przy zapisie';
+
+  @override
+  String get reminders => 'Przypomnienia';
+
+  @override
+  String get foodSettings => 'Ustawienia produktów';
+
+  @override
+  String get foodUnit => 'Jednostka produktu';
+
+  @override
+  String get fields => 'Pola';
+
+  @override
+  String get favoriteNewFoods => 'Dodawaj nowe produkty do ulubionych';
+
+  @override
+  String get pickFields => 'Wybierz pola';
+
+  @override
+  String get all => 'Wszystkie';
+
+  @override
+  String get onlySelected => 'Tylko wybrane';
+
+  @override
+  String get weightSettings => 'Ustawienia wagi';
+
+  @override
+  String get targetWeight => 'Waga docelowa';
+
+  @override
+  String get positiveReinforcement => 'Pozytywne wzmocnienie';
+
+  @override
+  String get positiveReinforcementPreview =>
+      'Wiadomości motywacyjne będą wyświetlane w ten sposób!';
+
+  @override
+  String get dataSettings => 'Ustawienia danych';
+
+  @override
+  String get automaticBackup => 'Automatyczna kopia zapasowa';
+
+  @override
+  String get shareDatabase => 'Udostępnij bazę danych';
+
+  @override
+  String get openNotification => 'Otwórz powiadomienie';
+
+  @override
+  String get automaticBackupsEnabled => 'Automatyczne kopie zapasowe włączone';
+
+  @override
+  String get automaticBackupBody =>
+      'FitBook będzie codziennie automatycznie tworzyć kopię danych i obrazów w wybranym folderze.';
+
+  @override
+  String get backupSettings => 'Ustawienia kopii zapasowych';
+
+  @override
+  String get backupSettingsChannelDescription =>
+      'Powiadomienia o automatycznych kopiach zapasowych';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => 'Nazwa użytkownika';
+
+  @override
+  String get password => 'Hasło';
+
+  @override
+  String get close => 'Zamknij';
+
+  @override
+  String get loggedIn => 'Zalogowano';
+
+  @override
+  String get about => 'O aplikacji';
+
+  @override
+  String get version => 'Wersja';
+
+  @override
+  String get whatsNew => 'Co nowego?';
+
+  @override
+  String get author => 'Autor';
+
+  @override
+  String get license => 'Licencja';
+
+  @override
+  String get donate => 'Wesprzyj';
+
+  @override
+  String get supportProject => 'Pomóż wspierać ten projekt';
+
+  @override
+  String get leaveReview => 'Dodaj opinię';
+
+  @override
+  String get rateOnPlayStore => 'Oceń FitBook w Sklepie Play';
+
+  @override
+  String get sourceCode => 'Kod źródłowy';
+
+  @override
+  String get foods => 'Produkty';
+
+  @override
+  String get backup => 'Kopia zapasowa';
+
+  @override
+  String get exportData => 'Eksportuj dane';
+
+  @override
+  String get importData => 'Importuj dane';
+
+  @override
+  String get failedImportData => 'Nie udało się zaimportować danych';
+
+  @override
+  String get copyError => 'Kopiuj błąd';
+
+  @override
+  String get deleteRecords => 'Usuń dane';
+
+  @override
+  String get unusedFood => 'Nieużywane produkty';
+
+  @override
+  String get database => 'Baza danych';
+
+  @override
+  String get deleteAllWeightsConfirm =>
+      'Czy na pewno chcesz usunąć wszystkie wpisy wagi? Tej operacji nie można cofnąć.';
+
+  @override
+  String get deleteDatabaseConfirm =>
+      'Czy na pewno chcesz usunąć bazę danych? Tej operacji nie można cofnąć i spowoduje ona usunięcie wszystkich danych.';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm =>
+      'Czy na pewno chcesz usunąć wszystkie produkty i wpisy dziennika? Tej operacji nie można cofnąć.';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Czy na pewno chcesz usunąć $count nieużywanego produktu? Tej operacji nie można cofnąć.',
+      many:
+          'Czy na pewno chcesz usunąć $count nieużywanych produktów? Tej operacji nie można cofnąć.',
+      few:
+          'Czy na pewno chcesz usunąć $count nieużywane produkty? Tej operacji nie można cofnąć.',
+      one:
+          'Czy na pewno chcesz usunąć 1 nieużywany produkt? Tej operacji nie można cofnąć.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm =>
+      'Czy na pewno chcesz usunąć wszystkie wpisy dziennika? Tej operacji nie można cofnąć.';
 }

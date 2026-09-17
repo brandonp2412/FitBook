@@ -615,6 +615,606 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appearance settings'**
   String get appearanceSettings;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm delete'**
+  String get confirmDelete;
+
+  /// No description provided for @confirmDeleteRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Are you sure you want to delete 1 record? This action is not reversible.} other{Are you sure you want to delete {count} records? This action is not reversible.}}'**
+  String confirmDeleteRecords(int count);
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get search;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @showMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Show menu'**
+  String get showMenu;
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get selectAll;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get favorite;
+
+  /// No description provided for @atLeastOneTab.
+  ///
+  /// In en, this message translates to:
+  /// **'You need at least one tab'**
+  String get atLeastOneTab;
+
+  /// No description provided for @scrollableTabs.
+  ///
+  /// In en, this message translates to:
+  /// **'Scrollable tabs'**
+  String get scrollableTabs;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @pureBlackAmoled.
+  ///
+  /// In en, this message translates to:
+  /// **'Pure black (AMOLED)'**
+  String get pureBlackAmoled;
+
+  /// No description provided for @pureBlackAmoledTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Use pure black colors for AMOLED displays'**
+  String get pureBlackAmoledTooltip;
+
+  /// No description provided for @systemColorScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'System color scheme'**
+  String get systemColorScheme;
+
+  /// No description provided for @systemColorSchemeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your device\'s primary color for the app'**
+  String get systemColorSchemeTooltip;
+
+  /// No description provided for @showImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Show images'**
+  String get showImages;
+
+  /// No description provided for @showImagesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick and display images on the diary and food pages'**
+  String get showImagesTooltip;
+
+  /// No description provided for @curveLineGraphs.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve line graphs'**
+  String get curveLineGraphs;
+
+  /// No description provided for @curveLineGraphsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Use smooth curves on the graphs page'**
+  String get curveLineGraphsTooltip;
+
+  /// No description provided for @weightStatCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight stat cards'**
+  String get weightStatCards;
+
+  /// No description provided for @weightStatCardsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Show weight entries as a grid of stat cards instead of the default list'**
+  String get weightStatCardsTooltip;
+
+  /// No description provided for @graphsStartAtZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Graphs start at zero'**
+  String get graphsStartAtZero;
+
+  /// No description provided for @graphsStartAtZeroTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Always start the graph y-axis at zero'**
+  String get graphsStartAtZeroTooltip;
+
+  /// No description provided for @navigationAnimation.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation animation'**
+  String get navigationAnimation;
+
+  /// No description provided for @animationFade.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade'**
+  String get animationFade;
+
+  /// No description provided for @animationZoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom'**
+  String get animationZoom;
+
+  /// No description provided for @animationSlide.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide'**
+  String get animationSlide;
+
+  /// No description provided for @animationRise.
+  ///
+  /// In en, this message translates to:
+  /// **'Rise'**
+  String get animationRise;
+
+  /// No description provided for @animationNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get animationNone;
+
+  /// No description provided for @longDateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Long date format ({example})'**
+  String longDateFormat(String example);
+
+  /// No description provided for @shortDateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Short date format ({example})'**
+  String shortDateFormat(String example);
+
+  /// No description provided for @diarySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary settings'**
+  String get diarySettings;
+
+  /// No description provided for @diaryUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary unit'**
+  String get diaryUnit;
+
+  /// No description provided for @diarySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Diary summary'**
+  String get diarySummary;
+
+  /// No description provided for @diarySummaryDivision.
+  ///
+  /// In en, this message translates to:
+  /// **'Division - current / total'**
+  String get diarySummaryDivision;
+
+  /// No description provided for @diarySummaryRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get diarySummaryRemaining;
+
+  /// No description provided for @diarySummaryBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Both - remaining (total)'**
+  String get diarySummaryBoth;
+
+  /// No description provided for @diarySummaryNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get diarySummaryNone;
+
+  /// No description provided for @dailyCaloriesKcal.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily calories (kcal)'**
+  String get dailyCaloriesKcal;
+
+  /// No description provided for @dailyProteinG.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily protein (g)'**
+  String get dailyProteinG;
+
+  /// No description provided for @dailyFatG.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily fat (g)'**
+  String get dailyFatG;
+
+  /// No description provided for @dailyCarbsG.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily carbs (g)'**
+  String get dailyCarbsG;
+
+  /// No description provided for @dailyFiberG.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily fiber (g)'**
+  String get dailyFiberG;
+
+  /// No description provided for @automaticDailies.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic daily targets'**
+  String get automaticDailies;
+
+  /// No description provided for @automaticDailiesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically calculate recommended daily calories, protein, fat and carbs from your body weight'**
+  String get automaticDailiesTooltip;
+
+  /// No description provided for @selectNameOnSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Select name on submit'**
+  String get selectNameOnSubmit;
+
+  /// No description provided for @reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get reminders;
+
+  /// No description provided for @foodSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Food settings'**
+  String get foodSettings;
+
+  /// No description provided for @foodUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Food unit'**
+  String get foodUnit;
+
+  /// No description provided for @fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Fields'**
+  String get fields;
+
+  /// No description provided for @favoriteNewFoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite new foods'**
+  String get favoriteNewFoods;
+
+  /// No description provided for @pickFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick fields'**
+  String get pickFields;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @onlySelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Only selected'**
+  String get onlySelected;
+
+  /// No description provided for @weightSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight settings'**
+  String get weightSettings;
+
+  /// No description provided for @targetWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Target weight'**
+  String get targetWeight;
+
+  /// No description provided for @positiveReinforcement.
+  ///
+  /// In en, this message translates to:
+  /// **'Positive reinforcement'**
+  String get positiveReinforcement;
+
+  /// No description provided for @positiveReinforcementPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Encouraging messages will be shown like this!'**
+  String get positiveReinforcementPreview;
+
+  /// No description provided for @dataSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Data settings'**
+  String get dataSettings;
+
+  /// No description provided for @automaticBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backup'**
+  String get automaticBackup;
+
+  /// No description provided for @shareDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Share database'**
+  String get shareDatabase;
+
+  /// No description provided for @openNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Open notification'**
+  String get openNotification;
+
+  /// No description provided for @automaticBackupsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backups enabled'**
+  String get automaticBackupsEnabled;
+
+  /// No description provided for @automaticBackupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'FitBook will automatically back up your data and images to the selected folder each day.'**
+  String get automaticBackupBody;
+
+  /// No description provided for @backupSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup settings'**
+  String get backupSettings;
+
+  /// No description provided for @backupSettingsChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications about automatic backups'**
+  String get backupSettingsChannelDescription;
+
+  /// No description provided for @openFoodFacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Food Facts'**
+  String get openFoodFacts;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @loggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in'**
+  String get loggedIn;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @whatsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new?'**
+  String get whatsNew;
+
+  /// No description provided for @author.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get author;
+
+  /// No description provided for @license.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get license;
+
+  /// No description provided for @donate.
+  ///
+  /// In en, this message translates to:
+  /// **'Donate'**
+  String get donate;
+
+  /// No description provided for @supportProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Help support this project'**
+  String get supportProject;
+
+  /// No description provided for @leaveReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review'**
+  String get leaveReview;
+
+  /// No description provided for @rateOnPlayStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate FitBook on the Play Store'**
+  String get rateOnPlayStore;
+
+  /// No description provided for @sourceCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Source code'**
+  String get sourceCode;
+
+  /// No description provided for @foods.
+  ///
+  /// In en, this message translates to:
+  /// **'Foods'**
+  String get foods;
+
+  /// No description provided for @backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get backup;
+
+  /// No description provided for @exportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export data'**
+  String get exportData;
+
+  /// No description provided for @importData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
+  String get importData;
+
+  /// No description provided for @failedImportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import data'**
+  String get failedImportData;
+
+  /// No description provided for @copyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy error'**
+  String get copyError;
+
+  /// No description provided for @deleteRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete records'**
+  String get deleteRecords;
+
+  /// No description provided for @unusedFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Unused food'**
+  String get unusedFood;
+
+  /// No description provided for @database.
+  ///
+  /// In en, this message translates to:
+  /// **'Database'**
+  String get database;
+
+  /// No description provided for @deleteAllWeightsConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all weights? This action is not reversible.'**
+  String get deleteAllWeightsConfirm;
+
+  /// No description provided for @deleteDatabaseConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your database? This action is not reversible and will destroy all your data.'**
+  String get deleteDatabaseConfirm;
+
+  /// No description provided for @deleteFoodsAndDiaryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all food and diary entries? This action is not reversible.'**
+  String get deleteFoodsAndDiaryConfirm;
+
+  /// No description provided for @deleteUnusedFoodsConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Are you sure you want to delete 1 unused food? This action is irreversible.} other{Are you sure you want to delete {count} unused foods? This action is irreversible.}}'**
+  String deleteUnusedFoodsConfirm(int count);
+
+  /// No description provided for @deleteAllDiaryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all diary entries? This action is not reversible.'**
+  String get deleteAllDiaryConfirm;
 }
 
 class _AppLocalizationsDelegate

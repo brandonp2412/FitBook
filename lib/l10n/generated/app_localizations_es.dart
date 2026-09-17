@@ -278,4 +278,342 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get appearanceSettings => 'Ajustes de apariencia';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get confirmDelete => 'Confirmar eliminación';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '¿Seguro que quieres eliminar $count registros? Esta acción no se puede deshacer.',
+      one:
+          '¿Seguro que quieres eliminar 1 registro? Esta acción no se puede deshacer.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get search => 'Buscar...';
+
+  @override
+  String get clear => 'Borrar';
+
+  @override
+  String get showMenu => 'Mostrar menú';
+
+  @override
+  String get selectAll => 'Seleccionar todo';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get favorite => 'Favorito';
+
+  @override
+  String get atLeastOneTab => 'Necesitas al menos una pestaña';
+
+  @override
+  String get scrollableTabs => 'Pestañas desplazables';
+
+  @override
+  String get save => 'Guardar';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get pureBlackAmoled => 'Negro puro (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip => 'Usa negro puro en pantallas AMOLED';
+
+  @override
+  String get systemColorScheme => 'Esquema de color del sistema';
+
+  @override
+  String get systemColorSchemeTooltip =>
+      'Usa el color principal de tu dispositivo en la aplicación';
+
+  @override
+  String get showImages => 'Mostrar imágenes';
+
+  @override
+  String get showImagesTooltip =>
+      'Selecciona y muestra imágenes en las páginas de diario y alimentos';
+
+  @override
+  String get curveLineGraphs => 'Gráficas de líneas curvas';
+
+  @override
+  String get curveLineGraphsTooltip =>
+      'Usa curvas suaves en la página de gráficas';
+
+  @override
+  String get weightStatCards => 'Tarjetas de estadísticas de peso';
+
+  @override
+  String get weightStatCardsTooltip =>
+      'Muestra las entradas de peso como una cuadrícula de tarjetas en lugar de la lista predeterminada';
+
+  @override
+  String get graphsStartAtZero => 'Las gráficas empiezan en cero';
+
+  @override
+  String get graphsStartAtZeroTooltip =>
+      'Haz que el eje Y de las gráficas empiece siempre en cero';
+
+  @override
+  String get navigationAnimation => 'Animación de navegación';
+
+  @override
+  String get animationFade => 'Fundido';
+
+  @override
+  String get animationZoom => 'Zoom';
+
+  @override
+  String get animationSlide => 'Deslizamiento';
+
+  @override
+  String get animationRise => 'Ascenso';
+
+  @override
+  String get animationNone => 'Ninguna';
+
+  @override
+  String longDateFormat(String example) {
+    return 'Formato de fecha largo ($example)';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return 'Formato de fecha corto ($example)';
+  }
+
+  @override
+  String get diarySettings => 'Ajustes del diario';
+
+  @override
+  String get diaryUnit => 'Unidad del diario';
+
+  @override
+  String get diarySummary => 'Resumen del diario';
+
+  @override
+  String get diarySummaryDivision => 'División - actual / total';
+
+  @override
+  String get diarySummaryRemaining => 'Restante';
+
+  @override
+  String get diarySummaryBoth => 'Ambos - restante (total)';
+
+  @override
+  String get diarySummaryNone => 'Ninguno';
+
+  @override
+  String get dailyCaloriesKcal => 'Calorías diarias (kcal)';
+
+  @override
+  String get dailyProteinG => 'Proteína diaria (g)';
+
+  @override
+  String get dailyFatG => 'Grasa diaria (g)';
+
+  @override
+  String get dailyCarbsG => 'Carbohidratos diarios (g)';
+
+  @override
+  String get dailyFiberG => 'Fibra diaria (g)';
+
+  @override
+  String get automaticDailies => 'Objetivos diarios automáticos';
+
+  @override
+  String get automaticDailiesTooltip =>
+      'Calcula automáticamente las calorías, proteínas, grasas y carbohidratos diarios recomendados a partir de tu peso corporal';
+
+  @override
+  String get selectNameOnSubmit => 'Seleccionar el nombre al guardar';
+
+  @override
+  String get reminders => 'Recordatorios';
+
+  @override
+  String get foodSettings => 'Ajustes de alimentos';
+
+  @override
+  String get foodUnit => 'Unidad de alimento';
+
+  @override
+  String get fields => 'Campos';
+
+  @override
+  String get favoriteNewFoods => 'Marcar nuevos alimentos como favoritos';
+
+  @override
+  String get pickFields => 'Elegir campos';
+
+  @override
+  String get all => 'Todos';
+
+  @override
+  String get onlySelected => 'Solo seleccionados';
+
+  @override
+  String get weightSettings => 'Ajustes de peso';
+
+  @override
+  String get targetWeight => 'Peso objetivo';
+
+  @override
+  String get positiveReinforcement => 'Refuerzo positivo';
+
+  @override
+  String get positiveReinforcementPreview =>
+      '¡Los mensajes motivadores se mostrarán así!';
+
+  @override
+  String get dataSettings => 'Ajustes de datos';
+
+  @override
+  String get automaticBackup => 'Copia de seguridad automática';
+
+  @override
+  String get shareDatabase => 'Compartir base de datos';
+
+  @override
+  String get openNotification => 'Abrir notificación';
+
+  @override
+  String get automaticBackupsEnabled =>
+      'Copias de seguridad automáticas activadas';
+
+  @override
+  String get automaticBackupBody =>
+      'FitBook guardará automáticamente tus datos e imágenes en la carpeta seleccionada cada día.';
+
+  @override
+  String get backupSettings => 'Ajustes de copia de seguridad';
+
+  @override
+  String get backupSettingsChannelDescription =>
+      'Notificaciones sobre copias de seguridad automáticas';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => 'Nombre de usuario';
+
+  @override
+  String get password => 'Contraseña';
+
+  @override
+  String get close => 'Cerrar';
+
+  @override
+  String get loggedIn => 'Sesión iniciada';
+
+  @override
+  String get about => 'Acerca de';
+
+  @override
+  String get version => 'Versión';
+
+  @override
+  String get whatsNew => 'Novedades';
+
+  @override
+  String get author => 'Autor';
+
+  @override
+  String get license => 'Licencia';
+
+  @override
+  String get donate => 'Donar';
+
+  @override
+  String get supportProject => 'Ayuda a mantener este proyecto';
+
+  @override
+  String get leaveReview => 'Dejar una reseña';
+
+  @override
+  String get rateOnPlayStore => 'Valora FitBook en Play Store';
+
+  @override
+  String get sourceCode => 'Código fuente';
+
+  @override
+  String get foods => 'Alimentos';
+
+  @override
+  String get backup => 'Copia de seguridad';
+
+  @override
+  String get exportData => 'Exportar datos';
+
+  @override
+  String get importData => 'Importar datos';
+
+  @override
+  String get failedImportData => 'No se pudieron importar los datos';
+
+  @override
+  String get copyError => 'Copiar error';
+
+  @override
+  String get deleteRecords => 'Eliminar registros';
+
+  @override
+  String get unusedFood => 'Alimentos sin usar';
+
+  @override
+  String get database => 'Base de datos';
+
+  @override
+  String get deleteAllWeightsConfirm =>
+      '¿Seguro que quieres eliminar todos los registros de peso? Esta acción no se puede deshacer.';
+
+  @override
+  String get deleteDatabaseConfirm =>
+      '¿Seguro que quieres eliminar tu base de datos? Esta acción no se puede deshacer y destruirá todos tus datos.';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm =>
+      '¿Seguro que quieres eliminar todos los alimentos y las entradas del diario? Esta acción no se puede deshacer.';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '¿Seguro que quieres eliminar $count alimentos sin usar? Esta acción es irreversible.',
+      one:
+          '¿Seguro que quieres eliminar 1 alimento sin usar? Esta acción es irreversible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm =>
+      '¿Seguro que quieres eliminar todas las entradas del diario? Esta acción no se puede deshacer.';
 }

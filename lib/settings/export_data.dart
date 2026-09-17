@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -34,7 +35,7 @@ class _ExportDataState extends State<ExportData> {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.date_range),
-                    title: const Text('Diary'),
+                    title: Text(context.l10n.diary),
                     onTap: () async {
                       setState(() {
                         exporting = true;
@@ -85,7 +86,7 @@ class _ExportDataState extends State<ExportData> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.restaurant),
-                    title: const Text('Foods'),
+                    title: Text(context.l10n.foods),
                     onTap: () async {
                       setState(() {
                         exporting = true;
@@ -243,7 +244,7 @@ class _ExportDataState extends State<ExportData> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Backup'),
+                    title: Text(context.l10n.backup),
                     onTap: () async {
                       Navigator.pop(context);
                       setState(() => exporting = true);
@@ -283,7 +284,7 @@ class _ExportDataState extends State<ExportData> {
               width: 20,
               child: CircularProgressIndicator(),
             )
-          : const Text('Export data'),
+          : Text(context.l10n.exportData),
     );
   }
 }

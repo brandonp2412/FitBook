@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:drift/drift.dart' hide Column;
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -43,7 +44,7 @@ class _TabSettingsState extends State<TabSettings> {
 
   void setTab(String name, bool enabled) {
     if (!enabled && tabs.where((tab) => tab.enabled == true).length == 1)
-      return toast(context, 'You need at least one tab');
+      return toast(context, context.l10n.atLeastOneTab);
     final index = tabs.indexWhere((tappedTab) => tappedTab.name == name);
     setState(() {
       tabs[index] = (name: name, enabled: enabled);
@@ -55,13 +56,13 @@ class _TabSettingsState extends State<TabSettings> {
     final settings = context.watch<SettingsState>().value;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Tabs")),
+      appBar: AppBar(title: Text(context.l10n.tabs)),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             SwitchListTile(
-              title: const Text("Scrollable Tabs"),
+              title: Text(context.l10n.scrollableTabs),
               value: settings.scrollableTabs,
               onChanged: (value) {
                 db.settings.update().write(
@@ -94,12 +95,12 @@ class _TabSettingsState extends State<TabSettings> {
                         value: tab.enabled,
                         onChanged: (value) => setTab(tab.name, value),
                       ),
-                      title: const Row(
+                      title: Row(
                         children: [
-                          Icon(Icons.date_range),
+                          const Icon(Icons.date_range),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Diary"),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.l10n.diary),
                           ),
                         ],
                       ),
@@ -116,12 +117,12 @@ class _TabSettingsState extends State<TabSettings> {
                         value: tab.enabled,
                         onChanged: (value) => setTab(tab.name, value),
                       ),
-                      title: const Row(
+                      title: Row(
                         children: [
-                          Icon(Icons.insights),
+                          const Icon(Icons.insights),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Graph"),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.l10n.navGraph),
                           ),
                         ],
                       ),
@@ -138,12 +139,12 @@ class _TabSettingsState extends State<TabSettings> {
                         value: tab.enabled,
                         onChanged: (value) => setTab(tab.name, value),
                       ),
-                      title: const Row(
+                      title: Row(
                         children: [
-                          Icon(Icons.restaurant),
+                          const Icon(Icons.restaurant),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Food"),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.l10n.food),
                           ),
                         ],
                       ),
@@ -160,12 +161,12 @@ class _TabSettingsState extends State<TabSettings> {
                         value: tab.enabled,
                         onChanged: (value) => setTab(tab.name, value),
                       ),
-                      title: const Row(
+                      title: Row(
                         children: [
-                          Icon(Icons.scale),
+                          const Icon(Icons.scale),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Weight"),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(context.l10n.weight),
                           ),
                         ],
                       ),
@@ -175,7 +176,7 @@ class _TabSettingsState extends State<TabSettings> {
                       ),
                     );
                   } else
-                    return ErrorWidget("Invalid tab settings.");
+                    return ErrorWidget(context.l10n.invalidTabSettings);
                 },
                 itemCount: tabs.length,
               ),
@@ -198,7 +199,7 @@ class _TabSettingsState extends State<TabSettings> {
           if (context.mounted) Navigator.of(context).pop();
         },
         icon: const Icon(Icons.save),
-        label: const Text("Save"),
+        label: Text(context.l10n.save),
       ),
     );
   }

@@ -280,4 +280,342 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get appearanceSettings => 'Paramètres d’apparence';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get confirmDelete => 'Confirmer la suppression';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Voulez-vous vraiment supprimer $count éléments ? Cette action est irréversible.',
+      one:
+          'Voulez-vous vraiment supprimer 1 élément ? Cette action est irréversible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get search => 'Rechercher...';
+
+  @override
+  String get clear => 'Effacer';
+
+  @override
+  String get showMenu => 'Afficher le menu';
+
+  @override
+  String get selectAll => 'Tout sélectionner';
+
+  @override
+  String get edit => 'Modifier';
+
+  @override
+  String get favorite => 'Favori';
+
+  @override
+  String get atLeastOneTab => 'Vous devez conserver au moins un onglet';
+
+  @override
+  String get scrollableTabs => 'Onglets défilants';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get themeSystem => 'Système';
+
+  @override
+  String get themeDark => 'Sombre';
+
+  @override
+  String get themeLight => 'Clair';
+
+  @override
+  String get pureBlackAmoled => 'Noir pur (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip =>
+      'Utiliser du noir pur sur les écrans AMOLED';
+
+  @override
+  String get systemColorScheme => 'Palette de couleurs du système';
+
+  @override
+  String get systemColorSchemeTooltip =>
+      'Utiliser la couleur principale de votre appareil dans l’application';
+
+  @override
+  String get showImages => 'Afficher les images';
+
+  @override
+  String get showImagesTooltip =>
+      'Choisir et afficher des images dans le journal et les pages d’aliments';
+
+  @override
+  String get curveLineGraphs => 'Courbes lissées';
+
+  @override
+  String get curveLineGraphsTooltip =>
+      'Utiliser des courbes lisses sur la page des graphiques';
+
+  @override
+  String get weightStatCards => 'Cartes de statistiques de poids';
+
+  @override
+  String get weightStatCardsTooltip =>
+      'Afficher les entrées de poids sous forme de grille de cartes plutôt que dans la liste par défaut';
+
+  @override
+  String get graphsStartAtZero => 'Graphiques à partir de zéro';
+
+  @override
+  String get graphsStartAtZeroTooltip =>
+      'Toujours faire commencer l’axe Y du graphique à zéro';
+
+  @override
+  String get navigationAnimation => 'Animation de navigation';
+
+  @override
+  String get animationFade => 'Fondu';
+
+  @override
+  String get animationZoom => 'Zoom';
+
+  @override
+  String get animationSlide => 'Glissement';
+
+  @override
+  String get animationRise => 'Montée';
+
+  @override
+  String get animationNone => 'Aucune';
+
+  @override
+  String longDateFormat(String example) {
+    return 'Format de date long ($example)';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return 'Format de date court ($example)';
+  }
+
+  @override
+  String get diarySettings => 'Paramètres du journal';
+
+  @override
+  String get diaryUnit => 'Unité du journal';
+
+  @override
+  String get diarySummary => 'Résumé du journal';
+
+  @override
+  String get diarySummaryDivision => 'Division - actuel / total';
+
+  @override
+  String get diarySummaryRemaining => 'Restant';
+
+  @override
+  String get diarySummaryBoth => 'Les deux - restant (total)';
+
+  @override
+  String get diarySummaryNone => 'Aucun';
+
+  @override
+  String get dailyCaloriesKcal => 'Calories quotidiennes (kcal)';
+
+  @override
+  String get dailyProteinG => 'Protéines quotidiennes (g)';
+
+  @override
+  String get dailyFatG => 'Lipides quotidiens (g)';
+
+  @override
+  String get dailyCarbsG => 'Glucides quotidiens (g)';
+
+  @override
+  String get dailyFiberG => 'Fibres quotidiennes (g)';
+
+  @override
+  String get automaticDailies => 'Objectifs quotidiens automatiques';
+
+  @override
+  String get automaticDailiesTooltip =>
+      'Calculer automatiquement les calories, protéines, lipides et glucides quotidiens recommandés à partir de votre poids';
+
+  @override
+  String get selectNameOnSubmit => 'Sélectionner le nom à l’enregistrement';
+
+  @override
+  String get reminders => 'Rappels';
+
+  @override
+  String get foodSettings => 'Paramètres des aliments';
+
+  @override
+  String get foodUnit => 'Unité des aliments';
+
+  @override
+  String get fields => 'Champs';
+
+  @override
+  String get favoriteNewFoods => 'Ajouter les nouveaux aliments aux favoris';
+
+  @override
+  String get pickFields => 'Choisir les champs';
+
+  @override
+  String get all => 'Tous';
+
+  @override
+  String get onlySelected => 'Sélection uniquement';
+
+  @override
+  String get weightSettings => 'Paramètres du poids';
+
+  @override
+  String get targetWeight => 'Poids cible';
+
+  @override
+  String get positiveReinforcement => 'Renforcement positif';
+
+  @override
+  String get positiveReinforcementPreview =>
+      'Les messages encourageants s’afficheront ainsi !';
+
+  @override
+  String get dataSettings => 'Paramètres des données';
+
+  @override
+  String get automaticBackup => 'Sauvegarde automatique';
+
+  @override
+  String get shareDatabase => 'Partager la base de données';
+
+  @override
+  String get openNotification => 'Ouvrir la notification';
+
+  @override
+  String get automaticBackupsEnabled => 'Sauvegardes automatiques activées';
+
+  @override
+  String get automaticBackupBody =>
+      'FitBook sauvegardera automatiquement vos données et vos images dans le dossier sélectionné chaque jour.';
+
+  @override
+  String get backupSettings => 'Paramètres de sauvegarde';
+
+  @override
+  String get backupSettingsChannelDescription =>
+      'Notifications concernant les sauvegardes automatiques';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => 'Nom d’utilisateur';
+
+  @override
+  String get password => 'Mot de passe';
+
+  @override
+  String get close => 'Fermer';
+
+  @override
+  String get loggedIn => 'Connecté';
+
+  @override
+  String get about => 'À propos';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get whatsNew => 'Nouveautés';
+
+  @override
+  String get author => 'Auteur';
+
+  @override
+  String get license => 'Licence';
+
+  @override
+  String get donate => 'Faire un don';
+
+  @override
+  String get supportProject => 'Aidez à soutenir ce projet';
+
+  @override
+  String get leaveReview => 'Laisser un avis';
+
+  @override
+  String get rateOnPlayStore => 'Évaluer FitBook sur le Play Store';
+
+  @override
+  String get sourceCode => 'Code source';
+
+  @override
+  String get foods => 'Aliments';
+
+  @override
+  String get backup => 'Sauvegarde';
+
+  @override
+  String get exportData => 'Exporter les données';
+
+  @override
+  String get importData => 'Importer les données';
+
+  @override
+  String get failedImportData => 'Échec de l’importation des données';
+
+  @override
+  String get copyError => 'Copier l’erreur';
+
+  @override
+  String get deleteRecords => 'Supprimer des données';
+
+  @override
+  String get unusedFood => 'Aliments inutilisés';
+
+  @override
+  String get database => 'Base de données';
+
+  @override
+  String get deleteAllWeightsConfirm =>
+      'Voulez-vous vraiment supprimer toutes les entrées de poids ? Cette action est irréversible.';
+
+  @override
+  String get deleteDatabaseConfirm =>
+      'Voulez-vous vraiment supprimer votre base de données ? Cette action est irréversible et supprimera toutes vos données.';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm =>
+      'Voulez-vous vraiment supprimer tous les aliments et toutes les entrées du journal ? Cette action est irréversible.';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Voulez-vous vraiment supprimer $count aliments inutilisés ? Cette action est irréversible.',
+      one:
+          'Voulez-vous vraiment supprimer 1 aliment inutilisé ? Cette action est irréversible.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm =>
+      'Voulez-vous vraiment supprimer toutes les entrées du journal ? Cette action est irréversible.';
 }

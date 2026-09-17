@@ -1,3 +1,4 @@
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
@@ -43,26 +44,26 @@ class _AppSearchState extends State<AppSearch> {
       trailingMain = widget.filter!;
     else if (widget.selected.isNotEmpty)
       trailingMain = IconButton(
-        tooltip: 'Delete',
+        tooltip: context.l10n.delete,
         icon: const Icon(Icons.delete),
         onPressed: () {
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text('Confirm delete'),
+                title: Text(context.l10n.confirmDelete),
                 content: Text(
-                  'Are you sure you want to delete ${widget.selected.length} records? This action is not reversible.',
+                  context.l10n.confirmDeleteRecords(widget.selected.length),
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: const Text('Cancel'),
+                    child: Text(context.l10n.cancel),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   TextButton(
-                    child: const Text('Delete'),
+                    child: Text(context.l10n.delete),
                     onPressed: () {
                       Navigator.pop(context);
                       widget.onDelete();
@@ -84,7 +85,7 @@ class _AppSearchState extends State<AppSearch> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 760),
           child: SearchBar(
-            hintText: "Search...",
+            hintText: context.l10n.search,
             controller: widget.ctrl,
             padding: WidgetStateProperty.all(
               const EdgeInsets.only(right: 8.0),
@@ -108,7 +109,7 @@ class _AppSearchState extends State<AppSearch> {
                             widget.onChange('');
                           },
                           icon: const Icon(Icons.arrow_back),
-                          tooltip: 'Clear',
+                          tooltip: context.l10n.clear,
                           padding: const EdgeInsets.only(
                             left: 16.0,
                             right: 8.0,
@@ -130,7 +131,7 @@ class _AppSearchState extends State<AppSearch> {
                   builder: (BuildContext badgeContext) {
                     return IconButton(
                       icon: const Icon(Icons.more_vert),
-                      tooltip: 'Show menu',
+                      tooltip: context.l10n.showMenu,
                       onPressed: () async {
                         final RenderBox button =
                             badgeContext.findRenderObject() as RenderBox;
@@ -159,7 +160,7 @@ class _AppSearchState extends State<AppSearch> {
                             PopupMenuItem(
                               child: ListTile(
                                 leading: const Icon(Icons.done_all),
-                                title: const Text('Select all'),
+                                title: Text(context.l10n.selectAll),
                                 onTap: () {
                                   Navigator.pop(context);
                                   widget.onSelect();
@@ -170,7 +171,7 @@ class _AppSearchState extends State<AppSearch> {
                               PopupMenuItem(
                                 child: ListTile(
                                   leading: const Icon(Icons.settings),
-                                  title: const Text('Settings'),
+                                  title: Text(context.l10n.settings),
                                   onTap: () {
                                     Navigator.pop(context);
                                     Navigator.of(context, rootNavigator: true)
@@ -188,7 +189,7 @@ class _AppSearchState extends State<AppSearch> {
                               PopupMenuItem(
                                 child: ListTile(
                                   leading: const Icon(Icons.edit),
-                                  title: const Text('Edit'),
+                                  title: Text(context.l10n.edit),
                                   onTap: () {
                                     Navigator.pop(context);
                                     widget.onEdit();
@@ -198,7 +199,7 @@ class _AppSearchState extends State<AppSearch> {
                               PopupMenuItem(
                                 child: ListTile(
                                   leading: const Icon(Icons.favorite_outline),
-                                  title: const Text('Favorite'),
+                                  title: Text(context.l10n.favorite),
                                   onTap: () {
                                     Navigator.pop(context);
                                     widget.onFavorite();

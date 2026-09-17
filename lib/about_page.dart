@@ -1,3 +1,4 @@
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/whats_new.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -13,7 +14,7 @@ class AboutPage extends StatelessWidget {
     final pkgInfo = PackageInfo.fromPlatform();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("About"),
+        title: Text(context.l10n.about),
       ),
       body: ListView(
         children: [
@@ -26,7 +27,7 @@ class AboutPage extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text("Version"),
+            title: Text(context.l10n.version),
             subtitle: FutureBuilder(
               future: pkgInfo,
               builder: (context, snapshot) =>
@@ -39,7 +40,7 @@ class AboutPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Whats new?"),
+            title: Text(context.l10n.whatsNew),
             leading: const Icon(Icons.change_circle_outlined),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
@@ -48,7 +49,7 @@ class AboutPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text("Author"),
+            title: Text(context.l10n.author),
             leading: const Icon(Icons.person),
             subtitle: const Text("Brandon Dick"),
             onTap: () async {
@@ -57,7 +58,7 @@ class AboutPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("License"),
+            title: Text(context.l10n.license),
             leading: const Icon(Icons.balance),
             subtitle: const Text("MIT"),
             onTap: () async {
@@ -67,18 +68,18 @@ class AboutPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Donate"),
+            title: Text(context.l10n.donate),
             leading: const Icon(Icons.favorite_outline),
-            subtitle: const Text("Help support this project"),
+            subtitle: Text(context.l10n.supportProject),
             onTap: () async {
               const url = 'https://github.com/sponsors/brandonp2412';
               if (await canLaunchUrlString(url)) await launchUrlString(url);
             },
           ),
           ListTile(
-            title: const Text("Leave a review"),
+            title: Text(context.l10n.leaveReview),
             leading: const Icon(Icons.reviews_outlined),
-            subtitle: const Text("Rate FitBook on the Play Store"),
+            subtitle: Text(context.l10n.rateOnPlayStore),
             onTap: () async {
               const url =
                   'https://play.google.com/store/apps/details?id=com.presley.fit_book';
@@ -86,7 +87,7 @@ class AboutPage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("Source code"),
+            title: Text(context.l10n.sourceCode),
             leading: const Icon(Icons.code),
             onTap: () async {
               const url = 'https://github.com/brandonp2412/FitBook';
