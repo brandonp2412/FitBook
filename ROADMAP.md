@@ -12,7 +12,7 @@
 - [x] Food and meal screens, editors, filters, barcode/Open Food Facts flows, empty states.
 - [x] Weight screens and editors.
 - [x] Graph/progress screens and metric labels.
-- [ ] Settings and supporting pages including About and What's New. The newest 20 changelog entries are localized; 87 older entries remain.
+- [x] Settings and supporting pages including About and What's New. All 107 changelog entries are localized across every first-wave locale.
 - [x] Import/export/backup/errors/snackbars and failed-migration UI.
 - [x] Notifications, notification channels, native platform-visible strings, accessibility labels/tooltips.
 
