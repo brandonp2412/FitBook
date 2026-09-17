@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "Zo doe je dat.",
   "reinforcementEasyAsPie": "Appeltje-eitje.",
   "reinforcementDoingGreat": "Je doet het geweldig.",
-  "reinforcementProgressNice": "Zie ik daar vooruitgang? Lekker."
+  "reinforcementProgressNice": "Zie ik daar vooruitgang? Lekker.",
+  "diarySummaryRemainingValue": "Nog {remaining} {unit}",
+  "diarySummaryBothValue": "Nog {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

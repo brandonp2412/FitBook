@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "Tak się to robi.",
   "reinforcementEasyAsPie": "Bułka z masłem.",
   "reinforcementDoingGreat": "Świetnie ci idzie.",
-  "reinforcementProgressNice": "Czy ja widzę postęp? Super."
+  "reinforcementProgressNice": "Czy ja widzę postęp? Super.",
+  "diarySummaryRemainingValue": "Pozostało {remaining} {unit}",
+  "diarySummaryBothValue": "Pozostało {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

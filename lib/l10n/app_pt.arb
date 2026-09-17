@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "É assim que se faz.",
   "reinforcementEasyAsPie": "Canja.",
   "reinforcementDoingGreat": "Estás a sair-te muito bem.",
-  "reinforcementProgressNice": "É progresso que estou a ver? Boa."
+  "reinforcementProgressNice": "É progresso que estou a ver? Boa.",
+  "diarySummaryRemainingValue": "Faltam {remaining} {unit}",
+  "diarySummaryBothValue": "Faltam {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

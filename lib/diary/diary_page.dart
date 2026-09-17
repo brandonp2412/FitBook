@@ -15,6 +15,7 @@ import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/speed_dial_fab.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,8 +62,8 @@ class DiaryPageState extends State<DiaryPage> {
                 ),
                 Text(
                   target == null
-                      ? '${value.toStringAsFixed(0)} $unit'
-                      : '${value.toStringAsFixed(0)} / $target $unit',
+                      ? '${formatDisplayNumber(context, value, maximumFractionDigits: 0)} $unit'
+                      : '${formatDisplayNumber(context, value, maximumFractionDigits: 0)} / ${formatDisplayNumber(context, target, maximumFractionDigits: 0)} $unit',
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),

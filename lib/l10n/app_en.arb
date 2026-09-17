@@ -366,5 +366,11 @@
   "reinforcementThatsHowItsDone": "That's how it's done.",
   "reinforcementEasyAsPie": "Easy as pie.",
   "reinforcementDoingGreat": "You are doing great.",
-  "reinforcementProgressNice": "Is that progress I see? Nice."
+  "reinforcementProgressNice": "Is that progress I see? Nice.",
+  "diarySummaryRemainingValue": "{remaining} {unit} remaining",
+  "@diarySummaryRemainingValue": {"placeholders": {"remaining": {"type": "String"}, "unit": {"type": "String"}}},
+  "diarySummaryBothValue": "{remaining} {unit} remaining ({target} {unit})",
+  "@diarySummaryBothValue": {"placeholders": {"remaining": {"type": "String"}, "target": {"type": "String"}, "unit": {"type": "String"}}},
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {"placeholders": {"current": {"type": "String"}, "target": {"type": "String"}, "unit": {"type": "String"}}}
 }

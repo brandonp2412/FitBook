@@ -2146,6 +2146,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Is that progress I see? Nice.'**
   String get reinforcementProgressNice;
+
+  /// No description provided for @diarySummaryRemainingValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{remaining} {unit} remaining'**
+  String diarySummaryRemainingValue(String remaining, String unit);
+
+  /// No description provided for @diarySummaryBothValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{remaining} {unit} remaining ({target} {unit})'**
+  String diarySummaryBothValue(String remaining, String target, String unit);
+
+  /// No description provided for @diarySummaryDivisionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / {target} {unit}'**
+  String diarySummaryDivisionValue(String current, String target, String unit);
 }
 
 class _AppLocalizationsDelegate

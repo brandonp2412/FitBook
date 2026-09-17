@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "这才对嘛。",
   "reinforcementEasyAsPie": "轻轻松松。",
   "reinforcementDoingGreat": "你做得很棒。",
-  "reinforcementProgressNice": "我是不是看到进步了？不错！"
+  "reinforcementProgressNice": "我是不是看到进步了？不错！",
+  "diarySummaryRemainingValue": "剩余 {remaining} {unit}",
+  "diarySummaryBothValue": "剩余 {remaining} {unit}（目标 {target} {unit}）",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

@@ -100,6 +100,7 @@ class _DiaryListState extends State<DiaryList> {
                 ),
                 Text(
                   _summaryText(
+                    context,
                     settings.diarySummary,
                     current: current,
                     target: target,
@@ -130,7 +131,7 @@ class _DiaryListState extends State<DiaryList> {
         if (settings.dailyCalories != null)
           goalBar(
             context,
-            'Calories',
+            context.l10n.calories,
             today.stats.cals,
             settings.dailyCalories!,
             'kcal',
@@ -139,7 +140,7 @@ class _DiaryListState extends State<DiaryList> {
         if (settings.dailyProtein != null)
           goalBar(
             context,
-            'Protein',
+            context.l10n.protein,
             today.stats.protein,
             settings.dailyProtein!,
             'g',
@@ -148,7 +149,7 @@ class _DiaryListState extends State<DiaryList> {
         if (settings.dailyCarb != null)
           goalBar(
             context,
-            'Carbs',
+            context.l10n.carbs,
             today.stats.carb,
             settings.dailyCarb!,
             'g',
@@ -157,7 +158,7 @@ class _DiaryListState extends State<DiaryList> {
         if (settings.dailyFat != null)
           goalBar(
             context,
-            'Fat',
+            context.l10n.fat,
             today.stats.fat,
             settings.dailyFat!,
             'g',
@@ -166,7 +167,7 @@ class _DiaryListState extends State<DiaryList> {
         if (settings.dailyFiber != null)
           goalBar(
             context,
-            'Fiber',
+            context.l10n.fiber,
             today.stats.fiber,
             settings.dailyFiber!,
             'g',
@@ -226,23 +227,45 @@ class _DiaryListState extends State<DiaryList> {
   }
 
   String _summaryText(
+    BuildContext context,
     String setting, {
     required double current,
     required int target,
     required String unit,
   }) {
-    final currentText = current.toStringAsFixed(0);
-    final remainingText = (target - current).toStringAsFixed(0);
+    final currentText = formatDisplayNumber(
+      context,
+      current,
+      maximumFractionDigits: 0,
+    );
+    final targetText = formatDisplayNumber(
+      context,
+      target,
+      maximumFractionDigits: 0,
+    );
+    final remainingText = formatDisplayNumber(
+      context,
+      target - current,
+      maximumFractionDigits: 0,
+    );
     switch (setting) {
       case 'DiarySummary.remaining':
-        return '$remainingText $unit remaining';
+        return context.l10n.diarySummaryRemainingValue(remainingText, unit);
       case 'DiarySummary.both':
-        return '$remainingText remaining ($target $unit)';
+        return context.l10n.diarySummaryBothValue(
+          remainingText,
+          targetText,
+          unit,
+        );
       case 'DiarySummary.none':
         return '';
       case 'DiarySummary.division':
       default:
-        return '$currentText / $target $unit';
+        return context.l10n.diarySummaryDivisionValue(
+          currentText,
+          targetText,
+          unit,
+        );
     }
   }
 }

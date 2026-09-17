@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "C’est comme ça qu’on fait.",
   "reinforcementEasyAsPie": "Facile comme tout.",
   "reinforcementDoingGreat": "Tu t’en sors super bien.",
-  "reinforcementProgressNice": "C’est du progrès que je vois ? Pas mal."
+  "reinforcementProgressNice": "C’est du progrès que je vois ? Pas mal.",
+  "diarySummaryRemainingValue": "Il reste {remaining} {unit}",
+  "diarySummaryBothValue": "Il reste {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

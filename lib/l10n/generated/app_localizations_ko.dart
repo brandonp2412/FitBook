@@ -1118,4 +1118,19 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get reinforcementProgressNice => '오, 발전이 보이는데요? 좋아요.';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return '$remaining $unit 남음';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return '$remaining $unit 남음 (목표 $target $unit)';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }

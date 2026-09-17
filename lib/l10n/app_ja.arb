@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "そう、それでこそ！",
   "reinforcementEasyAsPie": "楽勝です。",
   "reinforcementDoingGreat": "とても順調です。",
-  "reinforcementProgressNice": "おっ、進歩してますね。いい感じ！"
+  "reinforcementProgressNice": "おっ、進歩してますね。いい感じ！",
+  "diarySummaryRemainingValue": "残り {remaining} {unit}",
+  "diarySummaryBothValue": "残り {remaining} {unit}（目標 {target} {unit}）",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

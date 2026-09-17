@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "È così che si fa.",
   "reinforcementEasyAsPie": "Facile come bere un bicchier d’acqua.",
   "reinforcementDoingGreat": "Stai andando alla grande.",
-  "reinforcementProgressNice": "Quello che vedo è progresso? Bello."
+  "reinforcementProgressNice": "Quello che vedo è progresso? Bello.",
+  "diarySummaryRemainingValue": "Restano {remaining} {unit}",
+  "diarySummaryBothValue": "Restano {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

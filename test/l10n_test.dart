@@ -99,6 +99,21 @@ void main() {
     expect(localizedUnit(spanish, 'milliliters'), 'Mililitros');
     expect(localizedUnit(spanish, 'custom-unit'), 'custom-unit');
   });
+
+  test('diary summary phrases preserve localized placeholder ordering',
+      () async {
+    final spanish = await AppLocalizations.delegate.load(const Locale('es'));
+    final japanese = await AppLocalizations.delegate.load(const Locale('ja'));
+
+    expect(
+      spanish.diarySummaryRemainingValue('250', 'kcal'),
+      'Quedan 250 kcal',
+    );
+    expect(
+      japanese.diarySummaryBothValue('20', '100', 'g'),
+      '残り 20 g（目標 100 g）',
+    );
+  });
 }
 
 Map<String, dynamic> _readArb(File file) =>

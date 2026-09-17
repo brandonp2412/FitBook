@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "Genau so macht man das.",
   "reinforcementEasyAsPie": "Kinderleicht.",
   "reinforcementDoingGreat": "Du machst das großartig.",
-  "reinforcementProgressNice": "Sehe ich da Fortschritt? Stark."
+  "reinforcementProgressNice": "Sehe ich da Fortschritt? Stark.",
+  "diarySummaryRemainingValue": "Noch {remaining} {unit}",
+  "diarySummaryBothValue": "Noch {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

@@ -1164,6 +1164,21 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reinforcementProgressNice => 'É progresso que estou a ver? Boa.';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return 'Faltam $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return 'Faltam $remaining $unit ($target $unit)';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2325,4 +2340,19 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get reinforcementProgressNice =>
       'Isso é progresso que eu estou vendo? Boa.';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return 'Restam $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return 'Restam $remaining $unit ($target $unit)';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }

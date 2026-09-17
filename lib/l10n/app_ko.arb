@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "바로 이렇게 하는 거예요.",
   "reinforcementEasyAsPie": "식은 죽 먹기죠.",
   "reinforcementDoingGreat": "정말 잘하고 있어요.",
-  "reinforcementProgressNice": "오, 발전이 보이는데요? 좋아요."
+  "reinforcementProgressNice": "오, 발전이 보이는데요? 좋아요.",
+  "diarySummaryRemainingValue": "{remaining} {unit} 남음",
+  "diarySummaryBothValue": "{remaining} {unit} 남음 (목표 {target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

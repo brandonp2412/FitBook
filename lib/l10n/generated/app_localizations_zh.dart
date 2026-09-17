@@ -1112,6 +1112,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reinforcementProgressNice => '我是不是看到进步了？不错！';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return '剩余 $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return '剩余 $remaining $unit（目标 $target $unit）';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2222,4 +2237,19 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get reinforcementProgressNice => '我是不是看到进步了？不错！';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return '剩余 $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return '剩余 $remaining $unit（目标 $target $unit）';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }

@@ -348,5 +348,8 @@
   "reinforcementThatsHowItsDone": "É assim que se faz.",
   "reinforcementEasyAsPie": "Moleza.",
   "reinforcementDoingGreat": "Você está indo muito bem.",
-  "reinforcementProgressNice": "Isso é progresso que eu estou vendo? Boa."
+  "reinforcementProgressNice": "Isso é progresso que eu estou vendo? Boa.",
+  "diarySummaryRemainingValue": "Restam {remaining} {unit}",
+  "diarySummaryBothValue": "Restam {remaining} {unit} ({target} {unit})",
+  "diarySummaryDivisionValue": "{current} / {target} {unit}"
 }

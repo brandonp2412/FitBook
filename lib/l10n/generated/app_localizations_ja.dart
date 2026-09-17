@@ -1118,4 +1118,19 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get reinforcementProgressNice => 'おっ、進歩してますね。いい感じ！';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return '残り $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return '残り $remaining $unit（目標 $target $unit）';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
 }
