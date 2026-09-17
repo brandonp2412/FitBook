@@ -96,5 +96,14 @@
   "1740786471": "- Subir el botón de código de barras en la entrada\n- Limitar los campos predeterminados\n- Añadir macronutrientes al añadido rápido\n- Corregir la edición de fecha en el añadido rápido\n- Corregir los iconos monocromos del lanzador",
   "1740618491": "- Conservar la unidad de conversión anterior en la página de peso\n- Limpiar los datos del añadido rápido\n- Corregir que los alimentos nuevos se marquen como favoritos de forma predeterminada\n- Corregir las unidades de ración en la página de entradas\n- Corregir el vaciado de la base de datos",
   "1740611960": "- Corregir las calorías en la página de entradas y los gráficos\n- Gestionar mejor los errores en la página Diario\n- Corregir que el tamaño de la ración no se editara en Alimentos",
-  "1740537622": "- Corregir los gráficos rotos"
+  "1740537622": "- Corregir los gráficos rotos",
+  "1740206295": "- Añadir ajuste para calcular automáticamente los objetivos diarios",
+  "1740093439": "- Añadir página de comidas\n- Mover el botón para borrar la selección a la izquierda de la barra de búsqueda",
+  "1739933364": "- Añadir separador de miles al objetivo diario de kcal\n- Eliminar el relleno debajo de la búsqueda\n- Añadir selector de campos de alimentos\n- Permitir que falle la apertura de la base de datos al iniciar",
+  "1739404513": "- Añadir edición manual del código de barras\n- Añadir animación Zoop a las casillas al seleccionar\n- Añadir imágenes al peso\n- Almacenar en caché las imágenes de Alimentos y Diario",
+  "1739245541": "- Añadir conversiones de unidades al añadir peso\n- Añadir control deslizante para el límite del gráfico\n- Añadir los decimales que faltaban en los teclados de iOS",
+  "1739183116": "- Actualizar capturas de pantalla\n- Corregir la altura del gráfico en tablets\n- Hacer que las líneas sean curvas de forma predeterminada\n- Unificar el color de fondo del launcher\n- Corregir las copias de seguridad automáticas",
+  "1739182275": "- Corregir la altura del gráfico en tablets\n- Hacer que las líneas sean curvas de forma predeterminada\n- Unificar el color de fondo del launcher\n- Corregir las copias de seguridad automáticas",
+  "1739174605": "- Corregir las copias de seguridad automáticas\n- Escalar la altura del gráfico\n- Copiar la superficie del tema oscuro para el icono de la aplicación\n- Establecer un objetivo en las capturas de pantalla\n- Usar líneas curvas de forma predeterminada",
+  "1739174409": "- Corregir problemas de fecha\n- Descomentar fastlane supply en el despliegue\n- Renombrar AppGroupBy a Period\n- Eliminar la llamada a init en screenshot_test"
 }

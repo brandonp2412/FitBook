@@ -68,15 +68,20 @@ void main() {
       files.map((file) => file.uri.pathSegments.last.split('.').first).toSet(),
       expectedLocales,
     );
-    final canonical = _readStringMap(files.first);
-    expect(canonical, isNotEmpty);
+    final changelogIds = Directory('assets/changelogs')
+        .listSync()
+        .whereType<File>()
+        .where((file) => file.path.endsWith('.txt'))
+        .map((file) => file.uri.pathSegments.last.split('.').first)
+        .toSet();
+    expect(changelogIds, isNotEmpty);
 
     for (final file in files) {
       final translations = _readStringMap(file);
       expect(
         translations.keys.toSet(),
-        canonical.keys.toSet(),
-        reason: '${file.path} must cover the same changelog entries',
+        changelogIds,
+        reason: '${file.path} must cover every English changelog asset',
       );
       for (final entry in translations.entries) {
         expect(entry.value.trim(), isNotEmpty);

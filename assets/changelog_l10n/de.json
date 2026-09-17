@@ -96,5 +96,14 @@
   "1740786471": "- Barcode-Schaltfläche im Eintrag nach oben verschieben\n- Standardfelder begrenzen\n- Makronährstoffe zum Schnellhinzufügen hinzufügen\n- Datumsbearbeitung beim Schnellhinzufügen korrigieren\n- Monochrome Launcher-Symbole korrigieren",
   "1740618491": "- Alte Umrechnungseinheit auf der Gewichtsseite beibehalten\n- Details des Schnellhinzufügens löschen\n- Standardmäßiges Favorisieren neuer Lebensmittel korrigieren\n- Portionseinheiten auf der Eintragsseite korrigieren\n- Leeren der Datenbank korrigieren",
   "1740611960": "- Kalorien auf der Eintragsseite und in Diagrammen korrigieren\n- Fehler auf der Tagebuchseite besser behandeln\n- Fehler beheben, bei dem die Portionsgröße in Lebensmitteln nicht bearbeitet wurde",
-  "1740537622": "- Defekte Diagramme korrigieren"
+  "1740537622": "- Defekte Diagramme korrigieren",
+  "1740206295": "- Einstellung zur automatischen Berechnung täglicher Ziele hinzufügen",
+  "1740093439": "- Mahlzeitenseite hinzufügen\n- Schaltfläche zum Löschen der Auswahl links neben die Suchleiste verschieben",
+  "1739933364": "- Tausendertrennzeichen zum täglichen kcal-Ziel hinzufügen\n- Abstand unter der Suche entfernen\n- Feldauswahl für Lebensmittel hinzufügen\n- Fehlschlagen beim Öffnen der Datenbank beim Start zulassen",
+  "1739404513": "- Manuelle Bearbeitung des Barcodes hinzufügen\n- Zoop-Animation für Kontrollkästchen bei der Auswahl hinzufügen\n- Bilder zum Gewicht hinzufügen\n- Bilder auf Lebensmittel- und Tagebuchseite zwischenspeichern",
+  "1739245541": "- Einheitenumrechnungen beim Hinzufügen von Gewicht hinzufügen\n- Schieberegler für Diagrammlimit hinzufügen\n- Fehlende Dezimalzeichen auf iOS-Tastaturen hinzufügen",
+  "1739183116": "- Screenshots aktualisieren\n- Diagrammhöhe auf Tablets korrigieren\n- Linien standardmäßig gekrümmt darstellen\n- Hintergrundfarbe des Launchers vereinheitlichen\n- Automatische Sicherungen korrigieren",
+  "1739182275": "- Diagrammhöhe auf Tablets korrigieren\n- Linien standardmäßig gekrümmt darstellen\n- Hintergrundfarbe des Launchers vereinheitlichen\n- Automatische Sicherungen korrigieren",
+  "1739174605": "- Automatische Sicherungen korrigieren\n- Diagrammhöhe skalieren\n- Oberfläche des dunklen Themes für das App-Symbol übernehmen\n- Ziel in Screenshots festlegen\n- Linien standardmäßig krümmen",
+  "1739174409": "- Datumsprobleme korrigieren\n- fastlane supply in der Bereitstellung wieder einkommentieren\n- AppGroupBy in Period umbenennen\n- Aufruf von init in screenshot_test entfernen"
 }

@@ -96,5 +96,14 @@
   "1740786471": "- Barcodeknop in het item omhoog verplaatsen\n- Standaardvelden beperken\n- Macronutriënten aan snel toevoegen toevoegen\n- Datumbewerking bij snel toevoegen corrigeren\n- Monochrome opstartpictogrammen corrigeren",
   "1740618491": "- Oude conversie-eenheid op de gewichtspagina behouden\n- Details van snel toevoegen wissen\n- Standaard favoriet maken van nieuwe voedingsmiddelen corrigeren\n- Portie-eenheden op de itempagina corrigeren\n- Leegmaken van de database corrigeren",
   "1740611960": "- Calorieën op de itempagina en in grafieken corrigeren\n- Fouten op de Dagboekpagina beter afhandelen\n- Portiegrootte corrigeren die niet werd bewerkt bij Voeding",
-  "1740537622": "- Defecte grafieken corrigeren"
+  "1740537622": "- Defecte grafieken corrigeren",
+  "1740206295": "- Instelling toevoegen om dagelijkse doelen automatisch te berekenen",
+  "1740093439": "- Maaltijdpagina toevoegen\n- Knop om selectie te wissen links van de zoekbalk plaatsen",
+  "1739933364": "- Duizendtalscheiding aan het dagelijkse kcal-doel toevoegen\n- Opvulling onder zoeken verwijderen\n- Veldkiezer voor voeding toevoegen\n- Mislukken van het openen van de database bij opstart toestaan",
+  "1739404513": "- Handmatige bewerking van de barcode toevoegen\n- Zoop-animatie aan selectievakjes toevoegen bij selecteren\n- Afbeeldingen aan gewicht toevoegen\n- Afbeeldingen op Voeding en Dagboek cachen",
+  "1739245541": "- Eenheidsconversies toevoegen bij het toevoegen van gewicht\n- Schuifregelaar voor grafieklimiet toevoegen\n- Ontbrekende decimalen aan iOS-toetsenborden toevoegen",
+  "1739183116": "- Schermafbeeldingen bijwerken\n- Grafiekhoogte op tablets corrigeren\n- Lijnen standaard gebogen maken\n- Achtergrondkleur van de launcher consistent maken\n- Automatische back-ups corrigeren",
+  "1739182275": "- Grafiekhoogte op tablets corrigeren\n- Lijnen standaard gebogen maken\n- Achtergrondkleur van de launcher consistent maken\n- Automatische back-ups corrigeren",
+  "1739174605": "- Automatische back-ups corrigeren\n- Grafiekhoogte schalen\n- Oppervlak van het donkere thema kopiëren voor het app-pictogram\n- Doel instellen in schermafbeeldingen\n- Lijnen standaard buigen",
+  "1739174409": "- Datumproblemen corrigeren\n- fastlane supply in implementatie weer inschakelen\n- AppGroupBy hernoemen naar Period\n- Aanroep naar init in screenshot_test verwijderen"
 }

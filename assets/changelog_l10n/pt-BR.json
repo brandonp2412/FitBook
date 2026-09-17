@@ -96,5 +96,14 @@
   "1740786471": "- Mover o botão de código de barras para cima na entrada\n- Limitar os campos padrão\n- Adicionar macronutrientes à adição rápida\n- Corrigir edição de data na adição rápida\n- Corrigir ícones monocromáticos do launcher",
   "1740618491": "- Manter a unidade de conversão antiga na página de peso\n- Limpar detalhes da adição rápida\n- Corrigir alimentos novos sendo favoritados por padrão\n- Corrigir unidades de porção na página de entradas\n- Corrigir o esvaziamento do banco de dados",
   "1740611960": "- Corrigir calorias na página de entradas e nos gráficos\n- Tratar melhor os erros na página Diário\n- Corrigir o tamanho da porção que não era editado em Alimentos",
-  "1740537622": "- Corrigir gráficos quebrados"
+  "1740537622": "- Corrigir gráficos quebrados",
+  "1740206295": "- Adicionar configuração para calcular automaticamente as metas diárias",
+  "1740093439": "- Adicionar página de refeições\n- Mover o botão de limpar seleção para a esquerda da barra de pesquisa",
+  "1739933364": "- Adicionar separador de milhares à meta diária de kcal\n- Remover o espaçamento abaixo da pesquisa\n- Adicionar seletor de campos de alimentos\n- Permitir falha ao abrir o banco de dados na inicialização",
+  "1739404513": "- Adicionar edição manual do código de barras\n- Adicionar animação Zoop às caixas de seleção ao selecionar\n- Adicionar imagens ao peso\n- Armazenar em cache imagens de Alimentos e Diário",
+  "1739245541": "- Adicionar conversões de unidades ao adicionar peso\n- Adicionar controle deslizante para o limite do gráfico\n- Adicionar os decimais ausentes nos teclados do iOS",
+  "1739183116": "- Atualizar capturas de tela\n- Corrigir a altura do gráfico em tablets\n- Usar linhas curvas por padrão\n- Tornar consistente a cor de fundo do launcher\n- Corrigir backups automáticos",
+  "1739182275": "- Corrigir a altura do gráfico em tablets\n- Usar linhas curvas por padrão\n- Tornar consistente a cor de fundo do launcher\n- Corrigir backups automáticos",
+  "1739174605": "- Corrigir backups automáticos\n- Ajustar a altura do gráfico\n- Copiar a superfície do tema escuro para o ícone do app\n- Definir uma meta nas capturas de tela\n- Usar linhas curvas por padrão",
+  "1739174409": "- Corrigir problemas de data\n- Descomentar fastlane supply na implantação\n- Renomear AppGroupBy para Period\n- Remover a chamada a init em screenshot_test"
 }

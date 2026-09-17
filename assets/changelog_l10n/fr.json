@@ -96,5 +96,14 @@
   "1740786471": "- Remonter le bouton de code-barres dans l’entrée\n- Limiter les champs par défaut\n- Ajouter les macronutriments à l’ajout rapide\n- Corriger la modification de date dans l’ajout rapide\n- Corriger les lanceurs monochromes",
   "1740618491": "- Conserver l’ancienne unité de conversion sur la page des poids\n- Effacer les détails de l’ajout rapide\n- Corriger la mise en favori par défaut des nouveaux aliments\n- Corriger les unités de portion sur la page des entrées\n- Corriger la remise à zéro de la base de données",
   "1740611960": "- Corriger les calories sur la page des entrées et les graphiques\n- Mieux gérer les erreurs sur la page Journal\n- Corriger la taille de portion qui ne pouvait pas être modifiée dans Aliments",
-  "1740537622": "- Corriger les graphiques cassés"
+  "1740537622": "- Corriger les graphiques cassés",
+  "1740206295": "- Ajouter un paramètre pour calculer automatiquement les objectifs quotidiens",
+  "1740093439": "- Ajouter la page des repas\n- Déplacer le bouton d’effacement de la sélection à gauche de la barre de recherche",
+  "1739933364": "- Ajouter un séparateur de milliers à l’objectif quotidien en kcal\n- Supprimer le rembourrage sous la recherche\n- Ajouter un sélecteur de champs d’aliments\n- Autoriser l’échec de l’ouverture de la base de données au démarrage",
+  "1739404513": "- Ajouter la modification manuelle du code-barres\n- Ajouter l’animation Zoop aux cases à cocher lors de la sélection\n- Ajouter des images au poids\n- Mettre en cache les images des pages Aliments et Journal",
+  "1739245541": "- Ajouter les conversions d’unités lors de l’ajout de poids\n- Ajouter un curseur pour la limite du graphique\n- Ajouter les décimales manquantes aux claviers iOS",
+  "1739183116": "- Mettre à jour les captures d’écran\n- Corriger la hauteur du graphique sur tablette\n- Utiliser des lignes courbes par défaut\n- Uniformiser la couleur d’arrière-plan du lanceur\n- Corriger les sauvegardes automatiques",
+  "1739182275": "- Corriger la hauteur du graphique sur tablette\n- Utiliser des lignes courbes par défaut\n- Uniformiser la couleur d’arrière-plan du lanceur\n- Corriger les sauvegardes automatiques",
+  "1739174605": "- Corriger les sauvegardes automatiques\n- Adapter la hauteur du graphique\n- Copier la surface du thème sombre pour l’icône de l’application\n- Définir un objectif dans les captures d’écran\n- Utiliser des lignes courbes par défaut",
+  "1739174409": "- Corriger les problèmes de date\n- Décommenter fastlane supply dans le déploiement\n- Renommer AppGroupBy en Period\n- Supprimer l’appel à init dans screenshot_test"
 }

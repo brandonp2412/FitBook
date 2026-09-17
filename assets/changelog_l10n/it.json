@@ -96,5 +96,14 @@
   "1740786471": "- Spostare più in alto il pulsante del codice a barre nella voce\n- Limitare i campi predefiniti\n- Aggiungere i macronutrienti all’aggiunta rapida\n- Correggere la modifica della data nell’aggiunta rapida\n- Correggere i launcher monocromatici",
   "1740618491": "- Mantenere la vecchia unità di conversione nella pagina del peso\n- Cancellare i dettagli dell’aggiunta rapida\n- Correggere l’aggiunta automatica ai preferiti dei nuovi alimenti\n- Correggere le unità di porzione nella pagina delle voci\n- Correggere lo svuotamento del database",
   "1740611960": "- Correggere le calorie nella pagina delle voci e nei grafici\n- Gestire meglio gli errori nella pagina Diario\n- Correggere la dimensione della porzione che non veniva modificata negli Alimenti",
-  "1740537622": "- Correggere i grafici non funzionanti"
+  "1740537622": "- Correggere i grafici non funzionanti",
+  "1740206295": "- Aggiungere un’impostazione per calcolare automaticamente gli obiettivi giornalieri",
+  "1740093439": "- Aggiungere la pagina dei pasti\n- Spostare il pulsante per cancellare la selezione a sinistra della barra di ricerca",
+  "1739933364": "- Aggiungere il separatore delle migliaia all’obiettivo giornaliero in kcal\n- Rimuovere la spaziatura sotto la ricerca\n- Aggiungere il selettore dei campi degli alimenti\n- Consentire il fallimento dell’apertura del database all’avvio",
+  "1739404513": "- Aggiungere la modifica manuale del codice a barre\n- Aggiungere l’animazione Zoop alle caselle di controllo durante la selezione\n- Aggiungere immagini al peso\n- Memorizzare nella cache le immagini di Alimenti e Diario",
+  "1739245541": "- Aggiungere conversioni di unità durante l’aggiunta del peso\n- Aggiungere un cursore per il limite del grafico\n- Aggiungere i decimali mancanti alle tastiere iOS",
+  "1739183116": "- Aggiornare gli screenshot\n- Correggere l’altezza del grafico sui tablet\n- Usare linee curve per impostazione predefinita\n- Rendere coerente il colore di sfondo del launcher\n- Correggere i backup automatici",
+  "1739182275": "- Correggere l’altezza del grafico sui tablet\n- Usare linee curve per impostazione predefinita\n- Rendere coerente il colore di sfondo del launcher\n- Correggere i backup automatici",
+  "1739174605": "- Correggere i backup automatici\n- Ridimensionare l’altezza del grafico\n- Copiare la superficie del tema scuro per l’icona dell’app\n- Impostare un obiettivo negli screenshot\n- Usare linee curve per impostazione predefinita",
+  "1739174409": "- Correggere i problemi di data\n- Decommentare fastlane supply nel deployment\n- Rinominare AppGroupBy in Period\n- Rimuovere la chiamata a init in screenshot_test"
 }

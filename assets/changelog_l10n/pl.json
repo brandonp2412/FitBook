@@ -96,5 +96,14 @@
   "1740786471": "- Przenieść przycisk kodu kreskowego wyżej we wpisie\n- Ograniczyć domyślne pola\n- Dodać makroskładniki do szybkiego dodawania\n- Naprawić edycję daty w szybkim dodawaniu\n- Naprawić monochromatyczne ikony uruchamiania",
   "1740618491": "- Zachować starą jednostkę konwersji na stronie masy ciała\n- Wyczyścić szczegóły szybkiego dodawania\n- Naprawić domyślne dodawanie nowych produktów do ulubionych\n- Naprawić jednostki porcji na stronie wpisów\n- Naprawić opróżnianie bazy danych",
   "1740611960": "- Naprawić kalorie na stronie wpisów i na wykresach\n- Lepiej obsługiwać błędy na stronie Dziennik\n- Naprawić brak edycji wielkości porcji w Produktach",
-  "1740537622": "- Naprawić uszkodzone wykresy"
+  "1740537622": "- Naprawić uszkodzone wykresy",
+  "1740206295": "- Dodać ustawienie automatycznego obliczania dziennych celów",
+  "1740093439": "- Dodać stronę Posiłki\n- Przenieść przycisk czyszczenia zaznaczenia na lewo od paska wyszukiwania",
+  "1739933364": "- Dodać separator tysięcy do dziennego celu kcal\n- Usunąć odstęp pod wyszukiwaniem\n- Dodać wybór pól produktów\n- Zezwolić na niepowodzenie otwarcia bazy danych przy uruchamianiu",
+  "1739404513": "- Dodać ręczną edycję kodu kreskowego\n- Dodać animację Zoop do pól wyboru podczas zaznaczania\n- Dodać zdjęcia do masy ciała\n- Buforować obrazy na stronach Produkty i Dziennik",
+  "1739245541": "- Dodać konwersje jednostek podczas dodawania masy ciała\n- Dodać suwak limitu wykresu\n- Dodać brakujące separatory dziesiętne na klawiaturach iOS",
+  "1739183116": "- Zaktualizować zrzuty ekranu\n- Naprawić wysokość wykresu na tabletach\n- Domyślnie używać zakrzywionych linii\n- Ujednolicić kolor tła launchera\n- Naprawić automatyczne kopie zapasowe",
+  "1739182275": "- Naprawić wysokość wykresu na tabletach\n- Domyślnie używać zakrzywionych linii\n- Ujednolicić kolor tła launchera\n- Naprawić automatyczne kopie zapasowe",
+  "1739174605": "- Naprawić automatyczne kopie zapasowe\n- Skalować wysokość wykresu\n- Użyć koloru powierzchni ciemnego motywu dla ikony aplikacji\n- Ustawić cel na zrzutach ekranu\n- Domyślnie używać zakrzywionych linii",
+  "1739174409": "- Naprawić problemy z datą\n- Ponownie włączyć fastlane supply we wdrożeniu\n- Zmienić nazwę AppGroupBy na Period\n- Usunąć wywołanie init z screenshot_test"
 }
