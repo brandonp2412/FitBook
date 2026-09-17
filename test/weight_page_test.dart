@@ -12,6 +12,38 @@ import 'mock_tests.dart';
 import 'test_utils.dart';
 
 void main() async {
+  testWidgets('Weight page handles German at 200% text scale', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.weights.deleteAll();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const WeightPage(),
+          locale: const Locale('de'),
+          textScaler: const TextScaler.linear(2),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Noch keine Gewichtseinträge'), findsOneWidget);
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
+
   testWidgets('WeightPage deletes selected weights', (
     WidgetTester tester,
   ) async {

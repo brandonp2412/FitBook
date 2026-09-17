@@ -13,12 +13,21 @@ import 'test_utils.dart';
 Future<SettingsState> _settingsState() async =>
     SettingsState(await db.settings.select().getSingle());
 
-Widget _wrap(SettingsState settingsState) => MultiProvider(
+Widget _wrap(
+  SettingsState settingsState, {
+  Locale locale = const Locale('en'),
+  TextScaler? textScaler,
+}) =>
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => settingsState),
         ChangeNotifierProvider(create: (_) => DiaryState()),
       ],
-      child: localizedApp(home: const SettingsPage()),
+      child: localizedApp(
+        home: const SettingsPage(),
+        locale: locale,
+        textScaler: textScaler,
+      ),
     );
 
 void main() async {
@@ -37,6 +46,56 @@ void main() async {
 
     expect(find.text('Weight'), findsOne);
     expect(find.text('Appearance'), findsNothing);
+
+    await db.close();
+  });
+
+  testWidgets('Language selection persists the locale preference', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settingsState = await _settingsState();
+    await tester.pumpWidget(_wrap(settingsState));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Appearance'));
+    await tester.pumpAndSettle();
+    final languageField = find.byWidgetPredicate(
+      (widget) =>
+          widget is DropdownButtonFormField<String> &&
+          widget.decoration.labelText == 'Language',
+    );
+    await tester.tap(languageField);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('German').last);
+    await tester.pumpAndSettle();
+
+    expect((await db.settings.select().getSingle()).locale, 'de');
+    expect(settingsState.value.locale, 'de');
+
+    await db.close();
+  });
+
+  testWidgets('SettingsPage handles German at 200% text scale', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      _wrap(
+        await _settingsState(),
+        locale: const Locale('de'),
+        textScaler: const TextScaler.linear(2),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Einstellungen'), findsOneWidget);
+    expect(tester.takeException(), equals(null));
 
     await db.close();
   });

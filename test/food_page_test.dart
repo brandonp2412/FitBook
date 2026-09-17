@@ -43,6 +43,38 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('Food page handles German at 200% text scale', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.foods.deleteAll();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const FoodPage(),
+          locale: const Locale('de'),
+          textScaler: const TextScaler.linear(2),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Noch keine Lebensmittel'), findsOneWidget);
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
+
   testWidgets('FoodsPage CRUD', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();

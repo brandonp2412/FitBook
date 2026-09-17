@@ -58,18 +58,30 @@ class AppEmptyState extends StatelessWidget {
       ),
     );
 
-    return Center(
-      child: onAction == null
-          ? content
-          : Semantics(
-              button: true,
-              label: actionLabel ?? title,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(24),
-                onTap: onAction,
-                child: content,
-              ),
+    final centeredContent = onAction == null
+        ? content
+        : Semantics(
+            button: true,
+            label: actionLabel ?? title,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(24),
+              onTap: onAction,
+              child: content,
             ),
+          );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (!constraints.hasBoundedHeight) {
+          return Center(child: centeredContent);
+        }
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(child: centeredContent),
+          ),
+        );
+      },
     );
   }
 }

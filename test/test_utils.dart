@@ -5,11 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 Widget localizedApp({
   required Widget home,
   Locale locale = const Locale('en'),
+  TextScaler? textScaler,
 }) =>
     MaterialApp(
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: textScaler == null
+          ? null
+          : (context, child) => MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaler: textScaler),
+                child: child!,
+              ),
       home: home,
     );
 

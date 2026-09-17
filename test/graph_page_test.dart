@@ -26,6 +26,40 @@ Future<void> _selectMetric(
 }
 
 void main() async {
+  testWidgets('Graph page handles German at 200% text scale', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.diaries.deleteAll();
+    await db.weights.deleteAll();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const GraphPage(),
+          locale: const Locale('de'),
+          textScaler: const TextScaler.linear(2),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Kalorien'), findsWidgets);
+    expect(find.text('Noch keine Daten'), findsOneWidget);
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
+
   testWidgets('GraphPage diaries', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();

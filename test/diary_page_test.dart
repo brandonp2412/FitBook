@@ -23,6 +23,38 @@ Future<Food> _foodForDiary(int diaryId) async {
 }
 
 void main() async {
+  testWidgets('Diary page handles German at 200% text scale', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.diaries.deleteAll();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const DiaryPage(),
+          locale: const Locale('de'),
+          textScaler: const TextScaler.linear(2),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Heute keine Einträge.'), findsOneWidget);
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
+
   testWidgets('Diary search can create and log a missing food', (
     WidgetTester tester,
   ) async {

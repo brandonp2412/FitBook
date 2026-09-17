@@ -43,6 +43,60 @@ void main() {
     }
   });
 
+  test('Android platform strings cover every first-wave locale and key', () {
+    final base = File('android/app/src/main/res/values/strings.xml');
+    final expectedKeys = _androidStringKeys(base);
+    final localizedFiles = <String>[
+      'values-de',
+      'values-es',
+      'values-fr',
+      'values-it',
+      'values-ja',
+      'values-ko',
+      'values-nl',
+      'values-pl',
+      'values-pt-rBR',
+      'values-zh-rCN',
+    ];
+
+    for (final directory in localizedFiles) {
+      final file = File('android/app/src/main/res/$directory/strings.xml');
+      expect(file.existsSync(), isTrue, reason: '$directory must be localized');
+      expect(
+        _androidStringKeys(file),
+        expectedKeys,
+        reason: '${file.path} must match the default Android string keys',
+      );
+    }
+  });
+
+  test('iOS permission strings cover every first-wave locale and key', () {
+    final base = File('ios/Runner/en.lproj/InfoPlist.strings');
+    final expectedKeys = _appleStringKeys(base);
+    final localizedDirectories = <String>[
+      'de.lproj',
+      'es.lproj',
+      'fr.lproj',
+      'it.lproj',
+      'ja.lproj',
+      'ko.lproj',
+      'nl.lproj',
+      'pl.lproj',
+      'pt-BR.lproj',
+      'zh-Hans.lproj',
+    ];
+
+    for (final directory in localizedDirectories) {
+      final file = File('ios/Runner/$directory/InfoPlist.strings');
+      expect(file.existsSync(), isTrue, reason: '$directory must be localized');
+      expect(
+        _appleStringKeys(file),
+        expectedKeys,
+        reason: '${file.path} must match the English iOS permission keys',
+      );
+    }
+  });
+
   test('generated localizations expose the intended first-wave locales', () {
     expect(
       AppLocalizations.supportedLocales.toSet(),
@@ -189,3 +243,18 @@ Map<String, String> _messages(Map<String, dynamic> arb) => {
 Set<String> _placeholders(String message) => RegExp(
       r'\{([A-Za-z][A-Za-z0-9_]*)(?=[},])',
     ).allMatches(message).map((match) => match.group(1)!).toSet();
+
+Set<String> _androidStringKeys(File file) => RegExp(
+      r'<string\s+name="([^"]+)"',
+    )
+        .allMatches(file.readAsStringSync())
+        .map((match) => match.group(1)!)
+        .toSet();
+
+Set<String> _appleStringKeys(File file) => RegExp(
+      r'^"([^"]+)"\s*=',
+      multiLine: true,
+    )
+        .allMatches(file.readAsStringSync())
+        .map((match) => match.group(1)!)
+        .toSet();
