@@ -9,7 +9,6 @@ import 'package:fit_book/utils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GraphData {
@@ -41,8 +40,6 @@ class AppLine extends StatefulWidget {
 }
 
 class _AppLineState extends State<AppLine> {
-  final formatter = NumberFormat('#,##0.00');
-
   static const int _smoothWindow = 7;
 
   late Stream<List<GraphData>> stream;
@@ -119,13 +116,20 @@ class _AppLineState extends State<AppLine> {
     return {'slope': slope, 'intercept': intercept};
   }
 
+  String _formatGraphValue(num value) => formatDisplayNumber(
+        context,
+        value,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      );
+
   String _getTrendText(List<GraphData> data) {
-    if (data.length < 2) return "0.00 ${data.first.unit}";
+    if (data.length < 2) return "${_formatGraphValue(0)} ${data.first.unit}";
 
     final slopePerWeek = _calcTrend(data)['slope']! * 7;
 
     final sign = slopePerWeek >= 0 ? "+" : "";
-    return "$sign${formatter.format(slopePerWeek)} ${data.first.unit}";
+    return "$sign${_formatGraphValue(slopePerWeek)} ${data.first.unit}";
   }
 
   List<FlSpot> _getTrendSpots(List<GraphData> data) {
@@ -541,7 +545,7 @@ class _AppLineState extends State<AppLine> {
                   ),
                   label: l10n.value,
                   value:
-                      "${formatter.format(rows.last.val)} ${rows.first.unit}",
+                      "${_formatGraphValue(rows.last.val)} ${rows.first.unit}",
                   onTap: () => _updateSeries(value: !showMain),
                 ),
                 _statTile(
@@ -558,7 +562,7 @@ class _AppLineState extends State<AppLine> {
                   ),
                   label: l10n.goal,
                   value: goal > 0
-                      ? "${formatter.format(goal)} ${rows.first.unit}"
+                      ? "${_formatGraphValue(goal)} ${rows.first.unit}"
                       : l10n.notSet,
                   onTap:
                       goal > 0 ? () => _updateSeries(goal: !showGoal) : () {},
@@ -710,7 +714,7 @@ class _AppLineState extends State<AppLine> {
             settings.shortDateFormat,
           );
           return LineTooltipItem(
-            "${formatter.format(spot.y)} $unit\n$dateStr",
+            "${_formatGraphValue(spot.y)} $unit\n$dateStr",
             TextStyle(color: seriesColors[spot.barIndex]),
           );
         });

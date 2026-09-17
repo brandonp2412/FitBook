@@ -71,6 +71,62 @@ void main() async {
       await db.close();
     });
 
+    testWidgets('Trend values use locale decimal separators',
+        (WidgetTester tester) async {
+      await mockTests();
+      final settings = await (db.settings.select()).getSingle();
+      final settingsState = SettingsState(settings);
+
+      await (db.weights.insertAll([
+        WeightsCompanion.insert(
+          created: DateTime.now().subtract(const Duration(days: 6)),
+          unit: 'kg',
+          amount: 80,
+        ),
+        WeightsCompanion.insert(
+          created: DateTime.now().subtract(const Duration(days: 4)),
+          unit: 'kg',
+          amount: 79,
+        ),
+        WeightsCompanion.insert(
+          created: DateTime.now().subtract(const Duration(days: 2)),
+          unit: 'kg',
+          amount: 78,
+        ),
+        WeightsCompanion.insert(
+          created: DateTime.now(),
+          unit: 'kg',
+          amount: 77,
+        ),
+      ]));
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => settingsState),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
+          ],
+          child: localizedApp(
+            locale: const Locale('de'),
+            home: Scaffold(
+              body: AppLine(
+                metric: 'body-weight',
+                groupBy: Period.day,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Trend'));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('-3,50 kg'), findsOneWidget);
+
+      await db.close();
+    });
+
     testWidgets('Trend calculation shows positive slope for weight gain',
         (WidgetTester tester) async {
       await mockTests();
