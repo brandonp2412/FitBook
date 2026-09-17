@@ -56,5 +56,15 @@
   "1778890996": "• feat: aggiungere il link «Lascia una recensione» alla pagina Informazioni\n• fix: compilare ogni ABI separatamente e rimuovere gli ID di build non deterministici",
   "1778890509": "• feat: aggiungere il link «Lascia una recensione» alla pagina Informazioni\n• fix: compilare ogni ABI separatamente e rimuovere gli ID di build non deterministici",
   "1778382051": "• Aggiungere istruzioni per Claude\n• Aggiungere test unitari per la pagina dei pasti\n• Aggiungere il file di schema mancante\n• Aggiungere un’immagine opzionale ai pasti e distinguere i pasti nella lista degli alimenti\n• Aggiungere uno script ps1 per il deployment\n• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce\n• Chiudere automaticamente le richieste di funzionalità obsolete\n• Pulire le voci del diario quando si eliminano i pasti\n• Correggere l’eliminazione dei pasti\n• Correggere l’analisi Flutter",
-  "134188838719418420": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce\n• Correggere la selezione della tendenza che interrompeva il tooltip nei grafici"
+  "134188838719418420": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce\n• Correggere la selezione della tendenza che interrompeva il tooltip nei grafici",
+  "134185267504059170": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce",
+  "1765932891": "• Aggiungere etichette e animare i FAB\n• Correggere i toast che non scomparivano mai\n• Impostare 100 g come valore predefinito invece di 1 porzione\n• Arrotondare le schede a 1 dp invece di 2",
+  "1765243864": "• Correggere le icone adattate al tema",
+  "1764651156": "• Aggiornare Flutter alla versione 3.38.3",
+  "1764648354": "• Rielaborare la visualizzazione delle schede del peso",
+  "1759299121": "• Cambiare la visualizzazione di media/tendenza del grafico\n• Cambiare le etichette del selettore di campi\n• Cambiare lo stile dei toast\n• Cambiare le schede del peso\n• Ripulire i changelog\n• Correggere il rinforzo positivo che continuava a comparire dopo la disattivazione\n• Migliorare il tempo di caricamento dell’app",
+  "1759204293": "• Cambiare lo stile dei toast\n• Ripulire Novità\n• Correggere il rinforzo positivo che continuava a comparire dopo la disattivazione\n• Mostrare un’anteprima del rinforzo positivo quando viene attivato",
+  "1759118367": "• Correggere un bug durante l’unione dei conflitti tra alimenti",
+  "1759118366": "- Trasformare Scansiona codice a barre su OFF in un grande pulsante\n- Correggere la selezione del codice a barre dalla modifica di una voce\n- Distanziare maggiormente i punti del grafico in base alla data della voce",
+  "1759118334": "• Aggiungere un test delle prestazioni\n• Modificare l’esperienza di modifica del diario\n• Correggere le impostazioni dopo l’importazione di un nuovo database\n• Gestire le immagini non riuscite nella pagina Diario\n• Gestire l’unione di nomi di alimenti in conflitto\n• Includere la versione dell’app nell’esempio di issue GitHub per migrazioni non riuscite"
 }

@@ -56,5 +56,15 @@
   "1778890996": "• feat: añadir enlace «Dejar una reseña» a la página Acerca de\n• fix: compilar cada ABI por separado y eliminar identificadores de build no deterministas",
   "1778890509": "• feat: añadir enlace «Dejar una reseña» a la página Acerca de\n• fix: compilar cada ABI por separado y eliminar identificadores de build no deterministas",
   "1778382051": "• Añadir instrucciones para Claude\n• Añadir pruebas unitarias de la página de comidas\n• Añadir el archivo de esquema que faltaba\n• Añadir imagen opcional a las comidas y diferenciarlas en la lista de alimentos\n• Añadir script ps1 para el despliegue\n• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada\n• Cerrar automáticamente las solicitudes de funciones obsoletas\n• Limpiar las entradas del diario al eliminar comidas\n• Corregir la eliminación de comidas\n• Corregir el análisis de Flutter",
-  "134188838719418420": "• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada\n• Corregir que seleccionar la tendencia rompa el tooltip en los gráficos"
+  "134188838719418420": "• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada\n• Corregir que seleccionar la tendencia rompa el tooltip en los gráficos",
+  "134185267504059170": "• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada",
+  "1765932891": "• Añadir etiquetas y animar los FAB\n• Corregir los toasts que nunca se cerraban\n• Usar 100 g como valor predeterminado en lugar de 1 ración\n• Redondear las tarjetas a 1 dp en lugar de 2",
+  "1765243864": "• Corregir los iconos adaptados al tema",
+  "1764651156": "• Actualizar Flutter a 3.38.3",
+  "1764648354": "• Rediseñar la presentación de las tarjetas de peso",
+  "1759299121": "• Cambiar la visualización de promedio/tendencia del gráfico\n• Cambiar las etiquetas del selector de campos\n• Cambiar el estilo de los toasts\n• Cambiar las tarjetas de peso\n• Limpiar los changelogs\n• Corregir que el refuerzo positivo siga apareciendo cuando se desactiva\n• Mejorar el tiempo de carga de la aplicación",
+  "1759204293": "• Cambiar el estilo de los toasts\n• Limpiar Novedades\n• Corregir que el refuerzo positivo siga apareciendo cuando se desactiva\n• Mostrar una vista previa del refuerzo positivo al activarlo",
+  "1759118367": "• Corregir un error al intentar combinar conflictos de alimentos",
+  "1759118366": "- Convertir Escanear código de barras en OFF en un botón grande\n- Corregir la selección de código de barras desde la edición de una entrada\n- Separar más los puntos del gráfico según la fecha de la entrada",
+  "1759118334": "• Añadir prueba de rendimiento\n• Cambiar la experiencia de edición del diario\n• Corregir los ajustes después de importar una base de datos nueva\n• Gestionar imágenes fallidas en la página Diario\n• Gestionar la combinación de nombres de alimentos en conflicto\n• Incluir la versión de la aplicación en el ejemplo de issue de GitHub para migraciones fallidas"
 }

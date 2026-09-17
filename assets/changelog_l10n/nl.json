@@ -56,5 +56,15 @@
   "1778890996": "• feat: link ‘Een beoordeling achterlaten’ aan de pagina Over toevoegen\n• fix: elke ABI afzonderlijk bouwen en niet-deterministische build-ID's verwijderen",
   "1778890509": "• feat: link ‘Een beoordeling achterlaten’ aan de pagina Over toevoegen\n• fix: elke ABI afzonderlijk bouwen en niet-deterministische build-ID's verwijderen",
   "1778382051": "• Claude-instructies toevoegen\n• Unittests voor de maaltijdpagina toevoegen\n• Ontbrekend schemabestand toevoegen\n• Optionele afbeelding aan maaltijden toevoegen en maaltijden onderscheiden in de voedingslijst\n• ps1-script voor implementatie toevoegen\n• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen\n• Verouderde functieverzoeken automatisch sluiten\n• Dagboekitems opruimen bij het verwijderen van maaltijden\n• Verwijderen van maaltijden corrigeren\n• Flutter-analyse corrigeren",
-  "134188838719418420": "• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen\n• Fout corrigeren waarbij trendselectie de tooltip in grafieken brak"
+  "134188838719418420": "• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen\n• Fout corrigeren waarbij trendselectie de tooltip in grafieken brak",
+  "134185267504059170": "• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen",
+  "1765932891": "• Labels toevoegen en FAB's animeren\n• Toastmeldingen corrigeren die nooit verdwenen\n• Standaard 100 g gebruiken in plaats van 1 portie\n• Kaarten afronden op 1 dp in plaats van 2",
+  "1765243864": "• Thematische pictogrammen corrigeren",
+  "1764651156": "• Flutter upgraden naar 3.38.3",
+  "1764648354": "• Weergave van gewichtskaarten herwerken",
+  "1759299121": "• Weergave van grafiekgemiddelde/-trend wijzigen\n• Labels van de veldkiezer wijzigen\n• Stijl van toastmeldingen wijzigen\n• Gewichtskaarten wijzigen\n• Changelogs opschonen\n• Positieve bekrachtiging corrigeren die bleef verschijnen nadat deze was uitgeschakeld\n• Laadtijd van de app verbeteren",
+  "1759204293": "• Stijl van toastmeldingen wijzigen\n• Wat is er nieuw opschonen\n• Positieve bekrachtiging corrigeren die bleef verschijnen nadat deze was uitgeschakeld\n• Voorbeeld van positieve bekrachtiging tonen bij inschakelen",
+  "1759118367": "• Fout oplossen bij het samenvoegen van conflicterende voedingsmiddelen",
+  "1759118366": "- Barcode scannen op OFF als grote knop tonen\n- Barcodeselectie vanuit het bewerken van een item corrigeren\n- Grafiekpunten verder uit elkaar zetten op basis van de itemdatum",
+  "1759118334": "• Prestatietest toevoegen\n• Ervaring voor dagboekbewerking wijzigen\n• Instellingen corrigeren na het importeren van een nieuwe database\n• Mislukte afbeeldingen op de Dagboekpagina afhandelen\n• Samenvoegen van conflicterende voedingsnamen afhandelen\n• Appversie opnemen in het voorbeeld-GitHub-issue voor mislukte migraties"
 }

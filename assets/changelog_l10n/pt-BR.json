@@ -56,5 +56,15 @@
   "1778890996": "• feat: adicionar link «Deixar uma avaliação» à página Sobre\n• fix: compilar cada ABI separadamente e remover IDs de build não determinísticos",
   "1778890509": "• feat: adicionar link «Deixar uma avaliação» à página Sobre\n• fix: compilar cada ABI separadamente e remover IDs de build não determinísticos",
   "1778382051": "• Adicionar instruções do Claude\n• Adicionar testes unitários da página de refeições\n• Adicionar o arquivo de esquema ausente\n• Adicionar imagem opcional às refeições e diferenciá-las na lista de alimentos\n• Adicionar script ps1 para implantação\n• Adicionar tabela 2x3 à página Diário para calcular a nutrição por entrada\n• Fechar automaticamente solicitações de recursos obsoletas\n• Limpar entradas do diário ao excluir refeições\n• Corrigir exclusão de refeições\n• Corrigir a análise do Flutter",
-  "134188838719418420": "• Adicionar tabela 2x3 à página Diário para calcular a nutrição por entrada\n• Corrigir seleção de tendência quebrando o tooltip nos gráficos"
+  "134188838719418420": "• Adicionar tabela 2x3 à página Diário para calcular a nutrição por entrada\n• Corrigir seleção de tendência quebrando o tooltip nos gráficos",
+  "134185267504059170": "• Adicionar tabela 2x3 à página Diário para calcular a nutrição por entrada",
+  "1765932891": "• Adicionar rótulos e animar os FABs\n• Corrigir toasts que nunca desapareciam\n• Usar 100 g como padrão em vez de 1 porção\n• Arredondar os cartões para 1 dp em vez de 2",
+  "1765243864": "• Corrigir ícones adaptados ao tema",
+  "1764651156": "• Atualizar Flutter para 3.38.3",
+  "1764648354": "• Reformular a exibição dos cartões de peso",
+  "1759299121": "• Alterar a exibição de média/tendência do gráfico\n• Alterar os rótulos do seletor de campos\n• Alterar o estilo dos toasts\n• Alterar os cartões de peso\n• Limpar os changelogs\n• Corrigir o reforço positivo que continuava aparecendo após ser desativado\n• Melhorar o tempo de carregamento do app",
+  "1759204293": "• Alterar o estilo dos toasts\n• Limpar Novidades\n• Corrigir o reforço positivo que continuava aparecendo após ser desativado\n• Mostrar uma prévia do reforço positivo ao ativá-lo",
+  "1759118367": "• Corrigir bug ao tentar mesclar conflitos de alimentos",
+  "1759118366": "- Transformar Escanear código de barras no OFF em um botão grande\n- Corrigir a seleção de código de barras pela edição de uma entrada\n- Afastar mais os pontos do gráfico com base na data da entrada",
+  "1759118334": "• Adicionar teste de desempenho\n• Alterar a experiência de edição do diário\n• Corrigir configurações após importar um novo banco de dados\n• Tratar imagens que falham na página Diário\n• Tratar a mesclagem de nomes de alimentos conflitantes\n• Incluir a versão do app no exemplo de issue do GitHub para migrações com falha"
 }

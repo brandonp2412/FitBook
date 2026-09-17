@@ -56,5 +56,15 @@
   "1778890996": "• feat: Link „Bewertung abgeben“ zur Info-Seite hinzufügen\n• fix: jede ABI separat bauen und nichtdeterministische Build-IDs entfernen",
   "1778890509": "• feat: Link „Bewertung abgeben“ zur Info-Seite hinzufügen\n• fix: jede ABI separat bauen und nichtdeterministische Build-IDs entfernen",
   "1778382051": "• Claude-Anweisungen hinzufügen\n• Unit-Tests für die Mahlzeitenseite hinzufügen\n• Fehlende Schemadatei hinzufügen\n• Optionales Bild zu Mahlzeiten hinzufügen und Mahlzeiten in der Lebensmittelliste unterscheiden\n• ps1-Skript für die Bereitstellung hinzufügen\n• 2x3-Tabelle zur Tagebuchseite hinzufügen, um Nährwerte pro Eintrag zu berechnen\n• Veraltete Feature-Anfragen automatisch schließen\n• Tagebucheinträge beim Löschen von Mahlzeiten bereinigen\n• Löschen von Mahlzeiten korrigieren\n• Flutter-Analyse korrigieren",
-  "134188838719418420": "• 2x3-Tabelle zur Tagebuchseite hinzufügen, um Nährwerte pro Eintrag zu berechnen\n• Fehler beheben, bei dem die Trendauswahl den Tooltip in Diagrammen beschädigt"
+  "134188838719418420": "• 2x3-Tabelle zur Tagebuchseite hinzufügen, um Nährwerte pro Eintrag zu berechnen\n• Fehler beheben, bei dem die Trendauswahl den Tooltip in Diagrammen beschädigt",
+  "134185267504059170": "• 2x3-Tabelle zur Tagebuchseite hinzufügen, um Nährwerte pro Eintrag zu berechnen",
+  "1765932891": "• Beschriftungen hinzufügen und FABs animieren\n• Toast-Meldungen korrigieren, die nie verschwanden\n• Standardwert auf 100 g statt 1 Portion setzen\n• Karten mit 1 dp statt 2 abrunden",
+  "1765243864": "• Theme-angepasste Symbole korrigieren",
+  "1764651156": "• Flutter auf 3.38.3 aktualisieren",
+  "1764648354": "• Darstellung der Gewichtskarten überarbeiten",
+  "1759299121": "• Anzeige von Diagrammdurchschnitt/-trend ändern\n• Beschriftungen der Feldauswahl ändern\n• Stil der Toast-Meldungen ändern\n• Gewichtskarten ändern\n• Changelogs bereinigen\n• Fehler beheben, bei dem positive Verstärkung nach dem Ausschalten weiterhin angezeigt wird\n• Ladezeit der App verbessern",
+  "1759204293": "• Stil der Toast-Meldungen ändern\n• Neuigkeiten bereinigen\n• Fehler beheben, bei dem positive Verstärkung nach dem Ausschalten weiterhin angezeigt wird\n• Vorschau der positiven Verstärkung beim Aktivieren anzeigen",
+  "1759118367": "• Fehler beim Zusammenführen von Lebensmittelkonflikten beheben",
+  "1759118366": "- Barcode auf OFF scannen als große Schaltfläche anzeigen\n- Barcode-Auswahl beim Bearbeiten eines Eintrags korrigieren\n- Diagrammpunkte abhängig vom Eintragsdatum weiter auseinander setzen",
+  "1759118334": "• Leistungstest hinzufügen\n• Bearbeitungserlebnis des Tagebuchs ändern\n• Einstellungen nach dem Import einer neuen Datenbank korrigieren\n• Fehlgeschlagene Bilder auf der Tagebuchseite behandeln\n• Zusammenführen widersprüchlicher Lebensmittelnamen behandeln\n• App-Version in das Beispiel-GitHub-Issue für fehlgeschlagene Migrationen aufnehmen"
 }

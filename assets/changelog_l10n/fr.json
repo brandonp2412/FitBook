@@ -56,5 +56,15 @@
   "1778890996": "• feat: ajouter un lien « Laisser un avis » à la page À propos\n• fix: compiler chaque ABI séparément et supprimer les identifiants de build non déterministes",
   "1778890509": "• feat: ajouter un lien « Laisser un avis » à la page À propos\n• fix: compiler chaque ABI séparément et supprimer les identifiants de build non déterministes",
   "1778382051": "• Ajouter des instructions Claude\n• Ajouter des tests unitaires pour la page des repas\n• Ajouter le fichier de schéma manquant\n• Ajouter une image facultative aux repas et différencier les repas dans la liste des aliments\n• Ajouter un script ps1 pour le déploiement\n• Ajouter un tableau 2x3 à la page Journal pour calculer la nutrition par entrée\n• Fermer automatiquement les demandes de fonctionnalités obsolètes\n• Nettoyer les entrées du journal lors de la suppression de repas\n• Corriger la suppression de repas\n• Corriger l’analyse Flutter",
-  "134188838719418420": "• Ajouter un tableau 2x3 à la page Journal pour calculer la nutrition par entrée\n• Corriger la sélection de la tendance qui cassait l’info-bulle des graphiques"
+  "134188838719418420": "• Ajouter un tableau 2x3 à la page Journal pour calculer la nutrition par entrée\n• Corriger la sélection de la tendance qui cassait l’info-bulle des graphiques",
+  "134185267504059170": "• Ajouter un tableau 2x3 à la page Journal pour calculer la nutrition par entrée",
+  "1765932891": "• Ajouter des libellés et animer les FAB\n• Corriger les toasts qui ne disparaissaient jamais\n• Utiliser 100 g par défaut au lieu d’une portion\n• Arrondir les cartes à 1 dp au lieu de 2",
+  "1765243864": "• Corriger les icônes adaptées au thème",
+  "1764651156": "• Mettre Flutter à niveau vers 3.38.3",
+  "1764648354": "• Repenser l’affichage des cartes de poids",
+  "1759299121": "• Modifier l’affichage moyenne/tendance du graphique\n• Modifier les libellés du sélecteur de champs\n• Modifier le style des toasts\n• Modifier les cartes de poids\n• Nettoyer les changelogs\n• Corriger le renforcement positif qui s’affichait encore après sa désactivation\n• Améliorer le temps de chargement de l’application",
+  "1759204293": "• Modifier le style des toasts\n• Nettoyer Nouveautés\n• Corriger le renforcement positif qui s’affichait encore après sa désactivation\n• Afficher un aperçu du renforcement positif lors de son activation",
+  "1759118367": "• Corriger un bug lors de la fusion de conflits d’aliments",
+  "1759118366": "- Transformer Scanner le code-barres sur OFF en gros bouton\n- Corriger la sélection du code-barres depuis la modification d’une entrée\n- Espacer davantage les points du graphique selon la date de l’entrée",
+  "1759118334": "• Ajouter un test de performance\n• Modifier l’expérience de modification du journal\n• Corriger les paramètres après l’importation d’une nouvelle base de données\n• Gérer les images en échec sur la page Journal\n• Gérer la fusion de noms d’aliments en conflit\n• Inclure la version de l’application dans l’exemple d’issue GitHub pour les migrations échouées"
 }

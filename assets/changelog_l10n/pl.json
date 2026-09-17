@@ -56,5 +56,15 @@
   "1778890996": "• feat: dodać link „Zostaw opinię” do strony O aplikacji\n• fix: budować każde ABI osobno i usuwać niedeterministyczne identyfikatory builda",
   "1778890509": "• feat: dodać link „Zostaw opinię” do strony O aplikacji\n• fix: budować każde ABI osobno i usuwać niedeterministyczne identyfikatory builda",
   "1778382051": "• Dodać instrukcje Claude\n• Dodać testy jednostkowe strony posiłków\n• Dodać brakujący plik schematu\n• Dodać opcjonalny obraz do posiłków i odróżniać posiłki na liście produktów\n• Dodać skrypt ps1 do wdrażania\n• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis\n• Automatycznie zamykać nieaktualne prośby o funkcje\n• Czyścić wpisy dziennika przy usuwaniu posiłków\n• Naprawić usuwanie posiłków\n• Naprawić analizę Fluttera",
-  "134188838719418420": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis\n• Naprawić wybór trendu powodujący uszkodzenie podpowiedzi na wykresach"
+  "134188838719418420": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis\n• Naprawić wybór trendu powodujący uszkodzenie podpowiedzi na wykresach",
+  "134185267504059170": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis",
+  "1765932891": "• Dodać etykiety i animować FAB-y\n• Naprawić toasty, które nigdy nie znikały\n• Ustawić domyślnie 100 g zamiast 1 porcji\n• Zaokrąglić karty do 1 dp zamiast 2",
+  "1765243864": "• Naprawić ikony dopasowane do motywu",
+  "1764651156": "• Zaktualizować Flutter do 3.38.3",
+  "1764648354": "• Przeprojektować sposób wyświetlania kart masy ciała",
+  "1759299121": "• Zmienić sposób wyświetlania średniej/trendu na wykresie\n• Zmienić etykiety w wyborze pól\n• Zmienić styl toastów\n• Zmienić karty masy ciała\n• Uporządkować changelogi\n• Naprawić pozytywne wzmocnienie, które nadal pojawiało się po wyłączeniu\n• Poprawić czas ładowania aplikacji",
+  "1759204293": "• Zmienić styl toastów\n• Uporządkować Co nowego\n• Naprawić pozytywne wzmocnienie, które nadal pojawiało się po wyłączeniu\n• Pokazać podgląd pozytywnego wzmocnienia przy włączaniu",
+  "1759118367": "• Naprawić błąd podczas scalania konfliktów produktów",
+  "1759118366": "- Wyświetlić Skanuj kod kreskowy w OFF jako duży przycisk\n- Naprawić wybór kodu kreskowego z poziomu edycji wpisu\n- Rozsunąć punkty wykresu bardziej w zależności od daty wpisu",
+  "1759118334": "• Dodać test wydajności\n• Zmienić sposób edycji dziennika\n• Naprawić ustawienia po zaimportowaniu nowej bazy danych\n• Obsłużyć nieudane obrazy na stronie Dziennik\n• Obsłużyć scalanie konfliktujących nazw produktów\n• Dołączyć wersję aplikacji do przykładowego issue GitHub dla nieudanych migracji"
 }
