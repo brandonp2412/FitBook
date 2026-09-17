@@ -66,5 +66,15 @@
   "1759204293": "• Stijl van toastmeldingen wijzigen\n• Wat is er nieuw opschonen\n• Positieve bekrachtiging corrigeren die bleef verschijnen nadat deze was uitgeschakeld\n• Voorbeeld van positieve bekrachtiging tonen bij inschakelen",
   "1759118367": "• Fout oplossen bij het samenvoegen van conflicterende voedingsmiddelen",
   "1759118366": "- Barcode scannen op OFF als grote knop tonen\n- Barcodeselectie vanuit het bewerken van een item corrigeren\n- Grafiekpunten verder uit elkaar zetten op basis van de itemdatum",
-  "1759118334": "• Prestatietest toevoegen\n• Ervaring voor dagboekbewerking wijzigen\n• Instellingen corrigeren na het importeren van een nieuwe database\n• Mislukte afbeeldingen op de Dagboekpagina afhandelen\n• Samenvoegen van conflicterende voedingsnamen afhandelen\n• Appversie opnemen in het voorbeeld-GitHub-issue voor mislukte migraties"
+  "1759118334": "• Prestatietest toevoegen\n• Ervaring voor dagboekbewerking wijzigen\n• Instellingen corrigeren na het importeren van een nieuwe database\n• Mislukte afbeeldingen op de Dagboekpagina afhandelen\n• Samenvoegen van conflicterende voedingsnamen afhandelen\n• Appversie opnemen in het voorbeeld-GitHub-issue voor mislukte migraties",
+  "1759036639": "• README wijzigen [skip ci]\n• Implementatie naar Windows Store corrigeren\n• Voorgrond van het app-opstartpictogram verkleinen\n• Afbeelding aantikken om deze op de Voedingspagina in te stellen",
+  "1758495564": "• Instelling voor compacte gewichtsitems toevoegen\n• Dubbele voedingsafbeeldingen corrigeren\n• Geselecteerde voedingsitems markeren\n• shields.io koppelen in de downloadbadge\n• Tekst aantikken om gemiddelde/trend in grafieken te tonen",
+  "1757807076": "• Meldingen voor Wat is er nieuw toevoegen\n• Verticale opvulling in de gewichtslijst iets verkleinen",
+  "1757130267": "• FAB's opnieuw corrigeren",
+  "1757120959": "• Instelling compactDiary en migratie toevoegen\n• Dagboekweergave wijzigen op basis van de compacte instelling",
+  "1757112575": "• FAB verder omhoog verplaatsen en bottom sheets corrigeren",
+  "1757110948": "• Verborgen FAB's corrigeren",
+  "1757107240": "• Onder de systeeminterface tekenen",
+  "1757048283": "• Mislukken van back-up toestaan\n• Dagboekitems als kaarten weergeven\n• Gewichten als kaarten weergeven\n• Dagboekweergave herwerken\n• Datumnotatie in de gewichtslijst gebruiken",
+  "1756882404": "• Meervoudige bewerking van dagboekitems corrigeren\n• Snel toevoegen corrigeren\n• Unittests corrigeren\n• OFF-afbeeldingen vooraf bekijken op de Voedingspagina"
 }

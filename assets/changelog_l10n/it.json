@@ -66,5 +66,15 @@
   "1759204293": "• Cambiare lo stile dei toast\n• Ripulire Novità\n• Correggere il rinforzo positivo che continuava a comparire dopo la disattivazione\n• Mostrare un’anteprima del rinforzo positivo quando viene attivato",
   "1759118367": "• Correggere un bug durante l’unione dei conflitti tra alimenti",
   "1759118366": "- Trasformare Scansiona codice a barre su OFF in un grande pulsante\n- Correggere la selezione del codice a barre dalla modifica di una voce\n- Distanziare maggiormente i punti del grafico in base alla data della voce",
-  "1759118334": "• Aggiungere un test delle prestazioni\n• Modificare l’esperienza di modifica del diario\n• Correggere le impostazioni dopo l’importazione di un nuovo database\n• Gestire le immagini non riuscite nella pagina Diario\n• Gestire l’unione di nomi di alimenti in conflitto\n• Includere la versione dell’app nell’esempio di issue GitHub per migrazioni non riuscite"
+  "1759118334": "• Aggiungere un test delle prestazioni\n• Modificare l’esperienza di modifica del diario\n• Correggere le impostazioni dopo l’importazione di un nuovo database\n• Gestire le immagini non riuscite nella pagina Diario\n• Gestire l’unione di nomi di alimenti in conflitto\n• Includere la versione dell’app nell’esempio di issue GitHub per migrazioni non riuscite",
+  "1759036639": "• Modificare README [skip ci]\n• Correggere il deployment su Windows Store\n• Ridurre il primo piano dell’icona di avvio dell’app\n• Toccare un’immagine per impostarla nella pagina Alimenti",
+  "1758495564": "• Aggiungere l’impostazione per voci di peso compatte\n• Correggere immagini di alimenti duplicate\n• Evidenziare le voci di alimenti selezionate\n• Collegare shields.io nel badge dei download\n• Toccare il testo per mostrare media/tendenza nei grafici",
+  "1757807076": "• Aggiungere notifiche Novità\n• Ridurre leggermente la spaziatura verticale nella lista dei pesi",
+  "1757130267": "• Correggere di nuovo i FAB",
+  "1757120959": "• Aggiungere l’impostazione compactDiary e la migrazione\n• Cambiare la visualizzazione del diario in base all’impostazione compatta",
+  "1757112575": "• Spostare il FAB più in alto e correggere i bottom sheet",
+  "1757110948": "• Correggere i FAB nascosti",
+  "1757107240": "• Disegnare sotto l’interfaccia di sistema",
+  "1757048283": "• Consentire il fallimento del backup\n• Trasformare le voci del diario in schede\n• Trasformare i pesi in schede\n• Rielaborare la visualizzazione del diario\n• Usare il formato data nella lista dei pesi",
+  "1756882404": "• Correggere la modifica multipla delle voci del diario\n• Correggere l’aggiunta rapida\n• Correggere i test unitari\n• Mostrare l’anteprima delle immagini OFF nella pagina Alimenti"
 }

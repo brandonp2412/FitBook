@@ -66,5 +66,15 @@
   "1759204293": "• Alterar o estilo dos toasts\n• Limpar Novidades\n• Corrigir o reforço positivo que continuava aparecendo após ser desativado\n• Mostrar uma prévia do reforço positivo ao ativá-lo",
   "1759118367": "• Corrigir bug ao tentar mesclar conflitos de alimentos",
   "1759118366": "- Transformar Escanear código de barras no OFF em um botão grande\n- Corrigir a seleção de código de barras pela edição de uma entrada\n- Afastar mais os pontos do gráfico com base na data da entrada",
-  "1759118334": "• Adicionar teste de desempenho\n• Alterar a experiência de edição do diário\n• Corrigir configurações após importar um novo banco de dados\n• Tratar imagens que falham na página Diário\n• Tratar a mesclagem de nomes de alimentos conflitantes\n• Incluir a versão do app no exemplo de issue do GitHub para migrações com falha"
+  "1759118334": "• Adicionar teste de desempenho\n• Alterar a experiência de edição do diário\n• Corrigir configurações após importar um novo banco de dados\n• Tratar imagens que falham na página Diário\n• Tratar a mesclagem de nomes de alimentos conflitantes\n• Incluir a versão do app no exemplo de issue do GitHub para migrações com falha",
+  "1759036639": "• Alterar README [skip ci]\n• Corrigir a implantação na Windows Store\n• Diminuir o primeiro plano do ícone de inicialização do app\n• Tocar em uma imagem para defini-la na página Alimentos",
+  "1758495564": "• Adicionar configuração de entradas de peso compactas\n• Corrigir imagens de alimentos duplicadas\n• Destacar entradas de alimentos selecionadas\n• Vincular shields.io no selo de downloads\n• Tocar no texto para mostrar média/tendência nos gráficos",
+  "1757807076": "• Adicionar notificações de Novidades\n• Reduzir ligeiramente o espaçamento vertical na lista de pesos",
+  "1757130267": "• Corrigir os FABs novamente",
+  "1757120959": "• Adicionar a configuração compactDiary e sua migração\n• Alterar a exibição do diário com base na configuração compacta",
+  "1757112575": "• Mover o FAB mais para cima e corrigir os bottom sheets",
+  "1757110948": "• Corrigir FABs ocultos",
+  "1757107240": "• Desenhar sob a interface do sistema",
+  "1757048283": "• Permitir que o backup falhe\n• Transformar entradas do diário em cartões\n• Transformar pesos em cartões\n• Reformular a exibição do diário\n• Usar formato de data na lista de pesos",
+  "1756882404": "• Corrigir edição múltipla de entradas do diário\n• Corrigir adição rápida\n• Corrigir testes unitários\n• Mostrar prévia de imagens do OFF na página Alimentos"
 }

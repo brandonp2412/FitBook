@@ -66,5 +66,15 @@
   "1759204293": "• Stil der Toast-Meldungen ändern\n• Neuigkeiten bereinigen\n• Fehler beheben, bei dem positive Verstärkung nach dem Ausschalten weiterhin angezeigt wird\n• Vorschau der positiven Verstärkung beim Aktivieren anzeigen",
   "1759118367": "• Fehler beim Zusammenführen von Lebensmittelkonflikten beheben",
   "1759118366": "- Barcode auf OFF scannen als große Schaltfläche anzeigen\n- Barcode-Auswahl beim Bearbeiten eines Eintrags korrigieren\n- Diagrammpunkte abhängig vom Eintragsdatum weiter auseinander setzen",
-  "1759118334": "• Leistungstest hinzufügen\n• Bearbeitungserlebnis des Tagebuchs ändern\n• Einstellungen nach dem Import einer neuen Datenbank korrigieren\n• Fehlgeschlagene Bilder auf der Tagebuchseite behandeln\n• Zusammenführen widersprüchlicher Lebensmittelnamen behandeln\n• App-Version in das Beispiel-GitHub-Issue für fehlgeschlagene Migrationen aufnehmen"
+  "1759118334": "• Leistungstest hinzufügen\n• Bearbeitungserlebnis des Tagebuchs ändern\n• Einstellungen nach dem Import einer neuen Datenbank korrigieren\n• Fehlgeschlagene Bilder auf der Tagebuchseite behandeln\n• Zusammenführen widersprüchlicher Lebensmittelnamen behandeln\n• App-Version in das Beispiel-GitHub-Issue für fehlgeschlagene Migrationen aufnehmen",
+  "1759036639": "• README ändern [skip ci]\n• Bereitstellung im Windows Store korrigieren\n• Vordergrund des App-Launcher-Symbols verkleinern\n• Bild antippen, um es auf der Lebensmittelseite festzulegen",
+  "1758495564": "• Einstellung für kompakte Gewichtseinträge hinzufügen\n• Doppelte Lebensmittelbilder korrigieren\n• Ausgewählte Lebensmitteleinträge hervorheben\n• shields.io im Download-Badge verlinken\n• Text antippen, um Durchschnitt/Trend in Diagrammen anzuzeigen",
+  "1757807076": "• Neuigkeiten-Benachrichtigungen hinzufügen\n• Vertikalen Abstand in der Gewichtsliste leicht verringern",
+  "1757130267": "• FABs erneut korrigieren",
+  "1757120959": "• Einstellung compactDiary und Migration hinzufügen\n• Tagebuchanzeige anhand der Kompakt-Einstellung ändern",
+  "1757112575": "• FAB weiter nach oben verschieben und Bottom Sheets korrigieren",
+  "1757110948": "• Versteckte FABs korrigieren",
+  "1757107240": "• Unter der Systemoberfläche zeichnen",
+  "1757048283": "• Fehlschlagen der Sicherung zulassen\n• Tagebucheinträge als Karten darstellen\n• Gewichte als Karten darstellen\n• Tagebuchanzeige überarbeiten\n• Datumsformat in der Gewichtsliste verwenden",
+  "1756882404": "• Mehrfachbearbeitung von Tagebucheinträgen korrigieren\n• Schnellhinzufügen korrigieren\n• Unit-Tests korrigieren\n• OFF-Bilder auf der Lebensmittelseite als Vorschau anzeigen"
 }

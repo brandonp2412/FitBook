@@ -66,5 +66,15 @@
   "1759204293": "• Modifier le style des toasts\n• Nettoyer Nouveautés\n• Corriger le renforcement positif qui s’affichait encore après sa désactivation\n• Afficher un aperçu du renforcement positif lors de son activation",
   "1759118367": "• Corriger un bug lors de la fusion de conflits d’aliments",
   "1759118366": "- Transformer Scanner le code-barres sur OFF en gros bouton\n- Corriger la sélection du code-barres depuis la modification d’une entrée\n- Espacer davantage les points du graphique selon la date de l’entrée",
-  "1759118334": "• Ajouter un test de performance\n• Modifier l’expérience de modification du journal\n• Corriger les paramètres après l’importation d’une nouvelle base de données\n• Gérer les images en échec sur la page Journal\n• Gérer la fusion de noms d’aliments en conflit\n• Inclure la version de l’application dans l’exemple d’issue GitHub pour les migrations échouées"
+  "1759118334": "• Ajouter un test de performance\n• Modifier l’expérience de modification du journal\n• Corriger les paramètres après l’importation d’une nouvelle base de données\n• Gérer les images en échec sur la page Journal\n• Gérer la fusion de noms d’aliments en conflit\n• Inclure la version de l’application dans l’exemple d’issue GitHub pour les migrations échouées",
+  "1759036639": "• Modifier README [skip ci]\n• Corriger le déploiement sur Windows Store\n• Réduire le premier plan de l’icône de lancement de l’application\n• Toucher une image pour la définir sur la page Aliments",
+  "1758495564": "• Ajouter le paramètre d’entrées de poids compactes\n• Corriger les images d’aliments en double\n• Mettre en évidence les entrées d’aliments sélectionnées\n• Lier shields.io dans le badge de téléchargements\n• Toucher le texte pour afficher moyenne/tendance dans les graphiques",
+  "1757807076": "• Ajouter des notifications Nouveautés\n• Réduire légèrement le rembourrage vertical de la liste des poids",
+  "1757130267": "• Corriger encore les FAB",
+  "1757120959": "• Ajouter le paramètre compactDiary et sa migration\n• Modifier l’affichage du journal selon le paramètre compact",
+  "1757112575": "• Remonter le FAB et corriger les bottom sheets",
+  "1757110948": "• Corriger les FAB masqués",
+  "1757107240": "• Dessiner sous l’interface système",
+  "1757048283": "• Autoriser l’échec de la sauvegarde\n• Transformer les entrées du journal en cartes\n• Transformer les poids en cartes\n• Repenser l’affichage du journal\n• Utiliser le format de date dans la liste des poids",
+  "1756882404": "• Corriger la modification multiple des entrées du journal\n• Corriger l’ajout rapide\n• Corriger les tests unitaires\n• Prévisualiser les images OFF sur la page Aliments"
 }

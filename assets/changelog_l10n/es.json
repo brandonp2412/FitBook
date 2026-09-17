@@ -66,5 +66,15 @@
   "1759204293": "• Cambiar el estilo de los toasts\n• Limpiar Novedades\n• Corregir que el refuerzo positivo siga apareciendo cuando se desactiva\n• Mostrar una vista previa del refuerzo positivo al activarlo",
   "1759118367": "• Corregir un error al intentar combinar conflictos de alimentos",
   "1759118366": "- Convertir Escanear código de barras en OFF en un botón grande\n- Corregir la selección de código de barras desde la edición de una entrada\n- Separar más los puntos del gráfico según la fecha de la entrada",
-  "1759118334": "• Añadir prueba de rendimiento\n• Cambiar la experiencia de edición del diario\n• Corregir los ajustes después de importar una base de datos nueva\n• Gestionar imágenes fallidas en la página Diario\n• Gestionar la combinación de nombres de alimentos en conflicto\n• Incluir la versión de la aplicación en el ejemplo de issue de GitHub para migraciones fallidas"
+  "1759118334": "• Añadir prueba de rendimiento\n• Cambiar la experiencia de edición del diario\n• Corregir los ajustes después de importar una base de datos nueva\n• Gestionar imágenes fallidas en la página Diario\n• Gestionar la combinación de nombres de alimentos en conflicto\n• Incluir la versión de la aplicación en el ejemplo de issue de GitHub para migraciones fallidas",
+  "1759036639": "• Cambiar README [skip ci]\n• Corregir el despliegue en Windows Store\n• Hacer más pequeño el primer plano del icono de la aplicación\n• Tocar una imagen para establecerla en la página Alimentos",
+  "1758495564": "• Añadir ajuste de entradas de peso compactas\n• Corregir imágenes de alimentos duplicadas\n• Resaltar las entradas de alimentos seleccionadas\n• Enlazar shields.io en la insignia de descargas\n• Tocar el texto para mostrar promedio/tendencia en los gráficos",
+  "1757807076": "• Añadir notificaciones de Novedades\n• Reducir ligeramente el relleno vertical de la lista de pesos",
+  "1757130267": "• Corregir los FAB otra vez",
+  "1757120959": "• Añadir el ajuste compactDiary y su migración\n• Cambiar la visualización del diario según el ajuste compacto",
+  "1757112575": "• Mover el FAB más arriba y corregir los bottom sheets",
+  "1757110948": "• Corregir los FAB ocultos",
+  "1757107240": "• Dibujar bajo la interfaz del sistema",
+  "1757048283": "• Permitir que la copia de seguridad falle\n• Convertir las entradas del diario en tarjetas\n• Convertir los pesos en tarjetas\n• Rediseñar la visualización del diario\n• Usar formato de fecha en la lista de pesos",
+  "1756882404": "• Corregir la edición múltiple de entradas del diario\n• Corregir el añadido rápido\n• Corregir las pruebas unitarias\n• Previsualizar imágenes de OFF en la página Alimentos"
 }

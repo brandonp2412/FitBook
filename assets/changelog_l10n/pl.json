@@ -66,5 +66,15 @@
   "1759204293": "• Zmienić styl toastów\n• Uporządkować Co nowego\n• Naprawić pozytywne wzmocnienie, które nadal pojawiało się po wyłączeniu\n• Pokazać podgląd pozytywnego wzmocnienia przy włączaniu",
   "1759118367": "• Naprawić błąd podczas scalania konfliktów produktów",
   "1759118366": "- Wyświetlić Skanuj kod kreskowy w OFF jako duży przycisk\n- Naprawić wybór kodu kreskowego z poziomu edycji wpisu\n- Rozsunąć punkty wykresu bardziej w zależności od daty wpisu",
-  "1759118334": "• Dodać test wydajności\n• Zmienić sposób edycji dziennika\n• Naprawić ustawienia po zaimportowaniu nowej bazy danych\n• Obsłużyć nieudane obrazy na stronie Dziennik\n• Obsłużyć scalanie konfliktujących nazw produktów\n• Dołączyć wersję aplikacji do przykładowego issue GitHub dla nieudanych migracji"
+  "1759118334": "• Dodać test wydajności\n• Zmienić sposób edycji dziennika\n• Naprawić ustawienia po zaimportowaniu nowej bazy danych\n• Obsłużyć nieudane obrazy na stronie Dziennik\n• Obsłużyć scalanie konfliktujących nazw produktów\n• Dołączyć wersję aplikacji do przykładowego issue GitHub dla nieudanych migracji",
+  "1759036639": "• Zmienić README [skip ci]\n• Naprawić wdrażanie do Windows Store\n• Zmniejszyć pierwszy plan ikony uruchamiającej aplikację\n• Dotknąć obrazu, aby ustawić go na stronie Produkty",
+  "1758495564": "• Dodać ustawienie kompaktowych wpisów masy ciała\n• Naprawić zduplikowane obrazy produktów\n• Podświetlać wybrane wpisy produktów\n• Podlinkować shields.io w plakietce pobrań\n• Dotknąć tekstu, aby pokazać średnią/trend na wykresach",
+  "1757807076": "• Dodać powiadomienia Co nowego\n• Nieznacznie zmniejszyć pionowe odstępy na liście masy ciała",
+  "1757130267": "• Ponownie naprawić FAB-y",
+  "1757120959": "• Dodać ustawienie compactDiary i migrację\n• Zmienić wyświetlanie dziennika na podstawie ustawienia kompaktowego",
+  "1757112575": "• Przesunąć FAB wyżej i naprawić bottom sheets",
+  "1757110948": "• Naprawić ukryte FAB-y",
+  "1757107240": "• Rysować pod interfejsem systemowym",
+  "1757048283": "• Pozwolić na niepowodzenie kopii zapasowej\n• Wyświetlać wpisy dziennika jako karty\n• Wyświetlać wpisy masy ciała jako karty\n• Przeprojektować wyświetlanie dziennika\n• Używać formatu daty na liście masy ciała",
+  "1756882404": "• Naprawić wielokrotną edycję wpisów dziennika\n• Naprawić szybkie dodawanie\n• Naprawić testy jednostkowe\n• Pokazywać podgląd obrazów OFF na stronie Produkty"
 }
