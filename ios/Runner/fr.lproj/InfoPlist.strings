@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "FitBook utilise l’appareil photo pour scanner les codes-barres des aliments.";
+"NSPhotoLibraryUsageDescription" = "FitBook utilise votre photothèque pour ajouter des images d’aliments et de repas.";
+"NSAppleMusicUsageDescription" = "Un composant tiers utilisé par FitBook demande l’accès à Apple Music.";

@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "FitBook은 식품 바코드를 스캔하기 위해 카메라를 사용합니다.";
+"NSPhotoLibraryUsageDescription" = "FitBook은 식품 및 식사 이미지를 추가하기 위해 사진 보관함을 사용합니다.";
+"NSAppleMusicUsageDescription" = "FitBook에서 사용하는 타사 구성 요소가 Apple Music 접근 권한을 요청합니다.";
