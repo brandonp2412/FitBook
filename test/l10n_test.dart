@@ -140,6 +140,15 @@ void main() {
       'Tamaño de la ración',
     );
     expect(localizedFoodFieldLabel(japanese, 'carbohydrate_g'), '炭水化物');
+    expect(localizedFoodFieldLabel(spanish, 'sugars_g'), 'Azúcares');
+    expect(localizedFoodFieldLabel(spanish, 'vitamin_a_iu_iu'), 'Vitamina A');
+    expect(
+      localizedFoodFieldLabel(spanish, 'omega_3s_mg'),
+      'Ácidos grasos omega-3',
+    );
+    expect(localizedFoodFieldLabel(japanese, 'saturated_fats_g'), '飽和脂肪');
+    expect(localizedFoodFieldLabel(japanese, 'selenium_se_mcg'), 'セレン');
+    expect(localizedFoodFieldLabel(japanese, 'chlorine_mg'), '塩化物');
     expect(localizedFoodFieldLabel(spanish, 'custom_field'), 'Custom field');
   });
 }

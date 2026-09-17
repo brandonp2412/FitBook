@@ -1191,6 +1191,96 @@ class AppLocalizationsPt extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => 'Açúcares';
+
+  @override
+  String get nutrientCholesterol => 'Colesterol';
+
+  @override
+  String get nutrientSaturatedFat => 'Gorduras saturadas';
+
+  @override
+  String get nutrientCalcium => 'Cálcio';
+
+  @override
+  String get nutrientIron => 'Ferro';
+
+  @override
+  String get nutrientPotassium => 'Potássio';
+
+  @override
+  String get nutrientMagnesium => 'Magnésio';
+
+  @override
+  String get nutrientVitaminA => 'Vitamina A';
+
+  @override
+  String get nutrientVitaminC => 'Vitamina C';
+
+  @override
+  String get nutrientVitaminB12 => 'Vitamina B12';
+
+  @override
+  String get nutrientVitaminD => 'Vitamina D';
+
+  @override
+  String get nutrientVitaminE => 'Vitamina E';
+
+  @override
+  String get nutrientAddedSugar => 'Açúcares adicionados';
+
+  @override
+  String get nutrientNetCarbs => 'Hidratos de carbono líquidos';
+
+  @override
+  String get nutrientWater => 'Água';
+
+  @override
+  String get nutrientOmega3 => 'Ácidos gordos ómega-3';
+
+  @override
+  String get nutrientOmega6 => 'Ácidos gordos ómega-6';
+
+  @override
+  String get nutrientPralScore => 'Pontuação PRAL';
+
+  @override
+  String get nutrientTransFat => 'Gorduras trans';
+
+  @override
+  String get nutrientSolubleFiber => 'Fibra solúvel';
+
+  @override
+  String get nutrientInsolubleFiber => 'Fibra insolúvel';
+
+  @override
+  String get nutrientPhosphorus => 'Fósforo';
+
+  @override
+  String get nutrientSodium => 'Sódio';
+
+  @override
+  String get nutrientZinc => 'Zinco';
+
+  @override
+  String get nutrientCopper => 'Cobre';
+
+  @override
+  String get nutrientManganese => 'Manganês';
+
+  @override
+  String get nutrientSelenium => 'Selénio';
+
+  @override
+  String get nutrientFluoride => 'Fluoreto';
+
+  @override
+  String get nutrientMolybdenum => 'Molibdénio';
+
+  @override
+  String get nutrientChloride => 'Cloreto';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2379,4 +2469,94 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => 'Açúcares';
+
+  @override
+  String get nutrientCholesterol => 'Colesterol';
+
+  @override
+  String get nutrientSaturatedFat => 'Gorduras saturadas';
+
+  @override
+  String get nutrientCalcium => 'Cálcio';
+
+  @override
+  String get nutrientIron => 'Ferro';
+
+  @override
+  String get nutrientPotassium => 'Potássio';
+
+  @override
+  String get nutrientMagnesium => 'Magnésio';
+
+  @override
+  String get nutrientVitaminA => 'Vitamina A';
+
+  @override
+  String get nutrientVitaminC => 'Vitamina C';
+
+  @override
+  String get nutrientVitaminB12 => 'Vitamina B12';
+
+  @override
+  String get nutrientVitaminD => 'Vitamina D';
+
+  @override
+  String get nutrientVitaminE => 'Vitamina E';
+
+  @override
+  String get nutrientAddedSugar => 'Açúcares adicionados';
+
+  @override
+  String get nutrientNetCarbs => 'Carboidratos líquidos';
+
+  @override
+  String get nutrientWater => 'Água';
+
+  @override
+  String get nutrientOmega3 => 'Ácidos graxos ômega-3';
+
+  @override
+  String get nutrientOmega6 => 'Ácidos graxos ômega-6';
+
+  @override
+  String get nutrientPralScore => 'Pontuação PRAL';
+
+  @override
+  String get nutrientTransFat => 'Gorduras trans';
+
+  @override
+  String get nutrientSolubleFiber => 'Fibra solúvel';
+
+  @override
+  String get nutrientInsolubleFiber => 'Fibra insolúvel';
+
+  @override
+  String get nutrientPhosphorus => 'Fósforo';
+
+  @override
+  String get nutrientSodium => 'Sódio';
+
+  @override
+  String get nutrientZinc => 'Zinco';
+
+  @override
+  String get nutrientCopper => 'Cobre';
+
+  @override
+  String get nutrientManganese => 'Manganês';
+
+  @override
+  String get nutrientSelenium => 'Selênio';
+
+  @override
+  String get nutrientFluoride => 'Fluoreto';
+
+  @override
+  String get nutrientMolybdenum => 'Molibdênio';
+
+  @override
+  String get nutrientChloride => 'Cloreto';
 }

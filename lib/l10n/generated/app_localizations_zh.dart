@@ -1137,6 +1137,96 @@ class AppLocalizationsZh extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => '糖类';
+
+  @override
+  String get nutrientCholesterol => '胆固醇';
+
+  @override
+  String get nutrientSaturatedFat => '饱和脂肪';
+
+  @override
+  String get nutrientCalcium => '钙';
+
+  @override
+  String get nutrientIron => '铁';
+
+  @override
+  String get nutrientPotassium => '钾';
+
+  @override
+  String get nutrientMagnesium => '镁';
+
+  @override
+  String get nutrientVitaminA => '维生素 A';
+
+  @override
+  String get nutrientVitaminC => '维生素 C';
+
+  @override
+  String get nutrientVitaminB12 => '维生素 B12';
+
+  @override
+  String get nutrientVitaminD => '维生素 D';
+
+  @override
+  String get nutrientVitaminE => '维生素 E';
+
+  @override
+  String get nutrientAddedSugar => '添加糖';
+
+  @override
+  String get nutrientNetCarbs => '净碳水化合物';
+
+  @override
+  String get nutrientWater => '水分';
+
+  @override
+  String get nutrientOmega3 => 'Omega-3 脂肪酸';
+
+  @override
+  String get nutrientOmega6 => 'Omega-6 脂肪酸';
+
+  @override
+  String get nutrientPralScore => 'PRAL 评分';
+
+  @override
+  String get nutrientTransFat => '反式脂肪';
+
+  @override
+  String get nutrientSolubleFiber => '可溶性膳食纤维';
+
+  @override
+  String get nutrientInsolubleFiber => '不溶性膳食纤维';
+
+  @override
+  String get nutrientPhosphorus => '磷';
+
+  @override
+  String get nutrientSodium => '钠';
+
+  @override
+  String get nutrientZinc => '锌';
+
+  @override
+  String get nutrientCopper => '铜';
+
+  @override
+  String get nutrientManganese => '锰';
+
+  @override
+  String get nutrientSelenium => '硒';
+
+  @override
+  String get nutrientFluoride => '氟化物';
+
+  @override
+  String get nutrientMolybdenum => '钼';
+
+  @override
+  String get nutrientChloride => '氯化物';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2272,4 +2362,94 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => '糖类';
+
+  @override
+  String get nutrientCholesterol => '胆固醇';
+
+  @override
+  String get nutrientSaturatedFat => '饱和脂肪';
+
+  @override
+  String get nutrientCalcium => '钙';
+
+  @override
+  String get nutrientIron => '铁';
+
+  @override
+  String get nutrientPotassium => '钾';
+
+  @override
+  String get nutrientMagnesium => '镁';
+
+  @override
+  String get nutrientVitaminA => '维生素 A';
+
+  @override
+  String get nutrientVitaminC => '维生素 C';
+
+  @override
+  String get nutrientVitaminB12 => '维生素 B12';
+
+  @override
+  String get nutrientVitaminD => '维生素 D';
+
+  @override
+  String get nutrientVitaminE => '维生素 E';
+
+  @override
+  String get nutrientAddedSugar => '添加糖';
+
+  @override
+  String get nutrientNetCarbs => '净碳水化合物';
+
+  @override
+  String get nutrientWater => '水分';
+
+  @override
+  String get nutrientOmega3 => 'Omega-3 脂肪酸';
+
+  @override
+  String get nutrientOmega6 => 'Omega-6 脂肪酸';
+
+  @override
+  String get nutrientPralScore => 'PRAL 评分';
+
+  @override
+  String get nutrientTransFat => '反式脂肪';
+
+  @override
+  String get nutrientSolubleFiber => '可溶性膳食纤维';
+
+  @override
+  String get nutrientInsolubleFiber => '不溶性膳食纤维';
+
+  @override
+  String get nutrientPhosphorus => '磷';
+
+  @override
+  String get nutrientSodium => '钠';
+
+  @override
+  String get nutrientZinc => '锌';
+
+  @override
+  String get nutrientCopper => '铜';
+
+  @override
+  String get nutrientManganese => '锰';
+
+  @override
+  String get nutrientSelenium => '硒';
+
+  @override
+  String get nutrientFluoride => '氟化物';
+
+  @override
+  String get nutrientMolybdenum => '钼';
+
+  @override
+  String get nutrientChloride => '氯化物';
 }

@@ -1188,4 +1188,94 @@ class AppLocalizationsNl extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => 'Suikers';
+
+  @override
+  String get nutrientCholesterol => 'Cholesterol';
+
+  @override
+  String get nutrientSaturatedFat => 'Verzadigde vetten';
+
+  @override
+  String get nutrientCalcium => 'Calcium';
+
+  @override
+  String get nutrientIron => 'IJzer';
+
+  @override
+  String get nutrientPotassium => 'Kalium';
+
+  @override
+  String get nutrientMagnesium => 'Magnesium';
+
+  @override
+  String get nutrientVitaminA => 'Vitamine A';
+
+  @override
+  String get nutrientVitaminC => 'Vitamine C';
+
+  @override
+  String get nutrientVitaminB12 => 'Vitamine B12';
+
+  @override
+  String get nutrientVitaminD => 'Vitamine D';
+
+  @override
+  String get nutrientVitaminE => 'Vitamine E';
+
+  @override
+  String get nutrientAddedSugar => 'Toegevoegde suikers';
+
+  @override
+  String get nutrientNetCarbs => 'Netto koolhydraten';
+
+  @override
+  String get nutrientWater => 'Water';
+
+  @override
+  String get nutrientOmega3 => 'Omega 3-vetzuren';
+
+  @override
+  String get nutrientOmega6 => 'Omega 6-vetzuren';
+
+  @override
+  String get nutrientPralScore => 'PRAL-score';
+
+  @override
+  String get nutrientTransFat => 'Transvetten';
+
+  @override
+  String get nutrientSolubleFiber => 'Oplosbare vezels';
+
+  @override
+  String get nutrientInsolubleFiber => 'Onoplosbare vezels';
+
+  @override
+  String get nutrientPhosphorus => 'Fosfor';
+
+  @override
+  String get nutrientSodium => 'Natrium';
+
+  @override
+  String get nutrientZinc => 'Zink';
+
+  @override
+  String get nutrientCopper => 'Koper';
+
+  @override
+  String get nutrientManganese => 'Mangaan';
+
+  @override
+  String get nutrientSelenium => 'Seleen';
+
+  @override
+  String get nutrientFluoride => 'Fluoride';
+
+  @override
+  String get nutrientMolybdenum => 'Molybdeen';
+
+  @override
+  String get nutrientChloride => 'Chloride';
 }

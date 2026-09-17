@@ -1143,4 +1143,94 @@ class AppLocalizationsJa extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => '糖類';
+
+  @override
+  String get nutrientCholesterol => 'コレステロール';
+
+  @override
+  String get nutrientSaturatedFat => '飽和脂肪';
+
+  @override
+  String get nutrientCalcium => 'カルシウム';
+
+  @override
+  String get nutrientIron => '鉄';
+
+  @override
+  String get nutrientPotassium => 'カリウム';
+
+  @override
+  String get nutrientMagnesium => 'マグネシウム';
+
+  @override
+  String get nutrientVitaminA => 'ビタミンA';
+
+  @override
+  String get nutrientVitaminC => 'ビタミンC';
+
+  @override
+  String get nutrientVitaminB12 => 'ビタミンB12';
+
+  @override
+  String get nutrientVitaminD => 'ビタミンD';
+
+  @override
+  String get nutrientVitaminE => 'ビタミンE';
+
+  @override
+  String get nutrientAddedSugar => '添加糖類';
+
+  @override
+  String get nutrientNetCarbs => '正味炭水化物';
+
+  @override
+  String get nutrientWater => '水分';
+
+  @override
+  String get nutrientOmega3 => 'オメガ3脂肪酸';
+
+  @override
+  String get nutrientOmega6 => 'オメガ6脂肪酸';
+
+  @override
+  String get nutrientPralScore => 'PRALスコア';
+
+  @override
+  String get nutrientTransFat => 'トランス脂肪';
+
+  @override
+  String get nutrientSolubleFiber => '水溶性食物繊維';
+
+  @override
+  String get nutrientInsolubleFiber => '不溶性食物繊維';
+
+  @override
+  String get nutrientPhosphorus => 'リン';
+
+  @override
+  String get nutrientSodium => 'ナトリウム';
+
+  @override
+  String get nutrientZinc => '亜鉛';
+
+  @override
+  String get nutrientCopper => '銅';
+
+  @override
+  String get nutrientManganese => 'マンガン';
+
+  @override
+  String get nutrientSelenium => 'セレン';
+
+  @override
+  String get nutrientFluoride => 'フッ化物';
+
+  @override
+  String get nutrientMolybdenum => 'モリブデン';
+
+  @override
+  String get nutrientChloride => '塩化物';
 }

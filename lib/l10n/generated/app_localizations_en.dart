@@ -1184,4 +1184,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => 'Sugars';
+
+  @override
+  String get nutrientCholesterol => 'Cholesterol';
+
+  @override
+  String get nutrientSaturatedFat => 'Saturated fat';
+
+  @override
+  String get nutrientCalcium => 'Calcium';
+
+  @override
+  String get nutrientIron => 'Iron';
+
+  @override
+  String get nutrientPotassium => 'Potassium';
+
+  @override
+  String get nutrientMagnesium => 'Magnesium';
+
+  @override
+  String get nutrientVitaminA => 'Vitamin A';
+
+  @override
+  String get nutrientVitaminC => 'Vitamin C';
+
+  @override
+  String get nutrientVitaminB12 => 'Vitamin B12';
+
+  @override
+  String get nutrientVitaminD => 'Vitamin D';
+
+  @override
+  String get nutrientVitaminE => 'Vitamin E';
+
+  @override
+  String get nutrientAddedSugar => 'Added sugar';
+
+  @override
+  String get nutrientNetCarbs => 'Net carbs';
+
+  @override
+  String get nutrientWater => 'Water';
+
+  @override
+  String get nutrientOmega3 => 'Omega-3 fatty acids';
+
+  @override
+  String get nutrientOmega6 => 'Omega-6 fatty acids';
+
+  @override
+  String get nutrientPralScore => 'PRAL score';
+
+  @override
+  String get nutrientTransFat => 'Trans fat';
+
+  @override
+  String get nutrientSolubleFiber => 'Soluble fiber';
+
+  @override
+  String get nutrientInsolubleFiber => 'Insoluble fiber';
+
+  @override
+  String get nutrientPhosphorus => 'Phosphorus';
+
+  @override
+  String get nutrientSodium => 'Sodium';
+
+  @override
+  String get nutrientZinc => 'Zinc';
+
+  @override
+  String get nutrientCopper => 'Copper';
+
+  @override
+  String get nutrientManganese => 'Manganese';
+
+  @override
+  String get nutrientSelenium => 'Selenium';
+
+  @override
+  String get nutrientFluoride => 'Fluoride';
+
+  @override
+  String get nutrientMolybdenum => 'Molybdenum';
+
+  @override
+  String get nutrientChloride => 'Chloride';
 }

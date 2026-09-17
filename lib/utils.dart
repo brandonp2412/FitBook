@@ -73,6 +73,46 @@ String localizedFoodFieldLabel(AppLocalizations l10n, String field) =>
       'favorite' => l10n.favorite,
       'name' => l10n.name,
       'barcode' => l10n.barcode,
+      'sugars_g' || 'sugarsG' => l10n.nutrientSugars,
+      'cholesterol_mg' || 'cholesterolMg' => l10n.nutrientCholesterol,
+      'saturated_fats_g' || 'saturatedFatsG' => l10n.nutrientSaturatedFat,
+      'calcium_mg' || 'calciumMg' => l10n.nutrientCalcium,
+      'iron_fe_mg' || 'ironFeMg' => l10n.nutrientIron,
+      'potassium_k_mg' || 'potassiumKMg' => l10n.nutrientPotassium,
+      'magnesium_mg' || 'magnesiumMg' => l10n.nutrientMagnesium,
+      'vitamin_a_iu_iu' ||
+      'vitaminAIuIu' ||
+      'vitamin_a_rae_mcg' ||
+      'vitaminARaeMcg' =>
+        l10n.nutrientVitaminA,
+      'vitamin_c_mg' || 'vitaminCMg' => l10n.nutrientVitaminC,
+      'vitamin_b_12_mcg' || 'vitaminB12Mcg' => l10n.nutrientVitaminB12,
+      'vitamin_d_mcg' ||
+      'vitaminDMcg' ||
+      'vitamin_d_iu_iu' ||
+      'vitaminDIuIu' =>
+        l10n.nutrientVitaminD,
+      'vitamin_e_alpha_tocopherol_mg' ||
+      'vitaminEAlphaTocopherolMg' =>
+        l10n.nutrientVitaminE,
+      'added_sugar_g' || 'addedSugarG' => l10n.nutrientAddedSugar,
+      'net_carbs_g' || 'netCarbsG' => l10n.nutrientNetCarbs,
+      'water_g' || 'waterG' => l10n.nutrientWater,
+      'omega_3s_mg' || 'omega3sMg' => l10n.nutrientOmega3,
+      'omega_6s_mg' || 'omega6sMg' => l10n.nutrientOmega6,
+      'pral_score' || 'pralScore' => l10n.nutrientPralScore,
+      'trans_fatty_acids_g' || 'transFattyAcidsG' => l10n.nutrientTransFat,
+      'soluble_fiber_g' || 'solubleFiberG' => l10n.nutrientSolubleFiber,
+      'insoluble_fiber_g' || 'insolubleFiberG' => l10n.nutrientInsolubleFiber,
+      'phosphorus_p_mg' || 'phosphorusPMg' => l10n.nutrientPhosphorus,
+      'sodium_mg' || 'sodiumMg' => l10n.nutrientSodium,
+      'zinc_zn_mg' || 'zincZnMg' => l10n.nutrientZinc,
+      'copper_cu_mg' || 'copperCuMg' => l10n.nutrientCopper,
+      'manganese_mg' || 'manganeseMg' => l10n.nutrientManganese,
+      'selenium_se_mcg' || 'seleniumSeMcg' => l10n.nutrientSelenium,
+      'fluoride_f_mcg' || 'fluorideFMcg' => l10n.nutrientFluoride,
+      'molybdenum_mcg' || 'molybdenumMcg' => l10n.nutrientMolybdenum,
+      'chlorine_mg' || 'chlorineMg' => l10n.nutrientChloride,
       _ => sentenceCase(field),
     };
 

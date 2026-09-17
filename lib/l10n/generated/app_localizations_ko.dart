@@ -1143,4 +1143,94 @@ class AppLocalizationsKo extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => '당류';
+
+  @override
+  String get nutrientCholesterol => '콜레스테롤';
+
+  @override
+  String get nutrientSaturatedFat => '포화 지방';
+
+  @override
+  String get nutrientCalcium => '칼슘';
+
+  @override
+  String get nutrientIron => '철분';
+
+  @override
+  String get nutrientPotassium => '칼륨';
+
+  @override
+  String get nutrientMagnesium => '마그네슘';
+
+  @override
+  String get nutrientVitaminA => '비타민 A';
+
+  @override
+  String get nutrientVitaminC => '비타민 C';
+
+  @override
+  String get nutrientVitaminB12 => '비타민 B12';
+
+  @override
+  String get nutrientVitaminD => '비타민 D';
+
+  @override
+  String get nutrientVitaminE => '비타민 E';
+
+  @override
+  String get nutrientAddedSugar => '첨가당';
+
+  @override
+  String get nutrientNetCarbs => '순 탄수화물';
+
+  @override
+  String get nutrientWater => '수분';
+
+  @override
+  String get nutrientOmega3 => '오메가-3 지방산';
+
+  @override
+  String get nutrientOmega6 => '오메가-6 지방산';
+
+  @override
+  String get nutrientPralScore => 'PRAL 점수';
+
+  @override
+  String get nutrientTransFat => '트랜스 지방';
+
+  @override
+  String get nutrientSolubleFiber => '수용성 식이섬유';
+
+  @override
+  String get nutrientInsolubleFiber => '불용성 식이섬유';
+
+  @override
+  String get nutrientPhosphorus => '인';
+
+  @override
+  String get nutrientSodium => '나트륨';
+
+  @override
+  String get nutrientZinc => '아연';
+
+  @override
+  String get nutrientCopper => '구리';
+
+  @override
+  String get nutrientManganese => '망간';
+
+  @override
+  String get nutrientSelenium => '셀레늄';
+
+  @override
+  String get nutrientFluoride => '불소';
+
+  @override
+  String get nutrientMolybdenum => '몰리브덴';
+
+  @override
+  String get nutrientChloride => '염화물';
 }

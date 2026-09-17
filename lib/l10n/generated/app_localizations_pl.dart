@@ -1205,4 +1205,94 @@ class AppLocalizationsPl extends AppLocalizations {
   String diarySummaryDivisionValue(String current, String target, String unit) {
     return '$current / $target $unit';
   }
+
+  @override
+  String get nutrientSugars => 'Cukry';
+
+  @override
+  String get nutrientCholesterol => 'Cholesterol';
+
+  @override
+  String get nutrientSaturatedFat => 'Tłuszcze nasycone';
+
+  @override
+  String get nutrientCalcium => 'Wapń';
+
+  @override
+  String get nutrientIron => 'Żelazo';
+
+  @override
+  String get nutrientPotassium => 'Potas';
+
+  @override
+  String get nutrientMagnesium => 'Magnez';
+
+  @override
+  String get nutrientVitaminA => 'Witamina A';
+
+  @override
+  String get nutrientVitaminC => 'Witamina C';
+
+  @override
+  String get nutrientVitaminB12 => 'Witamina B12';
+
+  @override
+  String get nutrientVitaminD => 'Witamina D';
+
+  @override
+  String get nutrientVitaminE => 'Witamina E';
+
+  @override
+  String get nutrientAddedSugar => 'Cukry dodane';
+
+  @override
+  String get nutrientNetCarbs => 'Węglowodany netto';
+
+  @override
+  String get nutrientWater => 'Woda';
+
+  @override
+  String get nutrientOmega3 => 'Kwasy tłuszczowe omega-3';
+
+  @override
+  String get nutrientOmega6 => 'Kwasy tłuszczowe omega-6';
+
+  @override
+  String get nutrientPralScore => 'Wynik PRAL';
+
+  @override
+  String get nutrientTransFat => 'Tłuszcze trans';
+
+  @override
+  String get nutrientSolubleFiber => 'Błonnik rozpuszczalny';
+
+  @override
+  String get nutrientInsolubleFiber => 'Błonnik nierozpuszczalny';
+
+  @override
+  String get nutrientPhosphorus => 'Fosfor';
+
+  @override
+  String get nutrientSodium => 'Sód';
+
+  @override
+  String get nutrientZinc => 'Cynk';
+
+  @override
+  String get nutrientCopper => 'Miedź';
+
+  @override
+  String get nutrientManganese => 'Mangan';
+
+  @override
+  String get nutrientSelenium => 'Selen';
+
+  @override
+  String get nutrientFluoride => 'Fluorki';
+
+  @override
+  String get nutrientMolybdenum => 'Molibden';
+
+  @override
+  String get nutrientChloride => 'Chlorki';
 }
