@@ -1227,6 +1227,114 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nutrientChloride => '氯化物';
+
+  @override
+  String get nutrientSucrose => '蔗糖';
+
+  @override
+  String get nutrientGlucose => '葡萄糖';
+
+  @override
+  String get nutrientFructose => '果糖';
+
+  @override
+  String get nutrientLactose => '乳糖';
+
+  @override
+  String get nutrientMaltose => '麦芽糖';
+
+  @override
+  String get nutrientGalactose => '半乳糖';
+
+  @override
+  String get nutrientStarch => '淀粉';
+
+  @override
+  String get nutrientSugarAlcohols => '糖醇';
+
+  @override
+  String get nutrientThiaminB1 => '硫胺素（B1）';
+
+  @override
+  String get nutrientRiboflavinB2 => '核黄素（B2）';
+
+  @override
+  String get nutrientNiacinB3 => '烟酸（B3）';
+
+  @override
+  String get nutrientPantothenicAcidB5 => '泛酸（B5）';
+
+  @override
+  String get nutrientVitaminB6 => '维生素 B6';
+
+  @override
+  String get nutrientBiotinB7 => '生物素（B7）';
+
+  @override
+  String get nutrientFolateB9 => '叶酸（B9）';
+
+  @override
+  String get nutrientFolicAcid => '合成叶酸';
+
+  @override
+  String get nutrientFoodFolate => '食物叶酸';
+
+  @override
+  String get nutrientFolateDfe => '膳食叶酸当量（DFE）';
+
+  @override
+  String get nutrientCholine => '胆碱';
+
+  @override
+  String get nutrientBetaine => '甜菜碱';
+
+  @override
+  String get nutrientRetinol => '视黄醇';
+
+  @override
+  String get nutrientBetaCarotene => 'β-胡萝卜素';
+
+  @override
+  String get nutrientAlphaCarotene => 'α-胡萝卜素';
+
+  @override
+  String get nutrientLycopene => '番茄红素';
+
+  @override
+  String get nutrientLuteinZeaxanthin => '叶黄素 + 玉米黄质';
+
+  @override
+  String get nutrientVitaminD2 => '维生素 D2（麦角钙化醇）';
+
+  @override
+  String get nutrientVitaminD3 => '维生素 D3（胆钙化醇）';
+
+  @override
+  String get nutrientVitaminK => '维生素 K';
+
+  @override
+  String get nutrientDihydrophylloquinone => '二氢叶绿醌';
+
+  @override
+  String get nutrientMenaquinone4 => '甲萘醌-4（MK-4）';
+
+  @override
+  String get nutrientMonounsaturatedFat => '单不饱和脂肪';
+
+  @override
+  String get nutrientPolyunsaturatedFat => '多不饱和脂肪';
+
+  @override
+  String get nutrientAla => 'α-亚麻酸（ALA）';
+
+  @override
+  String get nutrientEpa => '二十碳五烯酸（EPA）';
+
+  @override
+  String get nutrientDpa => '二十二碳五烯酸（DPA）';
+
+  @override
+  String get nutrientDha => '二十二碳六烯酸（DHA）';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2452,4 +2560,112 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get nutrientChloride => '氯化物';
+
+  @override
+  String get nutrientSucrose => '蔗糖';
+
+  @override
+  String get nutrientGlucose => '葡萄糖';
+
+  @override
+  String get nutrientFructose => '果糖';
+
+  @override
+  String get nutrientLactose => '乳糖';
+
+  @override
+  String get nutrientMaltose => '麦芽糖';
+
+  @override
+  String get nutrientGalactose => '半乳糖';
+
+  @override
+  String get nutrientStarch => '淀粉';
+
+  @override
+  String get nutrientSugarAlcohols => '糖醇';
+
+  @override
+  String get nutrientThiaminB1 => '硫胺素（B1）';
+
+  @override
+  String get nutrientRiboflavinB2 => '核黄素（B2）';
+
+  @override
+  String get nutrientNiacinB3 => '烟酸（B3）';
+
+  @override
+  String get nutrientPantothenicAcidB5 => '泛酸（B5）';
+
+  @override
+  String get nutrientVitaminB6 => '维生素 B6';
+
+  @override
+  String get nutrientBiotinB7 => '生物素（B7）';
+
+  @override
+  String get nutrientFolateB9 => '叶酸（B9）';
+
+  @override
+  String get nutrientFolicAcid => '合成叶酸';
+
+  @override
+  String get nutrientFoodFolate => '食物叶酸';
+
+  @override
+  String get nutrientFolateDfe => '膳食叶酸当量（DFE）';
+
+  @override
+  String get nutrientCholine => '胆碱';
+
+  @override
+  String get nutrientBetaine => '甜菜碱';
+
+  @override
+  String get nutrientRetinol => '视黄醇';
+
+  @override
+  String get nutrientBetaCarotene => 'β-胡萝卜素';
+
+  @override
+  String get nutrientAlphaCarotene => 'α-胡萝卜素';
+
+  @override
+  String get nutrientLycopene => '番茄红素';
+
+  @override
+  String get nutrientLuteinZeaxanthin => '叶黄素 + 玉米黄质';
+
+  @override
+  String get nutrientVitaminD2 => '维生素 D2（麦角钙化醇）';
+
+  @override
+  String get nutrientVitaminD3 => '维生素 D3（胆钙化醇）';
+
+  @override
+  String get nutrientVitaminK => '维生素 K';
+
+  @override
+  String get nutrientDihydrophylloquinone => '二氢叶绿醌';
+
+  @override
+  String get nutrientMenaquinone4 => '甲萘醌-4（MK-4）';
+
+  @override
+  String get nutrientMonounsaturatedFat => '单不饱和脂肪';
+
+  @override
+  String get nutrientPolyunsaturatedFat => '多不饱和脂肪';
+
+  @override
+  String get nutrientAla => 'α-亚麻酸（ALA）';
+
+  @override
+  String get nutrientEpa => '二十碳五烯酸（EPA）';
+
+  @override
+  String get nutrientDpa => '二十二碳五烯酸（DPA）';
+
+  @override
+  String get nutrientDha => '二十二碳六烯酸（DHA）';
 }

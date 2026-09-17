@@ -113,6 +113,58 @@ String localizedFoodFieldLabel(AppLocalizations l10n, String field) =>
       'fluoride_f_mcg' || 'fluorideFMcg' => l10n.nutrientFluoride,
       'molybdenum_mcg' || 'molybdenumMcg' => l10n.nutrientMolybdenum,
       'chlorine_mg' || 'chlorineMg' => l10n.nutrientChloride,
+      'sucrose_g' || 'sucroseG' => l10n.nutrientSucrose,
+      'glucose_dextrose_g' || 'glucoseDextroseG' => l10n.nutrientGlucose,
+      'fructose_g' || 'fructoseG' => l10n.nutrientFructose,
+      'lactose_g' || 'lactoseG' => l10n.nutrientLactose,
+      'maltose_g' || 'maltoseG' => l10n.nutrientMaltose,
+      'galactose_g' || 'galactoseG' => l10n.nutrientGalactose,
+      'starch_g' || 'starchG' => l10n.nutrientStarch,
+      'total_sugar_alcohols_g' ||
+      'totalSugarAlcoholsG' =>
+        l10n.nutrientSugarAlcohols,
+      'thiamin_b1_mg' || 'thiaminB1Mg' => l10n.nutrientThiaminB1,
+      'riboflavin_b2_mg' || 'riboflavinB2Mg' => l10n.nutrientRiboflavinB2,
+      'niacin_b3_mg' || 'niacinB3Mg' => l10n.nutrientNiacinB3,
+      'pantothenic_acid_b5_mg' ||
+      'pantothenicAcidB5Mg' =>
+        l10n.nutrientPantothenicAcidB5,
+      'vitamin_b6_mg' || 'vitaminB6Mg' => l10n.nutrientVitaminB6,
+      'biotin_b7_mcg' || 'biotinB7Mcg' => l10n.nutrientBiotinB7,
+      'folate_b9_mcg' || 'folateB9Mcg' => l10n.nutrientFolateB9,
+      'folic_acid_mcg' || 'folicAcidMcg' => l10n.nutrientFolicAcid,
+      'food_folate_mcg' || 'foodFolateMcg' => l10n.nutrientFoodFolate,
+      'folate_dfe_mcg' || 'folateDfeMcg' => l10n.nutrientFolateDfe,
+      'choline_mg' || 'cholineMg' => l10n.nutrientCholine,
+      'betaine_mg' || 'betaineMg' => l10n.nutrientBetaine,
+      'retinol_mcg' || 'retinolMcg' => l10n.nutrientRetinol,
+      'carotene_beta_mcg' || 'caroteneBetaMcg' => l10n.nutrientBetaCarotene,
+      'carotene_alpha_mcg' || 'caroteneAlphaMcg' => l10n.nutrientAlphaCarotene,
+      'lycopene_mcg' || 'lycopeneMcg' => l10n.nutrientLycopene,
+      'lutein_zeaxanthin_mcg' ||
+      'luteinZeaxanthinMcg' =>
+        l10n.nutrientLuteinZeaxanthin,
+      'vitamin_d2_ergocalciferol_mcg' ||
+      'vitaminD2ErgocalciferolMcg' =>
+        l10n.nutrientVitaminD2,
+      'vitamin_d3_cholecalciferol_mcg' ||
+      'vitaminD3CholecalciferolMcg' =>
+        l10n.nutrientVitaminD3,
+      'vitamin_k_mcg' || 'vitaminKMcg' => l10n.nutrientVitaminK,
+      'dihydrophylloquinone_mcg' ||
+      'dihydrophylloquinoneMcg' =>
+        l10n.nutrientDihydrophylloquinone,
+      'menaquinone_4_mcg' || 'menaquinone4Mcg' => l10n.nutrientMenaquinone4,
+      'fatty_acids_total_monounsaturated_mg' ||
+      'fattyAcidsTotalMonounsaturatedMg' =>
+        l10n.nutrientMonounsaturatedFat,
+      'fatty_acids_total_polyunsaturated_mg' ||
+      'fattyAcidsTotalPolyunsaturatedMg' =>
+        l10n.nutrientPolyunsaturatedFat,
+      '_18_3_n_3_c_c_c_ala_mg' || 'u183N3CCCAlaMg' => l10n.nutrientAla,
+      '_20_5_n_3_epa_mg' || 'u205N3EpaMg' => l10n.nutrientEpa,
+      '_22_5_n_3_dpa_mg' || 'u225N3DpaMg' => l10n.nutrientDpa,
+      '_22_6_n_3_dha_mg' || 'u226N3DhaMg' => l10n.nutrientDha,
       _ => sentenceCase(field),
     };
 

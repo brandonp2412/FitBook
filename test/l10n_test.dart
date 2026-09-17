@@ -149,6 +149,15 @@ void main() {
     expect(localizedFoodFieldLabel(japanese, 'saturated_fats_g'), '飽和脂肪');
     expect(localizedFoodFieldLabel(japanese, 'selenium_se_mcg'), 'セレン');
     expect(localizedFoodFieldLabel(japanese, 'chlorine_mg'), '塩化物');
+    expect(localizedFoodFieldLabel(spanish, 'glucose_dextrose_g'), 'Glucosa');
+    expect(
+      localizedFoodFieldLabel(spanish, 'folate_dfe_mcg'),
+      'Equivalentes de folato dietético (DFE)',
+    );
+    expect(
+      localizedFoodFieldLabel(japanese, '_22_6_n_3_dha_mg'),
+      'ドコサヘキサエン酸（DHA）',
+    );
     expect(localizedFoodFieldLabel(spanish, 'custom_field'), 'Custom field');
   });
 }

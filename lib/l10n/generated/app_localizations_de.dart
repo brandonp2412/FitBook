@@ -1285,4 +1285,112 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nutrientChloride => 'Chlorid';
+
+  @override
+  String get nutrientSucrose => 'Saccharose';
+
+  @override
+  String get nutrientGlucose => 'Glukose';
+
+  @override
+  String get nutrientFructose => 'Fruktose';
+
+  @override
+  String get nutrientLactose => 'Laktose';
+
+  @override
+  String get nutrientMaltose => 'Maltose';
+
+  @override
+  String get nutrientGalactose => 'Galaktose';
+
+  @override
+  String get nutrientStarch => 'Stärke';
+
+  @override
+  String get nutrientSugarAlcohols => 'Zuckeralkohole';
+
+  @override
+  String get nutrientThiaminB1 => 'Thiamin (B1)';
+
+  @override
+  String get nutrientRiboflavinB2 => 'Riboflavin (B2)';
+
+  @override
+  String get nutrientNiacinB3 => 'Niacin (B3)';
+
+  @override
+  String get nutrientPantothenicAcidB5 => 'Pantothensäure (B5)';
+
+  @override
+  String get nutrientVitaminB6 => 'Vitamin B6';
+
+  @override
+  String get nutrientBiotinB7 => 'Biotin (B7)';
+
+  @override
+  String get nutrientFolateB9 => 'Folat (B9)';
+
+  @override
+  String get nutrientFolicAcid => 'Folsäure';
+
+  @override
+  String get nutrientFoodFolate => 'Nahrungsfolat';
+
+  @override
+  String get nutrientFolateDfe => 'Folatäquivalente (DFE)';
+
+  @override
+  String get nutrientCholine => 'Cholin';
+
+  @override
+  String get nutrientBetaine => 'Betain';
+
+  @override
+  String get nutrientRetinol => 'Retinol';
+
+  @override
+  String get nutrientBetaCarotene => 'Beta-Carotin';
+
+  @override
+  String get nutrientAlphaCarotene => 'Alpha-Carotin';
+
+  @override
+  String get nutrientLycopene => 'Lycopin';
+
+  @override
+  String get nutrientLuteinZeaxanthin => 'Lutein + Zeaxanthin';
+
+  @override
+  String get nutrientVitaminD2 => 'Vitamin D2 (Ergocalciferol)';
+
+  @override
+  String get nutrientVitaminD3 => 'Vitamin D3 (Cholecalciferol)';
+
+  @override
+  String get nutrientVitaminK => 'Vitamin K';
+
+  @override
+  String get nutrientDihydrophylloquinone => 'Dihydrophyllochinon';
+
+  @override
+  String get nutrientMenaquinone4 => 'Menachinon-4';
+
+  @override
+  String get nutrientMonounsaturatedFat => 'Einfach ungesättigte Fettsäuren';
+
+  @override
+  String get nutrientPolyunsaturatedFat => 'Mehrfach ungesättigte Fettsäuren';
+
+  @override
+  String get nutrientAla => 'Alpha-Linolensäure (ALA)';
+
+  @override
+  String get nutrientEpa => 'Eicosapentaensäure (EPA)';
+
+  @override
+  String get nutrientDpa => 'Docosapentaensäure (DPA)';
+
+  @override
+  String get nutrientDha => 'Docosahexaensäure (DHA)';
 }

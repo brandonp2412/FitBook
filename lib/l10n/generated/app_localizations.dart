@@ -2344,6 +2344,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chloride'**
   String get nutrientChloride;
+
+  /// No description provided for @nutrientSucrose.
+  ///
+  /// In en, this message translates to:
+  /// **'Sucrose'**
+  String get nutrientSucrose;
+
+  /// No description provided for @nutrientGlucose.
+  ///
+  /// In en, this message translates to:
+  /// **'Glucose'**
+  String get nutrientGlucose;
+
+  /// No description provided for @nutrientFructose.
+  ///
+  /// In en, this message translates to:
+  /// **'Fructose'**
+  String get nutrientFructose;
+
+  /// No description provided for @nutrientLactose.
+  ///
+  /// In en, this message translates to:
+  /// **'Lactose'**
+  String get nutrientLactose;
+
+  /// No description provided for @nutrientMaltose.
+  ///
+  /// In en, this message translates to:
+  /// **'Maltose'**
+  String get nutrientMaltose;
+
+  /// No description provided for @nutrientGalactose.
+  ///
+  /// In en, this message translates to:
+  /// **'Galactose'**
+  String get nutrientGalactose;
+
+  /// No description provided for @nutrientStarch.
+  ///
+  /// In en, this message translates to:
+  /// **'Starch'**
+  String get nutrientStarch;
+
+  /// No description provided for @nutrientSugarAlcohols.
+  ///
+  /// In en, this message translates to:
+  /// **'Sugar alcohols'**
+  String get nutrientSugarAlcohols;
+
+  /// No description provided for @nutrientThiaminB1.
+  ///
+  /// In en, this message translates to:
+  /// **'Thiamin (B1)'**
+  String get nutrientThiaminB1;
+
+  /// No description provided for @nutrientRiboflavinB2.
+  ///
+  /// In en, this message translates to:
+  /// **'Riboflavin (B2)'**
+  String get nutrientRiboflavinB2;
+
+  /// No description provided for @nutrientNiacinB3.
+  ///
+  /// In en, this message translates to:
+  /// **'Niacin (B3)'**
+  String get nutrientNiacinB3;
+
+  /// No description provided for @nutrientPantothenicAcidB5.
+  ///
+  /// In en, this message translates to:
+  /// **'Pantothenic acid (B5)'**
+  String get nutrientPantothenicAcidB5;
+
+  /// No description provided for @nutrientVitaminB6.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitamin B6'**
+  String get nutrientVitaminB6;
+
+  /// No description provided for @nutrientBiotinB7.
+  ///
+  /// In en, this message translates to:
+  /// **'Biotin (B7)'**
+  String get nutrientBiotinB7;
+
+  /// No description provided for @nutrientFolateB9.
+  ///
+  /// In en, this message translates to:
+  /// **'Folate (B9)'**
+  String get nutrientFolateB9;
+
+  /// No description provided for @nutrientFolicAcid.
+  ///
+  /// In en, this message translates to:
+  /// **'Folic acid'**
+  String get nutrientFolicAcid;
+
+  /// No description provided for @nutrientFoodFolate.
+  ///
+  /// In en, this message translates to:
+  /// **'Food folate'**
+  String get nutrientFoodFolate;
+
+  /// No description provided for @nutrientFolateDfe.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary folate equivalents (DFE)'**
+  String get nutrientFolateDfe;
+
+  /// No description provided for @nutrientCholine.
+  ///
+  /// In en, this message translates to:
+  /// **'Choline'**
+  String get nutrientCholine;
+
+  /// No description provided for @nutrientBetaine.
+  ///
+  /// In en, this message translates to:
+  /// **'Betaine'**
+  String get nutrientBetaine;
+
+  /// No description provided for @nutrientRetinol.
+  ///
+  /// In en, this message translates to:
+  /// **'Retinol'**
+  String get nutrientRetinol;
+
+  /// No description provided for @nutrientBetaCarotene.
+  ///
+  /// In en, this message translates to:
+  /// **'Beta-carotene'**
+  String get nutrientBetaCarotene;
+
+  /// No description provided for @nutrientAlphaCarotene.
+  ///
+  /// In en, this message translates to:
+  /// **'Alpha-carotene'**
+  String get nutrientAlphaCarotene;
+
+  /// No description provided for @nutrientLycopene.
+  ///
+  /// In en, this message translates to:
+  /// **'Lycopene'**
+  String get nutrientLycopene;
+
+  /// No description provided for @nutrientLuteinZeaxanthin.
+  ///
+  /// In en, this message translates to:
+  /// **'Lutein + zeaxanthin'**
+  String get nutrientLuteinZeaxanthin;
+
+  /// No description provided for @nutrientVitaminD2.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitamin D2 (ergocalciferol)'**
+  String get nutrientVitaminD2;
+
+  /// No description provided for @nutrientVitaminD3.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitamin D3 (cholecalciferol)'**
+  String get nutrientVitaminD3;
+
+  /// No description provided for @nutrientVitaminK.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitamin K'**
+  String get nutrientVitaminK;
+
+  /// No description provided for @nutrientDihydrophylloquinone.
+  ///
+  /// In en, this message translates to:
+  /// **'Dihydrophylloquinone'**
+  String get nutrientDihydrophylloquinone;
+
+  /// No description provided for @nutrientMenaquinone4.
+  ///
+  /// In en, this message translates to:
+  /// **'Menaquinone-4'**
+  String get nutrientMenaquinone4;
+
+  /// No description provided for @nutrientMonounsaturatedFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Monounsaturated fat'**
+  String get nutrientMonounsaturatedFat;
+
+  /// No description provided for @nutrientPolyunsaturatedFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Polyunsaturated fat'**
+  String get nutrientPolyunsaturatedFat;
+
+  /// No description provided for @nutrientAla.
+  ///
+  /// In en, this message translates to:
+  /// **'Alpha-linolenic acid (ALA)'**
+  String get nutrientAla;
+
+  /// No description provided for @nutrientEpa.
+  ///
+  /// In en, this message translates to:
+  /// **'Eicosapentaenoic acid (EPA)'**
+  String get nutrientEpa;
+
+  /// No description provided for @nutrientDpa.
+  ///
+  /// In en, this message translates to:
+  /// **'Docosapentaenoic acid (DPA)'**
+  String get nutrientDpa;
+
+  /// No description provided for @nutrientDha.
+  ///
+  /// In en, this message translates to:
+  /// **'Docosahexaenoic acid (DHA)'**
+  String get nutrientDha;
 }
 
 class _AppLocalizationsDelegate

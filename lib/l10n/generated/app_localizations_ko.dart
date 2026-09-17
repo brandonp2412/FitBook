@@ -1233,4 +1233,112 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nutrientChloride => '염화물';
+
+  @override
+  String get nutrientSucrose => '자당';
+
+  @override
+  String get nutrientGlucose => '포도당';
+
+  @override
+  String get nutrientFructose => '과당';
+
+  @override
+  String get nutrientLactose => '유당';
+
+  @override
+  String get nutrientMaltose => '맥아당';
+
+  @override
+  String get nutrientGalactose => '갈락토스';
+
+  @override
+  String get nutrientStarch => '전분';
+
+  @override
+  String get nutrientSugarAlcohols => '당알코올';
+
+  @override
+  String get nutrientThiaminB1 => '티아민 (B1)';
+
+  @override
+  String get nutrientRiboflavinB2 => '리보플라빈 (B2)';
+
+  @override
+  String get nutrientNiacinB3 => '나이아신 (B3)';
+
+  @override
+  String get nutrientPantothenicAcidB5 => '판토텐산 (B5)';
+
+  @override
+  String get nutrientVitaminB6 => '비타민 B6';
+
+  @override
+  String get nutrientBiotinB7 => '비오틴 (B7)';
+
+  @override
+  String get nutrientFolateB9 => '엽산 (B9)';
+
+  @override
+  String get nutrientFolicAcid => '엽산(합성)';
+
+  @override
+  String get nutrientFoodFolate => '식품 엽산';
+
+  @override
+  String get nutrientFolateDfe => '식이 엽산 당량 (DFE)';
+
+  @override
+  String get nutrientCholine => '콜린';
+
+  @override
+  String get nutrientBetaine => '베타인';
+
+  @override
+  String get nutrientRetinol => '레티놀';
+
+  @override
+  String get nutrientBetaCarotene => '베타카로틴';
+
+  @override
+  String get nutrientAlphaCarotene => '알파카로틴';
+
+  @override
+  String get nutrientLycopene => '라이코펜';
+
+  @override
+  String get nutrientLuteinZeaxanthin => '루테인 + 제아잔틴';
+
+  @override
+  String get nutrientVitaminD2 => '비타민 D2 (에르고칼시페롤)';
+
+  @override
+  String get nutrientVitaminD3 => '비타민 D3 (콜레칼시페롤)';
+
+  @override
+  String get nutrientVitaminK => '비타민 K';
+
+  @override
+  String get nutrientDihydrophylloquinone => '디하이드로필로퀴논';
+
+  @override
+  String get nutrientMenaquinone4 => '메나퀴논-4';
+
+  @override
+  String get nutrientMonounsaturatedFat => '단일불포화지방';
+
+  @override
+  String get nutrientPolyunsaturatedFat => '다중불포화지방';
+
+  @override
+  String get nutrientAla => '알파리놀렌산 (ALA)';
+
+  @override
+  String get nutrientEpa => '에이코사펜타엔산 (EPA)';
+
+  @override
+  String get nutrientDpa => '도코사펜타엔산 (DPA)';
+
+  @override
+  String get nutrientDha => '도코사헥사엔산 (DHA)';
 }
