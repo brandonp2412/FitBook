@@ -200,6 +200,9 @@ void main() {
     final rawErrorWidget = RegExp(
       r'''\bErrorWidget\s*\(\s*(?:snapshot\.error|error(?:\.toString\(\))?)''',
     );
+    final rawSnapshotThrow = RegExp(
+      r'''throw\s+(?:Exception|Error)\s*\(\s*snapshot\.error''',
+    );
     final violations = <String>[];
 
     final dartFiles =
@@ -226,6 +229,11 @@ void main() {
       for (final match in rawErrorWidget.allMatches(source)) {
         violations.add(
           '${file.path}:${_lineNumber(source, match.start)} raw ErrorWidget exception',
+        );
+      }
+      for (final match in rawSnapshotThrow.allMatches(source)) {
+        violations.add(
+          '${file.path}:${_lineNumber(source, match.start)} raw snapshot exception throw',
         );
       }
     }

@@ -101,7 +101,7 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
       Format.ean8 | Format.ean13 | Format.upca | Format.upce;
 
   bool _handled = false;
-  String? _cameraError;
+  bool _cameraFailed = false;
 
   void _onScan(Code code) {
     final barcode = code.text?.trim();
@@ -145,7 +145,8 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
             ),
             onControllerCreated: (_, error) {
               if (error != null && mounted) {
-                setState(() => _cameraError = error.toString());
+                talker.handle(error, null, 'Unable to start barcode camera');
+                setState(() => _cameraFailed = true);
               }
             },
             onScan: _onScan,
@@ -183,7 +184,7 @@ class _BarcodeScannerPageState extends State<_BarcodeScannerPage> {
               ),
             ),
           ),
-          if (_cameraError != null)
+          if (_cameraFailed)
             ColoredBox(
               color: Colors.black87,
               child: SafeArea(

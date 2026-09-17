@@ -273,7 +273,7 @@ class WeightPageState extends State<WeightPage>
         child: StreamBuilder(
           stream: stream,
           builder: (context, snapshot) {
-            if (snapshot.hasError) throw Exception(snapshot.error);
+            if (snapshot.hasError) return const SizedBox.shrink();
 
             return AnimatedFab(
               onTap: () async {
