@@ -10,12 +10,24 @@ import 'package:provider/provider.dart';
 
 /// Formatted, signed change versus the next-older entry, or null at the
 /// oldest entry or when the change rounds to zero.
-String? weightDeltaLabel(List<Weight> weights, int index) {
+String? weightDeltaLabel(
+  List<Weight> weights,
+  int index, {
+  BuildContext? context,
+}) {
   if (index >= weights.length - 1) return null;
   final delta = weights[index].amount - weights[index + 1].amount;
   if (delta.abs() < 0.01) return null;
   final sign = delta > 0 ? '▲' : '▼';
-  return '$sign${delta.abs().toStringAsFixed(1)}';
+  final value = context == null
+      ? delta.abs().toStringAsFixed(1)
+      : formatDisplayNumber(
+          context,
+          delta.abs(),
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        );
+  return '$sign$value';
 }
 
 bool weightDeltaIsUp(String delta) => delta.startsWith('▲');
@@ -100,7 +112,11 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             final weight = widget.weights[index];
             final isToday = isSameDay(weight.created, now);
             final isSelected = widget.selected.contains(weight.id);
-            final delta = weightDeltaLabel(widget.weights, index);
+            final delta = weightDeltaLabel(
+              widget.weights,
+              index,
+              context: context,
+            );
 
             return InkWell(
               borderRadius: BorderRadius.circular(10),
@@ -136,7 +152,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        '${weight.amount.toStringAsFixed(1)}${weight.unit}',
+                        '${formatDisplayNumber(context, weight.amount, minimumFractionDigits: 1, maximumFractionDigits: 1)}${weight.unit}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 12.5,
@@ -213,7 +229,11 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             final weight = widget.weights[index];
             final isToday = isSameDay(weight.created, now);
             final isSelected = widget.selected.contains(weight.id);
-            final delta = weightDeltaLabel(widget.weights, index);
+            final delta = weightDeltaLabel(
+              widget.weights,
+              index,
+              context: context,
+            );
             final sparkColor = isToday
                 ? colorScheme.primary
                 : colorScheme.onSurfaceVariant.withValues(alpha: 0.5);
@@ -251,7 +271,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  weight.amount.toStringAsFixed(1),
+                                  formatDisplayNumber(
+                                    context,
+                                    weight.amount,
+                                    minimumFractionDigits: 1,
+                                    maximumFractionDigits: 1,
+                                  ),
                                   style: theme.textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w700,
                                     height: 1.0,

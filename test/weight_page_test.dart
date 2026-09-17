@@ -86,6 +86,42 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('Weight displays use locale decimal separators', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final now = DateTime.now();
+
+    await db.weights.insertAll([
+      WeightsCompanion.insert(created: now, unit: 'kg', amount: 75.5),
+      WeightsCompanion.insert(
+        created: now.subtract(const Duration(days: 1)),
+        unit: 'kg',
+        amount: 74,
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const WeightPage(),
+          locale: const Locale('de'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('75,5'), findsOneWidget);
+    expect(find.text('▲1,5'), findsOneWidget);
+
+    await db.close();
+  });
+
   testWidgets('Weight stat cards use the standard search bar gap', (
     WidgetTester tester,
   ) async {

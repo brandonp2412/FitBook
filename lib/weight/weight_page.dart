@@ -7,6 +7,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/utils.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
 import 'package:fit_book/bottom_nav.dart';
@@ -227,7 +228,7 @@ class WeightPageState extends State<WeightPage>
                                     ),
                                     if (current != null)
                                       Text(
-                                        '${current.amount.toStringAsFixed(1)} ${current.unit}',
+                                        '${formatDisplayNumber(context, current.amount, minimumFractionDigits: 1, maximumFractionDigits: 1)} ${current.unit}',
                                         style: theme.textTheme.headlineSmall
                                             ?.copyWith(
                                           color: colorScheme.primary,
