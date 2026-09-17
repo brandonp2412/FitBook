@@ -809,4 +809,69 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get unitLiters => '리터';
+
+  @override
+  String get nameConflict => '이름 충돌';
+
+  @override
+  String get replaceExistingFood => '같은 이름의 음식이 이미 있습니다. 기존 음식을 바꾸시겠습니까?';
+
+  @override
+  String get no => '아니요';
+
+  @override
+  String get yes => '예';
+
+  @override
+  String get editFood => '음식 편집';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return '‘$name’ 항목을 삭제하시겠습니까?';
+  }
+
+  @override
+  String get caloriesKcal => '칼로리 (kcal)';
+
+  @override
+  String get kilojoulesKj => '킬로줄 (kJ)';
+
+  @override
+  String get servingSize => '1회 제공량 크기';
+
+  @override
+  String get servingUnit => '1회 제공량 단위';
+
+  @override
+  String get saveAsNewCopy => '새 복사본으로 저장';
+
+  @override
+  String get filterFoods => '음식 필터';
+
+  @override
+  String get narrowFoodsFilters => '필터를 원하는 대로 조합하여 목록을 좁히세요.';
+
+  @override
+  String get foodDetails => '음식 세부 정보';
+
+  @override
+  String get exampleFruitHint => '예: 과일';
+
+  @override
+  String get servingSizeRangeHint => '최솟값, 최댓값 또는 둘 다 설정하세요.';
+
+  @override
+  String get minimum => '최솟값';
+
+  @override
+  String get maximum => '최댓값';
+
+  @override
+  String get noMinimum => '최솟값 없음';
+
+  @override
+  String get noMaximum => '최댓값 없음';
+
+  @override
+  String get clearAll => '모두 지우기';
 }

@@ -804,6 +804,71 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get unitLiters => '升';
+
+  @override
+  String get nameConflict => '名称冲突';
+
+  @override
+  String get replaceExistingFood => '已有同名食物。要替换原来的食物吗？';
+
+  @override
+  String get no => '否';
+
+  @override
+  String get yes => '是';
+
+  @override
+  String get editFood => '编辑食物';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return '确定要删除 $name 吗？';
+  }
+
+  @override
+  String get caloriesKcal => '卡路里 (kcal)';
+
+  @override
+  String get kilojoulesKj => '千焦 (kJ)';
+
+  @override
+  String get servingSize => '每份大小';
+
+  @override
+  String get servingUnit => '每份单位';
+
+  @override
+  String get saveAsNewCopy => '另存为新副本';
+
+  @override
+  String get filterFoods => '筛选食物';
+
+  @override
+  String get narrowFoodsFilters => '使用任意组合的筛选条件缩小列表范围。';
+
+  @override
+  String get foodDetails => '食物详情';
+
+  @override
+  String get exampleFruitHint => '例如：水果';
+
+  @override
+  String get servingSizeRangeHint => '设置最小值、最大值或两者。';
+
+  @override
+  String get minimum => '最小值';
+
+  @override
+  String get maximum => '最大值';
+
+  @override
+  String get noMinimum => '无最小值';
+
+  @override
+  String get noMaximum => '无最大值';
+
+  @override
+  String get clearAll => '全部清除';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -1606,4 +1671,69 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get unitLiters => '升';
+
+  @override
+  String get nameConflict => '名称冲突';
+
+  @override
+  String get replaceExistingFood => '已有同名食物。要替换原来的食物吗？';
+
+  @override
+  String get no => '否';
+
+  @override
+  String get yes => '是';
+
+  @override
+  String get editFood => '编辑食物';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return '确定要删除 $name 吗？';
+  }
+
+  @override
+  String get caloriesKcal => '卡路里 (kcal)';
+
+  @override
+  String get kilojoulesKj => '千焦 (kJ)';
+
+  @override
+  String get servingSize => '每份大小';
+
+  @override
+  String get servingUnit => '每份单位';
+
+  @override
+  String get saveAsNewCopy => '另存为新副本';
+
+  @override
+  String get filterFoods => '筛选食物';
+
+  @override
+  String get narrowFoodsFilters => '使用任意组合的筛选条件缩小列表范围。';
+
+  @override
+  String get foodDetails => '食物详情';
+
+  @override
+  String get exampleFruitHint => '例如：水果';
+
+  @override
+  String get servingSizeRangeHint => '设置最小值、最大值或两者。';
+
+  @override
+  String get minimum => '最小值';
+
+  @override
+  String get maximum => '最大值';
+
+  @override
+  String get noMinimum => '无最小值';
+
+  @override
+  String get noMaximum => '无最大值';
+
+  @override
+  String get clearAll => '全部清除';
 }

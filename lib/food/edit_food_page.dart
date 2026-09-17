@@ -8,6 +8,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/search_open_food_facts.dart';
 import 'package:fit_book/settings/fields_picker.dart';
@@ -47,7 +48,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
   String? smallImg;
   String? bigImg;
   DateTime? created;
-  final formatter = NumberFormat('#,##0.00');
+  NumberFormat get formatter => NumberFormat.decimalPattern(
+        Localizations.localeOf(context).toLanguageTag(),
+      )..maximumFractionDigits = 2;
   final calCtrl = TextEditingController(text: "0");
   final barcodeCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
@@ -83,7 +86,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (widget.initialBarcode != null) {
       barcodeCtrl.text = widget.initialBarcode!;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) toast(context, 'Barcode not found. Save to insert.');
+        if (mounted) toast(context, context.l10n.barcodeNotFoundSaveToInsert);
       });
     }
 
@@ -168,8 +171,15 @@ class _EditFoodPageState extends State<EditFoodPage> {
     if (mounted) settingsState.removeListener(setCtrls);
   }
 
-  double? _parseNumber(String value) =>
-      double.tryParse(value.replaceAll(',', '').trim());
+  double? _parseNumber(String value) {
+    final text = value.trim();
+    if (text.isEmpty) return null;
+    try {
+      return formatter.parse(text).toDouble();
+    } on FormatException {
+      return null;
+    }
+  }
 
   Map<String, Expression> _buildFoodColumns({int? id}) {
     var food = FoodsCompanion.insert(
@@ -238,22 +248,20 @@ class _EditFoodPageState extends State<EditFoodPage> {
       bool replace = await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Name conflict"),
-          content: Text(
-            "A food already exists with this name. Do you want to replace the old one?",
-          ),
+          title: Text(context.l10n.nameConflict),
+          content: Text(context.l10n.replaceExistingFood),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text("No"),
+              child: Text(context.l10n.no),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
-              child: Text("Yes"),
+              child: Text(context.l10n.yes),
             ),
           ],
         ),
@@ -313,7 +321,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       errorBuilder: (context, error, stackTrace) =>
                           TextButton.icon(
                         onPressed: setImage,
-                        label: const Text('Image error'),
+                        label: Text(context.l10n.imageError),
                         icon: const Icon(Icons.error),
                       ),
                     )
@@ -331,12 +339,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
             children: [
               TextButton.icon(
                 icon: const Icon(Icons.image),
-                label: const Text('Set image'),
+                label: Text(context.l10n.setImage),
                 onPressed: setImage,
               ),
               TextButton.icon(
                 icon: const Icon(Icons.camera_alt),
-                label: const Text('Take photo'),
+                label: Text(context.l10n.takePhoto),
                 onPressed: () => setImage(source: ImageSource.camera),
               ),
             ],
@@ -349,12 +357,11 @@ class _EditFoodPageState extends State<EditFoodPage> {
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.id != null ? 'Edit food' : 'Add food',
-        ),
+        title: Text(widget.id != null ? l10n.editFood : l10n.addFood),
         actions: [
           IconButton(
             icon: Icon(
@@ -370,19 +377,19 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   context: context,
                   builder: (BuildContext dlgCtx) {
                     return AlertDialog(
-                      title: const Text('Confirm delete'),
+                      title: Text(dlgCtx.l10n.confirmDelete),
                       content: Text(
-                        'Are you sure you want to delete ${nameCtrl.text}?',
+                        dlgCtx.l10n.confirmDeleteFood(nameCtrl.text),
                       ),
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('Cancel'),
+                          child: Text(dlgCtx.l10n.cancel),
                           onPressed: () {
                             Navigator.pop(dlgCtx);
                           },
                         ),
                         TextButton(
-                          child: const Text('Delete'),
+                          child: Text(dlgCtx.l10n.delete),
                           onPressed: () async {
                             Navigator.pop(dlgCtx);
                             await db.foods.deleteWhere(
@@ -410,7 +417,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               focusNode: nameFocusNode,
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
-                labelText: 'Name',
+                labelText: l10n.name,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
               ),
               onSubmitted: (_) => selectAll(calCtrl),
@@ -421,20 +428,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: TextField(
                     controller: calCtrl,
-                    decoration: const InputDecoration(
-                      labelText: 'Calories (kcal)',
+                    decoration: InputDecoration(
+                      labelText: l10n.caloriesKcal,
                     ),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      final calories = double.tryParse(
-                        value.replaceAll(',', '').trim(),
-                      );
+                      final calories = _parseNumber(value);
                       if (calories == null) {
                         if (value.trim().isEmpty) kjCtrl.clear();
                         return;
                       }
-                      kjCtrl.text = (calories * 4.184).toStringAsFixed(2);
+                      kjCtrl.text = formatter.format(calories * 4.184);
                     },
                     onTap: () => selectAll(calCtrl),
                     onSubmitted: (_) => selectAll(kjCtrl),
@@ -445,20 +450,18 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: TextField(
                     controller: kjCtrl,
-                    decoration: const InputDecoration(
-                      labelText: 'Kilojoules (kj)',
+                    decoration: InputDecoration(
+                      labelText: l10n.kilojoulesKj,
                     ),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
-                      final kilojoules = double.tryParse(
-                        value.replaceAll(',', '').trim(),
-                      );
+                      final kilojoules = _parseNumber(value);
                       if (kilojoules == null) {
                         if (value.trim().isEmpty) calCtrl.clear();
                         return;
                       }
-                      calCtrl.text = (kilojoules / 4.184).toStringAsFixed(2);
+                      calCtrl.text = formatter.format(kilojoules / 4.184);
                     },
                     onSubmitted: (_) => selectAll(controllers['protein_g']!),
                     onTap: () => selectAll(kjCtrl),
@@ -471,8 +474,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Serving size',
+                    decoration: InputDecoration(
+                      labelText: l10n.servingSize,
                     ),
                     controller: sizeCtrl,
                     onTap: () => selectAll(sizeCtrl),
@@ -483,13 +486,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     initialValue: unit,
-                    decoration: const InputDecoration(
-                      labelText: 'Serving unit',
+                    decoration: InputDecoration(
+                      labelText: l10n.servingUnit,
                     ),
                     items: unitOptions.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(localizedUnit(l10n, value)),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -506,13 +509,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: 'Barcode',
+                labelText: l10n.barcode,
                 suffixIcon: ScanBarcode(
                   text: true,
                   value: barcodeCtrl.text,
                   onBarcode: (value) {
                     barcodeCtrl.text = value;
-                    toast(context, 'Barcode not found. Save to insert.');
+                    toast(context, l10n.barcodeNotFoundSaveToInsert);
                   },
                   onFood: (food) {
                     Navigator.of(context).pop();
@@ -535,12 +538,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       builder: (context) => const EditMealPage(),
                     ),
                   ),
-                  label: const Text("Create meal"),
+                  label: Text(l10n.createMeal),
                   icon: const Icon(Icons.restaurant),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.search),
-                  label: const Text("OpenFoodFacts"),
+                  label: Text(l10n.openFoodFacts),
                   onPressed: () async {
                     Food? food = await Navigator.of(context).push(
                       MaterialPageRoute(
@@ -569,8 +572,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
                         ),
                       )
                       .then((_) => setCtrls()),
-                  label: Text("Fields"),
-                  icon: Icon(Icons.settings),
+                  label: Text(l10n.fields),
+                  icon: const Icon(Icons.settings),
                 ),
               ],
             ),
@@ -613,7 +616,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             if (widget.id != null) ...[
               FloatingActionButton.small(
                 heroTag: 'saveAs',
-                tooltip: 'Save as new copy',
+                tooltip: l10n.saveAsNewCopy,
                 onPressed: saveAs,
                 child: const Icon(Icons.save_as),
               ),
@@ -621,7 +624,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
             ],
             AnimatedFab(
               onTap: save,
-              label: 'Save',
+              label: l10n.save,
               icon: Icons.save,
               scroll: scrollCtrl,
             ),

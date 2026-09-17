@@ -834,4 +834,72 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get unitLiters => 'Litri';
+
+  @override
+  String get nameConflict => 'Conflitto di nome';
+
+  @override
+  String get replaceExistingFood =>
+      'Esiste già un alimento con questo nome. Vuoi sostituire quello precedente?';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Sì';
+
+  @override
+  String get editFood => 'Modifica alimento';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return 'Vuoi davvero eliminare $name?';
+  }
+
+  @override
+  String get caloriesKcal => 'Calorie (kcal)';
+
+  @override
+  String get kilojoulesKj => 'Kilojoule (kJ)';
+
+  @override
+  String get servingSize => 'Dimensione della porzione';
+
+  @override
+  String get servingUnit => 'Unità della porzione';
+
+  @override
+  String get saveAsNewCopy => 'Salva come nuova copia';
+
+  @override
+  String get filterFoods => 'Filtra alimenti';
+
+  @override
+  String get narrowFoodsFilters =>
+      'Restringi l’elenco usando qualsiasi combinazione di filtri.';
+
+  @override
+  String get foodDetails => 'Dettagli dell’alimento';
+
+  @override
+  String get exampleFruitHint => 'es. Frutta';
+
+  @override
+  String get servingSizeRangeHint =>
+      'Imposta un minimo, un massimo o entrambi.';
+
+  @override
+  String get minimum => 'Minimo';
+
+  @override
+  String get maximum => 'Massimo';
+
+  @override
+  String get noMinimum => 'Nessun minimo';
+
+  @override
+  String get noMaximum => 'Nessun massimo';
+
+  @override
+  String get clearAll => 'Cancella tutto';
 }

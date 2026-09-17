@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   group('FoodFilters Widget Tests', () {
@@ -50,7 +51,7 @@ void main() async {
               ChangeNotifierProvider(create: (context) => settingsState),
               ChangeNotifierProvider(create: (context) => DiaryState()),
             ],
-            child: MaterialApp(
+            child: localizedApp(
               home: Scaffold(
                 body: FoodFilters(
                   groupCtrl: groupCtrl,
@@ -82,7 +83,7 @@ void main() async {
 
         final servingOption = find.descendant(
           of: find.byType(DropdownMenuItem<String>),
-          matching: find.text('serving'),
+          matching: find.text('Serving'),
         );
         expect(servingOption, findsOneWidget);
 
@@ -132,7 +133,7 @@ void main() async {
               ChangeNotifierProvider(create: (context) => settingsState),
               ChangeNotifierProvider(create: (context) => DiaryState()),
             ],
-            child: MaterialApp(
+            child: localizedApp(
               home: Scaffold(
                 body: FoodFilters(
                   groupCtrl: groupCtrl,
@@ -155,7 +156,7 @@ void main() async {
         await tester.tap(filterButton);
         await tester.pumpAndSettle();
 
-        final clearButton = find.text('Clear All');
+        final clearButton = find.text('Clear all');
         expect(clearButton, findsOneWidget);
 
         await tester.tap(clearButton);

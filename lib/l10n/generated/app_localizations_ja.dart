@@ -809,4 +809,69 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get unitLiters => 'リットル';
+
+  @override
+  String get nameConflict => '名前の重複';
+
+  @override
+  String get replaceExistingFood => '同じ名前の食品がすでにあります。以前の食品を置き換えますか？';
+
+  @override
+  String get no => 'いいえ';
+
+  @override
+  String get yes => 'はい';
+
+  @override
+  String get editFood => '食品を編集';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return '$name を削除しますか？';
+  }
+
+  @override
+  String get caloriesKcal => 'カロリー (kcal)';
+
+  @override
+  String get kilojoulesKj => 'キロジュール (kJ)';
+
+  @override
+  String get servingSize => '1食分の量';
+
+  @override
+  String get servingUnit => '1食分の単位';
+
+  @override
+  String get saveAsNewCopy => '新しいコピーとして保存';
+
+  @override
+  String get filterFoods => '食品を絞り込む';
+
+  @override
+  String get narrowFoodsFilters => '任意のフィルターを組み合わせて一覧を絞り込みます。';
+
+  @override
+  String get foodDetails => '食品の詳細';
+
+  @override
+  String get exampleFruitHint => '例：果物';
+
+  @override
+  String get servingSizeRangeHint => '最小値、最大値、または両方を設定します。';
+
+  @override
+  String get minimum => '最小値';
+
+  @override
+  String get maximum => '最大値';
+
+  @override
+  String get noMinimum => '最小値なし';
+
+  @override
+  String get noMaximum => '最大値なし';
+
+  @override
+  String get clearAll => 'すべてクリア';
 }

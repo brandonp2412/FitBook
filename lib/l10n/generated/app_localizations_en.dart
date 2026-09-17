@@ -830,4 +830,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unitLiters => 'Liters';
+
+  @override
+  String get nameConflict => 'Name conflict';
+
+  @override
+  String get replaceExistingFood =>
+      'A food already exists with this name. Do you want to replace the old one?';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get editFood => 'Edit food';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return 'Are you sure you want to delete $name?';
+  }
+
+  @override
+  String get caloriesKcal => 'Calories (kcal)';
+
+  @override
+  String get kilojoulesKj => 'Kilojoules (kJ)';
+
+  @override
+  String get servingSize => 'Serving size';
+
+  @override
+  String get servingUnit => 'Serving unit';
+
+  @override
+  String get saveAsNewCopy => 'Save as new copy';
+
+  @override
+  String get filterFoods => 'Filter foods';
+
+  @override
+  String get narrowFoodsFilters =>
+      'Narrow the list using any combination of filters.';
+
+  @override
+  String get foodDetails => 'Food details';
+
+  @override
+  String get exampleFruitHint => 'e.g. Fruit';
+
+  @override
+  String get servingSizeRangeHint => 'Set a minimum, maximum, or both.';
+
+  @override
+  String get minimum => 'Minimum';
+
+  @override
+  String get maximum => 'Maximum';
+
+  @override
+  String get noMinimum => 'No minimum';
+
+  @override
+  String get noMaximum => 'No maximum';
+
+  @override
+  String get clearAll => 'Clear all';
 }

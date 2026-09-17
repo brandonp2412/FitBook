@@ -1612,6 +1612,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Liters'**
   String get unitLiters;
+
+  /// No description provided for @nameConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Name conflict'**
+  String get nameConflict;
+
+  /// No description provided for @replaceExistingFood.
+  ///
+  /// In en, this message translates to:
+  /// **'A food already exists with this name. Do you want to replace the old one?'**
+  String get replaceExistingFood;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @editFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit food'**
+  String get editFood;
+
+  /// No description provided for @confirmDeleteFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete {name}?'**
+  String confirmDeleteFood(String name);
+
+  /// No description provided for @caloriesKcal.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories (kcal)'**
+  String get caloriesKcal;
+
+  /// No description provided for @kilojoulesKj.
+  ///
+  /// In en, this message translates to:
+  /// **'Kilojoules (kJ)'**
+  String get kilojoulesKj;
+
+  /// No description provided for @servingSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving size'**
+  String get servingSize;
+
+  /// No description provided for @servingUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving unit'**
+  String get servingUnit;
+
+  /// No description provided for @saveAsNewCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as new copy'**
+  String get saveAsNewCopy;
+
+  /// No description provided for @filterFoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter foods'**
+  String get filterFoods;
+
+  /// No description provided for @narrowFoodsFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow the list using any combination of filters.'**
+  String get narrowFoodsFilters;
+
+  /// No description provided for @foodDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Food details'**
+  String get foodDetails;
+
+  /// No description provided for @exampleFruitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Fruit'**
+  String get exampleFruitHint;
+
+  /// No description provided for @servingSizeRangeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a minimum, maximum, or both.'**
+  String get servingSizeRangeHint;
+
+  /// No description provided for @minimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum'**
+  String get minimum;
+
+  /// No description provided for @maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum'**
+  String get maximum;
+
+  /// No description provided for @noMinimum.
+  ///
+  /// In en, this message translates to:
+  /// **'No minimum'**
+  String get noMinimum;
+
+  /// No description provided for @noMaximum.
+  ///
+  /// In en, this message translates to:
+  /// **'No maximum'**
+  String get noMaximum;
+
+  /// No description provided for @clearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get clearAll;
 }
 
 class _AppLocalizationsDelegate

@@ -35,7 +35,7 @@ void main() {
     final kilojoules = find.byWidgetPredicate(
       (widget) =>
           widget is TextField &&
-          widget.decoration?.labelText == 'Kilojoules (kj)',
+          widget.decoration?.labelText == 'Kilojoules (kJ)',
     );
     final servingSize = find.byWidgetPredicate(
       (widget) =>

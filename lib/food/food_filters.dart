@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,7 @@ class _FoodFiltersState extends State<FoodFilters> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         icon: const Icon(Icons.tune),
-        title: const Text('Filter foods'),
+        title: Text(dialogContext.l10n.filterFoods),
         contentPadding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
         content: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 440),
@@ -67,7 +68,7 @@ class _FoodFiltersState extends State<FoodFilters> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Narrow the list using any combination of filters.',
+                  dialogContext.l10n.narrowFoodsFilters,
                   style: Theme.of(dialogContext).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(dialogContext)
                             .colorScheme
@@ -75,9 +76,9 @@ class _FoodFiltersState extends State<FoodFilters> {
                       ),
                 ),
                 const SizedBox(height: 24),
-                const _SectionLabel(
+                _SectionLabel(
                   icon: Icons.restaurant_menu,
-                  title: 'Food details',
+                  title: dialogContext.l10n.foodDetails,
                 ),
                 const SizedBox(height: 12),
                 Autocomplete<String>(
@@ -111,11 +112,11 @@ class _FoodFiltersState extends State<FoodFilters> {
                     controller = textEditingController;
                     controller.text = widget.groupCtrl.text;
                     return TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Food group',
-                        hintText: 'e.g. Fruit',
-                        prefixIcon: Icon(Icons.category_outlined),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: dialogContext.l10n.foodGroup,
+                        hintText: dialogContext.l10n.exampleFruitHint,
+                        prefixIcon: const Icon(Icons.category_outlined),
+                        border: const OutlineInputBorder(),
                       ),
                       controller: textEditingController,
                       focusNode: focusNode,
@@ -134,15 +135,15 @@ class _FoodFiltersState extends State<FoodFilters> {
                 DropdownButtonFormField<String>(
                   initialValue: _servingUnit,
                   isExpanded: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Serving unit',
-                    prefixIcon: Icon(Icons.straighten),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: dialogContext.l10n.servingUnit,
+                    prefixIcon: const Icon(Icons.straighten),
+                    border: const OutlineInputBorder(),
                   ),
                   items: unitOptions.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(localizedUnit(dialogContext.l10n, value)),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -156,13 +157,13 @@ class _FoodFiltersState extends State<FoodFilters> {
                   },
                 ),
                 const SizedBox(height: 24),
-                const _SectionLabel(
+                _SectionLabel(
                   icon: Icons.numbers,
-                  title: 'Serving size',
+                  title: dialogContext.l10n.servingSize,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Set a minimum, maximum, or both.',
+                  dialogContext.l10n.servingSizeRangeHint,
                   style: Theme.of(dialogContext).textTheme.bodySmall?.copyWith(
                         color: Theme.of(dialogContext)
                             .colorScheme
@@ -175,15 +176,15 @@ class _FoodFiltersState extends State<FoodFilters> {
                     children: [
                       _ServingSizeField(
                         controller: widget.servingSizeGtController,
-                        label: 'Minimum',
-                        hint: 'No minimum',
+                        label: dialogContext.l10n.minimum,
+                        hint: dialogContext.l10n.noMinimum,
                         onChanged: _notifyChange,
                       ),
                       const SizedBox(height: 12),
                       _ServingSizeField(
                         controller: widget.servingSizeLtController,
-                        label: 'Maximum',
-                        hint: 'No maximum',
+                        label: dialogContext.l10n.maximum,
+                        hint: dialogContext.l10n.noMaximum,
                         onChanged: _notifyChange,
                       ),
                     ],
@@ -194,8 +195,8 @@ class _FoodFiltersState extends State<FoodFilters> {
                       Expanded(
                         child: _ServingSizeField(
                           controller: widget.servingSizeGtController,
-                          label: 'Minimum',
-                          hint: 'No minimum',
+                          label: dialogContext.l10n.minimum,
+                          hint: dialogContext.l10n.noMinimum,
                           onChanged: _notifyChange,
                         ),
                       ),
@@ -203,8 +204,8 @@ class _FoodFiltersState extends State<FoodFilters> {
                       Expanded(
                         child: _ServingSizeField(
                           controller: widget.servingSizeLtController,
-                          label: 'Maximum',
-                          hint: 'No maximum',
+                          label: dialogContext.l10n.maximum,
+                          hint: dialogContext.l10n.noMaximum,
                           onChanged: _notifyChange,
                         ),
                       ),
@@ -229,7 +230,7 @@ class _FoodFiltersState extends State<FoodFilters> {
               );
               Navigator.of(dialogContext).pop();
             },
-            child: const Text('Clear All'),
+            child: Text(dialogContext.l10n.clearAll),
           ),
           FilledButton(
             onPressed: () {
@@ -243,7 +244,7 @@ class _FoodFiltersState extends State<FoodFilters> {
               }
               Navigator.of(dialogContext).pop();
             },
-            child: const Text('Done'),
+            child: Text(dialogContext.l10n.done),
           ),
         ],
       ),
@@ -264,7 +265,7 @@ class _FoodFiltersState extends State<FoodFilters> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       isLabelVisible: filterCount > 0,
       child: IconButton(
-        tooltip: 'Filter foods',
+        tooltip: context.l10n.filterFoods,
         icon: const Icon(Icons.filter_list),
         onPressed: _showFilterDialog,
       ),
