@@ -96,7 +96,8 @@ void main() {
 
   test('Android platform strings cover every first-wave locale and key', () {
     final base = File('android/app/src/main/res/values/strings.xml');
-    final expectedKeys = _androidStringKeys(base);
+    final englishStrings = _androidStrings(base);
+    final expectedKeys = englishStrings.keys.toSet();
     final localizedFiles = <String>[
       'values-de',
       'values-es',
@@ -113,17 +114,31 @@ void main() {
     for (final directory in localizedFiles) {
       final file = File('android/app/src/main/res/$directory/strings.xml');
       expect(file.existsSync(), isTrue, reason: '$directory must be localized');
+      final localizedStrings = _androidStrings(file);
       expect(
-        _androidStringKeys(file),
+        localizedStrings.keys.toSet(),
         expectedKeys,
         reason: '${file.path} must match the default Android string keys',
       );
+      for (final entry in englishStrings.entries) {
+        expect(
+          localizedStrings[entry.key],
+          isNotEmpty,
+          reason: '${file.path}:${entry.key} must not be empty',
+        );
+        expect(
+          localizedStrings[entry.key],
+          isNot(entry.value),
+          reason: '${file.path}:${entry.key} must not fall back to English',
+        );
+      }
     }
   });
 
   test('iOS permission strings cover every first-wave locale and key', () {
     final base = File('ios/Runner/en.lproj/InfoPlist.strings');
-    final expectedKeys = _appleStringKeys(base);
+    final englishStrings = _appleStrings(base);
+    final expectedKeys = englishStrings.keys.toSet();
     final localizedDirectories = <String>[
       'de.lproj',
       'es.lproj',
@@ -140,12 +155,76 @@ void main() {
     for (final directory in localizedDirectories) {
       final file = File('ios/Runner/$directory/InfoPlist.strings');
       expect(file.existsSync(), isTrue, reason: '$directory must be localized');
+      final localizedStrings = _appleStrings(file);
       expect(
-        _appleStringKeys(file),
+        localizedStrings.keys.toSet(),
         expectedKeys,
         reason: '${file.path} must match the English iOS permission keys',
       );
+      for (final entry in englishStrings.entries) {
+        expect(
+          localizedStrings[entry.key],
+          isNotEmpty,
+          reason: '${file.path}:${entry.key} must not be empty',
+        );
+        expect(
+          localizedStrings[entry.key],
+          isNot(entry.value),
+          reason: '${file.path}:${entry.key} must not fall back to English',
+        );
+      }
     }
+  });
+
+  test('Dart UI copy does not bypass localization', () {
+    const allowedDirectText = {'Brandon Dick', 'MIT'};
+    final directText = RegExp(
+      r'''\bText\s*\(\s*["']([^"'$]+)["']''',
+      multiLine: true,
+    );
+    final literalUiProperty = RegExp(
+      r'''(?:tooltip|semanticLabel|labelText|hintText|helperText|errorText)\s*:\s*["']([^"']+)["']''',
+      multiLine: true,
+    );
+    final rawErrorWidget = RegExp(
+      r'''\bErrorWidget\s*\(\s*(?:snapshot\.error|error(?:\.toString\(\))?)''',
+    );
+    final violations = <String>[];
+
+    final dartFiles =
+        Directory('lib').listSync(recursive: true).whereType<File>().where(
+              (file) =>
+                  file.path.endsWith('.dart') &&
+                  !file.path.contains('/l10n/generated/'),
+            );
+
+    for (final file in dartFiles) {
+      final source = file.readAsStringSync();
+      for (final match in directText.allMatches(source)) {
+        final value = match.group(1)!;
+        if (allowedDirectText.contains(value)) continue;
+        violations.add(
+          '${file.path}:${_lineNumber(source, match.start)} Text: $value',
+        );
+      }
+      for (final match in literalUiProperty.allMatches(source)) {
+        violations.add(
+          '${file.path}:${_lineNumber(source, match.start)} UI property: ${match.group(1)}',
+        );
+      }
+      for (final match in rawErrorWidget.allMatches(source)) {
+        violations.add(
+          '${file.path}:${_lineNumber(source, match.start)} raw ErrorWidget exception',
+        );
+      }
+    }
+
+    expect(
+      violations,
+      isEmpty,
+      reason:
+          'User-visible Dart copy must come from AppLocalizations:\n${violations.join('\n')}',
+    );
   });
 
   test('generated localizations expose the intended first-wave locales', () {
@@ -296,21 +375,24 @@ Map<String, String> _messages(Map<String, dynamic> arb) => {
         if (!entry.key.startsWith('@')) entry.key: entry.value as String,
     };
 
+int _lineNumber(String source, int offset) =>
+    '\n'.allMatches(source.substring(0, offset)).length + 1;
+
 Set<String> _placeholders(String message) => RegExp(
       r'\{([A-Za-z][A-Za-z0-9_]*)(?=[},])',
     ).allMatches(message).map((match) => match.group(1)!).toSet();
 
-Set<String> _androidStringKeys(File file) => RegExp(
-      r'<string\s+name="([^"]+)"',
-    )
-        .allMatches(file.readAsStringSync())
-        .map((match) => match.group(1)!)
-        .toSet();
+Map<String, String> _androidStrings(File file) => {
+      for (final match in RegExp(
+        r'<string\s+name="([^"]+)">([^<]*)</string>',
+      ).allMatches(file.readAsStringSync()))
+        match.group(1)!: match.group(2)!,
+    };
 
-Set<String> _appleStringKeys(File file) => RegExp(
-      r'^"([^"]+)"\s*=',
-      multiLine: true,
-    )
-        .allMatches(file.readAsStringSync())
-        .map((match) => match.group(1)!)
-        .toSet();
+Map<String, String> _appleStrings(File file) => {
+      for (final match in RegExp(
+        r'^"([^"]+)"\s*=\s*"([^"]*)";',
+        multiLine: true,
+      ).allMatches(file.readAsStringSync()))
+        match.group(1)!: match.group(2)!,
+    };

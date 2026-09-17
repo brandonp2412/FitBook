@@ -15,7 +15,11 @@ void main() {
 
       await binding.traceAction(
         () async {
-          await tester.fling(listFinder, Offset(0, -300), 1000);
+          await tester.fling(
+            listFinder,
+            Offset(0, -300),
+            1000,
+          );
           await tester.pumpAndSettle();
         },
         reportKey: 'scroll_performance',

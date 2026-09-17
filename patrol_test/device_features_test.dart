@@ -43,7 +43,9 @@ void main() {
 
       await remindersTile.scrollTo().tap();
       await remindersSwitch
-          .which<Switch>((widget) => !widget.value)
+          .which<Switch>(
+            (widget) => !widget.value,
+          )
           .waitUntilExists(timeout: _uiTimeout);
     },
     tags: 'reminders',
@@ -73,7 +75,9 @@ void main() {
       await _openSettingsSection($, 'Diary');
       await remindersTile.scrollTo();
       await remindersSwitch
-          .which<Switch>((widget) => widget.value)
+          .which<Switch>(
+            (widget) => widget.value,
+          )
           .waitUntilExists(timeout: _uiTimeout);
     },
     tags: 'reminders',
