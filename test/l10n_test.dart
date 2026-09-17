@@ -85,10 +85,16 @@ void main() {
       );
       for (final entry in translations.entries) {
         expect(entry.value.trim(), isNotEmpty);
+        final englishFile = File('assets/changelogs/${entry.key}.txt');
         expect(
-          File('assets/changelogs/${entry.key}.txt').existsSync(),
+          englishFile.existsSync(),
           isTrue,
           reason: '${entry.key} must reference an English changelog asset',
+        );
+        expect(
+          entry.value.trim(),
+          isNot(englishFile.readAsStringSync().trim()),
+          reason: '${file.path}:${entry.key} must not copy English unchanged',
         );
       }
     }
