@@ -76,5 +76,15 @@
   "1757110948": "• Versteckte FABs korrigieren",
   "1757107240": "• Unter der Systemoberfläche zeichnen",
   "1757048283": "• Fehlschlagen der Sicherung zulassen\n• Tagebucheinträge als Karten darstellen\n• Gewichte als Karten darstellen\n• Tagebuchanzeige überarbeiten\n• Datumsformat in der Gewichtsliste verwenden",
-  "1756882404": "• Mehrfachbearbeitung von Tagebucheinträgen korrigieren\n• Schnellhinzufügen korrigieren\n• Unit-Tests korrigieren\n• OFF-Bilder auf der Lebensmittelseite als Vorschau anzeigen"
+  "1756882404": "• Mehrfachbearbeitung von Tagebucheinträgen korrigieren\n• Schnellhinzufügen korrigieren\n• Unit-Tests korrigieren\n• OFF-Bilder auf der Lebensmittelseite als Vorschau anzeigen",
+  "1756878553": "• Einstellung zum Umschalten des Tab-Scrollens hinzufügen\n• Einträge zu Tagebüchern migrieren\n• Badges in README verschieben [skip ci]",
+  "1756092245": "• Kalorien nach Verwendung von OpenFoodFacts korrigieren\n• Publisher in pubspec.yaml korrigieren",
+  "1755152140": "• Fehler bei Alles auswählen beheben\n• Unit-Tests korrigieren",
+  "1755132691": "• OFF-Suche erklären\n• Höhe beim Bearbeiten eines Tagebucheintrags korrigieren\n• Namen nach Rückkehr von OpenFoodFacts korrigieren\n• Abstände auf der Eintrags-Bearbeitungsseite korrigieren\n• Nutzer auf OpenFoodFacts hinweisen, wenn ein Lebensmittel nicht existiert\n• Höhe des Bildes auf der Gewichts-Bearbeitungsseite festlegen",
+  "1754814154": "• Autovervollständigung zum Lebensmittelgruppenfilter hinzufügen\n• Teilübereinstimmung für Lebensmittelgruppen erlauben\n• Debugging unter macOS korrigieren\n• Fertig-Schaltfläche bei Lebensmittelfiltern korrigieren\n• Fehler beheben, bei dem Lebensmittelfilter die Gruppe nicht beibehielten\n• Unit-Tests der Lebensmittelfilter korrigieren\n• Persistenz des Lebensmittelgruppenfilters korrigieren\n• Lebensmittelgruppenfilter auf der Tagebuchseite korrigieren\n• Kameraberechtigungen aus macOS entfernen\n• network.server-Entitlements entfernen",
+  "1754365119": "• Fehlerbehebungen und Verbesserungen",
+  "1754281763": "• Fehlerhafte Filter korrigieren\n• Aktualisierung von Lebensmittelfeldern korrigieren\n• Geschwindigkeit der Tagebuchfilter-Schaltfläche verbessern\n• Einige Variablennamen kürzen",
+  "1754278031": "• Dasselbe Barcode-Feld für Lebensmittel und Einträge verwenden",
+  "1754192489": "• Aktualisierung der Windows-Store-App korrigieren",
+  "1753940196": "• chmod +x aus flutter/bin entfernen"
 }

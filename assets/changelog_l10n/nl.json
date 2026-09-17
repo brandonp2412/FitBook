@@ -76,5 +76,15 @@
   "1757110948": "• Verborgen FAB's corrigeren",
   "1757107240": "• Onder de systeeminterface tekenen",
   "1757048283": "• Mislukken van back-up toestaan\n• Dagboekitems als kaarten weergeven\n• Gewichten als kaarten weergeven\n• Dagboekweergave herwerken\n• Datumnotatie in de gewichtslijst gebruiken",
-  "1756882404": "• Meervoudige bewerking van dagboekitems corrigeren\n• Snel toevoegen corrigeren\n• Unittests corrigeren\n• OFF-afbeeldingen vooraf bekijken op de Voedingspagina"
+  "1756882404": "• Meervoudige bewerking van dagboekitems corrigeren\n• Snel toevoegen corrigeren\n• Unittests corrigeren\n• OFF-afbeeldingen vooraf bekijken op de Voedingspagina",
+  "1756878553": "• Instelling toevoegen om scrollen van tabbladen in of uit te schakelen\n• Items migreren naar dagboeken\n• Badges in README verplaatsen [skip ci]",
+  "1756092245": "• Calorieën corrigeren na gebruik van OpenFoodFacts\n• Publisher in pubspec.yaml corrigeren",
+  "1755152140": "• Fout bij alles selecteren corrigeren\n• Unittests corrigeren",
+  "1755132691": "• OFF-zoeken uitleggen\n• Hoogte bij het bewerken van een dagboekitem corrigeren\n• Naam corrigeren na terugkeer uit OpenFoodFacts\n• Afstand op de pagina voor itembewerking corrigeren\n• Gebruiker naar OpenFoodFacts verwijzen wanneer een voedingsmiddel niet bestaat\n• Hoogte van de afbeelding op de pagina voor gewichtsbewerking instellen",
+  "1754814154": "• Automatisch aanvullen toevoegen aan het voedingsgroepfilter\n• Gedeeltelijke overeenkomsten voor voedingsgroepen toestaan\n• Debuggen op macOS corrigeren\n• Knop Gereed bij voedingsfilters corrigeren\n• Voedingsfilters corrigeren die de groep niet behielden\n• Unittests van voedingsfilters corrigeren\n• Persistentie van het voedingsgroepfilter corrigeren\n• Voedingsgroepfilters op de Dagboekpagina corrigeren\n• Cameramachtigingen uit macOS verwijderen\n• network.server-entitlements verwijderen",
+  "1754365119": "• Bugfixes en verbeteringen",
+  "1754281763": "• Defecte filters corrigeren\n• Bijwerken van voedingsvelden corrigeren\n• Snelheid van de dagboekfilterknop verbeteren\n• Enkele variabelenamen inkorten",
+  "1754278031": "• Hetzelfde barcodeveld voor voedingsmiddelen en items gebruiken",
+  "1754192489": "• Bijwerken van de Windows Store-app corrigeren",
+  "1753940196": "• chmod +x uit flutter/bin verwijderen"
 }

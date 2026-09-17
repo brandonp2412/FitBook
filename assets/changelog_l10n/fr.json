@@ -76,5 +76,15 @@
   "1757110948": "• Corriger les FAB masqués",
   "1757107240": "• Dessiner sous l’interface système",
   "1757048283": "• Autoriser l’échec de la sauvegarde\n• Transformer les entrées du journal en cartes\n• Transformer les poids en cartes\n• Repenser l’affichage du journal\n• Utiliser le format de date dans la liste des poids",
-  "1756882404": "• Corriger la modification multiple des entrées du journal\n• Corriger l’ajout rapide\n• Corriger les tests unitaires\n• Prévisualiser les images OFF sur la page Aliments"
+  "1756882404": "• Corriger la modification multiple des entrées du journal\n• Corriger l’ajout rapide\n• Corriger les tests unitaires\n• Prévisualiser les images OFF sur la page Aliments",
+  "1756878553": "• Ajouter un paramètre pour activer ou désactiver le défilement des onglets\n• Migrer les entrées vers les journaux\n• Déplacer les badges dans README [skip ci]",
+  "1756092245": "• Corriger les calories après l’utilisation d’OpenFoodFacts\n• Corriger le publisher dans pubspec.yaml",
+  "1755152140": "• Corriger le bug de sélection de tout\n• Corriger les tests unitaires",
+  "1755132691": "• Expliquer la recherche OFF\n• Corriger la hauteur lors de la modification d’une entrée du journal\n• Corriger le nom au retour d’OpenFoodFacts\n• Corriger l’espacement sur la page de modification d’entrée\n• Orienter l’utilisateur vers OpenFoodFacts lorsqu’un aliment n’existe pas\n• Spécifier la hauteur de l’image sur la page de modification du poids",
+  "1754814154": "• Ajouter l’autocomplétion au filtre de groupe d’aliments\n• Autoriser la correspondance partielle des groupes d’aliments\n• Corriger le débogage sur macOS\n• Corriger le bouton Terminé des filtres d’aliments\n• Corriger les filtres d’aliments qui ne conservaient pas le groupe\n• Corriger les tests unitaires des filtres d’aliments\n• Corriger la persistance du filtre de groupe d’aliments\n• Corriger les filtres de groupe d’aliments sur la page Journal\n• Supprimer les autorisations de caméra de macOS\n• Supprimer les entitlements network.server",
+  "1754365119": "• Corrections de bugs et améliorations",
+  "1754281763": "• Corriger les filtres défectueux\n• Corriger la mise à jour des champs d’aliments\n• Améliorer la vitesse du bouton de filtres du journal\n• Raccourcir certains noms de variables",
+  "1754278031": "• Utiliser le même champ de code-barres pour les aliments et les entrées",
+  "1754192489": "• Corriger la mise à jour de l’application Windows Store",
+  "1753940196": "• Supprimer chmod +x de flutter/bin"
 }

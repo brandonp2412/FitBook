@@ -76,5 +76,15 @@
   "1757110948": "• Correggere i FAB nascosti",
   "1757107240": "• Disegnare sotto l’interfaccia di sistema",
   "1757048283": "• Consentire il fallimento del backup\n• Trasformare le voci del diario in schede\n• Trasformare i pesi in schede\n• Rielaborare la visualizzazione del diario\n• Usare il formato data nella lista dei pesi",
-  "1756882404": "• Correggere la modifica multipla delle voci del diario\n• Correggere l’aggiunta rapida\n• Correggere i test unitari\n• Mostrare l’anteprima delle immagini OFF nella pagina Alimenti"
+  "1756882404": "• Correggere la modifica multipla delle voci del diario\n• Correggere l’aggiunta rapida\n• Correggere i test unitari\n• Mostrare l’anteprima delle immagini OFF nella pagina Alimenti",
+  "1756878553": "• Aggiungere un’impostazione per attivare o disattivare lo scorrimento delle schede\n• Migrare le voci nei diari\n• Spostare i badge in README [skip ci]",
+  "1756092245": "• Correggere le calorie dopo l’uso di OpenFoodFacts\n• Correggere il publisher in pubspec.yaml",
+  "1755152140": "• Correggere il bug della selezione di tutto\n• Correggere i test unitari",
+  "1755132691": "• Spiegare la ricerca OFF\n• Correggere l’altezza durante la modifica di una voce del diario\n• Correggere il nome al ritorno da OpenFoodFacts\n• Correggere la spaziatura nella pagina di modifica della voce\n• Indirizzare l’utente a OpenFoodFacts quando un alimento non esiste\n• Specificare l’altezza dell’immagine nella pagina di modifica del peso",
+  "1754814154": "• Aggiungere l’autocompletamento al filtro dei gruppi di alimenti\n• Consentire corrispondenze parziali per i gruppi di alimenti\n• Correggere il debug su macOS\n• Correggere il pulsante Fine nei filtri degli alimenti\n• Correggere i filtri degli alimenti che non mantenevano il gruppo\n• Correggere i test unitari dei filtri degli alimenti\n• Correggere la persistenza del filtro dei gruppi di alimenti\n• Correggere i filtri dei gruppi di alimenti nella pagina Diario\n• Rimuovere i permessi della fotocamera da macOS\n• Rimuovere gli entitlement network.server",
+  "1754365119": "• Correzioni di bug e miglioramenti",
+  "1754281763": "• Correggere i filtri difettosi\n• Correggere l’aggiornamento dei campi degli alimenti\n• Migliorare la velocità del pulsante filtri del diario\n• Accorciare alcuni nomi di variabili",
+  "1754278031": "• Usare lo stesso campo del codice a barre per alimenti e voci",
+  "1754192489": "• Correggere l’aggiornamento dell’app Windows Store",
+  "1753940196": "• Rimuovere chmod +x da flutter/bin"
 }

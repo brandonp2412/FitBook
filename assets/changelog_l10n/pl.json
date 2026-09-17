@@ -76,5 +76,15 @@
   "1757110948": "• Naprawić ukryte FAB-y",
   "1757107240": "• Rysować pod interfejsem systemowym",
   "1757048283": "• Pozwolić na niepowodzenie kopii zapasowej\n• Wyświetlać wpisy dziennika jako karty\n• Wyświetlać wpisy masy ciała jako karty\n• Przeprojektować wyświetlanie dziennika\n• Używać formatu daty na liście masy ciała",
-  "1756882404": "• Naprawić wielokrotną edycję wpisów dziennika\n• Naprawić szybkie dodawanie\n• Naprawić testy jednostkowe\n• Pokazywać podgląd obrazów OFF na stronie Produkty"
+  "1756882404": "• Naprawić wielokrotną edycję wpisów dziennika\n• Naprawić szybkie dodawanie\n• Naprawić testy jednostkowe\n• Pokazywać podgląd obrazów OFF na stronie Produkty",
+  "1756878553": "• Dodać ustawienie do włączania lub wyłączania przewijania kart\n• Przenieść wpisy do dzienników\n• Przenieść plakietki w README [skip ci]",
+  "1756092245": "• Naprawić kalorie po użyciu OpenFoodFacts\n• Naprawić publisher w pubspec.yaml",
+  "1755152140": "• Naprawić błąd zaznaczania wszystkiego\n• Naprawić testy jednostkowe",
+  "1755132691": "• Wyjaśnić wyszukiwanie OFF\n• Naprawić wysokość przy edycji wpisu dziennika\n• Naprawić nazwę po powrocie z OpenFoodFacts\n• Naprawić odstępy na stronie edycji wpisu\n• Kierować użytkownika do OpenFoodFacts, gdy produkt nie istnieje\n• Określić wysokość obrazu na stronie edycji masy ciała",
+  "1754814154": "• Dodać autouzupełnianie do filtra grup produktów\n• Zezwolić na częściowe dopasowanie grup produktów\n• Naprawić debugowanie na macOS\n• Naprawić przycisk Gotowe w filtrach produktów\n• Naprawić filtry produktów, które nie zachowywały grupy\n• Naprawić testy jednostkowe filtrów produktów\n• Naprawić trwałość filtra grup produktów\n• Naprawić filtry grup produktów na stronie Dziennik\n• Usunąć uprawnienia aparatu z macOS\n• Usunąć entitlement network.server",
+  "1754365119": "• Poprawki błędów i ulepszenia",
+  "1754281763": "• Naprawić wadliwe filtry\n• Naprawić aktualizowanie pól produktów\n• Poprawić szybkość przycisku filtrów dziennika\n• Skrócić niektóre nazwy zmiennych",
+  "1754278031": "• Używać tego samego pola kodu kreskowego dla produktów i wpisów",
+  "1754192489": "• Naprawić aktualizację aplikacji Windows Store",
+  "1753940196": "• Usunąć chmod +x z flutter/bin"
 }

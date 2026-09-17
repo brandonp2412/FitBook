@@ -76,5 +76,15 @@
   "1757110948": "• Corrigir FABs ocultos",
   "1757107240": "• Desenhar sob a interface do sistema",
   "1757048283": "• Permitir que o backup falhe\n• Transformar entradas do diário em cartões\n• Transformar pesos em cartões\n• Reformular a exibição do diário\n• Usar formato de data na lista de pesos",
-  "1756882404": "• Corrigir edição múltipla de entradas do diário\n• Corrigir adição rápida\n• Corrigir testes unitários\n• Mostrar prévia de imagens do OFF na página Alimentos"
+  "1756882404": "• Corrigir edição múltipla de entradas do diário\n• Corrigir adição rápida\n• Corrigir testes unitários\n• Mostrar prévia de imagens do OFF na página Alimentos",
+  "1756878553": "• Adicionar configuração para ativar ou desativar a rolagem de abas\n• Migrar entradas para diários\n• Mover selos no README [skip ci]",
+  "1756092245": "• Corrigir calorias após usar OpenFoodFacts\n• Corrigir o publisher em pubspec.yaml",
+  "1755152140": "• Corrigir bug ao selecionar tudo\n• Corrigir testes unitários",
+  "1755132691": "• Explicar a pesquisa OFF\n• Corrigir a altura ao editar uma entrada do diário\n• Corrigir o nome ao voltar do OpenFoodFacts\n• Corrigir o espaçamento na página de edição de entrada\n• Direcionar o usuário ao OpenFoodFacts quando um alimento não existe\n• Especificar a altura da imagem na página de edição de peso",
+  "1754814154": "• Adicionar preenchimento automático ao filtro de grupo de alimentos\n• Permitir correspondência parcial para grupos de alimentos\n• Corrigir depuração no macOS\n• Corrigir o botão Concluído nos filtros de alimentos\n• Corrigir filtros de alimentos que não mantinham o grupo\n• Corrigir testes unitários dos filtros de alimentos\n• Corrigir a persistência do filtro de grupo de alimentos\n• Corrigir filtros de grupo de alimentos na página Diário\n• Remover permissões de câmera do macOS\n• Remover entitlements network.server",
+  "1754365119": "• Correções de bugs e melhorias",
+  "1754281763": "• Corrigir filtros com falhas\n• Corrigir atualização dos campos de alimentos\n• Melhorar a velocidade do botão de filtros do diário\n• Encurtar alguns nomes de variáveis",
+  "1754278031": "• Usar o mesmo campo de código de barras para alimentos e entradas",
+  "1754192489": "• Corrigir atualização do app na Windows Store",
+  "1753940196": "• Remover chmod +x de flutter/bin"
 }
