@@ -2560,6 +2560,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Docosahexaenoic acid (DHA)'**
   String get nutrientDha;
+
+  /// No description provided for @nutrientAlanine.
+  ///
+  /// In en, this message translates to:
+  /// **'Alanine'**
+  String get nutrientAlanine;
+
+  /// No description provided for @nutrientAlcohol.
+  ///
+  /// In en, this message translates to:
+  /// **'Alcohol'**
+  String get nutrientAlcohol;
+
+  /// No description provided for @nutrientArginine.
+  ///
+  /// In en, this message translates to:
+  /// **'Arginine'**
+  String get nutrientArginine;
+
+  /// No description provided for @nutrientAsparticAcid.
+  ///
+  /// In en, this message translates to:
+  /// **'Aspartic acid'**
+  String get nutrientAsparticAcid;
+
+  /// No description provided for @nutrientCystine.
+  ///
+  /// In en, this message translates to:
+  /// **'Cystine'**
+  String get nutrientCystine;
+
+  /// No description provided for @nutrientGlutamicAcid.
+  ///
+  /// In en, this message translates to:
+  /// **'Glutamic acid'**
+  String get nutrientGlutamicAcid;
+
+  /// No description provided for @nutrientGlycine.
+  ///
+  /// In en, this message translates to:
+  /// **'Glycine'**
+  String get nutrientGlycine;
+
+  /// No description provided for @nutrientHistidine.
+  ///
+  /// In en, this message translates to:
+  /// **'Histidine'**
+  String get nutrientHistidine;
+
+  /// No description provided for @nutrientHydroxyproline.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydroxyproline'**
+  String get nutrientHydroxyproline;
+
+  /// No description provided for @nutrientIsoleucine.
+  ///
+  /// In en, this message translates to:
+  /// **'Isoleucine'**
+  String get nutrientIsoleucine;
+
+  /// No description provided for @nutrientLeucine.
+  ///
+  /// In en, this message translates to:
+  /// **'Leucine'**
+  String get nutrientLeucine;
+
+  /// No description provided for @nutrientLysine.
+  ///
+  /// In en, this message translates to:
+  /// **'Lysine'**
+  String get nutrientLysine;
+
+  /// No description provided for @nutrientMethionine.
+  ///
+  /// In en, this message translates to:
+  /// **'Methionine'**
+  String get nutrientMethionine;
+
+  /// No description provided for @nutrientPhenylalanine.
+  ///
+  /// In en, this message translates to:
+  /// **'Phenylalanine'**
+  String get nutrientPhenylalanine;
+
+  /// No description provided for @nutrientProline.
+  ///
+  /// In en, this message translates to:
+  /// **'Proline'**
+  String get nutrientProline;
+
+  /// No description provided for @nutrientSerine.
+  ///
+  /// In en, this message translates to:
+  /// **'Serine'**
+  String get nutrientSerine;
+
+  /// No description provided for @nutrientThreonine.
+  ///
+  /// In en, this message translates to:
+  /// **'Threonine'**
+  String get nutrientThreonine;
+
+  /// No description provided for @nutrientTryptophan.
+  ///
+  /// In en, this message translates to:
+  /// **'Tryptophan'**
+  String get nutrientTryptophan;
+
+  /// No description provided for @nutrientTyrosine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tyrosine'**
+  String get nutrientTyrosine;
+
+  /// No description provided for @nutrientValine.
+  ///
+  /// In en, this message translates to:
+  /// **'Valine'**
+  String get nutrientValine;
+
+  /// No description provided for @nutrientCaffeine.
+  ///
+  /// In en, this message translates to:
+  /// **'Caffeine'**
+  String get nutrientCaffeine;
+
+  /// No description provided for @nutrientTheobromine.
+  ///
+  /// In en, this message translates to:
+  /// **'Theobromine'**
+  String get nutrientTheobromine;
 }
 
 class _AppLocalizationsDelegate

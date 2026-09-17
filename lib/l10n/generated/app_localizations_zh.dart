@@ -1335,6 +1335,72 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nutrientDha => '二十二碳六烯酸（DHA）';
+
+  @override
+  String get nutrientAlanine => '丙氨酸';
+
+  @override
+  String get nutrientAlcohol => '酒精';
+
+  @override
+  String get nutrientArginine => '精氨酸';
+
+  @override
+  String get nutrientAsparticAcid => '天冬氨酸';
+
+  @override
+  String get nutrientCystine => '胱氨酸';
+
+  @override
+  String get nutrientGlutamicAcid => '谷氨酸';
+
+  @override
+  String get nutrientGlycine => '甘氨酸';
+
+  @override
+  String get nutrientHistidine => '组氨酸';
+
+  @override
+  String get nutrientHydroxyproline => '羟脯氨酸';
+
+  @override
+  String get nutrientIsoleucine => '异亮氨酸';
+
+  @override
+  String get nutrientLeucine => '亮氨酸';
+
+  @override
+  String get nutrientLysine => '赖氨酸';
+
+  @override
+  String get nutrientMethionine => '蛋氨酸';
+
+  @override
+  String get nutrientPhenylalanine => '苯丙氨酸';
+
+  @override
+  String get nutrientProline => '脯氨酸';
+
+  @override
+  String get nutrientSerine => '丝氨酸';
+
+  @override
+  String get nutrientThreonine => '苏氨酸';
+
+  @override
+  String get nutrientTryptophan => '色氨酸';
+
+  @override
+  String get nutrientTyrosine => '酪氨酸';
+
+  @override
+  String get nutrientValine => '缬氨酸';
+
+  @override
+  String get nutrientCaffeine => '咖啡因';
+
+  @override
+  String get nutrientTheobromine => '可可碱';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2668,4 +2734,70 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get nutrientDha => '二十二碳六烯酸（DHA）';
+
+  @override
+  String get nutrientAlanine => '丙氨酸';
+
+  @override
+  String get nutrientAlcohol => '酒精';
+
+  @override
+  String get nutrientArginine => '精氨酸';
+
+  @override
+  String get nutrientAsparticAcid => '天冬氨酸';
+
+  @override
+  String get nutrientCystine => '胱氨酸';
+
+  @override
+  String get nutrientGlutamicAcid => '谷氨酸';
+
+  @override
+  String get nutrientGlycine => '甘氨酸';
+
+  @override
+  String get nutrientHistidine => '组氨酸';
+
+  @override
+  String get nutrientHydroxyproline => '羟脯氨酸';
+
+  @override
+  String get nutrientIsoleucine => '异亮氨酸';
+
+  @override
+  String get nutrientLeucine => '亮氨酸';
+
+  @override
+  String get nutrientLysine => '赖氨酸';
+
+  @override
+  String get nutrientMethionine => '蛋氨酸';
+
+  @override
+  String get nutrientPhenylalanine => '苯丙氨酸';
+
+  @override
+  String get nutrientProline => '脯氨酸';
+
+  @override
+  String get nutrientSerine => '丝氨酸';
+
+  @override
+  String get nutrientThreonine => '苏氨酸';
+
+  @override
+  String get nutrientTryptophan => '色氨酸';
+
+  @override
+  String get nutrientTyrosine => '酪氨酸';
+
+  @override
+  String get nutrientValine => '缬氨酸';
+
+  @override
+  String get nutrientCaffeine => '咖啡因';
+
+  @override
+  String get nutrientTheobromine => '可可碱';
 }

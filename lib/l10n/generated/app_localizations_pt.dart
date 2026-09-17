@@ -1389,6 +1389,72 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get nutrientDha => 'Ácido docosahexaenoico (DHA)';
+
+  @override
+  String get nutrientAlanine => 'Alanina';
+
+  @override
+  String get nutrientAlcohol => 'Álcool';
+
+  @override
+  String get nutrientArginine => 'Arginina';
+
+  @override
+  String get nutrientAsparticAcid => 'Ácido aspártico';
+
+  @override
+  String get nutrientCystine => 'Cistina';
+
+  @override
+  String get nutrientGlutamicAcid => 'Ácido glutâmico';
+
+  @override
+  String get nutrientGlycine => 'Glicina';
+
+  @override
+  String get nutrientHistidine => 'Histidina';
+
+  @override
+  String get nutrientHydroxyproline => 'Hidroxiprolina';
+
+  @override
+  String get nutrientIsoleucine => 'Isoleucina';
+
+  @override
+  String get nutrientLeucine => 'Leucina';
+
+  @override
+  String get nutrientLysine => 'Lisina';
+
+  @override
+  String get nutrientMethionine => 'Metionina';
+
+  @override
+  String get nutrientPhenylalanine => 'Fenilalanina';
+
+  @override
+  String get nutrientProline => 'Prolina';
+
+  @override
+  String get nutrientSerine => 'Serina';
+
+  @override
+  String get nutrientThreonine => 'Treonina';
+
+  @override
+  String get nutrientTryptophan => 'Triptofano';
+
+  @override
+  String get nutrientTyrosine => 'Tirosina';
+
+  @override
+  String get nutrientValine => 'Valina';
+
+  @override
+  String get nutrientCaffeine => 'Cafeína';
+
+  @override
+  String get nutrientTheobromine => 'Teobromina';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2775,4 +2841,70 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get nutrientDha => 'Ácido docosa-hexaenoico (DHA)';
+
+  @override
+  String get nutrientAlanine => 'Alanina';
+
+  @override
+  String get nutrientAlcohol => 'Álcool';
+
+  @override
+  String get nutrientArginine => 'Arginina';
+
+  @override
+  String get nutrientAsparticAcid => 'Ácido aspártico';
+
+  @override
+  String get nutrientCystine => 'Cistina';
+
+  @override
+  String get nutrientGlutamicAcid => 'Ácido glutâmico';
+
+  @override
+  String get nutrientGlycine => 'Glicina';
+
+  @override
+  String get nutrientHistidine => 'Histidina';
+
+  @override
+  String get nutrientHydroxyproline => 'Hidroxiprolina';
+
+  @override
+  String get nutrientIsoleucine => 'Isoleucina';
+
+  @override
+  String get nutrientLeucine => 'Leucina';
+
+  @override
+  String get nutrientLysine => 'Lisina';
+
+  @override
+  String get nutrientMethionine => 'Metionina';
+
+  @override
+  String get nutrientPhenylalanine => 'Fenilalanina';
+
+  @override
+  String get nutrientProline => 'Prolina';
+
+  @override
+  String get nutrientSerine => 'Serina';
+
+  @override
+  String get nutrientThreonine => 'Treonina';
+
+  @override
+  String get nutrientTryptophan => 'Triptofano';
+
+  @override
+  String get nutrientTyrosine => 'Tirosina';
+
+  @override
+  String get nutrientValine => 'Valina';
+
+  @override
+  String get nutrientCaffeine => 'Cafeína';
+
+  @override
+  String get nutrientTheobromine => 'Teobromina';
 }

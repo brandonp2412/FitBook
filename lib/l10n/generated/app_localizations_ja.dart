@@ -1341,4 +1341,70 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nutrientDha => 'ドコサヘキサエン酸（DHA）';
+
+  @override
+  String get nutrientAlanine => 'アラニン';
+
+  @override
+  String get nutrientAlcohol => 'アルコール';
+
+  @override
+  String get nutrientArginine => 'アルギニン';
+
+  @override
+  String get nutrientAsparticAcid => 'アスパラギン酸';
+
+  @override
+  String get nutrientCystine => 'シスチン';
+
+  @override
+  String get nutrientGlutamicAcid => 'グルタミン酸';
+
+  @override
+  String get nutrientGlycine => 'グリシン';
+
+  @override
+  String get nutrientHistidine => 'ヒスチジン';
+
+  @override
+  String get nutrientHydroxyproline => 'ヒドロキシプロリン';
+
+  @override
+  String get nutrientIsoleucine => 'イソロイシン';
+
+  @override
+  String get nutrientLeucine => 'ロイシン';
+
+  @override
+  String get nutrientLysine => 'リシン';
+
+  @override
+  String get nutrientMethionine => 'メチオニン';
+
+  @override
+  String get nutrientPhenylalanine => 'フェニルアラニン';
+
+  @override
+  String get nutrientProline => 'プロリン';
+
+  @override
+  String get nutrientSerine => 'セリン';
+
+  @override
+  String get nutrientThreonine => 'スレオニン';
+
+  @override
+  String get nutrientTryptophan => 'トリプトファン';
+
+  @override
+  String get nutrientTyrosine => 'チロシン';
+
+  @override
+  String get nutrientValine => 'バリン';
+
+  @override
+  String get nutrientCaffeine => 'カフェイン';
+
+  @override
+  String get nutrientTheobromine => 'テオブロミン';
 }

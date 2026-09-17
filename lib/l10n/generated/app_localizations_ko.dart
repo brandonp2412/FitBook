@@ -1341,4 +1341,70 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nutrientDha => '도코사헥사엔산 (DHA)';
+
+  @override
+  String get nutrientAlanine => '알라닌';
+
+  @override
+  String get nutrientAlcohol => '알코올';
+
+  @override
+  String get nutrientArginine => '아르기닌';
+
+  @override
+  String get nutrientAsparticAcid => '아스파르트산';
+
+  @override
+  String get nutrientCystine => '시스틴';
+
+  @override
+  String get nutrientGlutamicAcid => '글루탐산';
+
+  @override
+  String get nutrientGlycine => '글리신';
+
+  @override
+  String get nutrientHistidine => '히스티딘';
+
+  @override
+  String get nutrientHydroxyproline => '하이드록시프롤린';
+
+  @override
+  String get nutrientIsoleucine => '아이소류신';
+
+  @override
+  String get nutrientLeucine => '류신';
+
+  @override
+  String get nutrientLysine => '라이신';
+
+  @override
+  String get nutrientMethionine => '메티오닌';
+
+  @override
+  String get nutrientPhenylalanine => '페닐알라닌';
+
+  @override
+  String get nutrientProline => '프롤린';
+
+  @override
+  String get nutrientSerine => '세린';
+
+  @override
+  String get nutrientThreonine => '트레오닌';
+
+  @override
+  String get nutrientTryptophan => '트립토판';
+
+  @override
+  String get nutrientTyrosine => '티로신';
+
+  @override
+  String get nutrientValine => '발린';
+
+  @override
+  String get nutrientCaffeine => '카페인';
+
+  @override
+  String get nutrientTheobromine => '테오브로민';
 }

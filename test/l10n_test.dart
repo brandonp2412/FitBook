@@ -158,6 +158,10 @@ void main() {
       localizedFoodFieldLabel(japanese, '_22_6_n_3_dha_mg'),
       'ドコサヘキサエン酸（DHA）',
     );
+    expect(localizedFoodFieldLabel(spanish, 'tryptophan_mg'), 'Triptófano');
+    expect(localizedFoodFieldLabel(spanish, 'caffeine_mg'), 'Cafeína');
+    expect(localizedFoodFieldLabel(japanese, 'leucine_mg'), 'ロイシン');
+    expect(localizedFoodFieldLabel(japanese, 'theobromine_mg'), 'テオブロミン');
     expect(localizedFoodFieldLabel(spanish, 'custom_field'), 'Custom field');
   });
 }
