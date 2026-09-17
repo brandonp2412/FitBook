@@ -40,7 +40,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Backup path not set. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_path_not_set),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -59,10 +59,10 @@ class BackupReceiver : BroadcastReceiver() {
                         val channel =
                                 NotificationChannel(
                                         channelId,
-                                        "Backup channel",
+                                        context.getString(R.string.backup_channel_name),
                                         NotificationManager.IMPORTANCE_DEFAULT
                                 )
-                        channel.description = "Automatic backups of the database"
+                        channel.description = context.getString(R.string.backup_channel_description)
                         notificationManager.createNotificationChannel(channel)
 
                         if (ActivityCompat.checkSelfPermission(
@@ -78,7 +78,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Could not access backup directory. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_directory_access),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -95,7 +95,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Could not create backup file. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_create_file),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -136,7 +136,7 @@ class BackupReceiver : BroadcastReceiver() {
                         notificationBuilder =
                                 notificationBuilder.addAction(
                                         R.drawable.baseline_download_24,
-                                        "Share",
+                                        context.getString(R.string.share),
                                         pendingShare
                                 )
 
@@ -145,7 +145,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Could not access application files directory. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_app_files_directory),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -156,7 +156,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Could not access parent directory. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_parent_directory),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -171,7 +171,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Could not open output stream. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_output_stream),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -182,7 +182,7 @@ class BackupReceiver : BroadcastReceiver() {
                                 setAutomaticBackups(context, false)
                                 Toast.makeText(
                                                 context,
-                                                "Backup failed: Database file not found. Automatic backups disabled.",
+                                                context.getString(R.string.backup_failed_database_missing),
                                                 Toast.LENGTH_LONG
                                         )
                                         .show()
@@ -204,7 +204,9 @@ class BackupReceiver : BroadcastReceiver() {
                                         }
                                 }
                                 notificationBuilder =
-                                        notificationBuilder.setContentTitle("Backed up data and images")
+                                        notificationBuilder.setContentTitle(
+                                                context.getString(R.string.backup_success_title)
+                                        )
                                 notificationManager.notify(2, notificationBuilder.build())
                         } finally {
                                 temporaryDatabase.delete()
@@ -214,7 +216,7 @@ class BackupReceiver : BroadcastReceiver() {
                         setAutomaticBackups(context, false)
                         Toast.makeText(
                                         context,
-                                        "Backup failed: ${e.message}. Automatic backups disabled.",
+                                        context.getString(R.string.backup_failed_unexpected),
                                         Toast.LENGTH_LONG
                                 )
                                 .show()

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">备份失败：未设置备份位置。已停用自动备份。</string>
+    <string name="backup_channel_name">备份</string>
+    <string name="backup_channel_description">自动备份数据库</string>
+    <string name="backup_failed_directory_access">备份失败：无法访问备份文件夹。已停用自动备份。</string>
+    <string name="backup_failed_create_file">备份失败：无法创建备份文件。已停用自动备份。</string>
+    <string name="share">分享</string>
+    <string name="backup_failed_app_files_directory">备份失败：无法访问应用文件夹。已停用自动备份。</string>
+    <string name="backup_failed_parent_directory">备份失败：无法访问上级文件夹。已停用自动备份。</string>
+    <string name="backup_failed_output_stream">备份失败：无法打开目标文件。已停用自动备份。</string>
+    <string name="backup_failed_database_missing">备份失败：找不到数据库文件。已停用自动备份。</string>
+    <string name="backup_success_title">已备份数据和图片</string>
+    <string name="backup_failed_unexpected">备份因意外错误而失败。已停用自动备份。</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Error de copia de seguridad: no se ha configurado una ubicación de copia. Se han desactivado las copias automáticas.</string>
+    <string name="backup_channel_name">Copias de seguridad</string>
+    <string name="backup_channel_description">Copias de seguridad automáticas de la base de datos</string>
+    <string name="backup_failed_directory_access">Error de copia de seguridad: no se ha podido acceder a la carpeta de copias. Se han desactivado las copias automáticas.</string>
+    <string name="backup_failed_create_file">Error de copia de seguridad: no se ha podido crear el archivo de copia. Se han desactivado las copias automáticas.</string>
+    <string name="share">Compartir</string>
+    <string name="backup_failed_app_files_directory">Error de copia de seguridad: no se ha podido acceder a la carpeta de archivos de la aplicación. Se han desactivado las copias automáticas.</string>
+    <string name="backup_failed_parent_directory">Error de copia de seguridad: no se ha podido acceder a la carpeta superior. Se han desactivado las copias automáticas.</string>
+    <string name="backup_failed_output_stream">Error de copia de seguridad: no se ha podido abrir el archivo de destino. Se han desactivado las copias automáticas.</string>
+    <string name="backup_failed_database_missing">Error de copia de seguridad: no se ha encontrado el archivo de la base de datos. Se han desactivado las copias automáticas.</string>
+    <string name="backup_success_title">Copia de seguridad de datos e imágenes completada</string>
+    <string name="backup_failed_unexpected">La copia de seguridad ha fallado de forma inesperada. Se han desactivado las copias automáticas.</string>
+</resources>

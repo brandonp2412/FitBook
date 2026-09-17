@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Back-up mislukt: er is geen back-uplocatie ingesteld. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_channel_name">Back-ups</string>
+    <string name="backup_channel_description">Automatische back-ups van de database</string>
+    <string name="backup_failed_directory_access">Back-up mislukt: de back-upmap kon niet worden geopend. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_failed_create_file">Back-up mislukt: het back-upbestand kon niet worden gemaakt. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="share">Delen</string>
+    <string name="backup_failed_app_files_directory">Back-up mislukt: de map met appbestanden kon niet worden geopend. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_failed_parent_directory">Back-up mislukt: de bovenliggende map kon niet worden geopend. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_failed_output_stream">Back-up mislukt: het doelbestand kon niet worden geopend. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_failed_database_missing">Back-up mislukt: het databasebestand is niet gevonden. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_success_title">Gegevens en afbeeldingen geback-upt</string>
+    <string name="backup_failed_unexpected">De back-up is onverwacht mislukt. Automatische back-ups zijn uitgeschakeld.</string>
+</resources>

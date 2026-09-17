@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Backup failed: Backup path not set. Automatic backups disabled.</string>
+    <string name="backup_channel_name">Backup channel</string>
+    <string name="backup_channel_description">Automatic backups of the database</string>
+    <string name="backup_failed_directory_access">Backup failed: Could not access backup directory. Automatic backups disabled.</string>
+    <string name="backup_failed_create_file">Backup failed: Could not create backup file. Automatic backups disabled.</string>
+    <string name="share">Share</string>
+    <string name="backup_failed_app_files_directory">Backup failed: Could not access application files directory. Automatic backups disabled.</string>
+    <string name="backup_failed_parent_directory">Backup failed: Could not access parent directory. Automatic backups disabled.</string>
+    <string name="backup_failed_output_stream">Backup failed: Could not open output stream. Automatic backups disabled.</string>
+    <string name="backup_failed_database_missing">Backup failed: Database file not found. Automatic backups disabled.</string>
+    <string name="backup_success_title">Backed up data and images</string>
+    <string name="backup_failed_unexpected">Backup failed unexpectedly. Automatic backups disabled.</string>
+</resources>

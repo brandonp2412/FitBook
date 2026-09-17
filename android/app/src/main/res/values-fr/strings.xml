@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Échec de la sauvegarde : aucun emplacement de sauvegarde n’est défini. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_channel_name">Sauvegardes</string>
+    <string name="backup_channel_description">Sauvegardes automatiques de la base de données</string>
+    <string name="backup_failed_directory_access">Échec de la sauvegarde : impossible d’accéder au dossier de sauvegarde. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_failed_create_file">Échec de la sauvegarde : impossible de créer le fichier de sauvegarde. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="share">Partager</string>
+    <string name="backup_failed_app_files_directory">Échec de la sauvegarde : impossible d’accéder au dossier des fichiers de l’application. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_failed_parent_directory">Échec de la sauvegarde : impossible d’accéder au dossier parent. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_failed_output_stream">Échec de la sauvegarde : impossible d’ouvrir le fichier de destination. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_failed_database_missing">Échec de la sauvegarde : fichier de base de données introuvable. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_success_title">Données et images sauvegardées</string>
+    <string name="backup_failed_unexpected">La sauvegarde a échoué de manière inattendue. Les sauvegardes automatiques ont été désactivées.</string>
+</resources>

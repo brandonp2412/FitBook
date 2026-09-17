@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Backup non riuscito: nessuna posizione di backup configurata. I backup automatici sono stati disattivati.</string>
+    <string name="backup_channel_name">Backup</string>
+    <string name="backup_channel_description">Backup automatici del database</string>
+    <string name="backup_failed_directory_access">Backup non riuscito: impossibile accedere alla cartella di backup. I backup automatici sono stati disattivati.</string>
+    <string name="backup_failed_create_file">Backup non riuscito: impossibile creare il file di backup. I backup automatici sono stati disattivati.</string>
+    <string name="share">Condividi</string>
+    <string name="backup_failed_app_files_directory">Backup non riuscito: impossibile accedere alla cartella dei file dell’app. I backup automatici sono stati disattivati.</string>
+    <string name="backup_failed_parent_directory">Backup non riuscito: impossibile accedere alla cartella superiore. I backup automatici sono stati disattivati.</string>
+    <string name="backup_failed_output_stream">Backup non riuscito: impossibile aprire il file di destinazione. I backup automatici sono stati disattivati.</string>
+    <string name="backup_failed_database_missing">Backup non riuscito: file del database non trovato. I backup automatici sono stati disattivati.</string>
+    <string name="backup_success_title">Dati e immagini salvati nel backup</string>
+    <string name="backup_failed_unexpected">Il backup non è riuscito a causa di un errore imprevisto. I backup automatici sono stati disattivati.</string>
+</resources>

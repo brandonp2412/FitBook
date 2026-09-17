@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">백업 실패: 백업 위치가 설정되지 않았습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_channel_name">백업</string>
+    <string name="backup_channel_description">데이터베이스 자동 백업</string>
+    <string name="backup_failed_directory_access">백업 실패: 백업 폴더에 접근할 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_failed_create_file">백업 실패: 백업 파일을 만들 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="share">공유</string>
+    <string name="backup_failed_app_files_directory">백업 실패: 앱 파일 폴더에 접근할 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_failed_parent_directory">백업 실패: 상위 폴더에 접근할 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_failed_output_stream">백업 실패: 대상 파일을 열 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_failed_database_missing">백업 실패: 데이터베이스 파일을 찾을 수 없습니다. 자동 백업이 비활성화되었습니다.</string>
+    <string name="backup_success_title">데이터와 이미지 백업 완료</string>
+    <string name="backup_failed_unexpected">예기치 않은 오류로 백업에 실패했습니다. 자동 백업이 비활성화되었습니다.</string>
+</resources>

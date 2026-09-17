@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Sicherung fehlgeschlagen: Kein Sicherungsort festgelegt. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_channel_name">Sicherungen</string>
+    <string name="backup_channel_description">Automatische Sicherungen der Datenbank</string>
+    <string name="backup_failed_directory_access">Sicherung fehlgeschlagen: Auf den Sicherungsordner konnte nicht zugegriffen werden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_failed_create_file">Sicherung fehlgeschlagen: Die Sicherungsdatei konnte nicht erstellt werden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="share">Teilen</string>
+    <string name="backup_failed_app_files_directory">Sicherung fehlgeschlagen: Auf den App-Dateiordner konnte nicht zugegriffen werden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_failed_parent_directory">Sicherung fehlgeschlagen: Auf den übergeordneten Ordner konnte nicht zugegriffen werden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_failed_output_stream">Sicherung fehlgeschlagen: Die Zieldatei konnte nicht geöffnet werden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_failed_database_missing">Sicherung fehlgeschlagen: Die Datenbankdatei wurde nicht gefunden. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_success_title">Daten und Bilder wurden gesichert</string>
+    <string name="backup_failed_unexpected">Die Sicherung ist unerwartet fehlgeschlagen. Automatische Sicherungen wurden deaktiviert.</string>
+</resources>

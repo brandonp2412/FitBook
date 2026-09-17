@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Falha no backup: nenhum local de backup foi definido. Os backups automáticos foram desativados.</string>
+    <string name="backup_channel_name">Backups</string>
+    <string name="backup_channel_description">Backups automáticos do banco de dados</string>
+    <string name="backup_failed_directory_access">Falha no backup: não foi possível acessar a pasta de backup. Os backups automáticos foram desativados.</string>
+    <string name="backup_failed_create_file">Falha no backup: não foi possível criar o arquivo de backup. Os backups automáticos foram desativados.</string>
+    <string name="share">Compartilhar</string>
+    <string name="backup_failed_app_files_directory">Falha no backup: não foi possível acessar a pasta de arquivos do aplicativo. Os backups automáticos foram desativados.</string>
+    <string name="backup_failed_parent_directory">Falha no backup: não foi possível acessar a pasta superior. Os backups automáticos foram desativados.</string>
+    <string name="backup_failed_output_stream">Falha no backup: não foi possível abrir o arquivo de destino. Os backups automáticos foram desativados.</string>
+    <string name="backup_failed_database_missing">Falha no backup: o arquivo do banco de dados não foi encontrado. Os backups automáticos foram desativados.</string>
+    <string name="backup_success_title">Backup de dados e imagens concluído</string>
+    <string name="backup_failed_unexpected">O backup falhou inesperadamente. Os backups automáticos foram desativados.</string>
+</resources>

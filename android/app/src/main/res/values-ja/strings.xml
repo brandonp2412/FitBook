@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">バックアップに失敗しました：バックアップ先が設定されていません。自動バックアップを無効にしました。</string>
+    <string name="backup_channel_name">バックアップ</string>
+    <string name="backup_channel_description">データベースの自動バックアップ</string>
+    <string name="backup_failed_directory_access">バックアップに失敗しました：バックアップフォルダーにアクセスできません。自動バックアップを無効にしました。</string>
+    <string name="backup_failed_create_file">バックアップに失敗しました：バックアップファイルを作成できません。自動バックアップを無効にしました。</string>
+    <string name="share">共有</string>
+    <string name="backup_failed_app_files_directory">バックアップに失敗しました：アプリのファイルフォルダーにアクセスできません。自動バックアップを無効にしました。</string>
+    <string name="backup_failed_parent_directory">バックアップに失敗しました：親フォルダーにアクセスできません。自動バックアップを無効にしました。</string>
+    <string name="backup_failed_output_stream">バックアップに失敗しました：保存先ファイルを開けません。自動バックアップを無効にしました。</string>
+    <string name="backup_failed_database_missing">バックアップに失敗しました：データベースファイルが見つかりません。自動バックアップを無効にしました。</string>
+    <string name="backup_success_title">データと画像をバックアップしました</string>
+    <string name="backup_failed_unexpected">予期しないエラーでバックアップに失敗しました。自動バックアップを無効にしました。</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Kopia zapasowa nie powiodła się: nie ustawiono lokalizacji kopii. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_channel_name">Kopie zapasowe</string>
+    <string name="backup_channel_description">Automatyczne kopie zapasowe bazy danych</string>
+    <string name="backup_failed_directory_access">Kopia zapasowa nie powiodła się: nie można uzyskać dostępu do folderu kopii zapasowych. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_failed_create_file">Kopia zapasowa nie powiodła się: nie można utworzyć pliku kopii zapasowej. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="share">Udostępnij</string>
+    <string name="backup_failed_app_files_directory">Kopia zapasowa nie powiodła się: nie można uzyskać dostępu do folderu plików aplikacji. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_failed_parent_directory">Kopia zapasowa nie powiodła się: nie można uzyskać dostępu do folderu nadrzędnego. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_failed_output_stream">Kopia zapasowa nie powiodła się: nie można otworzyć pliku docelowego. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_failed_database_missing">Kopia zapasowa nie powiodła się: nie znaleziono pliku bazy danych. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_success_title">Utworzono kopię zapasową danych i obrazów</string>
+    <string name="backup_failed_unexpected">Kopia zapasowa nie powiodła się z powodu nieoczekiwanego błędu. Automatyczne kopie zapasowe zostały wyłączone.</string>
+</resources>
