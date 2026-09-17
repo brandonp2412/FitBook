@@ -98,6 +98,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Editar $count registros',
+      one: 'Editar 1 registro',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calories => 'Calorías';
 
   @override

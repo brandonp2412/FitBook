@@ -96,6 +96,16 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count개 기록 편집',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calories => '칼로리';
 
   @override

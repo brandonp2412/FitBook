@@ -26,6 +26,7 @@
   "todayProgress": "今日进度",
   "latestDay": "最近一天",
   "loggedEntries": "{count, plural, other{已记录 {count} 项}}",
+  "editEntries": "{count, plural, other{编辑 {count} 条记录}}",
   "calories": "热量",
   "protein": "蛋白质",
   "carbs": "碳水化合物",

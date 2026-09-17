@@ -4,11 +4,11 @@ import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   testWidgets('EditDiaries', (WidgetTester tester) async {
@@ -68,7 +68,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: EditDiariesPage(
             diaryIds: (await (db.diaries.select()).get())
                 .map((entry) => entry.id)
@@ -93,7 +93,7 @@ void main() async {
 
     await tester.tap(find.text('Unit'), warnIfMissed: false);
     await tester.pump();
-    await tester.tap(find.text('cups'));
+    await tester.tap(find.text('Cups'));
     await tester.pump();
 
     await tester.enterText(find.bySemanticsLabel('Calories'), '200');

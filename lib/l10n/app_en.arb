@@ -28,6 +28,8 @@
   "latestDay": "Latest day",
   "loggedEntries": "{count, plural, =0{No entries logged} =1{1 entry logged} other{{count} entries logged}}",
   "@loggedEntries": {"placeholders": {"count": {"type": "int"}}},
+  "editEntries": "{count, plural, =1{Edit 1 entry} other{Edit {count} entries}}",
+  "@editEntries": {"placeholders": {"count": {"type": "int"}}},
   "calories": "Calories",
   "protein": "Protein",
   "carbs": "Carbs",

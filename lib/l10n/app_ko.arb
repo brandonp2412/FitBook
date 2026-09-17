@@ -26,6 +26,7 @@
   "todayProgress": "오늘의 진행 상황",
   "latestDay": "최근 날짜",
   "loggedEntries": "{count, plural, other{{count}개 기록됨}}",
+  "editEntries": "{count, plural, other{{count}개 기록 편집}}",
   "calories": "칼로리",
   "protein": "단백질",
   "carbs": "탄수화물",

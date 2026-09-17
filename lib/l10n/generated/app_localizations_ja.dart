@@ -96,6 +96,16 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 件の記録を編集',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calories => 'カロリー';
 
   @override

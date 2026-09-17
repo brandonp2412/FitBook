@@ -274,6 +274,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No entries logged} =1{1 entry logged} other{{count} entries logged}}'**
   String loggedEntries(int count);
 
+  /// No description provided for @editEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Edit 1 entry} other{Edit {count} entries}}'**
+  String editEntries(int count);
+
   /// No description provided for @calories.
   ///
   /// In en, this message translates to:

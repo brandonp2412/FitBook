@@ -26,6 +26,7 @@
   "todayProgress": "今日の進捗",
   "latestDay": "最新の日",
   "loggedEntries": "{count, plural, other{{count} 件を記録}}",
+  "editEntries": "{count, plural, other{{count} 件の記録を編集}}",
   "calories": "カロリー",
   "protein": "たんぱく質",
   "carbs": "炭水化物",

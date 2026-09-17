@@ -96,6 +96,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '编辑 $count 条记录',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calories => '热量';
 
   @override
@@ -1140,6 +1150,16 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
       count,
       locale: localeName,
       other: '已记录 $count 项',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '编辑 $count 条记录',
     );
     return '$_temp0';
   }

@@ -26,6 +26,7 @@
   "todayProgress": "Heutiger Fortschritt",
   "latestDay": "Letzter Tag",
   "loggedEntries": "{count, plural, =0{Keine Einträge protokolliert} =1{1 Eintrag protokolliert} other{{count} Einträge protokolliert}}",
+  "editEntries": "{count, plural, =1{1 Eintrag bearbeiten} other{{count} Einträge bearbeiten}}",
   "calories": "Kalorien",
   "protein": "Eiweiß",
   "carbs": "Kohlenhydrate",

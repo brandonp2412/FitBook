@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -235,12 +236,11 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   @override
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Edit ${widget.diaryIds.length} entries",
-        ),
+        title: Text(l10n.editEntries(widget.diaryIds.length)),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -249,19 +249,19 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                 context: context,
                 builder: (BuildContext dialogContext) {
                   return AlertDialog(
-                    title: const Text('Confirm delete'),
+                    title: Text(l10n.confirmDelete),
                     content: Text(
-                      'Are you sure you want to delete ${widget.diaryIds.length} entries?',
+                      l10n.confirmDeleteRecords(widget.diaryIds.length),
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('Cancel'),
+                        child: Text(l10n.cancel),
                         onPressed: () {
                           Navigator.pop(dialogContext);
                         },
                       ),
                       TextButton(
-                        child: const Text('Delete'),
+                        child: Text(l10n.delete),
                         onPressed: () async {
                           Navigator.pop(dialogContext);
                           await db.diaries
@@ -308,7 +308,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                 nameController = textEditingController;
                 return TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Name',
+                    labelText: l10n.name,
                     hintText: oldNames,
                   ),
                   controller: textEditingController,
@@ -330,7 +330,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             TextField(
               controller: quantityController,
               decoration: InputDecoration(
-                label: const Text("Quantity"),
+                label: Text(l10n.quantity),
                 hintText: oldQuantities,
               ),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -342,12 +342,17 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             ),
             DropdownButtonFormField<String>(
               initialValue: unit,
-              decoration:
-                  InputDecoration(labelText: 'Unit', hintText: oldUnits),
+              decoration: InputDecoration(
+                labelText: l10n.unit,
+                hintText: oldUnits
+                    ?.split(', ')
+                    .map((value) => localizedUnit(l10n, value))
+                    .join(', '),
+              ),
               items: unitOptions.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(localizedUnit(l10n, value)),
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -362,7 +367,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                   child: TextField(
                     controller: caloriesController,
                     decoration: InputDecoration(
-                      labelText: 'Calories',
+                      labelText: l10n.calories,
                       hintText: oldCalories,
                     ),
                     onTap: () => selectAll(caloriesController),
@@ -387,7 +392,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                     child: TextField(
                       controller: kilojoulesController,
                       decoration: InputDecoration(
-                        labelText: 'Kilojoules',
+                        labelText: l10n.kilojoules,
                         hintText: oldKj,
                       ),
                       keyboardType:
@@ -409,7 +414,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             TextField(
               controller: proteinController,
               decoration: InputDecoration(
-                labelText: 'Protein',
+                labelText: l10n.protein,
                 hintText: oldProtein,
               ),
               onTap: () => selectAll(proteinController),
@@ -424,7 +429,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                   child: TextField(
                     controller: carbController,
                     decoration: InputDecoration(
-                      labelText: 'Carbs',
+                      labelText: l10n.carbs,
                       hintText: oldCarb,
                     ),
                     onTap: () => selectAll(carbController),
@@ -438,7 +443,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                   child: TextField(
                     controller: fatController,
                     decoration: InputDecoration(
-                      labelText: 'Fat',
+                      labelText: l10n.fat,
                       hintText: oldFat,
                     ),
                     onTap: () => selectAll(fatController),
@@ -453,7 +458,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
             TextField(
               controller: fiberController,
               decoration: InputDecoration(
-                labelText: 'Fiber',
+                labelText: l10n.fiber,
                 hintText: oldFiber,
               ),
               onTap: () => selectAll(fiberController),
@@ -462,10 +467,12 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
               textInputAction: TextInputAction.next,
             ),
             ListTile(
-              title: const Text('Created date'),
+              title: Text(l10n.createdDate),
               subtitle: Text(
-                DateFormat(settings.longDateFormat)
-                    .format(created ?? DateTime.now()),
+                DateFormat(
+                  settings.longDateFormat,
+                  Localizations.localeOf(context).toLanguageTag(),
+                ).format(created ?? DateTime.now()),
               ),
               onTap: () => pickDate(),
             ),
@@ -480,7 +487,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
         child: AnimatedFab(
           onTap: () => _save(),
           icon: Icons.save,
-          label: 'Save',
+          label: l10n.save,
           scroll: scrollCtrl,
         ),
       ),

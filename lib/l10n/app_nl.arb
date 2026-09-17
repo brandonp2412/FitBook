@@ -26,6 +26,7 @@
   "todayProgress": "Voortgang van vandaag",
   "latestDay": "Laatste dag",
   "loggedEntries": "{count, plural, =0{Geen registraties} =1{1 registratie} other{{count} registraties}}",
+  "editEntries": "{count, plural, =1{1 registratie bewerken} other{{count} registraties bewerken}}",
   "calories": "Calorieën",
   "protein": "Eiwitten",
   "carbs": "Koolhydraten",

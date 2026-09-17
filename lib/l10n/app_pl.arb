@@ -26,6 +26,7 @@
   "todayProgress": "Dzisiejszy postęp",
   "latestDay": "Ostatni dzień",
   "loggedEntries": "{count, plural, =0{Brak wpisów} =1{1 wpis} few{{count} wpisy} many{{count} wpisów} other{{count} wpisu}}",
+  "editEntries": "{count, plural, =1{Edytuj 1 wpis} few{Edytuj {count} wpisy} many{Edytuj {count} wpisów} other{Edytuj {count} wpisu}}",
   "calories": "Kalorie",
   "protein": "Białko",
   "carbs": "Węglowodany",
