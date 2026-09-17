@@ -28,6 +28,11 @@ void main() {
       for (final entry in templateMessages.entries) {
         final translated = messages[entry.key]!;
         expect(
+          translated.trim(),
+          isNotEmpty,
+          reason: '${file.path}:${entry.key} must not be empty',
+        );
+        expect(
           _placeholders(translated),
           _placeholders(entry.value),
           reason: '${file.path}:${entry.key} must preserve placeholders',

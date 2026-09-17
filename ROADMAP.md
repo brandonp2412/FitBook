@@ -35,3 +35,4 @@
 - [x] Final full-app localization audit and release-readiness pass.
 - [x] Add regression guards for hard-coded Dart UI copy, raw exception widgets, and untranslated platform fallbacks.
 - [x] Reject unchanged English changelog entries in every localized release bundle.
+- [x] Reject empty localized ARB messages before they can render blank UI.
