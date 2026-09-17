@@ -12,9 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'database/database.dart';
 
-final formatter = NumberFormat.decimalPattern()..maximumFractionDigits = 2;
-
-double? parseQuickAddNumber(String text) {
+double? parseQuickAddNumber(String text, NumberFormat formatter) {
   final value = text.trim();
   if (value.isEmpty) return null;
   try {
@@ -36,14 +34,27 @@ class QuickAddPage extends StatefulWidget {
 class _QuickAddPageState extends State<QuickAddPage> {
   final cal = TextEditingController(text: "600");
   var created = DateTime.now();
-  final kj = TextEditingController(text: "2,510.4");
+  final kj = TextEditingController();
   final protein = TextEditingController(text: "0");
   final carb = TextEditingController(text: "0");
   final fat = TextEditingController(text: "0");
+  late final String localeName;
+  late final NumberFormat formatter;
+
+  String _formatNumber(num value, {int minimumFractionDigits = 0}) =>
+      (NumberFormat.decimalPattern(localeName)
+            ..minimumFractionDigits = minimumFractionDigits
+            ..maximumFractionDigits = 2)
+          .format(value);
 
   @override
   void initState() {
     super.initState();
+    final settings = context.read<SettingsState>().value;
+    localeName = localizationsFromPreference(settings.locale).localeName;
+    formatter = NumberFormat.decimalPattern(localeName)
+      ..maximumFractionDigits = 2;
+    kj.text = _formatNumber(600 * 4.184);
     initData();
   }
 
@@ -70,11 +81,11 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ..limit(1))
           .getSingleOrNull();
       if (last == null) return;
-      cal.text = last.read(db.foods.calories)!.toString();
-      kj.text = formatter.format(formatter.parse(cal.text) * 4.184);
-      protein.text = last.read(db.foods.proteinG)!.toString();
-      carb.text = last.read(db.foods.carbohydrateG)!.toString();
-      fat.text = last.read(db.foods.fatG)!.toString();
+      cal.text = _formatNumber(last.read(db.foods.calories)!);
+      kj.text = _formatNumber(formatter.parse(cal.text) * 4.184);
+      protein.text = _formatNumber(last.read(db.foods.proteinG)!);
+      carb.text = _formatNumber(last.read(db.foods.carbohydrateG)!);
+      fat.text = _formatNumber(last.read(db.foods.fatG)!);
 
       return;
     }
@@ -85,10 +96,18 @@ class _QuickAddPageState extends State<QuickAddPage> {
     final food = await (db.foods.select()
           ..where((u) => u.id.equals(entry.food ?? 0)))
         .getSingle();
-    cal.text = food.calories?.toStringAsFixed(2) ?? "0";
-    protein.text = food.proteinG?.toStringAsFixed(2) ?? "0";
-    carb.text = food.carbohydrateG?.toStringAsFixed(2) ?? "0";
-    fat.text = food.fatG?.toStringAsFixed(2) ?? "0";
+    cal.text = food.calories != null
+        ? _formatNumber(food.calories!, minimumFractionDigits: 2)
+        : "0";
+    protein.text = food.proteinG != null
+        ? _formatNumber(food.proteinG!, minimumFractionDigits: 2)
+        : "0";
+    carb.text = food.carbohydrateG != null
+        ? _formatNumber(food.carbohydrateG!, minimumFractionDigits: 2)
+        : "0";
+    fat.text = food.fatG != null
+        ? _formatNumber(food.fatG!, minimumFractionDigits: 2)
+        : "0";
     setState(() {
       created = entry.created;
     });
@@ -96,10 +115,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
   }
 
   Future<void> save() async {
-    final calories = parseQuickAddNumber(cal.text);
-    final proteinG = parseQuickAddNumber(protein.text);
-    final carbohydrateG = parseQuickAddNumber(carb.text);
-    final fatG = parseQuickAddNumber(fat.text);
+    final calories = parseQuickAddNumber(cal.text, formatter);
+    final proteinG = parseQuickAddNumber(protein.text, formatter);
+    final carbohydrateG = parseQuickAddNumber(carb.text, formatter);
+    final fatG = parseQuickAddNumber(fat.text, formatter);
     if (calories == null ||
         proteinG == null ||
         carbohydrateG == null ||
@@ -207,10 +226,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
             onTap: () => selectAll(cal),
             onSubmitted: (value) => save(),
             onChanged: (value) {
-              final calories = parseQuickAddNumber(value);
+              final calories = parseQuickAddNumber(value, formatter);
               if (calories == null) return;
               setState(() {
-                kj.text = formatter.format(calories * 4.184);
+                kj.text = _formatNumber(calories * 4.184);
               });
             },
           ),
@@ -222,10 +241,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: (value) {
-              final kilojoules = parseQuickAddNumber(value);
+              final kilojoules = parseQuickAddNumber(value, formatter);
               if (kilojoules == null) return;
               setState(() {
-                cal.text = formatter.format(kilojoules / 4.184);
+                cal.text = _formatNumber(kilojoules / 4.184);
               });
             },
             onSubmitted: (value) => selectAll(protein),
