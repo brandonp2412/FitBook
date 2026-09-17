@@ -65,3 +65,23 @@ String localizedUnit(AppLocalizations l10n, String unit) => switch (unit) {
       'liters' => l10n.unitLiters,
       _ => unit,
     };
+
+/// Returns the localized messages used for positive weight reinforcement.
+List<String> localizedPositiveReinforcements(AppLocalizations l10n) => [
+      l10n.reinforcementGreatJob,
+      l10n.reinforcementKeepItUp,
+      l10n.reinforcementFantastic,
+      l10n.reinforcementWellDone,
+      l10n.reinforcementImpressive,
+      l10n.reinforcementAmazing,
+      l10n.reinforcementBravo,
+      l10n.reinforcementExcellent,
+      l10n.reinforcementSuperb,
+      l10n.reinforcementIncredible,
+      l10n.reinforcementWayToGoKing,
+      l10n.reinforcementYeahBuddy,
+      l10n.reinforcementThatsHowItsDone,
+      l10n.reinforcementEasyAsPie,
+      l10n.reinforcementDoingGreat,
+      l10n.reinforcementProgressNice,
+    ];

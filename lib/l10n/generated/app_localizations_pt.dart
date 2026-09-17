@@ -1109,6 +1109,61 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get dinnerRemindersChannelDescription =>
       'Lembretes para registrar o jantar';
+
+  @override
+  String get reinforcementGreatJob =>
+      'Bom trabalho! O teu esforço está a dar frutos.';
+
+  @override
+  String get reinforcementKeepItUp =>
+      'Continua assim! Estás a fazer excelentes progressos.';
+
+  @override
+  String get reinforcementFantastic =>
+      'Fantástico! A tua dedicação está a dar resultados.';
+
+  @override
+  String get reinforcementWellDone =>
+      'Muito bem! Estás um passo mais perto do teu objetivo.';
+
+  @override
+  String get reinforcementImpressive =>
+      'Impressionante! O teu esforço está a dar frutos.';
+
+  @override
+  String get reinforcementAmazing => 'Excelente! Estás no caminho certo.';
+
+  @override
+  String get reinforcementBravo => 'Bravo! O teu empenho é admirável.';
+
+  @override
+  String get reinforcementExcellent =>
+      'Excelente! A tua perseverança é inspiradora.';
+
+  @override
+  String get reinforcementSuperb =>
+      'Fantástico! Estás a fazer um trabalho excecional.';
+
+  @override
+  String get reinforcementIncredible => 'Incrível! O teu progresso é visível.';
+
+  @override
+  String get reinforcementWayToGoKing => 'Força, rei!';
+
+  @override
+  String get reinforcementYeahBuddy => 'É isso mesmo!';
+
+  @override
+  String get reinforcementThatsHowItsDone => 'É assim que se faz.';
+
+  @override
+  String get reinforcementEasyAsPie => 'Canja.';
+
+  @override
+  String get reinforcementDoingGreat => 'Estás a sair-te muito bem.';
+
+  @override
+  String get reinforcementProgressNice => 'É progresso que estou a ver? Boa.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2214,4 +2269,60 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get dinnerRemindersChannelDescription =>
       'Lembretes para registrar o jantar';
+
+  @override
+  String get reinforcementGreatJob =>
+      'Ótimo trabalho! Seu esforço está valendo a pena.';
+
+  @override
+  String get reinforcementKeepItUp =>
+      'Continue assim! Você está fazendo um excelente progresso.';
+
+  @override
+  String get reinforcementFantastic =>
+      'Fantástico! Sua dedicação está trazendo resultados.';
+
+  @override
+  String get reinforcementWellDone =>
+      'Muito bem! Você está um passo mais perto da sua meta.';
+
+  @override
+  String get reinforcementImpressive =>
+      'Impressionante! Seus esforços estão dando frutos.';
+
+  @override
+  String get reinforcementAmazing => 'Incrível! Você está no caminho certo.';
+
+  @override
+  String get reinforcementBravo => 'Bravo! Seu comprometimento é admirável.';
+
+  @override
+  String get reinforcementExcellent =>
+      'Excelente! Sua perseverança é inspiradora.';
+
+  @override
+  String get reinforcementSuperb =>
+      'Sensacional! Você está mandando muito bem.';
+
+  @override
+  String get reinforcementIncredible => 'Incrível! Dá para ver seu progresso.';
+
+  @override
+  String get reinforcementWayToGoKing => 'Boa, rei!';
+
+  @override
+  String get reinforcementYeahBuddy => 'É isso aí!';
+
+  @override
+  String get reinforcementThatsHowItsDone => 'É assim que se faz.';
+
+  @override
+  String get reinforcementEasyAsPie => 'Moleza.';
+
+  @override
+  String get reinforcementDoingGreat => 'Você está indo muito bem.';
+
+  @override
+  String get reinforcementProgressNice =>
+      'Isso é progresso que eu estou vendo? Boa.';
 }

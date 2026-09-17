@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "Lembretes para registrar o almoço",
   "dinnerReminderTitle": "Não se esqueça de registrar o jantar",
   "dinnerRemindersChannel": "Lembretes do jantar",
-  "dinnerRemindersChannelDescription": "Lembretes para registrar o jantar"
+  "dinnerRemindersChannelDescription": "Lembretes para registrar o jantar",
+  "reinforcementGreatJob": "Ótimo trabalho! Seu esforço está valendo a pena.",
+  "reinforcementKeepItUp": "Continue assim! Você está fazendo um excelente progresso.",
+  "reinforcementFantastic": "Fantástico! Sua dedicação está trazendo resultados.",
+  "reinforcementWellDone": "Muito bem! Você está um passo mais perto da sua meta.",
+  "reinforcementImpressive": "Impressionante! Seus esforços estão dando frutos.",
+  "reinforcementAmazing": "Incrível! Você está no caminho certo.",
+  "reinforcementBravo": "Bravo! Seu comprometimento é admirável.",
+  "reinforcementExcellent": "Excelente! Sua perseverança é inspiradora.",
+  "reinforcementSuperb": "Sensacional! Você está mandando muito bem.",
+  "reinforcementIncredible": "Incrível! Dá para ver seu progresso.",
+  "reinforcementWayToGoKing": "Boa, rei!",
+  "reinforcementYeahBuddy": "É isso aí!",
+  "reinforcementThatsHowItsDone": "É assim que se faz.",
+  "reinforcementEasyAsPie": "Moleza.",
+  "reinforcementDoingGreat": "Você está indo muito bem.",
+  "reinforcementProgressNice": "Isso é progresso que eu estou vendo? Boa."
 }

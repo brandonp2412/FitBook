@@ -1064,6 +1064,54 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dinnerRemindersChannelDescription => '提醒你记录晚餐';
+
+  @override
+  String get reinforcementGreatJob => '干得漂亮！你的努力正在得到回报。';
+
+  @override
+  String get reinforcementKeepItUp => '继续保持！你的进步非常棒。';
+
+  @override
+  String get reinforcementFantastic => '太棒了！你的坚持正在带来成果。';
+
+  @override
+  String get reinforcementWellDone => '做得好！你离目标又近了一步。';
+
+  @override
+  String get reinforcementImpressive => '真不错！你的努力正在开花结果。';
+
+  @override
+  String get reinforcementAmazing => '太棒了！你正走在正确的路上。';
+
+  @override
+  String get reinforcementBravo => '好样的！你的投入值得称赞。';
+
+  @override
+  String get reinforcementExcellent => '非常棒！你的坚持令人佩服。';
+
+  @override
+  String get reinforcementSuperb => '太赞了！你做得非常出色。';
+
+  @override
+  String get reinforcementIncredible => '不可思议！你的进步已经看得见了。';
+
+  @override
+  String get reinforcementWayToGoKing => '干得漂亮，王者！';
+
+  @override
+  String get reinforcementYeahBuddy => '就是这样！';
+
+  @override
+  String get reinforcementThatsHowItsDone => '这才对嘛。';
+
+  @override
+  String get reinforcementEasyAsPie => '轻轻松松。';
+
+  @override
+  String get reinforcementDoingGreat => '你做得很棒。';
+
+  @override
+  String get reinforcementProgressNice => '我是不是看到进步了？不错！';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2126,4 +2174,52 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get dinnerRemindersChannelDescription => '提醒你记录晚餐';
+
+  @override
+  String get reinforcementGreatJob => '干得漂亮！你的努力正在得到回报。';
+
+  @override
+  String get reinforcementKeepItUp => '继续保持！你的进步非常棒。';
+
+  @override
+  String get reinforcementFantastic => '太棒了！你的坚持正在带来成果。';
+
+  @override
+  String get reinforcementWellDone => '做得好！你离目标又近了一步。';
+
+  @override
+  String get reinforcementImpressive => '真不错！你的努力正在开花结果。';
+
+  @override
+  String get reinforcementAmazing => '太棒了！你正走在正确的路上。';
+
+  @override
+  String get reinforcementBravo => '好样的！你的投入值得称赞。';
+
+  @override
+  String get reinforcementExcellent => '非常棒！你的坚持令人佩服。';
+
+  @override
+  String get reinforcementSuperb => '太赞了！你做得非常出色。';
+
+  @override
+  String get reinforcementIncredible => '不可思议！你的进步已经看得见了。';
+
+  @override
+  String get reinforcementWayToGoKing => '干得漂亮，王者！';
+
+  @override
+  String get reinforcementYeahBuddy => '就是这样！';
+
+  @override
+  String get reinforcementThatsHowItsDone => '这才对嘛。';
+
+  @override
+  String get reinforcementEasyAsPie => '轻轻松松。';
+
+  @override
+  String get reinforcementDoingGreat => '你做得很棒。';
+
+  @override
+  String get reinforcementProgressNice => '我是不是看到进步了？不错！';
 }

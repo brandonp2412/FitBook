@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "Rappels pour enregistrer le déjeuner",
   "dinnerReminderTitle": "N’oubliez pas d’enregistrer le dîner",
   "dinnerRemindersChannel": "Rappels du dîner",
-  "dinnerRemindersChannelDescription": "Rappels pour enregistrer le dîner"
+  "dinnerRemindersChannelDescription": "Rappels pour enregistrer le dîner",
+  "reinforcementGreatJob": "Bravo ! Tes efforts portent leurs fruits.",
+  "reinforcementKeepItUp": "Continue comme ça ! Tu progresses vraiment bien.",
+  "reinforcementFantastic": "Fantastique ! Ta constance donne des résultats.",
+  "reinforcementWellDone": "Bien joué ! Tu te rapproches encore de ton objectif.",
+  "reinforcementImpressive": "Impressionnant ! Tes efforts portent leurs fruits.",
+  "reinforcementAmazing": "Incroyable ! Tu es sur la bonne voie.",
+  "reinforcementBravo": "Bravo ! Ton engagement est remarquable.",
+  "reinforcementExcellent": "Excellent ! Ta persévérance est inspirante.",
+  "reinforcementSuperb": "Superbe ! Tu fais un travail remarquable.",
+  "reinforcementIncredible": "Incroyable ! Tes progrès se voient.",
+  "reinforcementWayToGoKing": "Bien joué, champion !",
+  "reinforcementYeahBuddy": "Ouais, mon pote !",
+  "reinforcementThatsHowItsDone": "C’est comme ça qu’on fait.",
+  "reinforcementEasyAsPie": "Facile comme tout.",
+  "reinforcementDoingGreat": "Tu t’en sors super bien.",
+  "reinforcementProgressNice": "C’est du progrès que je vois ? Pas mal."
 }

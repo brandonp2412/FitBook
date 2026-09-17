@@ -1070,4 +1070,52 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dinnerRemindersChannelDescription => '夕食を記録するためのリマインダー';
+
+  @override
+  String get reinforcementGreatJob => 'いい調子！努力が成果につながっています。';
+
+  @override
+  String get reinforcementKeepItUp => 'その調子！素晴らしい進歩です。';
+
+  @override
+  String get reinforcementFantastic => '最高！継続した努力が結果に表れています。';
+
+  @override
+  String get reinforcementWellDone => 'よくできました！目標にまた一歩近づきました。';
+
+  @override
+  String get reinforcementImpressive => 'すごい！努力が実を結んでいます。';
+
+  @override
+  String get reinforcementAmazing => '素晴らしい！正しい方向に進んでいます。';
+
+  @override
+  String get reinforcementBravo => 'ブラボー！その頑張りは立派です。';
+
+  @override
+  String get reinforcementExcellent => '最高です！その粘り強さは見事です。';
+
+  @override
+  String get reinforcementSuperb => '素晴らしい！とてもよく頑張っています。';
+
+  @override
+  String get reinforcementIncredible => 'すごい！進歩がはっきり見えます。';
+
+  @override
+  String get reinforcementWayToGoKing => 'さすが、キング！';
+
+  @override
+  String get reinforcementYeahBuddy => 'よっしゃ！';
+
+  @override
+  String get reinforcementThatsHowItsDone => 'そう、それでこそ！';
+
+  @override
+  String get reinforcementEasyAsPie => '楽勝です。';
+
+  @override
+  String get reinforcementDoingGreat => 'とても順調です。';
+
+  @override
+  String get reinforcementProgressNice => 'おっ、進歩してますね。いい感じ！';
 }

@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "Herinneringen om je lunch te registreren",
   "dinnerReminderTitle": "Vergeet niet je avondeten te registreren",
   "dinnerRemindersChannel": "Avondetenherinneringen",
-  "dinnerRemindersChannelDescription": "Herinneringen om je avondeten te registreren"
+  "dinnerRemindersChannelDescription": "Herinneringen om je avondeten te registreren",
+  "reinforcementGreatJob": "Goed gedaan! Je harde werk werpt zijn vruchten af.",
+  "reinforcementKeepItUp": "Ga zo door! Je boekt uitstekende vooruitgang.",
+  "reinforcementFantastic": "Fantastisch! Je inzet levert resultaat op.",
+  "reinforcementWellDone": "Goed bezig! Je bent weer een stap dichter bij je doel.",
+  "reinforcementImpressive": "Indrukwekkend! Je inspanningen werpen hun vruchten af.",
+  "reinforcementAmazing": "Geweldig! Je bent goed op weg.",
+  "reinforcementBravo": "Bravo! Je inzet is bewonderenswaardig.",
+  "reinforcementExcellent": "Uitstekend! Je doorzettingsvermogen is inspirerend.",
+  "reinforcementSuperb": "Top! Je doet het fantastisch.",
+  "reinforcementIncredible": "Ongelooflijk! Je vooruitgang is zichtbaar.",
+  "reinforcementWayToGoKing": "Lekker bezig, koning!",
+  "reinforcementYeahBuddy": "Ja maat!",
+  "reinforcementThatsHowItsDone": "Zo doe je dat.",
+  "reinforcementEasyAsPie": "Appeltje-eitje.",
+  "reinforcementDoingGreat": "Je doet het geweldig.",
+  "reinforcementProgressNice": "Zie ik daar vooruitgang? Lekker."
 }

@@ -2050,6 +2050,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders to log dinner'**
   String get dinnerRemindersChannelDescription;
+
+  /// No description provided for @reinforcementGreatJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job! Your hard work is paying off.'**
+  String get reinforcementGreatJob;
+
+  /// No description provided for @reinforcementKeepItUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it up! You are making excellent progress.'**
+  String get reinforcementKeepItUp;
+
+  /// No description provided for @reinforcementFantastic.
+  ///
+  /// In en, this message translates to:
+  /// **'Fantastic! Your dedication is showing results.'**
+  String get reinforcementFantastic;
+
+  /// No description provided for @reinforcementWellDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Well done! You are one step closer to your goal.'**
+  String get reinforcementWellDone;
+
+  /// No description provided for @reinforcementImpressive.
+  ///
+  /// In en, this message translates to:
+  /// **'Impressive! Your efforts are bearing fruit.'**
+  String get reinforcementImpressive;
+
+  /// No description provided for @reinforcementAmazing.
+  ///
+  /// In en, this message translates to:
+  /// **'Amazing! You are on the right track.'**
+  String get reinforcementAmazing;
+
+  /// No description provided for @reinforcementBravo.
+  ///
+  /// In en, this message translates to:
+  /// **'Bravo! Your commitment is commendable.'**
+  String get reinforcementBravo;
+
+  /// No description provided for @reinforcementExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent! Your perseverance is inspiring.'**
+  String get reinforcementExcellent;
+
+  /// No description provided for @reinforcementSuperb.
+  ///
+  /// In en, this message translates to:
+  /// **'Superb! You are doing an outstanding job.'**
+  String get reinforcementSuperb;
+
+  /// No description provided for @reinforcementIncredible.
+  ///
+  /// In en, this message translates to:
+  /// **'Incredible! Your progress is noticeable.'**
+  String get reinforcementIncredible;
+
+  /// No description provided for @reinforcementWayToGoKing.
+  ///
+  /// In en, this message translates to:
+  /// **'Way to go King'**
+  String get reinforcementWayToGoKing;
+
+  /// No description provided for @reinforcementYeahBuddy.
+  ///
+  /// In en, this message translates to:
+  /// **'Yeah buddy!'**
+  String get reinforcementYeahBuddy;
+
+  /// No description provided for @reinforcementThatsHowItsDone.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s how it\'s done.'**
+  String get reinforcementThatsHowItsDone;
+
+  /// No description provided for @reinforcementEasyAsPie.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy as pie.'**
+  String get reinforcementEasyAsPie;
+
+  /// No description provided for @reinforcementDoingGreat.
+  ///
+  /// In en, this message translates to:
+  /// **'You are doing great.'**
+  String get reinforcementDoingGreat;
+
+  /// No description provided for @reinforcementProgressNice.
+  ///
+  /// In en, this message translates to:
+  /// **'Is that progress I see? Nice.'**
+  String get reinforcementProgressNice;
 }
 
 class _AppLocalizationsDelegate

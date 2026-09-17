@@ -1106,4 +1106,59 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get dinnerRemindersChannelDescription =>
       'Herinneringen om je avondeten te registreren';
+
+  @override
+  String get reinforcementGreatJob =>
+      'Goed gedaan! Je harde werk werpt zijn vruchten af.';
+
+  @override
+  String get reinforcementKeepItUp =>
+      'Ga zo door! Je boekt uitstekende vooruitgang.';
+
+  @override
+  String get reinforcementFantastic =>
+      'Fantastisch! Je inzet levert resultaat op.';
+
+  @override
+  String get reinforcementWellDone =>
+      'Goed bezig! Je bent weer een stap dichter bij je doel.';
+
+  @override
+  String get reinforcementImpressive =>
+      'Indrukwekkend! Je inspanningen werpen hun vruchten af.';
+
+  @override
+  String get reinforcementAmazing => 'Geweldig! Je bent goed op weg.';
+
+  @override
+  String get reinforcementBravo => 'Bravo! Je inzet is bewonderenswaardig.';
+
+  @override
+  String get reinforcementExcellent =>
+      'Uitstekend! Je doorzettingsvermogen is inspirerend.';
+
+  @override
+  String get reinforcementSuperb => 'Top! Je doet het fantastisch.';
+
+  @override
+  String get reinforcementIncredible =>
+      'Ongelooflijk! Je vooruitgang is zichtbaar.';
+
+  @override
+  String get reinforcementWayToGoKing => 'Lekker bezig, koning!';
+
+  @override
+  String get reinforcementYeahBuddy => 'Ja maat!';
+
+  @override
+  String get reinforcementThatsHowItsDone => 'Zo doe je dat.';
+
+  @override
+  String get reinforcementEasyAsPie => 'Appeltje-eitje.';
+
+  @override
+  String get reinforcementDoingGreat => 'Je doet het geweldig.';
+
+  @override
+  String get reinforcementProgressNice => 'Zie ik daar vooruitgang? Lekker.';
 }

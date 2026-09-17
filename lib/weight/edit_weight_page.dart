@@ -5,7 +5,6 @@ import 'package:drift/drift.dart' as drift;
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
-import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
@@ -81,9 +80,9 @@ void saveWeight(
   final show =
       shouldNotify(amount, original.amount.value, settings.targetWeight!);
   if (!show) return;
+  final reinforcements = localizedPositiveReinforcements(context.l10n);
   final random = Random();
-  final message =
-      positiveReinforcements[random.nextInt(positiveReinforcements.length)];
+  final message = reinforcements[random.nextInt(reinforcements.length)];
 
   toast(context, message);
 }

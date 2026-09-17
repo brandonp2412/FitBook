@@ -1070,4 +1070,52 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get dinnerRemindersChannelDescription => '저녁 식사 기록 알림';
+
+  @override
+  String get reinforcementGreatJob => '잘했어요! 노력이 결실을 맺고 있어요.';
+
+  @override
+  String get reinforcementKeepItUp => '계속 이렇게 해요! 정말 훌륭하게 발전하고 있어요.';
+
+  @override
+  String get reinforcementFantastic => '멋져요! 꾸준한 노력이 결과로 나타나고 있어요.';
+
+  @override
+  String get reinforcementWellDone => '잘했어요! 목표에 한 걸음 더 가까워졌어요.';
+
+  @override
+  String get reinforcementImpressive => '대단해요! 노력이 결실을 맺고 있어요.';
+
+  @override
+  String get reinforcementAmazing => '훌륭해요! 올바른 방향으로 가고 있어요.';
+
+  @override
+  String get reinforcementBravo => '브라보! 그 꾸준함이 정말 멋져요.';
+
+  @override
+  String get reinforcementExcellent => '최고예요! 끈기가 정말 인상적이에요.';
+
+  @override
+  String get reinforcementSuperb => '멋져요! 정말 잘하고 있어요.';
+
+  @override
+  String get reinforcementIncredible => '놀라워요! 발전이 눈에 보여요.';
+
+  @override
+  String get reinforcementWayToGoKing => '역시 킹!';
+
+  @override
+  String get reinforcementYeahBuddy => '좋았어!';
+
+  @override
+  String get reinforcementThatsHowItsDone => '바로 이렇게 하는 거예요.';
+
+  @override
+  String get reinforcementEasyAsPie => '식은 죽 먹기죠.';
+
+  @override
+  String get reinforcementDoingGreat => '정말 잘하고 있어요.';
+
+  @override
+  String get reinforcementProgressNice => '오, 발전이 보이는데요? 좋아요.';
 }

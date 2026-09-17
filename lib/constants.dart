@@ -172,25 +172,6 @@ const foodFields = [
   'created',
 ];
 
-List<String> positiveReinforcements = [
-  'Great job! Your hard work is paying off.',
-  'Keep it up! You are making excellent progress.',
-  'Fantastic! Your dedication is showing results.',
-  'Well done! You are one step closer to your goal.',
-  'Impressive! Your efforts are bearing fruit.',
-  'Amazing! You are on the right track.',
-  'Bravo! Your commitment is commendable.',
-  'Excellent! Your perseverance is inspiring.',
-  'Superb! You are doing an outstanding job.',
-  'Incredible! Your progress is noticeable.',
-  'Way to go King',
-  'Yeah buddy!',
-  "That's how it's done.",
-  "Easy as pie.",
-  "You are doing great.",
-  "Is that progress I see? Nice.",
-];
-
 final defaultSettings = SettingsCompanion.insert(
   longDateFormat: "dd/MM/yy",
   shortDateFormat: 'd/M/yy',

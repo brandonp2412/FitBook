@@ -1108,4 +1108,58 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get dinnerRemindersChannelDescription =>
       'Recordatorios para registrar la cena';
+
+  @override
+  String get reinforcementGreatJob =>
+      '¡Buen trabajo! Tu esfuerzo está dando sus frutos.';
+
+  @override
+  String get reinforcementKeepItUp =>
+      '¡Sigue así! Estás progresando de maravilla.';
+
+  @override
+  String get reinforcementFantastic =>
+      '¡Fantástico! Tu constancia está dando resultados.';
+
+  @override
+  String get reinforcementWellDone =>
+      '¡Bien hecho! Estás un paso más cerca de tu objetivo.';
+
+  @override
+  String get reinforcementImpressive =>
+      '¡Impresionante! Tu esfuerzo está dando frutos.';
+
+  @override
+  String get reinforcementAmazing => '¡Genial! Vas por buen camino.';
+
+  @override
+  String get reinforcementBravo => '¡Bravo! Tu compromiso es admirable.';
+
+  @override
+  String get reinforcementExcellent => '¡Excelente! Tu perseverancia inspira.';
+
+  @override
+  String get reinforcementSuperb =>
+      '¡Magnífico! Lo estás haciendo de maravilla.';
+
+  @override
+  String get reinforcementIncredible => '¡Increíble! Se nota tu progreso.';
+
+  @override
+  String get reinforcementWayToGoKing => '¡Así se hace, rey!';
+
+  @override
+  String get reinforcementYeahBuddy => '¡Eso es!';
+
+  @override
+  String get reinforcementThatsHowItsDone => 'Así se hace.';
+
+  @override
+  String get reinforcementEasyAsPie => 'Pan comido.';
+
+  @override
+  String get reinforcementDoingGreat => 'Lo estás haciendo muy bien.';
+
+  @override
+  String get reinforcementProgressNice => '¿Eso que veo es progreso? Bien.';
 }

@@ -350,5 +350,21 @@
   "lunchRemindersChannelDescription": "Reminders to log lunch",
   "dinnerReminderTitle": "Don't forget to log dinner",
   "dinnerRemindersChannel": "Dinner reminders",
-  "dinnerRemindersChannelDescription": "Reminders to log dinner"
+  "dinnerRemindersChannelDescription": "Reminders to log dinner",
+  "reinforcementGreatJob": "Great job! Your hard work is paying off.",
+  "reinforcementKeepItUp": "Keep it up! You are making excellent progress.",
+  "reinforcementFantastic": "Fantastic! Your dedication is showing results.",
+  "reinforcementWellDone": "Well done! You are one step closer to your goal.",
+  "reinforcementImpressive": "Impressive! Your efforts are bearing fruit.",
+  "reinforcementAmazing": "Amazing! You are on the right track.",
+  "reinforcementBravo": "Bravo! Your commitment is commendable.",
+  "reinforcementExcellent": "Excellent! Your perseverance is inspiring.",
+  "reinforcementSuperb": "Superb! You are doing an outstanding job.",
+  "reinforcementIncredible": "Incredible! Your progress is noticeable.",
+  "reinforcementWayToGoKing": "Way to go King",
+  "reinforcementYeahBuddy": "Yeah buddy!",
+  "reinforcementThatsHowItsDone": "That's how it's done.",
+  "reinforcementEasyAsPie": "Easy as pie.",
+  "reinforcementDoingGreat": "You are doing great.",
+  "reinforcementProgressNice": "Is that progress I see? Nice."
 }

@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "Przypomnienia o zapisaniu obiadu",
   "dinnerReminderTitle": "Nie zapomnij zapisać kolacji",
   "dinnerRemindersChannel": "Przypomnienia o kolacji",
-  "dinnerRemindersChannelDescription": "Przypomnienia o zapisaniu kolacji"
+  "dinnerRemindersChannelDescription": "Przypomnienia o zapisaniu kolacji",
+  "reinforcementGreatJob": "Świetna robota! Twój wysiłek przynosi efekty.",
+  "reinforcementKeepItUp": "Tak trzymaj! Robisz świetne postępy.",
+  "reinforcementFantastic": "Fantastycznie! Twoja konsekwencja przynosi rezultaty.",
+  "reinforcementWellDone": "Dobra robota! Jesteś o krok bliżej celu.",
+  "reinforcementImpressive": "Imponujące! Twój wysiłek przynosi owoce.",
+  "reinforcementAmazing": "Rewelacja! Jesteś na dobrej drodze.",
+  "reinforcementBravo": "Brawo! Twoje zaangażowanie jest godne podziwu.",
+  "reinforcementExcellent": "Doskonale! Twoja wytrwałość inspiruje.",
+  "reinforcementSuperb": "Super! Świetnie sobie radzisz.",
+  "reinforcementIncredible": "Niesamowite! Widać twoje postępy.",
+  "reinforcementWayToGoKing": "Tak trzymaj, królu!",
+  "reinforcementYeahBuddy": "No i pięknie!",
+  "reinforcementThatsHowItsDone": "Tak się to robi.",
+  "reinforcementEasyAsPie": "Bułka z masłem.",
+  "reinforcementDoingGreat": "Świetnie ci idzie.",
+  "reinforcementProgressNice": "Czy ja widzę postęp? Super."
 }

@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "Erinnerungen zum Eintragen des Mittagessens",
   "dinnerReminderTitle": "Vergiss nicht, dein Abendessen einzutragen",
   "dinnerRemindersChannel": "Abendessenserinnerungen",
-  "dinnerRemindersChannelDescription": "Erinnerungen zum Eintragen des Abendessens"
+  "dinnerRemindersChannelDescription": "Erinnerungen zum Eintragen des Abendessens",
+  "reinforcementGreatJob": "Klasse! Deine harte Arbeit zahlt sich aus.",
+  "reinforcementKeepItUp": "Weiter so! Du machst großartige Fortschritte.",
+  "reinforcementFantastic": "Fantastisch! Dein Einsatz zeigt Wirkung.",
+  "reinforcementWellDone": "Gut gemacht! Du bist deinem Ziel einen Schritt näher.",
+  "reinforcementImpressive": "Beeindruckend! Deine Mühe trägt Früchte.",
+  "reinforcementAmazing": "Super! Du bist auf dem richtigen Weg.",
+  "reinforcementBravo": "Bravo! Dein Einsatz ist bewundernswert.",
+  "reinforcementExcellent": "Ausgezeichnet! Deine Ausdauer ist inspirierend.",
+  "reinforcementSuperb": "Spitze! Du machst das hervorragend.",
+  "reinforcementIncredible": "Unglaublich! Deine Fortschritte sind sichtbar.",
+  "reinforcementWayToGoKing": "Weiter so, King!",
+  "reinforcementYeahBuddy": "Yeah, Buddy!",
+  "reinforcementThatsHowItsDone": "Genau so macht man das.",
+  "reinforcementEasyAsPie": "Kinderleicht.",
+  "reinforcementDoingGreat": "Du machst das großartig.",
+  "reinforcementProgressNice": "Sehe ich da Fortschritt? Stark."
 }

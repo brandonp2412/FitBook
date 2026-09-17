@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "提醒你记录午餐",
   "dinnerReminderTitle": "别忘了记录晚餐",
   "dinnerRemindersChannel": "晚餐提醒",
-  "dinnerRemindersChannelDescription": "提醒你记录晚餐"
+  "dinnerRemindersChannelDescription": "提醒你记录晚餐",
+  "reinforcementGreatJob": "干得漂亮！你的努力正在得到回报。",
+  "reinforcementKeepItUp": "继续保持！你的进步非常棒。",
+  "reinforcementFantastic": "太棒了！你的坚持正在带来成果。",
+  "reinforcementWellDone": "做得好！你离目标又近了一步。",
+  "reinforcementImpressive": "真不错！你的努力正在开花结果。",
+  "reinforcementAmazing": "太棒了！你正走在正确的路上。",
+  "reinforcementBravo": "好样的！你的投入值得称赞。",
+  "reinforcementExcellent": "非常棒！你的坚持令人佩服。",
+  "reinforcementSuperb": "太赞了！你做得非常出色。",
+  "reinforcementIncredible": "不可思议！你的进步已经看得见了。",
+  "reinforcementWayToGoKing": "干得漂亮，王者！",
+  "reinforcementYeahBuddy": "就是这样！",
+  "reinforcementThatsHowItsDone": "这才对嘛。",
+  "reinforcementEasyAsPie": "轻轻松松。",
+  "reinforcementDoingGreat": "你做得很棒。",
+  "reinforcementProgressNice": "我是不是看到进步了？不错！"
 }

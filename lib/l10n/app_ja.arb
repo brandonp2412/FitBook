@@ -332,5 +332,21 @@
   "lunchRemindersChannelDescription": "昼食を記録するためのリマインダー",
   "dinnerReminderTitle": "夕食の記録をお忘れなく",
   "dinnerRemindersChannel": "夕食のリマインダー",
-  "dinnerRemindersChannelDescription": "夕食を記録するためのリマインダー"
+  "dinnerRemindersChannelDescription": "夕食を記録するためのリマインダー",
+  "reinforcementGreatJob": "いい調子！努力が成果につながっています。",
+  "reinforcementKeepItUp": "その調子！素晴らしい進歩です。",
+  "reinforcementFantastic": "最高！継続した努力が結果に表れています。",
+  "reinforcementWellDone": "よくできました！目標にまた一歩近づきました。",
+  "reinforcementImpressive": "すごい！努力が実を結んでいます。",
+  "reinforcementAmazing": "素晴らしい！正しい方向に進んでいます。",
+  "reinforcementBravo": "ブラボー！その頑張りは立派です。",
+  "reinforcementExcellent": "最高です！その粘り強さは見事です。",
+  "reinforcementSuperb": "素晴らしい！とてもよく頑張っています。",
+  "reinforcementIncredible": "すごい！進歩がはっきり見えます。",
+  "reinforcementWayToGoKing": "さすが、キング！",
+  "reinforcementYeahBuddy": "よっしゃ！",
+  "reinforcementThatsHowItsDone": "そう、それでこそ！",
+  "reinforcementEasyAsPie": "楽勝です。",
+  "reinforcementDoingGreat": "とても順調です。",
+  "reinforcementProgressNice": "おっ、進歩してますね。いい感じ！"
 }
