@@ -1,11 +1,11 @@
 {
-    "name": "fit_book",
-    "short_name": "fit_book",
+    "name": "FitBook",
+    "short_name": "FitBook",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",
     "theme_color": "#hexcode",
-    "description": "A new Flutter project.",
+    "description": "Food, nutrition, and weight tracking with FitBook.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Barcode scanning foods</string>
+	<string>FitBook uses the camera to scan food barcodes.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Fit Book</string>
+	<string>FitBook</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -53,13 +53,13 @@
 		<string>remote-notification</string>
 	</array>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Requested by 3rd party API</string>
+	<string>A third-party component used by FitBook requests access to Apple Music.</string>
 	<key>UISupportsDocumentBrowser</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Requested by 3rd party API</string>
+	<string>FitBook uses your photo library to add food and meal images.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

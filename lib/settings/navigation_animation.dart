@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 /// The animation used when navigating between screens.
 enum NavigationAnimation {
-  fade('fade', 'Fade'),
-  zoom('zoom', 'Zoom'),
-  slide('slide', 'Slide'),
-  rise('rise', 'Rise'),
-  none('none', 'None');
+  fade('fade'),
+  zoom('zoom'),
+  slide('slide'),
+  rise('rise'),
+  none('none');
 
-  const NavigationAnimation(this.value, this.label);
+  const NavigationAnimation(this.value);
 
   /// Stable value persisted in the settings database.
   final String value;
-
-  /// User-facing name shown in appearance settings.
-  final String label;
 
   /// Returns the saved animation, falling back to fade for unknown values.
   static NavigationAnimation fromValue(String value) => values.firstWhere(

@@ -25,7 +25,7 @@
 ## Translation quality
 - [ ] Complete every locale ARB with natural nutrition/fitness terminology and exact ICU placeholders.
 - [x] Run automated key/placeholder completeness checks across every ARB.
-- [ ] Audit for accidental hard-coded user-visible English across Dart and native platform code.
+- [x] Audit for accidental hard-coded user-visible English across Dart and native platform code.
 
 ## QA and release readiness
 - [ ] Verify common screens under long translations and 200% text scale; fix overflow/layout issues without unnatural abbreviation.
