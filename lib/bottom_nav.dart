@@ -1,3 +1,4 @@
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 const double largeScreenBreakpoint = 900;
@@ -26,18 +27,18 @@ IconData iconForTab(String tab) {
   }
 }
 
-String labelForTab(String tab) {
+String labelForTab(BuildContext context, String tab) {
   switch (tab) {
     case 'DiaryPage':
-      return 'Diary';
+      return context.l10n.navDiary;
     case 'GraphPage':
-      return 'Graph';
+      return context.l10n.navGraph;
     case 'FoodPage':
-      return 'Food';
+      return context.l10n.navFood;
     case 'WeightPage':
-      return 'Weight';
+      return context.l10n.navWeight;
     default:
-      return 'Error';
+      return context.l10n.navError;
   }
 }
 
@@ -150,7 +151,7 @@ class BottomNav extends StatelessWidget {
               final index = entry.key;
               final tab = entry.value;
               final isSelected = index == currentIndex;
-              final label = labelForTab(tab);
+              final label = labelForTab(context, tab);
 
               return Semantics(
                 label: label,
@@ -279,11 +280,11 @@ class SideNav extends StatelessWidget {
                   ? FilledButton.tonalIcon(
                       onPressed: onOpenSettings,
                       icon: const Icon(Icons.settings_outlined),
-                      label: const Text('Settings'),
+                      label: Text(context.l10n.settings),
                     )
                   : IconButton.filledTonal(
                       onPressed: onOpenSettings,
-                      tooltip: 'Settings',
+                      tooltip: context.l10n.settings,
                       icon: const Icon(Icons.settings_outlined),
                     ),
             ),
@@ -295,7 +296,7 @@ class SideNav extends StatelessWidget {
               (tab) => NavigationRailDestination(
                 icon: Icon(iconForTab(tab)),
                 selectedIcon: Icon(iconForTab(tab)),
-                label: Text(labelForTab(tab), key: Key(tab)),
+                label: Text(labelForTab(context, tab), key: Key(tab)),
               ),
             )
             .toList(),

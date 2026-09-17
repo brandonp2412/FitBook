@@ -6,6 +6,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/weight/edit_weight_page.dart';
 import 'package:fit_book/weight/weight_list.dart';
 import 'package:fit_book/bottom_nav.dart';
@@ -100,13 +101,14 @@ class WeightPageState extends State<WeightPage>
                               ? Icons.monitor_weight_outlined
                               : Icons.search_off_rounded,
                           title: search.isEmpty
-                              ? 'No weights yet'
-                              : 'No matching weights',
+                              ? context.l10n.noWeightsYet
+                              : context.l10n.noMatchingWeights,
                           message: search.isEmpty
-                              ? 'Log your first weight to start tracking your trend.'
-                              : 'Nothing matches “$search”. Clear the search to see all entries.',
-                          actionLabel:
-                              search.isEmpty ? 'Log weight' : 'Clear search',
+                              ? context.l10n.logFirstWeight
+                              : context.l10n.noWeightSearchMatches(search),
+                          actionLabel: search.isEmpty
+                              ? context.l10n.logWeight
+                              : context.l10n.clearSearch,
                           actionIcon: search.isEmpty
                               ? Icons.add_rounded
                               : Icons.close_rounded,
@@ -216,7 +218,7 @@ class WeightPageState extends State<WeightPage>
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        'Weight trend',
+                                        context.l10n.weightTrend,
                                         style: theme.textTheme.titleLarge
                                             ?.copyWith(
                                           fontWeight: FontWeight.w700,
@@ -236,7 +238,7 @@ class WeightPageState extends State<WeightPage>
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Recent measurements and overall direction',
+                                  context.l10n.weightTrendSubtitle,
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     color: colorScheme.onSurfaceVariant,
                                   ),
@@ -285,7 +287,7 @@ class WeightPageState extends State<WeightPage>
 
                 showEditWeight(context, weight);
               },
-              label: 'Add',
+              label: context.l10n.add,
               icon: Icons.add,
               scroll: scrollCtrl,
             );

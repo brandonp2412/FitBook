@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,12 @@ final List<String> longFormats = [
   'yyyy.MM.dd H:mm',
 ];
 
-List<Widget> getAppearanceSettings(String term, SettingsState settings) {
+List<Widget> getAppearanceSettings(
+  BuildContext context,
+  String term,
+  SettingsState settings,
+) {
+  final l10n = context.l10n;
   final now = DateTime.now();
   String longExample = DateFormat(settings.value.longDateFormat)
       .format(DateTime(now.year, now.month, now.day, 13, 54));
@@ -37,6 +43,40 @@ List<Widget> getAppearanceSettings(String term, SettingsState settings) {
       .format(DateTime(now.year, now.month, now.day, 13, 54));
 
   return [
+    if ('language locale ${l10n.language.toLowerCase()}'.contains(term))
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: DropdownButtonFormField<String>(
+          initialValue: settings.value.locale,
+          items: [
+            DropdownMenuItem(value: 'system', child: Text(l10n.languageSystem)),
+            DropdownMenuItem(value: 'en', child: Text(l10n.languageEnglish)),
+            DropdownMenuItem(value: 'es', child: Text(l10n.languageSpanish)),
+            DropdownMenuItem(value: 'fr', child: Text(l10n.languageFrench)),
+            DropdownMenuItem(value: 'de', child: Text(l10n.languageGerman)),
+            DropdownMenuItem(value: 'it', child: Text(l10n.languageItalian)),
+            DropdownMenuItem(
+              value: 'pt-BR',
+              child: Text(l10n.languagePortugueseBrazil),
+            ),
+            DropdownMenuItem(value: 'nl', child: Text(l10n.languageDutch)),
+            DropdownMenuItem(value: 'pl', child: Text(l10n.languagePolish)),
+            DropdownMenuItem(value: 'ja', child: Text(l10n.languageJapanese)),
+            DropdownMenuItem(value: 'ko', child: Text(l10n.languageKorean)),
+            DropdownMenuItem(
+              value: 'zh-CN',
+              child: Text(l10n.languageChineseSimplified),
+            ),
+          ],
+          onChanged: (value) => db.settings.update().write(
+                SettingsCompanion(locale: Value(value!)),
+              ),
+          decoration: InputDecoration(
+            labelText: l10n.language,
+            helperText: l10n.languageSubtitle,
+          ),
+        ),
+      ),
     if ('theme'.contains(term))
       Padding(
         padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
@@ -283,12 +323,12 @@ class AppearanceSettings extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Appearance settings"),
+        title: Text(context.l10n.appearanceSettings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
-          children: getAppearanceSettings('', settings),
+          children: getAppearanceSettings(context, '', settings),
         ),
       ),
     );

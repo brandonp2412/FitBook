@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 Future<SettingsState> _settingsState() async =>
     SettingsState(await db.settings.select().getSingle());
@@ -17,7 +18,7 @@ Widget _wrap(SettingsState settingsState) => MultiProvider(
         ChangeNotifierProvider(create: (_) => settingsState),
         ChangeNotifierProvider(create: (_) => DiaryState()),
       ],
-      child: const MaterialApp(home: SettingsPage()),
+      child: localizedApp(home: const SettingsPage()),
     );
 
 void main() async {

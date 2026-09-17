@@ -5,6 +5,7 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -93,18 +94,18 @@ class GraphPageState extends State<GraphPage>
                           items: [
                             DropdownMenuItem(
                               value: db.foods.calories.name,
-                              child: const Text('Calories'),
+                              child: Text(context.l10n.calories),
                             ),
-                            const DropdownMenuItem(
+                            DropdownMenuItem(
                               value: 'body-weight',
-                              child: Text('Body weight'),
+                              child: Text(context.l10n.bodyWeight),
                             ),
                             ...filteredFields.map(
                               (field) => DropdownMenuItem(
                                 value: field,
                                 child: Text(
                                   field == db.foods.proteinG.name
-                                      ? 'Protein'
+                                      ? context.l10n.protein
                                       : sentenceCase(field),
                                 ),
                               ),
@@ -123,7 +124,7 @@ class GraphPageState extends State<GraphPage>
                     const SizedBox(width: 8),
                     IconButton.filledTonal(
                       icon: const Icon(Icons.tune),
-                      tooltip: 'Options',
+                      tooltip: context.l10n.options,
                       onPressed: _showOptions,
                     ),
                   ],
@@ -136,11 +137,23 @@ class GraphPageState extends State<GraphPage>
                     style: SegmentedButton.styleFrom(
                       visualDensity: VisualDensity.compact,
                     ),
-                    segments: const [
-                      ButtonSegment(value: Period.day, label: Text("Day")),
-                      ButtonSegment(value: Period.week, label: Text("Week")),
-                      ButtonSegment(value: Period.month, label: Text("Month")),
-                      ButtonSegment(value: Period.year, label: Text("Year")),
+                    segments: [
+                      ButtonSegment(
+                        value: Period.day,
+                        label: Text(context.l10n.day),
+                      ),
+                      ButtonSegment(
+                        value: Period.week,
+                        label: Text(context.l10n.week),
+                      ),
+                      ButtonSegment(
+                        value: Period.month,
+                        label: Text(context.l10n.month),
+                      ),
+                      ButtonSegment(
+                        value: Period.year,
+                        label: Text(context.l10n.year),
+                      ),
                     ],
                     selected: {groupBy},
                     onSelectionChanged: (value) {
@@ -196,18 +209,18 @@ class GraphPageState extends State<GraphPage>
                           items: [
                             DropdownMenuItem(
                               value: db.foods.calories.name,
-                              child: const Text('Calories'),
+                              child: Text(context.l10n.calories),
                             ),
-                            const DropdownMenuItem(
+                            DropdownMenuItem(
                               value: 'body-weight',
-                              child: Text('Body weight'),
+                              child: Text(context.l10n.bodyWeight),
                             ),
                             ...filteredFields.map(
                               (field) => DropdownMenuItem(
                                 value: field,
                                 child: Text(
                                   field == db.foods.proteinG.name
-                                      ? 'Protein'
+                                      ? context.l10n.protein
                                       : sentenceCase(field),
                                 ),
                               ),
@@ -226,7 +239,7 @@ class GraphPageState extends State<GraphPage>
                     const SizedBox(width: 8),
                     IconButton.filledTonal(
                       icon: const Icon(Icons.tune),
-                      tooltip: 'Options',
+                      tooltip: context.l10n.options,
                       onPressed: _showOptions,
                     ),
                   ],
@@ -239,11 +252,23 @@ class GraphPageState extends State<GraphPage>
                     style: SegmentedButton.styleFrom(
                       visualDensity: VisualDensity.compact,
                     ),
-                    segments: const [
-                      ButtonSegment(value: Period.day, label: Text("Day")),
-                      ButtonSegment(value: Period.week, label: Text("Week")),
-                      ButtonSegment(value: Period.month, label: Text("Month")),
-                      ButtonSegment(value: Period.year, label: Text("Year")),
+                    segments: [
+                      ButtonSegment(
+                        value: Period.day,
+                        label: Text(context.l10n.day),
+                      ),
+                      ButtonSegment(
+                        value: Period.week,
+                        label: Text(context.l10n.week),
+                      ),
+                      ButtonSegment(
+                        value: Period.month,
+                        label: Text(context.l10n.month),
+                      ),
+                      ButtonSegment(
+                        value: Period.year,
+                        label: Text(context.l10n.year),
+                      ),
                     ],
                     selected: {groupBy},
                     onSelectionChanged: (value) {
@@ -312,12 +337,12 @@ class GraphPageState extends State<GraphPage>
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    label('Date range'),
+                    label(pageContext.l10n.dateRange),
                     Row(
                       children: [
                         Expanded(
                           child: _DateField(
-                            label: 'Start date',
+                            label: pageContext.l10n.startDate,
                             value: start,
                             hint: settings.shortDateFormat,
                             onTap: () async {
@@ -333,7 +358,7 @@ class GraphPageState extends State<GraphPage>
                         const SizedBox(width: 12),
                         Expanded(
                           child: _DateField(
-                            label: 'Stop date',
+                            label: pageContext.l10n.stopDate,
                             value: end,
                             hint: settings.shortDateFormat,
                             onTap: () async {
@@ -352,7 +377,7 @@ class GraphPageState extends State<GraphPage>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        label('Data points'),
+                        label(pageContext.l10n.dataPoints),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
@@ -390,7 +415,7 @@ class GraphPageState extends State<GraphPage>
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         icon: const Icon(Icons.tune),
-                        label: const Text('Customize fields'),
+                        label: Text(pageContext.l10n.customizeFields),
                         onPressed: () {
                           Navigator.pop(sheetContext);
                           Navigator.of(pageContext)

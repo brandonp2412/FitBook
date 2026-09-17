@@ -48,6 +48,7 @@ class Settings extends Table {
   TextColumn get themeMode => text()();
   TextColumn get navigationAnimation =>
       text().withDefault(const Constant('fade'))();
+  TextColumn get locale => text().withDefault(const Constant('system'))();
   TextColumn get backupPath => text().nullable()();
   TextColumn get convertWeight => text().nullable()();
   BoolColumn get scrollableTabs =>

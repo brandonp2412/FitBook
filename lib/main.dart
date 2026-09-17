@@ -10,6 +10,7 @@ import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/food_page.dart';
 import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
@@ -139,8 +140,11 @@ class App extends StatelessWidget {
         _setSystemUIStyle(currentBrightness);
 
         return MaterialApp(
-          title: 'FitBook',
+          onGenerateTitle: (context) => context.l10n.appTitle,
           debugShowCheckedModeBanner: false,
+          locale: localeFromPreference(settings.locale),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',
@@ -196,7 +200,9 @@ class _HomePageState extends State<HomePage> {
       case 'WeightPage':
         return const WeightPage();
       default:
-        return ErrorWidget('Invalid tab settings.');
+        return Builder(
+          builder: (context) => ErrorWidget(context.l10n.invalidTabSettings),
+        );
     }
   }
 
@@ -227,9 +233,9 @@ class _HomePageState extends State<HomePage> {
       if (mounted)
         toast(
           context,
-          "New version ${pkg.version}",
+          context.l10n.newVersion(pkg.version),
           SnackBarAction(
-            label: 'Changes',
+            label: context.l10n.changes,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const WhatsNew(),

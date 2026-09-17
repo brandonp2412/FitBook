@@ -9,10 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 Finder _fieldWithLabel(String label) => find.byWidgetPredicate(
-  (widget) => widget is TextField && widget.decoration?.labelText == label,
-);
+      (widget) => widget is TextField && widget.decoration?.labelText == label,
+    );
 
 Future<Food> _foodForDiary(int diaryId) async {
   final diary = await (db.diaries.select()..where((d) => d.id.equals(diaryId)))
@@ -35,7 +36,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: DiaryPage()),
+        child: localizedApp(home: const DiaryPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -56,10 +57,9 @@ void main() async {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final createdFood =
-        await (db.foods.select()
-              ..where((food) => food.name.equals('Dragonfruit bowl')))
-            .getSingle();
+    final createdFood = await (db.foods.select()
+          ..where((food) => food.name.equals('Dragonfruit bowl')))
+        .getSingle();
     final diaries = await db.diaries.select().get();
     expect(diaries, hasLength(1));
     expect(diaries.single.food, createdFood.id);
@@ -100,7 +100,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: DiaryPage()),
+        child: localizedApp(home: const DiaryPage()),
       ),
     );
     await tester.pumpAndSettle();

@@ -55,7 +55,8 @@ Future<void> notifyRemindersEnabled() async {
   await plugin.show(
     id: 0,
     title: 'Meal reminders enabled',
-    body: "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
+    body:
+        "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
     notificationDetails: const NotificationDetails(
       android: AndroidNotificationDetails(
         'reminder-settings',
@@ -80,13 +81,13 @@ Future<void> doDesktopReminders() async {
 
   final db = AppDatabase();
 
-  final diaries =
-      await (db.diaries.select()..where(
-            (u) => const CustomExpression(
-              "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-            ),
-          ))
-          .get();
+  final diaries = await (db.diaries.select()
+        ..where(
+          (u) => const CustomExpression(
+            "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
+          ),
+        ))
+      .get();
   final now = DateTime.now();
   final hour = now.hour;
 
@@ -132,13 +133,13 @@ void doMobileReminders() {
 
     final db = AppDatabase();
 
-    final diaries =
-        await (db.diaries.select()..where(
-              (u) => const CustomExpression(
-                "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-              ),
-            ))
-            .get();
+    final diaries = await (db.diaries.select()
+          ..where(
+            (u) => const CustomExpression(
+              "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
+            ),
+          ))
+        .get();
     final now = DateTime.now();
     final hour = now.hour;
 

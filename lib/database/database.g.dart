@@ -6815,6 +6815,13 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           type: DriftSqlType.string,
           requiredDuringInsert: false,
           defaultValue: const Constant('fade'));
+  static const VerificationMeta _localeMeta = const VerificationMeta('locale');
+  @override
+  late final GeneratedColumn<String> locale = GeneratedColumn<String>(
+      'locale', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('system'));
   static const VerificationMeta _backupPathMeta =
       const VerificationMeta('backupPath');
   @override
@@ -6907,6 +6914,7 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         limit,
         themeMode,
         navigationAnimation,
+        locale,
         backupPath,
         convertWeight,
         scrollableTabs,
@@ -7098,6 +7106,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           navigationAnimation.isAcceptableOrUnknown(
               data['navigation_animation']!, _navigationAnimationMeta));
     }
+    if (data.containsKey('locale')) {
+      context.handle(_localeMeta,
+          locale.isAcceptableOrUnknown(data['locale']!, _localeMeta));
+    }
     if (data.containsKey('backup_path')) {
       context.handle(
           _backupPathMeta,
@@ -7209,6 +7221,8 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           .read(DriftSqlType.string, data['${effectivePrefix}theme_mode'])!,
       navigationAnimation: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}navigation_animation'])!,
+      locale: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}locale'])!,
       backupPath: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}backup_path']),
       convertWeight: attachedDatabase.typeMapping
@@ -7263,6 +7277,7 @@ class Setting extends DataClass implements Insertable<Setting> {
   final int limit;
   final String themeMode;
   final String navigationAnimation;
+  final String locale;
   final String? backupPath;
   final String? convertWeight;
   final bool scrollableTabs;
@@ -7301,6 +7316,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       required this.limit,
       required this.themeMode,
       required this.navigationAnimation,
+      required this.locale,
       this.backupPath,
       this.convertWeight,
       required this.scrollableTabs,
@@ -7359,6 +7375,7 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['limit'] = Variable<int>(limit);
     map['theme_mode'] = Variable<String>(themeMode);
     map['navigation_animation'] = Variable<String>(navigationAnimation);
+    map['locale'] = Variable<String>(locale);
     if (!nullToAbsent || backupPath != null) {
       map['backup_path'] = Variable<String>(backupPath);
     }
@@ -7422,6 +7439,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       limit: Value(limit),
       themeMode: Value(themeMode),
       navigationAnimation: Value(navigationAnimation),
+      locale: Value(locale),
       backupPath: backupPath == null && nullToAbsent
           ? const Value.absent()
           : Value(backupPath),
@@ -7473,6 +7491,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       themeMode: serializer.fromJson<String>(json['themeMode']),
       navigationAnimation:
           serializer.fromJson<String>(json['navigationAnimation']),
+      locale: serializer.fromJson<String>(json['locale']),
       backupPath: serializer.fromJson<String?>(json['backupPath']),
       convertWeight: serializer.fromJson<String?>(json['convertWeight']),
       scrollableTabs: serializer.fromJson<bool>(json['scrollableTabs']),
@@ -7516,6 +7535,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       'limit': serializer.toJson<int>(limit),
       'themeMode': serializer.toJson<String>(themeMode),
       'navigationAnimation': serializer.toJson<String>(navigationAnimation),
+      'locale': serializer.toJson<String>(locale),
       'backupPath': serializer.toJson<String?>(backupPath),
       'convertWeight': serializer.toJson<String?>(convertWeight),
       'scrollableTabs': serializer.toJson<bool>(scrollableTabs),
@@ -7557,6 +7577,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           int? limit,
           String? themeMode,
           String? navigationAnimation,
+          String? locale,
           Value<String?> backupPath = const Value.absent(),
           Value<String?> convertWeight = const Value.absent(),
           bool? scrollableTabs,
@@ -7599,6 +7620,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         limit: limit ?? this.limit,
         themeMode: themeMode ?? this.themeMode,
         navigationAnimation: navigationAnimation ?? this.navigationAnimation,
+        locale: locale ?? this.locale,
         backupPath: backupPath.present ? backupPath.value : this.backupPath,
         convertWeight:
             convertWeight.present ? convertWeight.value : this.convertWeight,
@@ -7668,6 +7690,7 @@ class Setting extends DataClass implements Insertable<Setting> {
       navigationAnimation: data.navigationAnimation.present
           ? data.navigationAnimation.value
           : this.navigationAnimation,
+      locale: data.locale.present ? data.locale.value : this.locale,
       backupPath:
           data.backupPath.present ? data.backupPath.value : this.backupPath,
       convertWeight: data.convertWeight.present
@@ -7723,6 +7746,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('limit: $limit, ')
           ..write('themeMode: $themeMode, ')
           ..write('navigationAnimation: $navigationAnimation, ')
+          ..write('locale: $locale, ')
           ..write('backupPath: $backupPath, ')
           ..write('convertWeight: $convertWeight, ')
           ..write('scrollableTabs: $scrollableTabs, ')
@@ -7766,6 +7790,7 @@ class Setting extends DataClass implements Insertable<Setting> {
         limit,
         themeMode,
         navigationAnimation,
+        locale,
         backupPath,
         convertWeight,
         scrollableTabs,
@@ -7808,6 +7833,7 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.limit == this.limit &&
           other.themeMode == this.themeMode &&
           other.navigationAnimation == this.navigationAnimation &&
+          other.locale == this.locale &&
           other.backupPath == this.backupPath &&
           other.convertWeight == this.convertWeight &&
           other.scrollableTabs == this.scrollableTabs &&
@@ -7848,6 +7874,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<int> limit;
   final Value<String> themeMode;
   final Value<String> navigationAnimation;
+  final Value<String> locale;
   final Value<String?> backupPath;
   final Value<String?> convertWeight;
   final Value<bool> scrollableTabs;
@@ -7886,6 +7913,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.limit = const Value.absent(),
     this.themeMode = const Value.absent(),
     this.navigationAnimation = const Value.absent(),
+    this.locale = const Value.absent(),
     this.backupPath = const Value.absent(),
     this.convertWeight = const Value.absent(),
     this.scrollableTabs = const Value.absent(),
@@ -7925,6 +7953,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.limit = const Value.absent(),
     required String themeMode,
     this.navigationAnimation = const Value.absent(),
+    this.locale = const Value.absent(),
     this.backupPath = const Value.absent(),
     this.convertWeight = const Value.absent(),
     this.scrollableTabs = const Value.absent(),
@@ -7973,6 +8002,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<int>? limit,
     Expression<String>? themeMode,
     Expression<String>? navigationAnimation,
+    Expression<String>? locale,
     Expression<String>? backupPath,
     Expression<String>? convertWeight,
     Expression<bool>? scrollableTabs,
@@ -8015,6 +8045,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (themeMode != null) 'theme_mode': themeMode,
       if (navigationAnimation != null)
         'navigation_animation': navigationAnimation,
+      if (locale != null) 'locale': locale,
       if (backupPath != null) 'backup_path': backupPath,
       if (convertWeight != null) 'convert_weight': convertWeight,
       if (scrollableTabs != null) 'scrollable_tabs': scrollableTabs,
@@ -8056,6 +8087,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<int>? limit,
       Value<String>? themeMode,
       Value<String>? navigationAnimation,
+      Value<String>? locale,
       Value<String?>? backupPath,
       Value<String?>? convertWeight,
       Value<bool>? scrollableTabs,
@@ -8095,6 +8127,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       limit: limit ?? this.limit,
       themeMode: themeMode ?? this.themeMode,
       navigationAnimation: navigationAnimation ?? this.navigationAnimation,
+      locale: locale ?? this.locale,
       backupPath: backupPath ?? this.backupPath,
       convertWeight: convertWeight ?? this.convertWeight,
       scrollableTabs: scrollableTabs ?? this.scrollableTabs,
@@ -8199,6 +8232,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (navigationAnimation.present) {
       map['navigation_animation'] = Variable<String>(navigationAnimation.value);
     }
+    if (locale.present) {
+      map['locale'] = Variable<String>(locale.value);
+    }
     if (backupPath.present) {
       map['backup_path'] = Variable<String>(backupPath.value);
     }
@@ -8256,6 +8292,7 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('limit: $limit, ')
           ..write('themeMode: $themeMode, ')
           ..write('navigationAnimation: $navigationAnimation, ')
+          ..write('locale: $locale, ')
           ..write('backupPath: $backupPath, ')
           ..write('convertWeight: $convertWeight, ')
           ..write('scrollableTabs: $scrollableTabs, ')
@@ -11856,6 +11893,7 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   Value<int> limit,
   required String themeMode,
   Value<String> navigationAnimation,
+  Value<String> locale,
   Value<String?> backupPath,
   Value<String?> convertWeight,
   Value<bool> scrollableTabs,
@@ -11895,6 +11933,7 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<int> limit,
   Value<String> themeMode,
   Value<String> navigationAnimation,
+  Value<String> locale,
   Value<String?> backupPath,
   Value<String?> convertWeight,
   Value<bool> scrollableTabs,
@@ -12008,6 +12047,9 @@ class $$SettingsTableFilterComposer
   ColumnFilters<String> get navigationAnimation => $composableBuilder(
       column: $table.navigationAnimation,
       builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get locale => $composableBuilder(
+      column: $table.locale, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get backupPath => $composableBuilder(
       column: $table.backupPath, builder: (column) => ColumnFilters(column));
@@ -12144,6 +12186,9 @@ class $$SettingsTableOrderingComposer
       column: $table.navigationAnimation,
       builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get locale => $composableBuilder(
+      column: $table.locale, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get backupPath => $composableBuilder(
       column: $table.backupPath, builder: (column) => ColumnOrderings(column));
 
@@ -12270,6 +12315,9 @@ class $$SettingsTableAnnotationComposer
   GeneratedColumn<String> get navigationAnimation => $composableBuilder(
       column: $table.navigationAnimation, builder: (column) => column);
 
+  GeneratedColumn<String> get locale =>
+      $composableBuilder(column: $table.locale, builder: (column) => column);
+
   GeneratedColumn<String> get backupPath => $composableBuilder(
       column: $table.backupPath, builder: (column) => column);
 
@@ -12345,6 +12393,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<int> limit = const Value.absent(),
             Value<String> themeMode = const Value.absent(),
             Value<String> navigationAnimation = const Value.absent(),
+            Value<String> locale = const Value.absent(),
             Value<String?> backupPath = const Value.absent(),
             Value<String?> convertWeight = const Value.absent(),
             Value<bool> scrollableTabs = const Value.absent(),
@@ -12384,6 +12433,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             limit: limit,
             themeMode: themeMode,
             navigationAnimation: navigationAnimation,
+            locale: locale,
             backupPath: backupPath,
             convertWeight: convertWeight,
             scrollableTabs: scrollableTabs,
@@ -12423,6 +12473,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<int> limit = const Value.absent(),
             required String themeMode,
             Value<String> navigationAnimation = const Value.absent(),
+            Value<String> locale = const Value.absent(),
             Value<String?> backupPath = const Value.absent(),
             Value<String?> convertWeight = const Value.absent(),
             Value<bool> scrollableTabs = const Value.absent(),
@@ -12462,6 +12513,7 @@ class $$SettingsTableTableManager extends RootTableManager<
             limit: limit,
             themeMode: themeMode,
             navigationAnimation: navigationAnimation,
+            locale: locale,
             backupPath: backupPath,
             convertWeight: convertWeight,
             scrollableTabs: scrollableTabs,

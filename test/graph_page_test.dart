@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 Future<void> _selectMetric(
   WidgetTester tester, {
@@ -81,7 +82,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -147,7 +148,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -186,7 +187,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -222,7 +223,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -275,7 +276,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();
@@ -306,7 +307,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: const MaterialApp(home: GraphPage()),
+        child: localizedApp(home: const GraphPage()),
       ),
     );
     await tester.pumpAndSettle();

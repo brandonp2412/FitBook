@@ -9,6 +9,7 @@ import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_filters.dart';
 import 'package:fit_book/food/food_list.dart';
 import 'package:fit_book/main.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/speed_dial_fab.dart';
@@ -187,6 +188,7 @@ GROUP BY meal_foods.meal
   }) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final l10n = context.l10n;
     final recent = foods.take(4).toList();
 
     return Card(
@@ -197,14 +199,14 @@ GROUP BY meal_foods.meal
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Food library',
+              l10n.foodLibrary,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              '${foods.length} foods · ${meals.length} meals',
+              l10n.foodLibraryCounts(foods.length, meals.length),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colors.onSurfaceVariant,
               ),
@@ -212,7 +214,7 @@ GROUP BY meal_foods.meal
             const SizedBox(height: 24),
             if (recent.isNotEmpty) ...[
               Text(
-                'Recently used',
+                l10n.recentlyUsed,
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: colors.onSurfaceVariant,
                   fontWeight: FontWeight.w700,
@@ -247,7 +249,7 @@ GROUP BY meal_foods.meal
               const Divider(height: 32),
             ],
             Text(
-              'Quick actions',
+              l10n.quickActions,
               style: theme.textTheme.labelLarge?.copyWith(
                 color: colors.onSurfaceVariant,
                 fontWeight: FontWeight.w700,
@@ -269,7 +271,7 @@ GROUP BY meal_foods.meal
                   ),
                 ),
                 icon: const Icon(Icons.add),
-                label: const Text('Add food'),
+                label: Text(l10n.addFood),
               ),
             ),
             const SizedBox(height: 8),
@@ -280,7 +282,7 @@ GROUP BY meal_foods.meal
                   MaterialPageRoute(builder: (context) => const EditMealPage()),
                 ),
                 icon: const Icon(Icons.restaurant_menu),
-                label: const Text('Create meal'),
+                label: Text(l10n.createMeal),
               ),
             ),
           ],
@@ -363,14 +365,15 @@ GROUP BY meal_foods.meal
                                       ? Icons.restaurant_menu_rounded
                                       : Icons.search_off_rounded,
                                   title: search.isEmpty
-                                      ? 'No food yet'
-                                      : 'No matching food',
+                                      ? context.l10n.noFoodYet
+                                      : context.l10n.noMatchingFood,
                                   message: search.isEmpty
-                                      ? 'Add your first food or meal to start building your library.'
-                                      : 'Nothing matches “$search”. Clear the search to see everything again.',
+                                      ? context.l10n.addFirstFoodOrMeal
+                                      : context.l10n
+                                          .noFoodSearchMatches(search),
                                   actionLabel: search.isEmpty
-                                      ? 'Add food'
-                                      : 'Clear search',
+                                      ? context.l10n.addFood
+                                      : context.l10n.clearSearch,
                                   actionIcon: search.isEmpty
                                       ? Icons.add_rounded
                                       : Icons.close_rounded,
@@ -582,13 +585,13 @@ GROUP BY meal_foods.meal
               ),
             );
           },
-          label: 'Add',
+          label: context.l10n.add,
           icon: Icons.add,
           scroll: scrollCtrl,
           actions: [
             SpeedDialAction(
               icon: Icons.restaurant,
-              label: 'Add meal',
+              label: context.l10n.addMeal,
               onSelected: () {
                 navKey.currentState!.push(
                   MaterialPageRoute(builder: (context) => const EditMealPage()),
@@ -597,7 +600,7 @@ GROUP BY meal_foods.meal
             ),
             SpeedDialAction(
               icon: Icons.barcode_reader,
-              label: 'Scan barcode',
+              label: context.l10n.scanBarcode,
               onSelected: () async {
                 final result = await performBarcodeScan(context);
                 if (result.food != null) {

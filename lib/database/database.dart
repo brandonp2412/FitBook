@@ -71,12 +71,21 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('PRAGMA foreign_keys = OFF');
 
         await transaction(() async {
-          await VersionedSchema.runMigrationSteps(
-            migrator: m,
-            from: from,
-            to: to,
-            steps: _upgrade,
-          );
+          final versionedSchemaTarget = to > 55 ? 55 : to;
+          if (from < versionedSchemaTarget) {
+            await VersionedSchema.runMigrationSteps(
+              migrator: m,
+              from: from,
+              to: versionedSchemaTarget,
+              steps: _upgrade,
+            );
+          }
+          if (from < 56 && to >= 56) {
+            await customStatement(
+              "ALTER TABLE settings ADD COLUMN locale "
+              "TEXT NOT NULL DEFAULT 'system'",
+            );
+          }
         });
 
         if (kDebugMode) {
@@ -560,5 +569,5 @@ class AppDatabase extends _$AppDatabase {
   );
 
   @override
-  int get schemaVersion => 55;
+  int get schemaVersion => 56;
 }

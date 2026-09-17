@@ -9,6 +9,7 @@ import 'package:fit_book/diary/edit_diaries_page.dart';
 import 'package:fit_book/diary/edit_diary_page.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/quick_add_page.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/scan_barcode.dart';
@@ -37,6 +38,7 @@ class DiaryPageState extends State<DiaryPage> {
   Widget _summaryCard(BuildContext context, DayGroup day, Setting settings) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final l10n = context.l10n;
 
     Widget metric(String label, double value, int? target, String unit) {
       final progress = target == null || target <= 0
@@ -91,23 +93,28 @@ class DiaryPageState extends State<DiaryPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isToday(day.day) ? "Today's progress" : 'Latest day',
+              isToday(day.day) ? l10n.todayProgress : l10n.latestDay,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              '${day.foods.length} logged ${day.foods.length == 1 ? 'entry' : 'entries'}',
+              l10n.loggedEntries(day.foods.length),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colors.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 24),
-            metric('Calories', day.stats.cals, settings.dailyCalories, 'kcal'),
-            metric('Protein', day.stats.protein, settings.dailyProtein, 'g'),
-            metric('Carbs', day.stats.carb, settings.dailyCarb, 'g'),
-            metric('Fat', day.stats.fat, settings.dailyFat, 'g'),
+            metric(
+              l10n.calories,
+              day.stats.cals,
+              settings.dailyCalories,
+              'kcal',
+            ),
+            metric(l10n.protein, day.stats.protein, settings.dailyProtein, 'g'),
+            metric(l10n.carbs, day.stats.carb, settings.dailyCarb, 'g'),
+            metric(l10n.fat, day.stats.fat, settings.dailyFat, 'g'),
             const Spacer(),
             SizedBox(
               width: double.infinity,
@@ -118,7 +125,7 @@ class DiaryPageState extends State<DiaryPage> {
                   ),
                 ),
                 icon: const Icon(Icons.add),
-                label: const Text('Add diary entry'),
+                label: Text(l10n.addDiaryEntry),
               ),
             ),
           ],
@@ -207,8 +214,9 @@ class DiaryPageState extends State<DiaryPage> {
                                     const SizedBox(height: 16),
                                     Text(
                                       searchTerm.isEmpty
-                                          ? 'No entries today.'
-                                          : 'Add "$searchTerm" to your diary',
+                                          ? context.l10n.noEntriesToday
+                                          : context.l10n
+                                              .addSearchToDiary(searchTerm),
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -220,8 +228,9 @@ class DiaryPageState extends State<DiaryPage> {
                                     const SizedBox(height: 8),
                                     Text(
                                       searchTerm.isEmpty
-                                          ? 'Tap to start logging food.'
-                                          : 'No matching diary entries. Tap to create this food and log it.',
+                                          ? context.l10n.tapStartLoggingFood
+                                          : context.l10n
+                                              .noMatchingDiaryEntriesTapCreate,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -359,13 +368,13 @@ class DiaryPageState extends State<DiaryPage> {
               ),
             );
           },
-          label: 'Add',
+          label: context.l10n.add,
           icon: Icons.add,
           scroll: scrollCtrl,
           actions: [
             SpeedDialAction(
               icon: Icons.electric_bolt,
-              label: 'Quick-add',
+              label: context.l10n.quickAdd,
               onSelected: () {
                 navigatorKey.currentState!.push(
                   MaterialPageRoute(
@@ -376,7 +385,7 @@ class DiaryPageState extends State<DiaryPage> {
             ),
             SpeedDialAction(
               icon: Icons.barcode_reader,
-              label: 'Scan barcode',
+              label: context.l10n.scanBarcode,
               onSelected: () async {
                 final result = await performBarcodeScan(context);
                 if (result.food != null) {

@@ -8,6 +8,7 @@ import 'package:fit_book/settings/food_settings.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/tab_settings.dart';
 import 'package:fit_book/settings/weight_settings.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,11 +52,16 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final settingsState = context.watch<SettingsState>();
+    final l10n = context.l10n;
 
     List<Widget> filtered = [];
     if (search.text.isNotEmpty)
       filtered = [
-        ...getAppearanceSettings(search.text.toLowerCase(), settingsState),
+        ...getAppearanceSettings(
+          context,
+          search.text.toLowerCase(),
+          settingsState,
+        ),
         ...getDiarySettings(
           calories: calories,
           carb: carb,
@@ -84,41 +90,41 @@ class _SettingsPageState extends State<SettingsPage> {
       ];
 
     final categories = <_SettingsCategory>[
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.color_lens_outlined,
-        title: 'Appearance',
-        subtitle: 'Theme, colors and graph display',
-        page: AppearanceSettings(),
+        title: l10n.appearance,
+        subtitle: l10n.appearanceSubtitle,
+        page: const AppearanceSettings(),
       ),
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.date_range,
-        title: 'Diary',
-        subtitle: 'Daily targets, summaries and logging',
-        page: DiarySettings(),
+        title: l10n.diary,
+        subtitle: l10n.diarySubtitle,
+        page: const DiarySettings(),
       ),
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.restaurant,
-        title: 'Food',
-        subtitle: 'Food units, fields and defaults',
-        page: FoodSettings(),
+        title: l10n.food,
+        subtitle: l10n.foodSubtitle,
+        page: const FoodSettings(),
       ),
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.scale,
-        title: 'Weight',
-        subtitle: 'Weight units, goals and display',
-        page: WeightSettings(),
+        title: l10n.weight,
+        subtitle: l10n.weightSubtitle,
+        page: const WeightSettings(),
       ),
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.tab_sharp,
-        title: 'Tabs',
-        subtitle: 'Navigation tabs and ordering',
-        page: TabSettings(),
+        title: l10n.tabs,
+        subtitle: l10n.tabsSubtitle,
+        page: const TabSettings(),
       ),
-      const _SettingsCategory(
+      _SettingsCategory(
         icon: Icons.storage,
-        title: 'Data',
-        subtitle: 'Import, export and local data',
-        page: DataSettings(),
+        title: l10n.data,
+        subtitle: l10n.dataSubtitle,
+        page: const DataSettings(),
       ),
     ];
 
@@ -154,7 +160,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(l10n.settings),
         actions: [
           if (defaultTargetPlatform != TargetPlatform.iOS &&
               defaultTargetPlatform != TargetPlatform.macOS)
@@ -178,7 +184,7 @@ class _SettingsPageState extends State<SettingsPage> {
               return ListView(
                 children: <Widget>[
                   SearchBar(
-                    hintText: "Search settings...",
+                    hintText: l10n.searchSettings,
                     controller: search,
                     padding: WidgetStateProperty.all(
                       const EdgeInsets.symmetric(horizontal: 16.0),
