@@ -8,5 +8,15 @@
   "1788551549": "• Redesenhar a interface para desktop\n• fix: restaurar o layout dos gráficos no celular",
   "1788536802": "• ci: concluir a migração das Actions para Node 24",
   "1788534128": "• ci: atualizar as Actions para runtimes do Node 24",
-  "1788530896": "• ci: serializar os envios para a Microsoft Store"
+  "1788530896": "• ci: serializar os envios para a Microsoft Store",
+  "1788524403": "• fix: remover a capacidade de rede desnecessária do Windows",
+  "1788520553": "• ci: usar o diretório de pacotes compatível da Microsoft Store",
+  "1788518658": "• ci: publicar atualizações da Microsoft Store sem implantação gradual",
+  "1788515899": "• Evitar espera ilimitada do Patrol após o seletor de pastas\n• Corrigir o argumento de publicação da CLI da Microsoft Store\n• ci: isolar grupos de testes instáveis do Patrol\n• ci: tentar novamente após desconexões temporárias do emulador de capturas de tela",
+  "1788498371": "• Corrigir o teste instável do Patrol para lembretes\n• Ocultar testes de integração do Linux no dwl\n• Atualizar a configuração do agente\n• build: oferecer suporte à cadeia de ferramentas Android API 37\n• chore: definir Android API 37 como alvo\n• ci: tornar a publicação na Microsoft Store tolerante a falhas\n• ci: sincronizar automaticamente os metadados do Play\n• feat: adicionar repetições configuráveis de entradas do diário\n• feat: combinar os gráficos de calorias e peso\n• feat: integrar o registro do Talker",
+  "1787818904": "• Padronizar os rótulos de proteína, fibra e álcool\n• Reduzir alterações desnecessárias em testes frágeis de widgets (#132)\n• Restaurar o callback de exclusão de imagem\n• fix: aplicar localmente o reforço do Flutter\n• fix: restaurar os utilitários compartilhados de nutrição\n• test: alinhar os testes do diário aos widgets atuais\n• test: verificar a quantidade do diário pelo texto editável",
+  "1787807338": "• Corrigir a busca da meta de macros no gráfico\n• Mostrar o rótulo Proteína sem sufixo de unidade\n• Atualizar o teste do gráfico para o rótulo Proteína",
+  "1787557753": "• Sincronizar automaticamente os metadados da Google Play Store (#130)",
+  "1787442544": "• Corrigir falhas do GitHub Actions\n• Corrigir a instalação do Patrol CLI\n• Corrigir os tooltips do gráfico para séries derivadas\n• Melhorar os padrões do diário e dos gráficos\n• Usar Patrol CLI compatível com Patrol 4.8\n• chore: corrigir automaticamente formatação, lint e cliente gerado [pre-push]\n• ci: reparar a configuração do Flutter e Patrol",
+  "1786954594": "• Adicionar teste para a animação de navegação ‘Nenhuma’\n• Automatizar capturas de tela e testes E2E\n• Limitar o tempo de execução da CI de capturas de tela\n• Garantir que o arquivo de bloqueio nunca fique divergente\n• Reordenar as configurações de aparência\n• Remover o atraso de ‘Nenhuma’ na animação de navegação\n• Remover o atraso de atributos com foco automático\n• Remover o teste unitário redundante e inválido da página de peso\n• Remover o hook Git redundante e excluir o submódulo Flutter da análise\n• Remover TODOs obsoletos do teste de migração"
 }

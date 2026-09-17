@@ -8,5 +8,15 @@
   "1788551549": "• Przeprojektować interfejs desktopowy\n• fix: przywrócić układ wykresów na urządzeniach mobilnych",
   "1788536802": "• ci: zakończyć migrację Actions do Node 24",
   "1788534128": "• ci: zaktualizować Actions do środowisk Node 24",
-  "1788530896": "• ci: serializować zgłoszenia do Microsoft Store"
+  "1788530896": "• ci: serializować zgłoszenia do Microsoft Store",
+  "1788524403": "• fix: usunąć niepotrzebną funkcję sieciową Windows",
+  "1788520553": "• ci: używać obsługiwanego katalogu pakietów Microsoft Store",
+  "1788518658": "• ci: publikować aktualizacje Microsoft Store bez stopniowego wdrażania",
+  "1788515899": "• Unikać nieograniczonego oczekiwania Patrol po wyborze folderu\n• Naprawić argument publikacji w CLI Microsoft Store\n• ci: odizolować niestabilne grupy testów Patrol\n• ci: ponawiać próby po przejściowych rozłączeniach emulatora zrzutów ekranu",
+  "1788498371": "• Naprawić niestabilny test Patrol przypomnień\n• Ukryć testy integracyjne Linux na dwl\n• Zaktualizować konfigurację agenta\n• build: dodać obsługę zestawu narzędzi Android API 37\n• chore: ustawić Android API 37 jako docelowy\n• ci: zabezpieczyć publikowanie w Microsoft Store na wypadek awarii\n• ci: automatycznie synchronizować metadane Play\n• feat: dodać konfigurowalne powtórzenia wpisów dziennika\n• feat: połączyć wykres kalorii i masy ciała\n• feat: zintegrować rejestrowanie Talker",
+  "1787818904": "• Ujednolicić etykiety białka, błonnika i alkoholu\n• Ograniczyć zbędne zmiany w kruchych testach widgetów (#132)\n• Przywrócić callback usuwania obrazu\n• fix: zastosować lokalnie wzmocnienia Fluttera\n• fix: przywrócić współdzielone narzędzia żywieniowe\n• test: dostosować testy dziennika do obecnych widgetów\n• test: sprawdzać ilość w dzienniku przez edytowalny tekst",
+  "1787807338": "• Naprawić wyszukiwanie celu makroskładników na wykresie\n• Wyświetlać etykietę Białko bez przyrostka jednostki\n• Zaktualizować test wykresu dla etykiety Białko",
+  "1787557753": "• Automatycznie synchronizować metadane Google Play Store (#130)",
+  "1787442544": "• Naprawić błędy GitHub Actions\n• Naprawić instalację Patrol CLI\n• Naprawić podpowiedzi wykresu dla serii pochodnych\n• Ulepszyć domyślne ustawienia dziennika i wykresów\n• Używać Patrol CLI zgodnego z Patrol 4.8\n• chore: automatycznie poprawiać formatowanie, lint i wygenerowanego klienta [pre-push]\n• ci: naprawić konfigurację Fluttera i Patrol",
+  "1786954594": "• Dodać test dla animacji nawigacji „Brak”\n• Zautomatyzować zrzuty ekranu i testy E2E\n• Ograniczyć czas działania CI zrzutów ekranu\n• Dopilnować, aby plik blokady nigdy się nie rozjeżdżał\n• Zmienić kolejność ustawień wyglądu\n• Usunąć opóźnienie dla „Brak” w animacji nawigacji\n• Usunąć opóźnienie automatycznie ustawianego fokusu atrybutów\n• Usunąć zbędny i nieprawidłowy test jednostkowy strony masy ciała\n• Usunąć zbędny hook Git i wykluczyć podmoduł Fluttera z analizy\n• Usunąć nieaktualne TODO z testu migracji"
 }

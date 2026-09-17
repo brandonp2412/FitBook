@@ -8,5 +8,15 @@
   "1788551549": "• Desktop-Oberfläche neu gestalten\n• fix: mobiles Diagrammlayout wiederherstellen",
   "1788536802": "• ci: Migration der Actions auf Node 24 abschließen",
   "1788534128": "• ci: Actions auf Node-24-Laufzeiten aktualisieren",
-  "1788530896": "• ci: Übermittlungen an den Microsoft Store serialisieren"
+  "1788530896": "• ci: Übermittlungen an den Microsoft Store serialisieren",
+  "1788524403": "• fix: unnötige Windows-Netzwerkberechtigung entfernen",
+  "1788520553": "• ci: unterstütztes Store-Paketverzeichnis verwenden",
+  "1788518658": "• ci: Store-Updates ohne schrittweise Einführung veröffentlichen",
+  "1788515899": "• Unbegrenztes Warten von Patrol nach der Ordnerauswahl vermeiden\n• Veröffentlichungsargument der Microsoft Store CLI korrigieren\n• ci: instabile Patrol-Testgruppen isolieren\n• ci: vorübergehende Verbindungsabbrüche des Screenshot-Emulators erneut versuchen",
+  "1788498371": "• Instabilen Patrol-Test für Erinnerungen korrigieren\n• Linux-Integrationstests unter dwl ausblenden\n• Agentenkonfiguration aktualisieren\n• build: Android-API-37-Toolchain unterstützen\n• chore: Android API 37 als Zielversion festlegen\n• ci: Veröffentlichung im Microsoft Store ausfallsicher machen\n• ci: Play-Metadaten automatisch synchronisieren\n• feat: konfigurierbare Wiederholungen für Tagebucheinträge hinzufügen\n• feat: Kalorien- und Gewichtsdiagramm kombinieren\n• feat: Talker-Protokollierung integrieren",
+  "1787818904": "• Bezeichnungen für Protein, Ballaststoffe und Alkohol vereinheitlichen\n• Änderungen in fragilen Widget-Tests reduzieren (#132)\n• Callback zum Löschen von Bildern wiederherstellen\n• fix: Flutter-Härtung lokal anwenden\n• fix: gemeinsame Nährwert-Hilfsfunktionen wiederherstellen\n• test: Tagebuchtests an aktuelle Widgets anpassen\n• test: Tagebuchmenge über bearbeitbaren Text prüfen",
+  "1787807338": "• Suche nach Makrozielen im Diagramm korrigieren\n• Proteinbezeichnung ohne Einheitensuffix anzeigen\n• Diagrammtest für die Proteinbezeichnung aktualisieren",
+  "1787557753": "• Metadaten im Google Play Store automatisch synchronisieren (#130)",
+  "1787442544": "• Fehler in GitHub Actions beheben\n• Installation der Patrol CLI korrigieren\n• Diagramm-Tooltips für abgeleitete Reihen korrigieren\n• Standardwerte für Tagebuch und Diagramme verbessern\n• Mit Patrol 4.8 kompatible Patrol CLI verwenden\n• chore: Formatierung, Lint und generierten Client automatisch korrigieren [pre-push]\n• ci: Flutter- und Patrol-Einrichtung reparieren",
+  "1786954594": "• Test für die Navigationsanimation „Keine“ hinzufügen\n• Screenshots und E2E-Tests automatisieren\n• Laufzeit der Screenshot-CI begrenzen\n• Sicherstellen, dass die Lockdatei nie abweicht\n• Darstellungseinstellungen neu anordnen\n• Verzögerung bei „Keine“ für die Navigationsanimation entfernen\n• Verzögerung bei automatisch fokussierten Attributen entfernen\n• Überflüssigen und ungültigen Unit-Test der Gewichtsseite entfernen\n• Überflüssigen Git-Hook entfernen und Flutter-Submodul von der Analyse ausschließen\n• Veraltete TODOs aus dem Migrationstest entfernen"
 }

@@ -8,5 +8,15 @@
   "1788551549": "• Desktopinterface opnieuw ontwerpen\n• fix: mobiele grafiekindeling herstellen",
   "1788536802": "• ci: migratie van Actions naar Node 24 afronden",
   "1788534128": "• ci: Actions upgraden naar Node 24-runtimes",
-  "1788530896": "• ci: inzendingen naar de Microsoft Store serialiseren"
+  "1788530896": "• ci: inzendingen naar de Microsoft Store serialiseren",
+  "1788524403": "• fix: onnodige Windows-netwerkmogelijkheid verwijderen",
+  "1788520553": "• ci: ondersteunde pakketmap voor de Microsoft Store gebruiken",
+  "1788518658": "• ci: Microsoft Store-updates publiceren zonder gefaseerde uitrol",
+  "1788515899": "• Onbegrensd wachten van Patrol na de mapkiezer voorkomen\n• Publicatieargument van de Microsoft Store CLI corrigeren\n• ci: instabiele Patrol-testgroepen isoleren\n• ci: tijdelijke verbindingen met de screenshotemulator opnieuw proberen",
+  "1788498371": "• Instabiele Patrol-test voor herinneringen corrigeren\n• Linux-integratietests op dwl verbergen\n• Agentconfiguratie bijwerken\n• build: Android API 37-toolchain ondersteunen\n• chore: Android API 37 als doel instellen\n• ci: publiceren naar de Microsoft Store fail-safe maken\n• ci: Play-metadata automatisch synchroniseren\n• feat: configureerbare herhalingen voor dagboekitems toevoegen\n• feat: calorie- en gewichtsgrafiek combineren\n• feat: Talker-logging integreren",
+  "1787818904": "• Labels voor eiwit, vezels en alcohol normaliseren\n• Onnodige wijzigingen in kwetsbare widgettests verminderen (#132)\n• Callback voor het verwijderen van afbeeldingen herstellen\n• fix: Flutter-versteviging lokaal toepassen\n• fix: gedeelde voedingshulpmiddelen herstellen\n• test: dagboektests afstemmen op de huidige widgets\n• test: dagboekhoeveelheid via bewerkbare tekst controleren",
+  "1787807338": "• Opzoeken van het macrodoel in de grafiek corrigeren\n• Eiwitlabel zonder eenheidsachtervoegsel tonen\n• Grafiektest voor het Eiwitlabel bijwerken",
+  "1787557753": "• Metadata van de Google Play Store automatisch synchroniseren (#130)",
+  "1787442544": "• Fouten in GitHub Actions oplossen\n• Installatie van Patrol CLI corrigeren\n• Grafiektooltips voor afgeleide reeksen corrigeren\n• Standaardwaarden voor dagboek en grafieken verbeteren\n• Patrol CLI gebruiken die compatibel is met Patrol 4.8\n• chore: opmaak, lint en gegenereerde client automatisch corrigeren [pre-push]\n• ci: Flutter- en Patrol-configuratie herstellen",
+  "1786954594": "• Test voor navigatie-animatie ‘Geen’ toevoegen\n• Screenshots en E2E-tests automatiseren\n• Looptijd van screenshot-CI begrenzen\n• Zorgen dat het lockbestand nooit afwijkt\n• Instellingen voor uiterlijk opnieuw ordenen\n• Vertraging bij ‘Geen’ voor de navigatie-animatie verwijderen\n• Vertraging bij automatisch gefocuste kenmerken verwijderen\n• Overbodige en ongeldige unit-test van de gewichtspagina verwijderen\n• Overbodige Git-hook verwijderen en Flutter-submodule uitsluiten van analyse\n• Verouderde TODO’s uit de migratietest verwijderen"
 }

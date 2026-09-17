@@ -8,5 +8,15 @@
   "1788551549": "• Repenser l’interface de bureau\n• fix: restaurer la disposition des graphiques sur mobile",
   "1788536802": "• ci: terminer la migration des Actions vers Node 24",
   "1788534128": "• ci: mettre à niveau les Actions vers les environnements Node 24",
-  "1788530896": "• ci: sérialiser les soumissions au Microsoft Store"
+  "1788530896": "• ci: sérialiser les soumissions au Microsoft Store",
+  "1788524403": "• fix: supprimer la capacité réseau Windows inutile",
+  "1788520553": "• ci: utiliser le répertoire de paquets pris en charge par le Microsoft Store",
+  "1788518658": "• ci: publier les mises à jour du Microsoft Store sans déploiement progressif",
+  "1788515899": "• Éviter l’attente Patrol sans limite après le sélecteur de dossier\n• Corriger l’argument de publication de la CLI Microsoft Store\n• ci: isoler les groupes de tests Patrol instables\n• ci: réessayer les déconnexions temporaires de l’émulateur de captures d’écran",
+  "1788498371": "• Corriger le test Patrol instable des rappels\n• Masquer les tests d’intégration Linux sous dwl\n• Mettre à jour la configuration de l’agent\n• build: prendre en charge la chaîne d’outils Android API 37\n• chore: cibler Android API 37\n• ci: sécuriser la publication sur le Microsoft Store en cas d’échec\n• ci: synchroniser automatiquement les métadonnées Play\n• feat: ajouter des répétitions configurables pour les entrées du journal\n• feat: combiner les graphiques des calories et du poids\n• feat: intégrer la journalisation Talker",
+  "1787818904": "• Harmoniser les libellés des protéines, des fibres et de l’alcool\n• Réduire les modifications inutiles dans les tests de widgets fragiles (#132)\n• Restaurer le callback de suppression d’image\n• fix: appliquer localement le durcissement de Flutter\n• fix: restaurer les utilitaires nutritionnels partagés\n• test: aligner les tests du journal sur les widgets actuels\n• test: vérifier la quantité du journal via le texte modifiable",
+  "1787807338": "• Corriger la recherche de l’objectif de macros dans le graphique\n• Afficher le libellé Protéines sans suffixe d’unité\n• Mettre à jour le test du graphique pour le libellé Protéines",
+  "1787557753": "• Synchroniser automatiquement les métadonnées du Google Play Store (#130)",
+  "1787442544": "• Corriger les échecs de GitHub Actions\n• Corriger l’installation de Patrol CLI\n• Corriger les info-bulles du graphique pour les séries dérivées\n• Améliorer les valeurs par défaut du journal et des graphiques\n• Utiliser une Patrol CLI compatible avec Patrol 4.8\n• chore: corriger automatiquement le formatage, le lint et le client généré [pre-push]\n• ci: réparer la configuration de Flutter et Patrol",
+  "1786954594": "• Ajouter un test pour l’animation de navigation « Aucune »\n• Automatiser les captures d’écran et les tests E2E\n• Limiter la durée d’exécution de la CI des captures d’écran\n• Garantir que le fichier de verrouillage ne dérive jamais\n• Réordonner les réglages d’apparence\n• Supprimer le délai de « Aucune » pour l’animation de navigation\n• Supprimer le délai des attributs avec mise au point automatique\n• Supprimer le test unitaire redondant et invalide de la page de poids\n• Supprimer le hook Git redondant et exclure le sous-module Flutter de l’analyse\n• Supprimer les TODO obsolètes du test de migration"
 }
