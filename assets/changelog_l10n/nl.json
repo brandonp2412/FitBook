@@ -86,5 +86,15 @@
   "1754281763": "• Defecte filters corrigeren\n• Bijwerken van voedingsvelden corrigeren\n• Snelheid van de dagboekfilterknop verbeteren\n• Enkele variabelenamen inkorten",
   "1754278031": "• Hetzelfde barcodeveld voor voedingsmiddelen en items gebruiken",
   "1754192489": "• Bijwerken van de Windows Store-app corrigeren",
-  "1753940196": "• chmod +x uit flutter/bin verwijderen"
+  "1753940196": "• chmod +x uit flutter/bin verwijderen",
+  "1753932094": "• Bugfixes en verbeteringen",
+  "1751920629": "- Optie voor trendlijn toevoegen\n- Vezels aan dagboekitems toevoegen\n- Volgorde van de Voedingspagina wijzigen\n- Nieuwe voedingsdatabase gebruiken",
+  "1751781487": "- Bewerken van macronutriënten bij snel toevoegen corrigeren\n- Filterfout corrigeren\n- Eenheidsconversies corrigeren",
+  "1742770279": "- Macronutriënten bij snel toevoegen onthouden",
+  "1741302139": "- Samenvattingen onder elke dag op de Dagboekpagina tonen\n- Relevante instellingen openen bij het aantikken van Doel\n- Wissen van dagelijkse doelen in instellingen toestaan\n- Statusbalk op Android 15 corrigeren",
+  "1741144627": "- Afstand op de pagina voor itembewerking corrigeren\n- Onthouden of de gebruiker lichaamsgewicht of calorieën koos op de grafiekpagina\n- Onhandige veldenknop naar de FAB verplaatsen\n- Alle afstand en labels van voeding in een item verwijderen\n- Voorkomen dat krommen buiten het grafiekgebied komen",
+  "1740786471": "- Barcodeknop in het item omhoog verplaatsen\n- Standaardvelden beperken\n- Macronutriënten aan snel toevoegen toevoegen\n- Datumbewerking bij snel toevoegen corrigeren\n- Monochrome opstartpictogrammen corrigeren",
+  "1740618491": "- Oude conversie-eenheid op de gewichtspagina behouden\n- Details van snel toevoegen wissen\n- Standaard favoriet maken van nieuwe voedingsmiddelen corrigeren\n- Portie-eenheden op de itempagina corrigeren\n- Leegmaken van de database corrigeren",
+  "1740611960": "- Calorieën op de itempagina en in grafieken corrigeren\n- Fouten op de Dagboekpagina beter afhandelen\n- Portiegrootte corrigeren die niet werd bewerkt bij Voeding",
+  "1740537622": "- Defecte grafieken corrigeren"
 }

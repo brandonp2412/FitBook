@@ -86,5 +86,15 @@
   "1754281763": "• Correggere i filtri difettosi\n• Correggere l’aggiornamento dei campi degli alimenti\n• Migliorare la velocità del pulsante filtri del diario\n• Accorciare alcuni nomi di variabili",
   "1754278031": "• Usare lo stesso campo del codice a barre per alimenti e voci",
   "1754192489": "• Correggere l’aggiornamento dell’app Windows Store",
-  "1753940196": "• Rimuovere chmod +x da flutter/bin"
+  "1753940196": "• Rimuovere chmod +x da flutter/bin",
+  "1753932094": "• Correzioni di bug e miglioramenti",
+  "1751920629": "- Aggiungere un’opzione per la linea di tendenza\n- Aggiungere le fibre alle voci del diario\n- Cambiare l’ordinamento della pagina Alimenti\n- Usare il nuovo database degli alimenti",
+  "1751781487": "- Correggere la modifica dei macronutrienti nell’aggiunta rapida\n- Correggere un bug dei filtri\n- Correggere le conversioni delle unità",
+  "1742770279": "- Ricordare i macronutrienti nell’aggiunta rapida",
+  "1741302139": "- Mostrare riepiloghi sotto ogni giorno nella pagina Diario\n- Aprire le impostazioni pertinenti toccando Obiettivo\n- Consentire la cancellazione degli obiettivi giornalieri nelle impostazioni\n- Correggere la barra di stato su Android 15",
+  "1741144627": "- Correggere la spaziatura nella pagina di modifica della voce\n- Ricordare se l’utente ha scelto peso corporeo o calorie nella pagina dei grafici\n- Spostare lo scomodo pulsante dei campi nel FAB\n- Rimuovere tutta la spaziatura e le etichette dell’alimento nella voce\n- Impedire alle curve di uscire dall’area del grafico",
+  "1740786471": "- Spostare più in alto il pulsante del codice a barre nella voce\n- Limitare i campi predefiniti\n- Aggiungere i macronutrienti all’aggiunta rapida\n- Correggere la modifica della data nell’aggiunta rapida\n- Correggere i launcher monocromatici",
+  "1740618491": "- Mantenere la vecchia unità di conversione nella pagina del peso\n- Cancellare i dettagli dell’aggiunta rapida\n- Correggere l’aggiunta automatica ai preferiti dei nuovi alimenti\n- Correggere le unità di porzione nella pagina delle voci\n- Correggere lo svuotamento del database",
+  "1740611960": "- Correggere le calorie nella pagina delle voci e nei grafici\n- Gestire meglio gli errori nella pagina Diario\n- Correggere la dimensione della porzione che non veniva modificata negli Alimenti",
+  "1740537622": "- Correggere i grafici non funzionanti"
 }

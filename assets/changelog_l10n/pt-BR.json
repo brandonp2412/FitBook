@@ -86,5 +86,15 @@
   "1754281763": "• Corrigir filtros com falhas\n• Corrigir atualização dos campos de alimentos\n• Melhorar a velocidade do botão de filtros do diário\n• Encurtar alguns nomes de variáveis",
   "1754278031": "• Usar o mesmo campo de código de barras para alimentos e entradas",
   "1754192489": "• Corrigir atualização do app na Windows Store",
-  "1753940196": "• Remover chmod +x de flutter/bin"
+  "1753940196": "• Remover chmod +x de flutter/bin",
+  "1753932094": "• Correções de bugs e melhorias",
+  "1751920629": "- Adicionar opção de linha de tendência\n- Adicionar fibras às entradas do diário\n- Alterar a ordem da página Alimentos\n- Usar o novo banco de dados de alimentos",
+  "1751781487": "- Corrigir edição de macronutrientes na adição rápida\n- Corrigir bug nos filtros\n- Corrigir conversões de unidades",
+  "1742770279": "- Lembrar os macronutrientes na adição rápida",
+  "1741302139": "- Mostrar resumos abaixo de cada dia na página Diário\n- Abrir as configurações relevantes ao tocar em Meta\n- Permitir limpar metas diárias nas configurações\n- Corrigir a barra de status no Android 15",
+  "1741144627": "- Corrigir o espaçamento na página de edição de entrada\n- Lembrar se o usuário escolheu peso corporal ou calorias na página de gráficos\n- Mover o botão de campos pouco prático para o FAB\n- Remover todo o espaçamento e os rótulos do alimento na entrada\n- Impedir que as curvas saiam da área do gráfico",
+  "1740786471": "- Mover o botão de código de barras para cima na entrada\n- Limitar os campos padrão\n- Adicionar macronutrientes à adição rápida\n- Corrigir edição de data na adição rápida\n- Corrigir ícones monocromáticos do launcher",
+  "1740618491": "- Manter a unidade de conversão antiga na página de peso\n- Limpar detalhes da adição rápida\n- Corrigir alimentos novos sendo favoritados por padrão\n- Corrigir unidades de porção na página de entradas\n- Corrigir o esvaziamento do banco de dados",
+  "1740611960": "- Corrigir calorias na página de entradas e nos gráficos\n- Tratar melhor os erros na página Diário\n- Corrigir o tamanho da porção que não era editado em Alimentos",
+  "1740537622": "- Corrigir gráficos quebrados"
 }

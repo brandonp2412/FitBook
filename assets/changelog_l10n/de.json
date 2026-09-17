@@ -86,5 +86,15 @@
   "1754281763": "• Fehlerhafte Filter korrigieren\n• Aktualisierung von Lebensmittelfeldern korrigieren\n• Geschwindigkeit der Tagebuchfilter-Schaltfläche verbessern\n• Einige Variablennamen kürzen",
   "1754278031": "• Dasselbe Barcode-Feld für Lebensmittel und Einträge verwenden",
   "1754192489": "• Aktualisierung der Windows-Store-App korrigieren",
-  "1753940196": "• chmod +x aus flutter/bin entfernen"
+  "1753940196": "• chmod +x aus flutter/bin entfernen",
+  "1753932094": "• Fehlerbehebungen und Verbesserungen",
+  "1751920629": "- Option für Trendlinie hinzufügen\n- Ballaststoffe zu Tagebucheinträgen hinzufügen\n- Reihenfolge der Lebensmittelseite ändern\n- Neue Lebensmitteldatenbank verwenden",
+  "1751781487": "- Bearbeitung von Makronährstoffen beim Schnellhinzufügen korrigieren\n- Filterfehler beheben\n- Einheitenumrechnungen korrigieren",
+  "1742770279": "- Makronährstoffe beim Schnellhinzufügen merken",
+  "1741302139": "- Zusammenfassungen unter jedem Tag auf der Tagebuchseite anzeigen\n- Relevante Einstellungen beim Antippen von Ziel öffnen\n- Löschen täglicher Ziele in den Einstellungen erlauben\n- Statusleiste unter Android 15 korrigieren",
+  "1741144627": "- Abstände auf der Eintrags-Bearbeitungsseite korrigieren\n- Merken, ob Nutzer auf der Diagrammseite Körpergewicht oder Kalorien gewählt haben\n- Unpraktische Felder-Schaltfläche zum FAB verschieben\n- Abstände und Beschriftungen des Lebensmittels im Eintrag entfernen\n- Verhindern, dass Kurven den Diagrammbereich verlassen",
+  "1740786471": "- Barcode-Schaltfläche im Eintrag nach oben verschieben\n- Standardfelder begrenzen\n- Makronährstoffe zum Schnellhinzufügen hinzufügen\n- Datumsbearbeitung beim Schnellhinzufügen korrigieren\n- Monochrome Launcher-Symbole korrigieren",
+  "1740618491": "- Alte Umrechnungseinheit auf der Gewichtsseite beibehalten\n- Details des Schnellhinzufügens löschen\n- Standardmäßiges Favorisieren neuer Lebensmittel korrigieren\n- Portionseinheiten auf der Eintragsseite korrigieren\n- Leeren der Datenbank korrigieren",
+  "1740611960": "- Kalorien auf der Eintragsseite und in Diagrammen korrigieren\n- Fehler auf der Tagebuchseite besser behandeln\n- Fehler beheben, bei dem die Portionsgröße in Lebensmitteln nicht bearbeitet wurde",
+  "1740537622": "- Defekte Diagramme korrigieren"
 }

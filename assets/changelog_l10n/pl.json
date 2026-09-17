@@ -86,5 +86,15 @@
   "1754281763": "• Naprawić wadliwe filtry\n• Naprawić aktualizowanie pól produktów\n• Poprawić szybkość przycisku filtrów dziennika\n• Skrócić niektóre nazwy zmiennych",
   "1754278031": "• Używać tego samego pola kodu kreskowego dla produktów i wpisów",
   "1754192489": "• Naprawić aktualizację aplikacji Windows Store",
-  "1753940196": "• Usunąć chmod +x z flutter/bin"
+  "1753940196": "• Usunąć chmod +x z flutter/bin",
+  "1753932094": "• Poprawki błędów i ulepszenia",
+  "1751920629": "- Dodać opcję linii trendu\n- Dodać błonnik do wpisów dziennika\n- Zmienić kolejność na stronie Produkty\n- Używać nowej bazy produktów",
+  "1751781487": "- Naprawić edycję makroskładników w szybkim dodawaniu\n- Naprawić błąd filtrów\n- Naprawić konwersje jednostek",
+  "1742770279": "- Zapamiętywać makroskładniki w szybkim dodawaniu",
+  "1741302139": "- Pokazywać podsumowania pod każdym dniem na stronie Dziennik\n- Otwierać odpowiednie ustawienia po dotknięciu Celu\n- Pozwalać usuwać dzienne cele w ustawieniach\n- Naprawić pasek stanu na Androidzie 15",
+  "1741144627": "- Naprawić odstępy na stronie edycji wpisu\n- Zapamiętywać, czy użytkownik wybrał masę ciała czy kalorie na stronie wykresów\n- Przenieść niewygodny przycisk pól do FAB\n- Usunąć całe odstępy i etykietowanie produktu we wpisie\n- Zapobiec wychodzeniu krzywych poza obszar wykresu",
+  "1740786471": "- Przenieść przycisk kodu kreskowego wyżej we wpisie\n- Ograniczyć domyślne pola\n- Dodać makroskładniki do szybkiego dodawania\n- Naprawić edycję daty w szybkim dodawaniu\n- Naprawić monochromatyczne ikony uruchamiania",
+  "1740618491": "- Zachować starą jednostkę konwersji na stronie masy ciała\n- Wyczyścić szczegóły szybkiego dodawania\n- Naprawić domyślne dodawanie nowych produktów do ulubionych\n- Naprawić jednostki porcji na stronie wpisów\n- Naprawić opróżnianie bazy danych",
+  "1740611960": "- Naprawić kalorie na stronie wpisów i na wykresach\n- Lepiej obsługiwać błędy na stronie Dziennik\n- Naprawić brak edycji wielkości porcji w Produktach",
+  "1740537622": "- Naprawić uszkodzone wykresy"
 }

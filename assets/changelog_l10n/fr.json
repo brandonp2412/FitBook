@@ -86,5 +86,15 @@
   "1754281763": "• Corriger les filtres défectueux\n• Corriger la mise à jour des champs d’aliments\n• Améliorer la vitesse du bouton de filtres du journal\n• Raccourcir certains noms de variables",
   "1754278031": "• Utiliser le même champ de code-barres pour les aliments et les entrées",
   "1754192489": "• Corriger la mise à jour de l’application Windows Store",
-  "1753940196": "• Supprimer chmod +x de flutter/bin"
+  "1753940196": "• Supprimer chmod +x de flutter/bin",
+  "1753932094": "• Corrections de bugs et améliorations",
+  "1751920629": "- Ajouter une option pour la ligne de tendance\n- Ajouter les fibres aux entrées du journal\n- Modifier l’ordre de la page Aliments\n- Utiliser la nouvelle base de données d’aliments",
+  "1751781487": "- Corriger la modification des macronutriments dans l’ajout rapide\n- Corriger un bug de filtres\n- Corriger les conversions d’unités",
+  "1742770279": "- Mémoriser les macronutriments dans l’ajout rapide",
+  "1741302139": "- Afficher des résumés sous chaque jour sur la page Journal\n- Ouvrir les paramètres pertinents en touchant Objectif\n- Autoriser l’effacement des objectifs quotidiens dans les paramètres\n- Corriger la barre d’état sous Android 15",
+  "1741144627": "- Corriger l’espacement sur la page de modification d’entrée\n- Mémoriser si l’utilisateur a choisi poids corporel ou calories sur la page des graphiques\n- Déplacer le bouton de champs peu pratique vers le FAB\n- Supprimer tout l’espacement et l’étiquetage de l’aliment dans l’entrée\n- Empêcher les courbes de sortir de la zone du graphique",
+  "1740786471": "- Remonter le bouton de code-barres dans l’entrée\n- Limiter les champs par défaut\n- Ajouter les macronutriments à l’ajout rapide\n- Corriger la modification de date dans l’ajout rapide\n- Corriger les lanceurs monochromes",
+  "1740618491": "- Conserver l’ancienne unité de conversion sur la page des poids\n- Effacer les détails de l’ajout rapide\n- Corriger la mise en favori par défaut des nouveaux aliments\n- Corriger les unités de portion sur la page des entrées\n- Corriger la remise à zéro de la base de données",
+  "1740611960": "- Corriger les calories sur la page des entrées et les graphiques\n- Mieux gérer les erreurs sur la page Journal\n- Corriger la taille de portion qui ne pouvait pas être modifiée dans Aliments",
+  "1740537622": "- Corriger les graphiques cassés"
 }

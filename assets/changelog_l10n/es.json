@@ -86,5 +86,15 @@
   "1754281763": "• Corregir filtros con errores\n• Corregir la actualización de campos de alimentos\n• Mejorar la velocidad del botón de filtros del diario\n• Acortar algunos nombres de variables",
   "1754278031": "• Usar el mismo campo de código de barras para alimentos y entradas",
   "1754192489": "• Corregir la actualización de la aplicación en Windows Store",
-  "1753940196": "• Eliminar chmod +x de flutter/bin"
+  "1753940196": "• Eliminar chmod +x de flutter/bin",
+  "1753932094": "• Correcciones de errores y mejoras",
+  "1751920629": "- Añadir opción para la línea de tendencia\n- Añadir fibra a las entradas del diario\n- Cambiar el orden de la página Alimentos\n- Usar la nueva base de datos de alimentos",
+  "1751781487": "- Corregir la edición de macronutrientes en el añadido rápido\n- Corregir un error de filtros\n- Corregir las conversiones de unidades",
+  "1742770279": "- Recordar los macronutrientes en el añadido rápido",
+  "1741302139": "- Mostrar resúmenes debajo de cada día en la página Diario\n- Abrir los ajustes relevantes al tocar Objetivo\n- Permitir borrar los objetivos diarios en ajustes\n- Corregir la barra de estado en Android 15",
+  "1741144627": "- Corregir el espaciado en la página de edición de entrada\n- Recordar si el usuario eligió peso corporal o calorías en la página de gráficos\n- Mover el incómodo botón de campos al FAB\n- Eliminar todo el espaciado y etiquetado del alimento en la entrada\n- Evitar que las curvas salgan del área del gráfico",
+  "1740786471": "- Subir el botón de código de barras en la entrada\n- Limitar los campos predeterminados\n- Añadir macronutrientes al añadido rápido\n- Corregir la edición de fecha en el añadido rápido\n- Corregir los iconos monocromos del lanzador",
+  "1740618491": "- Conservar la unidad de conversión anterior en la página de peso\n- Limpiar los datos del añadido rápido\n- Corregir que los alimentos nuevos se marquen como favoritos de forma predeterminada\n- Corregir las unidades de ración en la página de entradas\n- Corregir el vaciado de la base de datos",
+  "1740611960": "- Corregir las calorías en la página de entradas y los gráficos\n- Gestionar mejor los errores en la página Diario\n- Corregir que el tamaño de la ración no se editara en Alimentos",
+  "1740537622": "- Corregir los gráficos rotos"
 }
