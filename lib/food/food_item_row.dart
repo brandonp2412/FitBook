@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class FoodItemRow extends StatelessWidget {
   const FoodItemRow({
@@ -12,7 +12,6 @@ class FoodItemRow extends StatelessWidget {
     required this.food,
     required this.isSelected,
     required this.showImages,
-    required this.formatter,
     required this.onTap,
     required this.onLongPress,
   });
@@ -20,7 +19,6 @@ class FoodItemRow extends StatelessWidget {
   final FoodsCompanion food;
   final bool isSelected;
   final bool showImages;
-  final NumberFormat formatter;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
@@ -68,7 +66,11 @@ class FoodItemRow extends StatelessWidget {
           children: [
             Text(
               context.l10n.kcalValue(
-                formatter.format(food.calories.value ?? 0),
+                formatDisplayNumber(
+                  context,
+                  food.calories.value ?? 0,
+                  maximumFractionDigits: 0,
+                ),
               ),
             ),
             if (food.favorite.value == true) ...[

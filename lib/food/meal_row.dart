@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class MealRow extends StatelessWidget {
   const MealRow({
@@ -12,7 +12,6 @@ class MealRow extends StatelessWidget {
     required this.meal,
     required this.isSelected,
     required this.showImages,
-    required this.formatter,
     required this.totals,
     required this.onTap,
     required this.onLongPress,
@@ -21,7 +20,6 @@ class MealRow extends StatelessWidget {
   final Meal meal;
   final bool isSelected;
   final bool showImages;
-  final NumberFormat formatter;
   final ({double calories, double protein})? totals;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
@@ -91,9 +89,13 @@ class MealRow extends StatelessWidget {
             ? Text(context.l10n.meal)
             : Text(
                 totals!.protein > 0
-                    ? '${context.l10n.kcalValue(formatter.format(totals!.calories))} · ${context.l10n.proteinGramsValue(formatter.format(totals!.protein))}'
+                    ? '${context.l10n.kcalValue(formatDisplayNumber(context, totals!.calories, maximumFractionDigits: 0))} · ${context.l10n.proteinGramsValue(formatDisplayNumber(context, totals!.protein, maximumFractionDigits: 0))}'
                     : context.l10n.kcalValue(
-                        formatter.format(totals!.calories),
+                        formatDisplayNumber(
+                          context,
+                          totals!.calories,
+                          maximumFractionDigits: 0,
+                        ),
                       ),
               ),
         onTap: onTap,

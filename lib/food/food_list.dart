@@ -7,7 +7,6 @@ import 'package:fit_book/food/food_item_row.dart';
 import 'package:fit_book/food/meal_row.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// A food plus the latest diary entry that used it. The food page uses this
@@ -52,8 +51,6 @@ class FoodList extends StatefulWidget {
 }
 
 class _FoodListState extends State<FoodList> {
-  final formatter = NumberFormat('#,##0');
-
   @override
   void initState() {
     super.initState();
@@ -86,7 +83,6 @@ class _FoodListState extends State<FoodList> {
               meal: item,
               isSelected: widget.selectedMeals.contains(item.id),
               showImages: settings.showImages,
-              formatter: formatter,
               totals: widget.mealCalories[item.id],
               onTap: () {
                 if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
@@ -114,7 +110,6 @@ class _FoodListState extends State<FoodList> {
           food: food,
           isSelected: isSelected,
           showImages: settings.showImages,
-          formatter: formatter,
           onTap: () {
             if (widget.selected.isEmpty && widget.selectedMeals.isEmpty)
               Navigator.push(

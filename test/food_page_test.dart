@@ -2,8 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/food/food_page.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +13,36 @@ import 'mock_tests.dart';
 import 'test_utils.dart';
 
 void main() async {
+  testWidgets('Food list values use locale grouping separators', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.foods.deleteAll();
+    await db.foods.insertOne(
+      FoodsCompanion.insert(name: 'Haferflocken', calories: const Value(1200)),
+    );
+    final l10n = lookupAppLocalizations(const Locale('de'));
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: const FoodPage(),
+          locale: const Locale('de'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text(l10n.kcalValue('1.200')), findsOneWidget);
+
+    await db.close();
+  });
+
   testWidgets('FoodsPage CRUD', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
