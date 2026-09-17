@@ -439,5 +439,8 @@
   "nutrientTyrosine": "Tyrosine",
   "nutrientValine": "Valine",
   "nutrientCaffeine": "Cafeïne",
-  "nutrientTheobromine": "Theobromine"
+  "nutrientTheobromine": "Theobromine",
+  "servingWeightNumber": "Portiegewicht {number}",
+  "servingDescriptionNumber": "Portiebeschrijving {number}",
+  "calorieEquivalentWeight200": "Gewicht voor 200 kcal"
 }

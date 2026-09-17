@@ -187,6 +187,45 @@ String localizedFoodFieldLabel(AppLocalizations l10n, String field) =>
       'valine_mg' || 'valineMg' => l10n.nutrientValine,
       'caffeine_mg' || 'caffeineMg' => l10n.nutrientCaffeine,
       'theobromine_mg' || 'theobromineMg' => l10n.nutrientTheobromine,
+      'serving_weight_1_g' || 'servingWeight1G' => l10n.servingWeightNumber(1),
+      'serving_weight_2_g' || 'servingWeight2G' => l10n.servingWeightNumber(2),
+      'serving_weight_3_g' || 'servingWeight3G' => l10n.servingWeightNumber(3),
+      'serving_weight_4_g' || 'servingWeight4G' => l10n.servingWeightNumber(4),
+      'serving_weight_5_g' || 'servingWeight5G' => l10n.servingWeightNumber(5),
+      'serving_weight_6_g' || 'servingWeight6G' => l10n.servingWeightNumber(6),
+      'serving_weight_7_g' || 'servingWeight7G' => l10n.servingWeightNumber(7),
+      'serving_weight_8_g' || 'servingWeight8G' => l10n.servingWeightNumber(8),
+      'serving_weight_9_g' || 'servingWeight9G' => l10n.servingWeightNumber(9),
+      'serving_description_1_g' ||
+      'servingDescription1G' =>
+        l10n.servingDescriptionNumber(1),
+      'serving_description_2_g' ||
+      'servingDescription2G' =>
+        l10n.servingDescriptionNumber(2),
+      'serving_description_3_g' ||
+      'servingDescription3G' =>
+        l10n.servingDescriptionNumber(3),
+      'serving_description_4_g' ||
+      'servingDescription4G' =>
+        l10n.servingDescriptionNumber(4),
+      'serving_description_5_g' ||
+      'servingDescription5G' =>
+        l10n.servingDescriptionNumber(5),
+      'serving_description_6_g' ||
+      'servingDescription6G' =>
+        l10n.servingDescriptionNumber(6),
+      'serving_description_7_g' ||
+      'servingDescription7G' =>
+        l10n.servingDescriptionNumber(7),
+      'serving_description_8_g' ||
+      'servingDescription8G' =>
+        l10n.servingDescriptionNumber(8),
+      'serving_description_9_g' ||
+      'servingDescription9G' =>
+        l10n.servingDescriptionNumber(9),
+      '_200_calorie_weight_g' ||
+      'u200calorieWeightG' =>
+        l10n.calorieEquivalentWeight200,
       _ => sentenceCase(field),
     };
 

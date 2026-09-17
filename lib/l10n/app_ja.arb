@@ -439,5 +439,8 @@
   "nutrientTyrosine": "チロシン",
   "nutrientValine": "バリン",
   "nutrientCaffeine": "カフェイン",
-  "nutrientTheobromine": "テオブロミン"
+  "nutrientTheobromine": "テオブロミン",
+  "servingWeightNumber": "1食分の重量 {number}",
+  "servingDescriptionNumber": "1食分の説明 {number}",
+  "calorieEquivalentWeight200": "200 kcal相当の重量"
 }

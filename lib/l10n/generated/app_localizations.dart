@@ -2692,6 +2692,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Theobromine'**
   String get nutrientTheobromine;
+
+  /// No description provided for @servingWeightNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving weight {number}'**
+  String servingWeightNumber(int number);
+
+  /// No description provided for @servingDescriptionNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving description {number}'**
+  String servingDescriptionNumber(int number);
+
+  /// No description provided for @calorieEquivalentWeight200.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight equivalent to 200 kcal'**
+  String get calorieEquivalentWeight200;
 }
 
 class _AppLocalizationsDelegate

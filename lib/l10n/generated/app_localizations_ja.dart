@@ -1407,4 +1407,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nutrientTheobromine => 'テオブロミン';
+
+  @override
+  String servingWeightNumber(int number) {
+    return '1食分の重量 $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return '1食分の説明 $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => '200 kcal相当の重量';
 }

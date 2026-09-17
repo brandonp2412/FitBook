@@ -1459,4 +1459,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nutrientTheobromine => 'Theobromin';
+
+  @override
+  String servingWeightNumber(int number) {
+    return 'Portionsgewicht $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return 'Portionsbeschreibung $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => 'Gewicht entsprechend 200 kcal';
 }

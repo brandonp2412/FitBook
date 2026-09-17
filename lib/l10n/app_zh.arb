@@ -439,5 +439,8 @@
   "nutrientTyrosine": "酪氨酸",
   "nutrientValine": "缬氨酸",
   "nutrientCaffeine": "咖啡因",
-  "nutrientTheobromine": "可可碱"
+  "nutrientTheobromine": "可可碱",
+  "servingWeightNumber": "份量重量 {number}",
+  "servingDescriptionNumber": "份量描述 {number}",
+  "calorieEquivalentWeight200": "相当于 200 kcal 的重量"
 }

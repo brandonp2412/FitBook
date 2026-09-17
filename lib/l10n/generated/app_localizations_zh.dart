@@ -1401,6 +1401,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nutrientTheobromine => '可可碱';
+
+  @override
+  String servingWeightNumber(int number) {
+    return '份量重量 $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return '份量描述 $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => '相当于 200 kcal 的重量';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2800,4 +2813,17 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get nutrientTheobromine => '可可碱';
+
+  @override
+  String servingWeightNumber(int number) {
+    return '份量重量 $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return '份量描述 $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => '相当于 200 kcal 的重量';
 }

@@ -1452,4 +1452,17 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get nutrientTheobromine => 'Theobromine';
+
+  @override
+  String servingWeightNumber(int number) {
+    return 'Portiegewicht $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return 'Portiebeschrijving $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => 'Gewicht voor 200 kcal';
 }

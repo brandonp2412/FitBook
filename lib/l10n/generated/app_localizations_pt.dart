@@ -1455,6 +1455,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get nutrientTheobromine => 'Teobromina';
+
+  @override
+  String servingWeightNumber(int number) {
+    return 'Peso da porção $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return 'Descrição da porção $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => 'Peso equivalente a 200 kcal';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2907,4 +2920,17 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get nutrientTheobromine => 'Teobromina';
+
+  @override
+  String servingWeightNumber(int number) {
+    return 'Peso da porção $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return 'Descrição da porção $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => 'Peso equivalente a 200 kcal';
 }

@@ -439,5 +439,8 @@
   "nutrientTyrosine": "티로신",
   "nutrientValine": "발린",
   "nutrientCaffeine": "카페인",
-  "nutrientTheobromine": "테오브로민"
+  "nutrientTheobromine": "테오브로민",
+  "servingWeightNumber": "1회 제공량 무게 {number}",
+  "servingDescriptionNumber": "1회 제공량 설명 {number}",
+  "calorieEquivalentWeight200": "200 kcal 상당 무게"
 }

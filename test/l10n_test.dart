@@ -162,6 +162,18 @@ void main() {
     expect(localizedFoodFieldLabel(spanish, 'caffeine_mg'), 'Cafeína');
     expect(localizedFoodFieldLabel(japanese, 'leucine_mg'), 'ロイシン');
     expect(localizedFoodFieldLabel(japanese, 'theobromine_mg'), 'テオブロミン');
+    expect(
+      localizedFoodFieldLabel(spanish, 'serving_weight_3_g'),
+      'Peso de ración 3',
+    );
+    expect(
+      localizedFoodFieldLabel(japanese, 'serving_description_2_g'),
+      '1食分の説明 2',
+    );
+    expect(
+      localizedFoodFieldLabel(spanish, '_200_calorie_weight_g'),
+      'Peso equivalente a 200 kcal',
+    );
     expect(localizedFoodFieldLabel(spanish, 'custom_field'), 'Custom field');
   });
 }

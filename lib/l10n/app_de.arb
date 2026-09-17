@@ -439,5 +439,8 @@
   "nutrientTyrosine": "Tyrosin",
   "nutrientValine": "Valin",
   "nutrientCaffeine": "Koffein",
-  "nutrientTheobromine": "Theobromin"
+  "nutrientTheobromine": "Theobromin",
+  "servingWeightNumber": "Portionsgewicht {number}",
+  "servingDescriptionNumber": "Portionsbeschreibung {number}",
+  "calorieEquivalentWeight200": "Gewicht entsprechend 200 kcal"
 }
