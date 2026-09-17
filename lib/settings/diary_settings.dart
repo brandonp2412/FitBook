@@ -87,7 +87,11 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: calories,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyCalories: Value(int.tryParse(value))),
+                SettingsCompanion(
+                  dailyCalories: Value(
+                    parseDisplayInt(context, value),
+                  ),
+                ),
               ),
           onTap: () => selectAll(calories),
           keyboardType: TextInputType.number,
@@ -103,8 +107,9 @@ List<Widget> getDiarySettings({
           controller: protein,
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(
-                  dailyProtein:
-                      value == "" ? Value(null) : Value(int.tryParse(value)),
+                  dailyProtein: value.trim().isEmpty
+                      ? const Value(null)
+                      : Value(parseDisplayInt(context, value)),
                 ),
               ),
           onTap: () => selectAll(protein),
@@ -120,7 +125,11 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: fat,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyFat: Value(int.tryParse(value))),
+                SettingsCompanion(
+                  dailyFat: Value(
+                    parseDisplayInt(context, value),
+                  ),
+                ),
               ),
           onTap: () => selectAll(fat),
           keyboardType: TextInputType.number,
@@ -135,7 +144,11 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: carb,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyCarb: Value(int.tryParse(value))),
+                SettingsCompanion(
+                  dailyCarb: Value(
+                    parseDisplayInt(context, value),
+                  ),
+                ),
               ),
           onTap: () => selectAll(carb),
           keyboardType: TextInputType.number,
@@ -150,7 +163,11 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: fiber,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(dailyFiber: Value(int.tryParse(value))),
+                SettingsCompanion(
+                  dailyFiber: Value(
+                    parseDisplayInt(context, value),
+                  ),
+                ),
               ),
           onTap: () => selectAll(fiber),
           keyboardType: TextInputType.number,
@@ -187,11 +204,28 @@ List<Widget> getDiarySettings({
                     ..limit(1))
                   .getSingle();
 
+              if (!context.mounted) return;
               final macros = getMacros(bodyWeight.amount, bodyWeight.unit);
-              calories.text = macros.calories.toStringAsFixed(0);
-              protein.text = macros.protein.toStringAsFixed(0);
-              fat.text = macros.fat.toStringAsFixed(0);
-              carb.text = macros.carb.toStringAsFixed(0);
+              calories.text = formatDisplayNumber(
+                context,
+                macros.calories,
+                maximumFractionDigits: 0,
+              );
+              protein.text = formatDisplayNumber(
+                context,
+                macros.protein,
+                maximumFractionDigits: 0,
+              );
+              fat.text = formatDisplayNumber(
+                context,
+                macros.fat,
+                maximumFractionDigits: 0,
+              );
+              carb.text = formatDisplayNumber(
+                context,
+                macros.carb,
+                maximumFractionDigits: 0,
+              );
               db.settings.update().write(
                     SettingsCompanion(
                       dailyCalories: Value(macros.calories.toInt()),
@@ -259,17 +293,76 @@ class DiarySettings extends StatefulWidget {
 }
 
 class _DiarySettingsState extends State<DiarySettings> {
-  late final settings = context.read<SettingsState>();
-  late final calories =
-      TextEditingController(text: settings.value.dailyCalories?.toString());
-  late final protein =
-      TextEditingController(text: settings.value.dailyProtein?.toString());
-  late final fat =
-      TextEditingController(text: settings.value.dailyFat?.toString());
-  late final carb =
-      TextEditingController(text: settings.value.dailyCarb?.toString());
-  late final fiber =
-      TextEditingController(text: settings.value.dailyFiber?.toString());
+  late final SettingsState settings;
+  late final TextEditingController calories;
+  late final TextEditingController protein;
+  late final TextEditingController fat;
+  late final TextEditingController carb;
+  late final TextEditingController fiber;
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initialized) return;
+    _initialized = true;
+    settings = context.read<SettingsState>();
+    calories = TextEditingController(
+      text: settings.value.dailyCalories == null
+          ? ''
+          : formatDisplayNumber(
+              context,
+              settings.value.dailyCalories!,
+              maximumFractionDigits: 0,
+            ),
+    );
+    protein = TextEditingController(
+      text: settings.value.dailyProtein == null
+          ? ''
+          : formatDisplayNumber(
+              context,
+              settings.value.dailyProtein!,
+              maximumFractionDigits: 0,
+            ),
+    );
+    fat = TextEditingController(
+      text: settings.value.dailyFat == null
+          ? ''
+          : formatDisplayNumber(
+              context,
+              settings.value.dailyFat!,
+              maximumFractionDigits: 0,
+            ),
+    );
+    carb = TextEditingController(
+      text: settings.value.dailyCarb == null
+          ? ''
+          : formatDisplayNumber(
+              context,
+              settings.value.dailyCarb!,
+              maximumFractionDigits: 0,
+            ),
+    );
+    fiber = TextEditingController(
+      text: settings.value.dailyFiber == null
+          ? ''
+          : formatDisplayNumber(
+              context,
+              settings.value.dailyFiber!,
+              maximumFractionDigits: 0,
+            ),
+    );
+  }
+
+  @override
+  void dispose() {
+    calories.dispose();
+    protein.dispose();
+    fat.dispose();
+    carb.dispose();
+    fiber.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

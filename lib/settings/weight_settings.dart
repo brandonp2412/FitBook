@@ -23,7 +23,7 @@ List<Widget> getWeightSettings({
           controller: targetWeight,
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(
-                  targetWeight: Value(double.tryParse(value)),
+                  targetWeight: Value(parseDisplayNumber(context, value)),
                 ),
               ),
           onTap: () => selectAll(targetWeight),
@@ -68,10 +68,28 @@ class WeightSettings extends StatefulWidget {
 }
 
 class _WeightSettingsState extends State<WeightSettings> {
-  late final settings = context.read<SettingsState>();
-  late final targetWeight = TextEditingController(
-    text: settings.value.targetWeight.toString(),
-  );
+  late final SettingsState settings;
+  late final TextEditingController targetWeight;
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initialized) return;
+    _initialized = true;
+    settings = context.read<SettingsState>();
+    targetWeight = TextEditingController(
+      text: settings.value.targetWeight == null
+          ? ''
+          : formatDisplayNumber(context, settings.value.targetWeight!),
+    );
+  }
+
+  @override
+  void dispose() {
+    targetWeight.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

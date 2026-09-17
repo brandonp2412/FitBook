@@ -31,8 +31,11 @@ class DiaryEntryRow extends StatelessWidget {
     final suffix = food.unit == 'serving' && food.quantity > 1
         ? ' x${food.quantity.toInt()}'
         : '';
-    final kcal =
-        food.metrics[db.foods.calories.name]?.toStringAsFixed(0) ?? '0';
+    final kcal = formatDisplayNumber(
+      context,
+      food.metrics[db.foods.calories.name] ?? 0,
+      maximumFractionDigits: 0,
+    );
 
     return ListTile(
       tileColor: isSelected

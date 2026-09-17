@@ -9,6 +9,7 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/tab_settings.dart';
 import 'package:fit_book/settings/weight_settings.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,17 +37,57 @@ class _SettingsPageState extends State<SettingsPage> {
   final fiber = TextEditingController();
   final targetWeight = TextEditingController();
   late Setting settings;
+  bool _localizedInputsInitialized = false;
 
   @override
   void initState() {
     super.initState();
     settings = context.read<SettingsState>().value;
-    calories.text = settings.dailyCalories?.toString() ?? "";
-    protein.text = settings.dailyProtein?.toString() ?? "";
-    fat.text = settings.dailyFat?.toString() ?? "";
-    carb.text = settings.dailyCarb?.toString() ?? "";
-    fiber.text = settings.dailyFiber?.toString() ?? "";
-    targetWeight.text = settings.targetWeight?.toString() ?? "";
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_localizedInputsInitialized) return;
+    _localizedInputsInitialized = true;
+    calories.text = settings.dailyCalories == null
+        ? ''
+        : formatDisplayNumber(
+            context,
+            settings.dailyCalories!,
+            maximumFractionDigits: 0,
+          );
+    protein.text = settings.dailyProtein == null
+        ? ''
+        : formatDisplayNumber(
+            context,
+            settings.dailyProtein!,
+            maximumFractionDigits: 0,
+          );
+    fat.text = settings.dailyFat == null
+        ? ''
+        : formatDisplayNumber(
+            context,
+            settings.dailyFat!,
+            maximumFractionDigits: 0,
+          );
+    carb.text = settings.dailyCarb == null
+        ? ''
+        : formatDisplayNumber(
+            context,
+            settings.dailyCarb!,
+            maximumFractionDigits: 0,
+          );
+    fiber.text = settings.dailyFiber == null
+        ? ''
+        : formatDisplayNumber(
+            context,
+            settings.dailyFiber!,
+            maximumFractionDigits: 0,
+          );
+    targetWeight.text = settings.targetWeight == null
+        ? ''
+        : formatDisplayNumber(context, settings.targetWeight!);
   }
 
   @override

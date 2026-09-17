@@ -232,6 +232,17 @@ double? parseDisplayNumber(BuildContext context, String value) {
   }
 }
 
+/// Parses a whole number using the active locale's grouping separators.
+int? parseDisplayInt(BuildContext context, String value) {
+  final parsed = parseDisplayNumber(context, value);
+  if (parsed == null ||
+      !parsed.isFinite ||
+      parsed != parsed.truncateToDouble()) {
+    return null;
+  }
+  return parsed.toInt();
+}
+
 /// Groups per-row `(created, value)` entries into local-calendar-day buckets
 /// (matching the day grouping used by the Diary page), then rolls those days
 /// up into the requested [period]. Week/month/year buckets are averaged

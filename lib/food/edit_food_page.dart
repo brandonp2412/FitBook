@@ -51,6 +51,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
   NumberFormat get formatter => NumberFormat.decimalPattern(
         Localizations.localeOf(context).toLanguageTag(),
       )..maximumFractionDigits = 2;
+
+  String _formatControllerValue(Object? value) =>
+      value is num ? formatter.format(value) : value?.toString() ?? '';
   final calCtrl = TextEditingController(text: "0");
   final barcodeCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
@@ -98,7 +101,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       for (final field in food.toColumns(true).entries)
         if (controllers.containsKey(field.key))
           controllers[field.key]!.text =
-              (field.value as Variable).value.toString();
+              _formatControllerValue((field.value as Variable).value);
 
       setState(() {
         barcodeCtrl.text = food.barcode ?? "";
@@ -108,11 +111,14 @@ class _EditFoodPageState extends State<EditFoodPage> {
         smallImg = food.smallImage;
         bigImg = food.bigImage;
         created = food.created;
-        calCtrl.text = food.calories?.toStringAsFixed(2) ?? '';
+        calCtrl.text =
+            food.calories == null ? '' : formatter.format(food.calories!);
         kjCtrl.text = food.calories == null
             ? ''
             : formatter.format(food.calories! * 4.184);
-        sizeCtrl.text = food.servingSize?.toStringAsFixed(0) ?? '100';
+        sizeCtrl.text = food.servingSize == null
+            ? '100'
+            : formatter.format(food.servingSize!);
         _favorite = food.favorite;
       });
     });
@@ -138,8 +144,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
 
       final expression = columns[field];
       if (expression is Variable<Object>)
-        newControllers[field] =
-            TextEditingController(text: expression.value.toString());
+        newControllers[field] = TextEditingController(
+          text: _formatControllerValue(expression.value),
+        );
       else
         newControllers[field] = TextEditingController(
           text: db.foods.$columns

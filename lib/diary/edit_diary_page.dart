@@ -351,7 +351,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         builder: (context) => RepeatEntryPage(
           foodId: selectedFood?.id,
           mealId: _selectedMealId,
-          quantity: double.tryParse(quantity.text) ?? 1.0,
+          quantity: formatter.tryParse(quantity.text)?.toDouble() ?? 1.0,
           unit: unit,
           initialDate: created ?? DateTime.now(),
         ),
@@ -381,7 +381,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       kilojoules.text = food.calories != null
           ? formatter.format(food.calories! * 4.184)
           : "0";
-      if (lastQuantity != null) quantity.text = lastQuantity.toString();
+      if (lastQuantity != null) quantity.text = formatter.format(lastQuantity);
       if (lastUnit != null) unit = lastUnit;
     });
     quantityNode.requestFocus();
@@ -877,7 +877,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       ? Text(l10n.meal)
                       : result.food?.calories != null
                           ? Text(
-                              '${result.food!.calories!.toStringAsFixed(0)} kcal',
+                              '${formatter.format(result.food!.calories!)} kcal',
                             )
                           : null,
                   onTap: () => _onResultTap(result),

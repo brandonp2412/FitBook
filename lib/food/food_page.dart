@@ -16,11 +16,19 @@ import 'package:fit_book/speed_dial_fab.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 /// Parses a serving-size filter while allowing incomplete numeric input.
-double? parseServingSizeFilter(String value) =>
-    double.tryParse(value.replaceAll(',', '').trim());
+double? parseServingSizeFilter(String value, NumberFormat formatter) {
+  final text = value.trim();
+  if (text.isEmpty) return null;
+  try {
+    return formatter.parse(text).toDouble();
+  } on FormatException {
+    return null;
+  }
+}
 
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
@@ -57,6 +65,14 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
     setStream();
     setMealStream();
     _setMealCaloriesStream();
+  }
+
+  double? _parseServingSizeFilter(String value) {
+    if (value.trim().isEmpty) return null;
+    final formatter = NumberFormat.decimalPattern(
+      Localizations.localeOf(context).toLanguageTag(),
+    );
+    return parseServingSizeFilter(value, formatter);
   }
 
   void setStream() {
@@ -107,11 +123,11 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
       query = query..where(db.foods.foodGroup.like('%${groupCtrl.text}%'));
     if (_servingUnit != null)
       query = query..where(db.foods.servingUnit.equals(_servingUnit!));
-    final minimumServingSize = parseServingSizeFilter(gtController.text);
+    final minimumServingSize = _parseServingSizeFilter(gtController.text);
     if (minimumServingSize != null)
       query = query
         ..where(db.foods.servingSize.isBiggerThanValue(minimumServingSize));
-    final maximumServingSize = parseServingSizeFilter(ltController.text);
+    final maximumServingSize = _parseServingSizeFilter(ltController.text);
     if (maximumServingSize != null)
       query = query
         ..where(db.foods.servingSize.isSmallerThanValue(maximumServingSize));
@@ -230,7 +246,7 @@ GROUP BY meal_foods.meal
                   trailing: item.food.calories.value == null
                       ? null
                       : Text(
-                          '${item.food.calories.value!.toStringAsFixed(0)} kcal',
+                          '${formatDisplayNumber(context, item.food.calories.value!, maximumFractionDigits: 0)} kcal',
                         ),
                   onTap: () => navKey.currentState!.push(
                     MaterialPageRoute(

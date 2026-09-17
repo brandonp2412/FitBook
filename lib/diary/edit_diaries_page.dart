@@ -72,42 +72,71 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
         oldUnits =
             results.map((result) => result.read(db.diaries.unit)).join(', ');
         oldQuantities = results
-            .map((result) => result.read(db.diaries.quantity))
+            .map(
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.diaries.quantity) ?? 0,
+              ),
+            )
             .join(', ');
         oldCalories = results
             .map(
-              (result) =>
-                  result.read(db.foods.calories)?.toStringAsFixed(2) ?? '0',
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.foods.calories) ?? 0,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
         oldKj = results
             .map(
-              (result) => ((result.read(db.foods.calories) ?? 0) * 4.184)
-                  .toStringAsFixed(2),
+              (result) => formatDisplayNumber(
+                context,
+                (result.read(db.foods.calories) ?? 0) * 4.184,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
         oldProtein = results
             .map(
-              (result) =>
-                  result.read(db.foods.proteinG)?.toStringAsFixed(2) ?? '0',
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.foods.proteinG) ?? 0,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
         oldCarb = results
             .map(
-              (result) =>
-                  result.read(db.foods.carbohydrateG)?.toStringAsFixed(2) ??
-                  '0',
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.foods.carbohydrateG) ?? 0,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
         oldFat = results
             .map(
-              (result) => result.read(db.foods.fatG)?.toStringAsFixed(2) ?? '0',
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.foods.fatG) ?? 0,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
         oldFiber = results
             .map(
-              (result) =>
-                  result.read(db.foods.fiberG)?.toStringAsFixed(2) ?? '0',
+              (result) => formatDisplayNumber(
+                context,
+                result.read(db.foods.fiberG) ?? 0,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              ),
             )
             .join(', ');
       });
@@ -115,7 +144,12 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   }
 
   Future<void> _save() async {
-    final quantity = double.tryParse(quantityController.text);
+    final quantity = parseDisplayNumber(context, quantityController.text);
+    final calories = parseDisplayNumber(context, caloriesController.text);
+    final protein = parseDisplayNumber(context, proteinController.text);
+    final carb = parseDisplayNumber(context, carbController.text);
+    final fat = parseDisplayNumber(context, fatController.text);
+    final fiber = parseDisplayNumber(context, fiberController.text);
 
     final oldEntries = await (db.diaries.select()
           ..where((u) => u.id.isIn(widget.diaryIds)))
@@ -129,11 +163,11 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
         foodId = await (db.foods.insertOne(
           FoodsCompanion.insert(
             name: nameController!.text,
-            calories: Value(double.tryParse(caloriesController.text)),
-            proteinG: Value(double.tryParse(proteinController.text)),
-            carbohydrateG: Value(double.tryParse(carbController.text)),
-            fatG: Value(double.tryParse(fatController.text)),
-            fiberG: Value(double.tryParse(fiberController.text)),
+            calories: Value(calories),
+            proteinG: Value(protein),
+            carbohydrateG: Value(carb),
+            fatG: Value(fat),
+            fiberG: Value(fiber),
             favorite: Value(settings.favoriteNew),
           ),
         ));
@@ -142,19 +176,19 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
         await (db.foods.update()..where((u) => u.id.equals(foodId))).write(
           FoodsCompanion(
             calories: caloriesController.text.isNotEmpty
-                ? Value(double.tryParse(caloriesController.text))
+                ? Value(calories)
                 : const Value.absent(),
             proteinG: proteinController.text.isNotEmpty
-                ? Value(double.tryParse(proteinController.text))
+                ? Value(protein)
                 : const Value.absent(),
             carbohydrateG: carbController.text.isNotEmpty
-                ? Value(double.tryParse(carbController.text))
+                ? Value(carb)
                 : const Value.absent(),
             fatG: fatController.text.isNotEmpty
-                ? Value(double.tryParse(fatController.text))
+                ? Value(fat)
                 : const Value.absent(),
             fiberG: fiberController.text.isNotEmpty
-                ? Value(double.tryParse(fiberController.text))
+                ? Value(fiber)
                 : const Value.absent(),
           ),
         );
@@ -374,9 +408,12 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
                       setState(() {
-                        kilojoulesController.text =
-                            ((double.tryParse(value) ?? 0) * 4.184)
-                                .toStringAsFixed(2);
+                        kilojoulesController.text = formatDisplayNumber(
+                          context,
+                          (parseDisplayNumber(context, value) ?? 0) * 4.184,
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        );
                       });
                     },
                     onSubmitted: (value) {
@@ -398,9 +435,12 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
                           const TextInputType.numberWithOptions(decimal: true),
                       onChanged: (value) {
                         setState(() {
-                          caloriesController.text =
-                              ((double.tryParse(value) ?? 0) / 4.184)
-                                  .toStringAsFixed(2);
+                          caloriesController.text = formatDisplayNumber(
+                            context,
+                            (parseDisplayNumber(context, value) ?? 0) / 4.184,
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          );
                         });
                       },
                       onTap: () => selectAll(kilojoulesController),
