@@ -16,5 +16,15 @@
   "1788498371": "• Poprawić niestabilny test Patrol dla przypomnień\n• Ukryć testy integracyjne Linuksa na dwl\n• Zaktualizować konfigurację agenta\n• build: dodać obsługę zestawu narzędzi Android API 37\n• chore: ustawić Android API 37 jako cel\n• ci: uodpornić publikowanie w Microsoft Store na błędy\n• ci: automatycznie synchronizować metadane Play\n• feat: dodać konfigurowalne powtórzenia wpisów dziennika\n• feat: połączyć wykres kalorii i masy ciała\n• feat: zintegrować rejestrowanie Talker",
   "1787818904": "• Ujednolicić etykiety białka, błonnika i alkoholu\n• Ograniczyć zbędne zmiany w kruchych testach widżetów (#132)\n• Przywrócić callback usuwania obrazów\n• fix: zastosować lokalnie wzmocnienia Fluttera\n• fix: przywrócić wspólne narzędzia żywieniowe\n• test: dopasować testy dziennika do bieżących widżetów\n• test: sprawdzać ilość wpisu w dzienniku przez edytowalny tekst",
   "1787807338": "• Poprawić pobieranie celu makroskładników na wykresie\n• Wyświetlać etykietę Białko bez przyrostka jednostki\n• Zaktualizować test wykresu dla etykiety Białko",
-  "1787557753": "• Automatycznie synchronizować metadane Google Play Store (#130)"
+  "1787557753": "• Automatycznie synchronizować metadane Google Play Store (#130)",
+  "1787442544": "• Naprawić błędy GitHub Actions\n• Naprawić instalację CLI Patrol\n• Naprawić podpowiedzi wykresów dla serii pochodnych\n• Ulepszyć domyślne ustawienia dziennika i wykresów\n• Używać CLI Patrol zgodnego z Patrol 4.8\n• chore: automatycznie poprawiać formatowanie, lint i wygenerowanego klienta [pre-push]\n• ci: naprawić konfigurację Fluttera i Patrol",
+  "1786954594": "• Dodać test dla animacji nawigacji Brak\n• Zautomatyzować zrzuty ekranu i testy e2e\n• Ograniczyć czas działania CI dla zrzutów ekranu\n• Zapewnić, że plik blokady nigdy się nie rozbiega\n• Zmienić kolejność ustawień wyglądu\n• Usunąć opóźnienie dla „Brak” w animacji nawigacji\n• Usunąć opóźnienie dla automatycznie fokusowanych atrybutów\n• Usunąć zbędny i nieprawidłowy test jednostkowy strony masy ciała\n• Usunąć zbędny hook Git i wykluczyć podmoduł Fluttera z analizy\n• Usunąć nieaktualne TODO z testu migracji",
+  "1786876107": "• Usunąć workflow odtwarzalności",
+  "1786873625": "• Porównać przebudowy F-Droid z artefaktów workflow",
+  "1786870137": "• Użyć ścieżki Android SDK z buildserver",
+  "1786868451": "• Zachować ścieżkę Android SDK w buildach F-Droid",
+  "1786866734": "• Zezwolić na odtwarzalne buildy bez skanowania",
+  "1786865025": "• Naprawić kontrolę odtwarzalności F-Droid",
+  "1786620036": "• Dodać testy e2e Patrol w Darcie\n• Zmienić bibliotekę do skanowania kodów kreskowych\n• Naprawić automatyczne zrzuty ekranu\n• Naprawić ścieżki desktopowe\n• Spróbować naprawić odtwarzalność F-Droid",
+  "1786441785": "• Dodać szerokości cache do obrazów\n• Zezwolić na przewijanie strony wykresów\n• Naprawić błąd uruchamiania migracji bazy danych\n• Naprawić ustawienie podsumowania dziennika\n• Naprawić formatowanie zapytania SQL w database.dart\n• Naprawić wysokość strony wykresów\n• Naprawić rozmyte obrazy\n• Naprawić zmianę kolejności produktów podczas ich edycji\n• Naprawić obliczenia na 100 g\n• Wygenerować zrzuty ekranu"
 }

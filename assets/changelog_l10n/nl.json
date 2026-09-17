@@ -16,5 +16,15 @@
   "1788498371": "• Instabiele Patrol-test voor herinneringen corrigeren\n• Linux-integratietests op dwl verbergen\n• Agentconfiguratie bijwerken\n• build: Android API 37-toolchain ondersteunen\n• chore: Android API 37 als doel instellen\n• ci: publicatie naar Microsoft Store fouttolerant maken\n• ci: Play-metadata automatisch synchroniseren\n• feat: configureerbare herhalingen van dagboekitems toevoegen\n• feat: calorie- en gewichtsgrafiek combineren\n• feat: Talker-logging integreren",
   "1787818904": "• Labels voor eiwit, vezels en alcohol uniformeren\n• Onnodige wijzigingen in kwetsbare widgettests verminderen (#132)\n• Callback voor het verwijderen van afbeeldingen herstellen\n• fix: Flutter-verstevigingen lokaal toepassen\n• fix: gedeelde voedingshulpprogramma's herstellen\n• test: dagboektests afstemmen op de huidige widgets\n• test: dagboekhoeveelheid controleren via bewerkbare tekst",
   "1787807338": "• Ophalen van het macronutriëntendoel in de grafiek corrigeren\n• Label Eiwit zonder eenheidssuffix tonen\n• Grafiektest voor het label Eiwit bijwerken",
-  "1787557753": "• Google Play Store-metadata automatisch synchroniseren (#130)"
+  "1787557753": "• Google Play Store-metadata automatisch synchroniseren (#130)",
+  "1787442544": "• Fouten in GitHub Actions oplossen\n• Installatie van de Patrol CLI corrigeren\n• Grafiektooltips voor afgeleide reeksen corrigeren\n• Standaardinstellingen voor dagboek en grafieken verbeteren\n• Een Patrol CLI gebruiken die compatibel is met Patrol 4.8\n• chore: opmaak, lint en gegenereerde client automatisch corrigeren [pre-push]\n• ci: Flutter- en Patrol-configuratie repareren",
+  "1786954594": "• Test voor navigatieanimatie Geen toevoegen\n• Schermafbeeldingen en e2e-tests automatiseren\n• CI-runtime voor schermafbeeldingen begrenzen\n• Zorgen dat het lockbestand nooit afwijkt\n• Weergave-instellingen opnieuw ordenen\n• Vertraging bij ‘Geen’ voor de navigatieanimatie verwijderen\n• Vertraging bij automatisch gefocuste attributen verwijderen\n• Overbodige en ongeldige unittest van de gewichtspagina verwijderen\n• Overbodige Git-hook verwijderen en Flutter-submodule uitsluiten van analyse\n• Verouderde TODO's uit de migratietest verwijderen",
+  "1786876107": "• Workflow voor reproduceerbaarheid verwijderen",
+  "1786873625": "• F-Droid-herbuilds vergelijken aan de hand van workflowartefacten",
+  "1786870137": "• Android SDK-pad van buildserver gebruiken",
+  "1786868451": "• Android SDK-pad behouden in F-Droid-builds",
+  "1786866734": "• Reproduceerbare builds zonder scan toestaan",
+  "1786865025": "• Reproduceerbaarheidscontrole van F-Droid corrigeren",
+  "1786620036": "• Dart Patrol e2e-tests toevoegen\n• Bibliotheek voor barcodescanning wijzigen\n• Geautomatiseerde schermafbeeldingen corrigeren\n• Desktoppaden corrigeren\n• Reproduceerbaarheid van F-Droid proberen te corrigeren",
+  "1786441785": "• Cachebreedtes aan afbeeldingen toevoegen\n• Scrollen op de grafiekpagina toestaan\n• Opstartfout bij databasemigratie corrigeren\n• Instelling voor de dagboeksamenvatting corrigeren\n• Opmaak van de SQL-query in database.dart corrigeren\n• Hoogte van de grafiekpagina corrigeren\n• Wazige afbeeldingen corrigeren\n• Veranderende volgorde van voedingsmiddelen tijdens bewerken corrigeren\n• Berekeningen per 100 g corrigeren\n• Schermafbeeldingen genereren"
 }
