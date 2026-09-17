@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -87,10 +88,13 @@ class MealRow extends StatelessWidget {
         leading: leading,
         title: Text(meal.name),
         subtitle: totals == null
-            ? const Text('Meal')
+            ? Text(context.l10n.meal)
             : Text(
-                '${formatter.format(totals!.calories)} kcal'
-                '${totals!.protein > 0 ? " · ${formatter.format(totals!.protein)}g protein" : ""}',
+                totals!.protein > 0
+                    ? '${context.l10n.kcalValue(formatter.format(totals!.calories))} · ${context.l10n.proteinGramsValue(formatter.format(totals!.protein))}'
+                    : context.l10n.kcalValue(
+                        formatter.format(totals!.calories),
+                      ),
               ),
         onTap: onTap,
         onLongPress: onLongPress,

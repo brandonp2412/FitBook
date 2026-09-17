@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -65,7 +66,11 @@ class FoodItemRow extends StatelessWidget {
       subtitle: () {
         return Row(
           children: [
-            Text("${formatter.format(food.calories.value ?? 0)} kcal"),
+            Text(
+              context.l10n.kcalValue(
+                formatter.format(food.calories.value ?? 0),
+              ),
+            ),
             if (food.favorite.value == true) ...[
               const SizedBox(width: 6),
               Icon(

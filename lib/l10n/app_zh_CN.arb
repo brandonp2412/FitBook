@@ -269,5 +269,16 @@
   "maximum": "最大值",
   "noMinimum": "无最小值",
   "noMaximum": "无最大值",
-  "clearAll": "全部清除"
+  "clearAll": "全部清除",
+  "searchOpenFoodFacts": "搜索 Open Food Facts",
+  "noMatchingProducts": "没有匹配的产品",
+  "tryAnotherNameOrScanBarcode": "请尝试其他名称或扫描条形码。",
+  "enterFoodNameToSearch": "在上方输入食品名称，然后提交搜索。",
+  "submitToSearch": "搜索...",
+  "kcalValue": "{value} 千卡",
+  "@kcalValue": {"placeholders": {"value": {"type": "String"}}},
+  "proteinGramsValue": "蛋白质 {value} 克",
+  "@proteinGramsValue": {"placeholders": {"value": {"type": "String"}}},
+  "editFoodsCount": "{count, plural, other{编辑 {count} 种食品}}",
+  "@editFoodsCount": {"placeholders": {"count": {"type": "int"}}}
 }

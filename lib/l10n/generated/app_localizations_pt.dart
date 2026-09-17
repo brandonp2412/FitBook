@@ -900,6 +900,44 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get clearAll => 'Limpar tudo';
+
+  @override
+  String get searchOpenFoodFacts => 'Pesquisar no Open Food Facts';
+
+  @override
+  String get noMatchingProducts => 'Nenhum produto correspondente';
+
+  @override
+  String get tryAnotherNameOrScanBarcode =>
+      'Experimente outro nome ou leia um código de barras.';
+
+  @override
+  String get enterFoodNameToSearch =>
+      'Introduza acima o nome de um alimento e inicie a pesquisa.';
+
+  @override
+  String get submitToSearch => 'Pesquisar...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '$value g de proteína';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Editar $count alimentos',
+      one: 'Editar 1 alimento',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1796,4 +1834,42 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get clearAll => 'Limpar tudo';
+
+  @override
+  String get searchOpenFoodFacts => 'Pesquisar no Open Food Facts';
+
+  @override
+  String get noMatchingProducts => 'Nenhum produto correspondente';
+
+  @override
+  String get tryAnotherNameOrScanBarcode =>
+      'Tente outro nome ou escaneie um código de barras.';
+
+  @override
+  String get enterFoodNameToSearch =>
+      'Digite acima o nome de um alimento e faça a busca.';
+
+  @override
+  String get submitToSearch => 'Buscar...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '$value g de proteína';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Editar $count alimentos',
+      one: 'Editar 1 alimento',
+    );
+    return '$_temp0';
+  }
 }

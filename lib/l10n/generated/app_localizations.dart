@@ -1738,6 +1738,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear all'**
   String get clearAll;
+
+  /// No description provided for @searchOpenFoodFacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Open Food Facts'**
+  String get searchOpenFoodFacts;
+
+  /// No description provided for @noMatchingProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching products'**
+  String get noMatchingProducts;
+
+  /// No description provided for @tryAnotherNameOrScanBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another name or scan a barcode.'**
+  String get tryAnotherNameOrScanBarcode;
+
+  /// No description provided for @enterFoodNameToSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a food name above, then submit to search.'**
+  String get enterFoodNameToSearch;
+
+  /// No description provided for @submitToSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit to search...'**
+  String get submitToSearch;
+
+  /// No description provided for @kcalValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} kcal'**
+  String kcalValue(String value);
+
+  /// No description provided for @proteinGramsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} g protein'**
+  String proteinGramsValue(String value);
+
+  /// No description provided for @editFoodsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Edit 1 food} other{Edit {count} foods}}'**
+  String editFoodsCount(int count);
 }
 
 class _AppLocalizationsDelegate

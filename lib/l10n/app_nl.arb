@@ -269,5 +269,16 @@
   "maximum": "Maximum",
   "noMinimum": "Geen minimum",
   "noMaximum": "Geen maximum",
-  "clearAll": "Alles wissen"
+  "clearAll": "Alles wissen",
+  "searchOpenFoodFacts": "Zoeken in Open Food Facts",
+  "noMatchingProducts": "Geen overeenkomende producten",
+  "tryAnotherNameOrScanBarcode": "Probeer een andere naam of scan een barcode.",
+  "enterFoodNameToSearch": "Voer hierboven een voedingsmiddel in en start de zoekopdracht.",
+  "submitToSearch": "Zoeken...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {"placeholders": {"value": {"type": "String"}}},
+  "proteinGramsValue": "{value} g eiwit",
+  "@proteinGramsValue": {"placeholders": {"value": {"type": "String"}}},
+  "editFoodsCount": "{count, plural, one{1 voedingsmiddel bewerken} other{{count} voedingsmiddelen bewerken}}",
+  "@editFoodsCount": {"placeholders": {"count": {"type": "int"}}}
 }

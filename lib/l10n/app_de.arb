@@ -269,5 +269,16 @@
   "maximum": "Maximum",
   "noMinimum": "Kein Minimum",
   "noMaximum": "Kein Maximum",
-  "clearAll": "Alles löschen"
+  "clearAll": "Alles löschen",
+  "searchOpenFoodFacts": "Open Food Facts durchsuchen",
+  "noMatchingProducts": "Keine passenden Produkte",
+  "tryAnotherNameOrScanBarcode": "Probiere einen anderen Namen oder scanne einen Barcode.",
+  "enterFoodNameToSearch": "Gib oben einen Lebensmittelnamen ein und starte die Suche.",
+  "submitToSearch": "Suche starten...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {"placeholders": {"value": {"type": "String"}}},
+  "proteinGramsValue": "{value} g Eiweiß",
+  "@proteinGramsValue": {"placeholders": {"value": {"type": "String"}}},
+  "editFoodsCount": "{count, plural, one{1 Lebensmittel bearbeiten} other{{count} Lebensmittel bearbeiten}}",
+  "@editFoodsCount": {"placeholders": {"count": {"type": "int"}}}
 }

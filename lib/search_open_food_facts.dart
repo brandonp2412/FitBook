@@ -4,12 +4,14 @@ import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:provider/provider.dart';
 
@@ -83,6 +85,15 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     }
   }
 
+  String _calorieLabel(BuildContext context, double calories) {
+    final formatter = NumberFormat.decimalPattern(
+      Localizations.localeOf(context).toLanguageTag(),
+    )
+      ..minimumFractionDigits = 2
+      ..maximumFractionDigits = 2;
+    return context.l10n.kcalValue(formatter.format(calories));
+  }
+
   Widget productsBuilder(BuildContext context, String foodUnit) {
     if (searching)
       return const Expanded(child: Center(child: CircularProgressIndicator()));
@@ -92,12 +103,13 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           icon: hasSearched
               ? Icons.search_off_rounded
               : Icons.manage_search_rounded,
-          title:
-              hasSearched ? 'No matching products' : 'Search Open Food Facts',
+          title: hasSearched
+              ? context.l10n.noMatchingProducts
+              : context.l10n.searchOpenFoodFacts,
           message: hasSearched
-              ? 'Try another name or scan a barcode.'
-              : 'Enter a food name above, then submit to search.',
-          actionLabel: hasSearched ? 'Scan barcode' : null,
+              ? context.l10n.tryAnotherNameOrScanBarcode
+              : context.l10n.enterFoodNameToSearch,
+          actionLabel: hasSearched ? context.l10n.scanBarcode : null,
           actionIcon: Icons.barcode_reader,
           onAction: hasSearched ? scan : null,
         ),
@@ -150,13 +162,13 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Search open food facts")),
+      appBar: AppBar(title: Text(context.l10n.searchOpenFoodFacts)),
       body: material.Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
             child: SearchBar(
-              hintText: "Submit to search...",
+              hintText: context.l10n.submitToSearch,
               onSubmitted: (value) => search(value),
               onChanged: (value) => setState(() {}),
               padding: WidgetStateProperty.all(
@@ -179,7 +191,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                         });
                       },
                       icon: const Icon(Icons.clear),
-                      tooltip: 'Clear',
+                      tooltip: context.l10n.clear,
                       padding: const EdgeInsets.only(left: 16.0, right: 8.0),
                     ),
               trailing: [
@@ -213,7 +225,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 bottom: navigationBottomClearance(context),
               ),
               child: FloatingActionButton.extended(
-                label: const Text("Scan barcode"),
+                label: Text(context.l10n.scanBarcode),
                 onPressed: scan,
                 icon: const Icon(Icons.barcode_reader),
               ),
@@ -263,7 +275,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 child: material.Column(
                   children: [
                     Text('$title$brand ${product.quantity ?? ''}'),
-                    Text("${cals.toStringAsFixed(2)} kcal"),
+                    Text(_calorieLabel(context, cals)),
                   ],
                 ),
               ),
@@ -281,7 +293,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   ) {
     return ListTile(
       title: Text(product.productName ?? ""),
-      subtitle: Text("${cals.toStringAsFixed(2)} kcal"),
+      subtitle: Text(_calorieLabel(context, cals)),
       trailing: product.imageFrontSmallUrl != null
           ? CachedNetworkImage(
               imageUrl: product.imageFrontUrl!,

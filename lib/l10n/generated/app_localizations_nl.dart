@@ -898,4 +898,42 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get clearAll => 'Alles wissen';
+
+  @override
+  String get searchOpenFoodFacts => 'Zoeken in Open Food Facts';
+
+  @override
+  String get noMatchingProducts => 'Geen overeenkomende producten';
+
+  @override
+  String get tryAnotherNameOrScanBarcode =>
+      'Probeer een andere naam of scan een barcode.';
+
+  @override
+  String get enterFoodNameToSearch =>
+      'Voer hierboven een voedingsmiddel in en start de zoekopdracht.';
+
+  @override
+  String get submitToSearch => 'Zoeken...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '$value g eiwit';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count voedingsmiddelen bewerken',
+      one: '1 voedingsmiddel bewerken',
+    );
+    return '$_temp0';
+  }
 }

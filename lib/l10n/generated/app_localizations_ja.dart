@@ -874,4 +874,39 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get clearAll => 'すべてクリア';
+
+  @override
+  String get searchOpenFoodFacts => 'Open Food Factsを検索';
+
+  @override
+  String get noMatchingProducts => '一致する商品がありません';
+
+  @override
+  String get tryAnotherNameOrScanBarcode => '別の名前を試すか、バーコードをスキャンしてください。';
+
+  @override
+  String get enterFoodNameToSearch => '上に食品名を入力して検索してください。';
+
+  @override
+  String get submitToSearch => '検索...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return 'たんぱく質 $value g';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count件の食品を編集',
+    );
+    return '$_temp0';
+  }
 }

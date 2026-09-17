@@ -269,5 +269,16 @@
   "maximum": "최댓값",
   "noMinimum": "최솟값 없음",
   "noMaximum": "최댓값 없음",
-  "clearAll": "모두 지우기"
+  "clearAll": "모두 지우기",
+  "searchOpenFoodFacts": "Open Food Facts 검색",
+  "noMatchingProducts": "일치하는 제품이 없습니다",
+  "tryAnotherNameOrScanBarcode": "다른 이름으로 검색하거나 바코드를 스캔하세요.",
+  "enterFoodNameToSearch": "위에 식품 이름을 입력한 후 검색하세요.",
+  "submitToSearch": "검색...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {"placeholders": {"value": {"type": "String"}}},
+  "proteinGramsValue": "단백질 {value}g",
+  "@proteinGramsValue": {"placeholders": {"value": {"type": "String"}}},
+  "editFoodsCount": "{count, plural, other{{count}개 식품 편집}}",
+  "@editFoodsCount": {"placeholders": {"count": {"type": "int"}}}
 }

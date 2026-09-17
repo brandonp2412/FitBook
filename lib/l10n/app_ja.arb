@@ -269,5 +269,16 @@
   "maximum": "最大値",
   "noMinimum": "最小値なし",
   "noMaximum": "最大値なし",
-  "clearAll": "すべてクリア"
+  "clearAll": "すべてクリア",
+  "searchOpenFoodFacts": "Open Food Factsを検索",
+  "noMatchingProducts": "一致する商品がありません",
+  "tryAnotherNameOrScanBarcode": "別の名前を試すか、バーコードをスキャンしてください。",
+  "enterFoodNameToSearch": "上に食品名を入力して検索してください。",
+  "submitToSearch": "検索...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {"placeholders": {"value": {"type": "String"}}},
+  "proteinGramsValue": "たんぱく質 {value} g",
+  "@proteinGramsValue": {"placeholders": {"value": {"type": "String"}}},
+  "editFoodsCount": "{count, plural, other{{count}件の食品を編集}}",
+  "@editFoodsCount": {"placeholders": {"count": {"type": "int"}}}
 }

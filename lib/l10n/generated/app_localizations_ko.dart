@@ -874,4 +874,39 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get clearAll => '모두 지우기';
+
+  @override
+  String get searchOpenFoodFacts => 'Open Food Facts 검색';
+
+  @override
+  String get noMatchingProducts => '일치하는 제품이 없습니다';
+
+  @override
+  String get tryAnotherNameOrScanBarcode => '다른 이름으로 검색하거나 바코드를 스캔하세요.';
+
+  @override
+  String get enterFoodNameToSearch => '위에 식품 이름을 입력한 후 검색하세요.';
+
+  @override
+  String get submitToSearch => '검색...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '단백질 ${value}g';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count개 식품 편집',
+    );
+    return '$_temp0';
+  }
 }

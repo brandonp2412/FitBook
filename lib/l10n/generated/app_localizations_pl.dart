@@ -907,4 +907,44 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get clearAll => 'Wyczyść wszystko';
+
+  @override
+  String get searchOpenFoodFacts => 'Przeszukaj Open Food Facts';
+
+  @override
+  String get noMatchingProducts => 'Brak pasujących produktów';
+
+  @override
+  String get tryAnotherNameOrScanBarcode =>
+      'Spróbuj innej nazwy lub zeskanuj kod kreskowy.';
+
+  @override
+  String get enterFoodNameToSearch =>
+      'Wpisz powyżej nazwę produktu i rozpocznij wyszukiwanie.';
+
+  @override
+  String get submitToSearch => 'Szukaj...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value kcal';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '$value g białka';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Edytuj $count produktu',
+      many: 'Edytuj $count produktów',
+      few: 'Edytuj $count produkty',
+      one: 'Edytuj 1 produkt',
+    );
+    return '$_temp0';
+  }
 }

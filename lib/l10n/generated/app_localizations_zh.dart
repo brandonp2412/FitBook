@@ -869,6 +869,41 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get clearAll => '全部清除';
+
+  @override
+  String get searchOpenFoodFacts => '搜索 Open Food Facts';
+
+  @override
+  String get noMatchingProducts => '没有匹配的产品';
+
+  @override
+  String get tryAnotherNameOrScanBarcode => '请尝试其他名称或扫描条形码。';
+
+  @override
+  String get enterFoodNameToSearch => '在上方输入食品名称，然后提交搜索。';
+
+  @override
+  String get submitToSearch => '搜索...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value 千卡';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '蛋白质 $value 克';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '编辑 $count 种食品',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -1736,4 +1771,39 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get clearAll => '全部清除';
+
+  @override
+  String get searchOpenFoodFacts => '搜索 Open Food Facts';
+
+  @override
+  String get noMatchingProducts => '没有匹配的产品';
+
+  @override
+  String get tryAnotherNameOrScanBarcode => '请尝试其他名称或扫描条形码。';
+
+  @override
+  String get enterFoodNameToSearch => '在上方输入食品名称，然后提交搜索。';
+
+  @override
+  String get submitToSearch => '搜索...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value 千卡';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '蛋白质 $value 克';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '编辑 $count 种食品',
+    );
+    return '$_temp0';
+  }
 }

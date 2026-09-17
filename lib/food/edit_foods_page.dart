@@ -3,6 +3,7 @@ import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +86,7 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit ${widget.ids.length} foods"),
+        title: Text(context.l10n.editFoodsCount(widget.ids.length)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -94,40 +95,42 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
           children: [
             TextField(
               controller: nameController,
-              decoration:
-                  InputDecoration(labelText: 'Name', hintText: oldNames),
+              decoration: InputDecoration(
+                labelText: context.l10n.name,
+                hintText: oldNames,
+              ),
             ),
             TextField(
               controller: foodGroupController,
-              decoration: const InputDecoration(labelText: 'Food group'),
+              decoration: InputDecoration(labelText: context.l10n.foodGroup),
             ),
             TextField(
               controller: caloriesController,
-              decoration: const InputDecoration(labelText: 'Calories'),
+              decoration: InputDecoration(labelText: context.l10n.calories),
             ),
             TextField(
               controller: kilojoulesController,
-              decoration: const InputDecoration(labelText: 'Kilojoules'),
+              decoration: InputDecoration(labelText: context.l10n.kilojoules),
             ),
             TextField(
               controller: fatGController,
-              decoration: const InputDecoration(labelText: 'Fat'),
+              decoration: InputDecoration(labelText: context.l10n.fat),
             ),
             TextField(
               controller: proteinGController,
-              decoration: const InputDecoration(labelText: 'Protein'),
+              decoration: InputDecoration(labelText: context.l10n.protein),
             ),
             TextField(
               controller: servingSizeController,
-              decoration: const InputDecoration(labelText: 'Serving size'),
+              decoration: InputDecoration(labelText: context.l10n.servingSize),
             ),
             DropdownButtonFormField<String>(
               initialValue: servingUnit,
-              decoration: const InputDecoration(labelText: 'Unit'),
+              decoration: InputDecoration(labelText: context.l10n.unit),
               items: unitOptions.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(localizedUnit(context.l10n, value)),
                 );
               }).toList(),
               onChanged: (String? newValue) {
@@ -147,7 +150,7 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
         child: AnimatedFab(
           onTap: () => save(),
           icon: Icons.save,
-          label: 'Save',
+          label: context.l10n.save,
           scroll: scrollCtrl,
         ),
       ),
