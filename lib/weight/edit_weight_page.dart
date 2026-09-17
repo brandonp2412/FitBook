@@ -9,10 +9,10 @@ import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -120,6 +120,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
   String convertTo = 'kg';
   String? image;
   DateTime created = DateTime.now();
+  bool _valueInitialized = false;
 
   @override
   void initState() {
@@ -129,9 +130,21 @@ class _EditWeightPageState extends State<EditWeightPage> {
     convertTo = widget.weight.unit.value;
     created = widget.weight.created.value;
     image = widget.weight.image.value;
+  }
 
-    if (widget.weight.id.present)
-      valueController.text = widget.weight.amount.value.toStringAsFixed(2);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_valueInitialized) return;
+    _valueInitialized = true;
+    if (widget.weight.id.present) {
+      valueController.text = formatDisplayNumber(
+        context,
+        widget.weight.amount.value,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      );
+    }
   }
 
   @override
@@ -181,7 +194,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
 
   void save() {
     if (!(formKey.currentState?.validate() ?? false)) return;
-    final amount = double.tryParse(valueController.text.trim());
+    final amount = parseDisplayNumber(context, valueController.text);
     if (amount == null) return;
     Navigator.of(context).pop();
     saveWeight(
@@ -211,17 +224,19 @@ class _EditWeightPageState extends State<EditWeightPage> {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.weight.id.present ? "Edit weight" : "Add weight"),
+        title:
+            Text(widget.weight.id.present ? l10n.editWeight : l10n.addWeight),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
               SharePlus.instance.share(
                 ShareParams(
-                  text: "I just weighed ${valueController.text} $unit!",
+                  text: l10n.shareWeight(valueController.text, unit),
                 ),
               );
             },
@@ -239,13 +254,14 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 controller: valueController,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(labelText: 'Weight ($unit)'),
+                decoration:
+                    InputDecoration(labelText: l10n.weightWithUnit(unit)),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Please enter weight';
+                    return l10n.pleaseEnterWeight;
                   }
-                  if (double.tryParse(value.trim()) == null) {
-                    return 'Please enter a valid weight';
+                  if (parseDisplayNumber(context, value) == null) {
+                    return l10n.pleaseEnterValidWeight;
                   }
                   return null;
                 },
@@ -255,14 +271,14 @@ class _EditWeightPageState extends State<EditWeightPage> {
               TextFormField(
                 controller: TextEditingController(
                   text:
-                      "${widget.weight.amount.value.toStringAsFixed(2)} ${widget.weight.unit.value}",
+                      "${formatDisplayNumber(context, widget.weight.amount.value, minimumFractionDigits: 2, maximumFractionDigits: 2)} ${widget.weight.unit.value}",
                 ),
-                decoration: const InputDecoration(labelText: 'Last weight'),
+                decoration: InputDecoration(labelText: l10n.lastWeight),
                 enabled: false,
               ),
               const SizedBox(height: 8.0),
               ListTile(
-                title: Text("Unit ($unit)"),
+                title: Text(l10n.unitWithValue(unit)),
                 leading: unit == 'kg'
                     ? const Icon(Icons.straighten)
                     : const Icon(Icons.square_foot),
@@ -283,8 +299,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
               ),
               ListTile(
                 title: convertTo == unit
-                    ? Text("Keep unit as $unit")
-                    : Text("Convert to $convertTo"),
+                    ? Text(l10n.keepUnitAs(unit))
+                    : Text(l10n.convertToUnit(convertTo)),
                 leading: const Icon(Icons.conveyor_belt),
                 onTap: () {
                   setState(() {
@@ -315,11 +331,12 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 ),
               ),
               ListTile(
-                title: const Text('Created Date'),
+                title: Text(l10n.createdDate),
                 subtitle: Selector<SettingsState, String>(
                   selector: (p0, settings) => settings.value.longDateFormat,
-                  builder: (context, longDateFormat, child) =>
-                      Text(DateFormat(longDateFormat).format(created)),
+                  builder: (context, longDateFormat, child) => Text(
+                    formatDisplayDate(context, created, longDateFormat),
+                  ),
                 ),
                 onTap: () => _selectDate(),
               ),
@@ -334,7 +351,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                     errorBuilder: (context, error, stackTrace) =>
                         TextButton.icon(
                       onPressed: () {},
-                      label: const Text('Image error'),
+                      label: Text(l10n.imageError),
                       icon: const Icon(Icons.error),
                     ),
                   ),
@@ -343,14 +360,14 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 const SizedBox(height: 8),
                 TextButton.icon(
                   icon: const Icon(Icons.image),
-                  label: const Text('Set image'),
+                  label: Text(l10n.setImage),
                   onPressed: _pickImage,
                 ),
               ],
               if (image != null && settings.showImages)
                 TextButton.icon(
                   icon: const Icon(Icons.delete),
-                  label: const Text("Remove image"),
+                  label: Text(l10n.removeImage),
                   onPressed: () => setState(() {
                     image = null;
                   }),
@@ -366,7 +383,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         ),
         child: AnimatedFab(
           onTap: save,
-          label: "Save",
+          label: l10n.save,
           icon: Icons.save,
           scroll: ScrollController(),
         ),

@@ -909,4 +909,112 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => '식사 편집';
+
+  @override
+  String get addImage => '이미지 추가';
+
+  @override
+  String get noFoodsInMeal => '이 식사에 아직 음식이 없습니다';
+
+  @override
+  String get addFoodToMealHint => '음식을 추가하여 식사를 구성해 보세요.';
+
+  @override
+  String get remove => '삭제';
+
+  @override
+  String get searchFoods => '음식 검색...';
+
+  @override
+  String get noFoodsFound => '음식을 찾을 수 없습니다';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return '“$search”와 일치하는 항목이 없습니다.';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst => '식사에 추가하기 전에 라이브러리에 음식을 추가하세요.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '100g당 $value kcal';
+  }
+
+  @override
+  String get noDataYet => '아직 데이터가 없습니다';
+
+  @override
+  String get completePlansToViewGraphs => '몇 가지 계획을 완료하면 여기에 그래프가 표시됩니다.';
+
+  @override
+  String get value => '값';
+
+  @override
+  String get goal => '목표';
+
+  @override
+  String get notSet => '설정되지 않음';
+
+  @override
+  String get trend => '추세';
+
+  @override
+  String get smooth => '평활화';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count포인트 평균',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => '체중 편집';
+
+  @override
+  String get addWeight => '체중 추가';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return '방금 측정한 체중은 $value $unit입니다!';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return '체중 ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => '체중을 입력하세요';
+
+  @override
+  String get pleaseEnterValidWeight => '올바른 체중을 입력하세요';
+
+  @override
+  String get lastWeight => '이전 체중';
+
+  @override
+  String unitWithValue(String unit) {
+    return '단위 ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return '단위를 $unit로 유지';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return '$unit로 변환';
+  }
+
+  @override
+  String get removeImage => '이미지 제거';
 }

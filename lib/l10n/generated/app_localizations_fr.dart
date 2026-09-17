@@ -941,4 +941,116 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => 'Modifier le repas';
+
+  @override
+  String get addImage => 'Ajouter une image';
+
+  @override
+  String get noFoodsInMeal => 'Aucun aliment dans ce repas pour le moment';
+
+  @override
+  String get addFoodToMealHint =>
+      'Ajoutez un aliment pour commencer à composer ce repas.';
+
+  @override
+  String get remove => 'Retirer';
+
+  @override
+  String get searchFoods => 'Rechercher des aliments...';
+
+  @override
+  String get noFoodsFound => 'Aucun aliment trouvé';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return 'Aucun résultat pour « $search ».';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst =>
+      'Ajoutez des aliments à votre bibliothèque avant de les ajouter à un repas.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '$value kcal / 100 g';
+  }
+
+  @override
+  String get noDataYet => 'Aucune donnée pour le moment';
+
+  @override
+  String get completePlansToViewGraphs =>
+      'Terminez quelques plans pour afficher des graphiques ici.';
+
+  @override
+  String get value => 'Valeur';
+
+  @override
+  String get goal => 'Objectif';
+
+  @override
+  String get notSet => 'Non défini';
+
+  @override
+  String get trend => 'Tendance';
+
+  @override
+  String get smooth => 'Lissage';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Moyenne sur $count points',
+      one: 'Moyenne sur 1 point',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => 'Modifier le poids';
+
+  @override
+  String get addWeight => 'Ajouter un poids';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return 'Je viens de me peser : $value $unit !';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Poids ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => 'Saisissez le poids';
+
+  @override
+  String get pleaseEnterValidWeight => 'Saisissez un poids valide';
+
+  @override
+  String get lastWeight => 'Dernier poids';
+
+  @override
+  String unitWithValue(String unit) {
+    return 'Unité ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return 'Conserver l’unité en $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return 'Convertir en $unit';
+  }
+
+  @override
+  String get removeImage => 'Retirer l’image';
 }

@@ -936,4 +936,116 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => 'Maaltijd bewerken';
+
+  @override
+  String get addImage => 'Afbeelding toevoegen';
+
+  @override
+  String get noFoodsInMeal => 'Nog geen voedingsmiddelen in deze maaltijd';
+
+  @override
+  String get addFoodToMealHint =>
+      'Voeg een voedingsmiddel toe om deze maaltijd samen te stellen.';
+
+  @override
+  String get remove => 'Verwijderen';
+
+  @override
+  String get searchFoods => 'Voedingsmiddelen zoeken...';
+
+  @override
+  String get noFoodsFound => 'Geen voedingsmiddelen gevonden';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return 'Niets komt overeen met ‘$search’.';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst =>
+      'Voeg eerst voedingsmiddelen toe aan je bibliotheek voordat je ze aan een maaltijd toevoegt.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '$value kcal / 100 g';
+  }
+
+  @override
+  String get noDataYet => 'Nog geen gegevens';
+
+  @override
+  String get completePlansToViewGraphs =>
+      'Voltooi enkele plannen om hier grafieken te bekijken.';
+
+  @override
+  String get value => 'Waarde';
+
+  @override
+  String get goal => 'Doel';
+
+  @override
+  String get notSet => 'Niet ingesteld';
+
+  @override
+  String get trend => 'Trend';
+
+  @override
+  String get smooth => 'Afvlakking';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Gemiddelde over $count punten',
+      one: 'Gemiddelde over 1 punt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => 'Gewicht bewerken';
+
+  @override
+  String get addWeight => 'Gewicht toevoegen';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return 'Ik heb me net gewogen: $value $unit!';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Gewicht ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => 'Voer het gewicht in';
+
+  @override
+  String get pleaseEnterValidWeight => 'Voer een geldig gewicht in';
+
+  @override
+  String get lastWeight => 'Vorig gewicht';
+
+  @override
+  String unitWithValue(String unit) {
+    return 'Eenheid ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return 'Eenheid behouden als $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return 'Omzetten naar $unit';
+  }
+
+  @override
+  String get removeImage => 'Afbeelding verwijderen';
 }

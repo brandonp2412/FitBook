@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   testWidgets('EditWeightPage new', (WidgetTester tester) async {
@@ -22,7 +23,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: EditWeightPage(
             weight: WeightsCompanion.insert(
               amount: 0,
@@ -62,7 +63,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: EditWeightPage(
             weight: WeightsCompanion.insert(
               amount: 0,
@@ -89,6 +90,43 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('EditWeightPage accepts locale decimal input', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settings = await (db.settings.select()).getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          locale: const Locale('es'),
+          home: EditWeightPage(
+            weight: WeightsCompanion.insert(
+              amount: 0,
+              created: DateTime.now(),
+              unit: 'kg',
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.bySemanticsLabel('Peso (kg)'), '72,5');
+    await tester.tap(find.text('Guardar'));
+    await tester.pumpAndSettle();
+
+    final weight = await (db.weights.select()).getSingle();
+    expect(weight.amount, equals(72.5));
+
+    await db.close();
+  });
+
   testWidgets('EditWeightPage edit', (WidgetTester tester) async {
     await mockTests();
     final settings = await (db.settings.select()).getSingle();
@@ -107,7 +145,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
-        child: MaterialApp(
+        child: localizedApp(
           home: EditWeightPage(
             weight: weight,
           ),

@@ -1786,6 +1786,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{Edit 1 food} other{Edit {count} foods}}'**
   String editFoodsCount(int count);
+
+  /// No description provided for @editMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit meal'**
+  String get editMeal;
+
+  /// No description provided for @addImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add image'**
+  String get addImage;
+
+  /// No description provided for @noFoodsInMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods in this meal yet'**
+  String get noFoodsInMeal;
+
+  /// No description provided for @addFoodToMealHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a food to start building this meal.'**
+  String get addFoodToMealHint;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @searchFoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Search foods...'**
+  String get searchFoods;
+
+  /// No description provided for @noFoodsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods found'**
+  String get noFoodsFound;
+
+  /// No description provided for @nothingMatchesSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches “{search}”.'**
+  String nothingMatchesSearch(String search);
+
+  /// No description provided for @addFoodsToLibraryFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Add some foods to your library before adding them to a meal.'**
+  String get addFoodsToLibraryFirst;
+
+  /// No description provided for @caloriesPer100gValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} kcal / 100 g'**
+  String caloriesPer100gValue(String value);
+
+  /// No description provided for @noDataYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No data yet'**
+  String get noDataYet;
+
+  /// No description provided for @completePlansToViewGraphs.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete some plans to view graphs here.'**
+  String get completePlansToViewGraphs;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @goal.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get goal;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @trend.
+  ///
+  /// In en, this message translates to:
+  /// **'Trend'**
+  String get trend;
+
+  /// No description provided for @smooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Smooth'**
+  String get smooth;
+
+  /// No description provided for @pointAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1-point average} other{{count}-point average}}'**
+  String pointAverage(int count);
+
+  /// No description provided for @editWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit weight'**
+  String get editWeight;
+
+  /// No description provided for @addWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Add weight'**
+  String get addWeight;
+
+  /// No description provided for @shareWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'I just weighed {value} {unit}!'**
+  String shareWeight(String value, String unit);
+
+  /// No description provided for @weightWithUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight ({unit})'**
+  String weightWithUnit(String unit);
+
+  /// No description provided for @pleaseEnterWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter weight'**
+  String get pleaseEnterWeight;
+
+  /// No description provided for @pleaseEnterValidWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid weight'**
+  String get pleaseEnterValidWeight;
+
+  /// No description provided for @lastWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Last weight'**
+  String get lastWeight;
+
+  /// No description provided for @unitWithValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit ({unit})'**
+  String unitWithValue(String unit);
+
+  /// No description provided for @keepUnitAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep unit as {unit}'**
+  String keepUnitAs(String unit);
+
+  /// No description provided for @convertToUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert to {unit}'**
+  String convertToUnit(String unit);
+
+  /// No description provided for @removeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove image'**
+  String get removeImage;
 }
 
 class _AppLocalizationsDelegate

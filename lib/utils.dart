@@ -8,6 +8,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -166,6 +167,45 @@ bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
       date1.day == date2.day;
+}
+
+/// Formats [value] with [pattern] using the active app locale.
+String formatDisplayDate(
+  BuildContext context,
+  DateTime value,
+  String pattern,
+) =>
+    DateFormat(
+      pattern,
+      Localizations.localeOf(context).toLanguageTag(),
+    ).format(value);
+
+/// Formats [value] using the active app locale and fraction-digit bounds.
+String formatDisplayNumber(
+  BuildContext context,
+  num value, {
+  int minimumFractionDigits = 0,
+  int maximumFractionDigits = 2,
+}) {
+  final formatter = NumberFormat.decimalPattern(
+    Localizations.localeOf(context).toLanguageTag(),
+  )
+    ..minimumFractionDigits = minimumFractionDigits
+    ..maximumFractionDigits = maximumFractionDigits;
+  return formatter.format(value);
+}
+
+/// Parses a number using the active locale's decimal and grouping separators.
+double? parseDisplayNumber(BuildContext context, String value) {
+  final text = value.trim();
+  if (text.isEmpty) return null;
+  try {
+    return NumberFormat.decimalPattern(
+      Localizations.localeOf(context).toLanguageTag(),
+    ).parse(text).toDouble();
+  } on FormatException {
+    return null;
+  }
 }
 
 /// Groups per-row `(created, value)` entries into local-calendar-day buckets

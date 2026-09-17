@@ -10,11 +10,32 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/empty_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
+NumberFormat _mealNumberFormat(
+  BuildContext context, {
+  int maximumFractionDigits = 2,
+  int minimumFractionDigits = 0,
+}) =>
+    NumberFormat.decimalPattern(Localizations.localeOf(context).toLanguageTag())
+      ..maximumFractionDigits = maximumFractionDigits
+      ..minimumFractionDigits = minimumFractionDigits;
+
+double? _parseMealNumber(BuildContext context, String value) {
+  final text = value.trim();
+  if (text.isEmpty) return null;
+  try {
+    return _mealNumberFormat(context).parse(text).toDouble();
+  } on FormatException {
+    return null;
+  }
+}
 
 class EditMealPage extends StatefulWidget {
   final int? id;
@@ -87,10 +108,11 @@ class _EditMealPageState extends State<EditMealPage> {
     setState(() {
       nameCtrl.text = meal.name;
       _imageFile = meal.imageFile;
+      final quantityFormatter = _mealNumberFormat(context);
       mealFoods = rows.map((row) {
         final mf = row.readTable(db.mealFoods);
         final food = row.readTable(db.foods);
-        return _MealFoodEntry(
+        final entry = _MealFoodEntry(
           foodId: mf.food,
           foodName: food.name,
           calories: food.calories,
@@ -100,6 +122,8 @@ class _EditMealPageState extends State<EditMealPage> {
           quantity: mf.quantity,
           unit: mf.unit,
         );
+        entry.quantityCtrl.text = quantityFormatter.format(mf.quantity);
+        return entry;
       }).toList();
       loading = false;
     });
@@ -108,6 +132,9 @@ class _EditMealPageState extends State<EditMealPage> {
   Future<void> _save() async {
     final name = nameCtrl.text.trim();
     if (name.isEmpty) return;
+    final quantities = mealFoods
+        .map((entry) => _parseMealNumber(context, entry.quantityCtrl.text) ?? 1)
+        .toList();
 
     int mealId;
     if (widget.id == null) {
@@ -126,12 +153,13 @@ class _EditMealPageState extends State<EditMealPage> {
     }
 
     await (db.mealFoods.delete()..where((t) => t.meal.equals(mealId))).go();
-    for (final entry in mealFoods) {
+    for (var index = 0; index < mealFoods.length; index++) {
+      final entry = mealFoods[index];
       await db.mealFoods.insertOne(
         MealFoodsCompanion.insert(
           meal: mealId,
           food: entry.foodId,
-          quantity: double.tryParse(entry.quantityCtrl.text) ?? 1,
+          quantity: quantities[index],
           unit: entry.unit,
         ),
       );
@@ -183,7 +211,7 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   double _entryCalories(_MealFoodEntry e) {
-    final qty = double.tryParse(e.quantityCtrl.text) ?? 1;
+    final qty = _parseMealNumber(context, e.quantityCtrl.text) ?? 1;
     final qtyInGrams = switch (e.unit) {
       'serving' => qty * e.servingSize,
       'grams' || 'milliliters' => qty,
@@ -200,7 +228,7 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   double _entryProtein(_MealFoodEntry e) {
-    final qty = double.tryParse(e.quantityCtrl.text) ?? 1;
+    final qty = _parseMealNumber(context, e.quantityCtrl.text) ?? 1;
     final qtyInGrams = switch (e.unit) {
       'serving' => qty * e.servingSize,
       'grams' || 'milliliters' => qty,
@@ -225,12 +253,17 @@ class _EditMealPageState extends State<EditMealPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final wholeNumberFormatter = _mealNumberFormat(
+      context,
+      maximumFractionDigits: 0,
+    );
     final totalCal = _totalCalories;
     final totalProt = _totalProtein;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.id == null ? 'Create meal' : 'Edit meal'),
+        title: Text(widget.id == null ? l10n.createMeal : l10n.editMeal),
         bottom: mealFoods.isNotEmpty
             ? PreferredSize(
                 preferredSize: const Size.fromHeight(40),
@@ -258,7 +291,9 @@ class _EditMealPageState extends State<EditMealPage> {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              '${totalCal.toStringAsFixed(0)} kcal',
+                              l10n.kcalValue(
+                                wholeNumberFormatter.format(totalCal),
+                              ),
                               style: theme.textTheme.labelLarge?.copyWith(
                                 color: theme.colorScheme.onPrimaryContainer,
                                 fontWeight: FontWeight.w600,
@@ -287,7 +322,9 @@ class _EditMealPageState extends State<EditMealPage> {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              '${totalProt.toStringAsFixed(0)}g protein',
+                              l10n.proteinGramsValue(
+                                wholeNumberFormatter.format(totalProt),
+                              ),
                               style: theme.textTheme.labelLarge?.copyWith(
                                 color: theme.colorScheme.onTertiaryContainer,
                                 fontWeight: FontWeight.w600,
@@ -319,10 +356,10 @@ class _EditMealPageState extends State<EditMealPage> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: TextField(
                       controller: nameCtrl,
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
+                      decoration: InputDecoration(
+                        labelText: l10n.name,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                       ),
                       onChanged: (_) => setState(() {}),
                       textCapitalization: TextCapitalization.sentences,
@@ -374,7 +411,7 @@ class _EditMealPageState extends State<EditMealPage> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.image),
-                      label: const Text('Add image'),
+                      label: Text(l10n.addImage),
                       onPressed: _pickImage,
                     ),
                   );
@@ -384,9 +421,9 @@ class _EditMealPageState extends State<EditMealPage> {
                     height: 320,
                     child: AppEmptyState(
                       icon: Icons.restaurant_menu_rounded,
-                      title: 'No foods in this meal yet',
-                      message: 'Add a food to start building this meal.',
-                      actionLabel: 'Add food',
+                      title: l10n.noFoodsInMeal,
+                      message: l10n.addFoodToMealHint,
+                      actionLabel: l10n.addFood,
                       actionIcon: Icons.add_rounded,
                       onAction: _pickFood,
                     ),
@@ -406,14 +443,14 @@ class _EditMealPageState extends State<EditMealPage> {
           children: [
             FloatingActionButton.small(
               heroTag: 'addFood',
-              tooltip: 'Add food',
+              tooltip: l10n.addFood,
               onPressed: _pickFood,
               child: const Icon(Icons.add),
             ),
             const SizedBox(height: 8),
             AnimatedFab(
               onTap: _save,
-              label: 'Save',
+              label: l10n.save,
               icon: Icons.save,
               scroll: scrollCtrl,
             ),
@@ -439,7 +476,17 @@ class _FoodEntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final qty = double.tryParse(entry.quantityCtrl.text) ?? 1;
+    final l10n = context.l10n;
+    final calorieFormatter = _mealNumberFormat(
+      context,
+      maximumFractionDigits: 0,
+    );
+    final proteinFormatter = _mealNumberFormat(
+      context,
+      maximumFractionDigits: 1,
+      minimumFractionDigits: 1,
+    );
+    final qty = _parseMealNumber(context, entry.quantityCtrl.text) ?? 1;
     final qtyInGrams = switch (entry.unit) {
       'serving' => qty * entry.servingSize,
       'grams' || 'milliliters' => qty,
@@ -497,7 +544,7 @@ class _FoodEntryCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 20),
-                  tooltip: 'Remove',
+                  tooltip: l10n.remove,
                   visualDensity: VisualDensity.compact,
                   color: colorScheme.onSurfaceVariant,
                   onPressed: onRemove,
@@ -561,7 +608,10 @@ class _FoodEntryCard extends StatelessWidget {
                         ),
                         items: unitOptions
                             .map(
-                              (u) => DropdownMenuItem(value: u, child: Text(u)),
+                              (u) => DropdownMenuItem(
+                                value: u,
+                                child: Text(localizedUnit(l10n, u)),
+                              ),
                             )
                             .toList(),
                         onChanged: (v) {
@@ -587,7 +637,7 @@ class _FoodEntryCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '${cal.toStringAsFixed(0)} kcal',
+                        l10n.kcalValue(calorieFormatter.format(cal)),
                         style: theme.textTheme.labelLarge?.copyWith(
                           color: colorScheme.primary,
                           fontWeight: FontWeight.w600,
@@ -598,7 +648,7 @@ class _FoodEntryCard extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 4, left: 4),
                         child: Text(
-                          '${prot.toStringAsFixed(1)}g protein',
+                          l10n.proteinGramsValue(proteinFormatter.format(prot)),
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: colorScheme.tertiary,
                           ),
@@ -700,6 +750,11 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
   @override
   Widget build(BuildContext context) {
     final showImages = context.watch<SettingsState>().value.showImages;
+    final l10n = context.l10n;
+    final calorieFormatter = _mealNumberFormat(
+      context,
+      maximumFractionDigits: 0,
+    );
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
       child: Column(
@@ -711,7 +766,7 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
               autofocus: true,
               onChanged: (_) => _setStream(),
               decoration: InputDecoration(
-                hintText: 'Search foods...',
+                hintText: l10n.searchFoods,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -728,11 +783,11 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
                   final hasQuery = searchCtrl.text.trim().isNotEmpty;
                   return AppEmptyState(
                     icon: Icons.search_off_rounded,
-                    title: 'No foods found',
+                    title: l10n.noFoodsFound,
                     message: hasQuery
-                        ? 'Nothing matches “${searchCtrl.text.trim()}”.'
-                        : 'Add some foods to your library before adding them to a meal.',
-                    actionLabel: hasQuery ? 'Clear search' : null,
+                        ? l10n.nothingMatchesSearch(searchCtrl.text.trim())
+                        : l10n.addFoodsToLibraryFirst,
+                    actionLabel: hasQuery ? l10n.clearSearch : null,
                     actionIcon: Icons.close_rounded,
                     onAction: hasQuery
                         ? () {
@@ -750,7 +805,9 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
                       leading: _thumbnail(food, showImages),
                       title: Text(food.name),
                       subtitle: Text(
-                        '${food.calories?.toStringAsFixed(0) ?? 0} kcal / 100g',
+                        l10n.caloriesPer100gValue(
+                          calorieFormatter.format(food.calories ?? 0),
+                        ),
                       ),
                       onTap: () {
                         widget.onPicked(food);

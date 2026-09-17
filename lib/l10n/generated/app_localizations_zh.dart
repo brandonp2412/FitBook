@@ -904,6 +904,114 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => '编辑餐食';
+
+  @override
+  String get addImage => '添加图片';
+
+  @override
+  String get noFoodsInMeal => '此餐食中还没有食物';
+
+  @override
+  String get addFoodToMealHint => '添加食物以开始搭配这顿餐食。';
+
+  @override
+  String get remove => '移除';
+
+  @override
+  String get searchFoods => '搜索食物...';
+
+  @override
+  String get noFoodsFound => '未找到食物';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return '没有与“$search”匹配的结果。';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst => '请先将食物添加到食物库，再添加到餐食中。';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '每 100 克 $value 千卡';
+  }
+
+  @override
+  String get noDataYet => '暂无数据';
+
+  @override
+  String get completePlansToViewGraphs => '完成一些计划后即可在此查看图表。';
+
+  @override
+  String get value => '数值';
+
+  @override
+  String get goal => '目标';
+
+  @override
+  String get notSet => '未设置';
+
+  @override
+  String get trend => '趋势';
+
+  @override
+  String get smooth => '平滑';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 点平均',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => '编辑体重';
+
+  @override
+  String get addWeight => '添加体重';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return '我刚称完体重：$value $unit！';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return '体重（$unit）';
+  }
+
+  @override
+  String get pleaseEnterWeight => '请输入体重';
+
+  @override
+  String get pleaseEnterValidWeight => '请输入有效的体重';
+
+  @override
+  String get lastWeight => '上次体重';
+
+  @override
+  String unitWithValue(String unit) {
+    return '单位（$unit）';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return '单位保持为 $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return '转换为 $unit';
+  }
+
+  @override
+  String get removeImage => '移除图片';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -1806,4 +1914,112 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => '编辑餐食';
+
+  @override
+  String get addImage => '添加图片';
+
+  @override
+  String get noFoodsInMeal => '此餐食中还没有食物';
+
+  @override
+  String get addFoodToMealHint => '添加食物以开始搭配这顿餐食。';
+
+  @override
+  String get remove => '移除';
+
+  @override
+  String get searchFoods => '搜索食物...';
+
+  @override
+  String get noFoodsFound => '未找到食物';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return '没有与“$search”匹配的结果。';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst => '请先将食物添加到食物库，再添加到餐食中。';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '每 100 克 $value 千卡';
+  }
+
+  @override
+  String get noDataYet => '暂无数据';
+
+  @override
+  String get completePlansToViewGraphs => '完成一些计划后即可在此查看图表。';
+
+  @override
+  String get value => '数值';
+
+  @override
+  String get goal => '目标';
+
+  @override
+  String get notSet => '未设置';
+
+  @override
+  String get trend => '趋势';
+
+  @override
+  String get smooth => '平滑';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 点平均',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => '编辑体重';
+
+  @override
+  String get addWeight => '添加体重';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return '我刚称完体重：$value $unit！';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return '体重（$unit）';
+  }
+
+  @override
+  String get pleaseEnterWeight => '请输入体重';
+
+  @override
+  String get pleaseEnterValidWeight => '请输入有效的体重';
+
+  @override
+  String get lastWeight => '上次体重';
+
+  @override
+  String unitWithValue(String unit) {
+    return '单位（$unit）';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return '单位保持为 $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return '转换为 $unit';
+  }
+
+  @override
+  String get removeImage => '移除图片';
 }

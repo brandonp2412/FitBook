@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/empty_state.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -298,6 +299,7 @@ class _AppLineState extends State<AppLine> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final sel = context.select<
         SettingsState,
         ({
@@ -351,10 +353,10 @@ class _AppLineState extends State<AppLine> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return const SizedBox();
         if (snapshot.data?.isEmpty == true)
-          return const AppEmptyState(
+          return AppEmptyState(
             icon: Icons.show_chart_rounded,
-            title: 'No data yet',
-            message: 'Complete some plans to view graphs here.',
+            title: l10n.noDataYet,
+            message: l10n.completePlansToViewGraphs,
           );
         if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
 
@@ -537,7 +539,7 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: 'Value',
+                  label: l10n.value,
                   value:
                       "${formatter.format(rows.last.val)} ${rows.first.unit}",
                   onTap: () => _updateSeries(value: !showMain),
@@ -554,10 +556,10 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: 'Goal',
+                  label: l10n.goal,
                   value: goal > 0
                       ? "${formatter.format(goal)} ${rows.first.unit}"
-                      : "Not set",
+                      : l10n.notSet,
                   onTap:
                       goal > 0 ? () => _updateSeries(goal: !showGoal) : () {},
                 ),
@@ -572,7 +574,7 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: "Trend",
+                  label: l10n.trend,
                   value: _getTrendText(rows),
                   onTap: () => _updateSeries(trend: !showTrend),
                 ),
@@ -587,8 +589,8 @@ class _AppLineState extends State<AppLine> {
                           : null,
                     ),
                   ),
-                  label: "Smooth",
-                  value: "$_smoothWindow pt avg",
+                  label: l10n.smooth,
+                  value: l10n.pointAverage(_smoothWindow),
                   onTap: () => _updateSeries(smooth: !showSmooth),
                 ),
               ],

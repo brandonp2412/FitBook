@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 import 'mock_tests.dart';
+import 'test_utils.dart';
 
 void main() async {
   group('AppLine Trend Tests', () {
@@ -48,7 +49,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'body-weight',
@@ -100,7 +101,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'body-weight',
@@ -163,7 +164,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'body-weight',
@@ -266,7 +267,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'calories',
@@ -313,7 +314,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'body-weight',
@@ -351,7 +352,7 @@ void main() async {
             ChangeNotifierProvider(create: (context) => settingsState),
             ChangeNotifierProvider(create: (context) => DiaryState()),
           ],
-          child: MaterialApp(
+          child: localizedApp(
             home: Scaffold(
               body: AppLine(
                 metric: 'body-weight',

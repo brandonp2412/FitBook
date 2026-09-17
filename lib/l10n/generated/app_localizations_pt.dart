@@ -938,6 +938,118 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => 'Editar refeição';
+
+  @override
+  String get addImage => 'Adicionar imagem';
+
+  @override
+  String get noFoodsInMeal => 'Ainda não há alimentos nesta refeição';
+
+  @override
+  String get addFoodToMealHint =>
+      'Adicione um alimento para começar a montar esta refeição.';
+
+  @override
+  String get remove => 'Remover';
+
+  @override
+  String get searchFoods => 'Pesquisar alimentos...';
+
+  @override
+  String get noFoodsFound => 'Nenhum alimento encontrado';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return 'Nada corresponde a “$search”.';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst =>
+      'Adicione alimentos à sua biblioteca antes de adicioná-los a uma refeição.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '$value kcal / 100 g';
+  }
+
+  @override
+  String get noDataYet => 'Ainda não há dados';
+
+  @override
+  String get completePlansToViewGraphs =>
+      'Conclua alguns planos para ver gráficos aqui.';
+
+  @override
+  String get value => 'Valor';
+
+  @override
+  String get goal => 'Meta';
+
+  @override
+  String get notSet => 'Não definido';
+
+  @override
+  String get trend => 'Tendência';
+
+  @override
+  String get smooth => 'Suavização';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Média de $count pontos',
+      one: 'Média de 1 ponto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => 'Editar peso';
+
+  @override
+  String get addWeight => 'Adicionar peso';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return 'Acabei de me pesar: $value $unit!';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Peso ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => 'Digite o peso';
+
+  @override
+  String get pleaseEnterValidWeight => 'Digite um peso válido';
+
+  @override
+  String get lastWeight => 'Último peso';
+
+  @override
+  String unitWithValue(String unit) {
+    return 'Unidade ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return 'Manter unidade em $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return 'Converter para $unit';
+  }
+
+  @override
+  String get removeImage => 'Remover imagem';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1872,4 +1984,116 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => 'Editar refeição';
+
+  @override
+  String get addImage => 'Adicionar imagem';
+
+  @override
+  String get noFoodsInMeal => 'Ainda não há alimentos nesta refeição';
+
+  @override
+  String get addFoodToMealHint =>
+      'Adicione um alimento para começar a montar esta refeição.';
+
+  @override
+  String get remove => 'Remover';
+
+  @override
+  String get searchFoods => 'Pesquisar alimentos...';
+
+  @override
+  String get noFoodsFound => 'Nenhum alimento encontrado';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return 'Nada corresponde a “$search”.';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst =>
+      'Adicione alimentos à sua biblioteca antes de adicioná-los a uma refeição.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '$value kcal / 100 g';
+  }
+
+  @override
+  String get noDataYet => 'Ainda não há dados';
+
+  @override
+  String get completePlansToViewGraphs =>
+      'Conclua alguns planos para ver gráficos aqui.';
+
+  @override
+  String get value => 'Valor';
+
+  @override
+  String get goal => 'Meta';
+
+  @override
+  String get notSet => 'Não definido';
+
+  @override
+  String get trend => 'Tendência';
+
+  @override
+  String get smooth => 'Suavização';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Média de $count pontos',
+      one: 'Média de 1 ponto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => 'Editar peso';
+
+  @override
+  String get addWeight => 'Adicionar peso';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return 'Acabei de me pesar: $value $unit!';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Peso ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => 'Digite o peso';
+
+  @override
+  String get pleaseEnterValidWeight => 'Digite um peso válido';
+
+  @override
+  String get lastWeight => 'Último peso';
+
+  @override
+  String unitWithValue(String unit) {
+    return 'Unidade ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return 'Manter unidade em $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return 'Converter para $unit';
+  }
+
+  @override
+  String get removeImage => 'Remover imagem';
 }

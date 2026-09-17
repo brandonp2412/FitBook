@@ -935,4 +935,115 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get editMeal => 'Edit meal';
+
+  @override
+  String get addImage => 'Add image';
+
+  @override
+  String get noFoodsInMeal => 'No foods in this meal yet';
+
+  @override
+  String get addFoodToMealHint => 'Add a food to start building this meal.';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get searchFoods => 'Search foods...';
+
+  @override
+  String get noFoodsFound => 'No foods found';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return 'Nothing matches “$search”.';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst =>
+      'Add some foods to your library before adding them to a meal.';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '$value kcal / 100 g';
+  }
+
+  @override
+  String get noDataYet => 'No data yet';
+
+  @override
+  String get completePlansToViewGraphs =>
+      'Complete some plans to view graphs here.';
+
+  @override
+  String get value => 'Value';
+
+  @override
+  String get goal => 'Goal';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get trend => 'Trend';
+
+  @override
+  String get smooth => 'Smooth';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count-point average',
+      one: '1-point average',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => 'Edit weight';
+
+  @override
+  String get addWeight => 'Add weight';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return 'I just weighed $value $unit!';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Weight ($unit)';
+  }
+
+  @override
+  String get pleaseEnterWeight => 'Please enter weight';
+
+  @override
+  String get pleaseEnterValidWeight => 'Please enter a valid weight';
+
+  @override
+  String get lastWeight => 'Last weight';
+
+  @override
+  String unitWithValue(String unit) {
+    return 'Unit ($unit)';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return 'Keep unit as $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return 'Convert to $unit';
+  }
+
+  @override
+  String get removeImage => 'Remove image';
 }
