@@ -148,7 +148,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String foodLibraryCounts(int foodCount, int mealCount) {
-    return '$foodCount 种食物 · $mealCount 份餐食';
+    String _temp0 = intl.Intl.pluralLogic(
+      foodCount,
+      locale: localeName,
+      other: '$foodCount 种食物',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      mealCount,
+      locale: localeName,
+      other: '$mealCount 份餐食',
+    );
+    return '$_temp0 · $_temp1';
   }
 
   @override
@@ -1273,7 +1283,17 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String foodLibraryCounts(int foodCount, int mealCount) {
-    return '$foodCount 种食物 · $mealCount 份餐食';
+    String _temp0 = intl.Intl.pluralLogic(
+      foodCount,
+      locale: localeName,
+      other: '$foodCount 种食物',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      mealCount,
+      locale: localeName,
+      other: '$mealCount 份餐食',
+    );
+    return '$_temp0 · $_temp1';
   }
 
   @override

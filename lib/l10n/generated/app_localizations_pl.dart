@@ -156,7 +156,23 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String foodLibraryCounts(int foodCount, int mealCount) {
-    return '$foodCount produktów · $mealCount posiłków';
+    String _temp0 = intl.Intl.pluralLogic(
+      foodCount,
+      locale: localeName,
+      other: '$foodCount produktów',
+      many: '$foodCount produktów',
+      few: '$foodCount produkty',
+      one: '1 produkt',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      mealCount,
+      locale: localeName,
+      other: '$mealCount posiłków',
+      many: '$mealCount posiłków',
+      few: '$mealCount posiłki',
+      one: '1 posiłek',
+    );
+    return '$_temp0 · $_temp1';
   }
 
   @override

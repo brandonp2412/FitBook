@@ -44,7 +44,7 @@
   "quickAdd": "Quick-add",
   "scanBarcode": "Scan barcode",
   "foodLibrary": "Food library",
-  "foodLibraryCounts": "{foodCount} foods · {mealCount} meals",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 food} other{{foodCount} foods}} · {mealCount, plural, =1{1 meal} other{{mealCount} meals}}",
   "@foodLibraryCounts": {"placeholders": {"foodCount": {"type": "int"}, "mealCount": {"type": "int"}}},
   "recentlyUsed": "Recently used",
   "quickActions": "Quick actions",

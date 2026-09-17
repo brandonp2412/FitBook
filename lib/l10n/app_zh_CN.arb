@@ -40,7 +40,7 @@
   "quickAdd": "快速添加",
   "scanBarcode": "扫描条形码",
   "foodLibrary": "食物库",
-  "foodLibraryCounts": "{foodCount} 种食物 · {mealCount} 份餐食",
+  "foodLibraryCounts": "{foodCount, plural, other{{foodCount} 种食物}} · {mealCount, plural, other{{mealCount} 份餐食}}",
   "recentlyUsed": "最近使用",
   "quickActions": "快捷操作",
   "addFood": "添加食物",

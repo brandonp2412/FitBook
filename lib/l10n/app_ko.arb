@@ -40,7 +40,7 @@
   "quickAdd": "빠른 추가",
   "scanBarcode": "바코드 스캔",
   "foodLibrary": "음식 라이브러리",
-  "foodLibraryCounts": "음식 {foodCount}개 · 식사 {mealCount}개",
+  "foodLibraryCounts": "음식 {foodCount, plural, other{{foodCount}개}} · 식사 {mealCount, plural, other{{mealCount}개}}",
   "recentlyUsed": "최근 사용",
   "quickActions": "빠른 작업",
   "addFood": "음식 추가",

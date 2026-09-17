@@ -40,7 +40,7 @@
   "quickAdd": "Ajout rapide",
   "scanBarcode": "Scanner le code-barres",
   "foodLibrary": "Bibliothèque d’aliments",
-  "foodLibraryCounts": "{foodCount} aliments · {mealCount} repas",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 aliment} other{{foodCount} aliments}} · {mealCount, plural, =1{1 repas} other{{mealCount} repas}}",
   "recentlyUsed": "Utilisés récemment",
   "quickActions": "Actions rapides",
   "addFood": "Ajouter un aliment",

@@ -40,7 +40,7 @@
   "quickAdd": "Szybkie dodawanie",
   "scanBarcode": "Skanuj kod kreskowy",
   "foodLibrary": "Biblioteka żywności",
-  "foodLibraryCounts": "{foodCount} produktów · {mealCount} posiłków",
+  "foodLibraryCounts": "{foodCount, plural, one{1 produkt} few{{foodCount} produkty} many{{foodCount} produktów} other{{foodCount} produktów}} · {mealCount, plural, one{1 posiłek} few{{mealCount} posiłki} many{{mealCount} posiłków} other{{mealCount} posiłków}}",
   "recentlyUsed": "Ostatnio używane",
   "quickActions": "Szybkie działania",
   "addFood": "Dodaj produkt",

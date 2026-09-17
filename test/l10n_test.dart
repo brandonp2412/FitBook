@@ -101,6 +101,19 @@ void main() {
     expect(localizedUnit(spanish, 'custom-unit'), 'custom-unit');
   });
 
+  test('food library counts use locale plural rules', () async {
+    final english = await AppLocalizations.delegate.load(const Locale('en'));
+    final polish = await AppLocalizations.delegate.load(const Locale('pl'));
+    final japanese = await AppLocalizations.delegate.load(const Locale('ja'));
+
+    expect(english.foodLibraryCounts(1, 1), '1 food · 1 meal');
+    expect(english.foodLibraryCounts(2, 3), '2 foods · 3 meals');
+    expect(polish.foodLibraryCounts(1, 1), '1 produkt · 1 posiłek');
+    expect(polish.foodLibraryCounts(2, 4), '2 produkty · 4 posiłki');
+    expect(polish.foodLibraryCounts(5, 5), '5 produktów · 5 posiłków');
+    expect(japanese.foodLibraryCounts(1, 2), '食品 1 件 · 食事 2 件');
+  });
+
   test('diary summary phrases preserve localized placeholder ordering',
       () async {
     final spanish = await AppLocalizations.delegate.load(const Locale('es'));

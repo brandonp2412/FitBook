@@ -40,7 +40,7 @@
   "quickAdd": "クイック追加",
   "scanBarcode": "バーコードをスキャン",
   "foodLibrary": "食品ライブラリ",
-  "foodLibraryCounts": "食品 {foodCount} 件 · 食事 {mealCount} 件",
+  "foodLibraryCounts": "食品 {foodCount, plural, other{{foodCount} 件}} · 食事 {mealCount, plural, other{{mealCount} 件}}",
   "recentlyUsed": "最近使用",
   "quickActions": "クイック操作",
   "addFood": "食品を追加",

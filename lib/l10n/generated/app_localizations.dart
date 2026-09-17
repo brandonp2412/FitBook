@@ -361,7 +361,7 @@ abstract class AppLocalizations {
   /// No description provided for @foodLibraryCounts.
   ///
   /// In en, this message translates to:
-  /// **'{foodCount} foods · {mealCount} meals'**
+  /// **'{foodCount, plural, =1{1 food} other{{foodCount} foods}} · {mealCount, plural, =1{1 meal} other{{mealCount} meals}}'**
   String foodLibraryCounts(int foodCount, int mealCount);
 
   /// No description provided for @recentlyUsed.

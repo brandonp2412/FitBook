@@ -19,7 +19,7 @@
 ## Locale correctness
 - [x] Locale-aware dates and times; remove English-only formatting assumptions.
 - [x] Locale-aware numbers, decimal input/display, calories/nutrients/weights and units.
-- [ ] ICU plurals/selects/placeholders for all count- and value-dependent copy.
+- [x] ICU plurals/selects/placeholders for all count- and value-dependent copy.
 - [ ] Keep persisted identifiers, storage/API values, logs/debug copy and user-entered content untranslated.
 
 ## Translation quality

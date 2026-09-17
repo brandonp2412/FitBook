@@ -152,7 +152,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String foodLibraryCounts(int foodCount, int mealCount) {
-    return '$foodCount alimentos · $mealCount comidas';
+    String _temp0 = intl.Intl.pluralLogic(
+      foodCount,
+      locale: localeName,
+      other: '$foodCount alimentos',
+      one: '1 alimento',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      mealCount,
+      locale: localeName,
+      other: '$mealCount comidas',
+      one: '1 comida',
+    );
+    return '$_temp0 · $_temp1';
   }
 
   @override
