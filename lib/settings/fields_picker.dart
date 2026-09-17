@@ -85,14 +85,14 @@ class _FieldsPickerState extends State<FieldsPicker> {
             (column) {
               if (showSelected && !fields.contains(column.name)) return false;
 
-              return sentenceCase(column.name.toLowerCase())
+              return localizedFoodFieldLabel(context.l10n, column.name)
                       .toLowerCase()
                       .contains(search.toLowerCase()) &&
                   !excludedFields.contains(column.name);
             },
           ).map(
             (column) => ListTile(
-              title: Text(sentenceCase(column.name)),
+              title: Text(localizedFoodFieldLabel(context.l10n, column.name)),
               onTap: () {
                 setState(() {
                   if (fields.contains(column.name))

@@ -103,9 +103,7 @@ class GraphPageState extends State<GraphPage>
                               (field) => DropdownMenuItem(
                                 value: field,
                                 child: Text(
-                                  field == db.foods.proteinG.name
-                                      ? context.l10n.protein
-                                      : sentenceCase(field),
+                                  localizedFoodFieldLabel(context.l10n, field),
                                 ),
                               ),
                             ),
@@ -218,9 +216,7 @@ class GraphPageState extends State<GraphPage>
                               (field) => DropdownMenuItem(
                                 value: field,
                                 child: Text(
-                                  field == db.foods.proteinG.name
-                                      ? context.l10n.protein
-                                      : sentenceCase(field),
+                                  localizedFoodFieldLabel(context.l10n, field),
                                 ),
                               ),
                             ),

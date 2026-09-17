@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -113,6 +114,20 @@ void main() {
       japanese.diarySummaryBothValue('20', '100', 'g'),
       '残り 20 g（目標 100 g）',
     );
+  });
+
+  test('common food field labels localize without changing field identifiers',
+      () async {
+    final spanish = await AppLocalizations.delegate.load(const Locale('es'));
+    final japanese = await AppLocalizations.delegate.load(const Locale('ja'));
+
+    expect(localizedFoodFieldLabel(spanish, 'protein_g'), 'Proteínas');
+    expect(
+      localizedFoodFieldLabel(spanish, 'serving_size'),
+      'Tamaño de la ración',
+    );
+    expect(localizedFoodFieldLabel(japanese, 'carbohydrate_g'), '炭水化物');
+    expect(localizedFoodFieldLabel(spanish, 'custom_field'), 'Custom field');
   });
 }
 

@@ -596,8 +596,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                       selectAll(controllers.values.elementAt(currentIndex + 1));
                     }
                   },
-                  decoration:
-                      InputDecoration(labelText: sentenceCase(entry.key)),
+                  decoration: InputDecoration(
+                    labelText: localizedFoodFieldLabel(l10n, entry.key),
+                  ),
                 );
               },
             ),

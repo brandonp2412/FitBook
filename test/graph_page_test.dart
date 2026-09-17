@@ -90,8 +90,8 @@ void main() async {
     var currentLabel = 'Calories';
     for (final selection in [
       (label: 'Protein', metric: db.foods.proteinG.name),
-      (label: 'Fat g', metric: db.foods.fatG.name),
-      (label: 'Carbohydrate g', metric: db.foods.carbohydrateG.name),
+      (label: 'Fat', metric: db.foods.fatG.name),
+      (label: 'Carbs', metric: db.foods.carbohydrateG.name),
     ]) {
       await _selectMetric(
         tester,

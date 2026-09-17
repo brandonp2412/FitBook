@@ -57,6 +57,25 @@ String sentenceCase(String value) {
       value[0].toUpperCase() + value.substring(1).replaceAll('_', ' ');
 }
 
+/// Returns a localized label for common food fields while preserving the
+/// persisted database column name used by queries and settings.
+String localizedFoodFieldLabel(AppLocalizations l10n, String field) =>
+    switch (field) {
+      'calories' => l10n.calories,
+      'protein_g' || 'proteinG' => l10n.protein,
+      'carbohydrate_g' || 'carbohydrateG' => l10n.carbs,
+      'fat_g' || 'fatG' => l10n.fat,
+      'fiber_g' || 'fiberG' => l10n.fiber,
+      'food_group' || 'foodGroup' => l10n.foodGroup,
+      'serving_size' || 'servingSize' => l10n.servingSize,
+      'serving_unit' || 'servingUnit' => l10n.servingUnit,
+      'created' => l10n.createdDate,
+      'favorite' => l10n.favorite,
+      'name' => l10n.name,
+      'barcode' => l10n.barcode,
+      _ => sentenceCase(field),
+    };
+
 void toast(BuildContext context, String message, [SnackBarAction? action]) {
   final defaultAction = SnackBarAction(
     label: context.l10n.ok,
