@@ -6,6 +6,7 @@
   "navFood": "Alimentos",
   "navWeight": "Peso",
   "navError": "Erro",
+  "loadDataFailed": "Não foi possível carregar estes dados.",
   "settings": "Configurações",
   "invalidTabSettings": "Configuração de abas inválida.",
   "newVersion": "Nova versão {version}",

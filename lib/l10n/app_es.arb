@@ -6,6 +6,7 @@
   "navFood": "Alimentos",
   "navWeight": "Peso",
   "navError": "Error",
+  "loadDataFailed": "No se pudieron cargar estos datos.",
   "settings": "Ajustes",
   "invalidTabSettings": "Configuración de pestañas no válida.",
   "newVersion": "Nueva versión {version}",

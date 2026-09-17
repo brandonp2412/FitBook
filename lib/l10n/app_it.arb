@@ -6,6 +6,7 @@
   "navFood": "Alimenti",
   "navWeight": "Peso",
   "navError": "Errore",
+  "loadDataFailed": "Impossibile caricare questi dati.",
   "settings": "Impostazioni",
   "invalidTabSettings": "Impostazioni delle schede non valide.",
   "newVersion": "Nuova versione {version}",

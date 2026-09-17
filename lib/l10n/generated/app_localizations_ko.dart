@@ -27,6 +27,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get navError => '오류';
 
   @override
+  String get loadDataFailed => '데이터를 불러오지 못했습니다.';
+
+  @override
   String get settings => '설정';
 
   @override

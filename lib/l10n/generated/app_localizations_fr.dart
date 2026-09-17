@@ -27,6 +27,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navError => 'Erreur';
 
   @override
+  String get loadDataFailed => 'Impossible de charger ces données.';
+
+  @override
   String get settings => 'Paramètres';
 
   @override

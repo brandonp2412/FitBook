@@ -6,6 +6,7 @@
   "navFood": "食物",
   "navWeight": "体重",
   "navError": "错误",
+  "loadDataFailed": "无法加载这些数据。",
   "settings": "设置",
   "invalidTabSettings": "标签页设置无效。",
   "newVersion": "新版本 {version}",

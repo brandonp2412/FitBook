@@ -86,7 +86,9 @@ class WeightPageState extends State<WeightPage>
       body: StreamBuilder(
         stream: stream,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return ErrorWidget(snapshot.error!);
+          if (snapshot.hasError) {
+            return ErrorWidget(context.l10n.loadDataFailed);
+          }
           final weights = snapshot.data ?? [];
 
           final listPane = Stack(

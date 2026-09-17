@@ -27,6 +27,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navError => 'Erro';
 
   @override
+  String get loadDataFailed => 'Não foi possível carregar estes dados.';
+
+  @override
   String get settings => 'Configurações';
 
   @override
@@ -1491,6 +1494,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get navError => 'Erro';
+
+  @override
+  String get loadDataFailed => 'Não foi possível carregar estes dados.';
 
   @override
   String get settings => 'Configurações';

@@ -6,6 +6,7 @@
   "navFood": "Aliments",
   "navWeight": "Poids",
   "navError": "Erreur",
+  "loadDataFailed": "Impossible de charger ces données.",
   "settings": "Paramètres",
   "invalidTabSettings": "Configuration des onglets non valide.",
   "newVersion": "Nouvelle version {version}",

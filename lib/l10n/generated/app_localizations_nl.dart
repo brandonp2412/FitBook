@@ -27,6 +27,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get navError => 'Fout';
 
   @override
+  String get loadDataFailed => 'Deze gegevens konden niet worden geladen.';
+
+  @override
   String get settings => 'Instellingen';
 
   @override

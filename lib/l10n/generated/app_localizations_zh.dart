@@ -27,6 +27,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get navError => '错误';
 
   @override
+  String get loadDataFailed => '无法加载这些数据。';
+
+  @override
   String get settings => '设置';
 
   @override
@@ -1437,6 +1440,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get navError => '错误';
+
+  @override
+  String get loadDataFailed => '无法加载这些数据。';
 
   @override
   String get settings => '设置';

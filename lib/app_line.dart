@@ -355,6 +355,7 @@ class _AppLineState extends State<AppLine> {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
+        if (snapshot.hasError) return ErrorWidget(l10n.loadDataFailed);
         if (!snapshot.hasData) return const SizedBox();
         if (snapshot.data?.isEmpty == true)
           return AppEmptyState(
@@ -362,8 +363,6 @@ class _AppLineState extends State<AppLine> {
             title: l10n.noDataYet,
             message: l10n.completePlansToViewGraphs,
           );
-        if (snapshot.hasError) return ErrorWidget(snapshot.error.toString());
-
         List<Color> gradColors = [
           Theme.of(context).colorScheme.primary,
           Theme.of(context).colorScheme.surface,

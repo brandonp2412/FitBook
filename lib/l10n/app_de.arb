@@ -6,6 +6,7 @@
   "navFood": "Lebensmittel",
   "navWeight": "Gewicht",
   "navError": "Fehler",
+  "loadDataFailed": "Diese Daten konnten nicht geladen werden.",
   "settings": "Einstellungen",
   "invalidTabSettings": "Ungültige Tab-Einstellungen.",
   "newVersion": "Neue Version {version}",

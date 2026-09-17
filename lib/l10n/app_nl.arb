@@ -6,6 +6,7 @@
   "navFood": "Voeding",
   "navWeight": "Gewicht",
   "navError": "Fout",
+  "loadDataFailed": "Deze gegevens konden niet worden geladen.",
   "settings": "Instellingen",
   "invalidTabSettings": "Ongeldige tabbladinstellingen.",
   "newVersion": "Nieuwe versie {version}",

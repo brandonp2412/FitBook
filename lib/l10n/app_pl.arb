@@ -6,6 +6,7 @@
   "navFood": "Żywność",
   "navWeight": "Waga",
   "navError": "Błąd",
+  "loadDataFailed": "Nie udało się wczytać tych danych.",
   "settings": "Ustawienia",
   "invalidTabSettings": "Nieprawidłowe ustawienia kart.",
   "newVersion": "Nowa wersja {version}",

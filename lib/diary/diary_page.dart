@@ -166,7 +166,7 @@ class DiaryPageState extends State<DiaryPage> {
               snapshot.stackTrace,
               'Unable to load diary entries',
             );
-            return ErrorWidget(snapshot.error!);
+            return ErrorWidget(context.l10n.loadDataFailed);
           }
 
           final entryFoods = snapshot.data ?? [];

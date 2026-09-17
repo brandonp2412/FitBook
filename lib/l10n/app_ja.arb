@@ -6,6 +6,7 @@
   "navFood": "食品",
   "navWeight": "体重",
   "navError": "エラー",
+  "loadDataFailed": "データを読み込めませんでした。",
   "settings": "設定",
   "invalidTabSettings": "タブ設定が無効です。",
   "newVersion": "新しいバージョン {version}",

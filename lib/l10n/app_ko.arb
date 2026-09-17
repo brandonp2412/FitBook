@@ -6,6 +6,7 @@
   "navFood": "음식",
   "navWeight": "체중",
   "navError": "오류",
+  "loadDataFailed": "데이터를 불러오지 못했습니다.",
   "settings": "설정",
   "invalidTabSettings": "탭 설정이 올바르지 않습니다.",
   "newVersion": "새 버전 {version}",

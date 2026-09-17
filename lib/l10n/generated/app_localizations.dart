@@ -154,6 +154,12 @@ abstract class AppLocalizations {
   /// **'Error'**
   String get navError;
 
+  /// No description provided for @loadDataFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this data.'**
+  String get loadDataFailed;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:

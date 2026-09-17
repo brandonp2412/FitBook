@@ -6,6 +6,7 @@
   "navFood": "Food",
   "navWeight": "Weight",
   "navError": "Error",
+  "loadDataFailed": "Couldn't load this data.",
   "settings": "Settings",
   "invalidTabSettings": "Invalid tab settings.",
   "newVersion": "New version {version}",

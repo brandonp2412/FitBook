@@ -27,6 +27,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get navError => 'エラー';
 
   @override
+  String get loadDataFailed => 'データを読み込めませんでした。';
+
+  @override
   String get settings => '設定';
 
   @override

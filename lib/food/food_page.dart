@@ -331,15 +331,23 @@ GROUP BY meal_foods.meal
       body: StreamBuilder<Map<int, ({double calories, double protein})>>(
         stream: mealCaloriesStream,
         builder: (context, calSnapshot) {
+          if (calSnapshot.hasError) {
+            return ErrorWidget(context.l10n.loadDataFailed);
+          }
           final mealCalories = calSnapshot.data ?? {};
           return StreamBuilder<List<Meal>>(
             stream: mealStream,
             builder: (context, mealSnapshot) {
+              if (mealSnapshot.hasError) {
+                return ErrorWidget(context.l10n.loadDataFailed);
+              }
               final meals = mealSnapshot.data ?? [];
               return StreamBuilder(
                 stream: stream,
                 builder: (context, snapshot) {
-                  if (snapshot.hasError) throw snapshot.error!;
+                  if (snapshot.hasError) {
+                    return ErrorWidget(context.l10n.loadDataFailed);
+                  }
                   final foods = resultsToCompanions(snapshot.data ?? []);
 
                   final items = <Object>[...meals, ...foods];
