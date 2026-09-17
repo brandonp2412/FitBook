@@ -71,6 +71,25 @@ void main() {
     );
   });
 
+  test('background localizations honor stored, system, and fallback locales',
+      () {
+    expect(
+      localizationsFromPreference('es').breakfastReminderTitle,
+      'No olvides registrar el desayuno',
+    );
+    expect(
+      localizationsFromPreference(
+        'system',
+        systemLocale: const Locale('ja', 'JP'),
+      ).breakfastReminderTitle,
+      '朝食の記録をお忘れなく',
+    );
+    expect(
+      localizationsFromPreference('xx').breakfastReminderTitle,
+      "Don't forget to log breakfast",
+    );
+  });
+
   test('unit display labels localize without changing stored identifiers',
       () async {
     final spanish = await AppLocalizations.delegate.load(const Locale('es'));

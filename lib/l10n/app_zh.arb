@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "转换为 {unit}",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "移除图片"
+  "removeImage": "移除图片",
+  "mealRemindersEnabled": "已开启用餐提醒",
+  "mealRemindersEnabledBody": "如果你还没有记录早餐、午餐或晚餐，我们会提醒你记录。",
+  "reminderSettingsChannel": "提醒设置",
+  "reminderSettingsChannelDescription": "有关 FitBook 提醒的通知",
+  "breakfastReminderTitle": "别忘了记录早餐",
+  "breakfastRemindersChannel": "早餐提醒",
+  "breakfastRemindersChannelDescription": "提醒你记录早餐",
+  "lunchReminderTitle": "别忘了记录午餐",
+  "lunchRemindersChannel": "午餐提醒",
+  "lunchRemindersChannelDescription": "提醒你记录午餐",
+  "dinnerReminderTitle": "别忘了记录晚餐",
+  "dinnerRemindersChannel": "晚餐提醒",
+  "dinnerRemindersChannelDescription": "提醒你记录晚餐"
 }

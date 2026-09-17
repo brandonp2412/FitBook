@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "{unit} に変換",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "画像を削除"
+  "removeImage": "画像を削除",
+  "mealRemindersEnabled": "食事のリマインダーを有効にしました",
+  "mealRemindersEnabledBody": "朝食、昼食、夕食がまだ記録されていない場合に、記録するようお知らせします。",
+  "reminderSettingsChannel": "リマインダー設定",
+  "reminderSettingsChannelDescription": "FitBook のリマインダーに関する通知",
+  "breakfastReminderTitle": "朝食の記録をお忘れなく",
+  "breakfastRemindersChannel": "朝食のリマインダー",
+  "breakfastRemindersChannelDescription": "朝食を記録するためのリマインダー",
+  "lunchReminderTitle": "昼食の記録をお忘れなく",
+  "lunchRemindersChannel": "昼食のリマインダー",
+  "lunchRemindersChannelDescription": "昼食を記録するためのリマインダー",
+  "dinnerReminderTitle": "夕食の記録をお忘れなく",
+  "dinnerRemindersChannel": "夕食のリマインダー",
+  "dinnerRemindersChannelDescription": "夕食を記録するためのリマインダー"
 }

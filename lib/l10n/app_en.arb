@@ -334,5 +334,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "Convert to {unit}",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "Remove image"
+  "removeImage": "Remove image",
+  "mealRemindersEnabled": "Meal reminders enabled",
+  "mealRemindersEnabledBody": "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
+  "reminderSettingsChannel": "Reminder settings",
+  "reminderSettingsChannelDescription": "Notifications explaining FitBook reminders",
+  "breakfastReminderTitle": "Don't forget to log breakfast",
+  "breakfastRemindersChannel": "Breakfast reminders",
+  "breakfastRemindersChannelDescription": "Reminders to log breakfast",
+  "lunchReminderTitle": "Don't forget to log lunch",
+  "lunchRemindersChannel": "Lunch reminders",
+  "lunchRemindersChannelDescription": "Reminders to log lunch",
+  "dinnerReminderTitle": "Don't forget to log dinner",
+  "dinnerRemindersChannel": "Dinner reminders",
+  "dinnerRemindersChannelDescription": "Reminders to log dinner"
 }

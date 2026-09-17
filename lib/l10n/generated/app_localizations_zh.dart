@@ -1012,6 +1012,45 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get removeImage => '移除图片';
+
+  @override
+  String get mealRemindersEnabled => '已开启用餐提醒';
+
+  @override
+  String get mealRemindersEnabledBody => '如果你还没有记录早餐、午餐或晚餐，我们会提醒你记录。';
+
+  @override
+  String get reminderSettingsChannel => '提醒设置';
+
+  @override
+  String get reminderSettingsChannelDescription => '有关 FitBook 提醒的通知';
+
+  @override
+  String get breakfastReminderTitle => '别忘了记录早餐';
+
+  @override
+  String get breakfastRemindersChannel => '早餐提醒';
+
+  @override
+  String get breakfastRemindersChannelDescription => '提醒你记录早餐';
+
+  @override
+  String get lunchReminderTitle => '别忘了记录午餐';
+
+  @override
+  String get lunchRemindersChannel => '午餐提醒';
+
+  @override
+  String get lunchRemindersChannelDescription => '提醒你记录午餐';
+
+  @override
+  String get dinnerReminderTitle => '别忘了记录晚餐';
+
+  @override
+  String get dinnerRemindersChannel => '晚餐提醒';
+
+  @override
+  String get dinnerRemindersChannelDescription => '提醒你记录晚餐';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -2022,4 +2061,43 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get removeImage => '移除图片';
+
+  @override
+  String get mealRemindersEnabled => '已开启用餐提醒';
+
+  @override
+  String get mealRemindersEnabledBody => '如果你还没有记录早餐、午餐或晚餐，我们会提醒你记录。';
+
+  @override
+  String get reminderSettingsChannel => '提醒设置';
+
+  @override
+  String get reminderSettingsChannelDescription => '有关 FitBook 提醒的通知';
+
+  @override
+  String get breakfastReminderTitle => '别忘了记录早餐';
+
+  @override
+  String get breakfastRemindersChannel => '早餐提醒';
+
+  @override
+  String get breakfastRemindersChannelDescription => '提醒你记录早餐';
+
+  @override
+  String get lunchReminderTitle => '别忘了记录午餐';
+
+  @override
+  String get lunchRemindersChannel => '午餐提醒';
+
+  @override
+  String get lunchRemindersChannelDescription => '提醒你记录午餐';
+
+  @override
+  String get dinnerReminderTitle => '别忘了记录晚餐';
+
+  @override
+  String get dinnerRemindersChannel => '晚餐提醒';
+
+  @override
+  String get dinnerRemindersChannelDescription => '提醒你记录晚餐';
 }

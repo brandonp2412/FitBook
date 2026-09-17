@@ -1050,6 +1050,51 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get removeImage => 'Remover imagem';
+
+  @override
+  String get mealRemindersEnabled => 'Lembretes de refeições ativados';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'Vamos lembrar você de registrar o café da manhã, o almoço ou o jantar se ainda não tiver feito isso.';
+
+  @override
+  String get reminderSettingsChannel => 'Configurações de lembretes';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Notificações sobre os lembretes do FitBook';
+
+  @override
+  String get breakfastReminderTitle =>
+      'Não se esqueça de registrar o café da manhã';
+
+  @override
+  String get breakfastRemindersChannel => 'Lembretes do café da manhã';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Lembretes para registrar o café da manhã';
+
+  @override
+  String get lunchReminderTitle => 'Não se esqueça de registrar o almoço';
+
+  @override
+  String get lunchRemindersChannel => 'Lembretes do almoço';
+
+  @override
+  String get lunchRemindersChannelDescription =>
+      'Lembretes para registrar o almoço';
+
+  @override
+  String get dinnerReminderTitle => 'Não se esqueça de registrar o jantar';
+
+  @override
+  String get dinnerRemindersChannel => 'Lembretes do jantar';
+
+  @override
+  String get dinnerRemindersChannelDescription =>
+      'Lembretes para registrar o jantar';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -2096,4 +2141,49 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get removeImage => 'Remover imagem';
+
+  @override
+  String get mealRemindersEnabled => 'Lembretes de refeições ativados';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'Vamos lembrar você de registrar o café da manhã, o almoço ou o jantar se ainda não tiver feito isso.';
+
+  @override
+  String get reminderSettingsChannel => 'Configurações de lembretes';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Notificações sobre os lembretes do FitBook';
+
+  @override
+  String get breakfastReminderTitle =>
+      'Não se esqueça de registrar o café da manhã';
+
+  @override
+  String get breakfastRemindersChannel => 'Lembretes do café da manhã';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Lembretes para registrar o café da manhã';
+
+  @override
+  String get lunchReminderTitle => 'Não se esqueça de registrar o almoço';
+
+  @override
+  String get lunchRemindersChannel => 'Lembretes do almoço';
+
+  @override
+  String get lunchRemindersChannelDescription =>
+      'Lembretes para registrar o almoço';
+
+  @override
+  String get dinnerReminderTitle => 'Não se esqueça de registrar o jantar';
+
+  @override
+  String get dinnerRemindersChannel => 'Lembretes do jantar';
+
+  @override
+  String get dinnerRemindersChannelDescription =>
+      'Lembretes para registrar o jantar';
 }

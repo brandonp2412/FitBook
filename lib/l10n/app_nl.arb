@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "Omzetten naar {unit}",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "Afbeelding verwijderen"
+  "removeImage": "Afbeelding verwijderen",
+  "mealRemindersEnabled": "Maaltijdherinneringen ingeschakeld",
+  "mealRemindersEnabledBody": "We herinneren je eraan om ontbijt, lunch of avondeten te registreren als je dat nog niet hebt gedaan.",
+  "reminderSettingsChannel": "Herinneringsinstellingen",
+  "reminderSettingsChannelDescription": "Meldingen over FitBook-herinneringen",
+  "breakfastReminderTitle": "Vergeet niet je ontbijt te registreren",
+  "breakfastRemindersChannel": "Ontbijtherinneringen",
+  "breakfastRemindersChannelDescription": "Herinneringen om je ontbijt te registreren",
+  "lunchReminderTitle": "Vergeet niet je lunch te registreren",
+  "lunchRemindersChannel": "Lunchherinneringen",
+  "lunchRemindersChannelDescription": "Herinneringen om je lunch te registreren",
+  "dinnerReminderTitle": "Vergeet niet je avondeten te registreren",
+  "dinnerRemindersChannel": "Avondetenherinneringen",
+  "dinnerRemindersChannelDescription": "Herinneringen om je avondeten te registreren"
 }

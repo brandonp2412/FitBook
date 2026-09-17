@@ -1,3 +1,5 @@
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:fit_book/l10n/generated/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,6 +22,31 @@ String localePreferenceFromLocale(Locale locale) {
   return countryCode == null || countryCode.isEmpty
       ? locale.languageCode
       : '${locale.languageCode}-$countryCode';
+}
+
+/// Resolves generated localizations without requiring a widget [BuildContext].
+///
+/// This is used by background tasks such as reminders. A stored `system`
+/// preference follows [systemLocale] when supplied, otherwise the current
+/// platform locale. Unsupported locales fall back to English.
+AppLocalizations localizationsFromPreference(
+  String value, {
+  Locale? systemLocale,
+}) {
+  final requested = localeFromPreference(value) ??
+      systemLocale ??
+      PlatformDispatcher.instance.locale;
+  Locale? languageFallback;
+
+  for (final supported in AppLocalizations.supportedLocales) {
+    if (supported.languageCode != requested.languageCode) continue;
+    if (supported.countryCode == requested.countryCode) {
+      return lookupAppLocalizations(supported);
+    }
+    if (supported.countryCode == null) languageFallback = supported;
+  }
+
+  return lookupAppLocalizations(languageFallback ?? const Locale('en'));
 }
 
 /// Returns a localized display label without changing the persisted unit ID.

@@ -9,11 +9,11 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> setReminders(bool value) async {
+Future<void> setReminders(bool value, AppLocalizations l10n) async {
   await db.settings.update().write(SettingsCompanion(reminders: Value(value)));
   if (value) {
     setupReminders(requestPermission: false);
-    await notifyRemindersEnabled();
+    await notifyRemindersEnabled(l10n);
   } else {
     cancelReminders();
   }
@@ -239,11 +239,11 @@ List<Widget> getDiarySettings({
         key: const Key('remindersTile'),
         leading: const Icon(Icons.notifications),
         title: Text(l10n.reminders),
-        onTap: () => setReminders(!settings.value.reminders),
+        onTap: () => setReminders(!settings.value.reminders, l10n),
         trailing: Switch(
           key: const Key('remindersSwitch'),
           value: settings.value.reminders,
-          onChanged: (value) => setReminders(value),
+          onChanged: (value) => setReminders(value, l10n),
         ),
       ),
   ];

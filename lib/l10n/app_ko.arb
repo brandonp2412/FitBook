@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "{unit}로 변환",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "이미지 제거"
+  "removeImage": "이미지 제거",
+  "mealRemindersEnabled": "식사 알림이 켜졌습니다",
+  "mealRemindersEnabledBody": "아직 기록하지 않았다면 아침, 점심 또는 저녁 식사를 기록하도록 알려드릴게요.",
+  "reminderSettingsChannel": "알림 설정",
+  "reminderSettingsChannelDescription": "FitBook 식사 알림 안내",
+  "breakfastReminderTitle": "아침 식사를 기록하는 것을 잊지 마세요",
+  "breakfastRemindersChannel": "아침 식사 알림",
+  "breakfastRemindersChannelDescription": "아침 식사 기록 알림",
+  "lunchReminderTitle": "점심 식사를 기록하는 것을 잊지 마세요",
+  "lunchRemindersChannel": "점심 식사 알림",
+  "lunchRemindersChannelDescription": "점심 식사 기록 알림",
+  "dinnerReminderTitle": "저녁 식사를 기록하는 것을 잊지 마세요",
+  "dinnerRemindersChannel": "저녁 식사 알림",
+  "dinnerRemindersChannelDescription": "저녁 식사 기록 알림"
 }

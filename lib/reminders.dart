@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/l10n/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -31,7 +32,7 @@ void setupReminders({bool requestPermission = true}) {
 }
 
 /// Explains the reminder schedule the first time reminders are enabled.
-Future<void> notifyRemindersEnabled() async {
+Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
   if (kIsWeb) return;
 
   if (Platform.isAndroid || Platform.isIOS) {
@@ -41,10 +42,10 @@ Future<void> notifyRemindersEnabled() async {
 
   const darwin = DarwinInitializationSettings();
   const android = AndroidInitializationSettings('@drawable/nutrition');
-  const linux = LinuxInitializationSettings(
-    defaultActionName: 'Open notification',
+  final linux = LinuxInitializationSettings(
+    defaultActionName: l10n.openNotification,
   );
-  const init = InitializationSettings(
+  final init = InitializationSettings(
     android: android,
     iOS: darwin,
     macOS: darwin,
@@ -54,32 +55,31 @@ Future<void> notifyRemindersEnabled() async {
   await plugin.initialize(settings: init);
   await plugin.show(
     id: 0,
-    title: 'Meal reminders enabled',
-    body:
-        "We'll remind you to log breakfast, lunch, or dinner if you haven't logged it yet.",
-    notificationDetails: const NotificationDetails(
+    title: l10n.mealRemindersEnabled,
+    body: l10n.mealRemindersEnabledBody,
+    notificationDetails: NotificationDetails(
       android: AndroidNotificationDetails(
         'reminder-settings',
-        'Reminder settings',
-        channelDescription: 'Notifications explaining FitBook reminders',
+        l10n.reminderSettingsChannel,
+        channelDescription: l10n.reminderSettingsChannelDescription,
       ),
-      iOS: DarwinNotificationDetails(),
-      macOS: DarwinNotificationDetails(),
-      linux: LinuxNotificationDetails(),
+      iOS: const DarwinNotificationDetails(),
+      macOS: const DarwinNotificationDetails(),
+      linux: const LinuxNotificationDetails(),
     ),
   );
 }
 
 Future<void> doDesktopReminders() async {
-  const linux = LinuxInitializationSettings(
-    defaultActionName: 'Open notification',
+  final db = AppDatabase();
+  final l10n = await _loadReminderLocalizations(db);
+  final linux = LinuxInitializationSettings(
+    defaultActionName: l10n.openNotification,
   );
   const darwin = DarwinInitializationSettings();
-  const init = InitializationSettings(linux: linux, macOS: darwin);
+  final init = InitializationSettings(linux: linux, macOS: darwin);
   final plugin = FlutterLocalNotificationsPlugin();
   await plugin.initialize(settings: init);
-
-  final db = AppDatabase();
 
   final diaries = await (db.diaries.select()
         ..where(
@@ -95,21 +95,31 @@ Future<void> doDesktopReminders() async {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 6 && entry.created.hour < 12,
     );
-    if (entered.isEmpty)
-      await plugin.show(id: 1, title: "Don't forget to log breakfast");
+    if (entered.isEmpty) {
+      await plugin.show(id: 1, title: l10n.breakfastReminderTitle);
+    }
   } else if (hour >= 12 && hour < 16) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
     );
-    if (entered.isEmpty)
-      await plugin.show(id: 2, title: "Don't forget to log lunch");
+    if (entered.isEmpty) {
+      await plugin.show(id: 2, title: l10n.lunchReminderTitle);
+    }
   } else if (hour >= 16 && hour < 22) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
     );
-    if (entered.isEmpty)
-      await plugin.show(id: 3, title: "Don't forget to log dinner");
+    if (entered.isEmpty) {
+      await plugin.show(id: 3, title: l10n.dinnerReminderTitle);
+    }
   }
+}
+
+Future<AppLocalizations> _loadReminderLocalizations(
+  AppDatabase database,
+) async {
+  final settings = await (database.settings.select()..limit(1)).getSingle();
+  return localizationsFromPreference(settings.locale);
 }
 
 void cancelReminders() {
@@ -125,13 +135,13 @@ void cancelReminders() {
 @pragma('vm:entry-point')
 void doMobileReminders() {
   Workmanager().executeTask((task, inputData) async {
+    final db = AppDatabase();
+    final l10n = await _loadReminderLocalizations(db);
     const darwin = DarwinInitializationSettings();
     const android = AndroidInitializationSettings('@drawable/nutrition');
     const init = InitializationSettings(iOS: darwin, android: android);
     final plugin = FlutterLocalNotificationsPlugin();
     await plugin.initialize(settings: init);
-
-    final db = AppDatabase();
 
     final diaries = await (db.diaries.select()
           ..where(
@@ -153,12 +163,12 @@ void doMobileReminders() {
 
       await plugin.show(
         id: 1,
-        title: "Don't forget to log breakfast",
-        notificationDetails: const NotificationDetails(
+        title: l10n.breakfastReminderTitle,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'breakfast-reminders',
-            'Breakfast reminders',
-            channelDescription: 'Reminders to log breakfast',
+            l10n.breakfastRemindersChannel,
+            channelDescription: l10n.breakfastRemindersChannelDescription,
           ),
         ),
       );
@@ -168,12 +178,12 @@ void doMobileReminders() {
 
       await plugin.show(
         id: 2,
-        title: "Don't forget to log lunch",
-        notificationDetails: const NotificationDetails(
+        title: l10n.lunchReminderTitle,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'lunch-reminders',
-            'Lunch reminders',
-            channelDescription: 'Reminders to log lunch',
+            l10n.lunchRemindersChannel,
+            channelDescription: l10n.lunchRemindersChannelDescription,
           ),
         ),
       );
@@ -183,12 +193,12 @@ void doMobileReminders() {
 
       await plugin.show(
         id: 3,
-        title: "Don't forget to log dinner",
-        notificationDetails: const NotificationDetails(
+        title: l10n.dinnerReminderTitle,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'dinner-reminders',
-            'Dinner reminders',
-            channelDescription: 'Reminders to log dinner',
+            l10n.dinnerRemindersChannel,
+            channelDescription: l10n.dinnerRemindersChannelDescription,
           ),
         ),
       );

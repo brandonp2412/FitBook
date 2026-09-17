@@ -1960,6 +1960,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove image'**
   String get removeImage;
+
+  /// No description provided for @mealRemindersEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal reminders enabled'**
+  String get mealRemindersEnabled;
+
+  /// No description provided for @mealRemindersEnabledBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll remind you to log breakfast, lunch, or dinner if you haven\'t logged it yet.'**
+  String get mealRemindersEnabledBody;
+
+  /// No description provided for @reminderSettingsChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder settings'**
+  String get reminderSettingsChannel;
+
+  /// No description provided for @reminderSettingsChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications explaining FitBook reminders'**
+  String get reminderSettingsChannelDescription;
+
+  /// No description provided for @breakfastReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log breakfast'**
+  String get breakfastReminderTitle;
+
+  /// No description provided for @breakfastRemindersChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast reminders'**
+  String get breakfastRemindersChannel;
+
+  /// No description provided for @breakfastRemindersChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders to log breakfast'**
+  String get breakfastRemindersChannelDescription;
+
+  /// No description provided for @lunchReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log lunch'**
+  String get lunchReminderTitle;
+
+  /// No description provided for @lunchRemindersChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch reminders'**
+  String get lunchRemindersChannel;
+
+  /// No description provided for @lunchRemindersChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders to log lunch'**
+  String get lunchRemindersChannelDescription;
+
+  /// No description provided for @dinnerReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log dinner'**
+  String get dinnerReminderTitle;
+
+  /// No description provided for @dinnerRemindersChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner reminders'**
+  String get dinnerRemindersChannel;
+
+  /// No description provided for @dinnerRemindersChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders to log dinner'**
+  String get dinnerRemindersChannelDescription;
 }
 
 class _AppLocalizationsDelegate

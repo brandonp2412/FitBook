@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "Convertir en {unit}",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "Retirer l’image"
+  "removeImage": "Retirer l’image",
+  "mealRemindersEnabled": "Rappels de repas activés",
+  "mealRemindersEnabledBody": "Nous vous rappellerons d’enregistrer le petit-déjeuner, le déjeuner ou le dîner si vous ne l’avez pas encore fait.",
+  "reminderSettingsChannel": "Paramètres des rappels",
+  "reminderSettingsChannelDescription": "Notifications concernant les rappels FitBook",
+  "breakfastReminderTitle": "N’oubliez pas d’enregistrer le petit-déjeuner",
+  "breakfastRemindersChannel": "Rappels du petit-déjeuner",
+  "breakfastRemindersChannelDescription": "Rappels pour enregistrer le petit-déjeuner",
+  "lunchReminderTitle": "N’oubliez pas d’enregistrer le déjeuner",
+  "lunchRemindersChannel": "Rappels du déjeuner",
+  "lunchRemindersChannelDescription": "Rappels pour enregistrer le déjeuner",
+  "dinnerReminderTitle": "N’oubliez pas d’enregistrer le dîner",
+  "dinnerRemindersChannel": "Rappels du dîner",
+  "dinnerRemindersChannelDescription": "Rappels pour enregistrer le dîner"
 }

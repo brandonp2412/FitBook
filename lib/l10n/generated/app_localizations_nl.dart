@@ -1048,4 +1048,48 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get removeImage => 'Afbeelding verwijderen';
+
+  @override
+  String get mealRemindersEnabled => 'Maaltijdherinneringen ingeschakeld';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'We herinneren je eraan om ontbijt, lunch of avondeten te registreren als je dat nog niet hebt gedaan.';
+
+  @override
+  String get reminderSettingsChannel => 'Herinneringsinstellingen';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Meldingen over FitBook-herinneringen';
+
+  @override
+  String get breakfastReminderTitle => 'Vergeet niet je ontbijt te registreren';
+
+  @override
+  String get breakfastRemindersChannel => 'Ontbijtherinneringen';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Herinneringen om je ontbijt te registreren';
+
+  @override
+  String get lunchReminderTitle => 'Vergeet niet je lunch te registreren';
+
+  @override
+  String get lunchRemindersChannel => 'Lunchherinneringen';
+
+  @override
+  String get lunchRemindersChannelDescription =>
+      'Herinneringen om je lunch te registreren';
+
+  @override
+  String get dinnerReminderTitle => 'Vergeet niet je avondeten te registreren';
+
+  @override
+  String get dinnerRemindersChannel => 'Avondetenherinneringen';
+
+  @override
+  String get dinnerRemindersChannelDescription =>
+      'Herinneringen om je avondeten te registreren';
 }

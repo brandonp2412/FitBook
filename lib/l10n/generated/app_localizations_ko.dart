@@ -1017,4 +1017,44 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get removeImage => '이미지 제거';
+
+  @override
+  String get mealRemindersEnabled => '식사 알림이 켜졌습니다';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      '아직 기록하지 않았다면 아침, 점심 또는 저녁 식사를 기록하도록 알려드릴게요.';
+
+  @override
+  String get reminderSettingsChannel => '알림 설정';
+
+  @override
+  String get reminderSettingsChannelDescription => 'FitBook 식사 알림 안내';
+
+  @override
+  String get breakfastReminderTitle => '아침 식사를 기록하는 것을 잊지 마세요';
+
+  @override
+  String get breakfastRemindersChannel => '아침 식사 알림';
+
+  @override
+  String get breakfastRemindersChannelDescription => '아침 식사 기록 알림';
+
+  @override
+  String get lunchReminderTitle => '점심 식사를 기록하는 것을 잊지 마세요';
+
+  @override
+  String get lunchRemindersChannel => '점심 식사 알림';
+
+  @override
+  String get lunchRemindersChannelDescription => '점심 식사 기록 알림';
+
+  @override
+  String get dinnerReminderTitle => '저녁 식사를 기록하는 것을 잊지 마세요';
+
+  @override
+  String get dinnerRemindersChannel => '저녁 식사 알림';
+
+  @override
+  String get dinnerRemindersChannelDescription => '저녁 식사 기록 알림';
 }

@@ -1053,4 +1053,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get removeImage => 'Retirer l’image';
+
+  @override
+  String get mealRemindersEnabled => 'Rappels de repas activés';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'Nous vous rappellerons d’enregistrer le petit-déjeuner, le déjeuner ou le dîner si vous ne l’avez pas encore fait.';
+
+  @override
+  String get reminderSettingsChannel => 'Paramètres des rappels';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Notifications concernant les rappels FitBook';
+
+  @override
+  String get breakfastReminderTitle =>
+      'N’oubliez pas d’enregistrer le petit-déjeuner';
+
+  @override
+  String get breakfastRemindersChannel => 'Rappels du petit-déjeuner';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Rappels pour enregistrer le petit-déjeuner';
+
+  @override
+  String get lunchReminderTitle => 'N’oubliez pas d’enregistrer le déjeuner';
+
+  @override
+  String get lunchRemindersChannel => 'Rappels du déjeuner';
+
+  @override
+  String get lunchRemindersChannelDescription =>
+      'Rappels pour enregistrer le déjeuner';
+
+  @override
+  String get dinnerReminderTitle => 'N’oubliez pas d’enregistrer le dîner';
+
+  @override
+  String get dinnerRemindersChannel => 'Rappels du dîner';
+
+  @override
+  String get dinnerRemindersChannelDescription =>
+      'Rappels pour enregistrer le dîner';
 }

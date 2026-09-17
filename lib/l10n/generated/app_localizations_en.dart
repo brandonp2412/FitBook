@@ -1046,4 +1046,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeImage => 'Remove image';
+
+  @override
+  String get mealRemindersEnabled => 'Meal reminders enabled';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'We\'ll remind you to log breakfast, lunch, or dinner if you haven\'t logged it yet.';
+
+  @override
+  String get reminderSettingsChannel => 'Reminder settings';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Notifications explaining FitBook reminders';
+
+  @override
+  String get breakfastReminderTitle => 'Don\'t forget to log breakfast';
+
+  @override
+  String get breakfastRemindersChannel => 'Breakfast reminders';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Reminders to log breakfast';
+
+  @override
+  String get lunchReminderTitle => 'Don\'t forget to log lunch';
+
+  @override
+  String get lunchRemindersChannel => 'Lunch reminders';
+
+  @override
+  String get lunchRemindersChannelDescription => 'Reminders to log lunch';
+
+  @override
+  String get dinnerReminderTitle => 'Don\'t forget to log dinner';
+
+  @override
+  String get dinnerRemindersChannel => 'Dinner reminders';
+
+  @override
+  String get dinnerRemindersChannelDescription => 'Reminders to log dinner';
 }

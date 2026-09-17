@@ -1061,4 +1061,48 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get removeImage => 'Usuń obraz';
+
+  @override
+  String get mealRemindersEnabled => 'Przypomnienia o posiłkach włączone';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      'Przypomnimy Ci o zapisaniu śniadania, obiadu lub kolacji, jeśli nie zostały jeszcze zapisane.';
+
+  @override
+  String get reminderSettingsChannel => 'Ustawienia przypomnień';
+
+  @override
+  String get reminderSettingsChannelDescription =>
+      'Powiadomienia dotyczące przypomnień FitBook';
+
+  @override
+  String get breakfastReminderTitle => 'Nie zapomnij zapisać śniadania';
+
+  @override
+  String get breakfastRemindersChannel => 'Przypomnienia o śniadaniu';
+
+  @override
+  String get breakfastRemindersChannelDescription =>
+      'Przypomnienia o zapisaniu śniadania';
+
+  @override
+  String get lunchReminderTitle => 'Nie zapomnij zapisać obiadu';
+
+  @override
+  String get lunchRemindersChannel => 'Przypomnienia o obiedzie';
+
+  @override
+  String get lunchRemindersChannelDescription =>
+      'Przypomnienia o zapisaniu obiadu';
+
+  @override
+  String get dinnerReminderTitle => 'Nie zapomnij zapisać kolacji';
+
+  @override
+  String get dinnerRemindersChannel => 'Przypomnienia o kolacji';
+
+  @override
+  String get dinnerRemindersChannelDescription =>
+      'Przypomnienia o zapisaniu kolacji';
 }

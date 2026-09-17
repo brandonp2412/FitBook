@@ -317,5 +317,18 @@
   "@keepUnitAs": {"placeholders": {"unit": {"type": "String"}}},
   "convertToUnit": "Converti in {unit}",
   "@convertToUnit": {"placeholders": {"unit": {"type": "String"}}},
-  "removeImage": "Rimuovi immagine"
+  "removeImage": "Rimuovi immagine",
+  "mealRemindersEnabled": "Promemoria dei pasti attivati",
+  "mealRemindersEnabledBody": "Ti ricorderemo di registrare colazione, pranzo o cena se non l’hai ancora fatto.",
+  "reminderSettingsChannel": "Impostazioni dei promemoria",
+  "reminderSettingsChannelDescription": "Notifiche relative ai promemoria di FitBook",
+  "breakfastReminderTitle": "Non dimenticare di registrare la colazione",
+  "breakfastRemindersChannel": "Promemoria per la colazione",
+  "breakfastRemindersChannelDescription": "Promemoria per registrare la colazione",
+  "lunchReminderTitle": "Non dimenticare di registrare il pranzo",
+  "lunchRemindersChannel": "Promemoria per il pranzo",
+  "lunchRemindersChannelDescription": "Promemoria per registrare il pranzo",
+  "dinnerReminderTitle": "Non dimenticare di registrare la cena",
+  "dinnerRemindersChannel": "Promemoria per la cena",
+  "dinnerRemindersChannelDescription": "Promemoria per registrare la cena"
 }

@@ -1017,4 +1017,44 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get removeImage => '画像を削除';
+
+  @override
+  String get mealRemindersEnabled => '食事のリマインダーを有効にしました';
+
+  @override
+  String get mealRemindersEnabledBody =>
+      '朝食、昼食、夕食がまだ記録されていない場合に、記録するようお知らせします。';
+
+  @override
+  String get reminderSettingsChannel => 'リマインダー設定';
+
+  @override
+  String get reminderSettingsChannelDescription => 'FitBook のリマインダーに関する通知';
+
+  @override
+  String get breakfastReminderTitle => '朝食の記録をお忘れなく';
+
+  @override
+  String get breakfastRemindersChannel => '朝食のリマインダー';
+
+  @override
+  String get breakfastRemindersChannelDescription => '朝食を記録するためのリマインダー';
+
+  @override
+  String get lunchReminderTitle => '昼食の記録をお忘れなく';
+
+  @override
+  String get lunchRemindersChannel => '昼食のリマインダー';
+
+  @override
+  String get lunchRemindersChannelDescription => '昼食を記録するためのリマインダー';
+
+  @override
+  String get dinnerReminderTitle => '夕食の記録をお忘れなく';
+
+  @override
+  String get dinnerRemindersChannel => '夕食のリマインダー';
+
+  @override
+  String get dinnerRemindersChannelDescription => '夕食を記録するためのリマインダー';
 }
