@@ -310,7 +310,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
             onTap: () => showImageOptionsSheet(
               context: context,
               onReplace: setImage,
-              onCamera: () => setImage(source: ImageSource.camera),
+              onCamera: supportsCameraCapture
+                  ? () => setImage(source: ImageSource.camera)
+                  : null,
               onDelete: () => setState(() {
                 imgFile = null;
                 smallImg = null;
@@ -349,11 +351,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 label: Text(context.l10n.setImage),
                 onPressed: setImage,
               ),
-              TextButton.icon(
-                icon: const Icon(Icons.camera_alt),
-                label: Text(context.l10n.takePhoto),
-                onPressed: () => setImage(source: ImageSource.camera),
-              ),
+              if (supportsCameraCapture)
+                TextButton.icon(
+                  icon: const Icon(Icons.camera_alt),
+                  label: Text(context.l10n.takePhoto),
+                  onPressed: () => setImage(source: ImageSource.camera),
+                ),
             ],
           ),
         const SizedBox(height: 16),

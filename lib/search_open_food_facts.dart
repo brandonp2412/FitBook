@@ -8,7 +8,6 @@ import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -218,9 +217,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           Builder(builder: (context) => productsBuilder(context, foodUnit)),
         ],
       ),
-      floatingActionButton: kIsWeb
-          ? null
-          : Padding(
+      floatingActionButton: supportsBarcodeCamera
+          ? Padding(
               padding: EdgeInsets.only(
                 bottom: navigationBottomClearance(context),
               ),
@@ -229,7 +227,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 onPressed: scan,
                 icon: const Icon(Icons.barcode_reader),
               ),
-            ),
+            )
+          : null,
     );
   }
 

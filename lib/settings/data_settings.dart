@@ -18,8 +18,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-Future<void> notifyAutomaticBackupEnabled(AppLocalizations l10n) async {
-  if (kIsWeb) return;
+Future<void> notifyAutomaticBackupEnabled(
+  AppLocalizations l10n, {
+  bool? isAndroid,
+}) async {
+  final supportsBackup = isAndroid ?? Platform.isAndroid;
+  if (kIsWeb || !supportsBackup) return;
 
   if (Platform.isAndroid || Platform.isIOS) {
     final permission = await Permission.notification.request();
@@ -56,7 +60,14 @@ Future<void> notifyAutomaticBackupEnabled(AppLocalizations l10n) async {
   );
 }
 
-Future<void> tapBackup(bool value, AppLocalizations l10n) async {
+Future<void> tapBackup(
+  bool value,
+  AppLocalizations l10n, {
+  bool? isAndroid,
+}) async {
+  final supportsBackup = isAndroid ?? Platform.isAndroid;
+  if (kIsWeb || !supportsBackup) return;
+
   if (!value) {
     await db.settings.update().write(
           const SettingsCompanion(
@@ -81,7 +92,7 @@ Future<void> tapBackup(bool value, AppLocalizations l10n) async {
             automaticBackups: Value(true),
           ),
         );
-    await notifyAutomaticBackupEnabled(l10n);
+    await notifyAutomaticBackupEnabled(l10n, isAndroid: supportsBackup);
   } catch (_) {
     await db.settings.update().write(
           const SettingsCompanion(
@@ -100,7 +111,9 @@ List<Widget> getDataSettings({
   final l10n = context.l10n;
 
   return [
-    if (l10n.automaticBackup.toLowerCase().contains(term.toLowerCase()))
+    if (!kIsWeb &&
+        Platform.isAndroid &&
+        l10n.automaticBackup.toLowerCase().contains(term.toLowerCase()))
       ListTile(
         key: const Key('automaticBackupTile'),
         title: Text(l10n.automaticBackup),

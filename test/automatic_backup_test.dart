@@ -32,7 +32,7 @@ void main() {
       return null;
     });
 
-    await tapBackup(true, l10n);
+    await tapBackup(true, l10n, isAndroid: true);
 
     final settings = await db.settings.select().getSingle();
     expect(settings.automaticBackups, isFalse);
@@ -46,7 +46,7 @@ void main() {
     });
 
     await expectLater(
-      tapBackup(true, l10n),
+      tapBackup(true, l10n, isAndroid: true),
       throwsA(isA<PlatformException>()),
     );
 
@@ -66,7 +66,7 @@ void main() {
       return null;
     });
 
-    await tapBackup(false, l10n);
+    await tapBackup(false, l10n, isAndroid: true);
 
     final settings = await db.settings.select().getSingle();
     expect(settings.automaticBackups, isFalse);

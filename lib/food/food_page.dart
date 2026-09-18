@@ -626,27 +626,28 @@ GROUP BY meal_foods.meal
                 );
               },
             ),
-            SpeedDialAction(
-              icon: Icons.barcode_reader,
-              label: context.l10n.scanBarcode,
-              onSelected: () async {
-                final result = await performBarcodeScan(context);
-                if (result.food != null) {
-                  navKey.currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) => EditFoodPage(id: result.food!.id),
-                    ),
-                  );
-                } else if (result.barcode != null) {
-                  navKey.currentState!.push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          EditFoodPage(initialBarcode: result.barcode),
-                    ),
-                  );
-                }
-              },
-            ),
+            if (supportsBarcodeCamera)
+              SpeedDialAction(
+                icon: Icons.barcode_reader,
+                label: context.l10n.scanBarcode,
+                onSelected: () async {
+                  final result = await performBarcodeScan(context);
+                  if (result.food != null) {
+                    navKey.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(id: result.food!.id),
+                      ),
+                    );
+                  } else if (result.barcode != null) {
+                    navKey.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditFoodPage(initialBarcode: result.barcode),
+                      ),
+                    );
+                  }
+                },
+              ),
           ],
         ),
       ),

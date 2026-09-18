@@ -11,6 +11,17 @@ import 'package:workmanager/workmanager.dart';
 
 Timer? timer;
 
+const _windowsNotificationSettings = WindowsInitializationSettings(
+  appName: 'FitBook',
+  appUserModelId: 'FrisbeeSoftware.FitBook.CalorieTracker',
+  guid: '0efbdadd-a415-4ecc-ae12-bfa6bfd94af2',
+);
+const _desktopNotificationDetails = NotificationDetails(
+  macOS: DarwinNotificationDetails(),
+  linux: LinuxNotificationDetails(),
+  windows: WindowsNotificationDetails(),
+);
+
 void setupReminders({bool requestPermission = true}) {
   if (kIsWeb) return;
 
@@ -50,6 +61,7 @@ Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
     iOS: darwin,
     macOS: darwin,
     linux: linux,
+    windows: _windowsNotificationSettings,
   );
   final plugin = FlutterLocalNotificationsPlugin();
   await plugin.initialize(settings: init);
@@ -66,6 +78,7 @@ Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
       iOS: const DarwinNotificationDetails(),
       macOS: const DarwinNotificationDetails(),
       linux: const LinuxNotificationDetails(),
+      windows: const WindowsNotificationDetails(),
     ),
   );
 }
@@ -77,7 +90,11 @@ Future<void> doDesktopReminders() async {
     defaultActionName: l10n.openNotification,
   );
   const darwin = DarwinInitializationSettings();
-  final init = InitializationSettings(linux: linux, macOS: darwin);
+  final init = InitializationSettings(
+    linux: linux,
+    macOS: darwin,
+    windows: _windowsNotificationSettings,
+  );
   final plugin = FlutterLocalNotificationsPlugin();
   await plugin.initialize(settings: init);
 
@@ -96,21 +113,33 @@ Future<void> doDesktopReminders() async {
       (entry) => entry.created.hour >= 6 && entry.created.hour < 12,
     );
     if (entered.isEmpty) {
-      await plugin.show(id: 1, title: l10n.breakfastReminderTitle);
+      await plugin.show(
+        id: 1,
+        title: l10n.breakfastReminderTitle,
+        notificationDetails: _desktopNotificationDetails,
+      );
     }
   } else if (hour >= 12 && hour < 16) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
     );
     if (entered.isEmpty) {
-      await plugin.show(id: 2, title: l10n.lunchReminderTitle);
+      await plugin.show(
+        id: 2,
+        title: l10n.lunchReminderTitle,
+        notificationDetails: _desktopNotificationDetails,
+      );
     }
   } else if (hour >= 16 && hour < 22) {
     final entered = diaries.where(
       (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
     );
     if (entered.isEmpty) {
-      await plugin.show(id: 3, title: l10n.dinnerReminderTitle);
+      await plugin.show(
+        id: 3,
+        title: l10n.dinnerReminderTitle,
+        notificationDetails: _desktopNotificationDetails,
+      );
     }
   }
 }

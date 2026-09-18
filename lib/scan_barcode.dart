@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart' hide Column;
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_zxing/flutter_zxing.dart';
@@ -12,6 +15,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'database/database.dart';
+
+bool get supportsBarcodeCamera =>
+    !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 
 class BarcodeScanResult {
   final Food? food;
@@ -25,6 +31,8 @@ class BarcodeScanResult {
 }
 
 Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
+  if (!supportsBarcodeCamera) return const BarcodeScanResult.cancelled();
+
   final status = await Permission.camera.request();
   if (!status.isGranted) {
     talker.warning('Camera permission denied for barcode scan');
@@ -263,6 +271,8 @@ class _ScanBarcodeState extends State<ScanBarcode> {
 
   @override
   Widget build(BuildContext context) {
+    if (!supportsBarcodeCamera) return const SizedBox.shrink();
+
     if (searching) {
       return const Padding(
         padding: EdgeInsets.all(8.0),

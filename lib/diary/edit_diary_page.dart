@@ -738,7 +738,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                       onTap: () => showImageOptionsSheet(
                         context: context,
                         onReplace: setImage,
-                        onCamera: () => setImage(source: ImageSource.camera),
+                        onCamera: supportsCameraCapture
+                            ? () => setImage(source: ImageSource.camera)
+                            : null,
                         onDelete: () => setState(() {
                           imageFile = null;
                           bigImage = null;
@@ -779,11 +781,13 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                           label: Text(l10n.setImage),
                           onPressed: setImage,
                         ),
-                        TextButton.icon(
-                          icon: const Icon(Icons.camera_alt),
-                          label: Text(l10n.takePhoto),
-                          onPressed: () => setImage(source: ImageSource.camera),
-                        ),
+                        if (supportsCameraCapture)
+                          TextButton.icon(
+                            icon: const Icon(Icons.camera_alt),
+                            label: Text(l10n.takePhoto),
+                            onPressed: () =>
+                                setImage(source: ImageSource.camera),
+                          ),
                       ],
                     ),
               const SizedBox(height: 8),
@@ -813,7 +817,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     : Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!kIsWeb)
+                          if (supportsBarcodeCamera)
                             IconButton(
                               icon: const Icon(Icons.barcode_reader),
                               onPressed: () async {

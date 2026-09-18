@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -249,7 +250,12 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
   );
 }
 
+bool get supportsCameraCapture =>
+    !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
 Future<String?> pickAndSaveImage(String prefix, {ImageSource? source}) async {
+  if (source == ImageSource.camera && !supportsCameraCapture) return null;
+
   String? path;
   if (source == null) {
     final file = await FilePicker.pickFile(type: FileType.image);
@@ -269,7 +275,7 @@ Future<String?> pickAndSaveImage(String prefix, {ImageSource? source}) async {
 Future<void> showImageOptionsSheet({
   required BuildContext context,
   required VoidCallback onReplace,
-  required VoidCallback onCamera,
+  VoidCallback? onCamera,
   required VoidCallback onDelete,
 }) {
   return showModalBottomSheet(
@@ -286,14 +292,15 @@ Future<void> showImageOptionsSheet({
               onReplace();
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.camera_alt),
-            title: Text(ctx.l10n.takePhoto),
-            onTap: () {
-              Navigator.pop(ctx);
-              onCamera();
-            },
-          ),
+          if (onCamera != null)
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(ctx.l10n.takePhoto),
+              onTap: () {
+                Navigator.pop(ctx);
+                onCamera();
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: Text(ctx.l10n.deleteImage),
