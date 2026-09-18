@@ -12,7 +12,56 @@ if [ -z "${EMULATOR_PORT:-}" ]; then
   exit 1
 fi
 
+device="emulator-$EMULATOR_PORT"
 screenshot_dir="fastlane/metadata/android/en-US/images/$FITBOOK_DEVICE_TYPE"
+drive_timeout="${SCREENSHOT_DRIVE_TIMEOUT:-12m}"
+
+wait_for_emulator() {
+  timeout 60 adb -s "$device" wait-for-device >/dev/null 2>&1 || return 1
+
+  checks=0
+  while [ "$checks" -lt 30 ]; do
+    state=$(adb -s "$device" get-state 2>/dev/null || true)
+    boot_completed=$(adb -s "$device" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
+    if [ "$state" = "device" ] && [ "$boot_completed" = "1" ]; then
+      return 0
+    fi
+    sleep 2
+    checks=$((checks + 1))
+  done
+
+  return 1
+}
+
+recover_emulator() {
+  echo "Recovering emulator transport before retry" >&2
+  adb kill-server >/dev/null 2>&1 || true
+  adb start-server >/dev/null 2>&1 || true
+  adb reconnect offline >/dev/null 2>&1 || true
+  wait_for_emulator
+}
+
+collect_diagnostics() {
+  adb -s "$device" logcat -d -t 300 >&2 || true
+  adb -s "$device" shell dumpsys activity top >&2 || true
+  adb -s "$device" shell ps -A >&2 || true
+}
+
+screenshots_complete() {
+  for number in $(seq 1 8); do
+    [ -s "$screenshot_dir/${number}_en-US.png" ] || return 1
+  done
+  return 0
+}
+
+if ! wait_for_emulator; then
+  recover_emulator || {
+    echo "Emulator did not become ready" >&2
+    collect_diagnostics
+    exit 1
+  }
+fi
+
 rm -rf "$screenshot_dir"
 mkdir -p "$screenshot_dir"
 
@@ -24,47 +73,52 @@ if [ -n "${FITBOOK_SCREEN_SIZE:-}" ]; then
       ;;
   esac
 
-  adb -s "emulator-$EMULATOR_PORT" shell wm size "$FITBOOK_SCREEN_SIZE"
+  adb -s "$device" shell wm size "$FITBOOK_SCREEN_SIZE"
   expected_dimensions=$(printf '%s' "$FITBOOK_SCREEN_SIZE" | sed 's/x/ x /')
 fi
 
 drive_log=$(mktemp)
 drive_status=0
+attempt=1
 
-run_drive() {
+while :; do
+  rm -rf "$screenshot_dir"
+  mkdir -p "$screenshot_dir"
   drive_status=0
-  # Keep a wedged emulator from holding the workflow open indefinitely. The
-  # screenshot suite normally completes in roughly 10 minutes on CI.
-  timeout --foreground -k 30 1200 flutter drive \
-    --driver=test_driver/integration_test.dart \
-    --target=integration_test/screenshot_test.dart \
-    -d "emulator-$EMULATOR_PORT" >"$drive_log" 2>&1 || drive_status=$?
-}
 
-run_drive
+  echo "Running screenshot drive attempt $attempt with a $drive_timeout timeout"
+  timeout --foreground --signal=TERM --kill-after=30s "$drive_timeout" \
+    flutter drive --profile \
+      --driver=test_driver/integration_test.dart \
+      --target=integration_test/screenshot_test.dart \
+      -d "$device" >"$drive_log" 2>&1 || drive_status=$?
 
-if [ "$drive_status" -ne 0 ] && grep -Eq "Service has disappeared|device offline" "$drive_log"; then
   cat "$drive_log"
-  echo "Flutter driver lost the emulator; reconnecting ADB and retrying screenshots once" >&2
 
-  adb reconnect offline || true
-  if timeout 90 adb -s "emulator-$EMULATOR_PORT" wait-for-device; then
-    rm -rf "$screenshot_dir"
-    mkdir -p "$screenshot_dir"
-    run_drive
-  else
-    echo "Emulator did not recover within 90 seconds" >&2
+  if screenshots_complete && { [ "$drive_status" -eq 0 ] || grep -q "All tests passed!" "$drive_log"; }; then
+    break
   fi
-fi
 
-if [ "$drive_status" -eq 124 ]; then
-  echo "flutter drive timed out after 20 minutes; collecting emulator diagnostics" >&2
-  adb -s "emulator-$EMULATOR_PORT" logcat -d -t 300 >&2 || true
-  adb -s "emulator-$EMULATOR_PORT" shell dumpsys activity top >&2 || true
-  adb -s "emulator-$EMULATOR_PORT" shell ps -A >&2 || true
-fi
+  transient_failure=0
+  if [ "$drive_status" -eq 124 ] || [ "$drive_status" -eq 137 ] || grep -Eiq \
+    'device offline|Connection reset|Connection refused|Service has disappeared|Connecting to the VM Service is taking longer than expected|VMServiceFlutterDriver: It is taking an unusually long time to connect' \
+    "$drive_log"; then
+    transient_failure=1
+  elif grep -q "All tests passed!" "$drive_log" && ! screenshots_complete; then
+    transient_failure=1
+  fi
 
-cat "$drive_log"
+  if [ "$transient_failure" -ne 1 ] || [ "$attempt" -ge 2 ]; then
+    collect_diagnostics
+    break
+  fi
+
+  echo "Transient emulator failure on screenshot attempt $attempt; retrying once" >&2
+  collect_diagnostics
+  recover_emulator || break
+  attempt=$((attempt + 1))
+  drive_log=$(mktemp)
+done
 
 for number in $(seq 1 8); do
   screenshot="$screenshot_dir/${number}_en-US.png"
@@ -79,6 +133,12 @@ for number in $(seq 1 8); do
     exit 1
   fi
 done
+
+screenshot_count=$(find "$screenshot_dir" -maxdepth 1 -type f -name '*.png' | wc -l | tr -d ' ')
+if [ "$screenshot_count" -ne 8 ]; then
+  echo "Expected exactly 8 Google Play screenshots, found $screenshot_count" >&2
+  exit 1
+fi
 
 if [ "$drive_status" -ne 0 ]; then
   if ! grep -q "All tests passed!" "$drive_log"; then
