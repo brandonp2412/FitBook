@@ -14,6 +14,7 @@ import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 List<FoodsCompanion> foods = [
   FoodsCompanion.insert(
@@ -161,6 +162,30 @@ List<DiariesCompanion> diaries = [
     quantity: 250,
     unit: 'grams',
   ),
+  DiariesCompanion.insert(
+    food: Value(0),
+    created: DateTime.now().subtract(const Duration(days: 7)),
+    quantity: 480,
+    unit: 'grams',
+  ),
+  DiariesCompanion.insert(
+    food: Value(0),
+    created: DateTime.now().subtract(const Duration(days: 14)),
+    quantity: 560,
+    unit: 'grams',
+  ),
+  DiariesCompanion.insert(
+    food: Value(0),
+    created: DateTime.now().subtract(const Duration(days: 21)),
+    quantity: 400,
+    unit: 'grams',
+  ),
+  DiariesCompanion.insert(
+    food: Value(0),
+    created: DateTime.now().subtract(const Duration(days: 28)),
+    quantity: 640,
+    unit: 'grams',
+  ),
 ];
 
 List<WeightsCompanion> weights = [
@@ -243,11 +268,7 @@ String tabNavigationKey(TabBarState tabBarState) => switch (tabBarState) {
     };
 
 void navigateTo({required BuildContext context, required Widget page}) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => page,
-    ),
-  );
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => page));
 }
 
 Future<void> generateScreenshot({
@@ -260,6 +281,7 @@ Future<void> generateScreenshot({
 }) async {
   await appWrapper();
   await tester.pumpAndSettle();
+  expect(find.textContaining('New version '), findsNothing);
 
   await tester.tap(find.byKey(Key(tabNavigationKey(tabBarState))));
   await tester.pumpAndSettle();
@@ -285,10 +307,17 @@ void main() {
     await app.db.diaries.deleteAll();
     await app.db.foods.deleteAll();
     await app.db.weights.deleteAll();
+    await app.db.metadata.deleteAll();
 
     await app.db.diaries.insertAll(diaries);
     await app.db.foods.insertAll(foods);
     await app.db.weights.insertAll(weights);
+
+    final packageInfo = await PackageInfo.fromPlatform();
+    final buildNumber = int.parse(packageInfo.buildNumber);
+    await app.db.metadata.insertOne(
+      MetadataCompanion(buildNumber: Value(buildNumber)),
+    );
   });
 
   group("Generate default screenshots ", () {
@@ -318,10 +347,8 @@ void main() {
         binding: binding,
         tester: tester,
         screenshotName: '3_en-US',
-        navigateToPage: (context) async => navigateTo(
-          context: context,
-          page: const SettingsPage(),
-        ),
+        navigateToPage: (context) async =>
+            navigateTo(context: context, page: const SettingsPage()),
         tabBarState: TabBarState.diary,
       ),
     );
@@ -333,10 +360,7 @@ void main() {
         tester: tester,
         screenshotName: '4_en-US',
         navigateToPage: (context) async {
-          navigateTo(
-            context: context,
-            page: const FoodPage(),
-          );
+          navigateTo(context: context, page: const FoodPage());
         },
         tabBarState: TabBarState.foods,
       ),
@@ -349,10 +373,7 @@ void main() {
         tester: tester,
         screenshotName: '5_en-US',
         navigateToPage: (context) async {
-          navigateTo(
-            context: context,
-            page: const WeightPage(),
-          );
+          navigateTo(context: context, page: const WeightPage());
         },
         tabBarState: TabBarState.weights,
       ),
@@ -387,12 +408,7 @@ void main() {
         tester: tester,
         screenshotName: '7_en-US',
         navigateToPage: (context) async {
-          navigateTo(
-            context: context,
-            page: const EditFoodPage(
-              id: 1,
-            ),
-          );
+          navigateTo(context: context, page: const EditFoodPage(id: 1));
         },
         tabBarState: TabBarState.foods,
       ),
@@ -405,10 +421,7 @@ void main() {
         tester: tester,
         screenshotName: '8_en-US',
         navigateToPage: (context) async {
-          navigateTo(
-            context: context,
-            page: const EditDiaryPage(id: null),
-          );
+          navigateTo(context: context, page: const EditDiaryPage(id: null));
         },
         tabBarState: TabBarState.diary,
       ),
