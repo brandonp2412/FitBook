@@ -209,49 +209,76 @@ GROUP BY meal_foods.meal
 
     return Card(
       margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(22),
-        child: material.Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.foodLibrary,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              l10n.foodLibraryCounts(foods.length, meals.length),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colors.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 24),
-            if (recent.isNotEmpty) ...[
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(22),
+          child: material.Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                l10n.recentlyUsed,
+                l10n.foodLibrary,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                l10n.foodLibraryCounts(foods.length, meals.length),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colors.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 24),
+              if (recent.isNotEmpty) ...[
+                Text(
+                  l10n.recentlyUsed,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: colors.onSurfaceVariant,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ...recent.map(
+                  (item) => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    leading: const Icon(Icons.restaurant_outlined),
+                    title: Text(item.food.name.value),
+                    trailing: item.food.calories.value == null
+                        ? null
+                        : Text(
+                            '${formatDisplayNumber(context, item.food.calories.value!, maximumFractionDigits: 0)} kcal',
+                          ),
+                    onTap: () => navKey.currentState!.push(
+                      MaterialPageRoute(
+                        builder: (context) => EditFoodPage(
+                          id: item.food.id.value,
+                          onSavedNew: () => scrollCtrl.animateTo(
+                            0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Divider(height: 32),
+              ],
+              Text(
+                l10n.quickActions,
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: colors.onSurfaceVariant,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 8),
-              ...recent.map(
-                (item) => ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  dense: true,
-                  leading: const Icon(Icons.restaurant_outlined),
-                  title: Text(item.food.name.value),
-                  trailing: item.food.calories.value == null
-                      ? null
-                      : Text(
-                          '${formatDisplayNumber(context, item.food.calories.value!, maximumFractionDigits: 0)} kcal',
-                        ),
-                  onTap: () => navKey.currentState!.push(
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () => navKey.currentState!.push(
                     MaterialPageRoute(
                       builder: (context) => EditFoodPage(
-                        id: item.food.id.value,
                         onSavedNew: () => scrollCtrl.animateTo(
                           0,
                           duration: const Duration(milliseconds: 300),
@@ -260,48 +287,25 @@ GROUP BY meal_foods.meal
                       ),
                     ),
                   ),
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.addFood),
                 ),
               ),
-              const Divider(height: 32),
-            ],
-            Text(
-              l10n.quickActions,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: colors.onSurfaceVariant,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: () => navKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => EditFoodPage(
-                      onSavedNew: () => scrollCtrl.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => navKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditMealPage(),
                     ),
                   ),
+                  icon: const Icon(Icons.restaurant_menu),
+                  label: Text(l10n.createMeal),
                 ),
-                icon: const Icon(Icons.add),
-                label: Text(l10n.addFood),
               ),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () => navKey.currentState!.push(
-                  MaterialPageRoute(builder: (context) => const EditMealPage()),
-                ),
-                icon: const Icon(Icons.restaurant_menu),
-                label: Text(l10n.createMeal),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
