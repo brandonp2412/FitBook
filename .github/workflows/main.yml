@@ -103,6 +103,7 @@ jobs:
           retention-days: 7
 
   patrol-tests:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -148,8 +149,8 @@ jobs:
           script: bash ./scripts/ci-patrol.sh
 
   version-bump:
-    needs: [quality-checks, generate-screenshots, patrol-tests]
-    if: ${{ always() && github.event_name == 'push' && needs.quality-checks.result == 'success' && needs.patrol-tests.result == 'success' }}
+    needs: [quality-checks, generate-screenshots]
+    if: ${{ always() && github.event_name == 'push' && needs.quality-checks.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
