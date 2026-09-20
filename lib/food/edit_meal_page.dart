@@ -714,25 +714,23 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
     );
 
     Widget content = placeholder;
-    if (showImages) {
-      if (food.imageFile?.isNotEmpty == true)
-        content = Image.file(
-          File(food.imageFile!),
-          cacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
-          width: 44,
-          height: 44,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => placeholder,
-        );
-      else if (food.smallImage?.isNotEmpty == true)
-        content = CachedNetworkImage(
-          imageUrl: food.smallImage!,
-          width: 44,
-          height: 44,
-          fit: BoxFit.cover,
-          errorWidget: (_, __, ___) => placeholder,
-        );
-    }
+    if (showImages && food.imageFile?.isNotEmpty == true)
+      content = Image.file(
+        File(food.imageFile!),
+        cacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
+        width: 44,
+        height: 44,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => placeholder,
+      );
+    else if (showImages && food.smallImage?.isNotEmpty == true)
+      content = CachedNetworkImage(
+        imageUrl: food.smallImage!,
+        width: 44,
+        height: 44,
+        fit: BoxFit.cover,
+        errorWidget: (_, __, ___) => placeholder,
+      );
 
     return Container(
       width: 44,

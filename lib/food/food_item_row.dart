@@ -26,23 +26,20 @@ class FoodItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     Widget? image;
-    if (showImages) {
-      if (food.imageFile.value?.isNotEmpty == true)
-        image = Image.file(
-          File(food.imageFile.value!),
-          cacheWidth: (50 * MediaQuery.devicePixelRatioOf(context)).round(),
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) =>
-              _placeholder(colorScheme),
-        );
-      else if (food.smallImage.value?.isNotEmpty == true)
-        image = CachedNetworkImage(
-          imageUrl: food.smallImage.value!,
-          fit: BoxFit.cover,
-          placeholder: (_, __) => _placeholder(colorScheme),
-          errorWidget: (_, __, ___) => _placeholder(colorScheme),
-        );
-    }
+    if (showImages && food.imageFile.value?.isNotEmpty == true)
+      image = Image.file(
+        File(food.imageFile.value!),
+        cacheWidth: (50 * MediaQuery.devicePixelRatioOf(context)).round(),
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _placeholder(colorScheme),
+      );
+    else if (showImages && food.smallImage.value?.isNotEmpty == true)
+      image = CachedNetworkImage(
+        imageUrl: food.smallImage.value!,
+        fit: BoxFit.cover,
+        placeholder: (_, __) => _placeholder(colorScheme),
+        errorWidget: (_, __, ___) => _placeholder(colorScheme),
+      );
 
     return ListTile(
       tileColor: isSelected

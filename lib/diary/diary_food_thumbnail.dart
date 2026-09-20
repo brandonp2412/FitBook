@@ -25,23 +25,20 @@ class DiaryFoodThumbnail extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     Widget? image;
-    if (showImages) {
-      if (food.imageFile?.isNotEmpty == true) {
-        image = Image.file(
-          File(food.imageFile!),
-          cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) =>
-              _placeholder(colorScheme),
-        );
-      } else if (food.smallImage?.isNotEmpty == true) {
-        image = CachedNetworkImage(
-          imageUrl: food.smallImage!,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => _placeholder(colorScheme),
-          errorWidget: (context, url, error) => _placeholder(colorScheme),
-        );
-      }
+    if (showImages && food.imageFile?.isNotEmpty == true) {
+      image = Image.file(
+        File(food.imageFile!),
+        cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _placeholder(colorScheme),
+      );
+    } else if (showImages && food.smallImage?.isNotEmpty == true) {
+      image = CachedNetworkImage(
+        imageUrl: food.smallImage!,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => _placeholder(colorScheme),
+        errorWidget: (context, url, error) => _placeholder(colorScheme),
+      );
     }
 
     return Container(
