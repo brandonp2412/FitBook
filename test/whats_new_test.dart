@@ -15,7 +15,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.textContaining('Patrol-Zurücknavigation für Erinnerungen'),
+      find.textContaining('Lokalisierte Changelog-Abdeckung korrigieren'),
       findsOneWidget,
     );
   });
