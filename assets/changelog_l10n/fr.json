@@ -108,5 +108,6 @@
   "1739183116": "- Mettre à jour les captures d’écran\n- Corriger la hauteur du graphique sur tablette\n- Utiliser des lignes courbes par défaut\n- Uniformiser la couleur d’arrière-plan du lanceur\n- Corriger les sauvegardes automatiques",
   "1739182275": "- Corriger la hauteur du graphique sur tablette\n- Utiliser des lignes courbes par défaut\n- Uniformiser la couleur d’arrière-plan du lanceur\n- Corriger les sauvegardes automatiques",
   "1739174605": "- Corriger les sauvegardes automatiques\n- Adapter la hauteur du graphique\n- Copier la surface du thème sombre pour l’icône de l’application\n- Définir un objectif dans les captures d’écran\n- Utiliser des lignes courbes par défaut",
-  "1739174409": "- Corriger les problèmes de date\n- Décommenter fastlane supply dans le déploiement\n- Renommer AppGroupBy en Period\n- Supprimer l’appel à init dans screenshot_test"
+  "1739174409": "- Corriger les problèmes de date\n- Décommenter fastlane supply dans le déploiement\n- Renommer AppGroupBy en Period\n- Supprimer l’appel à init dans screenshot_test",
+  "1790247945": "• Traduction du dernier journal des modifications de FitBook (#137)"
 }
