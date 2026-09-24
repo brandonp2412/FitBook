@@ -306,6 +306,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageChineseSimplified => 'Chinês (simplificado)';
 
   @override
+  String get languageChineseTraditional => 'Chinês (tradicional)';
+
+  @override
   String get appearanceSettings => 'Configurações de aparência';
 
   @override
@@ -1773,6 +1776,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get languageChineseSimplified => 'Chinês (simplificado)';
+
+  @override
+  String get languageChineseTraditional => 'Chinês (tradicional)';
 
   @override
   String get appearanceSettings => 'Configurações de aparência';

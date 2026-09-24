@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "FitBook 使用相機掃描食品條碼。";
+"NSPhotoLibraryUsageDescription" = "FitBook 使用照片圖庫新增食品和餐點圖片。";
+"NSAppleMusicUsageDescription" = "FitBook 使用的第三方元件會要求存取 Apple Music。";

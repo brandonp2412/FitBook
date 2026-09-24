@@ -299,6 +299,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get languageChineseSimplified => '중국어(간체)';
 
   @override
+  String get languageChineseTraditional => '중국어(번체)';
+
+  @override
   String get appearanceSettings => '화면 설정';
 
   @override

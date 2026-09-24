@@ -306,6 +306,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageChineseSimplified => 'Chinese (Simplified)';
 
   @override
+  String get languageChineseTraditional => 'Chinese (Traditional)';
+
+  @override
   String get appearanceSettings => 'Appearance settings';
 
   @override

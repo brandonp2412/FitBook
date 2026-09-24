@@ -67,6 +67,7 @@ void main() {
       'pl',
       'pt-BR',
       'zh-CN',
+      'zh-TW',
     };
 
     expect(
@@ -120,6 +121,7 @@ void main() {
       'values-pl',
       'values-pt-rBR',
       'values-zh-rCN',
+      'values-zh-rTW',
     ];
 
     for (final directory in localizedFiles) {
@@ -161,6 +163,7 @@ void main() {
       'pl.lproj',
       'pt-BR.lproj',
       'zh-Hans.lproj',
+      'zh-Hant.lproj',
     ];
 
     for (final directory in localizedDirectories) {
@@ -261,6 +264,7 @@ void main() {
         const Locale('ja'),
         const Locale('ko'),
         const Locale('zh', 'CN'),
+        const Locale('zh', 'TW'),
       }),
     );
   });
@@ -272,6 +276,10 @@ void main() {
     expect(
       localePreferenceFromLocale(const Locale('zh', 'CN')),
       'zh-CN',
+    );
+    expect(
+      localePreferenceFromLocale(const Locale('zh', 'TW')),
+      'zh-TW',
     );
   });
 
