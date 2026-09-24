@@ -80,6 +80,10 @@ List<Widget> getAppearanceSettings(
               value: 'zh-CN',
               child: Text(l10n.languageChineseSimplified),
             ),
+            DropdownMenuItem(
+              value: 'zh-TW',
+              child: Text(l10n.languageChineseTraditional),
+            ),
           ],
           onChanged: (value) => db.settings.update().write(
                 SettingsCompanion(locale: Value(value!)),

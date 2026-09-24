@@ -85,6 +85,7 @@
   "languageJapanese": "日本語",
   "languageKorean": "韓国語",
   "languageChineseSimplified": "中国語（簡体字）",
+  "languageChineseTraditional": "中国語（繁体字）",
   "appearanceSettings": "外観設定",
   "delete": "削除",
   "confirmDelete": "削除の確認",

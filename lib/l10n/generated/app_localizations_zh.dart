@@ -298,6 +298,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageChineseSimplified => '中文（简体）';
 
   @override
+  String get languageChineseTraditional => '中文（繁体）';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1713,6 +1716,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageChineseSimplified => '中文（简体）';
 
   @override
+  String get languageChineseTraditional => '中文（繁体）';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -2832,4 +2838,1422 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get calorieEquivalentWeight200 => '相当于 200 kcal 的重量';
+}
+
+/// The translations for Chinese, as used in Taiwan (`zh_TW`).
+class AppLocalizationsZhTw extends AppLocalizationsZh {
+  AppLocalizationsZhTw() : super('zh_TW');
+
+  @override
+  String get appTitle => 'FitBook';
+
+  @override
+  String get navDiary => '日記';
+
+  @override
+  String get navGraph => '圖表';
+
+  @override
+  String get navFood => '食物';
+
+  @override
+  String get navWeight => '體重';
+
+  @override
+  String get navError => '錯誤';
+
+  @override
+  String get loadDataFailed => '無法載入這些資料。';
+
+  @override
+  String get settings => '設定';
+
+  @override
+  String get invalidTabSettings => '標籤頁設定無效。';
+
+  @override
+  String newVersion(String version) {
+    return '新版本 $version';
+  }
+
+  @override
+  String get changes => '更新內容';
+
+  @override
+  String get searchSettings => '搜尋設定...';
+
+  @override
+  String get appearance => '外觀';
+
+  @override
+  String get appearanceSubtitle => '主題、顏色和圖表顯示';
+
+  @override
+  String get diary => '日記';
+
+  @override
+  String get diarySubtitle => '每日目標、摘要和記錄';
+
+  @override
+  String get food => '食物';
+
+  @override
+  String get foodSubtitle => '食物單位、欄位和預設值';
+
+  @override
+  String get weight => '體重';
+
+  @override
+  String get weightSubtitle => '體重單位、目標和顯示';
+
+  @override
+  String get tabs => '標籤頁';
+
+  @override
+  String get tabsSubtitle => '導航標籤頁及順序';
+
+  @override
+  String get data => '資料';
+
+  @override
+  String get dataSubtitle => '匯入、匯出和本地資料';
+
+  @override
+  String get todayProgress => '今日進度';
+
+  @override
+  String get latestDay => '最近一天';
+
+  @override
+  String loggedEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '已記錄 $count 項',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String editEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '編輯 $count 條記錄',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get calories => '熱量';
+
+  @override
+  String get protein => '蛋白質';
+
+  @override
+  String get carbs => '碳水化合物';
+
+  @override
+  String get fat => '脂肪';
+
+  @override
+  String get addDiaryEntry => '新增日記記錄';
+
+  @override
+  String get noEntriesToday => '今天還沒有記錄。';
+
+  @override
+  String addSearchToDiary(String search) {
+    return '將“$search”新增到日記';
+  }
+
+  @override
+  String get tapStartLoggingFood => '點按即可開始記錄食物。';
+
+  @override
+  String get noMatchingDiaryEntriesTapCreate => '沒有匹配的日記記錄。點按即可建立此食物並記錄。';
+
+  @override
+  String get add => '新增';
+
+  @override
+  String get quickAdd => '快速新增';
+
+  @override
+  String get scanBarcode => '掃描條形碼';
+
+  @override
+  String get foodLibrary => '食物庫';
+
+  @override
+  String foodLibraryCounts(int foodCount, int mealCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      foodCount,
+      locale: localeName,
+      other: '$foodCount 種食物',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      mealCount,
+      locale: localeName,
+      other: '$mealCount 份餐食',
+    );
+    return '$_temp0 · $_temp1';
+  }
+
+  @override
+  String get recentlyUsed => '最近使用';
+
+  @override
+  String get quickActions => '快捷操作';
+
+  @override
+  String get addFood => '新增食物';
+
+  @override
+  String get createMeal => '建立餐食';
+
+  @override
+  String get noFoodYet => '還沒有食物';
+
+  @override
+  String get noMatchingFood => '沒有匹配的食物';
+
+  @override
+  String get addFirstFoodOrMeal => '新增第一種食物或第一份餐食，開始建立你的食物庫。';
+
+  @override
+  String noFoodSearchMatches(String search) {
+    return '沒有與“$search”匹配的內容。清除搜尋即可再次檢視全部內容。';
+  }
+
+  @override
+  String get clearSearch => '清除搜尋';
+
+  @override
+  String get addMeal => '新增餐食';
+
+  @override
+  String get noWeightsYet => '還沒有體重記錄';
+
+  @override
+  String get noMatchingWeights => '沒有匹配的體重記錄';
+
+  @override
+  String get logFirstWeight => '記錄第一次體重，開始跟蹤變化趨勢。';
+
+  @override
+  String noWeightSearchMatches(String search) {
+    return '沒有與“$search”匹配的內容。清除搜尋即可檢視所有記錄。';
+  }
+
+  @override
+  String get logWeight => '記錄體重';
+
+  @override
+  String get weightTrend => '體重趨勢';
+
+  @override
+  String get weightTrendSubtitle => '近期測量和整體趨勢';
+
+  @override
+  String get bodyWeight => '體重';
+
+  @override
+  String get options => '選項';
+
+  @override
+  String get day => '日';
+
+  @override
+  String get today => '今天';
+
+  @override
+  String get week => '周';
+
+  @override
+  String get month => '月';
+
+  @override
+  String get year => '年';
+
+  @override
+  String get dateRange => '日期範圍';
+
+  @override
+  String get startDate => '開始日期';
+
+  @override
+  String get stopDate => '結束日期';
+
+  @override
+  String get dataPoints => '資料點';
+
+  @override
+  String get customizeFields => '自定義欄位';
+
+  @override
+  String get language => '語言';
+
+  @override
+  String get languageSubtitle => '選擇 FitBook 使用的語言';
+
+  @override
+  String get languageSystem => '系統';
+
+  @override
+  String get languageEnglish => '英語';
+
+  @override
+  String get languageSpanish => '西班牙語';
+
+  @override
+  String get languageFrench => '法語';
+
+  @override
+  String get languageGerman => '德語';
+
+  @override
+  String get languageItalian => '義大利語';
+
+  @override
+  String get languagePortugueseBrazil => '葡萄牙語（巴西）';
+
+  @override
+  String get languageDutch => '荷蘭語';
+
+  @override
+  String get languagePolish => '波蘭語';
+
+  @override
+  String get languageJapanese => '日語';
+
+  @override
+  String get languageKorean => '韓語';
+
+  @override
+  String get languageChineseSimplified => '中文（簡體）';
+
+  @override
+  String get languageChineseTraditional => '中文（繁體）';
+
+  @override
+  String get appearanceSettings => '外觀設定';
+
+  @override
+  String get delete => '刪除';
+
+  @override
+  String get confirmDelete => '確認刪除';
+
+  @override
+  String confirmDeleteRecords(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '確定要刪除$count條記錄嗎？此操作無法撤銷。',
+      one: '確定要刪除1條記錄嗎？此操作無法撤銷。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get search => '搜尋...';
+
+  @override
+  String get clear => '清除';
+
+  @override
+  String get showMenu => '顯示選單';
+
+  @override
+  String get selectAll => '全選';
+
+  @override
+  String get edit => '編輯';
+
+  @override
+  String get favorite => '收藏';
+
+  @override
+  String get atLeastOneTab => '至少需要保留一個標籤頁';
+
+  @override
+  String get scrollableTabs => '可滾動標籤頁';
+
+  @override
+  String get save => '儲存';
+
+  @override
+  String get themeSystem => '系統';
+
+  @override
+  String get themeDark => '深色';
+
+  @override
+  String get themeLight => '淺色';
+
+  @override
+  String get pureBlackAmoled => '純黑 (AMOLED)';
+
+  @override
+  String get pureBlackAmoledTooltip => '在 AMOLED 螢幕上使用純黑色';
+
+  @override
+  String get systemColorScheme => '系統配色';
+
+  @override
+  String get systemColorSchemeTooltip => '在應用中使用裝置的主色';
+
+  @override
+  String get showImages => '顯示圖片';
+
+  @override
+  String get showImagesTooltip => '在日記和食物頁面選擇並顯示圖片';
+
+  @override
+  String get curveLineGraphs => '曲線折線圖';
+
+  @override
+  String get curveLineGraphsTooltip => '在圖表頁面使用平滑曲線';
+
+  @override
+  String get weightStatCards => '體重統計卡片';
+
+  @override
+  String get weightStatCardsTooltip => '將體重記錄顯示為統計卡片網格，而不是預設列表';
+
+  @override
+  String get graphsStartAtZero => '圖表從零開始';
+
+  @override
+  String get graphsStartAtZeroTooltip => '始終讓圖表 Y 軸從零開始';
+
+  @override
+  String get navigationAnimation => '導航動畫';
+
+  @override
+  String get animationFade => '淡入淡出';
+
+  @override
+  String get animationZoom => '縮放';
+
+  @override
+  String get animationSlide => '滑動';
+
+  @override
+  String get animationRise => '上升';
+
+  @override
+  String get animationNone => '無';
+
+  @override
+  String longDateFormat(String example) {
+    return '長日期格式（$example）';
+  }
+
+  @override
+  String shortDateFormat(String example) {
+    return '短日期格式（$example）';
+  }
+
+  @override
+  String get diarySettings => '日記設定';
+
+  @override
+  String get diaryUnit => '日記單位';
+
+  @override
+  String get diarySummary => '日記摘要';
+
+  @override
+  String get diarySummaryDivision => '比例 - 當前 / 總計';
+
+  @override
+  String get diarySummaryRemaining => '剩餘';
+
+  @override
+  String get diarySummaryBoth => '兩者 - 剩餘（總計）';
+
+  @override
+  String get diarySummaryNone => '無';
+
+  @override
+  String get dailyCaloriesKcal => '每日熱量 (kcal)';
+
+  @override
+  String get dailyProteinG => '每日蛋白質 (g)';
+
+  @override
+  String get dailyFatG => '每日脂肪 (g)';
+
+  @override
+  String get dailyCarbsG => '每日碳水化合物 (g)';
+
+  @override
+  String get dailyFiberG => '每日膳食纖維 (g)';
+
+  @override
+  String get automaticDailies => '自動每日目標';
+
+  @override
+  String get automaticDailiesTooltip => '根據體重自動計算建議的每日熱量、蛋白質、脂肪和碳水化合物';
+
+  @override
+  String get selectNameOnSubmit => '儲存時選擇名稱';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get foodSettings => '食物設定';
+
+  @override
+  String get foodUnit => '食物單位';
+
+  @override
+  String get fields => '欄位';
+
+  @override
+  String get favoriteNewFoods => '將新食物加入收藏';
+
+  @override
+  String get pickFields => '選擇欄位';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String get onlySelected => '僅已選擇';
+
+  @override
+  String get weightSettings => '體重設定';
+
+  @override
+  String get targetWeight => '目標體重';
+
+  @override
+  String get positiveReinforcement => '積極鼓勵';
+
+  @override
+  String get positiveReinforcementPreview => '鼓勵訊息將像這樣顯示！';
+
+  @override
+  String get dataSettings => '資料設定';
+
+  @override
+  String get automaticBackup => '自動備份';
+
+  @override
+  String get shareDatabase => '共享資料庫';
+
+  @override
+  String get openNotification => '開啟通知';
+
+  @override
+  String get automaticBackupsEnabled => '已啟用自動備份';
+
+  @override
+  String get automaticBackupBody => 'FitBook 每天會自動將你的資料和圖片備份到所選資料夾。';
+
+  @override
+  String get backupSettings => '備份設定';
+
+  @override
+  String get backupSettingsChannelDescription => '關於自動備份的通知';
+
+  @override
+  String get openFoodFacts => 'Open Food Facts';
+
+  @override
+  String get username => '使用者名稱';
+
+  @override
+  String get password => '密碼';
+
+  @override
+  String get close => '關閉';
+
+  @override
+  String get loggedIn => '已登入';
+
+  @override
+  String get about => '關於';
+
+  @override
+  String get version => '版本';
+
+  @override
+  String get whatsNew => '新功能';
+
+  @override
+  String get author => '作者';
+
+  @override
+  String get license => '許可證';
+
+  @override
+  String get donate => '捐贈';
+
+  @override
+  String get supportProject => '幫助支援此專案';
+
+  @override
+  String get leaveReview => '留下評價';
+
+  @override
+  String get rateOnPlayStore => '在 Play 商店評價 FitBook';
+
+  @override
+  String get sourceCode => '原始碼';
+
+  @override
+  String get foods => '食物';
+
+  @override
+  String get backup => '備份';
+
+  @override
+  String get exportData => '匯出資料';
+
+  @override
+  String get importData => '匯入資料';
+
+  @override
+  String get failedImportData => '匯入資料失敗';
+
+  @override
+  String get copyError => '複製錯誤';
+
+  @override
+  String get deleteRecords => '刪除資料';
+
+  @override
+  String get unusedFood => '未使用的食物';
+
+  @override
+  String get database => '資料庫';
+
+  @override
+  String get deleteAllWeightsConfirm => '確定要刪除所有體重記錄嗎？此操作無法撤銷。';
+
+  @override
+  String get deleteDatabaseConfirm => '確定要刪除資料庫嗎？此操作無法撤銷，並會刪除你的所有資料。';
+
+  @override
+  String get deleteFoodsAndDiaryConfirm => '確定要刪除所有食物和日記記錄嗎？此操作無法撤銷。';
+
+  @override
+  String deleteUnusedFoodsConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '確定要刪除 $count 個未使用的食物嗎？此操作無法撤銷。',
+      one: '確定要刪除 1 個未使用的食物嗎？此操作無法撤銷。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get deleteAllDiaryConfirm => '確定要刪除所有日記記錄嗎？此操作無法撤銷。';
+
+  @override
+  String get ok => '確定';
+
+  @override
+  String get replaceImage => '替換圖片';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get deleteImage => '刪除圖片';
+
+  @override
+  String get filters => '篩選';
+
+  @override
+  String get foodGroup => '食物組';
+
+  @override
+  String get exampleFruit => '水果';
+
+  @override
+  String clearFiltersCount(int count) {
+    return '清除（$count）';
+  }
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get showFilters => '顯示篩選條件';
+
+  @override
+  String get repeatEntry => '重複記錄';
+
+  @override
+  String get timeOfDay => '時間';
+
+  @override
+  String get everyDay => '每天';
+
+  @override
+  String get repeatEveryDayForYear => '在接下來一年中每天建立此記錄';
+
+  @override
+  String get repeatOn => '重複日期';
+
+  @override
+  String get weekdayMon => '週一';
+
+  @override
+  String get weekdayTue => '週二';
+
+  @override
+  String get weekdayWed => '週三';
+
+  @override
+  String get weekdayThu => '週四';
+
+  @override
+  String get weekdayFri => '週五';
+
+  @override
+  String get weekdaySat => '週六';
+
+  @override
+  String get weekdaySun => '週日';
+
+  @override
+  String get schedule => '安排';
+
+  @override
+  String get enterValidNutritionValues => '請輸入有效的營養數值';
+
+  @override
+  String get quickAddTitle => '快速新增';
+
+  @override
+  String get kilojoules => '千焦';
+
+  @override
+  String get createdDate => '建立日期';
+
+  @override
+  String get failedMigrations => '遷移失敗';
+
+  @override
+  String get failedMigrationsDescription => '建立或升級資料庫時出現問題。通常可以透過刪除並重新建立記錄來修復。';
+
+  @override
+  String get errorMessage => '錯誤資訊：';
+
+  @override
+  String get createIssue => '報告問題';
+
+  @override
+  String get cameraPermissionRequired => '掃描需要相機許可權。';
+
+  @override
+  String get scanFoodBarcode => '掃描食物條形碼';
+
+  @override
+  String get holdBarcodeInFrame => '將條形碼保持在框內';
+
+  @override
+  String get pinchToZoom => '雙指捏合縮放';
+
+  @override
+  String get cameraStartFailed => '無法啟動相機';
+
+  @override
+  String get editDiaryEntry => '編輯日記條目';
+
+  @override
+  String get addFoodToDiary => '將食物新增到日記';
+
+  @override
+  String confirmDeleteDiaryEntry(String name) {
+    return '確定要刪除 $name 嗎？';
+  }
+
+  @override
+  String get imageError => '圖片錯誤';
+
+  @override
+  String get setImage => '設定圖片';
+
+  @override
+  String get name => '名稱';
+
+  @override
+  String get searchFoodsAndMeals => '搜尋食物和餐食...';
+
+  @override
+  String get clearSelection => '清除選擇';
+
+  @override
+  String get barcodeNotFoundSaveToInsert => '未找到條形碼。儲存以新增。';
+
+  @override
+  String searchOpenFoodFactsFor(String name) {
+    return '在 OpenFoodFacts 中搜尋“$name”';
+  }
+
+  @override
+  String get meal => '餐食';
+
+  @override
+  String get quantity => '數量';
+
+  @override
+  String get unit => '單位';
+
+  @override
+  String servingWithAmountUnit(String amount, String unit) {
+    return '份 ($amount $unit)';
+  }
+
+  @override
+  String get barcode => '條形碼';
+
+  @override
+  String nutritionPerAmountUnit(String nutrient, String amount, String unit) {
+    return '$nutrient（每 $amount $unit）';
+  }
+
+  @override
+  String nutritionPerQuantityUnit(
+      String nutrient, String quantity, String unit) {
+    return '每 $quantity $unit的$nutrient';
+  }
+
+  @override
+  String get fiber => '膳食纖維';
+
+  @override
+  String get unitServing => '份';
+
+  @override
+  String get unitGrams => '克';
+
+  @override
+  String get unitMilliliters => '毫升';
+
+  @override
+  String get unitKilojoules => '千焦';
+
+  @override
+  String get unitCups => '杯';
+
+  @override
+  String get unitTablespoons => '湯匙';
+
+  @override
+  String get unitMilligrams => '毫克';
+
+  @override
+  String get unitTeaspoons => '茶匙';
+
+  @override
+  String get unitOunces => '盎司';
+
+  @override
+  String get unitPounds => '磅';
+
+  @override
+  String get unitKilograms => '千克';
+
+  @override
+  String get unitLiters => '升';
+
+  @override
+  String get nameConflict => '名稱衝突';
+
+  @override
+  String get replaceExistingFood => '已有同名食物。要替換原來的食物嗎？';
+
+  @override
+  String get no => '否';
+
+  @override
+  String get yes => '是';
+
+  @override
+  String get editFood => '編輯食物';
+
+  @override
+  String confirmDeleteFood(String name) {
+    return '確定要刪除 $name 嗎？';
+  }
+
+  @override
+  String get caloriesKcal => '卡路里 (kcal)';
+
+  @override
+  String get kilojoulesKj => '千焦 (kJ)';
+
+  @override
+  String get servingSize => '每份大小';
+
+  @override
+  String get servingUnit => '每份單位';
+
+  @override
+  String get saveAsNewCopy => '另存為新副本';
+
+  @override
+  String get filterFoods => '篩選食物';
+
+  @override
+  String get narrowFoodsFilters => '使用任意組合的篩選條件縮小列表範圍。';
+
+  @override
+  String get foodDetails => '食物詳情';
+
+  @override
+  String get exampleFruitHint => '例如：水果';
+
+  @override
+  String get servingSizeRangeHint => '設定最小值、最大值或兩者。';
+
+  @override
+  String get minimum => '最小值';
+
+  @override
+  String get maximum => '最大值';
+
+  @override
+  String get noMinimum => '無最小值';
+
+  @override
+  String get noMaximum => '無最大值';
+
+  @override
+  String get clearAll => '全部清除';
+
+  @override
+  String get searchOpenFoodFacts => '搜尋 Open Food Facts';
+
+  @override
+  String get noMatchingProducts => '沒有匹配的產品';
+
+  @override
+  String get tryAnotherNameOrScanBarcode => '請嘗試其他名稱或掃描條形碼。';
+
+  @override
+  String get enterFoodNameToSearch => '在上方輸入食品名稱，然後提交搜尋。';
+
+  @override
+  String get submitToSearch => '搜尋...';
+
+  @override
+  String kcalValue(String value) {
+    return '$value 千卡';
+  }
+
+  @override
+  String proteinGramsValue(String value) {
+    return '蛋白質 $value 克';
+  }
+
+  @override
+  String editFoodsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '編輯 $count 種食品',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editMeal => '編輯餐食';
+
+  @override
+  String get addImage => '新增圖片';
+
+  @override
+  String get noFoodsInMeal => '此餐食中還沒有食物';
+
+  @override
+  String get addFoodToMealHint => '新增食物以開始搭配這頓餐食。';
+
+  @override
+  String get remove => '移除';
+
+  @override
+  String get searchFoods => '搜尋食物...';
+
+  @override
+  String get noFoodsFound => '未找到食物';
+
+  @override
+  String nothingMatchesSearch(String search) {
+    return '沒有與“$search”匹配的結果。';
+  }
+
+  @override
+  String get addFoodsToLibraryFirst => '請先將食物新增到食物庫，再新增到餐食中。';
+
+  @override
+  String caloriesPer100gValue(String value) {
+    return '每 100 克 $value 千卡';
+  }
+
+  @override
+  String get noDataYet => '暫無資料';
+
+  @override
+  String get completePlansToViewGraphs => '完成一些計劃後即可在此檢視圖表。';
+
+  @override
+  String get value => '數值';
+
+  @override
+  String get goal => '目標';
+
+  @override
+  String get notSet => '未設定';
+
+  @override
+  String get trend => '趨勢';
+
+  @override
+  String get smooth => '平滑';
+
+  @override
+  String pointAverage(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 點平均',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editWeight => '編輯體重';
+
+  @override
+  String get addWeight => '新增體重';
+
+  @override
+  String shareWeight(String value, String unit) {
+    return '我剛稱完體重：$value $unit！';
+  }
+
+  @override
+  String weightWithUnit(String unit) {
+    return '體重（$unit）';
+  }
+
+  @override
+  String get pleaseEnterWeight => '請輸入體重';
+
+  @override
+  String get pleaseEnterValidWeight => '請輸入有效的體重';
+
+  @override
+  String get lastWeight => '上次體重';
+
+  @override
+  String unitWithValue(String unit) {
+    return '單位（$unit）';
+  }
+
+  @override
+  String keepUnitAs(String unit) {
+    return '單位保持為 $unit';
+  }
+
+  @override
+  String convertToUnit(String unit) {
+    return '轉換為 $unit';
+  }
+
+  @override
+  String get removeImage => '移除圖片';
+
+  @override
+  String get mealRemindersEnabled => '已開啟用餐提醒';
+
+  @override
+  String get mealRemindersEnabledBody => '如果你還沒有記錄早餐、午餐或晚餐，我們會提醒你記錄。';
+
+  @override
+  String get reminderSettingsChannel => '提醒設定';
+
+  @override
+  String get reminderSettingsChannelDescription => '有關 FitBook 提醒的通知';
+
+  @override
+  String get breakfastReminderTitle => '別忘了記錄早餐';
+
+  @override
+  String get breakfastRemindersChannel => '早餐提醒';
+
+  @override
+  String get breakfastRemindersChannelDescription => '提醒你記錄早餐';
+
+  @override
+  String get lunchReminderTitle => '別忘了記錄午餐';
+
+  @override
+  String get lunchRemindersChannel => '午餐提醒';
+
+  @override
+  String get lunchRemindersChannelDescription => '提醒你記錄午餐';
+
+  @override
+  String get dinnerReminderTitle => '別忘了記錄晚餐';
+
+  @override
+  String get dinnerRemindersChannel => '晚餐提醒';
+
+  @override
+  String get dinnerRemindersChannelDescription => '提醒你記錄晚餐';
+
+  @override
+  String get reinforcementGreatJob => '幹得漂亮！你的努力正在得到回報。';
+
+  @override
+  String get reinforcementKeepItUp => '繼續保持！你的進步非常棒。';
+
+  @override
+  String get reinforcementFantastic => '太棒了！你的堅持正在帶來成果。';
+
+  @override
+  String get reinforcementWellDone => '做得好！你離目標又近了一步。';
+
+  @override
+  String get reinforcementImpressive => '真不錯！你的努力正在開花結果。';
+
+  @override
+  String get reinforcementAmazing => '太棒了！你正走在正確的路上。';
+
+  @override
+  String get reinforcementBravo => '好樣的！你的投入值得稱讚。';
+
+  @override
+  String get reinforcementExcellent => '非常棒！你的堅持令人佩服。';
+
+  @override
+  String get reinforcementSuperb => '太讚了！你做得非常出色。';
+
+  @override
+  String get reinforcementIncredible => '不可思議！你的進步已經看得見了。';
+
+  @override
+  String get reinforcementWayToGoKing => '幹得漂亮，王者！';
+
+  @override
+  String get reinforcementYeahBuddy => '就是這樣！';
+
+  @override
+  String get reinforcementThatsHowItsDone => '這才對嘛。';
+
+  @override
+  String get reinforcementEasyAsPie => '輕輕鬆鬆。';
+
+  @override
+  String get reinforcementDoingGreat => '你做得很棒。';
+
+  @override
+  String get reinforcementProgressNice => '我是不是看到進步了？不錯！';
+
+  @override
+  String diarySummaryRemainingValue(String remaining, String unit) {
+    return '剩餘 $remaining $unit';
+  }
+
+  @override
+  String diarySummaryBothValue(String remaining, String target, String unit) {
+    return '剩餘 $remaining $unit（目標 $target $unit）';
+  }
+
+  @override
+  String diarySummaryDivisionValue(String current, String target, String unit) {
+    return '$current / $target $unit';
+  }
+
+  @override
+  String get nutrientSugars => '糖類';
+
+  @override
+  String get nutrientCholesterol => '膽固醇';
+
+  @override
+  String get nutrientSaturatedFat => '飽和脂肪';
+
+  @override
+  String get nutrientCalcium => '鈣';
+
+  @override
+  String get nutrientIron => '鐵';
+
+  @override
+  String get nutrientPotassium => '鉀';
+
+  @override
+  String get nutrientMagnesium => '鎂';
+
+  @override
+  String get nutrientVitaminA => '維生素 A';
+
+  @override
+  String get nutrientVitaminC => '維生素 C';
+
+  @override
+  String get nutrientVitaminB12 => '維生素 B12';
+
+  @override
+  String get nutrientVitaminD => '維生素 D';
+
+  @override
+  String get nutrientVitaminE => '維生素 E';
+
+  @override
+  String get nutrientAddedSugar => '新增糖';
+
+  @override
+  String get nutrientNetCarbs => '淨碳水化合物';
+
+  @override
+  String get nutrientWater => '水分';
+
+  @override
+  String get nutrientOmega3 => 'Omega-3 脂肪酸';
+
+  @override
+  String get nutrientOmega6 => 'Omega-6 脂肪酸';
+
+  @override
+  String get nutrientPralScore => 'PRAL 評分';
+
+  @override
+  String get nutrientTransFat => '反式脂肪';
+
+  @override
+  String get nutrientSolubleFiber => '可溶性膳食纖維';
+
+  @override
+  String get nutrientInsolubleFiber => '不溶性膳食纖維';
+
+  @override
+  String get nutrientPhosphorus => '磷';
+
+  @override
+  String get nutrientSodium => '鈉';
+
+  @override
+  String get nutrientZinc => '鋅';
+
+  @override
+  String get nutrientCopper => '銅';
+
+  @override
+  String get nutrientManganese => '錳';
+
+  @override
+  String get nutrientSelenium => '硒';
+
+  @override
+  String get nutrientFluoride => '氟化物';
+
+  @override
+  String get nutrientMolybdenum => '鉬';
+
+  @override
+  String get nutrientChloride => '氯化物';
+
+  @override
+  String get nutrientSucrose => '蔗糖';
+
+  @override
+  String get nutrientGlucose => '葡萄糖';
+
+  @override
+  String get nutrientFructose => '果糖';
+
+  @override
+  String get nutrientLactose => '乳糖';
+
+  @override
+  String get nutrientMaltose => '麥芽糖';
+
+  @override
+  String get nutrientGalactose => '半乳糖';
+
+  @override
+  String get nutrientStarch => '澱粉';
+
+  @override
+  String get nutrientSugarAlcohols => '糖醇';
+
+  @override
+  String get nutrientThiaminB1 => '硫胺素（B1）';
+
+  @override
+  String get nutrientRiboflavinB2 => '核黃素（B2）';
+
+  @override
+  String get nutrientNiacinB3 => '煙酸（B3）';
+
+  @override
+  String get nutrientPantothenicAcidB5 => '泛酸（B5）';
+
+  @override
+  String get nutrientVitaminB6 => '維生素 B6';
+
+  @override
+  String get nutrientBiotinB7 => '生物素（B7）';
+
+  @override
+  String get nutrientFolateB9 => '葉酸（B9）';
+
+  @override
+  String get nutrientFolicAcid => '合成葉酸';
+
+  @override
+  String get nutrientFoodFolate => '食物葉酸';
+
+  @override
+  String get nutrientFolateDfe => '膳食葉酸當量（DFE）';
+
+  @override
+  String get nutrientCholine => '膽鹼';
+
+  @override
+  String get nutrientBetaine => '甜菜鹼';
+
+  @override
+  String get nutrientRetinol => '視黃醇';
+
+  @override
+  String get nutrientBetaCarotene => 'β-胡蘿蔔素';
+
+  @override
+  String get nutrientAlphaCarotene => 'α-胡蘿蔔素';
+
+  @override
+  String get nutrientLycopene => '番茄紅素';
+
+  @override
+  String get nutrientLuteinZeaxanthin => '葉黃素 + 玉米黃質';
+
+  @override
+  String get nutrientVitaminD2 => '維生素 D2（麥角鈣化醇）';
+
+  @override
+  String get nutrientVitaminD3 => '維生素 D3（膽鈣化醇）';
+
+  @override
+  String get nutrientVitaminK => '維生素 K';
+
+  @override
+  String get nutrientDihydrophylloquinone => '二氫葉綠醌';
+
+  @override
+  String get nutrientMenaquinone4 => '甲萘醌-4（MK-4）';
+
+  @override
+  String get nutrientMonounsaturatedFat => '單不飽和脂肪';
+
+  @override
+  String get nutrientPolyunsaturatedFat => '多不飽和脂肪';
+
+  @override
+  String get nutrientAla => 'α-亞麻酸（ALA）';
+
+  @override
+  String get nutrientEpa => '二十碳五烯酸（EPA）';
+
+  @override
+  String get nutrientDpa => '二十二碳五烯酸（DPA）';
+
+  @override
+  String get nutrientDha => '二十二碳六烯酸（DHA）';
+
+  @override
+  String get nutrientAlanine => '丙氨酸';
+
+  @override
+  String get nutrientAlcohol => '酒精';
+
+  @override
+  String get nutrientArginine => '精氨酸';
+
+  @override
+  String get nutrientAsparticAcid => '天冬氨酸';
+
+  @override
+  String get nutrientCystine => '胱氨酸';
+
+  @override
+  String get nutrientGlutamicAcid => '穀氨酸';
+
+  @override
+  String get nutrientGlycine => '甘氨酸';
+
+  @override
+  String get nutrientHistidine => '組氨酸';
+
+  @override
+  String get nutrientHydroxyproline => '羥脯氨酸';
+
+  @override
+  String get nutrientIsoleucine => '異亮氨酸';
+
+  @override
+  String get nutrientLeucine => '亮氨酸';
+
+  @override
+  String get nutrientLysine => '賴氨酸';
+
+  @override
+  String get nutrientMethionine => '蛋氨酸';
+
+  @override
+  String get nutrientPhenylalanine => '苯丙氨酸';
+
+  @override
+  String get nutrientProline => '脯氨酸';
+
+  @override
+  String get nutrientSerine => '絲氨酸';
+
+  @override
+  String get nutrientThreonine => '蘇氨酸';
+
+  @override
+  String get nutrientTryptophan => '色氨酸';
+
+  @override
+  String get nutrientTyrosine => '酪氨酸';
+
+  @override
+  String get nutrientValine => '纈氨酸';
+
+  @override
+  String get nutrientCaffeine => '咖啡因';
+
+  @override
+  String get nutrientTheobromine => '可可鹼';
+
+  @override
+  String servingWeightNumber(int number) {
+    return '份量重量 $number';
+  }
+
+  @override
+  String servingDescriptionNumber(int number) {
+    return '份量描述 $number';
+  }
+
+  @override
+  String get calorieEquivalentWeight200 => '相當於 200 kcal 的重量';
 }

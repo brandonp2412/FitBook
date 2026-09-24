@@ -92,6 +92,7 @@
   "languageJapanese": "Japanese",
   "languageKorean": "Korean",
   "languageChineseSimplified": "Chinese (Simplified)",
+  "languageChineseTraditional": "Chinese (Traditional)",
   "appearanceSettings": "Appearance settings",
   "delete": "Delete",
   "confirmDelete": "Confirm delete",

@@ -299,6 +299,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageChineseSimplified => '中国語（簡体字）';
 
   @override
+  String get languageChineseTraditional => '中国語（繁体字）';
+
+  @override
   String get appearanceSettings => '外観設定';
 
   @override

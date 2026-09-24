@@ -115,7 +115,8 @@ abstract class AppLocalizations {
     Locale('pt'),
     Locale('pt', 'BR'),
     Locale('zh'),
-    Locale('zh', 'CN')
+    Locale('zh', 'CN'),
+    Locale('zh', 'TW')
   ];
 
   /// No description provided for @appTitle.
@@ -627,6 +628,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chinese (Simplified)'**
   String get languageChineseSimplified;
+
+  /// No description provided for @languageChineseTraditional.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese (Traditional)'**
+  String get languageChineseTraditional;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2762,6 +2769,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
         switch (locale.countryCode) {
           case 'CN':
             return AppLocalizationsZhCn();
+          case 'TW':
+            return AppLocalizationsZhTw();
         }
         break;
       }
