@@ -163,6 +163,7 @@ void main() {
       'pl.lproj',
       'pt-BR.lproj',
       'zh-Hans.lproj',
+      'zh-Hant.lproj',
     ];
 
     for (final directory in localizedDirectories) {
