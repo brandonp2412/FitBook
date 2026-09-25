@@ -111,5 +111,6 @@
   "1739174409": "- Corrigir problemas de data\n- Descomentar fastlane supply na implantação\n- Renomear AppGroupBy para Period\n- Remover a chamada a init em screenshot_test",
   "1790247945": "• Traduzido o registro de alterações mais recente do FitBook (#137)",
   "1790268963": "• feat(l10n): adicionar chinês tradicional ao FitBook\n• fix(l10n): concluir cobertura do iOS em chinês tradicional\n• fix(l10n): traduzir histórico de alterações da versão 2.0.99",
-  "1790300846": "• feat(l10n): traduções para russo adicionadas (#139)"
+  "1790300846": "• feat(l10n): traduções para russo adicionadas (#139)",
+  "1790348228": "• feat(l10n): adicionar traduções em hindi"
 }
