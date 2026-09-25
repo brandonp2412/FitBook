@@ -60,6 +60,7 @@ void main() {
       'de',
       'es',
       'fr',
+      'hi',
       'it',
       'ja',
       'ko',
