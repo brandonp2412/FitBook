@@ -312,6 +312,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageRussian => 'Russo';
 
   @override
+  String get languageHindi => 'Hindi';
+
+  @override
   String get appearanceSettings => 'Configurações de aparência';
 
   @override
@@ -1785,6 +1788,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get languageRussian => 'Russo';
+
+  @override
+  String get languageHindi => 'Hindi';
 
   @override
   String get appearanceSettings => 'Configurações de aparência';

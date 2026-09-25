@@ -312,6 +312,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageRussian => 'Russisch';
 
   @override
+  String get languageHindi => 'Hindi';
+
+  @override
   String get appearanceSettings => 'Weergave-instellingen';
 
   @override

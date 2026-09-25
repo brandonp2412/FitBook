@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">बैकअप विफल: बैकअप पथ सेट नहीं है। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_channel_name">बैकअप</string>
+    <string name="backup_channel_description">डेटाबेस के स्वचालित बैकअप</string>
+    <string name="backup_failed_directory_access">बैकअप विफल: बैकअप फ़ोल्डर तक पहुँच नहीं मिली। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_failed_create_file">बैकअप विफल: बैकअप फ़ाइल नहीं बनाई जा सकी। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="share">साझा करें</string>
+    <string name="backup_failed_app_files_directory">बैकअप विफल: ऐप फ़ाइलों के फ़ोल्डर तक पहुँच नहीं मिली। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_failed_parent_directory">बैकअप विफल: मूल फ़ोल्डर तक पहुँच नहीं मिली। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_failed_output_stream">बैकअप विफल: आउटपुट स्ट्रीम नहीं खोली जा सकी। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_failed_database_missing">बैकअप विफल: डेटाबेस फ़ाइल नहीं मिली। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_success_title">डेटा और चित्रों का बैकअप बन गया</string>
+    <string name="backup_failed_unexpected">अप्रत्याशित त्रुटि के कारण बैकअप विफल हुआ। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+</resources>
