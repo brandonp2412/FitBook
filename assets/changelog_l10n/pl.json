@@ -109,5 +109,6 @@
   "1739182275": "- Naprawić wysokość wykresu na tabletach\n- Domyślnie używać zakrzywionych linii\n- Ujednolicić kolor tła launchera\n- Naprawić automatyczne kopie zapasowe",
   "1739174605": "- Naprawić automatyczne kopie zapasowe\n- Skalować wysokość wykresu\n- Użyć koloru powierzchni ciemnego motywu dla ikony aplikacji\n- Ustawić cel na zrzutach ekranu\n- Domyślnie używać zakrzywionych linii",
   "1739174409": "- Naprawić problemy z datą\n- Ponownie włączyć fastlane supply we wdrożeniu\n- Zmienić nazwę AppGroupBy na Period\n- Usunąć wywołanie init z screenshot_test",
-  "1790247945": "• Przetłumaczono najnowszy dziennik zmian FitBook (#137)"
+  "1790247945": "• Przetłumaczono najnowszy dziennik zmian FitBook (#137)",
+  "1790268963": "• feat(l10n): dodać chiński tradycyjny do FitBook\n• fix(l10n): uzupełnić obsługę iOS dla chińskiego tradycyjnego\n• fix(l10n): przetłumaczyć listę zmian 2.0.99"
 }

@@ -15,6 +15,7 @@ import 'app_localizations_ko.dart';
 import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -114,6 +115,7 @@ abstract class AppLocalizations {
     Locale('pl'),
     Locale('pt'),
     Locale('pt', 'BR'),
+    Locale('ru'),
     Locale('zh'),
     Locale('zh', 'CN'),
     Locale('zh', 'TW')
@@ -634,6 +636,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chinese (Traditional)'**
   String get languageChineseTraditional;
+
+  /// No description provided for @languageRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get languageRussian;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2746,6 +2754,7 @@ class _AppLocalizationsDelegate
         'nl',
         'pl',
         'pt',
+        'ru',
         'zh'
       ].contains(locale.languageCode);
 
@@ -2798,6 +2807,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsPl();
     case 'pt':
       return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
     case 'zh':
       return AppLocalizationsZh();
   }

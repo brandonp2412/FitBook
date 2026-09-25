@@ -66,6 +66,7 @@ void main() {
       'nl',
       'pl',
       'pt-BR',
+      'ru',
       'zh-CN',
       'zh-TW',
     };
@@ -120,6 +121,7 @@ void main() {
       'values-nl',
       'values-pl',
       'values-pt-rBR',
+      'values-ru',
       'values-zh-rCN',
       'values-zh-rTW',
     ];
@@ -162,6 +164,7 @@ void main() {
       'nl.lproj',
       'pl.lproj',
       'pt-BR.lproj',
+      'ru.lproj',
       'zh-Hans.lproj',
       'zh-Hant.lproj',
     ];
@@ -261,6 +264,7 @@ void main() {
         const Locale('pt', 'BR'),
         const Locale('nl'),
         const Locale('pl'),
+        const Locale('ru'),
         const Locale('ja'),
         const Locale('ko'),
         const Locale('zh', 'CN'),
@@ -272,6 +276,7 @@ void main() {
   test('stored locale preferences preserve system and region choices', () {
     expect(localeFromPreference('system'), isNull);
     expect(localeFromPreference('de'), const Locale('de'));
+    expect(localeFromPreference('ru'), const Locale('ru'));
     expect(localeFromPreference('pt-BR'), const Locale('pt', 'BR'));
     expect(
       localePreferenceFromLocale(const Locale('zh', 'CN')),
@@ -315,6 +320,7 @@ void main() {
   test('food library counts use locale plural rules', () async {
     final english = await AppLocalizations.delegate.load(const Locale('en'));
     final polish = await AppLocalizations.delegate.load(const Locale('pl'));
+    final russian = await AppLocalizations.delegate.load(const Locale('ru'));
     final japanese = await AppLocalizations.delegate.load(const Locale('ja'));
 
     expect(english.foodLibraryCounts(1, 1), '1 food · 1 meal');
@@ -322,6 +328,9 @@ void main() {
     expect(polish.foodLibraryCounts(1, 1), '1 produkt · 1 posiłek');
     expect(polish.foodLibraryCounts(2, 4), '2 produkty · 4 posiłki');
     expect(polish.foodLibraryCounts(5, 5), '5 produktów · 5 posiłków');
+    expect(russian.foodLibraryCounts(1, 1), '1 продукт · 1 приём пищи');
+    expect(russian.foodLibraryCounts(2, 3), '2 продукта · 3 приёма пищи');
+    expect(russian.foodLibraryCounts(5, 5), '5 продуктов · 5 приёмов пищи');
     expect(japanese.foodLibraryCounts(1, 2), '食品 1 件 · 食事 2 件');
   });
 

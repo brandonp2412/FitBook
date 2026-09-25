@@ -301,6 +301,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageChineseTraditional => '中文（繁体）';
 
   @override
+  String get languageRussian => '俄语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1719,6 +1722,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageChineseTraditional => '中文（繁体）';
 
   @override
+  String get languageRussian => '俄语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3135,6 +3141,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languageChineseTraditional => '中文（繁體）';
+
+  @override
+  String get languageRussian => '俄語';
 
   @override
   String get appearanceSettings => '外觀設定';

@@ -317,6 +317,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get languageChineseTraditional => 'Chiński (tradycyjny)';
 
   @override
+  String get languageRussian => 'Rosyjski';
+
+  @override
   String get appearanceSettings => 'Ustawienia wyglądu';
 
   @override
