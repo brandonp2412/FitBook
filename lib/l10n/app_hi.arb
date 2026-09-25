@@ -1,0 +1,713 @@
+{
+  "@@locale": "hi",
+  "appTitle": "FitBook",
+  "navDiary": "डायरी",
+  "navGraph": "ग्राफ़",
+  "navFood": "भोजन",
+  "navWeight": "वज़न",
+  "navError": "त्रुटि",
+  "loadDataFailed": "यह डेटा लोड नहीं हो सका।",
+  "settings": "सेटिंग्स",
+  "invalidTabSettings": "टैब सेटिंग्स अमान्य हैं।",
+  "newVersion": "नया संस्करण {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "बदलाव",
+  "searchSettings": "सेटिंग्स खोजें...",
+  "appearance": "दिखावट",
+  "appearanceSubtitle": "थीम, रंग और ग्राफ़ प्रदर्शन",
+  "diary": "डायरी",
+  "diarySubtitle": "दैनिक लक्ष्य, सारांश और लॉगिंग",
+  "food": "भोजन",
+  "foodSubtitle": "भोजन की इकाइयाँ, फ़ील्ड और डिफ़ॉल्ट",
+  "weight": "वज़न",
+  "weightSubtitle": "वज़न की इकाइयाँ, लक्ष्य और प्रदर्शन",
+  "tabs": "टैब",
+  "tabsSubtitle": "नेविगेशन टैब और क्रम",
+  "data": "डेटा",
+  "dataSubtitle": "इम्पोर्ट, एक्सपोर्ट और स्थानीय डेटा",
+  "todayProgress": "आज की प्रगति",
+  "latestDay": "नवीनतम दिन",
+  "loggedEntries": "{count, plural, =0{कोई प्रविष्टि लॉग नहीं हुई} =1{1 प्रविष्टि लॉग हुई} other{{count} प्रविष्टियाँ लॉग हुईं}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{1 प्रविष्टि संपादित करें} other{{count} प्रविष्टियाँ संपादित करें}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "कैलोरी",
+  "protein": "प्रोटीन",
+  "carbs": "कार्ब्स",
+  "fat": "वसा",
+  "addDiaryEntry": "डायरी प्रविष्टि जोड़ें",
+  "noEntriesToday": "आज कोई प्रविष्टि नहीं है।",
+  "addSearchToDiary": "\"{search}\" को अपनी डायरी में जोड़ें",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "भोजन लॉग करना शुरू करने के लिए टैप करें।",
+  "noMatchingDiaryEntriesTapCreate": "कोई मेल खाती डायरी प्रविष्टि नहीं मिली। यह भोजन बनाने और लॉग करने के लिए टैप करें।",
+  "add": "जोड़ें",
+  "quickAdd": "त्वरित जोड़ें",
+  "scanBarcode": "बारकोड स्कैन करें",
+  "foodLibrary": "भोजन लाइब्रेरी",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 भोजन} other{{foodCount} भोजन}} · {mealCount, plural, =1{1 मील} other{{mealCount} मील}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "हाल में उपयोग किए गए",
+  "quickActions": "त्वरित कार्रवाइयाँ",
+  "addFood": "भोजन जोड़ें",
+  "createMeal": "मील बनाएँ",
+  "noFoodYet": "अभी कोई भोजन नहीं",
+  "noMatchingFood": "कोई मेल खाता भोजन नहीं",
+  "addFirstFoodOrMeal": "अपनी लाइब्रेरी बनाना शुरू करने के लिए पहला भोजन या मील जोड़ें।",
+  "noFoodSearchMatches": "“{search}” से कुछ भी मेल नहीं खाता। सब कुछ फिर से देखने के लिए खोज साफ़ करें।",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "खोज साफ़ करें",
+  "addMeal": "मील जोड़ें",
+  "noWeightsYet": "अभी कोई वज़न नहीं",
+  "noMatchingWeights": "कोई मेल खाता वज़न नहीं",
+  "logFirstWeight": "अपना रुझान ट्रैक करना शुरू करने के लिए पहला वज़न लॉग करें।",
+  "noWeightSearchMatches": "“{search}” से कुछ भी मेल नहीं खाता। सभी प्रविष्टियाँ देखने के लिए खोज साफ़ करें।",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "वज़न लॉग करें",
+  "weightTrend": "वज़न का रुझान",
+  "weightTrendSubtitle": "हाल के माप और समग्र दिशा",
+  "bodyWeight": "शरीर का वज़न",
+  "options": "विकल्प",
+  "day": "दिन",
+  "today": "आज",
+  "week": "सप्ताह",
+  "month": "महीना",
+  "year": "वर्ष",
+  "dateRange": "तारीख़ सीमा",
+  "startDate": "प्रारंभ तारीख़",
+  "stopDate": "समाप्ति तारीख़",
+  "dataPoints": "डेटा बिंदु",
+  "customizeFields": "फ़ील्ड अनुकूलित करें",
+  "language": "भाषा",
+  "languageSubtitle": "FitBook में इस्तेमाल होने वाली भाषा चुनें",
+  "languageSystem": "सिस्टम",
+  "languageEnglish": "अंग्रेज़ी",
+  "languageSpanish": "स्पेनिश",
+  "languageFrench": "फ़्रेंच",
+  "languageGerman": "जर्मन",
+  "languageItalian": "इतालवी",
+  "languagePortugueseBrazil": "पुर्तगाली (ब्राज़ील)",
+  "languageDutch": "डच",
+  "languagePolish": "पोलिश",
+  "languageJapanese": "जापानी",
+  "languageKorean": "कोरियाई",
+  "languageChineseSimplified": "चीनी (सरलीकृत)",
+  "languageChineseTraditional": "चीनी (पारंपरिक)",
+  "languageRussian": "रूसी",
+  "languageHindi": "हिन्दी",
+  "appearanceSettings": "दिखावट सेटिंग्स",
+  "delete": "हटाएँ",
+  "confirmDelete": "हटाने की पुष्टि करें",
+  "confirmDeleteRecords": "{count, plural, =1{क्या आप वाकई 1 रिकॉर्ड हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।} other{क्या आप वाकई {count} रिकॉर्ड हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "रद्द करें",
+  "search": "खोजें...",
+  "clear": "साफ़ करें",
+  "showMenu": "मेन्यू दिखाएँ",
+  "selectAll": "सभी चुनें",
+  "edit": "संपादित करें",
+  "favorite": "पसंदीदा",
+  "atLeastOneTab": "कम से कम एक टैब आवश्यक है",
+  "scrollableTabs": "स्क्रॉल करने योग्य टैब",
+  "save": "सहेजें",
+  "themeSystem": "सिस्टम",
+  "themeDark": "गहरा",
+  "themeLight": "हल्का",
+  "pureBlackAmoled": "शुद्ध काला (AMOLED)",
+  "pureBlackAmoledTooltip": "AMOLED डिस्प्ले के लिए शुद्ध काले रंग इस्तेमाल करें",
+  "systemColorScheme": "सिस्टम रंग योजना",
+  "systemColorSchemeTooltip": "ऐप के लिए अपने डिवाइस का प्राथमिक रंग इस्तेमाल करें",
+  "showImages": "चित्र दिखाएँ",
+  "showImagesTooltip": "डायरी और भोजन पेजों पर चित्र चुनें और दिखाएँ",
+  "curveLineGraphs": "घुमावदार रेखा ग्राफ़",
+  "curveLineGraphsTooltip": "ग्राफ़ पेज पर चिकनी वक्र रेखाएँ इस्तेमाल करें",
+  "weightStatCards": "वज़न आँकड़ा कार्ड",
+  "weightStatCardsTooltip": "डिफ़ॉल्ट सूची की जगह वज़न प्रविष्टियों को आँकड़ा कार्ड के ग्रिड के रूप में दिखाएँ",
+  "graphsStartAtZero": "ग्राफ़ शून्य से शुरू हों",
+  "graphsStartAtZeroTooltip": "ग्राफ़ की y-अक्ष हमेशा शून्य से शुरू करें",
+  "navigationAnimation": "नेविगेशन एनीमेशन",
+  "animationFade": "फेड",
+  "animationZoom": "ज़ूम",
+  "animationSlide": "स्लाइड",
+  "animationRise": "ऊपर उठना",
+  "animationNone": "कोई नहीं",
+  "longDateFormat": "लंबा तारीख़ प्रारूप ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "छोटा तारीख़ प्रारूप ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "डायरी सेटिंग्स",
+  "diaryUnit": "डायरी इकाई",
+  "diarySummary": "डायरी सारांश",
+  "diarySummaryDivision": "विभाजन - वर्तमान / कुल",
+  "diarySummaryRemaining": "शेष",
+  "diarySummaryBoth": "दोनों - शेष (कुल)",
+  "diarySummaryNone": "कोई नहीं",
+  "dailyCaloriesKcal": "दैनिक कैलोरी (kcal)",
+  "dailyProteinG": "दैनिक प्रोटीन (g)",
+  "dailyFatG": "दैनिक वसा (g)",
+  "dailyCarbsG": "दैनिक कार्ब्स (g)",
+  "dailyFiberG": "दैनिक फ़ाइबर (g)",
+  "automaticDailies": "स्वचालित दैनिक लक्ष्य",
+  "automaticDailiesTooltip": "अपने शरीर के वज़न से सुझाई गई दैनिक कैलोरी, प्रोटीन, वसा और कार्ब्स अपने-आप गणना करें",
+  "selectNameOnSubmit": "सबमिट करने पर नाम चुनें",
+  "reminders": "रिमाइंडर",
+  "foodSettings": "भोजन सेटिंग्स",
+  "foodUnit": "भोजन इकाई",
+  "fields": "फ़ील्ड",
+  "favoriteNewFoods": "नए भोजन को पसंदीदा बनाएँ",
+  "pickFields": "फ़ील्ड चुनें",
+  "all": "सभी",
+  "onlySelected": "केवल चुने हुए",
+  "weightSettings": "वज़न सेटिंग्स",
+  "targetWeight": "लक्ष्य वज़न",
+  "positiveReinforcement": "सकारात्मक प्रोत्साहन",
+  "positiveReinforcementPreview": "प्रोत्साहन संदेश इस तरह दिखाए जाएँगे!",
+  "dataSettings": "डेटा सेटिंग्स",
+  "automaticBackup": "स्वचालित बैकअप",
+  "shareDatabase": "डेटाबेस साझा करें",
+  "openNotification": "सूचना खोलें",
+  "automaticBackupsEnabled": "स्वचालित बैकअप चालू हैं",
+  "automaticBackupBody": "FitBook हर दिन चुने हुए फ़ोल्डर में आपके डेटा और चित्रों का अपने-आप बैकअप बनाएगा।",
+  "backupSettings": "बैकअप सेटिंग्स",
+  "backupSettingsChannelDescription": "स्वचालित बैकअप के बारे में सूचनाएँ",
+  "openFoodFacts": "Open Food Facts",
+  "username": "उपयोगकर्ता नाम",
+  "password": "पासवर्ड",
+  "close": "बंद करें",
+  "loggedIn": "लॉग इन",
+  "about": "परिचय",
+  "version": "संस्करण",
+  "whatsNew": "नया क्या है?",
+  "author": "लेखक",
+  "license": "लाइसेंस",
+  "donate": "दान करें",
+  "supportProject": "इस परियोजना का समर्थन करें",
+  "leaveReview": "समीक्षा दें",
+  "rateOnPlayStore": "Play Store पर FitBook को रेट करें",
+  "sourceCode": "स्रोत कोड",
+  "foods": "भोजन",
+  "backup": "बैकअप",
+  "exportData": "डेटा एक्सपोर्ट करें",
+  "importData": "डेटा इम्पोर्ट करें",
+  "failedImportData": "डेटा इम्पोर्ट नहीं हो सका",
+  "copyError": "त्रुटि कॉपी करें",
+  "deleteRecords": "रिकॉर्ड हटाएँ",
+  "unusedFood": "अप्रयुक्त भोजन",
+  "database": "डेटाबेस",
+  "deleteAllWeightsConfirm": "क्या आप वाकई सभी वज़न हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।",
+  "deleteDatabaseConfirm": "क्या आप वाकई अपना डेटाबेस हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती और आपका सारा डेटा नष्ट हो जाएगा।",
+  "deleteFoodsAndDiaryConfirm": "क्या आप वाकई सभी भोजन और डायरी प्रविष्टियाँ हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{क्या आप वाकई 1 अप्रयुक्त भोजन हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।} other{क्या आप वाकई {count} अप्रयुक्त भोजन हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "क्या आप वाकई सभी डायरी प्रविष्टियाँ हटाना चाहते हैं? यह कार्रवाई वापस नहीं की जा सकती।",
+  "ok": "ठीक है",
+  "replaceImage": "चित्र बदलें",
+  "takePhoto": "फ़ोटो लें",
+  "deleteImage": "चित्र हटाएँ",
+  "filters": "फ़िल्टर",
+  "foodGroup": "भोजन समूह",
+  "exampleFruit": "फल",
+  "clearFiltersCount": "साफ़ करें ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "हो गया",
+  "showFilters": "फ़िल्टर दिखाएँ",
+  "repeatEntry": "प्रविष्टि दोहराएँ",
+  "timeOfDay": "दिन का समय",
+  "everyDay": "हर दिन",
+  "repeatEveryDayForYear": "अगले एक वर्ष तक हर दिन यह प्रविष्टि बनाएँ",
+  "repeatOn": "इन दिनों दोहराएँ",
+  "weekdayMon": "सोम",
+  "weekdayTue": "मंगल",
+  "weekdayWed": "बुध",
+  "weekdayThu": "गुरु",
+  "weekdayFri": "शुक्र",
+  "weekdaySat": "शनि",
+  "weekdaySun": "रवि",
+  "schedule": "शेड्यूल",
+  "enterValidNutritionValues": "मान्य पोषण मान दर्ज करें",
+  "quickAddTitle": "त्वरित जोड़ें",
+  "kilojoules": "किलोजूल",
+  "createdDate": "बनाने की तारीख़",
+  "failedMigrations": "माइग्रेशन विफल",
+  "failedMigrationsDescription": "डेटाबेस बनाते या अपग्रेड करते समय कुछ गड़बड़ हुई। आम तौर पर रिकॉर्ड हटाकर और फिर से बनाकर इसे ठीक किया जा सकता है।",
+  "errorMessage": "त्रुटि संदेश:",
+  "createIssue": "समस्या रिपोर्ट बनाएँ",
+  "cameraPermissionRequired": "स्कैन करने के लिए कैमरा अनुमति आवश्यक है।",
+  "scanFoodBarcode": "भोजन का बारकोड स्कैन करें",
+  "holdBarcodeInFrame": "बारकोड को फ़्रेम के अंदर रखें",
+  "pinchToZoom": "ज़ूम करने के लिए पिंच करें",
+  "cameraStartFailed": "कैमरा शुरू नहीं हो सका",
+  "editDiaryEntry": "डायरी प्रविष्टि संपादित करें",
+  "addFoodToDiary": "डायरी में भोजन जोड़ें",
+  "confirmDeleteDiaryEntry": "क्या आप वाकई {name} को हटाना चाहते हैं?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "चित्र त्रुटि",
+  "setImage": "चित्र सेट करें",
+  "name": "नाम",
+  "searchFoodsAndMeals": "भोजन और मील खोजें...",
+  "clearSelection": "चयन साफ़ करें",
+  "barcodeNotFoundSaveToInsert": "बारकोड नहीं मिला। जोड़ने के लिए सहेजें।",
+  "searchOpenFoodFactsFor": "\"{name}\" के लिए OpenFoodFacts खोजें",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "मील",
+  "quantity": "मात्रा",
+  "unit": "इकाई",
+  "servingWithAmountUnit": "सर्विंग ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "बारकोड",
+  "nutritionPerAmountUnit": "{nutrient} (प्रति {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "प्रति {quantity} {unit} में {nutrient}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "फ़ाइबर",
+  "unitServing": "सर्विंग",
+  "unitGrams": "ग्राम",
+  "unitMilliliters": "मिलीलीटर",
+  "unitKilojoules": "किलोजूल",
+  "unitCups": "कप",
+  "unitTablespoons": "बड़ा चम्मच",
+  "unitMilligrams": "मिलीग्राम",
+  "unitTeaspoons": "छोटा चम्मच",
+  "unitOunces": "औंस",
+  "unitPounds": "पाउंड",
+  "unitKilograms": "किलोग्राम",
+  "unitLiters": "लीटर",
+  "nameConflict": "नाम टकराव",
+  "replaceExistingFood": "इस नाम का भोजन पहले से मौजूद है। क्या आप पुराने भोजन को बदलना चाहते हैं?",
+  "no": "नहीं",
+  "yes": "हाँ",
+  "editFood": "भोजन संपादित करें",
+  "confirmDeleteFood": "क्या आप वाकई {name} को हटाना चाहते हैं?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "कैलोरी (kcal)",
+  "kilojoulesKj": "किलोजूल (kJ)",
+  "servingSize": "सर्विंग आकार",
+  "servingUnit": "सर्विंग इकाई",
+  "saveAsNewCopy": "नई कॉपी के रूप में सहेजें",
+  "filterFoods": "भोजन फ़िल्टर करें",
+  "narrowFoodsFilters": "फ़िल्टरों के किसी भी संयोजन से सूची को सीमित करें।",
+  "foodDetails": "भोजन विवरण",
+  "exampleFruitHint": "जैसे, फल",
+  "servingSizeRangeHint": "न्यूनतम, अधिकतम या दोनों सेट करें।",
+  "minimum": "न्यूनतम",
+  "maximum": "अधिकतम",
+  "noMinimum": "कोई न्यूनतम नहीं",
+  "noMaximum": "कोई अधिकतम नहीं",
+  "clearAll": "सभी साफ़ करें",
+  "searchOpenFoodFacts": "Open Food Facts खोजें",
+  "noMatchingProducts": "कोई मेल खाता उत्पाद नहीं",
+  "tryAnotherNameOrScanBarcode": "कोई दूसरा नाम आज़माएँ या बारकोड स्कैन करें।",
+  "enterFoodNameToSearch": "ऊपर भोजन का नाम दर्ज करें, फिर खोजने के लिए सबमिट करें।",
+  "submitToSearch": "खोजने के लिए सबमिट करें...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} g प्रोटीन",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{1 भोजन संपादित करें} other{{count} भोजन संपादित करें}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "मील संपादित करें",
+  "addImage": "चित्र जोड़ें",
+  "noFoodsInMeal": "इस मील में अभी कोई भोजन नहीं है",
+  "addFoodToMealHint": "यह मील बनाना शुरू करने के लिए भोजन जोड़ें।",
+  "remove": "हटाएँ",
+  "searchFoods": "भोजन खोजें...",
+  "noFoodsFound": "कोई भोजन नहीं मिला",
+  "nothingMatchesSearch": "“{search}” से कुछ भी मेल नहीं खाता।",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "मील में जोड़ने से पहले अपनी लाइब्रेरी में कुछ भोजन जोड़ें।",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "अभी कोई डेटा नहीं",
+  "completePlansToViewGraphs": "यहाँ ग्राफ़ देखने के लिए कुछ योजनाएँ पूरी करें।",
+  "value": "मान",
+  "goal": "लक्ष्य",
+  "notSet": "सेट नहीं",
+  "trend": "रुझान",
+  "smooth": "स्मूद",
+  "pointAverage": "{count, plural, one{1-बिंदु औसत} other{{count}-बिंदु औसत}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "वज़न संपादित करें",
+  "addWeight": "वज़न जोड़ें",
+  "shareWeight": "मैंने अभी {value} {unit} वज़न मापा!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "वज़न ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "कृपया वज़न दर्ज करें",
+  "pleaseEnterValidWeight": "कृपया मान्य वज़न दर्ज करें",
+  "lastWeight": "पिछला वज़न",
+  "unitWithValue": "इकाई ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "इकाई {unit} ही रखें",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "{unit} में बदलें",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "चित्र हटाएँ",
+  "mealRemindersEnabled": "मील रिमाइंडर चालू हैं",
+  "mealRemindersEnabledBody": "अगर आपने नाश्ता, दोपहर का भोजन या रात का खाना लॉग नहीं किया है, तो हम आपको याद दिलाएँगे।",
+  "reminderSettingsChannel": "रिमाइंडर सेटिंग्स",
+  "reminderSettingsChannelDescription": "FitBook रिमाइंडर समझाने वाली सूचनाएँ",
+  "breakfastReminderTitle": "नाश्ता लॉग करना न भूलें",
+  "breakfastRemindersChannel": "नाश्ता रिमाइंडर",
+  "breakfastRemindersChannelDescription": "नाश्ता लॉग करने के रिमाइंडर",
+  "lunchReminderTitle": "दोपहर का भोजन लॉग करना न भूलें",
+  "lunchRemindersChannel": "दोपहर के भोजन के रिमाइंडर",
+  "lunchRemindersChannelDescription": "दोपहर का भोजन लॉग करने के रिमाइंडर",
+  "dinnerReminderTitle": "रात का खाना लॉग करना न भूलें",
+  "dinnerRemindersChannel": "रात के खाने के रिमाइंडर",
+  "dinnerRemindersChannelDescription": "रात का खाना लॉग करने के रिमाइंडर",
+  "reinforcementGreatJob": "बहुत बढ़िया! आपकी मेहनत रंग ला रही है।",
+  "reinforcementKeepItUp": "ऐसे ही जारी रखें! आप शानदार प्रगति कर रहे हैं।",
+  "reinforcementFantastic": "शानदार! आपकी लगन के परिणाम दिख रहे हैं।",
+  "reinforcementWellDone": "बहुत अच्छा! आप अपने लक्ष्य के एक कदम और करीब हैं।",
+  "reinforcementImpressive": "प्रभावशाली! आपकी कोशिशें फल दे रही हैं।",
+  "reinforcementAmazing": "कमाल! आप सही रास्ते पर हैं।",
+  "reinforcementBravo": "वाह! आपकी प्रतिबद्धता सराहनीय है।",
+  "reinforcementExcellent": "उत्कृष्ट! आपकी दृढ़ता प्रेरणादायक है।",
+  "reinforcementSuperb": "बहुत बढ़िया! आप शानदार काम कर रहे हैं।",
+  "reinforcementIncredible": "अविश्वसनीय! आपकी प्रगति साफ़ दिख रही है।",
+  "reinforcementWayToGoKing": "शाबाश, किंग",
+  "reinforcementYeahBuddy": "हाँ दोस्त!",
+  "reinforcementThatsHowItsDone": "ऐसे ही किया जाता है।",
+  "reinforcementEasyAsPie": "बहुत आसान।",
+  "reinforcementDoingGreat": "आप बहुत अच्छा कर रहे हैं।",
+  "reinforcementProgressNice": "क्या यह प्रगति है जो मुझे दिख रही है? बढ़िया।",
+  "diarySummaryRemainingValue": "{remaining} {unit} शेष",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} शेष ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "शर्करा",
+  "nutrientCholesterol": "कोलेस्ट्रॉल",
+  "nutrientSaturatedFat": "संतृप्त वसा",
+  "nutrientCalcium": "कैल्शियम",
+  "nutrientIron": "आयरन",
+  "nutrientPotassium": "पोटैशियम",
+  "nutrientMagnesium": "मैग्नीशियम",
+  "nutrientVitaminA": "विटामिन A",
+  "nutrientVitaminC": "विटामिन C",
+  "nutrientVitaminB12": "विटामिन B12",
+  "nutrientVitaminD": "विटामिन D",
+  "nutrientVitaminE": "विटामिन E",
+  "nutrientAddedSugar": "अतिरिक्त शर्करा",
+  "nutrientNetCarbs": "शुद्ध कार्ब्स",
+  "nutrientWater": "पानी",
+  "nutrientOmega3": "ओमेगा-3 फैटी एसिड",
+  "nutrientOmega6": "ओमेगा-6 फैटी एसिड",
+  "nutrientPralScore": "PRAL स्कोर",
+  "nutrientTransFat": "ट्रांस वसा",
+  "nutrientSolubleFiber": "घुलनशील फ़ाइबर",
+  "nutrientInsolubleFiber": "अघुलनशील फ़ाइबर",
+  "nutrientPhosphorus": "फॉस्फोरस",
+  "nutrientSodium": "सोडियम",
+  "nutrientZinc": "ज़िंक",
+  "nutrientCopper": "कॉपर",
+  "nutrientManganese": "मैंगनीज़",
+  "nutrientSelenium": "सेलेनियम",
+  "nutrientFluoride": "फ्लोराइड",
+  "nutrientMolybdenum": "मोलिब्डेनम",
+  "nutrientChloride": "क्लोराइड",
+  "nutrientSucrose": "सुक्रोज़",
+  "nutrientGlucose": "ग्लूकोज़",
+  "nutrientFructose": "फ्रुक्टोज़",
+  "nutrientLactose": "लैक्टोज़",
+  "nutrientMaltose": "माल्टोज़",
+  "nutrientGalactose": "गैलेक्टोज़",
+  "nutrientStarch": "स्टार्च",
+  "nutrientSugarAlcohols": "शुगर अल्कोहल",
+  "nutrientThiaminB1": "थायमिन (B1)",
+  "nutrientRiboflavinB2": "राइबोफ्लेविन (B2)",
+  "nutrientNiacinB3": "नायसिन (B3)",
+  "nutrientPantothenicAcidB5": "पैंटोथेनिक एसिड (B5)",
+  "nutrientVitaminB6": "विटामिन B6",
+  "nutrientBiotinB7": "बायोटिन (B7)",
+  "nutrientFolateB9": "फोलेट (B9)",
+  "nutrientFolicAcid": "फोलिक एसिड",
+  "nutrientFoodFolate": "भोजन फोलेट",
+  "nutrientFolateDfe": "डाइटरी फोलेट समतुल्य (DFE)",
+  "nutrientCholine": "कोलीन",
+  "nutrientBetaine": "बीटेन",
+  "nutrientRetinol": "रेटिनॉल",
+  "nutrientBetaCarotene": "बीटा-कैरोटीन",
+  "nutrientAlphaCarotene": "अल्फ़ा-कैरोटीन",
+  "nutrientLycopene": "लाइकोपीन",
+  "nutrientLuteinZeaxanthin": "ल्यूटिन + ज़ीएक्सैंथिन",
+  "nutrientVitaminD2": "विटामिन D2 (एर्गोकैल्सीफेरॉल)",
+  "nutrientVitaminD3": "विटामिन D3 (कोलेकैल्सीफेरॉल)",
+  "nutrientVitaminK": "विटामिन K",
+  "nutrientDihydrophylloquinone": "डाइहाइड्रोफाइलोक्विनोन",
+  "nutrientMenaquinone4": "मेनाक्विनोन-4",
+  "nutrientMonounsaturatedFat": "मोनोअनसैचुरेटेड वसा",
+  "nutrientPolyunsaturatedFat": "पॉलीअनसैचुरेटेड वसा",
+  "nutrientAla": "अल्फ़ा-लिनोलेनिक एसिड (ALA)",
+  "nutrientEpa": "इकोसापेंटेनोइक एसिड (EPA)",
+  "nutrientDpa": "डोकोसापेंटेनोइक एसिड (DPA)",
+  "nutrientDha": "डोकोसाहेक्साएनोइक एसिड (DHA)",
+  "nutrientAlanine": "एलानिन",
+  "nutrientAlcohol": "अल्कोहल",
+  "nutrientArginine": "आर्जिनिन",
+  "nutrientAsparticAcid": "एस्पार्टिक एसिड",
+  "nutrientCystine": "सिस्टिन",
+  "nutrientGlutamicAcid": "ग्लूटामिक एसिड",
+  "nutrientGlycine": "ग्लाइसिन",
+  "nutrientHistidine": "हिस्टिडिन",
+  "nutrientHydroxyproline": "हाइड्रॉक्सीप्रोलिन",
+  "nutrientIsoleucine": "आइसोल्यूसीन",
+  "nutrientLeucine": "ल्यूसीन",
+  "nutrientLysine": "लाइसिन",
+  "nutrientMethionine": "मेथियोनीन",
+  "nutrientPhenylalanine": "फेनिलएलानिन",
+  "nutrientProline": "प्रोलिन",
+  "nutrientSerine": "सेरीन",
+  "nutrientThreonine": "थ्रियोनीन",
+  "nutrientTryptophan": "ट्रिप्टोफैन",
+  "nutrientTyrosine": "टायरोसीन",
+  "nutrientValine": "वेलिन",
+  "nutrientCaffeine": "कैफ़ीन",
+  "nutrientTheobromine": "थियोब्रोमीन",
+  "servingWeightNumber": "सर्विंग वज़न {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "सर्विंग विवरण {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "200 kcal के बराबर वज़न"
+}

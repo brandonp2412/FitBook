@@ -9,6 +9,7 @@ import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_hi.dart';
 import 'app_localizations_it.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_ko.dart';
@@ -108,6 +109,7 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('es'),
     Locale('fr'),
+    Locale('hi'),
     Locale('it'),
     Locale('ja'),
     Locale('ko'),
@@ -642,6 +644,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Russian'**
   String get languageRussian;
+
+  /// No description provided for @languageHindi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hindi'**
+  String get languageHindi;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2748,6 +2756,7 @@ class _AppLocalizationsDelegate
         'en',
         'es',
         'fr',
+        'hi',
         'it',
         'ja',
         'ko',
@@ -2795,6 +2804,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEs();
     case 'fr':
       return AppLocalizationsFr();
+    case 'hi':
+      return AppLocalizationsHi();
     case 'it':
       return AppLocalizationsIt();
     case 'ja':

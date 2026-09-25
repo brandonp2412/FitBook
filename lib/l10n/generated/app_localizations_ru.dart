@@ -321,6 +321,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languageRussian => 'Русский';
 
   @override
+  String get languageHindi => 'Хинди';
+
+  @override
   String get appearanceSettings => 'Настройки оформления';
 
   @override

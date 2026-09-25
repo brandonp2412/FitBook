@@ -320,6 +320,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get languageRussian => 'Rosyjski';
 
   @override
+  String get languageHindi => 'hindi';
+
+  @override
   String get appearanceSettings => 'Ustawienia wyglądu';
 
   @override

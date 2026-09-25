@@ -304,6 +304,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageRussian => '俄语';
 
   @override
+  String get languageHindi => '印地语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1725,6 +1728,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageRussian => '俄语';
 
   @override
+  String get languageHindi => '印地语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3144,6 +3150,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languageRussian => '俄語';
+
+  @override
+  String get languageHindi => '印地語';
 
   @override
   String get appearanceSettings => '外觀設定';

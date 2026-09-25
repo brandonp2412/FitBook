@@ -110,5 +110,6 @@
   "1739174605": "- Correggere i backup automatici\n- Ridimensionare l’altezza del grafico\n- Copiare la superficie del tema scuro per l’icona dell’app\n- Impostare un obiettivo negli screenshot\n- Usare linee curve per impostazione predefinita",
   "1739174409": "- Correggere i problemi di data\n- Decommentare fastlane supply nel deployment\n- Rinominare AppGroupBy in Period\n- Rimuovere la chiamata a init in screenshot_test",
   "1790247945": "• Tradotto l'ultimo registro delle modifiche di FitBook (#137)",
-  "1790268963": "• feat(l10n): aggiungere il cinese tradizionale a FitBook\n• fix(l10n): completare la copertura iOS in cinese tradizionale\n• fix(l10n): tradurre il changelog della versione 2.0.99"
+  "1790268963": "• feat(l10n): aggiungere il cinese tradizionale a FitBook\n• fix(l10n): completare la copertura iOS in cinese tradizionale\n• fix(l10n): tradurre il changelog della versione 2.0.99",
+  "1790300846": "• feat(l10n): aggiunte le traduzioni in russo (#139)"
 }
