@@ -1,0 +1,712 @@
+{
+  "@@locale": "ru",
+  "appTitle": "FitBook",
+  "navDiary": "Дневник",
+  "navGraph": "График",
+  "navFood": "Еда",
+  "navWeight": "Вес",
+  "navError": "Ошибка",
+  "loadDataFailed": "Не удалось загрузить эти данные.",
+  "settings": "Настройки",
+  "invalidTabSettings": "Некорректные настройки вкладок.",
+  "newVersion": "Новая версия {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "Изменения",
+  "searchSettings": "Поиск настроек...",
+  "appearance": "Оформление",
+  "appearanceSubtitle": "Тема, цвета и отображение графиков",
+  "diary": "Дневник",
+  "diarySubtitle": "Дневные цели, сводки и ведение записей",
+  "food": "Еда",
+  "foodSubtitle": "Единицы, поля и настройки продуктов",
+  "weight": "Вес",
+  "weightSubtitle": "Единицы веса, цели и отображение",
+  "tabs": "Вкладки",
+  "tabsSubtitle": "Вкладки навигации и их порядок",
+  "data": "Данные",
+  "dataSubtitle": "Импорт, экспорт и локальные данные",
+  "todayProgress": "Прогресс за сегодня",
+  "latestDay": "Последний день",
+  "loggedEntries": "{count, plural, =0{Нет записей} one{Добавлена {count} запись} few{Добавлено {count} записи} many{Добавлено {count} записей} other{Добавлено {count} записи}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, one{Изменить {count} запись} few{Изменить {count} записи} many{Изменить {count} записей} other{Изменить {count} записи}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "Калории",
+  "protein": "Белок",
+  "carbs": "Углеводы",
+  "fat": "Жиры",
+  "addDiaryEntry": "Добавить запись в дневник",
+  "noEntriesToday": "Сегодня записей нет.",
+  "addSearchToDiary": "Добавить «{search}» в дневник",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "Нажмите, чтобы начать вести дневник питания.",
+  "noMatchingDiaryEntriesTapCreate": "Подходящих записей в дневнике нет. Нажмите, чтобы создать этот продукт и добавить его.",
+  "add": "Добавить",
+  "quickAdd": "Быстрое добавление",
+  "scanBarcode": "Сканировать штрихкод",
+  "foodLibrary": "Библиотека продуктов",
+  "foodLibraryCounts": "{foodCount, plural, one{{foodCount} продукт} few{{foodCount} продукта} many{{foodCount} продуктов} other{{foodCount} продукта}} · {mealCount, plural, one{{mealCount} приём пищи} few{{mealCount} приёма пищи} many{{mealCount} приёмов пищи} other{{mealCount} приёма пищи}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "Недавно использованные",
+  "quickActions": "Быстрые действия",
+  "addFood": "Добавить продукт",
+  "createMeal": "Создать приём пищи",
+  "noFoodYet": "Продуктов пока нет",
+  "noMatchingFood": "Подходящих продуктов нет",
+  "addFirstFoodOrMeal": "Добавьте первый продукт или приём пищи, чтобы начать формировать библиотеку.",
+  "noFoodSearchMatches": "По запросу «{search}» ничего не найдено. Очистите поиск, чтобы снова увидеть всё.",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "Очистить поиск",
+  "addMeal": "Добавить приём пищи",
+  "noWeightsYet": "Записей веса пока нет",
+  "noMatchingWeights": "Подходящих записей веса нет",
+  "logFirstWeight": "Запишите свой первый вес, чтобы начать отслеживать динамику.",
+  "noWeightSearchMatches": "По запросу «{search}» ничего не найдено. Очистите поиск, чтобы увидеть все записи.",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "Записать вес",
+  "weightTrend": "Динамика веса",
+  "weightTrendSubtitle": "Последние измерения и общее направление",
+  "bodyWeight": "Масса тела",
+  "options": "Параметры",
+  "day": "День",
+  "today": "Сегодня",
+  "week": "Неделя",
+  "month": "Месяц",
+  "year": "Год",
+  "dateRange": "Диапазон дат",
+  "startDate": "Дата начала",
+  "stopDate": "Дата окончания",
+  "dataPoints": "Точки данных",
+  "customizeFields": "Настроить поля",
+  "language": "Язык",
+  "languageSubtitle": "Выберите язык FitBook",
+  "languageSystem": "Системный",
+  "languageEnglish": "Английский",
+  "languageSpanish": "Испанский",
+  "languageFrench": "Французский",
+  "languageGerman": "Немецкий",
+  "languageItalian": "Итальянский",
+  "languagePortugueseBrazil": "Португальский (Бразилия)",
+  "languageDutch": "Нидерландский",
+  "languagePolish": "Польский",
+  "languageJapanese": "Японский",
+  "languageKorean": "Корейский",
+  "languageChineseSimplified": "Китайский (упрощённый)",
+  "languageChineseTraditional": "Китайский (традиционный)",
+  "languageRussian": "Русский",
+  "appearanceSettings": "Настройки оформления",
+  "delete": "Удалить",
+  "confirmDelete": "Подтверждение удаления",
+  "confirmDeleteRecords": "{count, plural, one{Вы уверены, что хотите удалить {count} запись? Это действие нельзя отменить.} few{Вы уверены, что хотите удалить {count} записи? Это действие нельзя отменить.} many{Вы уверены, что хотите удалить {count} записей? Это действие нельзя отменить.} other{Вы уверены, что хотите удалить {count} записи? Это действие нельзя отменить.}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Отмена",
+  "search": "Поиск...",
+  "clear": "Очистить",
+  "showMenu": "Показать меню",
+  "selectAll": "Выбрать всё",
+  "edit": "Изменить",
+  "favorite": "Избранное",
+  "atLeastOneTab": "Нужна хотя бы одна вкладка",
+  "scrollableTabs": "Прокручиваемые вкладки",
+  "save": "Сохранить",
+  "themeSystem": "Системная",
+  "themeDark": "Тёмная",
+  "themeLight": "Светлая",
+  "pureBlackAmoled": "Чистый чёрный (AMOLED)",
+  "pureBlackAmoledTooltip": "Использовать чистый чёрный цвет для AMOLED-дисплеев",
+  "systemColorScheme": "Системная цветовая схема",
+  "systemColorSchemeTooltip": "Использовать основной цвет устройства в приложении",
+  "showImages": "Показывать изображения",
+  "showImagesTooltip": "Выбирать и показывать изображения на страницах дневника и продуктов",
+  "curveLineGraphs": "Сглаженные линии графиков",
+  "curveLineGraphsTooltip": "Использовать плавные кривые на странице графиков",
+  "weightStatCards": "Карточки статистики веса",
+  "weightStatCardsTooltip": "Показывать записи веса сеткой карточек статистики вместо стандартного списка",
+  "graphsStartAtZero": "Графики начинаются с нуля",
+  "graphsStartAtZeroTooltip": "Всегда начинать ось Y графика с нуля",
+  "navigationAnimation": "Анимация навигации",
+  "animationFade": "Затухание",
+  "animationZoom": "Масштабирование",
+  "animationSlide": "Сдвиг",
+  "animationRise": "Подъём",
+  "animationNone": "Нет",
+  "longDateFormat": "Длинный формат даты ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "Короткий формат даты ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "Настройки дневника",
+  "diaryUnit": "Единица дневника",
+  "diarySummary": "Сводка дневника",
+  "diarySummaryDivision": "Деление — текущее / всего",
+  "diarySummaryRemaining": "Осталось",
+  "diarySummaryBoth": "Оба — осталось (всего)",
+  "diarySummaryNone": "Нет",
+  "dailyCaloriesKcal": "Дневная норма калорий (ккал)",
+  "dailyProteinG": "Дневная норма белка (г)",
+  "dailyFatG": "Дневная норма жиров (г)",
+  "dailyCarbsG": "Дневная норма углеводов (г)",
+  "dailyFiberG": "Дневная норма клетчатки (г)",
+  "automaticDailies": "Автоматические дневные цели",
+  "automaticDailiesTooltip": "Автоматически рассчитывать рекомендуемые дневные калории, белки, жиры и углеводы по массе тела",
+  "selectNameOnSubmit": "Выбирать название при сохранении",
+  "reminders": "Напоминания",
+  "foodSettings": "Настройки продуктов",
+  "foodUnit": "Единица продукта",
+  "fields": "Поля",
+  "favoriteNewFoods": "Добавлять новые продукты в избранное",
+  "pickFields": "Выбрать поля",
+  "all": "Все",
+  "onlySelected": "Только выбранные",
+  "weightSettings": "Настройки веса",
+  "targetWeight": "Целевой вес",
+  "positiveReinforcement": "Позитивное подкрепление",
+  "positiveReinforcementPreview": "Здесь будут показываться ободряющие сообщения!",
+  "dataSettings": "Настройки данных",
+  "automaticBackup": "Автоматическое резервное копирование",
+  "shareDatabase": "Поделиться базой данных",
+  "openNotification": "Открыть уведомление",
+  "automaticBackupsEnabled": "Автоматическое резервное копирование включено",
+  "automaticBackupBody": "FitBook будет каждый день автоматически создавать резервную копию данных и изображений в выбранной папке.",
+  "backupSettings": "Настройки резервного копирования",
+  "backupSettingsChannelDescription": "Уведомления об автоматическом резервном копировании",
+  "openFoodFacts": "Open Food Facts",
+  "username": "Имя пользователя",
+  "password": "Пароль",
+  "close": "Закрыть",
+  "loggedIn": "Выполнен вход",
+  "about": "О приложении",
+  "version": "Версия",
+  "whatsNew": "Что нового?",
+  "author": "Автор",
+  "license": "Лицензия",
+  "donate": "Поддержать",
+  "supportProject": "Помочь поддержать этот проект",
+  "leaveReview": "Оставить отзыв",
+  "rateOnPlayStore": "Оценить FitBook в Play Store",
+  "sourceCode": "Исходный код",
+  "foods": "Продукты",
+  "backup": "Резервная копия",
+  "exportData": "Экспорт данных",
+  "importData": "Импорт данных",
+  "failedImportData": "Не удалось импортировать данные",
+  "copyError": "Скопировать ошибку",
+  "deleteRecords": "Удалить записи",
+  "unusedFood": "Неиспользуемые продукты",
+  "database": "База данных",
+  "deleteAllWeightsConfirm": "Вы уверены, что хотите удалить все записи веса? Это действие нельзя отменить.",
+  "deleteDatabaseConfirm": "Вы уверены, что хотите удалить базу данных? Это действие нельзя отменить, и все ваши данные будут потеряны.",
+  "deleteFoodsAndDiaryConfirm": "Вы уверены, что хотите удалить все продукты и записи дневника? Это действие нельзя отменить.",
+  "deleteUnusedFoodsConfirm": "{count, plural, one{Вы уверены, что хотите удалить {count} неиспользуемый продукт? Это действие необратимо.} few{Вы уверены, что хотите удалить {count} неиспользуемых продукта? Это действие необратимо.} many{Вы уверены, что хотите удалить {count} неиспользуемых продуктов? Это действие необратимо.} other{Вы уверены, что хотите удалить {count} неиспользуемого продукта? Это действие необратимо.}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "Вы уверены, что хотите удалить все записи дневника? Это действие нельзя отменить.",
+  "ok": "ОК",
+  "replaceImage": "Заменить изображение",
+  "takePhoto": "Сделать фото",
+  "deleteImage": "Удалить изображение",
+  "filters": "Фильтры",
+  "foodGroup": "Группа продуктов",
+  "exampleFruit": "Фрукты",
+  "clearFiltersCount": "Очистить ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "Готово",
+  "showFilters": "Показать фильтры",
+  "repeatEntry": "Повторять запись",
+  "timeOfDay": "Время суток",
+  "everyDay": "Каждый день",
+  "repeatEveryDayForYear": "Создавать эту запись каждый день в течение следующего года",
+  "repeatOn": "Повторять по",
+  "weekdayMon": "Пн",
+  "weekdayTue": "Вт",
+  "weekdayWed": "Ср",
+  "weekdayThu": "Чт",
+  "weekdayFri": "Пт",
+  "weekdaySat": "Сб",
+  "weekdaySun": "Вс",
+  "schedule": "Расписание",
+  "enterValidNutritionValues": "Введите корректные значения пищевой ценности",
+  "quickAddTitle": "Быстрое добавление",
+  "kilojoules": "Килоджоули",
+  "createdDate": "Дата создания",
+  "failedMigrations": "Ошибки миграции",
+  "failedMigrationsDescription": "При создании или обновлении базы данных произошла ошибка. Обычно её можно исправить, удалив и заново создав записи.",
+  "errorMessage": "Сообщение об ошибке:",
+  "createIssue": "Создать обращение",
+  "cameraPermissionRequired": "Для сканирования требуется доступ к камере.",
+  "scanFoodBarcode": "Сканировать штрихкод продукта",
+  "holdBarcodeInFrame": "Расположите штрихкод внутри рамки",
+  "pinchToZoom": "Сведите или разведите пальцы для масштабирования",
+  "cameraStartFailed": "Не удалось запустить камеру",
+  "editDiaryEntry": "Изменить запись дневника",
+  "addFoodToDiary": "Добавить продукт в дневник",
+  "confirmDeleteDiaryEntry": "Вы уверены, что хотите удалить {name}?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "Ошибка изображения",
+  "setImage": "Установить изображение",
+  "name": "Название",
+  "searchFoodsAndMeals": "Поиск продуктов и приёмов пищи...",
+  "clearSelection": "Снять выделение",
+  "barcodeNotFoundSaveToInsert": "Штрихкод не найден. Сохраните, чтобы добавить.",
+  "searchOpenFoodFactsFor": "Искать «{name}» в Open Food Facts",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "Приём пищи",
+  "quantity": "Количество",
+  "unit": "Единица",
+  "servingWithAmountUnit": "Порция ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "Штрихкод",
+  "nutritionPerAmountUnit": "{nutrient} (на {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} на {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "Клетчатка",
+  "unitServing": "Порция",
+  "unitGrams": "Граммы",
+  "unitMilliliters": "Миллилитры",
+  "unitKilojoules": "Килоджоули",
+  "unitCups": "Чашки",
+  "unitTablespoons": "Столовые ложки",
+  "unitMilligrams": "Миллиграммы",
+  "unitTeaspoons": "Чайные ложки",
+  "unitOunces": "Унции",
+  "unitPounds": "Фунты",
+  "unitKilograms": "Килограммы",
+  "unitLiters": "Литры",
+  "nameConflict": "Конфликт названий",
+  "replaceExistingFood": "Продукт с таким названием уже существует. Заменить старый?",
+  "no": "Нет",
+  "yes": "Да",
+  "editFood": "Изменить продукт",
+  "confirmDeleteFood": "Вы уверены, что хотите удалить {name}?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "Калории (ккал)",
+  "kilojoulesKj": "Килоджоули (кДж)",
+  "servingSize": "Размер порции",
+  "servingUnit": "Единица порции",
+  "saveAsNewCopy": "Сохранить как новую копию",
+  "filterFoods": "Фильтр продуктов",
+  "narrowFoodsFilters": "Сузьте список, используя любую комбинацию фильтров.",
+  "foodDetails": "Сведения о продукте",
+  "exampleFruitHint": "например, фрукты",
+  "servingSizeRangeHint": "Укажите минимум, максимум или оба значения.",
+  "minimum": "Минимум",
+  "maximum": "Максимум",
+  "noMinimum": "Без минимума",
+  "noMaximum": "Без максимума",
+  "clearAll": "Очистить всё",
+  "searchOpenFoodFacts": "Поиск в Open Food Facts",
+  "noMatchingProducts": "Подходящих продуктов нет",
+  "tryAnotherNameOrScanBarcode": "Попробуйте другое название или отсканируйте штрихкод.",
+  "enterFoodNameToSearch": "Введите название продукта выше, затем отправьте запрос для поиска.",
+  "submitToSearch": "Отправить для поиска...",
+  "kcalValue": "{value} ккал",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} г белка",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{Изменить {count} продукт} few{Изменить {count} продукта} many{Изменить {count} продуктов} other{Изменить {count} продукта}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "Изменить приём пищи",
+  "addImage": "Добавить изображение",
+  "noFoodsInMeal": "В этом приёме пищи пока нет продуктов",
+  "addFoodToMealHint": "Добавьте продукт, чтобы начать формировать этот приём пищи.",
+  "remove": "Удалить",
+  "searchFoods": "Поиск продуктов...",
+  "noFoodsFound": "Продукты не найдены",
+  "nothingMatchesSearch": "По запросу «{search}» ничего не найдено.",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "Сначала добавьте продукты в библиотеку, прежде чем добавлять их в приём пищи.",
+  "caloriesPer100gValue": "{value} ккал / 100 г",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "Данных пока нет",
+  "completePlansToViewGraphs": "Заполните несколько записей, чтобы увидеть здесь графики.",
+  "value": "Значение",
+  "goal": "Цель",
+  "notSet": "Не задано",
+  "trend": "Тренд",
+  "smooth": "Сглаживание",
+  "pointAverage": "{count, plural, one{Среднее по {count} точке} few{Среднее по {count} точкам} many{Среднее по {count} точкам} other{Среднее по {count} точки}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "Изменить вес",
+  "addWeight": "Добавить вес",
+  "shareWeight": "Мой вес: {value} {unit}!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "Вес ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "Введите вес",
+  "pleaseEnterValidWeight": "Введите корректный вес",
+  "lastWeight": "Последний вес",
+  "unitWithValue": "Единица ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "Оставить единицу {unit}",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "Преобразовать в {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "Удалить изображение",
+  "mealRemindersEnabled": "Напоминания о приёмах пищи включены",
+  "mealRemindersEnabledBody": "Мы напомним вам записать завтрак, обед или ужин, если вы ещё этого не сделали.",
+  "reminderSettingsChannel": "Настройки напоминаний",
+  "reminderSettingsChannelDescription": "Уведомления с пояснениями о напоминаниях FitBook",
+  "breakfastReminderTitle": "Не забудьте записать завтрак",
+  "breakfastRemindersChannel": "Напоминания о завтраке",
+  "breakfastRemindersChannelDescription": "Напоминания записать завтрак",
+  "lunchReminderTitle": "Не забудьте записать обед",
+  "lunchRemindersChannel": "Напоминания об обеде",
+  "lunchRemindersChannelDescription": "Напоминания записать обед",
+  "dinnerReminderTitle": "Не забудьте записать ужин",
+  "dinnerRemindersChannel": "Напоминания об ужине",
+  "dinnerRemindersChannelDescription": "Напоминания записать ужин",
+  "reinforcementGreatJob": "Отличная работа! Ваши усилия приносят результат.",
+  "reinforcementKeepItUp": "Так держать! Вы отлично продвигаетесь.",
+  "reinforcementFantastic": "Прекрасно! Ваша целеустремлённость даёт результат.",
+  "reinforcementWellDone": "Молодец! Вы ещё на шаг ближе к своей цели.",
+  "reinforcementImpressive": "Впечатляет! Ваши усилия приносят плоды.",
+  "reinforcementAmazing": "Замечательно! Вы на правильном пути.",
+  "reinforcementBravo": "Браво! Ваша целеустремлённость достойна похвалы.",
+  "reinforcementExcellent": "Отлично! Ваша настойчивость вдохновляет.",
+  "reinforcementSuperb": "Превосходно! Вы отлично справляетесь.",
+  "reinforcementIncredible": "Невероятно! Ваш прогресс заметен.",
+  "reinforcementWayToGoKing": "Так держать, король!",
+  "reinforcementYeahBuddy": "Да, дружище!",
+  "reinforcementThatsHowItsDone": "Вот как надо!",
+  "reinforcementEasyAsPie": "Проще простого.",
+  "reinforcementDoingGreat": "У вас отлично получается.",
+  "reinforcementProgressNice": "Это прогресс? Отлично.",
+  "diarySummaryRemainingValue": "Осталось {remaining} {unit}",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "Осталось {remaining} {unit} (цель: {target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "Сахара",
+  "nutrientCholesterol": "Холестерин",
+  "nutrientSaturatedFat": "Насыщенные жиры",
+  "nutrientCalcium": "Кальций",
+  "nutrientIron": "Железо",
+  "nutrientPotassium": "Калий",
+  "nutrientMagnesium": "Магний",
+  "nutrientVitaminA": "Витамин A",
+  "nutrientVitaminC": "Витамин C",
+  "nutrientVitaminB12": "Витамин B12",
+  "nutrientVitaminD": "Витамин D",
+  "nutrientVitaminE": "Витамин E",
+  "nutrientAddedSugar": "Добавленный сахар",
+  "nutrientNetCarbs": "Чистые углеводы",
+  "nutrientWater": "Вода",
+  "nutrientOmega3": "Омега-3 жирные кислоты",
+  "nutrientOmega6": "Омега-6 жирные кислоты",
+  "nutrientPralScore": "Показатель PRAL",
+  "nutrientTransFat": "Трансжиры",
+  "nutrientSolubleFiber": "Растворимая клетчатка",
+  "nutrientInsolubleFiber": "Нерастворимая клетчатка",
+  "nutrientPhosphorus": "Фосфор",
+  "nutrientSodium": "Натрий",
+  "nutrientZinc": "Цинк",
+  "nutrientCopper": "Медь",
+  "nutrientManganese": "Марганец",
+  "nutrientSelenium": "Селен",
+  "nutrientFluoride": "Фторид",
+  "nutrientMolybdenum": "Молибден",
+  "nutrientChloride": "Хлорид",
+  "nutrientSucrose": "Сахароза",
+  "nutrientGlucose": "Глюкоза",
+  "nutrientFructose": "Фруктоза",
+  "nutrientLactose": "Лактоза",
+  "nutrientMaltose": "Мальтоза",
+  "nutrientGalactose": "Галактоза",
+  "nutrientStarch": "Крахмал",
+  "nutrientSugarAlcohols": "Сахарные спирты",
+  "nutrientThiaminB1": "Тиамин (B1)",
+  "nutrientRiboflavinB2": "Рибофлавин (B2)",
+  "nutrientNiacinB3": "Ниацин (B3)",
+  "nutrientPantothenicAcidB5": "Пантотеновая кислота (B5)",
+  "nutrientVitaminB6": "Витамин B6",
+  "nutrientBiotinB7": "Биотин (B7)",
+  "nutrientFolateB9": "Фолат (B9)",
+  "nutrientFolicAcid": "Фолиевая кислота",
+  "nutrientFoodFolate": "Фолат из пищи",
+  "nutrientFolateDfe": "Пищевые эквиваленты фолата (DFE)",
+  "nutrientCholine": "Холин",
+  "nutrientBetaine": "Бетаин",
+  "nutrientRetinol": "Ретинол",
+  "nutrientBetaCarotene": "Бета-каротин",
+  "nutrientAlphaCarotene": "Альфа-каротин",
+  "nutrientLycopene": "Ликопин",
+  "nutrientLuteinZeaxanthin": "Лютеин + зеаксантин",
+  "nutrientVitaminD2": "Витамин D2 (эргокальциферол)",
+  "nutrientVitaminD3": "Витамин D3 (холекальциферол)",
+  "nutrientVitaminK": "Витамин K",
+  "nutrientDihydrophylloquinone": "Дигидрофиллохинон",
+  "nutrientMenaquinone4": "Менахинон-4",
+  "nutrientMonounsaturatedFat": "Мононенасыщенные жиры",
+  "nutrientPolyunsaturatedFat": "Полиненасыщенные жиры",
+  "nutrientAla": "Альфа-линоленовая кислота (ALA)",
+  "nutrientEpa": "Эйкозапентаеновая кислота (EPA)",
+  "nutrientDpa": "Докозапентаеновая кислота (DPA)",
+  "nutrientDha": "Докозагексаеновая кислота (DHA)",
+  "nutrientAlanine": "Аланин",
+  "nutrientAlcohol": "Алкоголь",
+  "nutrientArginine": "Аргинин",
+  "nutrientAsparticAcid": "Аспарагиновая кислота",
+  "nutrientCystine": "Цистин",
+  "nutrientGlutamicAcid": "Глутаминовая кислота",
+  "nutrientGlycine": "Глицин",
+  "nutrientHistidine": "Гистидин",
+  "nutrientHydroxyproline": "Гидроксипролин",
+  "nutrientIsoleucine": "Изолейцин",
+  "nutrientLeucine": "Лейцин",
+  "nutrientLysine": "Лизин",
+  "nutrientMethionine": "Метионин",
+  "nutrientPhenylalanine": "Фенилаланин",
+  "nutrientProline": "Пролин",
+  "nutrientSerine": "Серин",
+  "nutrientThreonine": "Треонин",
+  "nutrientTryptophan": "Триптофан",
+  "nutrientTyrosine": "Тирозин",
+  "nutrientValine": "Валин",
+  "nutrientCaffeine": "Кофеин",
+  "nutrientTheobromine": "Теобромин",
+  "servingWeightNumber": "Вес порции {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "Описание порции {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "Вес, эквивалентный 200 ккал"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Не удалось создать резервную копию: путь не задан. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_channel_name">Резервные копии</string>
+    <string name="backup_channel_description">Автоматические резервные копии базы данных</string>
+    <string name="backup_failed_directory_access">Не удалось создать резервную копию: нет доступа к папке резервных копий. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_failed_create_file">Не удалось создать резервную копию: не удалось создать файл резервной копии. Автоматическое резервное копирование отключено.</string>
+    <string name="share">Поделиться</string>
+    <string name="backup_failed_app_files_directory">Не удалось создать резервную копию: нет доступа к папке файлов приложения. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_failed_parent_directory">Не удалось создать резервную копию: нет доступа к родительской папке. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_failed_output_stream">Не удалось создать резервную копию: не удалось открыть поток вывода. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_failed_database_missing">Не удалось создать резервную копию: файл базы данных не найден. Автоматическое резервное копирование отключено.</string>
+    <string name="backup_success_title">Резервная копия данных и изображений создана</string>
+    <string name="backup_failed_unexpected">Не удалось создать резервную копию из-за непредвиденной ошибки. Автоматическое резервное копирование отключено.</string>
+</resources>

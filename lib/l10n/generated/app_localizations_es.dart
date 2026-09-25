@@ -309,6 +309,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageChineseTraditional => 'Chino (tradicional)';
 
   @override
+  String get languageRussian => 'Ruso';
+
+  @override
   String get appearanceSettings => 'Ajustes de apariencia';
 
   @override

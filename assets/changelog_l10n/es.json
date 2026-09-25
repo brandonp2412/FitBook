@@ -109,5 +109,6 @@
   "1739182275": "- Corregir la altura del gráfico en tablets\n- Hacer que las líneas sean curvas de forma predeterminada\n- Unificar el color de fondo del launcher\n- Corregir las copias de seguridad automáticas",
   "1739174605": "- Corregir las copias de seguridad automáticas\n- Escalar la altura del gráfico\n- Copiar la superficie del tema oscuro para el icono de la aplicación\n- Establecer un objetivo en las capturas de pantalla\n- Usar líneas curvas de forma predeterminada",
   "1739174409": "- Corregir problemas de fecha\n- Descomentar fastlane supply en el despliegue\n- Renombrar AppGroupBy a Period\n- Eliminar la llamada a init en screenshot_test",
-  "1790247945": "• Se tradujo el registro de cambios más reciente de FitBook (#137)"
+  "1790247945": "• Se tradujo el registro de cambios más reciente de FitBook (#137)",
+  "1790268963": "• feat(l10n): añadir chino tradicional a FitBook\n• fix(l10n): completar la cobertura de iOS en chino tradicional\n• fix(l10n): traducir el registro de cambios de 2.0.99"
 }

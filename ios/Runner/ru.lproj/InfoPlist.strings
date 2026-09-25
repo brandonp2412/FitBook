@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "FitBook использует камеру для сканирования штрихкодов продуктов.";
+"NSPhotoLibraryUsageDescription" = "FitBook использует медиатеку, чтобы добавлять изображения продуктов и приёмов пищи.";
+"NSAppleMusicUsageDescription" = "Сторонний компонент, используемый FitBook, запрашивает доступ к Apple Music.";

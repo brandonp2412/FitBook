@@ -109,5 +109,6 @@
   "1739182275": "- Diagrammhöhe auf Tablets korrigieren\n- Linien standardmäßig gekrümmt darstellen\n- Hintergrundfarbe des Launchers vereinheitlichen\n- Automatische Sicherungen korrigieren",
   "1739174605": "- Automatische Sicherungen korrigieren\n- Diagrammhöhe skalieren\n- Oberfläche des dunklen Themes für das App-Symbol übernehmen\n- Ziel in Screenshots festlegen\n- Linien standardmäßig krümmen",
   "1739174409": "- Datumsprobleme korrigieren\n- fastlane supply in der Bereitstellung wieder einkommentieren\n- AppGroupBy in Period umbenennen\n- Aufruf von init in screenshot_test entfernen",
-  "1790247945": "• Neuester FitBook-Änderungsverlauf übersetzt (#137)"
+  "1790247945": "• Neuester FitBook-Änderungsverlauf übersetzt (#137)",
+  "1790268963": "• feat(l10n): Traditionelles Chinesisch zu FitBook hinzufügen\n• fix(l10n): iOS-Abdeckung für traditionelles Chinesisch vervollständigen\n• fix(l10n): Änderungsverlauf für 2.0.99 übersetzen"
 }
