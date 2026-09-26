@@ -1,0 +1,18 @@
+Registra alimentos, calorías, macronutrientes y peso sin renunciar al control de tus datos.
+
+FitBook es un contador de calorías y un registro de nutrición pensado para funcionar también sin conexión. Anota tus comidas, comprende tu consumo de macronutrientes y sigue tu progreso a lo largo del tiempo. Empieza con la base de datos de alimentos incluida, añade tus propios alimentos o conéctate a OpenFoodFacts cuando quieras.
+
+REGISTRA LO QUE IMPORTA
+
+• Anota comidas y calorías diarias
+• Sigue tus macronutrientes a lo largo del tiempo
+• Registra tu peso y consulta gráficos de progreso
+• Busca entre miles de alimentos de la base de datos incluida
+• Escanea códigos de barras y consulta OpenFoodFacts
+• Personaliza el registro para adaptarlo a tu forma de comer
+
+PRIVADO Y PENSADO PARA USARSE SIN CONEXIÓN
+
+FitBook funciona sin cuenta y guarda tus datos en tu dispositivo. El acceso a Internet es opcional y solo se usa para búsquedas en OpenFoodFacts y códigos de barras. La aplicación es de código abierto y no muestra publicidad.
+
+FitBook ayuda a organizar información sobre alimentación y nutrición; no sustituye el consejo médico de un profesional cualificado.
