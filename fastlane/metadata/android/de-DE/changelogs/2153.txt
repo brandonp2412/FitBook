@@ -1,0 +1,5 @@
+• fix: FitBook-Windows-Integrationen absichern
+• fix: neuesten Changelog-Eintrag lokalisieren
+• fix: Überlauf des Lebensmittelbibliothek-Panels verhindern
+• fix: instabile Screenshot-Emulator-Läufe erneut versuchen
+• fix: generierte Screenshots stabilisieren

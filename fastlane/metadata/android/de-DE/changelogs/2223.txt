@@ -1,0 +1,2 @@
+• docs: README-Darstellung zentrieren
+• feat(l10n): spanische Store-Metadaten vervollständigen

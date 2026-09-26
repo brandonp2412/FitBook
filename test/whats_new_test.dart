@@ -15,7 +15,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.textContaining('Lokalisierte Changelog-Abdeckung korrigieren'),
+      find.textContaining('README-Darstellung zentrieren'),
       findsOneWidget,
     );
   });

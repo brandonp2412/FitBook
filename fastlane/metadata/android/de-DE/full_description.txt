@@ -1,0 +1,18 @@
+Erfasse Lebensmittel, Kalorien, Makros und Gewicht, ohne die Kontrolle über deine Daten abzugeben.
+
+FitBook ist ein offline-freundlicher Kalorienzähler und Ernährungstracker, mit dem du Mahlzeiten protokollierst, deine Makronährstoffaufnahme nachvollziehst und deine Fortschritte über längere Zeit verfolgst. Nutze die integrierte Lebensmitteldatenbank, füge eigene Lebensmittel hinzu oder greife bei Bedarf online auf OpenFoodFacts zu.
+
+BEHALTE DAS WICHTIGE IM BLICK
+
+• Protokolliere Mahlzeiten und deine tägliche Kalorienaufnahme
+• Verfolge Makronährstoffe im Zeitverlauf
+• Erfasse dein Gewicht und sieh dir Fortschrittsdiagramme an
+• Durchsuche eine integrierte Datenbank mit Tausenden Lebensmitteln
+• Scanne Barcodes und suche in OpenFoodFacts nach Lebensmittelinformationen
+• Passe den Tracker an deine Ernährungsweise an
+
+OFFLINE-FIRST UND PRIVAT
+
+FitBook funktioniert ohne Konto und speichert deine Daten auf deinem Gerät. Internetzugriff ist nur optional für OpenFoodFacts-Suchen und Barcode-Abfragen erforderlich. Die App ist Open Source und zeigt keine Werbung an.
+
+FitBook hilft dir dabei, Lebensmittel- und Ernährungsinformationen zu organisieren; die App ersetzt keine medizinische Beratung durch qualifiziertes Fachpersonal.

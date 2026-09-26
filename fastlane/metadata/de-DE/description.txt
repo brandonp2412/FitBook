@@ -1,0 +1,11 @@
+Behalte deine Essgewohnheiten ganz einfach im Blick
+
+Keine Werbung beim Protokollieren deiner Lebensmittel.
+FitBook ist vollständig kostenlos und Open Source.
+Du kannst darauf vertrauen, dass wir deine Daten weder für Werbung
+verwenden noch an Dritte weitergeben.
+Alles wird lokal gespeichert – eine Internetverbindung
+ist daher optional.
+
+Wenn du einen Fehler bemerkst, kannst du hier ein Ticket öffnen:
+https://github.com/brandonp2412/FitBook

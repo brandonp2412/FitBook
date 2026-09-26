@@ -1,0 +1,4 @@
+- Option für Trendlinie hinzufügen
+- Ballaststoffe zu Tagebucheinträgen hinzufügen
+- Reihenfolge auf der Lebensmittelseite ändern
+- Neue Lebensmitteldatenbank verwenden

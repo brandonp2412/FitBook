@@ -1,0 +1,2 @@
+• feat(l10n): Hindi-Changelog-Verlauf übersetzen
+• fix(l10n): neueste Changelog-Übersetzungen vervollständigen
