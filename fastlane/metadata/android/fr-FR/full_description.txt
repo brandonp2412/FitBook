@@ -1,0 +1,18 @@
+Suivez vos aliments, calories, macronutriments et votre poids sans perdre le contrôle de vos données.
+
+FitBook est un compteur de calories et un suivi nutritionnel conçu pour fonctionner aussi hors ligne. Enregistrez vos repas, comprenez votre apport en macronutriments et suivez votre progression dans le temps. Commencez avec la base d’aliments intégrée, ajoutez vos propres aliments ou connectez-vous à OpenFoodFacts quand vous le souhaitez.
+
+SUIVEZ CE QUI COMPTE
+
+• Enregistrez vos repas et votre apport calorique quotidien
+• Suivez vos macronutriments dans le temps
+• Enregistrez votre poids et consultez des graphiques de progression
+• Recherchez parmi des milliers d’aliments dans la base intégrée
+• Scannez des codes-barres et recherchez des informations via OpenFoodFacts
+• Personnalisez le suivi selon votre façon de manger
+
+CONFIDENTIEL ET CONÇU POUR LE HORS-LIGNE
+
+FitBook fonctionne sans compte et conserve vos données sur votre appareil. L’accès à Internet est facultatif et sert uniquement aux recherches OpenFoodFacts et aux codes-barres. L’application est open source et n’affiche aucune publicité.
+
+FitBook aide à organiser les informations liées à l’alimentation et à la nutrition ; il ne remplace pas les conseils d’un professionnel de santé qualifié.

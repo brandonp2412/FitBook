@@ -1,0 +1,5 @@
+• Reforçar as integrações do FitBook no Windows
+• Corrigir a localização da entrada mais recente do changelog
+• Evitar estouro no painel da biblioteca de alimentos
+• Tentar novamente execuções instáveis do emulador de capturas
+• Estabilizar as capturas de tela geradas
