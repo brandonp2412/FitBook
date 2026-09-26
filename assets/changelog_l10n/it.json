@@ -112,5 +112,6 @@
   "1790247945": "• Tradotto l'ultimo registro delle modifiche di FitBook (#137)",
   "1790268963": "• feat(l10n): aggiungere il cinese tradizionale a FitBook\n• fix(l10n): completare la copertura iOS in cinese tradizionale\n• fix(l10n): tradurre il changelog della versione 2.0.99",
   "1790300846": "• feat(l10n): aggiunte le traduzioni in russo (#139)",
-  "1790348228": "• feat(l10n): aggiungere le traduzioni in hindi"
+  "1790348228": "• feat(l10n): aggiungere le traduzioni in hindi",
+  "1790376451": "• feat(l10n): tradurre la cronologia delle modifiche in hindi\n• fix(l10n): completare le traduzioni più recenti del registro modifiche"
 }
