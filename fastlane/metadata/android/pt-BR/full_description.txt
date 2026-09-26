@@ -1,0 +1,18 @@
+Acompanhe alimentos, calorias, macronutrientes e peso sem abrir mão do controle dos seus dados.
+
+O FitBook é um contador de calorias e rastreador nutricional que funciona muito bem offline. Registre refeições, entenda sua ingestão de macronutrientes e acompanhe seu progresso ao longo do tempo. Comece com um banco de dados de alimentos integrado, adicione seus próprios alimentos ou use o OpenFoodFacts quando quiser se conectar.
+
+ACOMPANHE O QUE IMPORTA
+
+• Registre refeições e a ingestão diária de calorias
+• Acompanhe macronutrientes ao longo do tempo
+• Registre seu peso e veja gráficos de progresso
+• Pesquise em um banco de dados integrado com milhares de alimentos
+• Escaneie códigos de barras e pesquise informações no OpenFoodFacts
+• Personalize o rastreador de acordo com sua alimentação
+
+PRIVADO E PENSADO PARA FUNCIONAR OFFLINE
+
+O FitBook funciona sem conta e mantém seus dados no seu dispositivo. O acesso à Internet é opcional para pesquisas no OpenFoodFacts e consulta de códigos de barras. O aplicativo é de código aberto e não exibe anúncios.
+
+O FitBook ajuda você a organizar informações sobre alimentação e nutrição; ele não substitui orientação médica de um profissional qualificado.

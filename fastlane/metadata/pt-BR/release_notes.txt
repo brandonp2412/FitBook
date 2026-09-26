@@ -1,0 +1,4 @@
+- Adiciona uma opção para linha de tendência
+- Adiciona fibras às entradas do diário
+- Altera a ordem da página de alimentos
+- Usa o novo banco de dados de alimentos

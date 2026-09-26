@@ -1,0 +1,2 @@
+• feat(l10n): traduzir o histórico do changelog para hindi
+• fix(l10n): concluir as traduções do changelog mais recente

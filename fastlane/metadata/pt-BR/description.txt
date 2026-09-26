@@ -1,0 +1,11 @@
+Acompanhe facilmente seus hábitos alimentares
+
+Nunca mais enfrente anúncios enquanto registra seus alimentos.
+O FitBook é totalmente gratuito e de código aberto.
+Tenha a tranquilidade de saber que não usaremos seus dados para marketing
+nem os compartilharemos com terceiros.
+Tudo é armazenado localmente, então a conexão
+com a Internet é opcional.
+
+Se encontrar algum bug, fique à vontade para abrir uma issue em
+https://github.com/brandonp2412/FitBook
