@@ -1,0 +1,5 @@
+• Renforcer les intégrations Windows de FitBook
+• Localiser la dernière entrée du journal des modifications
+• Empêcher le débordement du panneau de la bibliothèque d’aliments
+• Réessayer les exécutions instables de l’émulateur de captures d’écran
+• Stabiliser les captures d’écran générées

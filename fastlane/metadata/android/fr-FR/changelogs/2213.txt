@@ -1,0 +1,2 @@
+• feat(l10n) : traduire l’historique du journal des modifications en hindi
+• fix(l10n) : compléter les traductions du journal des modifications le plus récent

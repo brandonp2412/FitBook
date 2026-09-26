@@ -1,0 +1,4 @@
+- Ajoute une option pour afficher une ligne de tendance
+- Ajoute les fibres aux entrées du journal
+- Modifie l’ordre de la page des aliments
+- Utilise la nouvelle base de données d’aliments
