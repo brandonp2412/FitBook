@@ -9,13 +9,13 @@ void main() {
     await tester.pumpWidget(
       localizedApp(
         home: const WhatsNew(),
-        locale: const Locale('de'),
+        locale: const Locale('ja'),
       ),
     );
     await tester.pumpAndSettle();
 
     expect(
-      find.textContaining('README-Darstellung zentrieren'),
+      find.textContaining('READMEの表示を中央揃えに変更'),
       findsOneWidget,
     );
   });
