@@ -1,0 +1,2 @@
+• tính năng(l10n): dịch lịch sử nhật ký thay đổi tiếng Hindi
+• sửa(l10n): hoàn tất bản dịch nhật ký thay đổi mới nhất

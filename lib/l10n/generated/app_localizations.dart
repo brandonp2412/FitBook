@@ -18,6 +18,7 @@ import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
+import 'app_localizations_vi.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -120,6 +121,7 @@ abstract class AppLocalizations {
     Locale('pt'),
     Locale('pt', 'BR'),
     Locale('ru'),
+    Locale('vi'),
     Locale('zh'),
     Locale('zh', 'CN'),
     Locale('zh', 'TW')
@@ -658,6 +660,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indonesian'**
   String get languageIndonesian;
+
+  /// No description provided for @languageVietnamese.
+  ///
+  /// In en, this message translates to:
+  /// **'Vietnamese'**
+  String get languageVietnamese;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2773,6 +2781,7 @@ class _AppLocalizationsDelegate
         'pl',
         'pt',
         'ru',
+        'vi',
         'zh'
       ].contains(locale.languageCode);
 
@@ -2831,6 +2840,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsPt();
     case 'ru':
       return AppLocalizationsRu();
+    case 'vi':
+      return AppLocalizationsVi();
     case 'zh':
       return AppLocalizationsZh();
   }

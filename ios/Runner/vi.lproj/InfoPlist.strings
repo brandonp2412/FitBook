@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "FitBook sử dụng camera để quét mã vạch thực phẩm.";
+"NSPhotoLibraryUsageDescription" = "FitBook sử dụng thư viện ảnh của bạn để thêm hình ảnh thực phẩm và bữa ăn.";
+"NSAppleMusicUsageDescription" = "Một thành phần bên thứ ba được FitBook sử dụng yêu cầu quyền truy cập Apple Music.";

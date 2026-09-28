@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Sao lưu thất bại: Chưa đặt đường dẫn sao lưu. Đã tắt sao lưu tự động.</string>
+    <string name="backup_channel_name">Bản sao lưu</string>
+    <string name="backup_channel_description">Tự động sao lưu cơ sở dữ liệu</string>
+    <string name="backup_failed_directory_access">Sao lưu thất bại: Không thể truy cập thư mục sao lưu. Đã tắt sao lưu tự động.</string>
+    <string name="backup_failed_create_file">Sao lưu thất bại: Không thể tạo tệp sao lưu. Đã tắt sao lưu tự động.</string>
+    <string name="share">Chia sẻ</string>
+    <string name="backup_failed_app_files_directory">Sao lưu thất bại: Không thể truy cập thư mục tệp ứng dụng. Đã tắt sao lưu tự động.</string>
+    <string name="backup_failed_parent_directory">Sao lưu thất bại: Không thể truy cập thư mục cha. Đã tắt sao lưu tự động.</string>
+    <string name="backup_failed_output_stream">Sao lưu thất bại: Không thể mở luồng đầu ra. Đã tắt sao lưu tự động.</string>
+    <string name="backup_failed_database_missing">Sao lưu thất bại: Không tìm thấy tệp cơ sở dữ liệu. Đã tắt sao lưu tự động.</string>
+    <string name="backup_success_title">Đã sao lưu dữ liệu và hình ảnh</string>
+    <string name="backup_failed_unexpected">Sao lưu thất bại ngoài dự kiến. Đã tắt sao lưu tự động.</string>
+</resources>

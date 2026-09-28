@@ -1,0 +1,5 @@
+• sửa: tăng độ ổn định cho tích hợp FitBook trên Windows
+• sửa: bản địa hóa mục nhật ký thay đổi mới nhất
+• sửa: ngăn bảng thư viện thực phẩm bị tràn
+• sửa: thử lại khi trình giả lập chụp ảnh màn hình không ổn định
+• sửa: ổn định ảnh chụp màn hình được tạo

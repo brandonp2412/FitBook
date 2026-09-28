@@ -318,6 +318,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageIndonesian => 'Indonesian';
 
   @override
+  String get languageVietnamese => 'Vietnamese';
+
+  @override
   String get appearanceSettings => 'Appearance settings';
 
   @override

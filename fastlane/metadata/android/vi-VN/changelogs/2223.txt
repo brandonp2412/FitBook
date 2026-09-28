@@ -1,0 +1,2 @@
+• tài liệu: căn giữa phần trình bày README
+• tính năng(l10n): hoàn tất siêu dữ liệu cửa hàng tiếng Tây Ban Nha

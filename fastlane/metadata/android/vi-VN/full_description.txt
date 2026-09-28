@@ -1,0 +1,18 @@
+Theo dõi thực phẩm, calo, macro và cân nặng mà vẫn kiểm soát dữ liệu của bạn.
+
+FitBook là ứng dụng đếm calo và theo dõi dinh dưỡng ưu tiên ngoại tuyến, giúp bạn ghi lại bữa ăn, hiểu lượng macro nạp vào và theo dõi tiến trình theo thời gian. Bắt đầu với cơ sở dữ liệu thực phẩm tích hợp, thêm thực phẩm của riêng bạn hoặc dùng OpenFoodFacts khi bạn chọn kết nối.
+
+THEO DÕI ĐIỀU QUAN TRỌNG
+
+• Ghi lại bữa ăn và lượng calo hằng ngày
+• Theo dõi các chất dinh dưỡng đa lượng theo thời gian
+• Ghi lại cân nặng và xem biểu đồ tiến trình
+• Tìm kiếm trong cơ sở dữ liệu tích hợp gồm hàng nghìn thực phẩm
+• Quét mã vạch và tìm kiếm OpenFoodFacts để xem thông tin thực phẩm
+• Tùy chỉnh trình theo dõi cho phù hợp với cách bạn ăn uống
+
+ƯU TIÊN NGOẠI TUYẾN VÀ RIÊNG TƯ
+
+FitBook hoạt động mà không cần tài khoản và lưu dữ liệu trên thiết bị của bạn. Truy cập Internet chỉ là tùy chọn cho tìm kiếm OpenFoodFacts và tra cứu mã vạch. Ứng dụng là mã nguồn mở và không hiển thị quảng cáo.
+
+FitBook giúp bạn sắp xếp thông tin thực phẩm và dinh dưỡng; ứng dụng không thay thế tư vấn y tế từ chuyên gia có trình độ.

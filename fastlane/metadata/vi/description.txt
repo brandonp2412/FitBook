@@ -1,0 +1,11 @@
+Dễ dàng theo dõi thói quen ăn uống của bạn
+
+Không còn phải chịu quảng cáo khi ghi lại thực phẩm.
+FitBook hoàn toàn miễn phí và mã nguồn mở.
+Bạn có thể yên tâm rằng chúng tôi không tiếp thị
+cho bạn hoặc chia sẻ dữ liệu của bạn với bên thứ ba.
+Mọi thứ được lưu cục bộ - nghĩa là kết nối
+Internet chỉ là tùy chọn.
+
+Nếu phát hiện lỗi, bạn có thể mở ticket tại
+https://github.com/brandonp2412/FitBook

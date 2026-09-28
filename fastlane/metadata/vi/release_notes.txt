@@ -1,0 +1,4 @@
+- Thêm tùy chọn cho đường xu hướng
+- Thêm chất xơ vào các mục nhật ký
+- Thay đổi thứ tự trang thực phẩm
+- Sử dụng cơ sở dữ liệu thực phẩm mới

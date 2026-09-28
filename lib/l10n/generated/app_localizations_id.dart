@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -319,6 +318,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get languageIndonesian => 'Bahasa Indonesia';
 
   @override
+  String get languageVietnamese => 'Vietnam';
+
+  @override
   String get appearanceSettings => 'Pengaturan penampilan';
 
   @override
@@ -334,7 +336,8 @@ class AppLocalizationsId extends AppLocalizations {
       locale: localeName,
       other:
           'Yakin ingin menghapus $count catatan? Tindakan ini tidak dapat dibatalkan.',
-      one: 'Yakin ingin menghapus 1 catatan? Tindakan ini tidak dapat dibatalkan.',
+      one:
+          'Yakin ingin menghapus 1 catatan? Tindakan ini tidak dapat dibatalkan.',
     );
     return '$_temp0';
   }
@@ -647,7 +650,8 @@ class AppLocalizationsId extends AppLocalizations {
       locale: localeName,
       other:
           'Yakin ingin menghapus $count makanan yang tidak digunakan? Tindakan ini tidak dapat dibatalkan.',
-      one: 'Yakin ingin menghapus 1 makanan yang tidak digunakan? Tindakan ini tidak dapat dibatalkan.',
+      one:
+          'Yakin ingin menghapus 1 makanan yang tidak digunakan? Tindakan ini tidak dapat dibatalkan.',
     );
     return '$_temp0';
   }
@@ -828,10 +832,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '$nutrient untuk $quantity $unit';
   }
 

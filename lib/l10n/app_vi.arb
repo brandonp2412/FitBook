@@ -1,0 +1,715 @@
+{
+  "@@locale": "vi",
+  "appTitle": "FitBook",
+  "navDiary": "Nhật ký",
+  "navGraph": "Biểu đồ",
+  "navFood": "Thực phẩm",
+  "navWeight": "Trọng lượng",
+  "navError": "Lỗi",
+  "loadDataFailed": "Không thể tải dữ liệu này.",
+  "settings": "Cài đặt",
+  "invalidTabSettings": "Cài đặt tab không hợp lệ.",
+  "newVersion": "Phiên bản mới {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "Thay đổi",
+  "searchSettings": "Cài đặt tìm kiếm...",
+  "appearance": "Ngoại quan",
+  "appearanceSubtitle": "Chủ đề, màu sắc và biểu đồ hiển thị",
+  "diary": "Nhật ký",
+  "diarySubtitle": "Mục tiêu hàng ngày, tóm tắt và ghi nhật ký",
+  "food": "Thực phẩm",
+  "foodSubtitle": "Đơn vị thực phẩm, cánh đồng và mặc định",
+  "weight": "Trọng lượng",
+  "weightSubtitle": "Đơn vị trọng lượng, mục tiêu và hiển thị",
+  "tabs": "Tab",
+  "tabsSubtitle": "Tab điều hướng và thứ tự",
+  "data": "Dữ liệu",
+  "dataSubtitle": "Nhập, xuất và dữ liệu địa phương",
+  "todayProgress": "Tiến độ của ngày hôm nay",
+  "latestDay": "Ngày gần nhất",
+  "loggedEntries": "{count, plural, =0{Không có mục nhập nào được ghi lại} =1{1 mục nhập được ghi lại} other{{count} mục nhập được ghi lại}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{Chỉnh sửa 1 mục} other{Chỉnh sửa {count} mục}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "Calo",
+  "protein": "Chất đạm",
+  "carbs": "Carbohydrate",
+  "fat": "Chất béo",
+  "addDiaryEntry": "Thêm mục nhật ký",
+  "noEntriesToday": "Hôm nay không có mục nhập nào.",
+  "addSearchToDiary": "Thêm \"{search}\" vào nhật ký của bạn",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "Nhấn để bắt đầu ghi nhật ký đồ ăn.",
+  "noMatchingDiaryEntriesTapCreate": "Không có mục nhập nhật ký phù hợp. Nhấn để tạo món ăn này và ghi lại.",
+  "add": "Thêm",
+  "quickAdd": "Thêm nhanh",
+  "scanBarcode": "Quét mã vạch",
+  "foodLibrary": "Thư viện thực phẩm",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 thực phẩm} other{{foodCount} thực phẩm}} · {mealCount, plural, =1{1 bữa ăn} other{{mealCount} bữa ăn}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "Được sử dụng gần đây",
+  "quickActions": "Hành động nhanh chóng",
+  "addFood": "Thêm đồ ăn",
+  "createMeal": "Tạo bữa ăn",
+  "noFoodYet": "Chưa có đồ ăn",
+  "noMatchingFood": "Không có đồ ăn phù hợp",
+  "addFirstFoodOrMeal": "Thêm thực phẩm hoặc bữa ăn đầu tiên của quý vị để bắt đầu xây dựng thư viện của quý vị.",
+  "noFoodSearchMatches": "Không có kết quả nào khớp với “{search}”. Xóa tìm kiếm để xem lại mọi thứ.",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "Xóa tìm kiếm",
+  "addMeal": "Thêm bữa ăn",
+  "noWeightsYet": "Chưa có trọng lượng",
+  "noMatchingWeights": "Không có trọng lượng phù hợp",
+  "logFirstWeight": "Ghi lại trọng lượng đầu tiên của bạn để bắt đầu theo dõi xu hướng của bạn.",
+  "noWeightSearchMatches": "Không có kết quả nào khớp với “{search}”. Xóa tìm kiếm để xem tất cả các mục nhập.",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "Trọng lượng gỗ tròn",
+  "weightTrend": "Xu hướng trọng lượng",
+  "weightTrendSubtitle": "Các phép đo gần đây và hướng tổng thể",
+  "bodyWeight": "Trọng lượng cơ thể",
+  "options": "Tùy chọn",
+  "day": "Ngày",
+  "today": "Hôm nay",
+  "week": "Tuần",
+  "month": "Tháng",
+  "year": "Năm",
+  "dateRange": "Phạm vi ngày",
+  "startDate": "Ngày bắt đầu",
+  "stopDate": "Ngày kết thúc",
+  "dataPoints": "Điểm dữ liệu",
+  "customizeFields": "Tùy chỉnh các trường",
+  "language": "Ngôn ngữ",
+  "languageSubtitle": "Chọn ngôn ngữ được FitBook sử dụng",
+  "languageSystem": "Hệ thống",
+  "languageEnglish": "Tiếng Anh",
+  "languageSpanish": "Tiếng Tây Ban Nha",
+  "languageFrench": "Tiếng Pháp",
+  "languageGerman": "Tiếng Đức",
+  "languageItalian": "Tiếng Ý",
+  "languagePortugueseBrazil": "Tiếng Bồ Đào Nha (Brazil)",
+  "languageDutch": "Tiếng Hà Lan",
+  "languagePolish": "Tiếng Ba Lan",
+  "languageJapanese": "Tiếng Nhật",
+  "languageKorean": "Tiếng Hàn",
+  "languageChineseSimplified": "Tiếng Trung (Giản thể)",
+  "languageChineseTraditional": "Tiếng Trung (Phồn thể)",
+  "languageRussian": "Tiếng Nga",
+  "languageHindi": "Tiếng Hindi",
+  "languageIndonesian": "Tiếng Indonesia",
+  "languageVietnamese": "Tiếng Việt",
+  "appearanceSettings": "Cài đặt giao diện",
+  "delete": "Xóa",
+  "confirmDelete": "Xác nhận xóa",
+  "confirmDeleteRecords": "{count, plural, =1{Bạn có chắc chắn muốn xóa 1 bản ghi không? Hành động này không thể đảo ngược.} other{Bạn có chắc chắn muốn xóa {count} bản ghi không? Hành động này không thể đảo ngược.}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Hủy",
+  "search": "Tìm kiếm...",
+  "clear": "Xóa",
+  "showMenu": "Hiển thị menu",
+  "selectAll": "Chọn tất cả",
+  "edit": "Chỉnh sửa",
+  "favorite": "Yêu thích",
+  "atLeastOneTab": "Bạn cần ít nhất one tab",
+  "scrollableTabs": "Các tab có thể cuộn",
+  "save": "Lưu",
+  "themeSystem": "Hệ thống",
+  "themeDark": "Tối",
+  "themeLight": "Sáng",
+  "pureBlackAmoled": "Đen tinh khiết (AMOLED)",
+  "pureBlackAmoledTooltip": "Sử dụng màu đen tinh khiết cho màn hình AMOLED",
+  "systemColorScheme": "Bảng màu hệ thống",
+  "systemColorSchemeTooltip": "Sử dụng màu chính của thiết bị cho ứng dụng",
+  "showImages": "Hiển thị hình ảnh",
+  "showImagesTooltip": "Chọn và hiển thị hình ảnh trên nhật ký và trang thực phẩm",
+  "curveLineGraphs": "Đồ thị đường cong",
+  "curveLineGraphsTooltip": "Sử dụng các đường cong mượt mà trên trang đồ thị",
+  "weightStatCards": "Phiếu thống kê trọng lượng",
+  "weightStatCardsTooltip": "Hiển thị các mục nhập trọng lượng dưới dạng lưới các thẻ chỉ số thay vì danh sách mặc định",
+  "graphsStartAtZero": "Đồ thị bắt đầu từ 0",
+  "graphsStartAtZeroTooltip": "Luôn bắt đầu biểu đồ trục y bằng 0",
+  "navigationAnimation": "Hoạt ảnh điều hướng",
+  "animationFade": "Mờ dần",
+  "animationZoom": "Thu phóng",
+  "animationSlide": "Trượt",
+  "animationRise": "Tăng",
+  "animationNone": "Không",
+  "longDateFormat": "Định dạng ngày dài ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "Định dạng ngày ngắn ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "Cài đặt nhật ký",
+  "diaryUnit": "Đơn vị nhật ký",
+  "diarySummary": "Tóm tắt nhật ký",
+  "diarySummaryDivision": "Bộ phận - hiện tại / tổng cộng",
+  "diarySummaryRemaining": "Còn lại",
+  "diarySummaryBoth": "Cả hai - còn lại (tổng cộng)",
+  "diarySummaryNone": "Không",
+  "dailyCaloriesKcal": "Lượng calo hàng ngày (kcal)",
+  "dailyProteinG": "Protein hàng ngày (g)",
+  "dailyFatG": "Chất béo hàng ngày (g)",
+  "dailyCarbsG": "Carbs hàng ngày (g)",
+  "dailyFiberG": "Chất xơ hàng ngày (g)",
+  "automaticDailies": "Mục tiêu tự động hàng ngày",
+  "automaticDailiesTooltip": "Tự động tính toán lượng calo, protein, chất béo và carbs khuyến nghị hàng ngày từ trọng lượng cơ thể của bạn",
+  "selectNameOnSubmit": "Chọn tên khi gửi",
+  "reminders": "Lời nhắc",
+  "foodSettings": "Cài đặt thực phẩm",
+  "foodUnit": "Đơn vị thực phẩm",
+  "fields": "Trường",
+  "favoriteNewFoods": "Món ăn mới yêu thích",
+  "pickFields": "Chọn trường",
+  "all": "Tất cả",
+  "onlySelected": "Chỉ được chọn",
+  "weightSettings": "Cài đặt trọng lượng",
+  "targetWeight": "Trọng lượng mục tiêu",
+  "positiveReinforcement": "Tăng cường tích cực",
+  "positiveReinforcementPreview": "Tin nhắn khích lệ sẽ được hiển thị như thế này!",
+  "dataSettings": "Cài đặt dữ liệu",
+  "automaticBackup": "Sao lưu tự động",
+  "shareDatabase": "Chia sẻ cơ sở dữ liệu",
+  "openNotification": "Mở thông báo",
+  "automaticBackupsEnabled": "Đã bật sao lưu tự động",
+  "automaticBackupBody": "FitBook sẽ tự động sao lưu dữ liệu và hình ảnh của bạn vào thư mục đã chọn mỗi ngày.",
+  "backupSettings": "Cài đặt sao lưu",
+  "backupSettingsChannelDescription": "Thông báo về sao lưu tự động",
+  "openFoodFacts": "Thông tin về thực phẩm mở",
+  "username": "Tên người dùng",
+  "password": "Mật khẩu",
+  "close": "Đóng",
+  "loggedIn": "Đã đăng nhập",
+  "about": "Giới thiệu",
+  "version": "Phiên bản",
+  "whatsNew": "Có gì mới?",
+  "author": "Tác giả",
+  "license": "Giấy phép",
+  "donate": "Quyên góp",
+  "supportProject": "Giúp hỗ trợ dự án này",
+  "leaveReview": "Để lại đánh giá",
+  "rateOnPlayStore": "Xếp hạng FitBook trên Play Store",
+  "sourceCode": "Mã nguồn",
+  "foods": "Thực phẩm",
+  "backup": "Sao lưu",
+  "exportData": "Xuất dữ liệu",
+  "importData": "Nhập dữ liệu",
+  "failedImportData": "Không thể nhập dữ liệu",
+  "copyError": "Lỗi sao chép",
+  "deleteRecords": "Xóa bản ghi",
+  "unusedFood": "Thực phẩm chưa sử dụng",
+  "database": "Cơ sở dữ liệu",
+  "deleteAllWeightsConfirm": "Bạn có chắc chắn muốn xóa tất cả các trọng số không? Hành động này không thể đảo ngược.",
+  "deleteDatabaseConfirm": "Bạn có chắc chắn muốn xóa cơ sở dữ liệu của mình không? Hành động này không thể đảo ngược và sẽ phá hủy tất cả dữ liệu của bạn.",
+  "deleteFoodsAndDiaryConfirm": "Bạn có chắc chắn muốn xóa tất cả các mục nhập thực phẩm và nhật ký không? Hành động này không thể đảo ngược.",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{Bạn có chắc chắn muốn xóa 1 thực phẩm chưa sử dụng không? Hành động này là không thể đảo ngược.} other{Bạn có chắc chắn muốn xóa {count} thực phẩm chưa sử dụng không? Hành động này là không thể đảo ngược.}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "Bạn có chắc chắn muốn xóa tất cả các mục nhật ký không? Hành động này không thể đảo ngược.",
+  "ok": "OK",
+  "replaceImage": "Thay thế hình ảnh",
+  "takePhoto": "Chụp ảnh",
+  "deleteImage": "Xóa hình ảnh",
+  "filters": "Bộ lọc",
+  "foodGroup": "Nhóm thực phẩm",
+  "exampleFruit": "Trái cây",
+  "clearFiltersCount": "Xóa ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "Hoàn tất",
+  "showFilters": "Hiển thị bộ lọc",
+  "repeatEntry": "Nhập lại",
+  "timeOfDay": "Thời gian trong ngày",
+  "everyDay": "Mỗi ngày",
+  "repeatEveryDayForYear": "Tạo mục nhập này mỗi ngày cho năm tiếp theo",
+  "repeatOn": "Lặp lại vào",
+  "weekdayMon": "T2",
+  "weekdayTue": "Thứ Ba",
+  "weekdayWed": "T4",
+  "weekdayThu": "T5",
+  "weekdayFri": "T6",
+  "weekdaySat": "T7",
+  "weekdaySun": "CN",
+  "schedule": "Lịch trình",
+  "enterValidNutritionValues": "Nhập giá trị dinh dưỡng hợp lệ",
+  "quickAddTitle": "Thêm nhanh",
+  "kilojoules": "Kilôjun",
+  "createdDate": "Ngày tạo",
+  "failedMigrations": "Di chuyển không thành công",
+  "failedMigrationsDescription": "Đã xảy ra lỗi khi tạo hoặc nâng cấp cơ sở dữ liệu của bạn. Thông thường, điều này có thể được khắc phục bằng cách xóa và tạo lại hồ sơ của quý vị.",
+  "errorMessage": "Thông báo lỗi:",
+  "createIssue": "Tạo vấn đề",
+  "cameraPermissionRequired": "Cần có quyền truy cập camera để quét.",
+  "scanFoodBarcode": "Quét mã vạch thực phẩm",
+  "holdBarcodeInFrame": "Giữ mã vạch bên trong khung",
+  "pinchToZoom": "Chụm để thu phóng",
+  "cameraStartFailed": "Không thể khởi động máy ảnh",
+  "editDiaryEntry": "Chỉnh sửa mục nhập nhật ký",
+  "addFoodToDiary": "Thêm thực phẩm vào nhật ký",
+  "confirmDeleteDiaryEntry": "Bạn có chắc chắn muốn xóa {name} không?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "Lỗi hình ảnh",
+  "setImage": "Đặt hình ảnh",
+  "name": "Tên",
+  "searchFoodsAndMeals": "Tìm kiếm thực phẩm và bữa ăn...",
+  "clearSelection": "Xóa lựa chọn",
+  "barcodeNotFoundSaveToInsert": "Không tìm thấy mã vạch. Lưu để chèn.",
+  "searchOpenFoodFactsFor": "Tìm kiếm OpenFoodFacts cho \"{name}\"",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "Bữa ăn",
+  "quantity": "Số lượng",
+  "unit": "Đơn vị",
+  "servingWithAmountUnit": "Phục vụ ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "Mã vạch",
+  "nutritionPerAmountUnit": "{nutrient} (mỗi {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} trên {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "Chất xơ",
+  "unitServing": "Phục vụ",
+  "unitGrams": "Gram",
+  "unitMilliliters": "Mi-li-lít",
+  "unitKilojoules": "Kilôjun",
+  "unitCups": "Cốc",
+  "unitTablespoons": "Muỗng canh",
+  "unitMilligrams": "Miligam",
+  "unitTeaspoons": "Muỗng cà phê",
+  "unitOunces": "Ounce",
+  "unitPounds": "Pound",
+  "unitKilograms": "Kilôgam",
+  "unitLiters": "Lít",
+  "nameConflict": "Xung đột tên",
+  "replaceExistingFood": "Một món ăn đã tồn tại với tên này. Bạn có muốn thay thế one cũ không?",
+  "no": "Không",
+  "yes": "Có",
+  "editFood": "Chỉnh sửa đồ ăn",
+  "confirmDeleteFood": "Bạn có chắc chắn muốn xóa {name} không?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "Calo (kcal)",
+  "kilojoulesKj": "Kilôjun (kJ)",
+  "servingSize": "Kích thước khẩu phần",
+  "servingUnit": "Thiết bị phục vụ",
+  "saveAsNewCopy": "Lưu dưới dạng bản sao mới",
+  "filterFoods": "Lọc thực phẩm",
+  "narrowFoodsFilters": "Thu hẹp danh sách bằng cách sử dụng bất kỳ kết hợp các bộ lọc nào.",
+  "foodDetails": "Chi tiết đồ ăn",
+  "exampleFruitHint": "ví dụ: Trái cây",
+  "servingSizeRangeHint": "Đặt mức tối thiểu, tối đa hoặc cả hai.",
+  "minimum": "Tối thiểu",
+  "maximum": "Tối đa",
+  "noMinimum": "Không có mức tối thiểu",
+  "noMaximum": "Không có tối đa",
+  "clearAll": "Xóa tất cả",
+  "searchOpenFoodFacts": "Tìm kiếm thông tin về thực phẩm mở",
+  "noMatchingProducts": "Không có sản phẩm phù hợp",
+  "tryAnotherNameOrScanBarcode": "Hãy thử tên khác hoặc quét mã vạch.",
+  "enterFoodNameToSearch": "Nhập tên thực phẩm ở trên, sau đó gửi để tìm kiếm.",
+  "submitToSearch": "Gửi để tìm kiếm...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} g chất đạm",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{Chỉnh sửa 1 thực phẩm} other{Chỉnh sửa {count} thực phẩm}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "Chỉnh sửa bữa ăn",
+  "addImage": "Thêm hình ảnh",
+  "noFoodsInMeal": "Chưa có thực phẩm nào trong bữa ăn này",
+  "addFoodToMealHint": "Thêm thực phẩm để bắt đầu xây dựng bữa ăn này.",
+  "remove": "Xóa",
+  "searchFoods": "Tìm kiếm thực phẩm...",
+  "noFoodsFound": "Không tìm thấy thực phẩm",
+  "nothingMatchesSearch": "Không có kết quả nào khớp với “{search}”.",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "Thêm một số thực phẩm vào thư viện của bạn trước khi thêm chúng vào bữa ăn.",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "Chưa có dữ liệu",
+  "completePlansToViewGraphs": "Hoàn thành một số kế hoạch để xem biểu đồ tại đây.",
+  "value": "Giá trị",
+  "goal": "Mục tiêu",
+  "notSet": "Chưa thiết lập",
+  "trend": "Xu hướng",
+  "smooth": "Mịn màng",
+  "pointAverage": "{count, plural, one{Trung bình 1 điểm} other{Trung bình {count} điểm}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "Chỉnh sửa trọng lượng",
+  "addWeight": "Thêm trọng lượng",
+  "shareWeight": "Tôi vừa cân {value} {unit}!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "Trọng lượng ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "Vui lòng nhập trọng lượng",
+  "pleaseEnterValidWeight": "Vui lòng nhập trọng lượng hợp lệ",
+  "lastWeight": "Trọng lượng cuối cùng",
+  "unitWithValue": "Đơn vị ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "Giữ đơn vị dưới dạng {unit}",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "Chuyển đổi thành {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "Xóa hình ảnh",
+  "mealRemindersEnabled": "Đã bật lời nhắc bữa ăn",
+  "mealRemindersEnabledBody": "Chúng tôi sẽ nhắc bạn ghi lại bữa sáng, bữa trưa hoặc bữa tối nếu bạn chưa ghi lại.",
+  "reminderSettingsChannel": "Cài đặt lời nhắc",
+  "reminderSettingsChannelDescription": "Thông báo giải thích lời nhắc FitBook",
+  "breakfastReminderTitle": "Đừng quên ghi nhật ký bữa sáng",
+  "breakfastRemindersChannel": "Nhắc nhở về bữa sáng",
+  "breakfastRemindersChannelDescription": "Lời nhắc ghi lại bữa sáng",
+  "lunchReminderTitle": "Đừng quên ghi nhật ký bữa trưa",
+  "lunchRemindersChannel": "Nhắc nhở ăn trưa",
+  "lunchRemindersChannelDescription": "Lời nhắc ghi nhật ký ăn trưa",
+  "dinnerReminderTitle": "Đừng quên ghi nhật ký bữa tối",
+  "dinnerRemindersChannel": "Lời nhắc về bữa tối",
+  "dinnerRemindersChannelDescription": "Lời nhắc ghi nhật ký ăn tối",
+  "reinforcementGreatJob": "Làm tốt lắm! Công việc khó khăn của bạn đang được đền đáp.",
+  "reinforcementKeepItUp": "Hãy tiếp tục! Bạn đang đạt được tiến bộ tuyệt vời.",
+  "reinforcementFantastic": "Tuyệt vời! Sự cống hiến của bạn đang cho thấy kết quả.",
+  "reinforcementWellDone": "Làm tốt lắm! Bạn đã one tiến gần hơn đến mục tiêu của mình.",
+  "reinforcementImpressive": "Thật ấn tượng! Nỗ lực của bạn đang mang lại kết quả.",
+  "reinforcementAmazing": "Tuyệt vời! Bạn đang đi đúng hướng.",
+  "reinforcementBravo": "Hoan hô! Cam kết của bạn thật đáng khen ngợi.",
+  "reinforcementExcellent": "Tuyệt vời! Sự kiên trì của bạn là nguồn cảm hứng.",
+  "reinforcementSuperb": "Tuyệt vời! Bạn đang làm một công việc xuất sắc.",
+  "reinforcementIncredible": "Thật đáng kinh ngạc! Tiến độ của bạn thật đáng chú ý.",
+  "reinforcementWayToGoKing": "Cách để trở thành Vua",
+  "reinforcementYeahBuddy": "Yeah anh bạn!",
+  "reinforcementThatsHowItsDone": "Đó là cách nó được thực hiện.",
+  "reinforcementEasyAsPie": "Dễ như ăn bánh.",
+  "reinforcementDoingGreat": "Bạn đang làm rất tốt.",
+  "reinforcementProgressNice": "Đó có phải là sự tiến bộ mà tôi thấy không? Rất tốt.",
+  "diarySummaryRemainingValue": "Còn lại {remaining} {unit}",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} còn lại ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "Đường",
+  "nutrientCholesterol": "Cholesterol",
+  "nutrientSaturatedFat": "Chất béo bão hòa",
+  "nutrientCalcium": "Canxi",
+  "nutrientIron": "Sắt",
+  "nutrientPotassium": "Kali",
+  "nutrientMagnesium": "Magiê",
+  "nutrientVitaminA": "Vitamin A",
+  "nutrientVitaminC": "Vitamin C",
+  "nutrientVitaminB12": "Vitamin B12",
+  "nutrientVitaminD": "Vitamin D",
+  "nutrientVitaminE": "Vitamin E",
+  "nutrientAddedSugar": "Đường bổ sung",
+  "nutrientNetCarbs": "Cacbohydrat ròng",
+  "nutrientWater": "Nước",
+  "nutrientOmega3": "Axit béo omega-3",
+  "nutrientOmega6": "Axit béo Omega-6",
+  "nutrientPralScore": "Điểm PRAL",
+  "nutrientTransFat": "Chất béo chuyển hóa",
+  "nutrientSolubleFiber": "Chất xơ hòa tan",
+  "nutrientInsolubleFiber": "Chất xơ không hòa tan",
+  "nutrientPhosphorus": "Photpho",
+  "nutrientSodium": "Natri",
+  "nutrientZinc": "Kẽm",
+  "nutrientCopper": "Đồng",
+  "nutrientManganese": "Mangan",
+  "nutrientSelenium": "Selen",
+  "nutrientFluoride": "Florua",
+  "nutrientMolybdenum": "Molypden",
+  "nutrientChloride": "Clorua",
+  "nutrientSucrose": "Sucroza",
+  "nutrientGlucose": "Glucose",
+  "nutrientFructose": "Fructoza",
+  "nutrientLactose": "Lactoza",
+  "nutrientMaltose": "Maltose",
+  "nutrientGalactose": "Galactoza",
+  "nutrientStarch": "Tinh bột",
+  "nutrientSugarAlcohols": "Cồn đường",
+  "nutrientThiaminB1": "Thiamin (B1)",
+  "nutrientRiboflavinB2": "Riboflavin (B2)",
+  "nutrientNiacinB3": "Niacin (B3)",
+  "nutrientPantothenicAcidB5": "Axit pantothenic (B5)",
+  "nutrientVitaminB6": "Vitamin B6",
+  "nutrientBiotinB7": "Biotin (B7)",
+  "nutrientFolateB9": "Folat (B9)",
+  "nutrientFolicAcid": "Axit folic",
+  "nutrientFoodFolate": "Folate thực phẩm",
+  "nutrientFolateDfe": "Chế độ ăn uống tương đương folate (DFE)",
+  "nutrientCholine": "Choline",
+  "nutrientBetaine": "Betaine",
+  "nutrientRetinol": "Retinol",
+  "nutrientBetaCarotene": "Beta-carotene",
+  "nutrientAlphaCarotene": "Alpha-caroten",
+  "nutrientLycopene": "Lycopene",
+  "nutrientLuteinZeaxanthin": "Lutein + zeaxanthin",
+  "nutrientVitaminD2": "Vitamin D2 (ergocalciferol)",
+  "nutrientVitaminD3": "Vitamin D3 (cholecalciferol)",
+  "nutrientVitaminK": "Vitamin K",
+  "nutrientDihydrophylloquinone": "Dihydrophylloquinone",
+  "nutrientMenaquinone4": "Menaquinone-4",
+  "nutrientMonounsaturatedFat": "Chất béo không bão hòa đơn",
+  "nutrientPolyunsaturatedFat": "Chất béo không bão hòa đa",
+  "nutrientAla": "Axit alpha-linolenic (ALA)",
+  "nutrientEpa": "Axit eicosapentaenoic (EPA)",
+  "nutrientDpa": "Axit Docosapentaenoic (DPA)",
+  "nutrientDha": "Axit Docosahexaenoic (DHA)",
+  "nutrientAlanine": "Alanine",
+  "nutrientAlcohol": "Rượu",
+  "nutrientArginine": "Arginine",
+  "nutrientAsparticAcid": "Axit aspartic",
+  "nutrientCystine": "Cystine",
+  "nutrientGlutamicAcid": "Axit glutamic",
+  "nutrientGlycine": "Glycine",
+  "nutrientHistidine": "Histidin",
+  "nutrientHydroxyproline": "Hydroxyproline",
+  "nutrientIsoleucine": "Isoleucine",
+  "nutrientLeucine": "Leucine",
+  "nutrientLysine": "Lysine",
+  "nutrientMethionine": "Methionin",
+  "nutrientPhenylalanine": "Phenylalanin",
+  "nutrientProline": "Prolin",
+  "nutrientSerine": "Serin",
+  "nutrientThreonine": "Threonin",
+  "nutrientTryptophan": "Tryptophan",
+  "nutrientTyrosine": "Tyrosine",
+  "nutrientValine": "Valine",
+  "nutrientCaffeine": "Caffeine",
+  "nutrientTheobromine": "Theobromine",
+  "servingWeightNumber": "Trọng lượng khẩu phần {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "Mô tả dịch vụ {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "Trọng lượng tương đương 200 kcal"
+}
