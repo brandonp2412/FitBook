@@ -308,6 +308,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get languageHindi => '힌디어';
 
   @override
+  String get languageIndonesian => '인도네시아어';
+
+  @override
   String get appearanceSettings => '화면 설정';
 
   @override

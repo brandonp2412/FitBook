@@ -1,0 +1,4 @@
+- Tambahkan opsi untuk garis tren
+- Tambahkan serat ke entri buku harian
+- Ubah pemesanan halaman makanan
+- Gunakan database makanan baru

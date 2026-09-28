@@ -315,6 +315,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageHindi => 'Hindi';
 
   @override
+  String get languageIndonesian => 'indonesio';
+
+  @override
   String get appearanceSettings => 'Ajustes de apariencia';
 
   @override

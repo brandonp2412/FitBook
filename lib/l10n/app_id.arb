@@ -1,0 +1,714 @@
+{
+  "@@locale": "id",
+  "appTitle": "FitBook",
+  "navDiary": "Buku harian",
+  "navGraph": "Grafik",
+  "navFood": "Makanan",
+  "navWeight": "Berat",
+  "navError": "Kesalahan",
+  "loadDataFailed": "Tidak dapat memuat data ini.",
+  "settings": "Pengaturan",
+  "invalidTabSettings": "Setelan tab tidak valid.",
+  "newVersion": "Versi baru {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "Perubahan",
+  "searchSettings": "Setelan penelusuran...",
+  "appearance": "Penampilan",
+  "appearanceSubtitle": "Tema, warna dan tampilan grafik",
+  "diary": "Buku harian",
+  "diarySubtitle": "Target harian, ringkasan dan pencatatan",
+  "food": "Makanan",
+  "foodSubtitle": "Unit makanan, bidang dan default",
+  "weight": "Berat",
+  "weightSubtitle": "Satuan berat, sasaran, dan tampilan",
+  "tabs": "tab",
+  "tabsSubtitle": "Tab navigasi dan pemesanan",
+  "data": "Data",
+  "dataSubtitle": "Impor, ekspor, dan data lokal",
+  "todayProgress": "Kemajuan hari ini",
+  "latestDay": "Hari terakhir",
+  "loggedEntries": "{count, plural, =0{Belum ada entri yang dicatat} =1{1 entri dicatat} other{{count} entri dicatat}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{Edit 1 entri} other{Edit {count} entri}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "Kalori",
+  "protein": "Protein",
+  "carbs": "Karbohidrat",
+  "fat": "Gemuk",
+  "addDiaryEntry": "Tambahkan entri buku harian",
+  "noEntriesToday": "Tidak ada entri hari ini.",
+  "addSearchToDiary": "Tambahkan \"{search}\" ke buku harian Anda",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "Ketuk untuk mulai mencatat makanan.",
+  "noMatchingDiaryEntriesTapCreate": "Tidak ada entri buku harian yang cocok. Ketuk untuk membuat makanan ini dan mencatatnya.",
+  "add": "Menambahkan",
+  "quickAdd": "Tambahkan cepat",
+  "scanBarcode": "Pindai kode batang",
+  "foodLibrary": "Perpustakaan makanan",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 makanan} other{{foodCount} makanan}} · {mealCount, plural, =1{1 hidangan} other{{mealCount} hidangan}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "Baru-baru ini digunakan",
+  "quickActions": "Tindakan cepat",
+  "addFood": "Tambahkan makanan",
+  "createMeal": "Buat makanan",
+  "noFoodYet": "Belum ada makanan",
+  "noMatchingFood": "Tidak ada makanan yang cocok",
+  "addFirstFoodOrMeal": "Tambahkan makanan atau makanan pertama Anda untuk mulai membangun perpustakaan Anda.",
+  "noFoodSearchMatches": "Tidak ada yang cocok dengan “{search}”. Hapus pencarian untuk melihat semuanya lagi.",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "Hapus pencarian",
+  "addMeal": "Tambahkan makanan",
+  "noWeightsYet": "Belum ada beban",
+  "noMatchingWeights": "Tidak ada bobot yang cocok",
+  "logFirstWeight": "Catat berat badan pertama Anda untuk mulai melacak tren Anda.",
+  "noWeightSearchMatches": "Tidak ada yang cocok dengan “{search}”. Hapus pencarian untuk melihat semua entri.",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "Catat beratnya",
+  "weightTrend": "Tren berat badan",
+  "weightTrendSubtitle": "Pengukuran terkini dan arah keseluruhan",
+  "bodyWeight": "Berat badan",
+  "options": "Pilihan",
+  "day": "Hari",
+  "today": "Hari ini",
+  "week": "Pekan",
+  "month": "Bulan",
+  "year": "Tahun",
+  "dateRange": "Rentang tanggal",
+  "startDate": "Tanggal mulai",
+  "stopDate": "Tanggal berhenti",
+  "dataPoints": "Poin data",
+  "customizeFields": "Sesuaikan bidang",
+  "language": "Bahasa",
+  "languageSubtitle": "Pilih bahasa yang digunakan oleh FitBook",
+  "languageSystem": "Sistem",
+  "languageEnglish": "Bahasa inggris",
+  "languageSpanish": "Spanyol",
+  "languageFrench": "Perancis",
+  "languageGerman": "Jerman",
+  "languageItalian": "Italia",
+  "languagePortugueseBrazil": "Portugis (Brasil)",
+  "languageDutch": "Belanda",
+  "languagePolish": "Polandia",
+  "languageJapanese": "Jepang",
+  "languageKorean": "Korea",
+  "languageChineseSimplified": "Cina (Sederhana)",
+  "languageChineseTraditional": "Cina (Tradisional)",
+  "languageRussian": "Rusia",
+  "languageHindi": "Hindi",
+  "languageIndonesian": "Bahasa Indonesia",
+  "appearanceSettings": "Pengaturan penampilan",
+  "delete": "Menghapus",
+  "confirmDelete": "Konfirmasi penghapusan",
+  "confirmDeleteRecords": "{count, plural, =1{Yakin ingin menghapus 1 catatan? Tindakan ini tidak dapat dibatalkan.} other{Yakin ingin menghapus {count} catatan? Tindakan ini tidak dapat dibatalkan.}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Membatalkan",
+  "search": "Mencari...",
+  "clear": "Jernih",
+  "showMenu": "Tampilkan menu",
+  "selectAll": "Pilih semua",
+  "edit": "Sunting",
+  "favorite": "Favorit",
+  "atLeastOneTab": "Anda memerlukan setidaknya satu tab",
+  "scrollableTabs": "Tab yang dapat digulir",
+  "save": "Menyimpan",
+  "themeSystem": "Sistem",
+  "themeDark": "Gelap",
+  "themeLight": "Lampu",
+  "pureBlackAmoled": "Hitam murni (AMOLED)",
+  "pureBlackAmoledTooltip": "Gunakan warna hitam murni untuk layar AMOLED",
+  "systemColorScheme": "Skema warna sistem",
+  "systemColorSchemeTooltip": "Gunakan warna utama perangkat Anda untuk aplikasi",
+  "showImages": "Tampilkan gambar",
+  "showImagesTooltip": "Pilih dan tampilkan gambar di halaman buku harian dan makanan",
+  "curveLineGraphs": "Grafik garis kurva",
+  "curveLineGraphsTooltip": "Gunakan kurva halus pada halaman grafik",
+  "weightStatCards": "Kartu status berat badan",
+  "weightStatCardsTooltip": "Tampilkan entri bobot sebagai kisi kartu stat, bukan daftar default",
+  "graphsStartAtZero": "Grafik dimulai dari nol",
+  "graphsStartAtZeroTooltip": "Selalu awali grafik sumbu y dari nol",
+  "navigationAnimation": "Animasi navigasi",
+  "animationFade": "Memudar",
+  "animationZoom": "Perbesar",
+  "animationSlide": "Menggeser",
+  "animationRise": "Bangkit",
+  "animationNone": "Tidak ada",
+  "longDateFormat": "Format tanggal panjang ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "Format tanggal pendek ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "Pengaturan buku harian",
+  "diaryUnit": "Satuan buku harian",
+  "diarySummary": "Ringkasan buku harian",
+  "diarySummaryDivision": "Divisi - saat ini / total",
+  "diarySummaryRemaining": "Tersisa",
+  "diarySummaryBoth": "Keduanya - tersisa (total)",
+  "diarySummaryNone": "Tidak ada",
+  "dailyCaloriesKcal": "Kalori harian (kkal)",
+  "dailyProteinG": "Protein harian (g)",
+  "dailyFatG": "Lemak harian (g)",
+  "dailyCarbsG": "Karbohidrat harian (g)",
+  "dailyFiberG": "Serat harian (g)",
+  "automaticDailies": "Target harian otomatis",
+  "automaticDailiesTooltip": "Secara otomatis menghitung rekomendasi kalori, protein, lemak, dan karbohidrat harian dari berat badan Anda",
+  "selectNameOnSubmit": "Pilih nama saat dikirim",
+  "reminders": "Pengingat",
+  "foodSettings": "Pengaturan makanan",
+  "foodUnit": "Satuan makanan",
+  "fields": "Bidang",
+  "favoriteNewFoods": "Makanan baru favorit",
+  "pickFields": "Pilih bidang",
+  "all": "Semua",
+  "onlySelected": "Hanya dipilih",
+  "weightSettings": "Pengaturan berat badan",
+  "targetWeight": "Berat sasaran",
+  "positiveReinforcement": "Penguatan positif",
+  "positiveReinforcementPreview": "Pesan-pesan yang menyemangati akan ditampilkan seperti ini!",
+  "dataSettings": "Pengaturan data",
+  "automaticBackup": "Pencadangan otomatis",
+  "shareDatabase": "Bagikan basis data",
+  "openNotification": "Buka notifikasi",
+  "automaticBackupsEnabled": "Pencadangan otomatis diaktifkan",
+  "automaticBackupBody": "FitBook akan secara otomatis mencadangkan data dan gambar Anda ke folder yang dipilih setiap hari.",
+  "backupSettings": "Pengaturan cadangan",
+  "backupSettingsChannelDescription": "Pemberitahuan tentang pencadangan otomatis",
+  "openFoodFacts": "Buka Fakta Makanan",
+  "username": "Nama belakang",
+  "password": "Kata sandi",
+  "close": "Menutup",
+  "loggedIn": "Masuk",
+  "about": "Tentang",
+  "version": "Versi",
+  "whatsNew": "Apa yang baru?",
+  "author": "Pengarang",
+  "license": "Lisensi",
+  "donate": "Menyumbangkan",
+  "supportProject": "Bantu dukung proyek ini",
+  "leaveReview": "Tinggalkan ulasan",
+  "rateOnPlayStore": "Nilai FitBook di Play Store",
+  "sourceCode": "Kode sumber",
+  "foods": "Makanan",
+  "backup": "Cadangan",
+  "exportData": "Ekspor data",
+  "importData": "Impor data",
+  "failedImportData": "Gagal mengimpor data",
+  "copyError": "Kesalahan penyalinan",
+  "deleteRecords": "Hapus catatan",
+  "unusedFood": "Makanan yang tidak terpakai",
+  "database": "Basis data",
+  "deleteAllWeightsConfirm": "Apakah Anda yakin ingin menghapus semua bobot? Tindakan ini tidak dapat dibatalkan.",
+  "deleteDatabaseConfirm": "Apakah Anda yakin ingin menghapus database Anda? Tindakan ini tidak dapat dibatalkan dan akan menghancurkan semua data Anda.",
+  "deleteFoodsAndDiaryConfirm": "Apakah Anda yakin ingin menghapus semua entri makanan dan buku harian? Tindakan ini tidak dapat dibatalkan.",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{Yakin ingin menghapus 1 makanan yang tidak digunakan? Tindakan ini tidak dapat dibatalkan.} other{Yakin ingin menghapus {count} makanan yang tidak digunakan? Tindakan ini tidak dapat dibatalkan.}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "Apakah Anda yakin ingin menghapus semua entri buku harian? Tindakan ini tidak dapat dibatalkan.",
+  "ok": "OKE",
+  "replaceImage": "Ganti gambar",
+  "takePhoto": "Ambil foto",
+  "deleteImage": "Hapus gambar",
+  "filters": "Filter",
+  "foodGroup": "Kelompok makanan",
+  "exampleFruit": "Buah",
+  "clearFiltersCount": "Jelas ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "Selesai",
+  "showFilters": "Tampilkan filter",
+  "repeatEntry": "Ulangi entri",
+  "timeOfDay": "Waktu hari ini",
+  "everyDay": "Setiap hari",
+  "repeatEveryDayForYear": "Buat entri ini setiap hari untuk tahun berikutnya",
+  "repeatOn": "Ulangi terus",
+  "weekdayMon": "Senin",
+  "weekdayTue": "Selasa",
+  "weekdayWed": "Menikahi",
+  "weekdayThu": "Kam",
+  "weekdayFri": "Jumat",
+  "weekdaySat": "Duduk",
+  "weekdaySun": "Matahari",
+  "schedule": "Jadwal",
+  "enterValidNutritionValues": "Masukkan nilai nutrisi yang valid",
+  "quickAddTitle": "Tambah cepat",
+  "kilojoules": "Kilojoule",
+  "createdDate": "Tanggal dibuat",
+  "failedMigrations": "Migrasi gagal",
+  "failedMigrationsDescription": "Ada yang tidak beres saat membuat atau mengupgrade database Anda. Biasanya hal ini dapat diperbaiki dengan menghapus dan membuat ulang catatan Anda.",
+  "errorMessage": "Pesan kesalahan:",
+  "createIssue": "Buat masalah",
+  "cameraPermissionRequired": "Izin kamera diperlukan untuk memindai.",
+  "scanFoodBarcode": "Pindai kode batang makanan",
+  "holdBarcodeInFrame": "Pegang kode batang di dalam bingkai",
+  "pinchToZoom": "Cubit untuk memperbesar",
+  "cameraStartFailed": "Tidak dapat memulai kamera",
+  "editDiaryEntry": "Edit entri buku harian",
+  "addFoodToDiary": "Tambahkan makanan ke buku harian",
+  "confirmDeleteDiaryEntry": "Apakah Anda yakin ingin menghapus {name}?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "Kesalahan gambar",
+  "setImage": "Tetapkan gambar",
+  "name": "Nama",
+  "searchFoodsAndMeals": "Cari makanan dan makanan...",
+  "clearSelection": "Hapus pilihan",
+  "barcodeNotFoundSaveToInsert": "Kode batang tidak ditemukan. Simpan untuk disisipkan.",
+  "searchOpenFoodFactsFor": "Telusuri OpenFoodFacts untuk \"{name}\"",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "Makanan",
+  "quantity": "Kuantitas",
+  "unit": "Satuan",
+  "servingWithAmountUnit": "Penyajian ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "kode batang",
+  "nutritionPerAmountUnit": "{nutrient} (sesuai {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} untuk {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "Serat",
+  "unitServing": "Porsi",
+  "unitGrams": "gram",
+  "unitMilliliters": "Mililiter",
+  "unitKilojoules": "Kilojoule",
+  "unitCups": "Piala",
+  "unitTablespoons": "sendok makan",
+  "unitMilligrams": "Miligram",
+  "unitTeaspoons": "sendok teh",
+  "unitOunces": "Ons",
+  "unitPounds": "Pound",
+  "unitKilograms": "Kilogram",
+  "unitLiters": "liter",
+  "nameConflict": "Konflik nama",
+  "replaceExistingFood": "Makanan sudah ada dengan nama ini. Apakah Anda ingin mengganti yang lama?",
+  "no": "TIDAK",
+  "yes": "Ya",
+  "editFood": "Sunting makanan",
+  "confirmDeleteFood": "Apakah Anda yakin ingin menghapus {name}?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "Kalori (kkal)",
+  "kilojoulesKj": "Kilojoule (kJ)",
+  "servingSize": "Ukuran porsi",
+  "servingUnit": "Satuan penyajian",
+  "saveAsNewCopy": "Simpan sebagai salinan baru",
+  "filterFoods": "Saring makanan",
+  "narrowFoodsFilters": "Persempit daftar menggunakan kombinasi filter apa pun.",
+  "foodDetails": "Detail makanan",
+  "exampleFruitHint": "misalnya Buah",
+  "servingSizeRangeHint": "Tetapkan minimum, maksimum, atau keduanya.",
+  "minimum": "Minimum",
+  "maximum": "Maksimum",
+  "noMinimum": "Tidak ada minimal",
+  "noMaximum": "Tidak maksimal",
+  "clearAll": "Hapus semuanya",
+  "searchOpenFoodFacts": "Cari Fakta Makanan Terbuka",
+  "noMatchingProducts": "Tidak ada produk yang cocok",
+  "tryAnotherNameOrScanBarcode": "Coba nama lain atau pindai kode batang.",
+  "enterFoodNameToSearch": "Masukkan nama makanan di atas, lalu kirimkan ke pencarian.",
+  "submitToSearch": "Kirim untuk mencari...",
+  "kcalValue": "{value} kkal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} gram protein",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{Edit 1 makanan} other{Edit {count} makanan}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "Sunting makanan",
+  "addImage": "Tambahkan gambar",
+  "noFoodsInMeal": "Belum ada makanan dalam makanan ini",
+  "addFoodToMealHint": "Tambahkan makanan untuk mulai membuat makanan ini.",
+  "remove": "Menghapus",
+  "searchFoods": "Cari makanan...",
+  "noFoodsFound": "Tidak ada makanan yang ditemukan",
+  "nothingMatchesSearch": "Tidak ada yang cocok dengan “{search}”.",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "Tambahkan beberapa makanan ke perpustakaan Anda sebelum menambahkannya ke makanan.",
+  "caloriesPer100gValue": "{value} kkal / 100 gram",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "Belum ada datanya",
+  "completePlansToViewGraphs": "Selesaikan beberapa rencana untuk melihat grafik di sini.",
+  "value": "Nilai",
+  "goal": "Sasaran",
+  "notSet": "Tidak disetel",
+  "trend": "Kecenderungan",
+  "smooth": "Mulus",
+  "pointAverage": "{count, plural, one{Rata-rata 1 titik} other{Rata-rata {count} titik}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "Sunting berat",
+  "addWeight": "Tambahkan berat",
+  "shareWeight": "Saya baru saja menimbang {value} {unit}!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "Berat ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "Silakan masukkan berat badan",
+  "pleaseEnterValidWeight": "Silakan masukkan berat yang valid",
+  "lastWeight": "Berat terakhir",
+  "unitWithValue": "Satuan ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "Pertahankan unit sebagai {unit}",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "Ubah menjadi {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "Hapus gambar",
+  "mealRemindersEnabled": "Pengingat makan diaktifkan",
+  "mealRemindersEnabledBody": "Kami akan mengingatkan Anda untuk mencatat sarapan, makan siang, atau makan malam jika Anda belum mencatatnya.",
+  "reminderSettingsChannel": "Pengaturan pengingat",
+  "reminderSettingsChannelDescription": "Pemberitahuan menjelaskan pengingat FitBook",
+  "breakfastReminderTitle": "Jangan lupa untuk mencatat sarapan",
+  "breakfastRemindersChannel": "Pengingat sarapan",
+  "breakfastRemindersChannelDescription": "Pengingat untuk mencatat sarapan",
+  "lunchReminderTitle": "Jangan lupa mencatat makan siangnya",
+  "lunchRemindersChannel": "Pengingat makan siang",
+  "lunchRemindersChannelDescription": "Pengingat untuk mencatat makan siang",
+  "dinnerReminderTitle": "Jangan lupa untuk mencatat makan malam",
+  "dinnerRemindersChannel": "Pengingat makan malam",
+  "dinnerRemindersChannelDescription": "Pengingat untuk mencatat makan malam",
+  "reinforcementGreatJob": "Kerja bagus! Kerja keras Anda membuahkan hasil.",
+  "reinforcementKeepItUp": "Lanjutkan kerja baikmu! Anda membuat kemajuan luar biasa.",
+  "reinforcementFantastic": "Fantastis! Dedikasi Anda mulai membuahkan hasil.",
+  "reinforcementWellDone": "Bagus sekali! Anda selangkah lebih dekat ke tujuan Anda.",
+  "reinforcementImpressive": "Menakjubkan! Upaya Anda membuahkan hasil.",
+  "reinforcementAmazing": "Luar biasa! Anda berada di jalur yang benar.",
+  "reinforcementBravo": "Bagus sekali! Komitmen Anda patut diacungi jempol.",
+  "reinforcementExcellent": "Bagus sekali! Ketekunan Anda sangat menginspirasi.",
+  "reinforcementSuperb": "Hebat! Anda melakukan pekerjaan luar biasa.",
+  "reinforcementIncredible": "Menakjubkan! Kemajuan Anda terlihat jelas.",
+  "reinforcementWayToGoKing": "Bagus sekali, Raja",
+  "reinforcementYeahBuddy": "Ya sobat!",
+  "reinforcementThatsHowItsDone": "Begitulah cara melakukannya.",
+  "reinforcementEasyAsPie": "Mudah sekali.",
+  "reinforcementDoingGreat": "Anda melakukannya dengan baik.",
+  "reinforcementProgressNice": "Apakah itu kemajuan yang saya lihat? Bagus.",
+  "diarySummaryRemainingValue": "{remaining} {unit} tersisa",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} tersisa ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "Gula",
+  "nutrientCholesterol": "Kolesterol",
+  "nutrientSaturatedFat": "Lemak jenuh",
+  "nutrientCalcium": "Kalsium",
+  "nutrientIron": "Besi",
+  "nutrientPotassium": "Kalium",
+  "nutrientMagnesium": "Magnesium",
+  "nutrientVitaminA": "vitamin A",
+  "nutrientVitaminC": "Vitamin C",
+  "nutrientVitaminB12": "Vitamin B12",
+  "nutrientVitaminD": "Vitamin D",
+  "nutrientVitaminE": "Vitamin E",
+  "nutrientAddedSugar": "Ditambahkan gula",
+  "nutrientNetCarbs": "Karbohidrat bersih",
+  "nutrientWater": "Air",
+  "nutrientOmega3": "Asam lemak omega-3",
+  "nutrientOmega6": "Asam lemak omega-6",
+  "nutrientPralScore": "skor PRAL",
+  "nutrientTransFat": "Lemak trans",
+  "nutrientSolubleFiber": "Serat larut",
+  "nutrientInsolubleFiber": "Serat tidak larut",
+  "nutrientPhosphorus": "Fosfor",
+  "nutrientSodium": "Sodium",
+  "nutrientZinc": "Seng",
+  "nutrientCopper": "Tembaga",
+  "nutrientManganese": "mangan",
+  "nutrientSelenium": "Selenium",
+  "nutrientFluoride": "Fluor",
+  "nutrientMolybdenum": "Molibdenum",
+  "nutrientChloride": "Khlorida",
+  "nutrientSucrose": "sukrosa",
+  "nutrientGlucose": "Glukosa",
+  "nutrientFructose": "Fruktosa",
+  "nutrientLactose": "Laktosa",
+  "nutrientMaltose": "Maltosa",
+  "nutrientGalactose": "Galaktosa",
+  "nutrientStarch": "Pati",
+  "nutrientSugarAlcohols": "Alkohol gula",
+  "nutrientThiaminB1": "Tiamin (B1)",
+  "nutrientRiboflavinB2": "Riboflavin (B2)",
+  "nutrientNiacinB3": "Niasin (B3)",
+  "nutrientPantothenicAcidB5": "Asam pantotenat (B5)",
+  "nutrientVitaminB6": "Vitamin B6",
+  "nutrientBiotinB7": "Biotin (B7)",
+  "nutrientFolateB9": "Folat (B9)",
+  "nutrientFolicAcid": "Asam folat",
+  "nutrientFoodFolate": "Folat makanan",
+  "nutrientFolateDfe": "Setara folat makanan (DFE)",
+  "nutrientCholine": "Kolin",
+  "nutrientBetaine": "betaine",
+  "nutrientRetinol": "Retinol",
+  "nutrientBetaCarotene": "Beta-karoten",
+  "nutrientAlphaCarotene": "Alfa-karoten",
+  "nutrientLycopene": "likopen",
+  "nutrientLuteinZeaxanthin": "Lutein + zeaksantin",
+  "nutrientVitaminD2": "Vitamin D2 (ergokalsiferol)",
+  "nutrientVitaminD3": "Vitamin D3 (kolekalsiferol)",
+  "nutrientVitaminK": "Vitamin K",
+  "nutrientDihydrophylloquinone": "Dihidrofilokuinon",
+  "nutrientMenaquinone4": "Menaquinon-4",
+  "nutrientMonounsaturatedFat": "Lemak tak jenuh tunggal",
+  "nutrientPolyunsaturatedFat": "Lemak tak jenuh ganda",
+  "nutrientAla": "Asam alfa-linolenat (ALA)",
+  "nutrientEpa": "Asam eicosapentaenoic (EPA)",
+  "nutrientDpa": "Asam dokosapentaenoat (DPA)",
+  "nutrientDha": "Asam docosahexaenoic (DHA)",
+  "nutrientAlanine": "Alanin",
+  "nutrientAlcohol": "Alkohol",
+  "nutrientArginine": "Arginin",
+  "nutrientAsparticAcid": "Asam aspartat",
+  "nutrientCystine": "sistin",
+  "nutrientGlutamicAcid": "Asam glutamat",
+  "nutrientGlycine": "Glisin",
+  "nutrientHistidine": "Histidin",
+  "nutrientHydroxyproline": "Hidroksiprolin",
+  "nutrientIsoleucine": "Isoleusin",
+  "nutrientLeucine": "Leusin",
+  "nutrientLysine": "lisin",
+  "nutrientMethionine": "Metionin",
+  "nutrientPhenylalanine": "Fenilalanin",
+  "nutrientProline": "Prolin",
+  "nutrientSerine": "Serin",
+  "nutrientThreonine": "Treonin",
+  "nutrientTryptophan": "triptofan",
+  "nutrientTyrosine": "Tirosin",
+  "nutrientValine": "Valin",
+  "nutrientCaffeine": "Kafein",
+  "nutrientTheobromine": "Teobromin",
+  "servingWeightNumber": "Berat porsi {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "Deskripsi penyajian {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "Berat setara dengan 200 kkal"
+}

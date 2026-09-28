@@ -1,0 +1,11 @@
+Lacak kebiasaan makan Anda dengan mudah
+
+Jangan pernah melihat iklan lain saat mencatat makanan Anda.
+FitBook sepenuhnya Gratis dan Sumber Terbuka. 
+Yakinlah kami tidak akan memasarkannya
+kepada Anda atau membagikan data Anda dengan pihak ketiga.
+Semuanya disimpan secara lokal - itu berarti internet
+konektivitas adalah opsional.
+
+Jika Anda melihat ada bug, silakan buka tiket di
+https://github.com/brandonp2412/FitBook

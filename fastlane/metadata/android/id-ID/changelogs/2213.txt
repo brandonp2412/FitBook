@@ -1,0 +1,2 @@
+• feat(l10n): terjemahkan riwayat perubahan log bahasa Hindi
+• fix(l10n): menyelesaikan terjemahan changelog terbaru

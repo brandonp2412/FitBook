@@ -1,0 +1,5 @@
+• memperbaiki: memperkuat integrasi FitBook Windows
+• perbaikan: lokalkan entri changelog terbaru
+• perbaikan: mencegah panel perpustakaan makanan meluap
+• perbaikan: coba lagi jalankan emulator tangkapan layar yang tidak stabil
+• perbaikan: menstabilkan tangkapan layar yang dihasilkan

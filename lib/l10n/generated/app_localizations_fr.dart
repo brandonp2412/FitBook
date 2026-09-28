@@ -317,6 +317,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageHindi => 'hindi';
 
   @override
+  String get languageIndonesian => 'indonésien';
+
+  @override
   String get appearanceSettings => 'Paramètres d’apparence';
 
   @override

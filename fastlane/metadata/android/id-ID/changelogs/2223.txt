@@ -1,0 +1,2 @@
+• dokumen: tengahkan presentasi README
+• feat(l10n): metadata toko bahasa Spanyol lengkap

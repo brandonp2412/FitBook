@@ -323,6 +323,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get languageHindi => 'hindi';
 
   @override
+  String get languageIndonesian => 'indonezyjski';
+
+  @override
   String get appearanceSettings => 'Ustawienia wyglądu';
 
   @override

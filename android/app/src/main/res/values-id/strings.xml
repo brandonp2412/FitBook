@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Pencadangan gagal: Jalur pencadangan tidak disetel. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_channel_name">Cadangan</string>
+    <string name="backup_channel_description">Pencadangan otomatis database</string>
+    <string name="backup_failed_directory_access">Pencadangan gagal: Tidak dapat mengakses direktori pencadangan. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_failed_create_file">Pencadangan gagal: Tidak dapat membuat file cadangan. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="share">Membagikan</string>
+    <string name="backup_failed_app_files_directory">Pencadangan gagal: Tidak dapat mengakses direktori file aplikasi. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_failed_parent_directory">Pencadangan gagal: Tidak dapat mengakses direktori induk. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_failed_output_stream">Pencadangan gagal: Tidak dapat membuka aliran keluaran. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_failed_database_missing">Pencadangan gagal: File basis data tidak ditemukan. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_success_title">Data dan gambar yang dicadangkan</string>
+    <string name="backup_failed_unexpected">Pencadangan gagal secara tidak terduga. Pencadangan otomatis dinonaktifkan.</string>
+</resources>

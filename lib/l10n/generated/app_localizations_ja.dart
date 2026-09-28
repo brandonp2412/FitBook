@@ -308,6 +308,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageHindi => 'ヒンディー語';
 
   @override
+  String get languageIndonesian => 'インドネシア語';
+
+  @override
   String get appearanceSettings => '外観設定';
 
   @override

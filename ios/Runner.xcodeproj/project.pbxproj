@@ -73,6 +73,7 @@
 		D1A00000000000000000000A /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A000000000000000000010 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D1A000000000000000000011 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000B /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -261,6 +262,7 @@
 				pl,
 				ru,
 				hi,
+				id,
 				ja,
 				ko,
 				"zh-Hans",
@@ -454,6 +456,7 @@
 				D1A00000000000000000000A /* pl */,
 				D1A00000000000000000000F /* ru */,
 				D1A000000000000000000010 /* hi */,
+				D1A000000000000000000011 /* id */,
 				D1A00000000000000000000B /* ja */,
 				D1A00000000000000000000C /* ko */,
 				D1A00000000000000000000D /* zh-Hans */,

@@ -1,0 +1,18 @@
+Lacak makanan, kalori, makro, dan berat badan tanpa melepaskan kendali atas data Anda.
+
+FitBook adalah penghitung kalori dan pelacak nutrisi yang ramah offline untuk mencatat makanan, memahami asupan makro, dan mengikuti kemajuan Anda dari waktu ke waktu. Mulailah dengan database makanan bawaan, tambahkan makanan Anda sendiri, atau gunakan OpenFoodFacts saat Anda memilih untuk terhubung.
+
+LACAK APA YANG PENTING
+
+• Catat makanan dan asupan kalori harian
+• Ikuti makronutrien dari waktu ke waktu
+• Catat berat badan dan lihat grafik kemajuan
+• Cari database yang berisi ribuan makanan
+• Pindai kode batang dan cari OpenFoodFacts untuk informasi makanan
+• Sesuaikan pelacak agar sesuai dengan cara Anda makan
+
+OFFLINE-PERTAMA DAN PRIBADI
+
+FitBook berfungsi tanpa akun dan menyimpan data Anda di perangkat Anda. Akses internet bersifat opsional untuk pencarian OpenFoodFacts dan pencarian kode batang. Aplikasi ini open source dan tidak menayangkan iklan.
+
+FitBook membantu Anda mengatur informasi makanan dan nutrisi; ini bukan pengganti nasihat medis dari profesional yang berkualifikasi.
