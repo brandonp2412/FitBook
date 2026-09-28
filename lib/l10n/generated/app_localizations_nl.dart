@@ -321,6 +321,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageVietnamese => 'Vietnamees';
 
   @override
+  String get languageThai => 'Thais';
+
+  @override
   String get appearanceSettings => 'Weergave-instellingen';
 
   @override

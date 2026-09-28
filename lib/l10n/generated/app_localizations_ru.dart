@@ -330,6 +330,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languageVietnamese => 'Вьетнамский';
 
   @override
+  String get languageThai => 'Тайский';
+
+  @override
   String get appearanceSettings => 'Настройки оформления';
 
   @override

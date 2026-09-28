@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">สำรองข้อมูลล้มเหลว: ยังไม่ได้ตั้งค่าพาธสำรอง ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_channel_name">การสำรองข้อมูล</string>
+    <string name="backup_channel_description">สำรองฐานข้อมูลโดยอัตโนมัติ</string>
+    <string name="backup_failed_directory_access">สำรองข้อมูลล้มเหลว: ไม่สามารถเข้าถึงโฟลเดอร์สำรองได้ ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_failed_create_file">สำรองข้อมูลล้มเหลว: ไม่สามารถสร้างไฟล์สำรองได้ ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="share">แชร์</string>
+    <string name="backup_failed_app_files_directory">สำรองข้อมูลล้มเหลว: ไม่สามารถเข้าถึงโฟลเดอร์ไฟล์ของแอปได้ ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_failed_parent_directory">สำรองข้อมูลล้มเหลว: ไม่สามารถเข้าถึงโฟลเดอร์แม่ได้ ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_failed_output_stream">สำรองข้อมูลล้มเหลว: ไม่สามารถเปิดสตรีมเอาต์พุตได้ ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_failed_database_missing">สำรองข้อมูลล้มเหลว: ไม่พบไฟล์ฐานข้อมูล ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_success_title">สำรองข้อมูลและรูปภาพแล้ว</string>
+    <string name="backup_failed_unexpected">การสำรองข้อมูลล้มเหลวโดยไม่คาดคิด ปิดการสำรองอัตโนมัติแล้ว</string>
+</resources>

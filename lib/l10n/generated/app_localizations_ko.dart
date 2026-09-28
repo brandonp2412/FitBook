@@ -314,6 +314,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get languageVietnamese => '베트남어';
 
   @override
+  String get languageThai => '태국어';
+
+  @override
   String get appearanceSettings => '화면 설정';
 
   @override

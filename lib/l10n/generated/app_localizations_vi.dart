@@ -321,6 +321,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get languageVietnamese => 'Tiếng Việt';
 
   @override
+  String get languageThai => 'Tiếng Thái';
+
+  @override
   String get appearanceSettings => 'Cài đặt giao diện';
 
   @override

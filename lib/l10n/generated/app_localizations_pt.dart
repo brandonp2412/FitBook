@@ -321,6 +321,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageVietnamese => 'Vietnamita';
 
   @override
+  String get languageThai => 'Tailandês';
+
+  @override
   String get appearanceSettings => 'Configurações de aparência';
 
   @override
@@ -1803,6 +1806,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get languageVietnamese => 'Vietnamita';
+
+  @override
+  String get languageThai => 'Tailandês';
 
   @override
   String get appearanceSettings => 'Configurações de aparência';

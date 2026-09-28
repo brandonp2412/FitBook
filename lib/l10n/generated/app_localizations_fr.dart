@@ -323,6 +323,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get languageVietnamese => 'Vietnamien';
 
   @override
+  String get languageThai => 'Thaï';
+
+  @override
   String get appearanceSettings => 'Paramètres d’apparence';
 
   @override

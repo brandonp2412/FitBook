@@ -1,0 +1,716 @@
+{
+  "@@locale": "th",
+  "appTitle": "FitBook",
+  "navDiary": "ไดอารี",
+  "navGraph": "กราฟ",
+  "navFood": "อาหาร",
+  "navWeight": "น้ำหนัก",
+  "navError": "ข้อผิดพลาด",
+  "loadDataFailed": "โหลดข้อมูลนี้ไม่สำเร็จ",
+  "settings": "การตั้งค่า",
+  "invalidTabSettings": "การตั้งค่าแท็บไม่ถูกต้อง",
+  "newVersion": "เวอร์ชันใหม่ {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "การเปลี่ยนแปลง",
+  "searchSettings": "ค้นหาการตั้งค่า...",
+  "appearance": "รูปลักษณ์",
+  "appearanceSubtitle": "ธีม สี และการแสดงผลกราฟ",
+  "diary": "ไดอารี",
+  "diarySubtitle": "เป้าหมายรายวัน สรุป และการบันทึก",
+  "food": "อาหาร",
+  "foodSubtitle": "หน่วยอาหาร ช่องข้อมูล และค่าเริ่มต้น",
+  "weight": "น้ำหนัก",
+  "weightSubtitle": "หน่วยน้ำหนัก เป้าหมาย และการแสดงผล",
+  "tabs": "แท็บ",
+  "tabsSubtitle": "แท็บนำทางและลำดับ",
+  "data": "ข้อมูล",
+  "dataSubtitle": "นำเข้า ส่งออก และข้อมูลในเครื่อง",
+  "todayProgress": "ความคืบหน้าวันนี้",
+  "latestDay": "วันล่าสุด",
+  "loggedEntries": "{count, plural, =0{ยังไม่มีรายการที่บันทึก} =1{บันทึก 1 รายการ} other{บันทึก {count} รายการ}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{แก้ไข 1 รายการ} other{แก้ไข {count} รายการ}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "แคลอรี",
+  "protein": "โปรตีน",
+  "carbs": "คาร์โบไฮเดรต",
+  "fat": "ไขมัน",
+  "addDiaryEntry": "เพิ่มรายการไดอารี",
+  "noEntriesToday": "วันนี้ยังไม่มีรายการ",
+  "addSearchToDiary": "เพิ่ม \"{search}\" ลงในไดอารี",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "แตะเพื่อเริ่มบันทึกอาหาร",
+  "noMatchingDiaryEntriesTapCreate": "ไม่พบรายการไดอารีที่ตรงกัน แตะเพื่อสร้างอาหารนี้และบันทึก",
+  "add": "เพิ่ม",
+  "quickAdd": "เพิ่มด่วน",
+  "scanBarcode": "สแกนบาร์โค้ด",
+  "foodLibrary": "คลังอาหาร",
+  "foodLibraryCounts": "{foodCount, plural, =1{อาหาร 1 รายการ} other{อาหาร {foodCount} รายการ}} · {mealCount, plural, =1{มื้ออาหาร 1 รายการ} other{มื้ออาหาร {mealCount} รายการ}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "ใช้ล่าสุด",
+  "quickActions": "การทำงานด่วน",
+  "addFood": "เพิ่มอาหาร",
+  "createMeal": "สร้างมื้ออาหาร",
+  "noFoodYet": "ยังไม่มีอาหาร",
+  "noMatchingFood": "ไม่พบอาหารที่ตรงกัน",
+  "addFirstFoodOrMeal": "เพิ่มอาหารหรือมื้อแรกเพื่อเริ่มสร้างคลังของคุณ",
+  "noFoodSearchMatches": "ไม่พบรายการที่ตรงกับ “{search}” ล้างการค้นหาเพื่อดูทั้งหมดอีกครั้ง",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "ล้างการค้นหา",
+  "addMeal": "เพิ่มมื้ออาหาร",
+  "noWeightsYet": "ยังไม่มีข้อมูลน้ำหนัก",
+  "noMatchingWeights": "ไม่พบน้ำหนักที่ตรงกัน",
+  "logFirstWeight": "บันทึกน้ำหนักครั้งแรกเพื่อเริ่มติดตามแนวโน้ม",
+  "noWeightSearchMatches": "ไม่พบรายการที่ตรงกับ “{search}” ล้างการค้นหาเพื่อดูรายการทั้งหมด",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "บันทึกน้ำหนัก",
+  "weightTrend": "แนวโน้มน้ำหนัก",
+  "weightTrendSubtitle": "การวัดล่าสุดและแนวโน้มโดยรวม",
+  "bodyWeight": "น้ำหนักตัว",
+  "options": "ตัวเลือก",
+  "day": "วัน",
+  "today": "วันนี้",
+  "week": "สัปดาห์",
+  "month": "เดือน",
+  "year": "ปี",
+  "dateRange": "ช่วงวันที่",
+  "startDate": "วันที่เริ่ม",
+  "stopDate": "วันที่สิ้นสุด",
+  "dataPoints": "จุดข้อมูล",
+  "customizeFields": "ปรับแต่งช่องข้อมูล",
+  "language": "ภาษา",
+  "languageSubtitle": "เลือกภาษาที่ FitBook ใช้",
+  "languageSystem": "ระบบ",
+  "languageEnglish": "อังกฤษ",
+  "languageSpanish": "สเปน",
+  "languageFrench": "ฝรั่งเศส",
+  "languageGerman": "เยอรมัน",
+  "languageItalian": "อิตาลี",
+  "languagePortugueseBrazil": "โปรตุเกส (บราซิล)",
+  "languageDutch": "ดัตช์",
+  "languagePolish": "โปแลนด์",
+  "languageJapanese": "ญี่ปุ่น",
+  "languageKorean": "เกาหลี",
+  "languageChineseSimplified": "จีน (ตัวย่อ)",
+  "languageChineseTraditional": "จีน (ตัวเต็ม)",
+  "languageRussian": "รัสเซีย",
+  "languageHindi": "ฮินดี",
+  "languageIndonesian": "อินโดนีเซีย",
+  "languageVietnamese": "เวียดนาม",
+  "languageThai": "ไทย",
+  "appearanceSettings": "การตั้งค่ารูปลักษณ์",
+  "delete": "ลบ",
+  "confirmDelete": "ยืนยันการลบ",
+  "confirmDeleteRecords": "{count, plural, =1{ต้องการลบ 1 ระเบียนหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้} other{ต้องการลบ {count} ระเบียนหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "ยกเลิก",
+  "search": "ค้นหา...",
+  "clear": "ล้าง",
+  "showMenu": "แสดงเมนู",
+  "selectAll": "เลือกทั้งหมด",
+  "edit": "แก้ไข",
+  "favorite": "รายการโปรด",
+  "atLeastOneTab": "ต้องมีอย่างน้อยหนึ่งแท็บ",
+  "scrollableTabs": "แท็บแบบเลื่อนได้",
+  "save": "บันทึก",
+  "themeSystem": "ระบบ",
+  "themeDark": "มืด",
+  "themeLight": "สว่าง",
+  "pureBlackAmoled": "ดำสนิท (AMOLED)",
+  "pureBlackAmoledTooltip": "ใช้สีดำสนิทสำหรับจอ AMOLED",
+  "systemColorScheme": "ชุดสีของระบบ",
+  "systemColorSchemeTooltip": "ใช้สีหลักของอุปกรณ์กับแอป",
+  "showImages": "แสดงรูปภาพ",
+  "showImagesTooltip": "เลือกรูปและแสดงในหน้าไดอารีและอาหาร",
+  "curveLineGraphs": "กราฟเส้นโค้ง",
+  "curveLineGraphsTooltip": "ใช้เส้นโค้งแบบเรียบในหน้ากราฟ",
+  "weightStatCards": "การ์ดสถิติน้ำหนัก",
+  "weightStatCardsTooltip": "แสดงรายการน้ำหนักเป็นตารางการ์ดสถิติแทนรายการเริ่มต้น",
+  "graphsStartAtZero": "ให้กราฟเริ่มที่ศูนย์",
+  "graphsStartAtZeroTooltip": "ให้แกน y ของกราฟเริ่มที่ศูนย์เสมอ",
+  "navigationAnimation": "แอนิเมชันการนำทาง",
+  "animationFade": "จาง",
+  "animationZoom": "ซูม",
+  "animationSlide": "เลื่อน",
+  "animationRise": "ยกขึ้น",
+  "animationNone": "ไม่มี",
+  "longDateFormat": "รูปแบบวันที่แบบยาว ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "รูปแบบวันที่แบบสั้น ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "การตั้งค่าไดอารี",
+  "diaryUnit": "หน่วยไดอารี",
+  "diarySummary": "สรุปไดอารี",
+  "diarySummaryDivision": "หาร - ปัจจุบัน / ทั้งหมด",
+  "diarySummaryRemaining": "คงเหลือ",
+  "diarySummaryBoth": "ทั้งคู่ - คงเหลือ (ทั้งหมด)",
+  "diarySummaryNone": "ไม่มี",
+  "dailyCaloriesKcal": "แคลอรีต่อวัน (kcal)",
+  "dailyProteinG": "โปรตีนต่อวัน (g)",
+  "dailyFatG": "ไขมันต่อวัน (g)",
+  "dailyCarbsG": "คาร์โบไฮเดรตต่อวัน (g)",
+  "dailyFiberG": "ใยอาหารต่อวัน (g)",
+  "automaticDailies": "เป้าหมายรายวันอัตโนมัติ",
+  "automaticDailiesTooltip": "คำนวณแคลอรี โปรตีน ไขมัน และคาร์โบไฮเดรตที่แนะนำต่อวันจากน้ำหนักตัวโดยอัตโนมัติ",
+  "selectNameOnSubmit": "เลือกชื่อเมื่อส่ง",
+  "reminders": "การแจ้งเตือน",
+  "foodSettings": "การตั้งค่าอาหาร",
+  "foodUnit": "หน่วยอาหาร",
+  "fields": "ช่องข้อมูล",
+  "favoriteNewFoods": "เพิ่มอาหารใหม่เป็นรายการโปรด",
+  "pickFields": "เลือกช่องข้อมูล",
+  "all": "ทั้งหมด",
+  "onlySelected": "เฉพาะที่เลือก",
+  "weightSettings": "การตั้งค่าน้ำหนัก",
+  "targetWeight": "น้ำหนักเป้าหมาย",
+  "positiveReinforcement": "ข้อความให้กำลังใจ",
+  "positiveReinforcementPreview": "ข้อความให้กำลังใจจะแสดงแบบนี้!",
+  "dataSettings": "การตั้งค่าข้อมูล",
+  "automaticBackup": "สำรองข้อมูลอัตโนมัติ",
+  "shareDatabase": "แชร์ฐานข้อมูล",
+  "openNotification": "เปิดการแจ้งเตือน",
+  "automaticBackupsEnabled": "เปิดการสำรองข้อมูลอัตโนมัติแล้ว",
+  "automaticBackupBody": "FitBook จะสำรองข้อมูลและรูปภาพไปยังโฟลเดอร์ที่เลือกโดยอัตโนมัติทุกวัน",
+  "backupSettings": "การตั้งค่าการสำรองข้อมูล",
+  "backupSettingsChannelDescription": "การแจ้งเตือนเกี่ยวกับการสำรองข้อมูลอัตโนมัติ",
+  "openFoodFacts": "Open Food Facts",
+  "username": "ชื่อผู้ใช้",
+  "password": "รหัสผ่าน",
+  "close": "ปิด",
+  "loggedIn": "เข้าสู่ระบบแล้ว",
+  "about": "เกี่ยวกับ",
+  "version": "เวอร์ชัน",
+  "whatsNew": "มีอะไรใหม่?",
+  "author": "ผู้เขียน",
+  "license": "สัญญาอนุญาต",
+  "donate": "บริจาค",
+  "supportProject": "ช่วยสนับสนุนโปรเจกต์นี้",
+  "leaveReview": "เขียนรีวิว",
+  "rateOnPlayStore": "ให้คะแนน FitBook บน Play Store",
+  "sourceCode": "ซอร์สโค้ด",
+  "foods": "อาหาร",
+  "backup": "สำรองข้อมูล",
+  "exportData": "ส่งออกข้อมูล",
+  "importData": "นำเข้าข้อมูล",
+  "failedImportData": "นำเข้าข้อมูลไม่สำเร็จ",
+  "copyError": "คัดลอกข้อผิดพลาด",
+  "deleteRecords": "ลบระเบียน",
+  "unusedFood": "อาหารที่ไม่ได้ใช้",
+  "database": "ฐานข้อมูล",
+  "deleteAllWeightsConfirm": "ต้องการลบน้ำหนักทั้งหมดหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้",
+  "deleteDatabaseConfirm": "ต้องการลบฐานข้อมูลของคุณหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้และจะทำลายข้อมูลทั้งหมด",
+  "deleteFoodsAndDiaryConfirm": "ต้องการลบอาหารและรายการไดอารีทั้งหมดหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{ต้องการลบอาหารที่ไม่ได้ใช้ 1 รายการหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้} other{ต้องการลบอาหารที่ไม่ได้ใช้ {count} รายการหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "ต้องการลบรายการไดอารีทั้งหมดหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้",
+  "ok": "ตกลง",
+  "replaceImage": "เปลี่ยนรูปภาพ",
+  "takePhoto": "ถ่ายรูป",
+  "deleteImage": "ลบรูปภาพ",
+  "filters": "ตัวกรอง",
+  "foodGroup": "กลุ่มอาหาร",
+  "exampleFruit": "ผลไม้",
+  "clearFiltersCount": "ล้าง ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "เสร็จสิ้น",
+  "showFilters": "แสดงตัวกรอง",
+  "repeatEntry": "ทำรายการซ้ำ",
+  "timeOfDay": "เวลาของวัน",
+  "everyDay": "ทุกวัน",
+  "repeatEveryDayForYear": "สร้างรายการนี้ทุกวันตลอดหนึ่งปีถัดไป",
+  "repeatOn": "ทำซ้ำในวัน",
+  "weekdayMon": "จ.",
+  "weekdayTue": "อ.",
+  "weekdayWed": "พ.",
+  "weekdayThu": "พฤ.",
+  "weekdayFri": "ศ.",
+  "weekdaySat": "ส.",
+  "weekdaySun": "อา.",
+  "schedule": "กำหนดเวลา",
+  "enterValidNutritionValues": "ใส่ค่าทางโภชนาการที่ถูกต้อง",
+  "quickAddTitle": "เพิ่มด่วน",
+  "kilojoules": "กิโลจูล",
+  "createdDate": "วันที่สร้าง",
+  "failedMigrations": "การย้ายฐานข้อมูลล้มเหลว",
+  "failedMigrationsDescription": "เกิดข้อผิดพลาดขณะสร้างหรืออัปเกรดฐานข้อมูล โดยปกติแก้ได้ด้วยการลบและสร้างระเบียนใหม่",
+  "errorMessage": "ข้อความข้อผิดพลาด:",
+  "createIssue": "สร้าง issue",
+  "cameraPermissionRequired": "ต้องอนุญาตการใช้กล้องเพื่อสแกน",
+  "scanFoodBarcode": "สแกนบาร์โค้ดอาหาร",
+  "holdBarcodeInFrame": "วางบาร์โค้ดให้อยู่ในกรอบ",
+  "pinchToZoom": "จีบนิ้วเพื่อซูม",
+  "cameraStartFailed": "ไม่สามารถเปิดกล้องได้",
+  "editDiaryEntry": "แก้ไขรายการไดอารี",
+  "addFoodToDiary": "เพิ่มอาหารลงไดอารี",
+  "confirmDeleteDiaryEntry": "ต้องการลบ {name} หรือไม่?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "ข้อผิดพลาดของรูปภาพ",
+  "setImage": "ตั้งรูปภาพ",
+  "name": "ชื่อ",
+  "searchFoodsAndMeals": "ค้นหาอาหารและมื้ออาหาร...",
+  "clearSelection": "ล้างการเลือก",
+  "barcodeNotFoundSaveToInsert": "ไม่พบบาร์โค้ด บันทึกเพื่อเพิ่มรายการ",
+  "searchOpenFoodFactsFor": "ค้นหา OpenFoodFacts สำหรับ \"{name}\"",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "มื้ออาหาร",
+  "quantity": "ปริมาณ",
+  "unit": "หน่วย",
+  "servingWithAmountUnit": "หนึ่งหน่วยบริโภค ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "บาร์โค้ด",
+  "nutritionPerAmountUnit": "{nutrient} (ต่อ {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} ต่อ {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "ใยอาหาร",
+  "unitServing": "หนึ่งหน่วยบริโภค",
+  "unitGrams": "กรัม",
+  "unitMilliliters": "มิลลิลิตร",
+  "unitKilojoules": "กิโลจูล",
+  "unitCups": "ถ้วย",
+  "unitTablespoons": "ช้อนโต๊ะ",
+  "unitMilligrams": "มิลลิกรัม",
+  "unitTeaspoons": "ช้อนชา",
+  "unitOunces": "ออนซ์",
+  "unitPounds": "ปอนด์",
+  "unitKilograms": "กิโลกรัม",
+  "unitLiters": "ลิตร",
+  "nameConflict": "ชื่อซ้ำ",
+  "replaceExistingFood": "มีอาหารชื่อนี้อยู่แล้ว ต้องการแทนที่รายการเดิมหรือไม่?",
+  "no": "ไม่",
+  "yes": "ใช่",
+  "editFood": "แก้ไขอาหาร",
+  "confirmDeleteFood": "ต้องการลบ {name} หรือไม่?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "แคลอรี (kcal)",
+  "kilojoulesKj": "กิโลจูล (kJ)",
+  "servingSize": "ขนาดหนึ่งหน่วยบริโภค",
+  "servingUnit": "หน่วยบริโภค",
+  "saveAsNewCopy": "บันทึกเป็นสำเนาใหม่",
+  "filterFoods": "กรองอาหาร",
+  "narrowFoodsFilters": "จำกัดรายการด้วยตัวกรองแบบใดก็ได้ร่วมกัน",
+  "foodDetails": "รายละเอียดอาหาร",
+  "exampleFruitHint": "เช่น ผลไม้",
+  "servingSizeRangeHint": "กำหนดค่าต่ำสุด สูงสุด หรือทั้งสองค่า",
+  "minimum": "ต่ำสุด",
+  "maximum": "สูงสุด",
+  "noMinimum": "ไม่มีค่าต่ำสุด",
+  "noMaximum": "ไม่มีค่าสูงสุด",
+  "clearAll": "ล้างทั้งหมด",
+  "searchOpenFoodFacts": "ค้นหา Open Food Facts",
+  "noMatchingProducts": "ไม่พบผลิตภัณฑ์ที่ตรงกัน",
+  "tryAnotherNameOrScanBarcode": "ลองชื่ออื่นหรือสแกนบาร์โค้ด",
+  "enterFoodNameToSearch": "ใส่ชื่ออาหารด้านบน แล้วส่งเพื่อค้นหา",
+  "submitToSearch": "ส่งเพื่อค้นหา...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "โปรตีน {value} g",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{แก้ไขอาหาร 1 รายการ} other{แก้ไขอาหาร {count} รายการ}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "แก้ไขมื้ออาหาร",
+  "addImage": "เพิ่มรูปภาพ",
+  "noFoodsInMeal": "ยังไม่มีอาหารในมื้อนี้",
+  "addFoodToMealHint": "เพิ่มอาหารเพื่อเริ่มสร้างมื้อนี้",
+  "remove": "นำออก",
+  "searchFoods": "ค้นหาอาหาร...",
+  "noFoodsFound": "ไม่พบอาหาร",
+  "nothingMatchesSearch": "ไม่พบรายการที่ตรงกับ “{search}”",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "เพิ่มอาหารลงในคลังก่อนนำไปเพิ่มในมื้ออาหาร",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "ยังไม่มีข้อมูล",
+  "completePlansToViewGraphs": "บันทึกข้อมูลให้ครบเพื่อดูกราฟที่นี่",
+  "value": "ค่า",
+  "goal": "เป้าหมาย",
+  "notSet": "ยังไม่ได้ตั้งค่า",
+  "trend": "แนวโน้ม",
+  "smooth": "ปรับให้เรียบ",
+  "pointAverage": "{count, plural, one{ค่าเฉลี่ย 1 จุด} other{ค่าเฉลี่ย {count} จุด}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "แก้ไขน้ำหนัก",
+  "addWeight": "เพิ่มน้ำหนัก",
+  "shareWeight": "ฉันเพิ่งชั่งได้ {value} {unit}!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "น้ำหนัก ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "โปรดใส่น้ำหนัก",
+  "pleaseEnterValidWeight": "โปรดใส่น้ำหนักที่ถูกต้อง",
+  "lastWeight": "น้ำหนักล่าสุด",
+  "unitWithValue": "หน่วย ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "ใช้หน่วย {unit} ต่อไป",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "แปลงเป็น {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "นำรูปภาพออก",
+  "mealRemindersEnabled": "เปิดการแจ้งเตือนมื้ออาหารแล้ว",
+  "mealRemindersEnabledBody": "เราจะแจ้งเตือนให้บันทึกอาหารเช้า กลางวัน หรือเย็น หากคุณยังไม่ได้บันทึก",
+  "reminderSettingsChannel": "การตั้งค่าการแจ้งเตือน",
+  "reminderSettingsChannelDescription": "การแจ้งเตือนที่อธิบายการเตือนของ FitBook",
+  "breakfastReminderTitle": "อย่าลืมบันทึกอาหารเช้า",
+  "breakfastRemindersChannel": "การแจ้งเตือนอาหารเช้า",
+  "breakfastRemindersChannelDescription": "เตือนให้บันทึกอาหารเช้า",
+  "lunchReminderTitle": "อย่าลืมบันทึกอาหารกลางวัน",
+  "lunchRemindersChannel": "การแจ้งเตือนอาหารกลางวัน",
+  "lunchRemindersChannelDescription": "เตือนให้บันทึกอาหารกลางวัน",
+  "dinnerReminderTitle": "อย่าลืมบันทึกอาหารเย็น",
+  "dinnerRemindersChannel": "การแจ้งเตือนอาหารเย็น",
+  "dinnerRemindersChannelDescription": "เตือนให้บันทึกอาหารเย็น",
+  "reinforcementGreatJob": "ยอดเยี่ยม! ความพยายามของคุณกำลังเห็นผล",
+  "reinforcementKeepItUp": "ทำต่อไป! คุณกำลังก้าวหน้าได้ดีมาก",
+  "reinforcementFantastic": "เยี่ยมมาก! ความทุ่มเทของคุณกำลังเห็นผล",
+  "reinforcementWellDone": "ทำได้ดี! คุณเข้าใกล้เป้าหมายอีกหนึ่งก้าวแล้ว",
+  "reinforcementImpressive": "น่าประทับใจ! ความพยายามของคุณกำลังออกดอกผล",
+  "reinforcementAmazing": "สุดยอด! คุณมาถูกทางแล้ว",
+  "reinforcementBravo": "เยี่ยม! ความมุ่งมั่นของคุณน่าชื่นชม",
+  "reinforcementExcellent": "ยอดเยี่ยม! ความพากเพียรของคุณสร้างแรงบันดาลใจ",
+  "reinforcementSuperb": "สุดยอด! คุณทำได้ดีมาก",
+  "reinforcementIncredible": "เหลือเชื่อ! เห็นความก้าวหน้าของคุณชัดเจน",
+  "reinforcementWayToGoKing": "เยี่ยมไปเลย King",
+  "reinforcementYeahBuddy": "เยี่ยมเลย!",
+  "reinforcementThatsHowItsDone": "แบบนี้แหละ",
+  "reinforcementEasyAsPie": "ง่ายนิดเดียว",
+  "reinforcementDoingGreat": "คุณทำได้ดีมาก",
+  "reinforcementProgressNice": "นั่นคือความก้าวหน้าที่เห็นใช่ไหม? ดีมาก",
+  "diarySummaryRemainingValue": "เหลือ {remaining} {unit}",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "เหลือ {remaining} {unit} ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "น้ำตาล",
+  "nutrientCholesterol": "คอเลสเตอรอล",
+  "nutrientSaturatedFat": "ไขมันอิ่มตัว",
+  "nutrientCalcium": "แคลเซียม",
+  "nutrientIron": "ธาตุเหล็ก",
+  "nutrientPotassium": "โพแทสเซียม",
+  "nutrientMagnesium": "แมกนีเซียม",
+  "nutrientVitaminA": "วิตามิน A",
+  "nutrientVitaminC": "วิตามิน C",
+  "nutrientVitaminB12": "วิตามิน B12",
+  "nutrientVitaminD": "วิตามิน D",
+  "nutrientVitaminE": "วิตามิน E",
+  "nutrientAddedSugar": "น้ำตาลเติมเพิ่ม",
+  "nutrientNetCarbs": "คาร์โบไฮเดรตสุทธิ",
+  "nutrientWater": "น้ำ",
+  "nutrientOmega3": "กรดไขมันโอเมกา-3",
+  "nutrientOmega6": "กรดไขมันโอเมกา-6",
+  "nutrientPralScore": "คะแนน PRAL",
+  "nutrientTransFat": "ไขมันทรานส์",
+  "nutrientSolubleFiber": "ใยอาหารละลายน้ำ",
+  "nutrientInsolubleFiber": "ใยอาหารไม่ละลายน้ำ",
+  "nutrientPhosphorus": "ฟอสฟอรัส",
+  "nutrientSodium": "โซเดียม",
+  "nutrientZinc": "สังกะสี",
+  "nutrientCopper": "ทองแดง",
+  "nutrientManganese": "แมงกานีส",
+  "nutrientSelenium": "ซีลีเนียม",
+  "nutrientFluoride": "ฟลูออไรด์",
+  "nutrientMolybdenum": "โมลิบดีนัม",
+  "nutrientChloride": "คลอไรด์",
+  "nutrientSucrose": "ซูโครส",
+  "nutrientGlucose": "กลูโคส",
+  "nutrientFructose": "ฟรุกโตส",
+  "nutrientLactose": "แลคโตส",
+  "nutrientMaltose": "มอลโทส",
+  "nutrientGalactose": "กาแลคโตส",
+  "nutrientStarch": "แป้ง",
+  "nutrientSugarAlcohols": "น้ำตาลแอลกอฮอล์",
+  "nutrientThiaminB1": "ไทอามีน (B1)",
+  "nutrientRiboflavinB2": "ไรโบฟลาวิน (B2)",
+  "nutrientNiacinB3": "ไนอาซิน (B3)",
+  "nutrientPantothenicAcidB5": "กรดแพนโทเทนิก (B5)",
+  "nutrientVitaminB6": "วิตามิน B6",
+  "nutrientBiotinB7": "ไบโอติน (B7)",
+  "nutrientFolateB9": "โฟเลต (B9)",
+  "nutrientFolicAcid": "กรดโฟลิก",
+  "nutrientFoodFolate": "โฟเลตจากอาหาร",
+  "nutrientFolateDfe": "โฟเลตเทียบเท่าในอาหาร (DFE)",
+  "nutrientCholine": "โคลีน",
+  "nutrientBetaine": "บีเทน",
+  "nutrientRetinol": "เรตินอล",
+  "nutrientBetaCarotene": "เบตาแคโรทีน",
+  "nutrientAlphaCarotene": "แอลฟาแคโรทีน",
+  "nutrientLycopene": "ไลโคปีน",
+  "nutrientLuteinZeaxanthin": "ลูทีน + ซีแซนทีน",
+  "nutrientVitaminD2": "วิตามิน D2 (เออร์โกแคลซิเฟอรอล)",
+  "nutrientVitaminD3": "วิตามิน D3 (โคเลแคลซิเฟอรอล)",
+  "nutrientVitaminK": "วิตามิน K",
+  "nutrientDihydrophylloquinone": "ไดไฮโดรฟิลโลควิโนน",
+  "nutrientMenaquinone4": "เมนาควิโนน-4",
+  "nutrientMonounsaturatedFat": "ไขมันไม่อิ่มตัวเชิงเดี่ยว",
+  "nutrientPolyunsaturatedFat": "ไขมันไม่อิ่มตัวเชิงซ้อน",
+  "nutrientAla": "กรดแอลฟาไลโนเลนิก (ALA)",
+  "nutrientEpa": "กรดไอโคซาเพนตาอีโนอิก (EPA)",
+  "nutrientDpa": "กรดโดโคซาเพนตาอีโนอิก (DPA)",
+  "nutrientDha": "กรดโดโคซาเฮกซาอีโนอิก (DHA)",
+  "nutrientAlanine": "อะลานีน",
+  "nutrientAlcohol": "แอลกอฮอล์",
+  "nutrientArginine": "อาร์จินีน",
+  "nutrientAsparticAcid": "กรดแอสปาร์ติก",
+  "nutrientCystine": "ซิสทีน",
+  "nutrientGlutamicAcid": "กรดกลูตามิก",
+  "nutrientGlycine": "ไกลซีน",
+  "nutrientHistidine": "ฮิสทิดีน",
+  "nutrientHydroxyproline": "ไฮดรอกซีโพรลีน",
+  "nutrientIsoleucine": "ไอโซลิวซีน",
+  "nutrientLeucine": "ลิวซีน",
+  "nutrientLysine": "ไลซีน",
+  "nutrientMethionine": "เมไทโอนีน",
+  "nutrientPhenylalanine": "ฟีนิลอะลานีน",
+  "nutrientProline": "โพรลีน",
+  "nutrientSerine": "ซีรีน",
+  "nutrientThreonine": "ทรีโอนีน",
+  "nutrientTryptophan": "ทริปโตเฟน",
+  "nutrientTyrosine": "ไทโรซีน",
+  "nutrientValine": "วาลีน",
+  "nutrientCaffeine": "คาเฟอีน",
+  "nutrientTheobromine": "ธีโอโบรมีน",
+  "servingWeightNumber": "น้ำหนักหนึ่งหน่วยบริโภค {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "คำอธิบายหนึ่งหน่วยบริโภค {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "น้ำหนักที่เทียบเท่า 200 kcal"
+}

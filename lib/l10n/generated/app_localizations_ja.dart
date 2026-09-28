@@ -314,6 +314,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageVietnamese => 'ベトナム語';
 
   @override
+  String get languageThai => 'タイ語';
+
+  @override
   String get appearanceSettings => '外観設定';
 
   @override

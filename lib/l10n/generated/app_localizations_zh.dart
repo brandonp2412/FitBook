@@ -313,6 +313,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageVietnamese => '越南语';
 
   @override
+  String get languageThai => '泰语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1743,6 +1746,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageVietnamese => '越南语';
 
   @override
+  String get languageThai => '泰语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3171,6 +3177,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languageVietnamese => '越南文';
+
+  @override
+  String get languageThai => '泰語';
 
   @override
   String get appearanceSettings => '外觀設定';
