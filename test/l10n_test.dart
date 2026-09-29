@@ -308,6 +308,30 @@ void main() {
     );
   });
 
+  test('app locale resolution uses English only as the final fallback', () {
+    expect(
+      resolveAppLocale(
+        const [Locale('ja', 'JP')],
+        AppLocalizations.supportedLocales,
+      ),
+      const Locale('ja'),
+    );
+    expect(
+      resolveAppLocale(
+        const [Locale('sv', 'SE'), Locale('de', 'DE')],
+        AppLocalizations.supportedLocales,
+      ),
+      const Locale('de'),
+    );
+    expect(
+      resolveAppLocale(
+        const [Locale('tr', 'TR')],
+        AppLocalizations.supportedLocales,
+      ),
+      const Locale('en'),
+    );
+  });
+
   test('background localizations honor stored, system, and fallback locales',
       () {
     expect(
