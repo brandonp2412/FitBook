@@ -145,6 +145,7 @@ class App extends StatelessWidget {
           locale: localeFromPreference(settings.locale),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          localeListResolutionCallback: resolveAppLocale,
           theme: ThemeData(
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',

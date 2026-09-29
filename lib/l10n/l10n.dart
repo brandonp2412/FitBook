@@ -17,6 +17,18 @@ Locale? localeFromPreference(String value) {
       : Locale(parts.first, parts[1]);
 }
 
+/// Resolves system locales and uses English when none are supported.
+Locale resolveAppLocale(
+  List<Locale>? preferredLocales,
+  Iterable<Locale> supportedLocales,
+) {
+  final locales = supportedLocales.toList(growable: false);
+  return basicLocaleListResolution(preferredLocales, [
+    ...locales.where((locale) => locale.languageCode == 'en'),
+    ...locales.where((locale) => locale.languageCode != 'en'),
+  ]);
+}
+
 String localePreferenceFromLocale(Locale locale) {
   final countryCode = locale.countryCode;
   return countryCode == null || countryCode.isEmpty
