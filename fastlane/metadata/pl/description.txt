@@ -1,0 +1,9 @@
+Łatwo śledź swoje nawyki żywieniowe
+
+Koniec z reklamami podczas zapisywania posiłków.
+FitBook jest całkowicie darmową aplikacją o otwartym kodzie źródłowym.
+Możesz mieć pewność, że nie będziemy wykorzystywać Twoich danych do celów marketingowych ani udostępniać ich podmiotom trzecim.
+Wszystkie dane są przechowywane lokalnie na urządzeniu, więc połączenie z internetem jest opcjonalne.
+
+Jeśli zauważysz błąd, zgłoś go tutaj:
+https://github.com/brandonp2412/FitBook

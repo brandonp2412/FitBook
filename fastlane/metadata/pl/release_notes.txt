@@ -1,0 +1,4 @@
+- Dodano opcję wyświetlania linii trendu
+- Dodano błonnik do wpisów dziennika
+- Zmieniono kolejność produktów na stronie produktów
+- Zastosowano nową bazę danych produktów

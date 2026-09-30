@@ -1,0 +1,2 @@
+• feat(l10n): przetłumacz historię dziennika zmian na hindi
+• fix(l10n): uzupełnij najnowsze tłumaczenia dziennika zmian

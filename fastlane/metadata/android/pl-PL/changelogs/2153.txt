@@ -1,0 +1,5 @@
+• fix: wzmocnij integracje FitBook w systemie Windows
+• fix: zlokalizuj najnowszy wpis dziennika zmian
+• fix: zapobiegaj przepełnieniu panelu biblioteki produktów
+• fix: ponawiaj niestabilne uruchomienia emulatora do zrzutów ekranu
+• fix: ustabilizuj generowane zrzuty ekranu

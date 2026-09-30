@@ -1,0 +1,18 @@
+Śledź jedzenie, kalorie, makroskładniki i wagę, zachowując pełną kontrolę nad swoimi danymi.
+
+FitBook to działający także offline licznik kalorii i dziennik żywienia do zapisywania posiłków, analizowania spożycia makroskładników i śledzenia postępów w czasie. Zacznij od wbudowanej bazy produktów, dodawaj własne produkty lub korzystaj z OpenFoodFacts, gdy chcesz połączyć się z internetem.
+
+ŚLEDŹ TO, CO WAŻNE
+
+• Zapisuj posiłki i dzienne spożycie kalorii
+• Śledź makroskładniki w czasie
+• Zapisuj wagę i przeglądaj wykresy postępów
+• Przeszukuj wbudowaną bazę tysięcy produktów
+• Skanuj kody kreskowe i wyszukuj informacje o produktach w OpenFoodFacts
+• Dostosuj aplikację do swojego sposobu odżywiania
+
+DZIAŁA OFFLINE I CHRONI PRYWATNOŚĆ
+
+FitBook działa bez konta i przechowuje dane na Twoim urządzeniu. Dostęp do internetu jest opcjonalny i służy wyszukiwaniu w OpenFoodFacts oraz odczytywaniu kodów kreskowych. Aplikacja ma otwarty kod źródłowy i nie wyświetla reklam.
+
+FitBook pomaga porządkować informacje o żywieniu i produktach; nie zastępuje porady medycznej udzielonej przez wykwalifikowanego specjalistę.
