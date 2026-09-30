@@ -1,0 +1,717 @@
+{
+  "@@locale": "bn",
+  "appTitle": "FitBook",
+  "navDiary": "ডায়েরি",
+  "navGraph": "গ্রাফ",
+  "navFood": "খাবার",
+  "navWeight": "ওজন",
+  "navError": "ত্রুটি",
+  "loadDataFailed": "এই ডেটা লোড করা যায়নি।",
+  "settings": "সেটিংস",
+  "invalidTabSettings": "ট্যাব সেটিংস সঠিক নয়।",
+  "newVersion": "নতুন সংস্করণ {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "পরিবর্তন",
+  "searchSettings": "সেটিংস খুঁজুন...",
+  "appearance": "চেহারা",
+  "appearanceSubtitle": "থিম, রং এবং গ্রাফ প্রদর্শন",
+  "diary": "ডায়েরি",
+  "diarySubtitle": "দৈনিক লক্ষ্য, সারাংশ এবং লগিং",
+  "food": "খাবার",
+  "foodSubtitle": "খাবারের একক, ক্ষেত্র এবং ডিফল্ট",
+  "weight": "ওজন",
+  "weightSubtitle": "ওজনের একক, লক্ষ্য এবং প্রদর্শন",
+  "tabs": "ট্যাব",
+  "tabsSubtitle": "নেভিগেশন ট্যাব এবং ক্রম",
+  "data": "ডেটা",
+  "dataSubtitle": "ইমপোর্ট, এক্সপোর্ট এবং স্থানীয় ডেটা",
+  "todayProgress": "আজকের অগ্রগতি",
+  "latestDay": "সর্বশেষ দিন",
+  "loggedEntries": "{count, plural, =0{কোনো এন্ট্রি লগ করা হয়নি} =1{১টি এন্ট্রি লগ করা হয়েছে} other{{count}টি এন্ট্রি লগ করা হয়েছে}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{১টি এন্ট্রি সম্পাদনা করুন} other{{count}টি এন্ট্রি সম্পাদনা করুন}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "ক্যালরি",
+  "protein": "প্রোটিন",
+  "carbs": "কার্বোহাইড্রেট",
+  "fat": "চর্বি",
+  "addDiaryEntry": "ডায়েরি এন্ট্রি যোগ করুন",
+  "noEntriesToday": "আজ কোনো এন্ট্রি নেই।",
+  "addSearchToDiary": "“{search}” আপনার ডায়েরিতে যোগ করুন",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "খাবার লগ করা শুরু করতে ট্যাপ করুন।",
+  "noMatchingDiaryEntriesTapCreate": "মিলেছে এমন কোনো ডায়েরি এন্ট্রি নেই। এই খাবার তৈরি করে লগ করতে ট্যাপ করুন।",
+  "add": "যোগ করুন",
+  "quickAdd": "দ্রুত যোগ",
+  "scanBarcode": "বারকোড স্ক্যান করুন",
+  "foodLibrary": "খাবারের লাইব্রেরি",
+  "foodLibraryCounts": "{foodCount, plural, =1{১টি খাবার} other{{foodCount}টি খাবার}} · {mealCount, plural, =1{১টি মিল} other{{mealCount}টি মিল}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "সম্প্রতি ব্যবহৃত",
+  "quickActions": "দ্রুত কাজ",
+  "addFood": "খাবার যোগ করুন",
+  "createMeal": "মিল তৈরি করুন",
+  "noFoodYet": "এখনও কোনো খাবার নেই",
+  "noMatchingFood": "মিলেছে এমন কোনো খাবার নেই",
+  "addFirstFoodOrMeal": "আপনার লাইব্রেরি তৈরি শুরু করতে প্রথম খাবার বা মিল যোগ করুন।",
+  "noFoodSearchMatches": "“{search}”-এর সঙ্গে কিছুই মেলেনি। সবকিছু আবার দেখতে অনুসন্ধান পরিষ্কার করুন।",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "অনুসন্ধান পরিষ্কার করুন",
+  "addMeal": "মিল যোগ করুন",
+  "noWeightsYet": "এখনও কোনো ওজন নেই",
+  "noMatchingWeights": "মিলেছে এমন কোনো ওজন নেই",
+  "logFirstWeight": "আপনার প্রবণতা ট্র্যাক করা শুরু করতে প্রথম ওজন লগ করুন।",
+  "noWeightSearchMatches": "“{search}”-এর সঙ্গে কিছুই মেলেনি। সব এন্ট্রি দেখতে অনুসন্ধান পরিষ্কার করুন।",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "ওজন লগ করুন",
+  "weightTrend": "ওজনের প্রবণতা",
+  "weightTrendSubtitle": "সাম্প্রতিক মাপ এবং সামগ্রিক দিক",
+  "bodyWeight": "শরীরের ওজন",
+  "options": "বিকল্প",
+  "day": "দিন",
+  "today": "আজ",
+  "week": "সপ্তাহ",
+  "month": "মাস",
+  "year": "বছর",
+  "dateRange": "তারিখের সীমা",
+  "startDate": "শুরুর তারিখ",
+  "stopDate": "শেষের তারিখ",
+  "dataPoints": "ডেটা পয়েন্ট",
+  "customizeFields": "ক্ষেত্র কাস্টমাইজ করুন",
+  "language": "ভাষা",
+  "languageSubtitle": "FitBook-এ ব্যবহৃত ভাষা বেছে নিন",
+  "languageSystem": "সিস্টেম",
+  "languageEnglish": "ইংরেজি",
+  "languageSpanish": "স্প্যানিশ",
+  "languageFrench": "ফরাসি",
+  "languageGerman": "জার্মান",
+  "languageItalian": "ইতালীয়",
+  "languagePortugueseBrazil": "পর্তুগিজ (ব্রাজিল)",
+  "languageDutch": "ডাচ",
+  "languagePolish": "পোলিশ",
+  "languageJapanese": "জাপানি",
+  "languageKorean": "কোরিয়ান",
+  "languageChineseSimplified": "চীনা (সরলীকৃত)",
+  "languageChineseTraditional": "চীনা (প্রথাগত)",
+  "languageRussian": "রাশিয়ান",
+  "languageHindi": "হিন্দি",
+  "languageIndonesian": "ইন্দোনেশীয়",
+  "languageVietnamese": "ভিয়েতনামি",
+  "languageThai": "থাই",
+  "languageBengali": "বাংলা",
+  "appearanceSettings": "চেহারা সেটিংস",
+  "delete": "মুছুন",
+  "confirmDelete": "মুছে ফেলা নিশ্চিত করুন",
+  "confirmDeleteRecords": "{count, plural, =1{আপনি কি নিশ্চিত যে ১টি রেকর্ড মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।} other{আপনি কি নিশ্চিত যে {count}টি রেকর্ড মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "বাতিল",
+  "search": "খুঁজুন...",
+  "clear": "পরিষ্কার করুন",
+  "showMenu": "মেনু দেখান",
+  "selectAll": "সব নির্বাচন করুন",
+  "edit": "সম্পাদনা",
+  "favorite": "পছন্দের",
+  "atLeastOneTab": "অন্তত একটি ট্যাব প্রয়োজন",
+  "scrollableTabs": "স্ক্রলযোগ্য ট্যাব",
+  "save": "সংরক্ষণ করুন",
+  "themeSystem": "সিস্টেম",
+  "themeDark": "ডার্ক",
+  "themeLight": "লাইট",
+  "pureBlackAmoled": "সম্পূর্ণ কালো (AMOLED)",
+  "pureBlackAmoledTooltip": "AMOLED ডিসপ্লের জন্য সম্পূর্ণ কালো রং ব্যবহার করুন",
+  "systemColorScheme": "সিস্টেমের রঙের স্কিম",
+  "systemColorSchemeTooltip": "অ্যাপের জন্য আপনার ডিভাইসের প্রাথমিক রং ব্যবহার করুন",
+  "showImages": "ছবি দেখান",
+  "showImagesTooltip": "ডায়েরি ও খাবার পাতায় ছবি বেছে নিন এবং দেখান",
+  "curveLineGraphs": "গ্রাফের রেখা বাঁকানো রাখুন",
+  "curveLineGraphsTooltip": "গ্রাফ পাতায় মসৃণ বক্ররেখা ব্যবহার করুন",
+  "weightStatCards": "ওজনের পরিসংখ্যান কার্ড",
+  "weightStatCardsTooltip": "ডিফল্ট তালিকার বদলে ওজনের এন্ট্রিগুলো পরিসংখ্যান কার্ডের গ্রিড হিসেবে দেখান",
+  "graphsStartAtZero": "গ্রাফ শূন্য থেকে শুরু হবে",
+  "graphsStartAtZeroTooltip": "গ্রাফের y-অক্ষ সবসময় শূন্য থেকে শুরু করুন",
+  "navigationAnimation": "নেভিগেশন অ্যানিমেশন",
+  "animationFade": "ফেড",
+  "animationZoom": "জুম",
+  "animationSlide": "স্লাইড",
+  "animationRise": "উপরে ওঠা",
+  "animationNone": "কোনোটিই নয়",
+  "longDateFormat": "দীর্ঘ তারিখের ফরম্যাট ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "সংক্ষিপ্ত তারিখের ফরম্যাট ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "ডায়েরি সেটিংস",
+  "diaryUnit": "ডায়েরির একক",
+  "diarySummary": "ডায়েরির সারাংশ",
+  "diarySummaryDivision": "ভাগ — বর্তমান / মোট",
+  "diarySummaryRemaining": "অবশিষ্ট",
+  "diarySummaryBoth": "উভয় — অবশিষ্ট (মোট)",
+  "diarySummaryNone": "কোনোটিই নয়",
+  "dailyCaloriesKcal": "দৈনিক ক্যালরি (kcal)",
+  "dailyProteinG": "দৈনিক প্রোটিন (g)",
+  "dailyFatG": "দৈনিক চর্বি (g)",
+  "dailyCarbsG": "দৈনিক কার্বোহাইড্রেট (g)",
+  "dailyFiberG": "দৈনিক ফাইবার (g)",
+  "automaticDailies": "স্বয়ংক্রিয় দৈনিক লক্ষ্য",
+  "automaticDailiesTooltip": "আপনার শরীরের ওজন থেকে প্রস্তাবিত দৈনিক ক্যালরি, প্রোটিন, চর্বি ও কার্বোহাইড্রেট স্বয়ংক্রিয়ভাবে হিসাব করুন",
+  "selectNameOnSubmit": "সাবমিট করলে নাম নির্বাচন করুন",
+  "reminders": "স্মরণীয় বিষয়সমূহ",
+  "foodSettings": "খাবার সেটিংস",
+  "foodUnit": "খাবারের একক",
+  "fields": "ক্ষেত্রসমূহ",
+  "favoriteNewFoods": "নতুন খাবার পছন্দের হিসেবে রাখুন",
+  "pickFields": "ক্ষেত্র বেছে নিন",
+  "all": "সব",
+  "onlySelected": "শুধু নির্বাচিত",
+  "weightSettings": "ওজন সেটিংস",
+  "targetWeight": "লক্ষ্য ওজন",
+  "positiveReinforcement": "ইতিবাচক উৎসাহ",
+  "positiveReinforcementPreview": "উৎসাহব্যঞ্জক বার্তা এভাবে দেখানো হবে!",
+  "dataSettings": "ডেটা সেটিংস",
+  "automaticBackup": "স্বয়ংক্রিয় ব্যাকআপ",
+  "shareDatabase": "ডেটাবেস শেয়ার করুন",
+  "openNotification": "নোটিফিকেশন খুলুন",
+  "automaticBackupsEnabled": "স্বয়ংক্রিয় ব্যাকআপ চালু",
+  "automaticBackupBody": "FitBook প্রতিদিন নির্বাচিত ফোল্ডারে আপনার ডেটা ও ছবি স্বয়ংক্রিয়ভাবে ব্যাকআপ করবে।",
+  "backupSettings": "ব্যাকআপ সেটিংস",
+  "backupSettingsChannelDescription": "স্বয়ংক্রিয় ব্যাকআপ সম্পর্কিত নোটিফিকেশন",
+  "openFoodFacts": "Open Food Facts",
+  "username": "ব্যবহারকারীর নাম",
+  "password": "পাসওয়ার্ড",
+  "close": "বন্ধ করুন",
+  "loggedIn": "লগ ইন করা হয়েছে",
+  "about": "সম্পর্কে",
+  "version": "সংস্করণ",
+  "whatsNew": "নতুন কী?",
+  "author": "লেখক",
+  "license": "লাইসেন্স",
+  "donate": "অনুদান",
+  "supportProject": "এই প্রকল্পকে সহায়তা করুন",
+  "leaveReview": "রিভিউ দিন",
+  "rateOnPlayStore": "Play Store-এ FitBook-কে রেট দিন",
+  "sourceCode": "সোর্স কোড",
+  "foods": "খাবারসমূহ",
+  "backup": "ব্যাকআপ",
+  "exportData": "ডেটা রপ্তানি করুন",
+  "importData": "ডেটা আমদানি করুন",
+  "failedImportData": "ডেটা ইমপোর্ট করা যায়নি",
+  "copyError": "ত্রুটি কপি করুন",
+  "deleteRecords": "রেকর্ড মুছুন",
+  "unusedFood": "অব্যবহৃত খাবার",
+  "database": "ডেটাবেস",
+  "deleteAllWeightsConfirm": "আপনি কি নিশ্চিত যে সব ওজন মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।",
+  "deleteDatabaseConfirm": "আপনি কি নিশ্চিত যে আপনার ডেটাবেস মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না এবং আপনার সব ডেটা নষ্ট হবে।",
+  "deleteFoodsAndDiaryConfirm": "আপনি কি নিশ্চিত যে সব খাবার ও ডায়েরি এন্ট্রি মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{আপনি কি নিশ্চিত যে ১টি অব্যবহৃত খাবার মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।} other{আপনি কি নিশ্চিত যে {count}টি অব্যবহৃত খাবার মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "আপনি কি নিশ্চিত যে সব ডায়েরি এন্ট্রি মুছতে চান? এই কাজটি ফিরিয়ে নেওয়া যাবে না।",
+  "ok": "ঠিক আছে",
+  "replaceImage": "ছবি প্রতিস্থাপন করুন",
+  "takePhoto": "ছবি তুলুন",
+  "deleteImage": "ছবি মুছুন",
+  "filters": "ফিল্টারসমূহ",
+  "foodGroup": "খাবারের গ্রুপ",
+  "exampleFruit": "ফল",
+  "clearFiltersCount": "পরিষ্কার করুন ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "সম্পন্ন",
+  "showFilters": "ফিল্টার দেখান",
+  "repeatEntry": "এন্ট্রি পুনরাবৃত্তি করুন",
+  "timeOfDay": "দিনের সময়",
+  "everyDay": "প্রতিদিন",
+  "repeatEveryDayForYear": "পরবর্তী এক বছর প্রতিদিন এই এন্ট্রি তৈরি করুন",
+  "repeatOn": "যে দিনে পুনরাবৃত্তি হবে",
+  "weekdayMon": "সোম",
+  "weekdayTue": "মঙ্গল",
+  "weekdayWed": "বুধ",
+  "weekdayThu": "বৃহস্পতি",
+  "weekdayFri": "শুক্র",
+  "weekdaySat": "শনি",
+  "weekdaySun": "রবি",
+  "schedule": "সময়সূচি",
+  "enterValidNutritionValues": "সঠিক পুষ্টিমান লিখুন",
+  "quickAddTitle": "দ্রুত যোগ",
+  "kilojoules": "কিলোজুল",
+  "createdDate": "তৈরির তারিখ",
+  "failedMigrations": "ব্যর্থ মাইগ্রেশন",
+  "failedMigrationsDescription": "আপনার ডেটাবেস তৈরি বা আপগ্রেড করার সময় কিছু সমস্যা হয়েছে। সাধারণত রেকর্ডগুলো মুছে আবার তৈরি করলে এটি ঠিক করা যায়।",
+  "errorMessage": "ত্রুটির বার্তা:",
+  "createIssue": "ইস্যু তৈরি করুন",
+  "cameraPermissionRequired": "স্ক্যান করতে ক্যামেরার অনুমতি প্রয়োজন।",
+  "scanFoodBarcode": "খাবারের বারকোড স্ক্যান করুন",
+  "holdBarcodeInFrame": "বারকোডটি ফ্রেমের ভেতরে ধরে রাখুন",
+  "pinchToZoom": "জুম করতে পিঞ্চ করুন",
+  "cameraStartFailed": "ক্যামেরা চালু করা যায়নি",
+  "editDiaryEntry": "ডায়েরি এন্ট্রি সম্পাদনা করুন",
+  "addFoodToDiary": "ডায়েরিতে খাবার যোগ করুন",
+  "confirmDeleteDiaryEntry": "আপনি কি নিশ্চিত যে {name} মুছতে চান?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "ছবির ত্রুটি",
+  "setImage": "ছবি সেট করুন",
+  "name": "নাম",
+  "searchFoodsAndMeals": "খাবার ও মিল খুঁজুন...",
+  "clearSelection": "নির্বাচন পরিষ্কার করুন",
+  "barcodeNotFoundSaveToInsert": "বারকোড পাওয়া যায়নি। যোগ করতে সংরক্ষণ করুন।",
+  "searchOpenFoodFactsFor": "OpenFoodFacts-এ “{name}” খুঁজুন",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "মিল",
+  "quantity": "পরিমাণ",
+  "unit": "একক",
+  "servingWithAmountUnit": "পরিবেশন ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "বারকোড",
+  "nutritionPerAmountUnit": "{nutrient} (প্রতি {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "প্রতি {quantity} {unit}-এ {nutrient}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "ফাইবার",
+  "unitServing": "পরিবেশন",
+  "unitGrams": "গ্রাম",
+  "unitMilliliters": "মিলিলিটার",
+  "unitKilojoules": "কিলোজুল",
+  "unitCups": "কাপ",
+  "unitTablespoons": "টেবিলচামচ",
+  "unitMilligrams": "মিলিগ্রাম",
+  "unitTeaspoons": "চা-চামচ",
+  "unitOunces": "আউন্স",
+  "unitPounds": "পাউন্ড",
+  "unitKilograms": "কিলোগ্রাম",
+  "unitLiters": "লিটার",
+  "nameConflict": "নামের দ্বন্দ্ব",
+  "replaceExistingFood": "এই নামে একটি খাবার ইতিমধ্যেই আছে। পুরোনোটিকে প্রতিস্থাপন করতে চান?",
+  "no": "না",
+  "yes": "হ্যাঁ",
+  "editFood": "খাবার সম্পাদনা করুন",
+  "confirmDeleteFood": "আপনি কি নিশ্চিত যে {name} মুছতে চান?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "ক্যালরি (kcal)",
+  "kilojoulesKj": "কিলোজুল (kJ)",
+  "servingSize": "পরিবেশনের আকার",
+  "servingUnit": "পরিবেশনের একক",
+  "saveAsNewCopy": "নতুন কপি হিসেবে সংরক্ষণ করুন",
+  "filterFoods": "খাবার ফিল্টার করুন",
+  "narrowFoodsFilters": "যেকোনো ফিল্টারের সমন্বয় ব্যবহার করে তালিকাটি ছোট করুন।",
+  "foodDetails": "খাবারের বিবরণ",
+  "exampleFruitHint": "যেমন: ফল",
+  "servingSizeRangeHint": "সর্বনিম্ন, সর্বোচ্চ বা উভয় মান সেট করুন।",
+  "minimum": "সর্বনিম্ন",
+  "maximum": "সর্বোচ্চ",
+  "noMinimum": "সর্বনিম্ন সীমা নেই",
+  "noMaximum": "সর্বোচ্চ সীমা নেই",
+  "clearAll": "সব পরিষ্কার করুন",
+  "searchOpenFoodFacts": "Open Food Facts-এ খুঁজুন",
+  "noMatchingProducts": "মিলেছে এমন কোনো পণ্য নেই",
+  "tryAnotherNameOrScanBarcode": "অন্য নাম চেষ্টা করুন বা একটি বারকোড স্ক্যান করুন।",
+  "enterFoodNameToSearch": "উপরে খাবারের নাম লিখে অনুসন্ধান করতে সাবমিট করুন।",
+  "submitToSearch": "অনুসন্ধান করতে সাবমিট করুন...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} g প্রোটিন",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{১টি খাবার সম্পাদনা করুন} other{{count}টি খাবার সম্পাদনা করুন}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "মিল সম্পাদনা করুন",
+  "addImage": "ছবি যোগ করুন",
+  "noFoodsInMeal": "এই মিলে এখনও কোনো খাবার নেই",
+  "addFoodToMealHint": "এই মিল তৈরি শুরু করতে একটি খাবার যোগ করুন।",
+  "remove": "সরান",
+  "searchFoods": "খাবার খুঁজুন...",
+  "noFoodsFound": "কোনো খাবার পাওয়া যায়নি",
+  "nothingMatchesSearch": "“{search}”-এর সঙ্গে কিছুই মেলেনি।",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "মিলে যোগ করার আগে আপনার লাইব্রেরিতে কিছু খাবার যোগ করুন।",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "এখনো কোনো ডেটা নেই",
+  "completePlansToViewGraphs": "এখানে গ্রাফ দেখতে কিছু প্ল্যান সম্পূর্ণ করুন।",
+  "value": "মান",
+  "goal": "লক্ষ্য",
+  "notSet": "সেট করা নেই",
+  "trend": "প্রবণতা",
+  "smooth": "মসৃণ",
+  "pointAverage": "{count, plural, one{১-পয়েন্ট গড়} other{{count}-পয়েন্ট গড়}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "ওজন সম্পাদনা করুন",
+  "addWeight": "ওজন যোগ করুন",
+  "shareWeight": "আমি এখনই {value} {unit} ওজন মেপেছি!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "ওজন ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "ওজন লিখুন",
+  "pleaseEnterValidWeight": "সঠিক ওজন লিখুন",
+  "lastWeight": "সর্বশেষ ওজন",
+  "unitWithValue": "একক ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "একক {unit} রাখুন",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "{unit}-এ রূপান্তর করুন",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "ছবি সরান",
+  "mealRemindersEnabled": "মিল স্মরণ করিয়ে দেওয়া চালু আছে",
+  "mealRemindersEnabledBody": "আপনি যদি এখনও লগ না করে থাকেন, আমরা নাশতা, দুপুরের খাবার বা রাতের খাবার লগ করতে মনে করিয়ে দেব।",
+  "reminderSettingsChannel": "রিমাইন্ডার সেটিংস",
+  "reminderSettingsChannelDescription": "FitBook রিমাইন্ডার সম্পর্কে ব্যাখ্যামূলক নোটিফিকেশন",
+  "breakfastReminderTitle": "নাশতা লগ করতে ভুলবেন না",
+  "breakfastRemindersChannel": "নাশতার রিমাইন্ডার",
+  "breakfastRemindersChannelDescription": "নাশতা লগ করার রিমাইন্ডার",
+  "lunchReminderTitle": "দুপুরের খাবার লগ করতে ভুলবেন না",
+  "lunchRemindersChannel": "দুপুরের খাবারের রিমাইন্ডার",
+  "lunchRemindersChannelDescription": "দুপুরের খাবার লগ করার রিমাইন্ডার",
+  "dinnerReminderTitle": "রাতের খাবার লগ করতে ভুলবেন না",
+  "dinnerRemindersChannel": "রাতের খাবারের রিমাইন্ডার",
+  "dinnerRemindersChannelDescription": "রাতের খাবার লগ করার রিমাইন্ডার",
+  "reinforcementGreatJob": "দারুণ কাজ! আপনার পরিশ্রমের ফল মিলছে।",
+  "reinforcementKeepItUp": "এভাবেই চালিয়ে যান! আপনি চমৎকার অগ্রগতি করছেন।",
+  "reinforcementFantastic": "চমৎকার! আপনার নিষ্ঠার ফল দেখা যাচ্ছে।",
+  "reinforcementWellDone": "খুব ভালো! আপনি আপনার লক্ষ্যের আরও এক ধাপ কাছে।",
+  "reinforcementImpressive": "দারুণ! আপনার প্রচেষ্টা ফল দিচ্ছে।",
+  "reinforcementAmazing": "অসাধারণ! আপনি সঠিক পথে আছেন।",
+  "reinforcementBravo": "বাহ! আপনার অঙ্গীকার প্রশংসনীয়।",
+  "reinforcementExcellent": "দারুণ! আপনার অধ্যবসায় অনুপ্রেরণাদায়ক।",
+  "reinforcementSuperb": "অসাধারণ! আপনি চমৎকার কাজ করছেন।",
+  "reinforcementIncredible": "অবিশ্বাস্য! আপনার অগ্রগতি স্পষ্ট।",
+  "reinforcementWayToGoKing": "এভাবেই এগিয়ে চলো, কিং",
+  "reinforcementYeahBuddy": "হ্যাঁ বন্ধু!",
+  "reinforcementThatsHowItsDone": "এভাবেই করতে হয়।",
+  "reinforcementEasyAsPie": "একদম সহজ।",
+  "reinforcementDoingGreat": "আপনি দারুণ করছেন।",
+  "reinforcementProgressNice": "এটা কি অগ্রগতি দেখছি? দারুণ।",
+  "diarySummaryRemainingValue": "{remaining} {unit} অবশিষ্ট",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} অবশিষ্ট ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "চিনি",
+  "nutrientCholesterol": "কোলেস্টেরল",
+  "nutrientSaturatedFat": "স্যাচুরেটেড ফ্যাট",
+  "nutrientCalcium": "ক্যালসিয়াম",
+  "nutrientIron": "আয়রন",
+  "nutrientPotassium": "পটাশিয়াম",
+  "nutrientMagnesium": "ম্যাগনেসিয়াম",
+  "nutrientVitaminA": "ভিটামিন A",
+  "nutrientVitaminC": "ভিটামিন C",
+  "nutrientVitaminB12": "ভিটামিন B12",
+  "nutrientVitaminD": "ভিটামিন D",
+  "nutrientVitaminE": "ভিটামিন E",
+  "nutrientAddedSugar": "যোগ করা চিনি",
+  "nutrientNetCarbs": "নেট কার্বোহাইড্রেট",
+  "nutrientWater": "পানি",
+  "nutrientOmega3": "ওমেগা-৩ ফ্যাটি অ্যাসিড",
+  "nutrientOmega6": "ওমেগা-৬ ফ্যাটি অ্যাসিড",
+  "nutrientPralScore": "PRAL স্কোর",
+  "nutrientTransFat": "ট্রান্স ফ্যাট",
+  "nutrientSolubleFiber": "দ্রবণীয় ফাইবার",
+  "nutrientInsolubleFiber": "অদ্রবণীয় ফাইবার",
+  "nutrientPhosphorus": "ফসফরাস",
+  "nutrientSodium": "সোডিয়াম",
+  "nutrientZinc": "জিঙ্ক",
+  "nutrientCopper": "কপার",
+  "nutrientManganese": "ম্যাঙ্গানিজ",
+  "nutrientSelenium": "সেলেনিয়াম",
+  "nutrientFluoride": "ফ্লুরাইড",
+  "nutrientMolybdenum": "মলিবডেনাম",
+  "nutrientChloride": "ক্লোরাইড",
+  "nutrientSucrose": "সুক্রোজ",
+  "nutrientGlucose": "গ্লুকোজ",
+  "nutrientFructose": "ফ্রুক্টোজ",
+  "nutrientLactose": "ল্যাকটোজ",
+  "nutrientMaltose": "মল্টোজ",
+  "nutrientGalactose": "গ্যালাক্টোজ",
+  "nutrientStarch": "স্টার্চ",
+  "nutrientSugarAlcohols": "সুগার অ্যালকোহল",
+  "nutrientThiaminB1": "থায়ামিন (B1)",
+  "nutrientRiboflavinB2": "রাইবোফ্লাভিন (B2)",
+  "nutrientNiacinB3": "নায়াসিন (B3)",
+  "nutrientPantothenicAcidB5": "প্যান্টোথেনিক অ্যাসিড (B5)",
+  "nutrientVitaminB6": "ভিটামিন B6",
+  "nutrientBiotinB7": "বায়োটিন (B7)",
+  "nutrientFolateB9": "ফোলেট (B9)",
+  "nutrientFolicAcid": "ফলিক অ্যাসিড",
+  "nutrientFoodFolate": "খাদ্যজাত ফোলেট",
+  "nutrientFolateDfe": "ডায়েটারি ফোলেট সমতুল্য (DFE)",
+  "nutrientCholine": "কোলিন",
+  "nutrientBetaine": "বিটেইন",
+  "nutrientRetinol": "রেটিনল",
+  "nutrientBetaCarotene": "বিটা-ক্যারোটিন",
+  "nutrientAlphaCarotene": "আলফা-ক্যারোটিন",
+  "nutrientLycopene": "লাইকোপিন",
+  "nutrientLuteinZeaxanthin": "লুটেইন + জিয়াজ্যান্থিন",
+  "nutrientVitaminD2": "ভিটামিন D2 (এরগোক্যালসিফেরল)",
+  "nutrientVitaminD3": "ভিটামিন D3 (কোলেক্যালসিফেরল)",
+  "nutrientVitaminK": "ভিটামিন K",
+  "nutrientDihydrophylloquinone": "ডাইহাইড্রোফাইলোকুইনোন",
+  "nutrientMenaquinone4": "মেনাকুইনোন-৪",
+  "nutrientMonounsaturatedFat": "মনোআনস্যাচুরেটেড ফ্যাট",
+  "nutrientPolyunsaturatedFat": "পলিআনস্যাচুরেটেড ফ্যাট",
+  "nutrientAla": "আলফা-লিনোলেনিক অ্যাসিড (ALA)",
+  "nutrientEpa": "আইকোসাপেন্টাইনোইক অ্যাসিড (EPA)",
+  "nutrientDpa": "ডোকোসাপেন্টাইনোইক অ্যাসিড (DPA)",
+  "nutrientDha": "ডোকোসাহেক্সাইনোইক অ্যাসিড (DHA)",
+  "nutrientAlanine": "অ্যালানিন",
+  "nutrientAlcohol": "মদ",
+  "nutrientArginine": "আর্জিনিন",
+  "nutrientAsparticAcid": "অ্যাসপার্টিক অ্যাসিড",
+  "nutrientCystine": "সিস্টিন",
+  "nutrientGlutamicAcid": "গ্লুটামিক অ্যাসিড",
+  "nutrientGlycine": "গ্লাইসিন",
+  "nutrientHistidine": "হিস্টিডিন",
+  "nutrientHydroxyproline": "হাইড্রক্সিপ্রোলিন",
+  "nutrientIsoleucine": "আইসোলিউসিন",
+  "nutrientLeucine": "লিউসিন",
+  "nutrientLysine": "লাইসিন",
+  "nutrientMethionine": "মেথিওনিন",
+  "nutrientPhenylalanine": "ফেনাইলঅ্যালানিন",
+  "nutrientProline": "প্রোলিন",
+  "nutrientSerine": "সেরিন",
+  "nutrientThreonine": "থ্রিওনিন",
+  "nutrientTryptophan": "ট্রিপটোফ্যান",
+  "nutrientTyrosine": "টাইরোসিন",
+  "nutrientValine": "ভ্যালিন",
+  "nutrientCaffeine": "ক্যাফেইন",
+  "nutrientTheobromine": "থিওব্রোমিন",
+  "servingWeightNumber": "পরিবেশনের ওজন {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "পরিবেশনের বিবরণ {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "২০০ kcal-এর সমতুল্য ওজন"
+}

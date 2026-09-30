@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -322,6 +323,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get languageThai => 'Tiếng Thái';
+
+  @override
+  String get languageBengali => 'Tiếng Bengal';
 
   @override
   String get appearanceSettings => 'Cài đặt giao diện';
@@ -834,7 +838,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '$nutrient trên $quantity $unit';
   }
 

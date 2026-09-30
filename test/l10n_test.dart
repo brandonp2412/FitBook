@@ -64,6 +64,7 @@ void main() {
       'id',
       'vi',
       'th',
+      'bn',
       'it',
       'ja',
       'ko',
@@ -130,6 +131,7 @@ void main() {
       'values-id',
       'values-vi',
       'values-th',
+      'values-bn',
       'values-zh-rCN',
       'values-zh-rTW',
     ];
@@ -177,6 +179,7 @@ void main() {
       'id.lproj',
       'vi.lproj',
       'th.lproj',
+      'bn.lproj',
       'zh-Hans.lproj',
       'zh-Hant.lproj',
     ];
@@ -281,6 +284,7 @@ void main() {
         const Locale('id'),
         const Locale('vi'),
         const Locale('th'),
+        const Locale('bn'),
         const Locale('ja'),
         const Locale('ko'),
         const Locale('zh', 'CN'),
@@ -297,6 +301,7 @@ void main() {
     expect(localeFromPreference('id'), const Locale('id'));
     expect(localeFromPreference('vi'), const Locale('vi'));
     expect(localeFromPreference('th'), const Locale('th'));
+    expect(localeFromPreference('bn'), const Locale('bn'));
     expect(localeFromPreference('pt-BR'), const Locale('pt', 'BR'));
     expect(
       localePreferenceFromLocale(const Locale('zh', 'CN')),

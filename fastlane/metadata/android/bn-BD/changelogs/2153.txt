@@ -1,0 +1,5 @@
+• ফিক্স: FitBook-এর Windows integration আরও শক্ত করা হয়েছে
+• ফিক্স: সর্বশেষ changelog entry স্থানীয়করণ করা হয়েছে
+• ফিক্স: food library panel overflow রোধ করা হয়েছে
+• ফিক্স: অস্থির screenshot emulator run-এ retry যোগ করা হয়েছে
+• ফিক্স: generated screenshot স্থিতিশীল করা হয়েছে

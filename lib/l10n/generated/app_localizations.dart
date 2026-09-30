@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_bn.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
@@ -108,6 +109,7 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('bn'),
     Locale('de'),
     Locale('en'),
     Locale('es'),
@@ -126,7 +128,7 @@ abstract class AppLocalizations {
     Locale('vi'),
     Locale('zh'),
     Locale('zh', 'CN'),
-    Locale('zh', 'TW')
+    Locale('zh', 'TW'),
   ];
 
   /// No description provided for @appTitle.
@@ -674,6 +676,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thai'**
   String get languageThai;
+
+  /// No description provided for @languageBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'Bengali'**
+  String get languageBengali;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -1598,7 +1606,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{nutrient} per {quantity} {unit}'**
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit);
+    String nutrient,
+    String quantity,
+    String unit,
+  );
 
   /// No description provided for @fiber.
   ///
@@ -2776,6 +2787,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) => <String>[
+        'bn',
         'de',
         'en',
         'es',
@@ -2791,7 +2803,7 @@ class _AppLocalizationsDelegate
         'ru',
         'th',
         'vi',
-        'zh'
+        'zh',
       ].contains(locale.languageCode);
 
   @override
@@ -2823,6 +2835,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'bn':
+      return AppLocalizationsBn();
     case 'de':
       return AppLocalizationsDe();
     case 'en':
@@ -2858,8 +2872,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

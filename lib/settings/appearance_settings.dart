@@ -79,6 +79,7 @@ List<Widget> getAppearanceSettings(
             DropdownMenuItem(value: 'id', child: Text(l10n.languageIndonesian)),
             DropdownMenuItem(value: 'vi', child: Text(l10n.languageVietnamese)),
             DropdownMenuItem(value: 'th', child: Text(l10n.languageThai)),
+            DropdownMenuItem(value: 'bn', child: Text(l10n.languageBengali)),
             DropdownMenuItem(value: 'ja', child: Text(l10n.languageJapanese)),
             DropdownMenuItem(value: 'ko', child: Text(l10n.languageKorean)),
             DropdownMenuItem(

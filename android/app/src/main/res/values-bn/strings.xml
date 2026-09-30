@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">ব্যাকআপ ব্যর্থ: ব্যাকআপের পথ সেট করা নেই। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_channel_name">ব্যাকআপ</string>
+    <string name="backup_channel_description">ডেটাবেসের স্বয়ংক্রিয় ব্যাকআপ</string>
+    <string name="backup_failed_directory_access">ব্যাকআপ ব্যর্থ: ব্যাকআপ ফোল্ডারে প্রবেশ করা যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_failed_create_file">ব্যাকআপ ব্যর্থ: ব্যাকআপ ফাইল তৈরি করা যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="share">শেয়ার</string>
+    <string name="backup_failed_app_files_directory">ব্যাকআপ ব্যর্থ: অ্যাপের ফাইল ডিরেক্টরিতে প্রবেশ করা যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_failed_parent_directory">ব্যাকআপ ব্যর্থ: মূল ডিরেক্টরিতে প্রবেশ করা যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_failed_output_stream">ব্যাকআপ ব্যর্থ: আউটপুট স্ট্রিম খোলা যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_failed_database_missing">ব্যাকআপ ব্যর্থ: ডেটাবেস ফাইল পাওয়া যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_success_title">ডেটা ও ছবির ব্যাকআপ সম্পন্ন হয়েছে</string>
+    <string name="backup_failed_unexpected">অপ্রত্যাশিতভাবে ব্যাকআপ ব্যর্থ হয়েছে। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+</resources>

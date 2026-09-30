@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -314,6 +315,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get languageThai => '泰语';
+
+  @override
+  String get languageBengali => '孟加拉语';
 
   @override
   String get appearanceSettings => '外观设置';
@@ -806,7 +810,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -1749,6 +1756,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageThai => '泰语';
 
   @override
+  String get languageBengali => '孟加拉语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -2239,7 +2249,10 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -3182,6 +3195,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get languageThai => '泰語';
 
   @override
+  String get languageBengali => '孟加拉語';
+
+  @override
   String get appearanceSettings => '外觀設定';
 
   @override
@@ -3672,7 +3688,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 

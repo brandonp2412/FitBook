@@ -1,0 +1,2 @@
+• ডকস: README presentation মাঝখানে আনা হয়েছে
+• feat(l10n): স্প্যানিশ store metadata সম্পূর্ণ করা হয়েছে

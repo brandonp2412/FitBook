@@ -1,0 +1,2 @@
+• feat(l10n): হিন্দি changelog history অনুবাদ করা হয়েছে
+• fix(l10n): সর্বশেষ changelog translation সম্পূর্ণ করা হয়েছে

@@ -324,6 +324,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get languageThai => 'ไทย';
 
   @override
+  String get languageBengali => 'เบงกาลี';
+
+  @override
   String get appearanceSettings => 'การตั้งค่ารูปลักษณ์';
 
   @override
@@ -646,7 +649,8 @@ class AppLocalizationsTh extends AppLocalizations {
       locale: localeName,
       other:
           'ต้องการลบอาหารที่ไม่ได้ใช้ $count รายการหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้',
-      one: 'ต้องการลบอาหารที่ไม่ได้ใช้ 1 รายการหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้',
+      one:
+          'ต้องการลบอาหารที่ไม่ได้ใช้ 1 รายการหรือไม่? การดำเนินการนี้ย้อนกลับไม่ได้',
     );
     return '$_temp0';
   }
