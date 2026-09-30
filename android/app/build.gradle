@@ -43,8 +43,10 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
 
     sourceSets {
@@ -77,17 +79,17 @@ android {
    buildTypes {
        profile {
            if (keystorePropertiesFile.exists()) {
-               signingConfig signingConfigs.release
+               signingConfig = signingConfigs.release
            }
        }
        debug {
            if (keystorePropertiesFile.exists()) {
-               signingConfig signingConfigs.release
+               signingConfig = signingConfigs.release
            }
        }
        release {
            if (keystorePropertiesFile.exists()) {
-               signingConfig signingConfigs.release
+               signingConfig = signingConfigs.release
            }
        }
    }
@@ -118,7 +120,6 @@ flutter {
 dependencies {
     implementation 'androidx.documentfile:documentfile:1.1.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.2.20"))
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     androidTestUtil 'androidx.test:orchestrator:1.5.1'
 }
