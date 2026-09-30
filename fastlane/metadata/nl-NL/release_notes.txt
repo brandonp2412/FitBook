@@ -1,0 +1,4 @@
+- Optie voor trendlijn toevoegen
+- Vezels aan dagboekitems toevoegen
+- Volgorde van de voedingsmiddelenpagina wijzigen
+- Nieuwe voedingsdatabase gebruiken

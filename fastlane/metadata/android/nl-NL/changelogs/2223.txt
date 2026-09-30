@@ -1,0 +1,2 @@
+• docs: README-presentatie centreren
+• feat(l10n): Spaanse winkelmetadata voltooien

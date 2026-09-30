@@ -1,0 +1,5 @@
+• fix: FitBook-integraties voor Windows robuuster maken
+• fix: nieuwste changelog-item lokaliseren
+• fix: overloop van het voedingsbibliotheekpaneel voorkomen
+• fix: instabiele emulatorruns voor screenshots opnieuw proberen
+• fix: gegenereerde screenshots stabiliseren

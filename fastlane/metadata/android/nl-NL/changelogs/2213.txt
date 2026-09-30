@@ -1,0 +1,2 @@
+• feat(l10n): Hindi-wijzigingsgeschiedenis vertalen
+• fix(l10n): nieuwste vertalingen van het wijzigingslogboek voltooien

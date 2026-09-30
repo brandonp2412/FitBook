@@ -1,0 +1,18 @@
+Volg voeding, calorieën, macro's en gewicht zonder de controle over je gegevens op te geven.
+
+FitBook is een offlinevriendelijke calorieteller en voedingstracker om maaltijden te registreren, inzicht te krijgen in je macro-inname en je voortgang in de loop van de tijd te volgen. Begin met een ingebouwde voedingsdatabase, voeg je eigen voedingsmiddelen toe of gebruik OpenFoodFacts wanneer je ervoor kiest verbinding te maken.
+
+HOUD BIJ WAT BELANGRIJK IS
+
+• Registreer maaltijden en je dagelijkse calorie-inname
+• Volg macronutriënten in de loop van de tijd
+• Registreer je gewicht en bekijk voortgangsgrafieken
+• Doorzoek een ingebouwde database met duizenden voedingsmiddelen
+• Scan barcodes en zoek in OpenFoodFacts naar voedingsinformatie
+• Pas de tracker aan op jouw eetpatroon
+
+OFFLINE-FIRST EN PRIVÉ
+
+FitBook werkt zonder account en bewaart je gegevens op je apparaat. Internettoegang is optioneel voor zoekopdrachten in OpenFoodFacts en het opzoeken van barcodes. De app is open source en bevat geen advertenties.
+
+FitBook helpt je informatie over voeding en voedingsmiddelen te organiseren; het is geen vervanging voor medisch advies van een gekwalificeerde professional.
