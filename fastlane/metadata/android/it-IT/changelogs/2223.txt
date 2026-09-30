@@ -1,0 +1,2 @@
+• docs: centra la presentazione del README
+• feat(l10n): completa i metadati dello store in spagnolo

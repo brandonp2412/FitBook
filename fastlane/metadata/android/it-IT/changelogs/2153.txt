@@ -1,0 +1,5 @@
+• fix: rendi più robuste le integrazioni Windows di FitBook
+• fix: localizza l'ultima voce del registro modifiche
+• fix: evita l'overflow del pannello della libreria alimenti
+• fix: riprova le esecuzioni instabili dell'emulatore per gli screenshot
+• fix: stabilizza gli screenshot generati

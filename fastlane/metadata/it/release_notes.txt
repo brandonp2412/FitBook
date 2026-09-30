@@ -1,0 +1,4 @@
+- Aggiunta l'opzione per la linea di tendenza
+- Aggiunte le fibre alle voci del diario
+- Modificato l'ordinamento della pagina degli alimenti
+- Utilizzato il nuovo database degli alimenti

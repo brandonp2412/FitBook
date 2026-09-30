@@ -1,0 +1,11 @@
+Tieni facilmente traccia delle tue abitudini alimentari
+
+Mai più pubblicità mentre registri ciò che mangi.
+FitBook è completamente gratuito e open source.
+Puoi stare tranquillo: non useremo i tuoi dati per il marketing
+e non li condivideremo con terze parti.
+Tutto viene archiviato localmente, quindi la connessione
+a Internet è facoltativa.
+
+Se trovi un bug, segnalalo pure qui:
+https://github.com/brandonp2412/FitBook

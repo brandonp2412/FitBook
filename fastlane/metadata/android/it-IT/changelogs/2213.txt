@@ -1,0 +1,2 @@
+• feat(l10n): traduci in hindi la cronologia delle modifiche
+• fix(l10n): completa le traduzioni più recenti del registro modifiche
