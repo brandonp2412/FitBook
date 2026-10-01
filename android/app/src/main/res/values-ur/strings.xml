@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">بیک اپ ناکام: بیک اپ کا راستہ مقرر نہیں۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_channel_name">بیک اپ</string>
+    <string name="backup_channel_description">ڈیٹابیس کے خودکار بیک اپ</string>
+    <string name="backup_failed_directory_access">بیک اپ ناکام: بیک اپ ڈائریکٹری تک رسائی حاصل نہیں ہو سکی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_failed_create_file">بیک اپ ناکام: بیک اپ فائل نہیں بن سکی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="share">شیئر کریں</string>
+    <string name="backup_failed_app_files_directory">بیک اپ ناکام: ایپ کی فائلز ڈائریکٹری تک رسائی حاصل نہیں ہو سکی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_failed_parent_directory">بیک اپ ناکام: پیرنٹ ڈائریکٹری تک رسائی حاصل نہیں ہو سکی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_failed_output_stream">بیک اپ ناکام: آؤٹ پٹ اسٹریم نہیں کھل سکی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_failed_database_missing">بیک اپ ناکام: ڈیٹابیس فائل نہیں ملی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_success_title">ڈیٹا اور تصاویر کا بیک اپ بن گیا</string>
+    <string name="backup_failed_unexpected">بیک اپ غیر متوقع طور پر ناکام ہو گیا۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+</resources>

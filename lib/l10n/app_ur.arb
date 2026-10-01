@@ -1,0 +1,718 @@
+{
+  "@@locale": "ur",
+  "appTitle": "FitBook",
+  "navDiary": "ڈائری",
+  "navGraph": "گراف",
+  "navFood": "خوراک",
+  "navWeight": "وزن",
+  "navError": "خرابی",
+  "loadDataFailed": "یہ ڈیٹا لوڈ نہیں ہو سکا۔",
+  "settings": "ترتیبات",
+  "invalidTabSettings": "ٹیب کی ترتیبات درست نہیں ہیں۔",
+  "newVersion": "نیا ورژن {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "تبدیلیاں",
+  "searchSettings": "ترتیبات تلاش کریں...",
+  "appearance": "ظاہری شکل",
+  "appearanceSubtitle": "تھیم، رنگ اور گراف کا ڈسپلے",
+  "diary": "ڈائری",
+  "diarySubtitle": "روزانہ کے اہداف، خلاصے اور اندراج",
+  "food": "خوراک",
+  "foodSubtitle": "خوراک کی اکائیاں، فیلڈز اور ڈیفالٹس",
+  "weight": "وزن",
+  "weightSubtitle": "وزن کی اکائیاں، اہداف اور ڈسپلے",
+  "tabs": "ٹیبز",
+  "tabsSubtitle": "نیویگیشن ٹیبز اور ان کی ترتیب",
+  "data": "ڈیٹا",
+  "dataSubtitle": "درآمد، برآمد اور مقامی ڈیٹا",
+  "todayProgress": "آج کی پیش رفت",
+  "latestDay": "تازہ ترین دن",
+  "loggedEntries": "{count, plural, =0{کوئی اندراج نہیں کیا گیا} =1{1 اندراج کیا گیا} other{{count} اندراج کیے گئے}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{1 اندراج میں ترمیم کریں} other{{count} اندراجات میں ترمیم کریں}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "کیلوریز",
+  "protein": "پروٹین",
+  "carbs": "کاربوہائیڈریٹس",
+  "fat": "چربی",
+  "addDiaryEntry": "ڈائری میں اندراج شامل کریں",
+  "noEntriesToday": "آج کوئی اندراج نہیں ہے۔",
+  "addSearchToDiary": "\"{search}\" کو اپنی ڈائری میں شامل کریں",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "خوراک درج کرنا شروع کرنے کے لیے ٹیپ کریں۔",
+  "noMatchingDiaryEntriesTapCreate": "ڈائری میں کوئی مماثل اندراج نہیں۔ یہ خوراک بنانے اور درج کرنے کے لیے ٹیپ کریں۔",
+  "add": "شامل کریں",
+  "quickAdd": "فوری اضافہ",
+  "scanBarcode": "بارکوڈ اسکین کریں",
+  "foodLibrary": "خوراک کی لائبریری",
+  "foodLibraryCounts": "{foodCount, plural, =1{1 خوراک} other{{foodCount} خوراکیں}} · {mealCount, plural, =1{1 کھانا} other{{mealCount} کھانے}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "حال ہی میں استعمال شدہ",
+  "quickActions": "فوری اقدامات",
+  "addFood": "خوراک شامل کریں",
+  "createMeal": "کھانا بنائیں",
+  "noFoodYet": "ابھی کوئی خوراک نہیں",
+  "noMatchingFood": "کوئی مماثل خوراک نہیں",
+  "addFirstFoodOrMeal": "اپنی لائبریری بنانا شروع کرنے کے لیے پہلی خوراک یا کھانا شامل کریں۔",
+  "noFoodSearchMatches": "“{search}” سے کچھ مماثل نہیں۔ سب کچھ دوبارہ دیکھنے کے لیے تلاش صاف کریں۔",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "تلاش صاف کریں",
+  "addMeal": "کھانا شامل کریں",
+  "noWeightsYet": "ابھی کوئی وزن درج نہیں",
+  "noMatchingWeights": "کوئی مماثل وزن نہیں",
+  "logFirstWeight": "اپنا پہلا وزن درج کریں تاکہ رجحان کو ٹریک کرنا شروع ہو۔",
+  "noWeightSearchMatches": "“{search}” سے کچھ مماثل نہیں۔ تمام اندراجات دیکھنے کے لیے تلاش صاف کریں۔",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "وزن درج کریں",
+  "weightTrend": "وزن کا رجحان",
+  "weightTrendSubtitle": "حالیہ پیمائشیں اور مجموعی سمت",
+  "bodyWeight": "جسمانی وزن",
+  "options": "اختیارات",
+  "day": "دن",
+  "today": "آج",
+  "week": "ہفتہ",
+  "month": "مہینہ",
+  "year": "سال",
+  "dateRange": "تاریخ کی حد",
+  "startDate": "شروع کی تاریخ",
+  "stopDate": "اختتامی تاریخ",
+  "dataPoints": "ڈیٹا پوائنٹس",
+  "customizeFields": "فیلڈز حسبِ ضرورت بنائیں",
+  "language": "زبان",
+  "languageSubtitle": "FitBook میں استعمال ہونے والی زبان منتخب کریں",
+  "languageSystem": "سسٹم",
+  "languageEnglish": "انگریزی",
+  "languageSpanish": "ہسپانوی",
+  "languageFrench": "فرانسیسی",
+  "languageGerman": "جرمن",
+  "languageItalian": "اطالوی",
+  "languagePortugueseBrazil": "پرتگالی (برازیل)",
+  "languageDutch": "ڈچ",
+  "languagePolish": "پولش",
+  "languageJapanese": "جاپانی",
+  "languageKorean": "کوریائی",
+  "languageChineseSimplified": "چینی (سادہ)",
+  "languageChineseTraditional": "چینی (روایتی)",
+  "languageRussian": "روسی",
+  "languageHindi": "ہندی",
+  "languageIndonesian": "انڈونیشیائی",
+  "languageVietnamese": "ویتنامی",
+  "languageThai": "تھائی",
+  "languageBengali": "بنگالی",
+  "languageUrdu": "اردو",
+  "appearanceSettings": "ظاہری شکل کی ترتیبات",
+  "delete": "حذف کریں",
+  "confirmDelete": "حذف کرنے کی تصدیق",
+  "confirmDeleteRecords": "{count, plural, =1{کیا آپ واقعی 1 ریکارڈ حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔} other{کیا آپ واقعی {count} ریکارڈ حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "منسوخ کریں",
+  "search": "تلاش کریں...",
+  "clear": "صاف کریں",
+  "showMenu": "مینو دکھائیں",
+  "selectAll": "سب منتخب کریں",
+  "edit": "ترمیم",
+  "favorite": "پسندیدہ",
+  "atLeastOneTab": "کم از کم ایک ٹیب ضروری ہے",
+  "scrollableTabs": "اسکرول ہونے والے ٹیبز",
+  "save": "محفوظ کریں",
+  "themeSystem": "سسٹم",
+  "themeDark": "گہرا",
+  "themeLight": "روشن",
+  "pureBlackAmoled": "مکمل سیاہ (AMOLED)",
+  "pureBlackAmoledTooltip": "AMOLED ڈسپلے کے لیے مکمل سیاہ رنگ استعمال کریں",
+  "systemColorScheme": "سسٹم کی رنگ اسکیم",
+  "systemColorSchemeTooltip": "ایپ کے لیے اپنے آلے کا بنیادی رنگ استعمال کریں",
+  "showImages": "تصاویر دکھائیں",
+  "showImagesTooltip": "ڈائری اور خوراک کے صفحات پر تصاویر منتخب اور دکھائیں",
+  "curveLineGraphs": "گراف کی لائنیں خم دار کریں",
+  "curveLineGraphsTooltip": "گراف کے صفحے پر ہموار خم استعمال کریں",
+  "weightStatCards": "وزن کے اسٹیٹ کارڈز",
+  "weightStatCardsTooltip": "وزن کے اندراجات کو ڈیفالٹ فہرست کے بجائے اسٹیٹ کارڈز کی گرڈ میں دکھائیں",
+  "graphsStartAtZero": "گراف صفر سے شروع ہوں",
+  "graphsStartAtZeroTooltip": "گراف کے y-axis کو ہمیشہ صفر سے شروع کریں",
+  "navigationAnimation": "نیویگیشن اینیمیشن",
+  "animationFade": "مدھم ہونا",
+  "animationZoom": "زوم",
+  "animationSlide": "سلائیڈ",
+  "animationRise": "اوپر آنا",
+  "animationNone": "کوئی نہیں",
+  "longDateFormat": "طویل تاریخ کا فارمیٹ ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "مختصر تاریخ کا فارمیٹ ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "ڈائری کی ترتیبات",
+  "diaryUnit": "ڈائری کی اکائی",
+  "diarySummary": "ڈائری کا خلاصہ",
+  "diarySummaryDivision": "تقسیم - موجودہ / کل",
+  "diarySummaryRemaining": "باقی",
+  "diarySummaryBoth": "دونوں - باقی (کل)",
+  "diarySummaryNone": "کوئی نہیں",
+  "dailyCaloriesKcal": "روزانہ کیلوریز (kcal)",
+  "dailyProteinG": "روزانہ پروٹین (g)",
+  "dailyFatG": "روزانہ چربی (g)",
+  "dailyCarbsG": "روزانہ کاربوہائیڈریٹس (g)",
+  "dailyFiberG": "روزانہ فائبر (g)",
+  "automaticDailies": "خودکار روزانہ اہداف",
+  "automaticDailiesTooltip": "اپنے جسمانی وزن سے تجویز کردہ روزانہ کیلوریز، پروٹین، چربی اور کاربوہائیڈریٹس خودکار طور پر حساب کریں",
+  "selectNameOnSubmit": "جمع کراتے وقت نام منتخب کریں",
+  "reminders": "یاد دہانیاں",
+  "foodSettings": "خوراک کی ترتیبات",
+  "foodUnit": "خوراک کی اکائی",
+  "fields": "فیلڈز",
+  "favoriteNewFoods": "نئی خوراکوں کو پسندیدہ بنائیں",
+  "pickFields": "فیلڈز منتخب کریں",
+  "all": "سب",
+  "onlySelected": "صرف منتخب شدہ",
+  "weightSettings": "وزن کی ترتیبات",
+  "targetWeight": "ہدف وزن",
+  "positiveReinforcement": "مثبت حوصلہ افزائی",
+  "positiveReinforcementPreview": "حوصلہ افزا پیغامات اس طرح دکھائے جائیں گے!",
+  "dataSettings": "ڈیٹا کی ترتیبات",
+  "automaticBackup": "خودکار بیک اپ",
+  "shareDatabase": "ڈیٹابیس شیئر کریں",
+  "openNotification": "نوٹیفکیشن کھولیں",
+  "automaticBackupsEnabled": "خودکار بیک اپ فعال ہیں",
+  "automaticBackupBody": "FitBook ہر روز آپ کے ڈیٹا اور تصاویر کا منتخب فولڈر میں خودکار بیک اپ بنائے گا۔",
+  "backupSettings": "بیک اپ کی ترتیبات",
+  "backupSettingsChannelDescription": "خودکار بیک اپ کے بارے میں نوٹیفکیشن",
+  "openFoodFacts": "Open Food Facts",
+  "username": "صارف نام",
+  "password": "پاس ورڈ",
+  "close": "بند کریں",
+  "loggedIn": "لاگ اِن ہے",
+  "about": "بارے میں",
+  "version": "ورژن",
+  "whatsNew": "نیا کیا ہے؟",
+  "author": "مصنف",
+  "license": "لائسنس",
+  "donate": "عطیہ دیں",
+  "supportProject": "اس منصوبے کی حمایت میں مدد کریں",
+  "leaveReview": "جائزہ دیں",
+  "rateOnPlayStore": "Play Store پر FitBook کو ریٹ کریں",
+  "sourceCode": "سورس کوڈ",
+  "foods": "خوراکیں",
+  "backup": "بیک اپ",
+  "exportData": "ڈیٹا برآمد کریں",
+  "importData": "ڈیٹا درآمد کریں",
+  "failedImportData": "ڈیٹا درآمد نہیں ہو سکا",
+  "copyError": "خرابی کاپی کریں",
+  "deleteRecords": "ریکارڈز حذف کریں",
+  "unusedFood": "غیر استعمال شدہ خوراک",
+  "database": "ڈیٹابیس",
+  "deleteAllWeightsConfirm": "کیا آپ واقعی تمام وزن حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔",
+  "deleteDatabaseConfirm": "کیا آپ واقعی اپنا ڈیٹابیس حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا اور آپ کا تمام ڈیٹا ضائع ہو جائے گا۔",
+  "deleteFoodsAndDiaryConfirm": "کیا آپ واقعی تمام خوراکیں اور ڈائری کے اندراجات حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{کیا آپ واقعی 1 غیر استعمال شدہ خوراک حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔} other{کیا آپ واقعی {count} غیر استعمال شدہ خوراکیں حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "کیا آپ واقعی ڈائری کے تمام اندراجات حذف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں لیا جا سکتا۔",
+  "ok": "ٹھیک ہے",
+  "replaceImage": "تصویر تبدیل کریں",
+  "takePhoto": "تصویر لیں",
+  "deleteImage": "تصویر حذف کریں",
+  "filters": "فلٹرز",
+  "foodGroup": "خوراک کا گروپ",
+  "exampleFruit": "پھل",
+  "clearFiltersCount": "صاف کریں ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "مکمل",
+  "showFilters": "فلٹرز دکھائیں",
+  "repeatEntry": "اندراج دہرائیں",
+  "timeOfDay": "دن کا وقت",
+  "everyDay": "ہر روز",
+  "repeatEveryDayForYear": "اگلے ایک سال تک ہر روز یہ اندراج بنائیں",
+  "repeatOn": "ان دنوں دہرائیں",
+  "weekdayMon": "پیر",
+  "weekdayTue": "منگل",
+  "weekdayWed": "بدھ",
+  "weekdayThu": "جمعرات",
+  "weekdayFri": "جمعہ",
+  "weekdaySat": "ہفتہ",
+  "weekdaySun": "اتوار",
+  "schedule": "شیڈول",
+  "enterValidNutritionValues": "درست غذائی اقدار درج کریں",
+  "quickAddTitle": "فوری اضافہ",
+  "kilojoules": "کلو جولز",
+  "createdDate": "تخلیق کی تاریخ",
+  "failedMigrations": "ناکام مائیگریشنز",
+  "failedMigrationsDescription": "آپ کا ڈیٹابیس بناتے یا اپ گریڈ کرتے وقت کچھ غلط ہو گیا۔ عموماً ریکارڈز حذف کر کے دوبارہ بنانے سے یہ مسئلہ حل ہو جاتا ہے۔",
+  "errorMessage": "خرابی کا پیغام:",
+  "createIssue": "ایشو بنائیں",
+  "cameraPermissionRequired": "اسکین کرنے کے لیے کیمرے کی اجازت درکار ہے۔",
+  "scanFoodBarcode": "خوراک کا بارکوڈ اسکین کریں",
+  "holdBarcodeInFrame": "بارکوڈ کو فریم کے اندر رکھیں",
+  "pinchToZoom": "زوم کرنے کے لیے پِنچ کریں",
+  "cameraStartFailed": "کیمرہ شروع نہیں ہو سکا",
+  "editDiaryEntry": "ڈائری کے اندراج میں ترمیم کریں",
+  "addFoodToDiary": "ڈائری میں خوراک شامل کریں",
+  "confirmDeleteDiaryEntry": "کیا آپ واقعی {name} حذف کرنا چاہتے ہیں؟",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "تصویر کی خرابی",
+  "setImage": "تصویر مقرر کریں",
+  "name": "نام",
+  "searchFoodsAndMeals": "خوراکیں اور کھانے تلاش کریں...",
+  "clearSelection": "انتخاب صاف کریں",
+  "barcodeNotFoundSaveToInsert": "بارکوڈ نہیں ملا۔ شامل کرنے کے لیے محفوظ کریں۔",
+  "searchOpenFoodFactsFor": "OpenFoodFacts میں \"{name}\" تلاش کریں",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "کھانا",
+  "quantity": "مقدار",
+  "unit": "اکائی",
+  "servingWithAmountUnit": "سرونگ ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "بارکوڈ",
+  "nutritionPerAmountUnit": "{nutrient} (فی {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} فی {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "فائبر",
+  "unitServing": "سرونگ",
+  "unitGrams": "گرام",
+  "unitMilliliters": "ملی لیٹر",
+  "unitKilojoules": "کلو جولز",
+  "unitCups": "کپ",
+  "unitTablespoons": "کھانے کے چمچ",
+  "unitMilligrams": "ملی گرام",
+  "unitTeaspoons": "چائے کے چمچ",
+  "unitOunces": "اونس",
+  "unitPounds": "پاؤنڈ",
+  "unitKilograms": "کلوگرام",
+  "unitLiters": "لیٹر",
+  "nameConflict": "نام کا تصادم",
+  "replaceExistingFood": "اس نام سے ایک خوراک پہلے سے موجود ہے۔ کیا آپ پرانی خوراک کو تبدیل کرنا چاہتے ہیں؟",
+  "no": "نہیں",
+  "yes": "ہاں",
+  "editFood": "خوراک میں ترمیم کریں",
+  "confirmDeleteFood": "کیا آپ واقعی {name} حذف کرنا چاہتے ہیں؟",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "کیلوریز (kcal)",
+  "kilojoulesKj": "کلو جولز (kJ)",
+  "servingSize": "سرونگ کا سائز",
+  "servingUnit": "سرونگ کی اکائی",
+  "saveAsNewCopy": "نئی نقل کے طور پر محفوظ کریں",
+  "filterFoods": "خوراکیں فلٹر کریں",
+  "narrowFoodsFilters": "فلٹرز کے کسی بھی امتزاج سے فہرست محدود کریں۔",
+  "foodDetails": "خوراک کی تفصیلات",
+  "exampleFruitHint": "مثلاً پھل",
+  "servingSizeRangeHint": "کم از کم، زیادہ سے زیادہ، یا دونوں مقرر کریں۔",
+  "minimum": "کم از کم",
+  "maximum": "زیادہ سے زیادہ",
+  "noMinimum": "کوئی کم از کم حد نہیں",
+  "noMaximum": "کوئی زیادہ سے زیادہ حد نہیں",
+  "clearAll": "سب صاف کریں",
+  "searchOpenFoodFacts": "Open Food Facts میں تلاش کریں",
+  "noMatchingProducts": "کوئی مماثل پروڈکٹ نہیں",
+  "tryAnotherNameOrScanBarcode": "کوئی دوسرا نام آزمائیں یا بارکوڈ اسکین کریں۔",
+  "enterFoodNameToSearch": "اوپر خوراک کا نام درج کریں، پھر تلاش کے لیے جمع کرائیں۔",
+  "submitToSearch": "تلاش کے لیے جمع کرائیں...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} g پروٹین",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{1 خوراک میں ترمیم کریں} other{{count} خوراکوں میں ترمیم کریں}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "کھانے میں ترمیم کریں",
+  "addImage": "تصویر شامل کریں",
+  "noFoodsInMeal": "اس کھانے میں ابھی کوئی خوراک نہیں",
+  "addFoodToMealHint": "یہ کھانا بنانا شروع کرنے کے لیے خوراک شامل کریں۔",
+  "remove": "ہٹائیں",
+  "searchFoods": "خوراکیں تلاش کریں...",
+  "noFoodsFound": "کوئی خوراک نہیں ملی",
+  "nothingMatchesSearch": "“{search}” سے کچھ مماثل نہیں۔",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "کسی کھانے میں شامل کرنے سے پہلے اپنی لائبریری میں کچھ خوراکیں شامل کریں۔",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "ابھی کوئی ڈیٹا نہیں",
+  "completePlansToViewGraphs": "یہاں گراف دیکھنے کے لیے کچھ منصوبے مکمل کریں۔",
+  "value": "قدر",
+  "goal": "ہدف",
+  "notSet": "مقرر نہیں",
+  "trend": "رجحان",
+  "smooth": "ہموار",
+  "pointAverage": "{count, plural, one{1 پوائنٹ اوسط} other{{count} پوائنٹ اوسط}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "وزن میں ترمیم کریں",
+  "addWeight": "وزن شامل کریں",
+  "shareWeight": "میں نے ابھی {value} {unit} وزن کیا!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "وزن ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "براہ کرم وزن درج کریں",
+  "pleaseEnterValidWeight": "براہ کرم درست وزن درج کریں",
+  "lastWeight": "آخری وزن",
+  "unitWithValue": "اکائی ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "اکائی {unit} ہی رکھیں",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "{unit} میں تبدیل کریں",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "تصویر ہٹائیں",
+  "mealRemindersEnabled": "کھانے کی یاد دہانیاں فعال ہیں",
+  "mealRemindersEnabledBody": "اگر آپ نے ابھی تک ناشتہ، دوپہر یا رات کا کھانا درج نہیں کیا تو ہم آپ کو یاد دلائیں گے۔",
+  "reminderSettingsChannel": "یاد دہانی کی ترتیبات",
+  "reminderSettingsChannelDescription": "FitBook کی یاد دہانیوں کی وضاحت کرنے والے نوٹیفکیشن",
+  "breakfastReminderTitle": "ناشتہ درج کرنا نہ بھولیں",
+  "breakfastRemindersChannel": "ناشتے کی یاد دہانیاں",
+  "breakfastRemindersChannelDescription": "ناشتہ درج کرنے کی یاد دہانیاں",
+  "lunchReminderTitle": "دوپہر کا کھانا درج کرنا نہ بھولیں",
+  "lunchRemindersChannel": "دوپہر کے کھانے کی یاد دہانیاں",
+  "lunchRemindersChannelDescription": "دوپہر کا کھانا درج کرنے کی یاد دہانیاں",
+  "dinnerReminderTitle": "رات کا کھانا درج کرنا نہ بھولیں",
+  "dinnerRemindersChannel": "رات کے کھانے کی یاد دہانیاں",
+  "dinnerRemindersChannelDescription": "رات کا کھانا درج کرنے کی یاد دہانیاں",
+  "reinforcementGreatJob": "بہت خوب! آپ کی محنت رنگ لا رہی ہے۔",
+  "reinforcementKeepItUp": "اسی طرح جاری رکھیں! آپ بہترین پیش رفت کر رہے ہیں۔",
+  "reinforcementFantastic": "شاندار! آپ کی لگن کے نتائج نظر آ رہے ہیں۔",
+  "reinforcementWellDone": "شاباش! آپ اپنے ہدف کے ایک قدم اور قریب ہیں۔",
+  "reinforcementImpressive": "زبردست! آپ کی کوششیں نتیجہ دے رہی ہیں۔",
+  "reinforcementAmazing": "کمال! آپ درست راستے پر ہیں۔",
+  "reinforcementBravo": "واہ! آپ کی ثابت قدمی قابلِ تعریف ہے۔",
+  "reinforcementExcellent": "بہترین! آپ کی مستقل مزاجی متاثر کن ہے۔",
+  "reinforcementSuperb": "لاجواب! آپ بہت عمدہ کام کر رہے ہیں۔",
+  "reinforcementIncredible": "حیرت انگیز! آپ کی پیش رفت واضح ہے۔",
+  "reinforcementWayToGoKing": "شاباش بادشاہ",
+  "reinforcementYeahBuddy": "ہاں دوست!",
+  "reinforcementThatsHowItsDone": "ایسے ہی کیا جاتا ہے۔",
+  "reinforcementEasyAsPie": "بالکل آسان۔",
+  "reinforcementDoingGreat": "آپ بہت اچھا کر رہے ہیں۔",
+  "reinforcementProgressNice": "کیا یہ پیش رفت ہے جو مجھے نظر آ رہی ہے؟ بہت خوب۔",
+  "diarySummaryRemainingValue": "{remaining} {unit} باقی",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} باقی ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "شکر",
+  "nutrientCholesterol": "کولیسٹرول",
+  "nutrientSaturatedFat": "سیر شدہ چربی",
+  "nutrientCalcium": "کیلشیم",
+  "nutrientIron": "آئرن",
+  "nutrientPotassium": "پوٹاشیم",
+  "nutrientMagnesium": "میگنیشیم",
+  "nutrientVitaminA": "وٹامن A",
+  "nutrientVitaminC": "وٹامن C",
+  "nutrientVitaminB12": "وٹامن B12",
+  "nutrientVitaminD": "وٹامن D",
+  "nutrientVitaminE": "وٹامن E",
+  "nutrientAddedSugar": "اضافی شکر",
+  "nutrientNetCarbs": "خالص کاربوہائیڈریٹس",
+  "nutrientWater": "پانی",
+  "nutrientOmega3": "اومیگا-3 فیٹی ایسڈز",
+  "nutrientOmega6": "اومیگا-6 فیٹی ایسڈز",
+  "nutrientPralScore": "PRAL اسکور",
+  "nutrientTransFat": "ٹرانس فیٹ",
+  "nutrientSolubleFiber": "حل پذیر فائبر",
+  "nutrientInsolubleFiber": "ناقابلِ حل فائبر",
+  "nutrientPhosphorus": "فاسفورس",
+  "nutrientSodium": "سوڈیم",
+  "nutrientZinc": "زنک",
+  "nutrientCopper": "تانبا",
+  "nutrientManganese": "مینگنیز",
+  "nutrientSelenium": "سیلینیم",
+  "nutrientFluoride": "فلورائیڈ",
+  "nutrientMolybdenum": "مولبڈینم",
+  "nutrientChloride": "کلورائیڈ",
+  "nutrientSucrose": "سکروز",
+  "nutrientGlucose": "گلوکوز",
+  "nutrientFructose": "فریکٹوز",
+  "nutrientLactose": "لیکٹوز",
+  "nutrientMaltose": "مالٹوز",
+  "nutrientGalactose": "گیلیکٹوز",
+  "nutrientStarch": "نشاستہ",
+  "nutrientSugarAlcohols": "شوگر الکوحلز",
+  "nutrientThiaminB1": "تھیامین (B1)",
+  "nutrientRiboflavinB2": "رائبوفلیون (B2)",
+  "nutrientNiacinB3": "نیاسین (B3)",
+  "nutrientPantothenicAcidB5": "پینٹوتھینک ایسڈ (B5)",
+  "nutrientVitaminB6": "وٹامن B6",
+  "nutrientBiotinB7": "بایوٹن (B7)",
+  "nutrientFolateB9": "فولیٹ (B9)",
+  "nutrientFolicAcid": "فولک ایسڈ",
+  "nutrientFoodFolate": "غذائی فولیٹ",
+  "nutrientFolateDfe": "غذائی فولیٹ مساویات (DFE)",
+  "nutrientCholine": "کولین",
+  "nutrientBetaine": "بیٹین",
+  "nutrientRetinol": "ریٹینول",
+  "nutrientBetaCarotene": "بیٹا کیروٹین",
+  "nutrientAlphaCarotene": "الفا کیروٹین",
+  "nutrientLycopene": "لائیکوپین",
+  "nutrientLuteinZeaxanthin": "لوٹین + زیاگزینتھین",
+  "nutrientVitaminD2": "وٹامن D2 (ارگوکیلسیفیرول)",
+  "nutrientVitaminD3": "وٹامن D3 (کولیکلسیفیرول)",
+  "nutrientVitaminK": "وٹامن K",
+  "nutrientDihydrophylloquinone": "ڈائی ہائیڈروفائلوکوئنون",
+  "nutrientMenaquinone4": "میناکوئنون-4",
+  "nutrientMonounsaturatedFat": "یک غیر سیر شدہ چربی",
+  "nutrientPolyunsaturatedFat": "کثیر غیر سیر شدہ چربی",
+  "nutrientAla": "الفا-لینولینک ایسڈ (ALA)",
+  "nutrientEpa": "ایکوساپینٹاینوئک ایسڈ (EPA)",
+  "nutrientDpa": "ڈوکوساپینٹاینوئک ایسڈ (DPA)",
+  "nutrientDha": "ڈوکوساہیکساینوئک ایسڈ (DHA)",
+  "nutrientAlanine": "ایلینین",
+  "nutrientAlcohol": "الکوحل",
+  "nutrientArginine": "ارجینین",
+  "nutrientAsparticAcid": "ایسپارٹک ایسڈ",
+  "nutrientCystine": "سسٹین",
+  "nutrientGlutamicAcid": "گلوٹامک ایسڈ",
+  "nutrientGlycine": "گلائسین",
+  "nutrientHistidine": "ہسٹیڈین",
+  "nutrientHydroxyproline": "ہائیڈروکسی پرولین",
+  "nutrientIsoleucine": "آئیسولیوسین",
+  "nutrientLeucine": "لیوسین",
+  "nutrientLysine": "لائسین",
+  "nutrientMethionine": "میتھیونین",
+  "nutrientPhenylalanine": "فینائل ایلینین",
+  "nutrientProline": "پرولین",
+  "nutrientSerine": "سیرین",
+  "nutrientThreonine": "تھریونین",
+  "nutrientTryptophan": "ٹرپٹوفین",
+  "nutrientTyrosine": "ٹائروسین",
+  "nutrientValine": "ویلین",
+  "nutrientCaffeine": "کیفین",
+  "nutrientTheobromine": "تھیوبرومین",
+  "servingWeightNumber": "سرونگ کا وزن {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "سرونگ کی تفصیل {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "200 kcal کے برابر وزن"
+}
