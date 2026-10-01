@@ -129,6 +129,7 @@ abstract class AppLocalizations {
     Locale('pl'),
     Locale('pt'),
     Locale('pt', 'BR'),
+    Locale('pt', 'PT'),
     Locale('ru'),
     Locale('th'),
     Locale('uk'),
@@ -136,7 +137,7 @@ abstract class AppLocalizations {
     Locale('vi'),
     Locale('zh'),
     Locale('zh', 'CN'),
-    Locale('zh', 'TW')
+    Locale('zh', 'TW'),
   ];
 
   /// No description provided for @appTitle.
@@ -618,6 +619,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Portuguese (Brazil)'**
   String get languagePortugueseBrazil;
+
+  /// No description provided for @languagePortuguesePortugal.
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese (Portugal)'**
+  String get languagePortuguesePortugal;
 
   /// No description provided for @languageDutch.
   ///
@@ -1638,7 +1645,10 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{nutrient} per {quantity} {unit}'**
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit);
+    String nutrient,
+    String quantity,
+    String unit,
+  );
 
   /// No description provided for @fiber.
   ///
@@ -2836,7 +2846,7 @@ class _AppLocalizationsDelegate
         'uk',
         'ur',
         'vi',
-        'zh'
+        'zh',
       ].contains(locale.languageCode);
 
   @override
@@ -2851,6 +2861,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
         switch (locale.countryCode) {
           case 'BR':
             return AppLocalizationsPtBr();
+          case 'PT':
+            return AppLocalizationsPtPt();
         }
         break;
       }
@@ -2913,8 +2925,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

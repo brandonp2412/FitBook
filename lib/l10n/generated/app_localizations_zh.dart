@@ -283,6 +283,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languagePortugueseBrazil => '葡萄牙语（巴西）';
 
   @override
+  String get languagePortuguesePortugal => '葡萄牙语（葡萄牙）';
+
+  @override
   String get languageDutch => '荷兰语';
 
   @override
@@ -821,7 +824,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -1731,6 +1737,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languagePortugueseBrazil => '葡萄牙语（巴西）';
 
   @override
+  String get languagePortuguesePortugal => '葡萄牙语（葡萄牙）';
+
+  @override
   String get languageDutch => '荷兰语';
 
   @override
@@ -2269,7 +2278,10 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -3179,6 +3191,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get languagePortugueseBrazil => '葡萄牙語（巴西）';
 
   @override
+  String get languagePortuguesePortugal => '葡萄牙語（葡萄牙）';
+
+  @override
   String get languageDutch => '荷蘭語';
 
   @override
@@ -3717,7 +3732,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '每 $quantity $unit的$nutrient';
   }
 

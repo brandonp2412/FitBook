@@ -69,6 +69,7 @@
 		D1A000000000000000000006 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A000000000000000000007 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A000000000000000000008 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		D1A000000000000000000019 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D1A000000000000000000009 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000A /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1A00000000000000000000F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -265,6 +266,7 @@
 				de,
 				it,
 				"pt-BR",
+				"pt-PT",
 				nl,
 				pl,
 				ru,
@@ -466,6 +468,7 @@
 				D1A000000000000000000006 /* de */,
 				D1A000000000000000000007 /* it */,
 				D1A000000000000000000008 /* pt-BR */,
+				D1A000000000000000000019 /* pt-PT */,
 				D1A000000000000000000009 /* nl */,
 				D1A00000000000000000000A /* pl */,
 				D1A00000000000000000000F /* ru */,

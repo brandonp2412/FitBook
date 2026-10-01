@@ -1,0 +1,5 @@
+• Reforçar as integrações do FitBook no Windows
+• Corrigir a localização da entrada mais recente do registo de alterações
+• Evitar o transbordo do painel da biblioteca de alimentos
+• Repetir execuções instáveis do emulador de capturas de ecrã
+• Estabilizar as capturas de ecrã geradas

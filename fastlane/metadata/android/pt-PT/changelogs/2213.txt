@@ -1,0 +1,2 @@
+• feat(l10n): traduzir o histórico do registo de alterações para hindi
+• fix(l10n): concluir as traduções do registo de alterações mais recente

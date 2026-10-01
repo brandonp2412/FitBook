@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Falha na cópia de segurança: não foi definida uma localização para a cópia de segurança. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_channel_name">Cópias de segurança</string>
+    <string name="backup_channel_description">Cópias de segurança automáticas da base de dados</string>
+    <string name="backup_failed_directory_access">Falha na cópia de segurança: não foi possível aceder à pasta de cópias de segurança. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_failed_create_file">Falha na cópia de segurança: não foi possível criar o ficheiro de cópia de segurança. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="share">Partilhar</string>
+    <string name="backup_failed_app_files_directory">Falha na cópia de segurança: não foi possível aceder à pasta de ficheiros da aplicação. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_failed_parent_directory">Falha na cópia de segurança: não foi possível aceder à pasta superior. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_failed_output_stream">Falha na cópia de segurança: não foi possível abrir o ficheiro de destino. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_failed_database_missing">Falha na cópia de segurança: o ficheiro da base de dados não foi encontrado. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_success_title">Cópia de segurança de dados e imagens concluída</string>
+    <string name="backup_failed_unexpected">A cópia de segurança falhou inesperadamente. As cópias de segurança automáticas foram desativadas.</string>
+</resources>

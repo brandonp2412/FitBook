@@ -284,6 +284,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languagePortugueseBrazil => 'ポルトガル語（ブラジル）';
 
   @override
+  String get languagePortuguesePortugal => 'ポルトガル語（ポルトガル）';
+
+  @override
   String get languageDutch => 'オランダ語';
 
   @override
@@ -826,7 +829,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-      String nutrient, String quantity, String unit) {
+    String nutrient,
+    String quantity,
+    String unit,
+  ) {
     return '$quantity $unitあたりの$nutrient';
   }
 

@@ -72,6 +72,10 @@ List<Widget> getAppearanceSettings(
               value: 'pt-BR',
               child: Text(l10n.languagePortugueseBrazil),
             ),
+            DropdownMenuItem(
+              value: 'pt-PT',
+              child: Text(l10n.languagePortuguesePortugal),
+            ),
             DropdownMenuItem(value: 'nl', child: Text(l10n.languageDutch)),
             DropdownMenuItem(value: 'pl', child: Text(l10n.languagePolish)),
             DropdownMenuItem(value: 'ru', child: Text(l10n.languageRussian)),

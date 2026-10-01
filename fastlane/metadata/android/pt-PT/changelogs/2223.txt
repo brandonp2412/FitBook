@@ -1,0 +1,2 @@
+• docs: centralizar a apresentação do README
+• feat(l10n): concluir os metadados da loja em espanhol
