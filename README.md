@@ -3,7 +3,7 @@
 
 # FitBook
 
-**Graph your eating habits with ease!**
+Graph your eating habits with ease!
 
 <p>
   <a href="https://github.com/brandonp2412/FitBook/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/brandonp2412/fitbook?style=for-the-badge&logoColor=a0cafd&labelColor=a0cafd&color=111418"></a>
