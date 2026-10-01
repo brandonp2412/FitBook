@@ -5,6 +5,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,14 @@ import 'test_utils.dart';
 
 void main() async {
   group('AppLine Trend Tests', () {
+    test('calendar day spacing ignores daylight-saving hour shifts', () {
+      final beforeShift = DateTime.utc(2026, 9, 26, 12);
+      final afterShift = DateTime.utc(2026, 9, 28, 11);
+
+      expect(afterShift.difference(beforeShift).inDays, 1);
+      expect(calendarDayDifference(beforeShift, afterShift), 2);
+    });
+
     testWidgets('Trend radio button appears and functions',
         (WidgetTester tester) async {
       await mockTests();

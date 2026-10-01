@@ -348,6 +348,13 @@ bool isSameDay(DateTime date1, DateTime date2) {
       date1.day == date2.day;
 }
 
+/// Returns the number of calendar days between two dates, ignoring DST shifts.
+int calendarDayDifference(DateTime start, DateTime end) {
+  final startDate = DateTime.utc(start.year, start.month, start.day);
+  final endDate = DateTime.utc(end.year, end.month, end.day);
+  return endDate.difference(startDate).inDays;
+}
+
 /// Formats [value] with [pattern] using the active app locale.
 String formatDisplayDate(
   BuildContext context,

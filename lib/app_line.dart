@@ -97,7 +97,7 @@ class _AppLineState extends State<AppLine> {
     final n = sortedData.length;
 
     for (final row in sortedData) {
-      final x = row.created.difference(firstCreated).inDays.toDouble();
+      final x = calendarDayDifference(firstCreated, row.created).toDouble();
       final y = row.val;
       sumX += x;
       sumY += y;
