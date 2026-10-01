@@ -1,0 +1,4 @@
+- Tambah pilihan untuk garis trend
+- Tambah serat pada catatan diari
+- Ubah susunan halaman makanan
+- Gunakan pangkalan data makanan baharu

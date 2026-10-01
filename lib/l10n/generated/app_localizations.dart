@@ -16,6 +16,7 @@ import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
 import 'app_localizations_ja.dart';
 import 'app_localizations_ko.dart';
+import 'app_localizations_ms.dart';
 import 'app_localizations_nl.dart';
 import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
@@ -122,6 +123,7 @@ abstract class AppLocalizations {
     Locale('it'),
     Locale('ja'),
     Locale('ko'),
+    Locale('ms'),
     Locale('nl'),
     Locale('pl'),
     Locale('pt'),
@@ -698,6 +700,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Persian'**
   String get languagePersian;
+
+  /// No description provided for @languageMalay.
+  ///
+  /// In en, this message translates to:
+  /// **'Malay'**
+  String get languageMalay;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2811,6 +2819,7 @@ class _AppLocalizationsDelegate
         'it',
         'ja',
         'ko',
+        'ms',
         'nl',
         'pl',
         'pt',
@@ -2872,6 +2881,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsJa();
     case 'ko':
       return AppLocalizationsKo();
+    case 'ms':
+      return AppLocalizationsMs();
     case 'nl':
       return AppLocalizationsNl();
     case 'pl':

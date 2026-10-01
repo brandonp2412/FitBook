@@ -342,6 +342,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languagePersian => 'Персидский';
 
   @override
+  String get languageMalay => 'Малайский';
+
+  @override
   String get appearanceSettings => 'Настройки оформления';
 
   @override

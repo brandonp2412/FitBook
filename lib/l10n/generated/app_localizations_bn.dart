@@ -333,6 +333,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get languagePersian => 'ফারসি';
 
   @override
+  String get languageMalay => 'মালয়';
+
+  @override
   String get appearanceSettings => 'চেহারা সেটিংস';
 
   @override

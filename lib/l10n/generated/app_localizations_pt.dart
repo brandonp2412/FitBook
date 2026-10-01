@@ -333,6 +333,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languagePersian => 'Persa';
 
   @override
+  String get languageMalay => 'Malaio';
+
+  @override
   String get appearanceSettings => 'Configurações de aparência';
 
   @override
@@ -1827,6 +1830,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get languagePersian => 'Persa';
+
+  @override
+  String get languageMalay => 'Malaio';
 
   @override
   String get appearanceSettings => 'Configurações de aparência';

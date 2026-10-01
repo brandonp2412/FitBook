@@ -334,6 +334,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get languagePersian => 'فارسی';
 
   @override
+  String get languageMalay => 'مالائی';
+
+  @override
   String get appearanceSettings => 'ظاہری شکل کی ترتیبات';
 
   @override

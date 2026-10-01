@@ -1,0 +1,5 @@
+• pembaikan: perkukuh integrasi Windows FitBook
+• pembaikan: setempatkan catatan log perubahan terkini
+• pembaikan: elakkan limpahan panel pustaka makanan
+• pembaikan: cuba semula larian emulator tangkapan skrin yang tidak stabil
+• pembaikan: stabilkan tangkapan skrin yang dijana

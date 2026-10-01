@@ -325,6 +325,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languagePersian => '波斯语';
 
   @override
+  String get languageMalay => '马来语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1767,6 +1770,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languagePersian => '波斯语';
 
   @override
+  String get languageMalay => '马来语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3207,6 +3213,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languagePersian => '波斯語';
+
+  @override
+  String get languageMalay => '馬來語';
 
   @override
   String get appearanceSettings => '外觀設定';

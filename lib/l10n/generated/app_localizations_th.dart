@@ -332,6 +332,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get languagePersian => 'ภาษาเปอร์เซีย';
 
   @override
+  String get languageMalay => 'ภาษามลายู';
+
+  @override
   String get appearanceSettings => 'การตั้งค่ารูปลักษณ์';
 
   @override

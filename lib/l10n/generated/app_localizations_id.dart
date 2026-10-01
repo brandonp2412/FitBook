@@ -333,6 +333,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get languagePersian => 'Persia';
 
   @override
+  String get languageMalay => 'Melayu';
+
+  @override
   String get appearanceSettings => 'Pengaturan penampilan';
 
   @override

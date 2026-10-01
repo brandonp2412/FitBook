@@ -336,6 +336,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get languagePersian => 'Persisch';
 
   @override
+  String get languageMalay => 'Malaiisch';
+
+  @override
   String get appearanceSettings => 'Darstellungseinstellungen';
 
   @override

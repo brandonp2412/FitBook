@@ -333,6 +333,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languagePersian => 'Persa';
 
   @override
+  String get languageMalay => 'Malayo';
+
+  @override
   String get appearanceSettings => 'Ajustes de apariencia';
 
   @override

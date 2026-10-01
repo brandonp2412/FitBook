@@ -1,0 +1,2 @@
+• ciri(l10n): terjemahkan sejarah log perubahan Hindi
+• pembaikan(l10n): lengkapkan terjemahan log perubahan terkini

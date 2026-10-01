@@ -1,0 +1,18 @@
+Jejak makanan, kalori, makro dan berat tanpa melepaskan kawalan terhadap data anda.
+
+FitBook ialah pengira kalori dan penjejak pemakanan mesra luar talian untuk mencatat hidangan, memahami pengambilan makro dan mengikuti kemajuan anda dari semasa ke semasa. Mulakan dengan pangkalan data makanan terbina dalam, tambah makanan anda sendiri, atau gunakan OpenFoodFacts apabila anda memilih untuk menyambung.
+
+JEJAK PERKARA YANG PENTING
+
+• Catat hidangan dan pengambilan kalori harian
+• Ikuti makronutrien dari semasa ke semasa
+• Catat berat dan lihat graf kemajuan
+• Cari dalam pangkalan data terbina dalam yang mengandungi beribu-ribu makanan
+• Imbas kod bar dan cari OpenFoodFacts untuk maklumat makanan
+• Sesuaikan penjejak mengikut cara anda makan
+
+UTAMAKAN LUAR TALIAN DAN PRIVASI
+
+FitBook berfungsi tanpa akaun dan menyimpan data anda pada peranti anda. Akses internet adalah pilihan untuk carian OpenFoodFacts dan semakan kod bar. Aplikasi ini sumber terbuka dan tidak memaparkan iklan.
+
+FitBook membantu anda mengatur maklumat makanan dan pemakanan; ia bukan pengganti nasihat perubatan daripada profesional yang berkelayakan.

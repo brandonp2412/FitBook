@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Sandaran gagal: Laluan sandaran belum ditetapkan. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_channel_name">Sandaran</string>
+    <string name="backup_channel_description">Sandaran automatik pangkalan data</string>
+    <string name="backup_failed_directory_access">Sandaran gagal: Tidak dapat mengakses direktori sandaran. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_failed_create_file">Sandaran gagal: Tidak dapat mencipta fail sandaran. Sandaran automatik dinyahdayakan.</string>
+    <string name="share">Kongsi</string>
+    <string name="backup_failed_app_files_directory">Sandaran gagal: Tidak dapat mengakses direktori fail aplikasi. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_failed_parent_directory">Sandaran gagal: Tidak dapat mengakses direktori induk. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_failed_output_stream">Sandaran gagal: Tidak dapat membuka strim output. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_failed_database_missing">Sandaran gagal: Fail pangkalan data tidak ditemui. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_success_title">Data dan imej telah disandarkan</string>
+    <string name="backup_failed_unexpected">Sandaran gagal secara tidak dijangka. Sandaran automatik dinyahdayakan.</string>
+</resources>
