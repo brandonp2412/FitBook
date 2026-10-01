@@ -22,6 +22,7 @@ import 'app_localizations_pl.dart';
 import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_th.dart';
+import 'app_localizations_uk.dart';
 import 'app_localizations_ur.dart';
 import 'app_localizations_vi.dart';
 import 'app_localizations_zh.dart';
@@ -130,6 +131,7 @@ abstract class AppLocalizations {
     Locale('pt', 'BR'),
     Locale('ru'),
     Locale('th'),
+    Locale('uk'),
     Locale('ur'),
     Locale('vi'),
     Locale('zh'),
@@ -706,6 +708,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Malay'**
   String get languageMalay;
+
+  /// No description provided for @languageUkrainian.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukrainian'**
+  String get languageUkrainian;
 
   /// No description provided for @appearanceSettings.
   ///
@@ -2825,6 +2833,7 @@ class _AppLocalizationsDelegate
         'pt',
         'ru',
         'th',
+        'uk',
         'ur',
         'vi',
         'zh'
@@ -2893,6 +2902,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsRu();
     case 'th':
       return AppLocalizationsTh();
+    case 'uk':
+      return AppLocalizationsUk();
     case 'ur':
       return AppLocalizationsUr();
     case 'vi':

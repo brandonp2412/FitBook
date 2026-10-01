@@ -336,6 +336,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get languageMalay => 'Bahasa Melayu';
 
   @override
+  String get languageUkrainian => 'Bahasa Ukraine';
+
+  @override
   String get appearanceSettings => 'Tetapan penampilan';
 
   @override

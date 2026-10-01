@@ -1,0 +1,721 @@
+{
+  "@@locale": "uk",
+  "appTitle": "FitBook",
+  "navDiary": "Щоденник",
+  "navGraph": "Графік",
+  "navFood": "Їжа",
+  "navWeight": "Вага",
+  "navError": "Помилка",
+  "loadDataFailed": "Не вдалося завантажити ці дані.",
+  "settings": "Налаштування",
+  "invalidTabSettings": "Некоректні налаштування вкладок.",
+  "newVersion": "Нова версія {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "Зміни",
+  "searchSettings": "Пошук налаштувань...",
+  "appearance": "Вигляд",
+  "appearanceSubtitle": "Тема, кольори та відображення графіків",
+  "diary": "Щоденник",
+  "diarySubtitle": "Щоденні цілі, підсумки та ведення записів",
+  "food": "Їжа",
+  "foodSubtitle": "Одиниці їжі, поля та типові значення",
+  "weight": "Вага",
+  "weightSubtitle": "Одиниці ваги, цілі та відображення",
+  "tabs": "Вкладки",
+  "tabsSubtitle": "Навігаційні вкладки та їх порядок",
+  "data": "Дані",
+  "dataSubtitle": "Імпорт, експорт і локальні дані",
+  "todayProgress": "Сьогоднішній прогрес",
+  "latestDay": "Останній день",
+  "loggedEntries": "{count, plural, =0{Записів немає} one{{count} запис} few{{count} записи} many{{count} записів} other{{count} запису}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, one{Редагувати {count} запис} few{Редагувати {count} записи} many{Редагувати {count} записів} other{Редагувати {count} запису}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "Калорії",
+  "protein": "Білок",
+  "carbs": "Вуглеводи",
+  "fat": "Жири",
+  "addDiaryEntry": "Додати запис до щоденника",
+  "noEntriesToday": "Сьогодні записів немає.",
+  "addSearchToDiary": "Додати «{search}» до щоденника",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "Торкніться, щоб почати записувати їжу.",
+  "noMatchingDiaryEntriesTapCreate": "Відповідних записів у щоденнику немає. Торкніться, щоб створити цю їжу та записати її.",
+  "add": "Додати",
+  "quickAdd": "Швидке додавання",
+  "scanBarcode": "Сканувати штрихкод",
+  "foodLibrary": "Бібліотека продуктів",
+  "foodLibraryCounts": "{foodCount, plural, one{{foodCount} продукт} few{{foodCount} продукти} many{{foodCount} продуктів} other{{foodCount} продукту}} · {mealCount, plural, one{{mealCount} прийом їжі} few{{mealCount} прийоми їжі} many{{mealCount} прийомів їжі} other{{mealCount} прийому їжі}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "Нещодавно використані",
+  "quickActions": "Швидкі дії",
+  "addFood": "Додати продукт",
+  "createMeal": "Створити прийом їжі",
+  "noFoodYet": "Продуктів ще немає",
+  "noMatchingFood": "Відповідних продуктів немає",
+  "addFirstFoodOrMeal": "Додайте перший продукт або прийом їжі, щоб почати наповнювати бібліотеку.",
+  "noFoodSearchMatches": "За запитом «{search}» нічого не знайдено. Очистьте пошук, щоб знову побачити все.",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "Очистити пошук",
+  "addMeal": "Додати прийом їжі",
+  "noWeightsYet": "Записів ваги ще немає",
+  "noMatchingWeights": "Відповідних записів ваги немає",
+  "logFirstWeight": "Запишіть свою першу вагу, щоб почати відстежувати тенденцію.",
+  "noWeightSearchMatches": "За запитом «{search}» нічого не знайдено. Очистьте пошук, щоб побачити всі записи.",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "Записати вагу",
+  "weightTrend": "Тенденція ваги",
+  "weightTrendSubtitle": "Останні вимірювання та загальний напрямок",
+  "bodyWeight": "Вага тіла",
+  "options": "Параметри",
+  "day": "День",
+  "today": "Сьогодні",
+  "week": "Тиждень",
+  "month": "Місяць",
+  "year": "Рік",
+  "dateRange": "Діапазон дат",
+  "startDate": "Дата початку",
+  "stopDate": "Дата завершення",
+  "dataPoints": "Точки даних",
+  "customizeFields": "Налаштувати поля",
+  "language": "Мова",
+  "languageSubtitle": "Виберіть мову FitBook",
+  "languageSystem": "Системна",
+  "languageEnglish": "Англійська",
+  "languageSpanish": "Іспанська",
+  "languageFrench": "Французька",
+  "languageGerman": "Німецька",
+  "languageItalian": "Італійська",
+  "languagePortugueseBrazil": "Португальська (Бразилія)",
+  "languageDutch": "Нідерландська",
+  "languagePolish": "Польська",
+  "languageJapanese": "Японська",
+  "languageKorean": "Корейська",
+  "languageChineseSimplified": "Китайська (спрощена)",
+  "languageChineseTraditional": "Китайська (традиційна)",
+  "languageRussian": "Російська",
+  "languageHindi": "Гінді",
+  "languageIndonesian": "Індонезійська",
+  "languageVietnamese": "В’єтнамська",
+  "languageThai": "Тайська",
+  "languageBengali": "Бенгальська",
+  "languageUrdu": "Урду",
+  "languagePersian": "Перська",
+  "languageMalay": "Малайська",
+  "languageUkrainian": "Українська",
+  "appearanceSettings": "Налаштування вигляду",
+  "delete": "Видалити",
+  "confirmDelete": "Підтвердження видалення",
+  "confirmDeleteRecords": "{count, plural, one{Ви впевнені, що хочете видалити {count} запис? Цю дію не можна скасувати.} few{Ви впевнені, що хочете видалити {count} записи? Цю дію не можна скасувати.} many{Ви впевнені, що хочете видалити {count} записів? Цю дію не можна скасувати.} other{Ви впевнені, що хочете видалити {count} запису? Цю дію не можна скасувати.}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "Скасувати",
+  "search": "Пошук...",
+  "clear": "Очистити",
+  "showMenu": "Показати меню",
+  "selectAll": "Вибрати все",
+  "edit": "Редагувати",
+  "favorite": "Улюблене",
+  "atLeastOneTab": "Потрібна щонайменше одна вкладка",
+  "scrollableTabs": "Прокручувані вкладки",
+  "save": "Зберегти",
+  "themeSystem": "Системна",
+  "themeDark": "Темна",
+  "themeLight": "Світла",
+  "pureBlackAmoled": "Чистий чорний (AMOLED)",
+  "pureBlackAmoledTooltip": "Використовувати чистий чорний колір для AMOLED-дисплеїв",
+  "systemColorScheme": "Системна колірна схема",
+  "systemColorSchemeTooltip": "Використовувати основний колір пристрою для застосунку",
+  "showImages": "Показувати зображення",
+  "showImagesTooltip": "Вибирати та показувати зображення на сторінках щоденника й продуктів",
+  "curveLineGraphs": "Плавні лінії графіків",
+  "curveLineGraphsTooltip": "Використовувати плавні криві на сторінці графіків",
+  "weightStatCards": "Картки статистики ваги",
+  "weightStatCardsTooltip": "Показувати записи ваги у вигляді сітки карток статистики замість стандартного списку",
+  "graphsStartAtZero": "Графіки починаються з нуля",
+  "graphsStartAtZeroTooltip": "Завжди починати вісь Y графіка з нуля",
+  "navigationAnimation": "Анімація навігації",
+  "animationFade": "Згасання",
+  "animationZoom": "Масштабування",
+  "animationSlide": "Ковзання",
+  "animationRise": "Підйом",
+  "animationNone": "Немає",
+  "longDateFormat": "Довгий формат дати ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "Короткий формат дати ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "Налаштування щоденника",
+  "diaryUnit": "Одиниця щоденника",
+  "diarySummary": "Підсумок щоденника",
+  "diarySummaryDivision": "Поділ — поточне / загальне",
+  "diarySummaryRemaining": "Залишок",
+  "diarySummaryBoth": "Обидва — залишок (загалом)",
+  "diarySummaryNone": "Немає",
+  "dailyCaloriesKcal": "Добові калорії (ккал)",
+  "dailyProteinG": "Добовий білок (г)",
+  "dailyFatG": "Добові жири (г)",
+  "dailyCarbsG": "Добові вуглеводи (г)",
+  "dailyFiberG": "Добова клітковина (г)",
+  "automaticDailies": "Автоматичні добові цілі",
+  "automaticDailiesTooltip": "Автоматично розраховувати рекомендовану добову кількість калорій, білка, жирів і вуглеводів на основі ваги тіла",
+  "selectNameOnSubmit": "Вибирати назву після підтвердження",
+  "reminders": "Нагадування",
+  "foodSettings": "Налаштування продуктів",
+  "foodUnit": "Одиниця їжі",
+  "fields": "Поля",
+  "favoriteNewFoods": "Додавати нові продукти до улюблених",
+  "pickFields": "Вибрати поля",
+  "all": "Усі",
+  "onlySelected": "Лише вибрані",
+  "weightSettings": "Налаштування ваги",
+  "targetWeight": "Цільова вага",
+  "positiveReinforcement": "Позитивне підкріплення",
+  "positiveReinforcementPreview": "Заохочувальні повідомлення виглядатимуть так!",
+  "dataSettings": "Налаштування даних",
+  "automaticBackup": "Автоматичне резервне копіювання",
+  "shareDatabase": "Поділитися базою даних",
+  "openNotification": "Відкрити сповіщення",
+  "automaticBackupsEnabled": "Автоматичні резервні копії ввімкнено",
+  "automaticBackupBody": "FitBook автоматично створюватиме резервну копію ваших даних і зображень у вибраній папці щодня.",
+  "backupSettings": "Налаштування резервного копіювання",
+  "backupSettingsChannelDescription": "Сповіщення про автоматичне резервне копіювання",
+  "openFoodFacts": "Open Food Facts",
+  "username": "Ім’я користувача",
+  "password": "Пароль",
+  "close": "Закрити",
+  "loggedIn": "Вхід виконано",
+  "about": "Про застосунок",
+  "version": "Версія",
+  "whatsNew": "Що нового?",
+  "author": "Автор",
+  "license": "Ліцензія",
+  "donate": "Підтримати",
+  "supportProject": "Допоможіть підтримати цей проєкт",
+  "leaveReview": "Залишити відгук",
+  "rateOnPlayStore": "Оцінити FitBook у Play Store",
+  "sourceCode": "Вихідний код",
+  "foods": "Продукти",
+  "backup": "Резервна копія",
+  "exportData": "Експортувати дані",
+  "importData": "Імпортувати дані",
+  "failedImportData": "Не вдалося імпортувати дані",
+  "copyError": "Копіювати помилку",
+  "deleteRecords": "Видалити записи",
+  "unusedFood": "Невикористані продукти",
+  "database": "База даних",
+  "deleteAllWeightsConfirm": "Ви впевнені, що хочете видалити всі записи ваги? Цю дію не можна скасувати.",
+  "deleteDatabaseConfirm": "Ви впевнені, що хочете видалити базу даних? Цю дію не можна скасувати, і всі ваші дані буде знищено.",
+  "deleteFoodsAndDiaryConfirm": "Ви впевнені, що хочете видалити всі продукти та записи щоденника? Цю дію не можна скасувати.",
+  "deleteUnusedFoodsConfirm": "{count, plural, one{Ви впевнені, що хочете видалити {count} невикористаний продукт? Цю дію не можна скасувати.} few{Ви впевнені, що хочете видалити {count} невикористані продукти? Цю дію не можна скасувати.} many{Ви впевнені, що хочете видалити {count} невикористаних продуктів? Цю дію не можна скасувати.} other{Ви впевнені, що хочете видалити {count} невикористаного продукту? Цю дію не можна скасувати.}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "Ви впевнені, що хочете видалити всі записи щоденника? Цю дію не можна скасувати.",
+  "ok": "Гаразд",
+  "replaceImage": "Замінити зображення",
+  "takePhoto": "Зробити фото",
+  "deleteImage": "Видалити зображення",
+  "filters": "Фільтри",
+  "foodGroup": "Група продуктів",
+  "exampleFruit": "Фрукти",
+  "clearFiltersCount": "Очистити ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "Готово",
+  "showFilters": "Показати фільтри",
+  "repeatEntry": "Повторити запис",
+  "timeOfDay": "Час доби",
+  "everyDay": "Щодня",
+  "repeatEveryDayForYear": "Створювати цей запис щодня протягом наступного року",
+  "repeatOn": "Повторювати в",
+  "weekdayMon": "Пн",
+  "weekdayTue": "Вт",
+  "weekdayWed": "Ср",
+  "weekdayThu": "Чт",
+  "weekdayFri": "Пт",
+  "weekdaySat": "Сб",
+  "weekdaySun": "Нд",
+  "schedule": "Розклад",
+  "enterValidNutritionValues": "Введіть коректні значення поживності",
+  "quickAddTitle": "Швидке додавання",
+  "kilojoules": "Кілоджоулі",
+  "createdDate": "Дата створення",
+  "failedMigrations": "Невдалі міграції",
+  "failedMigrationsDescription": "Під час створення або оновлення бази даних сталася помилка. Зазвичай це можна виправити, видаливши й повторно створивши записи.",
+  "errorMessage": "Повідомлення про помилку:",
+  "createIssue": "Створити звернення",
+  "cameraPermissionRequired": "Для сканування потрібен дозвіл на використання камери.",
+  "scanFoodBarcode": "Сканувати штрихкод продукту",
+  "holdBarcodeInFrame": "Тримайте штрихкод у межах рамки",
+  "pinchToZoom": "Зведіть або розведіть пальці для масштабування",
+  "cameraStartFailed": "Не вдалося запустити камеру",
+  "editDiaryEntry": "Редагувати запис щоденника",
+  "addFoodToDiary": "Додати продукт до щоденника",
+  "confirmDeleteDiaryEntry": "Ви впевнені, що хочете видалити {name}?",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "Помилка зображення",
+  "setImage": "Встановити зображення",
+  "name": "Назва",
+  "searchFoodsAndMeals": "Пошук продуктів і прийомів їжі...",
+  "clearSelection": "Очистити вибір",
+  "barcodeNotFoundSaveToInsert": "Штрихкод не знайдено. Збережіть, щоб додати.",
+  "searchOpenFoodFactsFor": "Шукати «{name}» в Open Food Facts",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "Прийом їжі",
+  "quantity": "Кількість",
+  "unit": "Одиниця",
+  "servingWithAmountUnit": "Порція ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "Штрихкод",
+  "nutritionPerAmountUnit": "{nutrient} (на {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} на {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "Клітковина",
+  "unitServing": "Порція",
+  "unitGrams": "Грами",
+  "unitMilliliters": "Мілілітри",
+  "unitKilojoules": "Кілоджоулі",
+  "unitCups": "Чашки",
+  "unitTablespoons": "Столові ложки",
+  "unitMilligrams": "Міліграми",
+  "unitTeaspoons": "Чайні ложки",
+  "unitOunces": "Унції",
+  "unitPounds": "Фунти",
+  "unitKilograms": "Кілограми",
+  "unitLiters": "Літри",
+  "nameConflict": "Конфлікт назв",
+  "replaceExistingFood": "Продукт із такою назвою вже існує. Замінити старий?",
+  "no": "Ні",
+  "yes": "Так",
+  "editFood": "Редагувати продукт",
+  "confirmDeleteFood": "Ви впевнені, що хочете видалити {name}?",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "Калорії (ккал)",
+  "kilojoulesKj": "Кілоджоулі (кДж)",
+  "servingSize": "Розмір порції",
+  "servingUnit": "Одиниця порції",
+  "saveAsNewCopy": "Зберегти як нову копію",
+  "filterFoods": "Фільтрувати продукти",
+  "narrowFoodsFilters": "Звузьте список за допомогою будь-якої комбінації фільтрів.",
+  "foodDetails": "Відомості про продукт",
+  "exampleFruitHint": "наприклад, фрукти",
+  "servingSizeRangeHint": "Установіть мінімум, максимум або обидва значення.",
+  "minimum": "Мінімум",
+  "maximum": "Максимум",
+  "noMinimum": "Без мінімуму",
+  "noMaximum": "Без максимуму",
+  "clearAll": "Очистити все",
+  "searchOpenFoodFacts": "Пошук в Open Food Facts",
+  "noMatchingProducts": "Відповідних продуктів немає",
+  "tryAnotherNameOrScanBarcode": "Спробуйте іншу назву або відскануйте штрихкод.",
+  "enterFoodNameToSearch": "Введіть назву продукту вище, а потім надішліть запит для пошуку.",
+  "submitToSearch": "Надіслати для пошуку...",
+  "kcalValue": "{value} ккал",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} г білка",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{Редагувати {count} продукт} few{Редагувати {count} продукти} many{Редагувати {count} продуктів} other{Редагувати {count} продукту}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "Редагувати прийом їжі",
+  "addImage": "Додати зображення",
+  "noFoodsInMeal": "У цьому прийомі їжі ще немає продуктів",
+  "addFoodToMealHint": "Додайте продукт, щоб почати формувати цей прийом їжі.",
+  "remove": "Вилучити",
+  "searchFoods": "Пошук продуктів...",
+  "noFoodsFound": "Продуктів не знайдено",
+  "nothingMatchesSearch": "За запитом «{search}» нічого не знайдено.",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "Додайте кілька продуктів до бібліотеки, перш ніж додавати їх до прийому їжі.",
+  "caloriesPer100gValue": "{value} ккал / 100 г",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "Даних ще немає",
+  "completePlansToViewGraphs": "Завершіть кілька планів, щоб переглядати тут графіки.",
+  "value": "Значення",
+  "goal": "Ціль",
+  "notSet": "Не задано",
+  "trend": "Тенденція",
+  "smooth": "Згладжування",
+  "pointAverage": "{count, plural, one{Середнє за 1 точкою} few{Середнє за {count} точками} many{Середнє за {count} точками} other{Середнє за {count} точки}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "Редагувати вагу",
+  "addWeight": "Додати вагу",
+  "shareWeight": "Моя щойно виміряна вага — {value} {unit}!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "Вага ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "Введіть вагу",
+  "pleaseEnterValidWeight": "Введіть коректну вагу",
+  "lastWeight": "Остання вага",
+  "unitWithValue": "Одиниця ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "Залишити одиницю {unit}",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "Перетворити на {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "Вилучити зображення",
+  "mealRemindersEnabled": "Нагадування про прийоми їжі ввімкнено",
+  "mealRemindersEnabledBody": "Ми нагадаємо записати сніданок, обід або вечерю, якщо ви ще цього не зробили.",
+  "reminderSettingsChannel": "Налаштування нагадувань",
+  "reminderSettingsChannelDescription": "Сповіщення з поясненнями нагадувань FitBook",
+  "breakfastReminderTitle": "Не забудьте записати сніданок",
+  "breakfastRemindersChannel": "Нагадування про сніданок",
+  "breakfastRemindersChannelDescription": "Нагадування записати сніданок",
+  "lunchReminderTitle": "Не забудьте записати обід",
+  "lunchRemindersChannel": "Нагадування про обід",
+  "lunchRemindersChannelDescription": "Нагадування записати обід",
+  "dinnerReminderTitle": "Не забудьте записати вечерю",
+  "dinnerRemindersChannel": "Нагадування про вечерю",
+  "dinnerRemindersChannelDescription": "Нагадування записати вечерю",
+  "reinforcementGreatJob": "Чудова робота! Ваші зусилля дають результат.",
+  "reinforcementKeepItUp": "Так тримати! Ви чудово просуваєтеся вперед.",
+  "reinforcementFantastic": "Фантастично! Ваша наполегливість дає результат.",
+  "reinforcementWellDone": "Чудово! Ви ще на крок ближче до своєї цілі.",
+  "reinforcementImpressive": "Вражає! Ваші зусилля приносять плоди.",
+  "reinforcementAmazing": "Неймовірно! Ви на правильному шляху.",
+  "reinforcementBravo": "Браво! Ваша відданість заслуговує на похвалу.",
+  "reinforcementExcellent": "Відмінно! Ваша наполегливість надихає.",
+  "reinforcementSuperb": "Прекрасно! Ви виконуєте чудову роботу.",
+  "reinforcementIncredible": "Неймовірно! Ваш прогрес помітний.",
+  "reinforcementWayToGoKing": "Так тримати, королю!",
+  "reinforcementYeahBuddy": "Так, друже!",
+  "reinforcementThatsHowItsDone": "Ось як це робиться.",
+  "reinforcementEasyAsPie": "Простіше простого.",
+  "reinforcementDoingGreat": "У вас чудово виходить.",
+  "reinforcementProgressNice": "Це прогрес, який я бачу? Чудово.",
+  "diarySummaryRemainingValue": "Залишилося {remaining} {unit}",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "Залишилося {remaining} {unit} (ціль: {target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "Цукри",
+  "nutrientCholesterol": "Холестерин",
+  "nutrientSaturatedFat": "Насичені жири",
+  "nutrientCalcium": "Кальцій",
+  "nutrientIron": "Залізо",
+  "nutrientPotassium": "Калій",
+  "nutrientMagnesium": "Магній",
+  "nutrientVitaminA": "Вітамін A",
+  "nutrientVitaminC": "Вітамін C",
+  "nutrientVitaminB12": "Вітамін B12",
+  "nutrientVitaminD": "Вітамін D",
+  "nutrientVitaminE": "Вітамін E",
+  "nutrientAddedSugar": "Доданий цукор",
+  "nutrientNetCarbs": "Чисті вуглеводи",
+  "nutrientWater": "Вода",
+  "nutrientOmega3": "Омега-3 жирні кислоти",
+  "nutrientOmega6": "Омега-6 жирні кислоти",
+  "nutrientPralScore": "Показник PRAL",
+  "nutrientTransFat": "Трансжири",
+  "nutrientSolubleFiber": "Розчинна клітковина",
+  "nutrientInsolubleFiber": "Нерозчинна клітковина",
+  "nutrientPhosphorus": "Фосфор",
+  "nutrientSodium": "Натрій",
+  "nutrientZinc": "Цинк",
+  "nutrientCopper": "Мідь",
+  "nutrientManganese": "Марганець",
+  "nutrientSelenium": "Селен",
+  "nutrientFluoride": "Фторид",
+  "nutrientMolybdenum": "Молібден",
+  "nutrientChloride": "Хлорид",
+  "nutrientSucrose": "Сахароза",
+  "nutrientGlucose": "Глюкоза",
+  "nutrientFructose": "Фруктоза",
+  "nutrientLactose": "Лактоза",
+  "nutrientMaltose": "Мальтоза",
+  "nutrientGalactose": "Галактоза",
+  "nutrientStarch": "Крохмаль",
+  "nutrientSugarAlcohols": "Цукрові спирти",
+  "nutrientThiaminB1": "Тіамін (B1)",
+  "nutrientRiboflavinB2": "Рибофлавін (B2)",
+  "nutrientNiacinB3": "Ніацин (B3)",
+  "nutrientPantothenicAcidB5": "Пантотенова кислота (B5)",
+  "nutrientVitaminB6": "Вітамін B6",
+  "nutrientBiotinB7": "Біотин (B7)",
+  "nutrientFolateB9": "Фолат (B9)",
+  "nutrientFolicAcid": "Фолієва кислота",
+  "nutrientFoodFolate": "Харчовий фолат",
+  "nutrientFolateDfe": "Дієтичний фолатний еквівалент (DFE)",
+  "nutrientCholine": "Холін",
+  "nutrientBetaine": "Бетаїн",
+  "nutrientRetinol": "Ретинол",
+  "nutrientBetaCarotene": "Бета-каротин",
+  "nutrientAlphaCarotene": "Альфа-каротин",
+  "nutrientLycopene": "Лікопін",
+  "nutrientLuteinZeaxanthin": "Лютеїн + зеаксантин",
+  "nutrientVitaminD2": "Вітамін D2 (ергокальциферол)",
+  "nutrientVitaminD3": "Вітамін D3 (холекальциферол)",
+  "nutrientVitaminK": "Вітамін K",
+  "nutrientDihydrophylloquinone": "Дигідрофілохінон",
+  "nutrientMenaquinone4": "Менахінон-4",
+  "nutrientMonounsaturatedFat": "Мононенасичені жири",
+  "nutrientPolyunsaturatedFat": "Поліненасичені жири",
+  "nutrientAla": "Альфа-ліноленова кислота (ALA)",
+  "nutrientEpa": "Ейкозапентаєнова кислота (EPA)",
+  "nutrientDpa": "Докозапентаєнова кислота (DPA)",
+  "nutrientDha": "Докозагексаєнова кислота (DHA)",
+  "nutrientAlanine": "Аланін",
+  "nutrientAlcohol": "Алкоголь",
+  "nutrientArginine": "Аргінін",
+  "nutrientAsparticAcid": "Аспарагінова кислота",
+  "nutrientCystine": "Цистин",
+  "nutrientGlutamicAcid": "Глутамінова кислота",
+  "nutrientGlycine": "Гліцин",
+  "nutrientHistidine": "Гістидин",
+  "nutrientHydroxyproline": "Гідроксипролін",
+  "nutrientIsoleucine": "Ізолейцин",
+  "nutrientLeucine": "Лейцин",
+  "nutrientLysine": "Лізин",
+  "nutrientMethionine": "Метіонін",
+  "nutrientPhenylalanine": "Фенілаланін",
+  "nutrientProline": "Пролін",
+  "nutrientSerine": "Серин",
+  "nutrientThreonine": "Треонін",
+  "nutrientTryptophan": "Триптофан",
+  "nutrientTyrosine": "Тирозин",
+  "nutrientValine": "Валін",
+  "nutrientCaffeine": "Кофеїн",
+  "nutrientTheobromine": "Теобромін",
+  "servingWeightNumber": "Вага порції {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "Опис порції {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "Вага, еквівалентна 200 ккал"
+}

@@ -336,6 +336,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageMalay => 'Malaio';
 
   @override
+  String get languageUkrainian => 'Ucraniano';
+
+  @override
   String get appearanceSettings => 'Configurações de aparência';
 
   @override
@@ -1833,6 +1836,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get languageMalay => 'Malaio';
+
+  @override
+  String get languageUkrainian => 'Ucraniano (Ucrânia)';
 
   @override
   String get appearanceSettings => 'Configurações de aparência';

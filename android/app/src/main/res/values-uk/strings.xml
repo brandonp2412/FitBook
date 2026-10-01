@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">Не вдалося створити резервну копію: шлях резервного копіювання не задано. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_channel_name">Резервні копії</string>
+    <string name="backup_channel_description">Автоматичні резервні копії бази даних</string>
+    <string name="backup_failed_directory_access">Не вдалося створити резервну копію: немає доступу до папки резервних копій. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_failed_create_file">Не вдалося створити резервну копію: неможливо створити файл резервної копії. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="share">Поділитися</string>
+    <string name="backup_failed_app_files_directory">Не вдалося створити резервну копію: немає доступу до папки файлів застосунку. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_failed_parent_directory">Не вдалося створити резервну копію: немає доступу до батьківської папки. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_failed_output_stream">Не вдалося створити резервну копію: неможливо відкрити вихідний потік. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_failed_database_missing">Не вдалося створити резервну копію: файл бази даних не знайдено. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_success_title">Дані та зображення збережено в резервній копії</string>
+    <string name="backup_failed_unexpected">Неочікувана помилка резервного копіювання. Автоматичне резервне копіювання вимкнено.</string>
+</resources>

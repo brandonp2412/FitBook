@@ -328,6 +328,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageMalay => '马来语';
 
   @override
+  String get languageUkrainian => '乌克兰语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1773,6 +1776,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageMalay => '马来语';
 
   @override
+  String get languageUkrainian => '乌克兰语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3216,6 +3222,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languageMalay => '馬來語';
+
+  @override
+  String get languageUkrainian => '烏克蘭語';
 
   @override
   String get appearanceSettings => '外觀設定';

@@ -336,6 +336,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get languageMalay => 'مالایی';
 
   @override
+  String get languageUkrainian => 'اوکراینی';
+
+  @override
   String get appearanceSettings => 'تنظیمات ظاهر';
 
   @override
