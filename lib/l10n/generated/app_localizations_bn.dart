@@ -330,6 +330,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get languageUrdu => 'উর্দু';
 
   @override
+  String get languagePersian => 'ফারসি';
+
+  @override
   String get appearanceSettings => 'চেহারা সেটিংস';
 
   @override

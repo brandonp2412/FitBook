@@ -330,6 +330,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get languageUrdu => 'उर्दू';
 
   @override
+  String get languagePersian => 'फ़ारसी';
+
+  @override
   String get appearanceSettings => 'दिखावट सेटिंग्स';
 
   @override

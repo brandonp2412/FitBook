@@ -1,0 +1,719 @@
+{
+  "@@locale": "fa",
+  "appTitle": "FitBook",
+  "navDiary": "دفتر روزانه",
+  "navGraph": "نمودار",
+  "navFood": "غذا",
+  "navWeight": "وزن",
+  "navError": "خطا",
+  "loadDataFailed": "بارگیری این داده ممکن نشد.",
+  "settings": "تنظیمات",
+  "invalidTabSettings": "تنظیمات زبانه نامعتبر است.",
+  "newVersion": "نسخه جدید {version}",
+  "@newVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changes": "تغییرات",
+  "searchSettings": "جست‌وجوی تنظیمات...",
+  "appearance": "ظاهر",
+  "appearanceSubtitle": "پوسته، رنگ‌ها و نمایش نمودار",
+  "diary": "دفتر روزانه",
+  "diarySubtitle": "اهداف روزانه، خلاصه‌ها و ثبت اطلاعات",
+  "food": "غذا",
+  "foodSubtitle": "واحدها، فیلدها و پیش‌فرض‌های غذا",
+  "weight": "وزن",
+  "weightSubtitle": "واحدهای وزن، اهداف و نمایش",
+  "tabs": "زبانه‌ها",
+  "tabsSubtitle": "زبانه‌های پیمایش و ترتیب آن‌ها",
+  "data": "داده‌ها",
+  "dataSubtitle": "درون‌ریزی، برون‌ریزی و داده‌های محلی",
+  "todayProgress": "پیشرفت امروز",
+  "latestDay": "آخرین روز",
+  "loggedEntries": "{count, plural, =0{هیچ ورودی‌ای ثبت نشده} =1{۱ ورودی ثبت شده} other{{count} ورودی ثبت شده}}",
+  "@loggedEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editEntries": "{count, plural, =1{ویرایش ۱ ورودی} other{ویرایش {count} ورودی}}",
+  "@editEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calories": "کالری",
+  "protein": "پروتئین",
+  "carbs": "کربوهیدرات",
+  "fat": "چربی",
+  "addDiaryEntry": "افزودن ورودی دفتر روزانه",
+  "noEntriesToday": "امروز ورودی‌ای وجود ندارد.",
+  "addSearchToDiary": "افزودن «{search}» به دفتر روزانه",
+  "@addSearchToDiary": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "tapStartLoggingFood": "برای شروع ثبت غذا ضربه بزنید.",
+  "noMatchingDiaryEntriesTapCreate": "ورودی منطبقی در دفتر روزانه نیست. برای ساخت این غذا و ثبت آن ضربه بزنید.",
+  "add": "افزودن",
+  "quickAdd": "افزودن سریع",
+  "scanBarcode": "اسکن بارکد",
+  "foodLibrary": "کتابخانه غذا",
+  "foodLibraryCounts": "{foodCount, plural, =1{۱ غذا} other{{foodCount} غذا}} · {mealCount, plural, =1{۱ وعده} other{{mealCount} وعده}}",
+  "@foodLibraryCounts": {
+    "placeholders": {
+      "foodCount": {
+        "type": "int"
+      },
+      "mealCount": {
+        "type": "int"
+      }
+    }
+  },
+  "recentlyUsed": "اخیراً استفاده‌شده",
+  "quickActions": "اقدام‌های سریع",
+  "addFood": "افزودن غذا",
+  "createMeal": "ساخت وعده غذایی",
+  "noFoodYet": "هنوز غذایی نیست",
+  "noMatchingFood": "غذای منطبقی نیست",
+  "addFirstFoodOrMeal": "برای ساخت کتابخانه خود، نخستین غذا یا وعده را اضافه کنید.",
+  "noFoodSearchMatches": "چیزی با «{search}» مطابقت ندارد. برای دیدن دوباره همه موارد، جست‌وجو را پاک کنید.",
+  "@noFoodSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "clearSearch": "پاک کردن جست‌وجو",
+  "addMeal": "افزودن وعده غذایی",
+  "noWeightsYet": "هنوز وزنی ثبت نشده",
+  "noMatchingWeights": "وزن منطبقی نیست",
+  "logFirstWeight": "نخستین وزن خود را ثبت کنید تا روندتان پیگیری شود.",
+  "noWeightSearchMatches": "چیزی با «{search}» مطابقت ندارد. برای دیدن همه ورودی‌ها، جست‌وجو را پاک کنید.",
+  "@noWeightSearchMatches": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "logWeight": "ثبت وزن",
+  "weightTrend": "روند وزن",
+  "weightTrendSubtitle": "اندازه‌گیری‌های اخیر و جهت کلی",
+  "bodyWeight": "وزن بدن",
+  "options": "گزینه‌ها",
+  "day": "روز",
+  "today": "امروز",
+  "week": "هفته",
+  "month": "ماه",
+  "year": "سال",
+  "dateRange": "بازه تاریخ",
+  "startDate": "تاریخ شروع",
+  "stopDate": "تاریخ پایان",
+  "dataPoints": "نقاط داده",
+  "customizeFields": "سفارشی‌سازی فیلدها",
+  "language": "زبان",
+  "languageSubtitle": "زبان مورد استفاده FitBook را انتخاب کنید",
+  "languageSystem": "سیستم",
+  "languageEnglish": "انگلیسی",
+  "languageSpanish": "اسپانیایی",
+  "languageFrench": "فرانسوی",
+  "languageGerman": "آلمانی",
+  "languageItalian": "ایتالیایی",
+  "languagePortugueseBrazil": "پرتغالی (برزیل)",
+  "languageDutch": "هلندی",
+  "languagePolish": "لهستانی",
+  "languageJapanese": "ژاپنی",
+  "languageKorean": "کره‌ای",
+  "languageChineseSimplified": "چینی (ساده‌شده)",
+  "languageChineseTraditional": "چینی (سنتی)",
+  "languageRussian": "روسی",
+  "languageHindi": "هندی",
+  "languageIndonesian": "اندونزیایی",
+  "languageVietnamese": "ویتنامی",
+  "languageThai": "تایلندی",
+  "languageBengali": "بنگالی",
+  "languageUrdu": "اردو",
+  "languagePersian": "فارسی",
+  "appearanceSettings": "تنظیمات ظاهر",
+  "delete": "حذف",
+  "confirmDelete": "تأیید حذف",
+  "confirmDeleteRecords": "{count, plural, =1{آیا مطمئنید می‌خواهید ۱ رکورد را حذف کنید؟ این کار قابل بازگشت نیست.} other{آیا مطمئنید می‌خواهید {count} رکورد را حذف کنید؟ این کار قابل بازگشت نیست.}}",
+  "@confirmDeleteRecords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cancel": "لغو",
+  "search": "جست‌وجو...",
+  "clear": "پاک کردن",
+  "showMenu": "نمایش منو",
+  "selectAll": "انتخاب همه",
+  "edit": "ویرایش",
+  "favorite": "موردعلاقه",
+  "atLeastOneTab": "حداقل یک زبانه لازم است",
+  "scrollableTabs": "زبانه‌های قابل پیمایش",
+  "save": "ذخیره",
+  "themeSystem": "سیستم",
+  "themeDark": "تیره",
+  "themeLight": "روشن",
+  "pureBlackAmoled": "سیاه خالص (AMOLED)",
+  "pureBlackAmoledTooltip": "برای نمایشگرهای AMOLED از رنگ سیاه خالص استفاده کنید",
+  "systemColorScheme": "طرح رنگ سیستم",
+  "systemColorSchemeTooltip": "از رنگ اصلی دستگاه برای برنامه استفاده کنید",
+  "showImages": "نمایش تصاویر",
+  "showImagesTooltip": "در صفحه‌های دفتر روزانه و غذا تصویر انتخاب و نمایش دهید",
+  "curveLineGraphs": "منحنی کردن خطوط نمودار",
+  "curveLineGraphsTooltip": "در صفحه نمودارها از منحنی‌های نرم استفاده کنید",
+  "weightStatCards": "کارت‌های آماری وزن",
+  "weightStatCardsTooltip": "ورودی‌های وزن را به‌جای فهرست پیش‌فرض به‌شکل شبکه‌ای از کارت‌های آماری نشان دهید",
+  "graphsStartAtZero": "شروع نمودارها از صفر",
+  "graphsStartAtZeroTooltip": "محور y نمودار همیشه از صفر آغاز شود",
+  "navigationAnimation": "پویانمایی پیمایش",
+  "animationFade": "محو شدن",
+  "animationZoom": "بزرگ‌نمایی",
+  "animationSlide": "لغزش",
+  "animationRise": "بالا آمدن",
+  "animationNone": "بدون پویانمایی",
+  "longDateFormat": "قالب تاریخ بلند ({example})",
+  "@longDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "shortDateFormat": "قالب تاریخ کوتاه ({example})",
+  "@shortDateFormat": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySettings": "تنظیمات دفتر روزانه",
+  "diaryUnit": "واحد دفتر روزانه",
+  "diarySummary": "خلاصه دفتر روزانه",
+  "diarySummaryDivision": "تقسیم - فعلی / کل",
+  "diarySummaryRemaining": "باقی‌مانده",
+  "diarySummaryBoth": "هر دو - باقی‌مانده (کل)",
+  "diarySummaryNone": "هیچ‌کدام",
+  "dailyCaloriesKcal": "کالری روزانه (kcal)",
+  "dailyProteinG": "پروتئین روزانه (g)",
+  "dailyFatG": "چربی روزانه (g)",
+  "dailyCarbsG": "کربوهیدرات روزانه (g)",
+  "dailyFiberG": "فیبر روزانه (g)",
+  "automaticDailies": "اهداف روزانه خودکار",
+  "automaticDailiesTooltip": "کالری، پروتئین، چربی و کربوهیدرات روزانه پیشنهادی را بر اساس وزن بدن به‌طور خودکار محاسبه کنید",
+  "selectNameOnSubmit": "انتخاب نام هنگام ثبت",
+  "reminders": "یادآورها",
+  "foodSettings": "تنظیمات غذا",
+  "foodUnit": "واحد غذا",
+  "fields": "فیلدها",
+  "favoriteNewFoods": "موردعلاقه کردن غذاهای جدید",
+  "pickFields": "انتخاب فیلدها",
+  "all": "همه",
+  "onlySelected": "فقط انتخاب‌شده‌ها",
+  "weightSettings": "تنظیمات وزن",
+  "targetWeight": "وزن هدف",
+  "positiveReinforcement": "تقویت مثبت",
+  "positiveReinforcementPreview": "پیام‌های تشویقی به این شکل نمایش داده می‌شوند!",
+  "dataSettings": "تنظیمات داده",
+  "automaticBackup": "پشتیبان‌گیری خودکار",
+  "shareDatabase": "اشتراک‌گذاری پایگاه داده",
+  "openNotification": "باز کردن اعلان",
+  "automaticBackupsEnabled": "پشتیبان‌گیری خودکار فعال است",
+  "automaticBackupBody": "FitBook هر روز به‌طور خودکار از داده‌ها و تصاویر شما در پوشه انتخاب‌شده پشتیبان می‌گیرد.",
+  "backupSettings": "تنظیمات پشتیبان‌گیری",
+  "backupSettingsChannelDescription": "اعلان‌های مربوط به پشتیبان‌گیری خودکار",
+  "openFoodFacts": "Open Food Facts",
+  "username": "نام کاربری",
+  "password": "رمز عبور",
+  "close": "بستن",
+  "loggedIn": "وارد شده",
+  "about": "درباره",
+  "version": "نسخه",
+  "whatsNew": "چه چیز جدیدی است؟",
+  "author": "نویسنده",
+  "license": "مجوز",
+  "donate": "حمایت مالی",
+  "supportProject": "از این پروژه حمایت کنید",
+  "leaveReview": "ثبت نظر",
+  "rateOnPlayStore": "امتیاز دادن به FitBook در Play Store",
+  "sourceCode": "کد منبع",
+  "foods": "غذاها",
+  "backup": "پشتیبان‌گیری",
+  "exportData": "برون‌ریزی داده‌ها",
+  "importData": "درون‌ریزی داده‌ها",
+  "failedImportData": "درون‌ریزی داده‌ها ناموفق بود",
+  "copyError": "کپی خطا",
+  "deleteRecords": "حذف رکوردها",
+  "unusedFood": "غذای استفاده‌نشده",
+  "database": "پایگاه داده",
+  "deleteAllWeightsConfirm": "آیا مطمئنید می‌خواهید همه وزن‌ها را حذف کنید؟ این کار قابل بازگشت نیست.",
+  "deleteDatabaseConfirm": "آیا مطمئنید می‌خواهید پایگاه داده خود را حذف کنید؟ این کار قابل بازگشت نیست و همه داده‌های شما را از بین می‌برد.",
+  "deleteFoodsAndDiaryConfirm": "آیا مطمئنید می‌خواهید همه غذاها و ورودی‌های دفتر روزانه را حذف کنید؟ این کار قابل بازگشت نیست.",
+  "deleteUnusedFoodsConfirm": "{count, plural, =1{آیا مطمئنید می‌خواهید ۱ غذای استفاده‌نشده را حذف کنید؟ این کار برگشت‌ناپذیر است.} other{آیا مطمئنید می‌خواهید {count} غذای استفاده‌نشده را حذف کنید؟ این کار برگشت‌ناپذیر است.}}",
+  "@deleteUnusedFoodsConfirm": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteAllDiaryConfirm": "آیا مطمئنید می‌خواهید همه ورودی‌های دفتر روزانه را حذف کنید؟ این کار قابل بازگشت نیست.",
+  "ok": "تأیید",
+  "replaceImage": "جایگزینی تصویر",
+  "takePhoto": "گرفتن عکس",
+  "deleteImage": "حذف تصویر",
+  "filters": "فیلترها",
+  "foodGroup": "گروه غذایی",
+  "exampleFruit": "میوه",
+  "clearFiltersCount": "پاک کردن ({count})",
+  "@clearFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "done": "انجام شد",
+  "showFilters": "نمایش فیلترها",
+  "repeatEntry": "تکرار ورودی",
+  "timeOfDay": "زمان روز",
+  "everyDay": "هر روز",
+  "repeatEveryDayForYear": "این ورودی را هر روز در طول سال آینده ایجاد کنید",
+  "repeatOn": "تکرار در",
+  "weekdayMon": "دوشنبه",
+  "weekdayTue": "سه‌شنبه",
+  "weekdayWed": "چهارشنبه",
+  "weekdayThu": "پنج‌شنبه",
+  "weekdayFri": "جمعه",
+  "weekdaySat": "شنبه",
+  "weekdaySun": "یکشنبه",
+  "schedule": "زمان‌بندی",
+  "enterValidNutritionValues": "مقادیر تغذیه‌ای معتبر وارد کنید",
+  "quickAddTitle": "افزودن سریع",
+  "kilojoules": "کیلوژول",
+  "createdDate": "تاریخ ایجاد",
+  "failedMigrations": "مهاجرت‌های ناموفق",
+  "failedMigrationsDescription": "هنگام ایجاد یا ارتقای پایگاه داده مشکلی رخ داد. معمولاً با حذف و ایجاد دوباره رکوردها می‌توان آن را برطرف کرد.",
+  "errorMessage": "پیام خطا:",
+  "createIssue": "ایجاد گزارش مشکل",
+  "cameraPermissionRequired": "برای اسکن، اجازه دوربین لازم است.",
+  "scanFoodBarcode": "اسکن بارکد غذا",
+  "holdBarcodeInFrame": "بارکد را داخل کادر نگه دارید",
+  "pinchToZoom": "برای بزرگ‌نمایی دو انگشت را باز و بسته کنید",
+  "cameraStartFailed": "راه‌اندازی دوربین ممکن نشد",
+  "editDiaryEntry": "ویرایش ورودی دفتر روزانه",
+  "addFoodToDiary": "افزودن غذا به دفتر روزانه",
+  "confirmDeleteDiaryEntry": "آیا مطمئنید می‌خواهید {name} را حذف کنید؟",
+  "@confirmDeleteDiaryEntry": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "imageError": "خطای تصویر",
+  "setImage": "تنظیم تصویر",
+  "name": "نام",
+  "searchFoodsAndMeals": "جست‌وجوی غذاها و وعده‌ها...",
+  "clearSelection": "پاک کردن انتخاب",
+  "barcodeNotFoundSaveToInsert": "بارکد پیدا نشد. برای افزودن، ذخیره کنید.",
+  "searchOpenFoodFactsFor": "جست‌وجوی «{name}» در OpenFoodFacts",
+  "@searchOpenFoodFactsFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meal": "وعده غذایی",
+  "quantity": "مقدار",
+  "unit": "واحد",
+  "servingWithAmountUnit": "وعده ({amount} {unit})",
+  "@servingWithAmountUnit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "barcode": "بارکد",
+  "nutritionPerAmountUnit": "{nutrient} (به‌ازای {amount} {unit})",
+  "@nutritionPerAmountUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionPerQuantityUnit": "{nutrient} به‌ازای {quantity} {unit}",
+  "@nutritionPerQuantityUnit": {
+    "placeholders": {
+      "nutrient": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "fiber": "فیبر",
+  "unitServing": "وعده",
+  "unitGrams": "گرم",
+  "unitMilliliters": "میلی‌لیتر",
+  "unitKilojoules": "کیلوژول",
+  "unitCups": "پیمانه",
+  "unitTablespoons": "قاشق غذاخوری",
+  "unitMilligrams": "میلی‌گرم",
+  "unitTeaspoons": "قاشق چای‌خوری",
+  "unitOunces": "اونس",
+  "unitPounds": "پوند",
+  "unitKilograms": "کیلوگرم",
+  "unitLiters": "لیتر",
+  "nameConflict": "تداخل نام",
+  "replaceExistingFood": "غذایی با این نام از قبل وجود دارد. می‌خواهید مورد قبلی را جایگزین کنید؟",
+  "no": "خیر",
+  "yes": "بله",
+  "editFood": "ویرایش غذا",
+  "confirmDeleteFood": "آیا مطمئنید می‌خواهید {name} را حذف کنید؟",
+  "@confirmDeleteFood": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "caloriesKcal": "کالری (kcal)",
+  "kilojoulesKj": "کیلوژول (kJ)",
+  "servingSize": "اندازه وعده",
+  "servingUnit": "واحد وعده",
+  "saveAsNewCopy": "ذخیره به‌عنوان نسخه جدید",
+  "filterFoods": "فیلتر کردن غذاها",
+  "narrowFoodsFilters": "فهرست را با هر ترکیبی از فیلترها محدود کنید.",
+  "foodDetails": "جزئیات غذا",
+  "exampleFruitHint": "مثلاً میوه",
+  "servingSizeRangeHint": "حداقل، حداکثر یا هر دو را تعیین کنید.",
+  "minimum": "حداقل",
+  "maximum": "حداکثر",
+  "noMinimum": "بدون حداقل",
+  "noMaximum": "بدون حداکثر",
+  "clearAll": "پاک کردن همه",
+  "searchOpenFoodFacts": "جست‌وجو در Open Food Facts",
+  "noMatchingProducts": "محصول منطبقی نیست",
+  "tryAnotherNameOrScanBarcode": "نام دیگری را امتحان کنید یا بارکد را اسکن کنید.",
+  "enterFoodNameToSearch": "نام غذا را در بالا وارد کنید و سپس جست‌وجو را ارسال کنید.",
+  "submitToSearch": "ارسال برای جست‌وجو...",
+  "kcalValue": "{value} kcal",
+  "@kcalValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "proteinGramsValue": "{value} گرم پروتئین",
+  "@proteinGramsValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editFoodsCount": "{count, plural, one{ویرایش ۱ غذا} other{ویرایش {count} غذا}}",
+  "@editFoodsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editMeal": "ویرایش وعده غذایی",
+  "addImage": "افزودن تصویر",
+  "noFoodsInMeal": "هنوز غذایی در این وعده نیست",
+  "addFoodToMealHint": "برای ساخت این وعده، یک غذا اضافه کنید.",
+  "remove": "حذف",
+  "searchFoods": "جست‌وجوی غذاها...",
+  "noFoodsFound": "غذایی پیدا نشد",
+  "nothingMatchesSearch": "چیزی با «{search}» مطابقت ندارد.",
+  "@nothingMatchesSearch": {
+    "placeholders": {
+      "search": {
+        "type": "String"
+      }
+    }
+  },
+  "addFoodsToLibraryFirst": "پیش از افزودن غذا به یک وعده، چند غذا به کتابخانه خود اضافه کنید.",
+  "caloriesPer100gValue": "{value} kcal / 100 g",
+  "@caloriesPer100gValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noDataYet": "هنوز داده‌ای نیست",
+  "completePlansToViewGraphs": "چند برنامه را تکمیل کنید تا نمودارها را اینجا ببینید.",
+  "value": "مقدار",
+  "goal": "هدف",
+  "notSet": "تنظیم نشده",
+  "trend": "روند",
+  "smooth": "هموار",
+  "pointAverage": "{count, plural, one{میانگین ۱ نقطه‌ای} other{میانگین {count} نقطه‌ای}}",
+  "@pointAverage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "editWeight": "ویرایش وزن",
+  "addWeight": "افزودن وزن",
+  "shareWeight": "همین الان {value} {unit} وزن کردم!",
+  "@shareWeight": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightWithUnit": "وزن ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseEnterWeight": "لطفاً وزن را وارد کنید",
+  "pleaseEnterValidWeight": "لطفاً یک وزن معتبر وارد کنید",
+  "lastWeight": "آخرین وزن",
+  "unitWithValue": "واحد ({unit})",
+  "@unitWithValue": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "keepUnitAs": "واحد را {unit} نگه دارید",
+  "@keepUnitAs": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "convertToUnit": "تبدیل به {unit}",
+  "@convertToUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "removeImage": "حذف تصویر",
+  "mealRemindersEnabled": "یادآور وعده‌های غذایی فعال است",
+  "mealRemindersEnabledBody": "اگر صبحانه، ناهار یا شام را ثبت نکرده باشید، به شما یادآوری می‌کنیم.",
+  "reminderSettingsChannel": "تنظیمات یادآورها",
+  "reminderSettingsChannelDescription": "اعلان‌هایی که یادآورهای FitBook را توضیح می‌دهند",
+  "breakfastReminderTitle": "ثبت صبحانه را فراموش نکنید",
+  "breakfastRemindersChannel": "یادآورهای صبحانه",
+  "breakfastRemindersChannelDescription": "یادآوری برای ثبت صبحانه",
+  "lunchReminderTitle": "ثبت ناهار را فراموش نکنید",
+  "lunchRemindersChannel": "یادآورهای ناهار",
+  "lunchRemindersChannelDescription": "یادآوری برای ثبت ناهار",
+  "dinnerReminderTitle": "ثبت شام را فراموش نکنید",
+  "dinnerRemindersChannel": "یادآورهای شام",
+  "dinnerRemindersChannelDescription": "یادآوری برای ثبت شام",
+  "reinforcementGreatJob": "عالی بود! تلاش شما دارد نتیجه می‌دهد.",
+  "reinforcementKeepItUp": "ادامه بدهید! پیشرفت فوق‌العاده‌ای دارید.",
+  "reinforcementFantastic": "فوق‌العاده است! پشتکار شما نتیجه داده است.",
+  "reinforcementWellDone": "آفرین! یک قدم دیگر به هدفتان نزدیک‌تر شدید.",
+  "reinforcementImpressive": "تحسین‌برانگیز است! تلاش‌هایتان به ثمر نشسته.",
+  "reinforcementAmazing": "شگفت‌انگیز است! در مسیر درستی هستید.",
+  "reinforcementBravo": "آفرین! تعهد شما ستودنی است.",
+  "reinforcementExcellent": "عالی! پشتکار شما الهام‌بخش است.",
+  "reinforcementSuperb": "فوق‌العاده! کارتان واقعاً عالی است.",
+  "reinforcementIncredible": "باورنکردنی است! پیشرفتتان کاملاً پیداست.",
+  "reinforcementWayToGoKing": "دمت گرم قهرمان",
+  "reinforcementYeahBuddy": "آره رفیق!",
+  "reinforcementThatsHowItsDone": "همینه که باید باشه.",
+  "reinforcementEasyAsPie": "مثل آب خوردن.",
+  "reinforcementDoingGreat": "خیلی خوب پیش می‌روید.",
+  "reinforcementProgressNice": "این پیشرفته که می‌بینم؟ عالیه.",
+  "diarySummaryRemainingValue": "{remaining} {unit} باقی‌مانده",
+  "@diarySummaryRemainingValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryBothValue": "{remaining} {unit} باقی‌مانده ({target} {unit})",
+  "@diarySummaryBothValue": {
+    "placeholders": {
+      "remaining": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "diarySummaryDivisionValue": "{current} / {target} {unit}",
+  "@diarySummaryDivisionValue": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "nutrientSugars": "قندها",
+  "nutrientCholesterol": "کلسترول",
+  "nutrientSaturatedFat": "چربی اشباع",
+  "nutrientCalcium": "کلسیم",
+  "nutrientIron": "آهن",
+  "nutrientPotassium": "پتاسیم",
+  "nutrientMagnesium": "منیزیم",
+  "nutrientVitaminA": "ویتامین A",
+  "nutrientVitaminC": "ویتامین C",
+  "nutrientVitaminB12": "ویتامین B12",
+  "nutrientVitaminD": "ویتامین D",
+  "nutrientVitaminE": "ویتامین E",
+  "nutrientAddedSugar": "قند افزوده",
+  "nutrientNetCarbs": "کربوهیدرات خالص",
+  "nutrientWater": "آب",
+  "nutrientOmega3": "اسیدهای چرب امگا ۳",
+  "nutrientOmega6": "اسیدهای چرب امگا ۶",
+  "nutrientPralScore": "امتیاز PRAL",
+  "nutrientTransFat": "چربی ترانس",
+  "nutrientSolubleFiber": "فیبر محلول",
+  "nutrientInsolubleFiber": "فیبر نامحلول",
+  "nutrientPhosphorus": "فسفر",
+  "nutrientSodium": "سدیم",
+  "nutrientZinc": "روی",
+  "nutrientCopper": "مس",
+  "nutrientManganese": "منگنز",
+  "nutrientSelenium": "سلنیوم",
+  "nutrientFluoride": "فلوراید",
+  "nutrientMolybdenum": "مولیبدن",
+  "nutrientChloride": "کلرید",
+  "nutrientSucrose": "ساکاروز",
+  "nutrientGlucose": "گلوکز",
+  "nutrientFructose": "فروکتوز",
+  "nutrientLactose": "لاکتوز",
+  "nutrientMaltose": "مالتوز",
+  "nutrientGalactose": "گالاکتوز",
+  "nutrientStarch": "نشاسته",
+  "nutrientSugarAlcohols": "الکل‌های قندی",
+  "nutrientThiaminB1": "تیامین (B1)",
+  "nutrientRiboflavinB2": "ریبوفلاوین (B2)",
+  "nutrientNiacinB3": "نیاسین (B3)",
+  "nutrientPantothenicAcidB5": "اسید پانتوتنیک (B5)",
+  "nutrientVitaminB6": "ویتامین B6",
+  "nutrientBiotinB7": "بیوتین (B7)",
+  "nutrientFolateB9": "فولات (B9)",
+  "nutrientFolicAcid": "اسید فولیک",
+  "nutrientFoodFolate": "فولات غذایی",
+  "nutrientFolateDfe": "معادل فولات غذایی (DFE)",
+  "nutrientCholine": "کولین",
+  "nutrientBetaine": "بتائین",
+  "nutrientRetinol": "رتینول",
+  "nutrientBetaCarotene": "بتاکاروتن",
+  "nutrientAlphaCarotene": "آلفاکاروتن",
+  "nutrientLycopene": "لیکوپن",
+  "nutrientLuteinZeaxanthin": "لوتئین + زآگزانتین",
+  "nutrientVitaminD2": "ویتامین D2 (ارگوکلسیفرول)",
+  "nutrientVitaminD3": "ویتامین D3 (کوله‌کلسیفرول)",
+  "nutrientVitaminK": "ویتامین K",
+  "nutrientDihydrophylloquinone": "دی‌هیدروفیلوکینون",
+  "nutrientMenaquinone4": "مناکینون-۴",
+  "nutrientMonounsaturatedFat": "چربی تک‌غیراشباع",
+  "nutrientPolyunsaturatedFat": "چربی چندغیراشباع",
+  "nutrientAla": "اسید آلفا-لینولنیک (ALA)",
+  "nutrientEpa": "اسید ایکوزاپنتانوئیک (EPA)",
+  "nutrientDpa": "اسید دوکوزاپنتانوئیک (DPA)",
+  "nutrientDha": "اسید دوکوزاهگزانوئیک (DHA)",
+  "nutrientAlanine": "آلانین",
+  "nutrientAlcohol": "الکل",
+  "nutrientArginine": "آرژینین",
+  "nutrientAsparticAcid": "اسید آسپارتیک",
+  "nutrientCystine": "سیستین",
+  "nutrientGlutamicAcid": "اسید گلوتامیک",
+  "nutrientGlycine": "گلیسین",
+  "nutrientHistidine": "هیستیدین",
+  "nutrientHydroxyproline": "هیدروکسی‌پرولین",
+  "nutrientIsoleucine": "ایزولوسین",
+  "nutrientLeucine": "لوسین",
+  "nutrientLysine": "لیزین",
+  "nutrientMethionine": "متیونین",
+  "nutrientPhenylalanine": "فنیل‌آلانین",
+  "nutrientProline": "پرولین",
+  "nutrientSerine": "سرین",
+  "nutrientThreonine": "ترئونین",
+  "nutrientTryptophan": "تریپتوفان",
+  "nutrientTyrosine": "تیروزین",
+  "nutrientValine": "والین",
+  "nutrientCaffeine": "کافئین",
+  "nutrientTheobromine": "تئوبرومین",
+  "servingWeightNumber": "وزن وعده {number}",
+  "@servingWeightNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "servingDescriptionNumber": "توضیحات وعده {number}",
+  "@servingDescriptionNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "calorieEquivalentWeight200": "وزن معادل ۲۰۰ kcal"
+}

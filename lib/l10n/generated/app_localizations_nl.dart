@@ -330,6 +330,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageUrdu => 'Urdu';
 
   @override
+  String get languagePersian => 'Perzisch';
+
+  @override
   String get appearanceSettings => 'Weergave-instellingen';
 
   @override

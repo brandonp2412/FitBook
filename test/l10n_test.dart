@@ -66,6 +66,7 @@ void main() {
       'th',
       'bn',
       'ur',
+      'fa',
       'it',
       'ja',
       'ko',
@@ -287,6 +288,7 @@ void main() {
         const Locale('th'),
         const Locale('bn'),
         const Locale('ur'),
+        const Locale('fa'),
         const Locale('ja'),
         const Locale('ko'),
         const Locale('zh', 'CN'),
@@ -305,6 +307,7 @@ void main() {
     expect(localeFromPreference('th'), const Locale('th'));
     expect(localeFromPreference('bn'), const Locale('bn'));
     expect(localeFromPreference('ur'), const Locale('ur'));
+    expect(localeFromPreference('fa'), const Locale('fa'));
     expect(localeFromPreference('pt-BR'), const Locale('pt', 'BR'));
     expect(
       localePreferenceFromLocale(const Locale('zh', 'CN')),

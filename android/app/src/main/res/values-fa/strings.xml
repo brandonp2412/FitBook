@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_failed_path_not_set">پشتیبان‌گیری ناموفق بود: مسیر پشتیبان‌گیری تنظیم نشده است. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_channel_name">پشتیبان‌گیری</string>
+    <string name="backup_channel_description">پشتیبان‌گیری خودکار از پایگاه داده</string>
+    <string name="backup_failed_directory_access">پشتیبان‌گیری ناموفق بود: دسترسی به پوشه پشتیبان‌گیری ممکن نیست. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_failed_create_file">پشتیبان‌گیری ناموفق بود: ایجاد فایل پشتیبان ممکن نیست. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="share">اشتراک‌گذاری</string>
+    <string name="backup_failed_app_files_directory">پشتیبان‌گیری ناموفق بود: دسترسی به پوشه فایل‌های برنامه ممکن نیست. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_failed_parent_directory">پشتیبان‌گیری ناموفق بود: دسترسی به پوشه والد ممکن نیست. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_failed_output_stream">پشتیبان‌گیری ناموفق بود: باز کردن جریان خروجی ممکن نیست. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_failed_database_missing">پشتیبان‌گیری ناموفق بود: فایل پایگاه داده پیدا نشد. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_success_title">از داده‌ها و تصاویر پشتیبان تهیه شد</string>
+    <string name="backup_failed_unexpected">پشتیبان‌گیری به‌طور غیرمنتظره‌ای ناموفق بود. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+</resources>

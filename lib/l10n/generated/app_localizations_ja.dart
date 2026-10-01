@@ -323,6 +323,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageUrdu => 'ウルドゥー語';
 
   @override
+  String get languagePersian => 'ペルシア語';
+
+  @override
   String get appearanceSettings => '外観設定';
 
   @override

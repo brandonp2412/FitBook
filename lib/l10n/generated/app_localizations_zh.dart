@@ -322,6 +322,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageUrdu => '乌尔都语';
 
   @override
+  String get languagePersian => '波斯语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -1761,6 +1764,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get languageUrdu => '乌尔都语';
 
   @override
+  String get languagePersian => '波斯语';
+
+  @override
   String get appearanceSettings => '外观设置';
 
   @override
@@ -3198,6 +3204,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get languageUrdu => '烏爾都語';
+
+  @override
+  String get languagePersian => '波斯語';
 
   @override
   String get appearanceSettings => '外觀設定';

@@ -330,6 +330,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get languageUrdu => 'Tiếng Urdu';
 
   @override
+  String get languagePersian => 'Tiếng Ba Tư';
+
+  @override
   String get appearanceSettings => 'Cài đặt giao diện';
 
   @override
