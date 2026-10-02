@@ -488,7 +488,7 @@ class _DateField extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: onTap,
-      onLongPress: onClear,
+      onLongPress: usesDesktopInteractions(context) ? null : onClear,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
@@ -530,6 +530,12 @@ class _DateField extends StatelessWidget {
                 ],
               ),
             ),
+            if (usesDesktopInteractions(context) && hasValue)
+              IconButton(
+                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
+                onPressed: onClear,
+                icon: const Icon(Icons.close, size: 18),
+              ),
           ],
         ),
       ),

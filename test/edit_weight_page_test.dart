@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
@@ -164,6 +165,49 @@ void main() async {
 
     final editedWeight = await (db.weights.select()).getSingle();
     expect(editedWeight.amount, equals(200));
+
+    await db.close();
+  });
+  testWidgets('EditWeightPage uses a two-column desktop form', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1200, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: EditWeightPage(
+            weight: WeightsCompanion.insert(
+              amount: 75,
+              created: DateTime.now(),
+              unit: 'kg',
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AnimatedFab), findsNothing);
+    expect(find.widgetWithText(FilledButton, 'Save'), findsOneWidget);
+
+    final weightField = find.bySemanticsLabel('Weight (kg)');
+    final createdLabel = find.text('Created date');
+    expect(
+      tester.getRect(createdLabel).left,
+      greaterThan(tester.getRect(weightField).right),
+    );
+    expect(tester.takeException(), equals(null));
 
     await db.close();
   });

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/utils.dart';
@@ -57,8 +58,11 @@ class MealRow extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
                 shape: BoxShape.circle,
               ),
-              child:
-                  const Icon(Icons.restaurant, size: 10, color: Colors.white),
+              child: const Icon(
+                Icons.restaurant,
+                size: 10,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -98,8 +102,11 @@ class MealRow extends StatelessWidget {
                         ),
                       ),
               ),
+        trailing: usesDesktopInteractions(context)
+            ? Checkbox(value: isSelected, onChanged: (_) => onLongPress())
+            : null,
         onTap: onTap,
-        onLongPress: onLongPress,
+        onLongPress: usesDesktopInteractions(context) ? null : onLongPress,
       ),
     );
   }

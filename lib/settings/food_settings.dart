@@ -5,6 +5,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/fields_picker.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/settings_surface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,8 +30,8 @@ List<Widget> getFoodSettings({
             );
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(foodUnit: Value(value!)),
-              ),
+            SettingsCompanion(foodUnit: Value(value!)),
+          ),
         ),
       ),
     if (l10n.fields.toLowerCase().contains(term))
@@ -43,11 +44,8 @@ List<Widget> getFoodSettings({
             "(${settings.value.fields?.split(',').length.toString()})",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => FieldsPicker(),
-            ),
-          ),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => FieldsPicker())),
         ),
       ),
     if (l10n.favoriteNewFoods.toLowerCase().contains(term))
@@ -57,15 +55,13 @@ List<Widget> getFoodSettings({
           leading: const Icon(Icons.favorite_outline),
           title: Text(l10n.favoriteNewFoods),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  favoriteNew: Value(!settings.value.favoriteNew),
-                ),
-              ),
+            SettingsCompanion(favoriteNew: Value(!settings.value.favoriteNew)),
+          ),
           trailing: Switch(
             value: settings.value.favoriteNew,
-            onChanged: (value) => db.settings
-                .update()
-                .write(SettingsCompanion(favoriteNew: Value(value))),
+            onChanged: (value) => db.settings.update().write(
+              SettingsCompanion(favoriteNew: Value(value)),
+            ),
           ),
         ),
       ),
@@ -87,17 +83,12 @@ class _FoodSettingsState extends State<FoodSettings> {
     final settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.foodSettings),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: getFoodSettings(
-            term: '',
-            settings: settings,
-            context: context,
-          ),
+      appBar: AppBar(title: Text(context.l10n.foodSettings)),
+      body: SettingsSurface(
+        children: getFoodSettings(
+          term: '',
+          settings: settings,
+          context: context,
         ),
       ),
     );

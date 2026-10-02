@@ -93,6 +93,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
+    final desktop = usesDesktopInteractions(context);
 
     if (settings.compactWeights) {
       final theme = Theme.of(context);
@@ -127,7 +128,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                   widget.onSelect(weight.id);
                 }
               },
-              onLongPress: () => widget.onSelect(weight.id),
+              onLongPress: desktop ? null : () => widget.onSelect(weight.id),
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 2),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
@@ -139,6 +140,13 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                 ),
                 child: Row(
                   children: [
+                    if (desktop) ...[
+                      Checkbox(
+                        value: isSelected,
+                        onChanged: (_) => widget.onSelect(weight.id),
+                      ),
+                      const SizedBox(width: 4),
+                    ],
                     Container(
                       constraints: const BoxConstraints(minWidth: 64),
                       padding: const EdgeInsets.symmetric(
@@ -182,8 +190,9 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                           Text(
                             formatDisplayTime(context, weight.created),
                             style: theme.textTheme.labelSmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant
-                                  .withValues(alpha: 0.7),
+                              color: colorScheme.onSurfaceVariant.withValues(
+                                alpha: 0.7,
+                              ),
                             ),
                           ),
                         ],
@@ -257,7 +266,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                     widget.onSelect(weight.id);
                   }
                 },
-                onLongPress: () => widget.onSelect(weight.id),
+                onLongPress: desktop ? null : () => widget.onSelect(weight.id),
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
@@ -266,6 +275,11 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (desktop)
+                            Checkbox(
+                              value: isSelected,
+                              onChanged: (_) => widget.onSelect(weight.id),
+                            ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,8 +314,10 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: weightDeltaColor(colorScheme, delta)
-                                    .withValues(alpha: 0.14),
+                                color: weightDeltaColor(
+                                  colorScheme,
+                                  delta,
+                                ).withValues(alpha: 0.14),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(

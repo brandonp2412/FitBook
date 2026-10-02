@@ -33,8 +33,9 @@ class DiaryPageState extends State<DiaryPage> {
 
   final ScrollController scrollCtrl = ScrollController();
   late var entriesState = context.read<DiaryState>();
-  late final TextEditingController searchController =
-      TextEditingController(text: entriesState.search);
+  late final TextEditingController searchController = TextEditingController(
+    text: entriesState.search,
+  );
 
   Widget _summaryCard(BuildContext context, DayGroup day, Setting settings) {
     final theme = Theme.of(context);
@@ -194,9 +195,7 @@ class DiaryPageState extends State<DiaryPage> {
                                 MaterialPageRoute(
                                   builder: (context) => searchTerm.isEmpty
                                       ? const EditDiaryPage()
-                                      : EditDiaryPage(
-                                          initialName: searchTerm,
-                                        ),
+                                      : EditDiaryPage(initialName: searchTerm),
                                 ),
                               ),
                               child: Padding(
@@ -209,15 +208,17 @@ class DiaryPageState extends State<DiaryPage> {
                                           ? Icons.restaurant_menu_rounded
                                           : Icons.add_circle_outline_rounded,
                                       size: 56,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
                                     ),
                                     const SizedBox(height: 16),
                                     Text(
                                       searchTerm.isEmpty
                                           ? context.l10n.noEntriesToday
-                                          : context.l10n
-                                              .addSearchToDiary(searchTerm),
+                                          : context.l10n.addSearchToDiary(
+                                              searchTerm,
+                                            ),
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -230,8 +231,9 @@ class DiaryPageState extends State<DiaryPage> {
                                     Text(
                                       searchTerm.isEmpty
                                           ? context.l10n.tapStartLoggingFood
-                                          : context.l10n
-                                              .noMatchingDiaryEntriesTapCreate,
+                                          : context
+                                                .l10n
+                                                .noMatchingDiaryEntriesTapCreate,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -290,9 +292,9 @@ class DiaryPageState extends State<DiaryPage> {
                     setState(() {
                       selected.clear();
                     });
-                    await (db.delete(db.diaries)
-                          ..where((tbl) => tbl.id.isIn(selectedCopy)))
-                        .go();
+                    await (db.delete(
+                      db.diaries,
+                    )..where((tbl) => tbl.id.isIn(selectedCopy))).go();
                   },
                   onSelect: () => setState(() {
                     selected.addAll(
@@ -301,12 +303,14 @@ class DiaryPageState extends State<DiaryPage> {
                   }),
                   selected: selected,
                   onFavorite: () async {
-                    final diaries = await (db.diaries.selectOnly()
-                          ..addColumns([db.diaries.id, db.diaries.food])
-                          ..where(db.diaries.id.isIn(selected)))
-                        .get();
-                    final foodIds =
-                        diaries.map((entry) => entry.read(db.diaries.food)!);
+                    final diaries =
+                        await (db.diaries.selectOnly()
+                              ..addColumns([db.diaries.id, db.diaries.food])
+                              ..where(db.diaries.id.isIn(selected)))
+                            .get();
+                    final foodIds = diaries.map(
+                      (entry) => entry.read(db.diaries.food)!,
+                    );
                     await (db.foods.update()
                           ..where((tbl) => tbl.id.isIn(foodIds)))
                         .write(const FoodsCompanion(favorite: Value(true)));
@@ -318,9 +322,8 @@ class DiaryPageState extends State<DiaryPage> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditDiariesPage(
-                          diaryIds: selected.toList(),
-                        ),
+                        builder: (context) =>
+                            EditDiariesPage(diaryIds: selected.toList()),
                       ),
                     );
                     setState(() {
@@ -357,59 +360,61 @@ class DiaryPageState extends State<DiaryPage> {
           );
         },
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
-        child: SpeedDialFab(
-          onTap: () {
-            navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                builder: (context) => const EditDiaryPage(),
+      floatingActionButton: usesSideNavigation(context)
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
               ),
-            );
-          },
-          label: context.l10n.add,
-          icon: Icons.add,
-          scroll: scrollCtrl,
-          actions: [
-            SpeedDialAction(
-              icon: Icons.electric_bolt,
-              label: context.l10n.quickAdd,
-              onSelected: () {
-                navigatorKey.currentState!.push(
-                  MaterialPageRoute(
-                    builder: (context) => const QuickAddPage(),
-                  ),
-                );
-              },
-            ),
-            if (supportsBarcodeCamera)
-              SpeedDialAction(
-                icon: Icons.barcode_reader,
-                label: context.l10n.scanBarcode,
-                onSelected: () async {
-                  final result = await performBarcodeScan(context);
-                  if (result.food != null) {
-                    navigatorKey.currentState!.push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditDiaryPage(initialFood: result.food),
-                      ),
-                    );
-                  } else if (result.barcode != null) {
-                    navigatorKey.currentState!.push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditDiaryPage(initialBarcode: result.barcode),
-                      ),
-                    );
-                  }
+              child: SpeedDialFab(
+                onTap: () {
+                  navigatorKey.currentState!.push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditDiaryPage(),
+                    ),
+                  );
                 },
+                label: context.l10n.add,
+                icon: Icons.add,
+                scroll: scrollCtrl,
+                actions: [
+                  SpeedDialAction(
+                    icon: Icons.electric_bolt,
+                    label: context.l10n.quickAdd,
+                    onSelected: () {
+                      navigatorKey.currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => const QuickAddPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  if (supportsBarcodeCamera)
+                    SpeedDialAction(
+                      icon: Icons.barcode_reader,
+                      label: context.l10n.scanBarcode,
+                      onSelected: () async {
+                        final result = await performBarcodeScan(context);
+                        if (result.food != null) {
+                          navigatorKey.currentState!.push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditDiaryPage(initialFood: result.food),
+                            ),
+                          );
+                        } else if (result.barcode != null) {
+                          navigatorKey.currentState!.push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditDiaryPage(initialBarcode: result.barcode),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                ],
               ),
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:fit_book/diary/diary_food_thumbnail.dart';
 import 'package:fit_book/main.dart';
@@ -36,17 +37,53 @@ class DiaryEntryRow extends StatelessWidget {
       food.metrics[db.foods.calories.name] ?? 0,
       maximumFractionDigits: 0,
     );
+    final subtitle = '$kcal kcal · ${formatDisplayTime(context, food.created)}';
+    final thumbnail = DiaryFoodThumbnail(food: food, showImages: showImages);
+
+    if (usesDesktopInteractions(context)) {
+      return ListTile(
+        tileColor: isSelected
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
+            : null,
+        dense: dense,
+        leading: Checkbox(
+          key: ValueKey('diary-select-${food.entryId}'),
+          value: isSelected,
+          onChanged: (_) => onLongPress(),
+        ),
+        title: Row(
+          children: [
+            thumbnail,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(food.name + suffix),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        onTap: onTap,
+      );
+    }
 
     return ListTile(
       tileColor: isSelected
           ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
           : null,
       dense: dense,
-      leading: DiaryFoodThumbnail(food: food, showImages: showImages),
-      title: Text('${food.name}$suffix'),
-      subtitle: Text(
-        '$kcal kcal · ${formatDisplayTime(context, food.created)}',
-      ),
+      leading: thumbnail,
+      title: Text(food.name + suffix),
+      subtitle: Text(subtitle),
       onTap: onTap,
       onLongPress: onLongPress,
     );

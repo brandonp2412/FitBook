@@ -9,6 +9,7 @@ import 'package:fit_book/settings/export_data.dart';
 import 'package:fit_book/settings/import_data.dart';
 import 'package:fit_book/settings/open_food_facts_login.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/settings_surface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -70,35 +71,27 @@ Future<void> tapBackup(
 
   if (!value) {
     await db.settings.update().write(
-          const SettingsCompanion(
-            automaticBackups: Value(false),
-          ),
-        );
+      const SettingsCompanion(automaticBackups: Value(false)),
+    );
     return;
   }
 
   await db.settings.update().write(
-        const SettingsCompanion(
-          automaticBackups: Value(false),
-        ),
-      );
+    const SettingsCompanion(automaticBackups: Value(false)),
+  );
 
   try {
     final selectedPath = await androidChannel.invokeMethod<String>('pick');
     if (selectedPath == null) return;
 
     await db.settings.update().write(
-          const SettingsCompanion(
-            automaticBackups: Value(true),
-          ),
-        );
+      const SettingsCompanion(automaticBackups: Value(true)),
+    );
     await notifyAutomaticBackupEnabled(l10n, isAndroid: supportsBackup);
   } catch (_) {
     await db.settings.update().write(
-          const SettingsCompanion(
-            automaticBackups: Value(false),
-          ),
-        );
+      const SettingsCompanion(automaticBackups: Value(false)),
+    );
     rethrow;
   }
 }
@@ -166,17 +159,12 @@ class _DataSettingsState extends State<DataSettings> {
     final settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.dataSettings),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: getDataSettings(
-            term: '',
-            settings: settings,
-            context: context,
-          ),
+      appBar: AppBar(title: Text(context.l10n.dataSettings)),
+      body: SettingsSurface(
+        children: getDataSettings(
+          term: '',
+          settings: settings,
+          context: context,
         ),
       ),
     );

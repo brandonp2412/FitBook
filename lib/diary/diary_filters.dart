@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
@@ -9,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DiaryFilters extends StatefulWidget {
-  const DiaryFilters({
-    super.key,
-  });
+  const DiaryFilters({super.key});
 
   @override
   State<DiaryFilters> createState() => _DiaryFiltersState();
@@ -47,8 +46,9 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                       ..addColumns([db.foods.foodGroup])
                       ..groupBy([db.foods.foodGroup]))
                     .get();
-                return results
-                    .map((result) => result.read(db.foods.foodGroup)!);
+                return results.map(
+                  (result) => result.read(db.foods.foodGroup)!,
+                );
               },
               onSelected: (option) async {
                 groupCtrl.text = option;
@@ -95,16 +95,26 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                           ),
                           overflow: TextOverflow.ellipsis,
                         )
-                      : Text(
-                          shortDateFormat,
-                          overflow: TextOverflow.ellipsis,
-                        );
+                      : Text(shortDateFormat, overflow: TextOverflow.ellipsis);
                 },
               ),
-              onLongPress: () {
-                context.read<DiaryState>().startDate = null;
-              },
+              onLongPress: usesDesktopInteractions(dialogContext)
+                  ? null
+                  : () {
+                      context.read<DiaryState>().startDate = null;
+                    },
               leading: const Icon(Icons.calendar_today),
+              trailing: usesDesktopInteractions(dialogContext) &&
+                      dialogContext.watch<DiaryState>().startDate != null
+                  ? IconButton(
+                      tooltip: MaterialLocalizations.of(dialogContext)
+                          .deleteButtonTooltip,
+                      onPressed: () {
+                        context.read<DiaryState>().startDate = null;
+                      },
+                      icon: const Icon(Icons.close),
+                    )
+                  : null,
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
@@ -134,16 +144,26 @@ class _DiaryFiltersState extends State<DiaryFilters> {
                           ),
                           overflow: TextOverflow.ellipsis,
                         )
-                      : Text(
-                          shortDateFormat,
-                          overflow: TextOverflow.ellipsis,
-                        );
+                      : Text(shortDateFormat, overflow: TextOverflow.ellipsis);
                 },
               ),
-              onLongPress: () {
-                context.read<DiaryState>().endDate = null;
-              },
+              onLongPress: usesDesktopInteractions(dialogContext)
+                  ? null
+                  : () {
+                      context.read<DiaryState>().endDate = null;
+                    },
               leading: const Icon(Icons.calendar_today),
+              trailing: usesDesktopInteractions(dialogContext) &&
+                      dialogContext.watch<DiaryState>().endDate != null
+                  ? IconButton(
+                      tooltip: MaterialLocalizations.of(dialogContext)
+                          .deleteButtonTooltip,
+                      onPressed: () {
+                        context.read<DiaryState>().endDate = null;
+                      },
+                      icon: const Icon(Icons.close),
+                    )
+                  : null,
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,

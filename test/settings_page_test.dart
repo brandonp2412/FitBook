@@ -143,4 +143,30 @@ void main() async {
 
     await db.close();
   });
+  testWidgets('Appearance settings use a desktop two-column surface', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    await tester.pumpWidget(_wrap(await _settingsState()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Appearance'));
+    await tester.pumpAndSettle();
+
+    final cards = find.byType(Card);
+    expect(cards, findsAtLeastNWidgets(4));
+
+    final first = tester.getRect(cards.at(0));
+    final second = tester.getRect(cards.at(1));
+    expect((first.top - second.top).abs(), lessThan(1));
+    expect(second.left, greaterThan(first.right));
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
 }

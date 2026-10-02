@@ -4,6 +4,7 @@ import 'package:fit_book/diary/diary_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/speed_dial_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -180,6 +181,68 @@ void main() async {
     final afterDelete = await db.diaries.select().get();
     expect(afterDelete, hasLength(1));
     expect(afterDelete.single.id, originalDiaryId);
+
+    await db.close();
+  });
+  testWidgets('Diary desktop uses explicit selection and one add action', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Desktop diary food',
+        calories: const Value(250),
+      ),
+    );
+    await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        food: Value(foodId),
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: Theme(
+            data: ThemeData(platform: TargetPlatform.linux),
+            child: const DiaryPage(),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add diary entry'), findsOneWidget);
+    expect(find.byType(SpeedDialFab), findsNothing);
+    expect(find.byType(Checkbox), findsWidgets);
+
+    final checkbox = find.byType(Checkbox).first;
+    expect(tester.widget<Checkbox>(checkbox).value, isFalse);
+
+    final row = find
+        .ancestor(
+          of: find.text('Desktop diary food'),
+          matching: find.byType(ListTile),
+        )
+        .first;
+    expect(tester.widget<ListTile>(row).onLongPress, equals(null));
+
+    tester.widget<Checkbox>(checkbox).onChanged!(true);
+    await tester.pump();
+    expect(tester.widget<Checkbox>(checkbox).value, isTrue);
 
     await db.close();
   });

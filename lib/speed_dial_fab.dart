@@ -1,4 +1,5 @@
 import 'package:fit_book/animated_fab.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,8 +38,10 @@ class SpeedDialFab extends StatefulWidget {
 class _SpeedDialFabState extends State<SpeedDialFab> {
   bool dragging = false;
   int? hoveredIndex;
-  late final _actionKeys =
-      List.generate(widget.actions.length, (_) => GlobalKey());
+  late final _actionKeys = List.generate(
+    widget.actions.length,
+    (_) => GlobalKey(),
+  );
 
   int? _hitTest(Offset globalPosition) {
     for (var i = 0; i < _actionKeys.length; i++) {
@@ -72,6 +75,42 @@ class _SpeedDialFabState extends State<SpeedDialFab> {
 
   @override
   Widget build(BuildContext context) {
+    if (usesDesktopInteractions(context)) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (widget.actions.isNotEmpty) ...[
+            PopupMenuButton<int>(
+              tooltip: widget.label,
+              icon: const Icon(Icons.more_horiz),
+              onSelected: (index) => widget.actions[index].onSelected(),
+              itemBuilder: (context) => [
+                for (var i = 0; i < widget.actions.length; i++)
+                  PopupMenuItem<int>(
+                    value: i,
+                    child: Row(
+                      children: [
+                        Icon(widget.actions[i].icon),
+                        const SizedBox(width: 10),
+                        Text(widget.actions[i].label),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(width: 8),
+          ],
+          AnimatedFab(
+            onTap: widget.onTap,
+            label: widget.label,
+            icon: widget.icon,
+            scroll: widget.scroll,
+            showTooltip: false,
+          ),
+        ],
+      );
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,

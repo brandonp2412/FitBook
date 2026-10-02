@@ -75,8 +75,8 @@ class _AppLineState extends State<AppLine> {
       if (showSmooth) 'smooth',
     ];
     db.settings.update().write(
-          SettingsCompanion(graphSeries: Value(series.join(','))),
-        );
+      SettingsCompanion(graphSeries: Value(series.join(','))),
+    );
   }
 
   /// Least-squares regression of `val` against days elapsed since the
@@ -117,11 +117,11 @@ class _AppLineState extends State<AppLine> {
   }
 
   String _formatGraphValue(num value) => formatDisplayNumber(
-        context,
-        value,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      );
+    context,
+    value,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  );
 
   String _getTrendText(List<GraphData> data) {
     if (data.length < 2) return "${_formatGraphValue(0)} ${data.first.unit}";
@@ -140,9 +140,7 @@ class _AppLineState extends State<AppLine> {
     final intercept = trend['intercept']!;
     final firstCreated = (List<GraphData>.from(
       data,
-    )..sort((a, b) => a.created.compareTo(b.created)))
-        .first
-        .created;
+    )..sort((a, b) => a.created.compareTo(b.created))).first.created;
 
     final trendSpots = <FlSpot>[];
     for (int i = 0; i < data.length; i++) {
@@ -215,118 +213,122 @@ class _AppLineState extends State<AppLine> {
   void _setStream() {
     if (widget.metric == 'body-weight') {
       final createdCol = getCreated('weights');
-      stream = (db.weights.selectOnly()
-            ..orderBy([
-              OrderingTerm(
-                expression: db.weights.created,
-                mode: OrderingMode.desc,
-              ),
-            ])
-            ..addColumns([
-              db.weights.created,
-              db.weights.amount,
-              db.weights.unit,
-            ])
-            ..groupBy([createdCol])
-            ..where(
-              db.weights.created.isBiggerOrEqualValue(
-                widget.start ?? DateTime(0),
-              ),
-            )
-            ..where(
-              db.weights.created.isSmallerOrEqualValue(
-                widget.end ?? DateTime.now().add(const Duration(days: 1)),
-              ),
-            )
-            ..limit(settings.limit))
-          .watch()
-          .map(
-            (results) => results
-                .map(
-                  (result) => GraphData(
-                    created: result.read(db.weights.created)!,
-                    val: result.read(db.weights.amount)!,
-                    unit: result.read(db.weights.unit)!,
+      stream =
+          (db.weights.selectOnly()
+                ..orderBy([
+                  OrderingTerm(
+                    expression: db.weights.created,
+                    mode: OrderingMode.desc,
+                  ),
+                ])
+                ..addColumns([
+                  db.weights.created,
+                  db.weights.amount,
+                  db.weights.unit,
+                ])
+                ..groupBy([createdCol])
+                ..where(
+                  db.weights.created.isBiggerOrEqualValue(
+                    widget.start ?? DateTime(0),
                   ),
                 )
-                .toList()
-                .reversed
-                .toList(),
-          );
+                ..where(
+                  db.weights.created.isSmallerOrEqualValue(
+                    widget.end ?? DateTime.now().add(const Duration(days: 1)),
+                  ),
+                )
+                ..limit(settings.limit))
+              .watch()
+              .map(
+                (results) => results
+                    .map(
+                      (result) => GraphData(
+                        created: result.read(db.weights.created)!,
+                        val: result.read(db.weights.amount)!,
+                        unit: result.read(db.weights.unit)!,
+                      ),
+                    )
+                    .toList()
+                    .reversed
+                    .toList(),
+              );
     } else {
       final valueCol = CustomExpression<double>(
         mealAwareFieldExpr(widget.metric),
         watchedTables: {db.foods, db.diaries},
       );
 
-      stream = (db.diaries.selectOnly()
-            ..addColumns([db.diaries.created, valueCol])
-            ..join([
-              leftOuterJoin(
-                db.foods,
-                db.diaries.food.equalsExp(db.foods.id),
-              ),
-            ])
-            ..where(
-              db.diaries.created.isBiggerOrEqualValue(
-                widget.start ?? DateTime(0),
-              ),
-            )
-            ..where(
-              db.diaries.created.isSmallerOrEqualValue(
-                widget.end ?? DateTime.now().add(const Duration(days: 1)),
-              ),
-            ))
-          .watch()
-          .map((results) {
-        final entries = results
-            .map(
-              (result) => (
-                created: result.read(db.diaries.created)!.toLocal(),
-                value: result.read(valueCol) ?? 0.0,
-              ),
-            )
-            .toList();
-        final unit = nutrientUnit(widget.metric);
-        return bucketGraphData(entries, widget.groupBy, settings.limit)
-            .map(
-              (bucket) => GraphData(
-                created: bucket.created,
-                val: bucket.val,
-                unit: unit,
-              ),
-            )
-            .toList();
-      });
+      stream =
+          (db.diaries.selectOnly()
+                ..addColumns([db.diaries.created, valueCol])
+                ..join([
+                  leftOuterJoin(
+                    db.foods,
+                    db.diaries.food.equalsExp(db.foods.id),
+                  ),
+                ])
+                ..where(
+                  db.diaries.created.isBiggerOrEqualValue(
+                    widget.start ?? DateTime(0),
+                  ),
+                )
+                ..where(
+                  db.diaries.created.isSmallerOrEqualValue(
+                    widget.end ?? DateTime.now().add(const Duration(days: 1)),
+                  ),
+                ))
+              .watch()
+              .map((results) {
+                final entries = results
+                    .map(
+                      (result) => (
+                        created: result.read(db.diaries.created)!.toLocal(),
+                        value: result.read(valueCol) ?? 0.0,
+                      ),
+                    )
+                    .toList();
+                final unit = nutrientUnit(widget.metric);
+                return bucketGraphData(entries, widget.groupBy, settings.limit)
+                    .map(
+                      (bucket) => GraphData(
+                        created: bucket.created,
+                        val: bucket.val,
+                        unit: unit,
+                      ),
+                    )
+                    .toList();
+              });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final sel = context.select<
-        SettingsState,
-        ({
-          int? dailyCalories,
-          int? dailyProtein,
-          double? targetWeight,
-          int? dailyFat,
-          int? dailyCarb,
-          bool curveLines,
-          bool graphsStartAtZero,
-          String shortDateFormat,
-        })>(
-      (s) => (
-        dailyCalories: s.value.dailyCalories,
-        dailyProtein: s.value.dailyProtein,
-        targetWeight: s.value.targetWeight,
-        dailyFat: s.value.dailyFat,
-        dailyCarb: s.value.dailyCarb,
-        curveLines: s.value.curveLines,
-        graphsStartAtZero: s.value.graphsStartAtZero,
-        shortDateFormat: s.value.shortDateFormat,
-      ),
-    );
+    final sel = context
+        .select<
+          SettingsState,
+          ({
+            int? dailyCalories,
+            int? dailyProtein,
+            double? targetWeight,
+            int? dailyFat,
+            int? dailyCarb,
+            bool curveLines,
+            bool graphsStartAtZero,
+            String shortDateFormat,
+          })
+        >(
+          (s) => (
+            dailyCalories: s.value.dailyCalories,
+            dailyProtein: s.value.dailyProtein,
+            targetWeight: s.value.targetWeight,
+            dailyFat: s.value.dailyFat,
+            dailyCarb: s.value.dailyCarb,
+            curveLines: s.value.curveLines,
+            graphsStartAtZero: s.value.graphsStartAtZero,
+            shortDateFormat: s.value.shortDateFormat,
+          ),
+        );
     settings = context.read<SettingsState>().value;
 
     double goal = 0;
@@ -439,36 +441,33 @@ class _AppLineState extends State<AppLine> {
         // fl_chart derives its bounds from line-bar spots, not extra lines.
         // Extend the relevant bound when the goal is visible so the goal line
         // remains inside the graph rather than being drawn beyond its edge.
-        final visibleSpots =
-            lineBars.isEmpty ? spots : lineBars.expand((bar) => bar.spots);
+        final visibleSpots = lineBars.isEmpty
+            ? spots
+            : lineBars.expand((bar) => bar.spots);
         double? lowestVisibleValue;
         double? highestVisibleValue;
         for (final spot in visibleSpots) {
           lowestVisibleValue = lowestVisibleValue == null
               ? spot.y
               : spot.y < lowestVisibleValue
-                  ? spot.y
-                  : lowestVisibleValue;
+              ? spot.y
+              : lowestVisibleValue;
           highestVisibleValue = highestVisibleValue == null
               ? spot.y
               : spot.y > highestVisibleValue
-                  ? spot.y
-                  : highestVisibleValue;
+              ? spot.y
+              : highestVisibleValue;
         }
         final shouldIncludeGoal =
             showGoal && goal > 0 && highestVisibleValue != null;
         final minY = sel.graphsStartAtZero
             ? 0.0
             : shouldIncludeGoal && goal < lowestVisibleValue!
-                ? goal
-                : null;
-        final maxY =
-            shouldIncludeGoal && goal > highestVisibleValue ? goal : null;
-        final maxBottomTitles = widget.maxBottomTitles;
-        final bottomTitleInterval =
-            maxBottomTitles == null || rows.length <= maxBottomTitles
-                ? 1.0
-                : (rows.length / maxBottomTitles).ceilToDouble();
+            ? goal
+            : null;
+        final maxY = shouldIncludeGoal && goal > highestVisibleValue
+            ? goal
+            : null;
 
         return material.Column(
           children: [
@@ -504,8 +503,8 @@ class _AppLineState extends State<AppLine> {
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
-                          reservedSize: 27,
-                          interval: bottomTitleInterval,
+                          reservedSize: 34,
+                          interval: 1,
                           getTitlesWidget: (value, meta) =>
                               _bottomTitleWidgets(value, meta, rows),
                         ),
@@ -550,8 +549,9 @@ class _AppLineState extends State<AppLine> {
                 _statTile(
                   leading: Checkbox(
                     value: showGoal,
-                    onChanged:
-                        goal > 0 ? (value) => _updateSeries(goal: value) : null,
+                    onChanged: goal > 0
+                        ? (value) => _updateSeries(goal: value)
+                        : null,
                     checkColor: Theme.of(context).colorScheme.onPrimary,
                     fillColor: WidgetStateProperty.resolveWith<Color?>(
                       (states) => states.contains(WidgetState.selected)
@@ -563,8 +563,9 @@ class _AppLineState extends State<AppLine> {
                   value: goal > 0
                       ? "${_formatGraphValue(goal)} ${rows.first.unit}"
                       : l10n.notSet,
-                  onTap:
-                      goal > 0 ? () => _updateSeries(goal: !showGoal) : () {},
+                  onTap: goal > 0
+                      ? () => _updateSeries(goal: !showGoal)
+                      : () {},
                 ),
                 _statTile(
                   leading: Checkbox(
@@ -655,28 +656,45 @@ class _AppLineState extends State<AppLine> {
     TitleMeta meta,
     List<GraphData> rows,
   ) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double labelWidth = 100;
-    int labelCount = (screenWidth / labelWidth).floor();
+    if (rows.isEmpty) return const SizedBox.shrink();
 
-    const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
-    Widget text;
-
-    List<int> indices = List.generate(labelCount, (index) {
-      return ((rows.length - 1) * index / (labelCount - 1)).round();
-    });
-
-    if (indices.contains(value.toInt())) {
-      DateTime createdDate = rows[value.toInt()].created;
-      text = Text(
-        formatDisplayDate(context, createdDate, settings.shortDateFormat),
-        style: style,
-      );
-    } else {
-      text = const Text('', style: style);
+    final index = value.round();
+    if ((value - index).abs() > 0.001 || index < 0 || index >= rows.length) {
+      return const SizedBox.shrink();
     }
 
-    return SideTitleWidget(meta: meta, child: text);
+    final widthBasedCount = (meta.parentAxisSize / 88).floor();
+    final requestedCount = widget.maxBottomTitles == null
+        ? widthBasedCount
+        : widthBasedCount < widget.maxBottomTitles!
+        ? widthBasedCount
+        : widget.maxBottomTitles!;
+    final labelCount = rows.length == 1
+        ? 1
+        : requestedCount.clamp(2, rows.length).toInt();
+
+    final indices = <int>{
+      if (labelCount == 1)
+        0
+      else
+        for (var i = 0; i < labelCount; i++)
+          ((rows.length - 1) * i / (labelCount - 1)).round(),
+    };
+
+    if (!indices.contains(index)) return const SizedBox.shrink();
+
+    final createdDate = rows[index].created;
+    return SideTitleWidget(
+      meta: meta,
+      space: 8,
+      child: Text(
+        formatDisplayDate(context, createdDate, settings.shortDateFormat),
+        maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.visible,
+        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+      ),
+    );
   }
 
   LineTouchTooltipData _tooltipData(

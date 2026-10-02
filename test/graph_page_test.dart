@@ -1,4 +1,6 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/app_line.dart';
+import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/graph_page.dart';
@@ -354,6 +356,77 @@ void main() async {
           .toBoolOrNull(),
       isTrue,
     );
+
+    await db.close();
+  });
+  testWidgets('Body weight graph uses desktop width for date ticks', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1000, 650);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settings = await db.settings.select().getSingle();
+    final settingsState = SettingsState(settings);
+    final now = DateTime.now();
+
+    await db.weights.insertAll(
+      List.generate(
+        20,
+        (index) => WeightsCompanion.insert(
+          created: now.subtract(Duration(days: index * 7)),
+          unit: 'kg',
+          amount: 75 + index / 10,
+        ),
+      ),
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(
+          home: Scaffold(
+            body: SizedBox(
+              width: 1000,
+              height: 650,
+              child: AppLine(
+                metric: 'body-weight',
+                groupBy: Period.week,
+                start: null,
+                end: null,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final dateFormat = DateFormat(settings.shortDateFormat);
+    final visibleLabels = <Finder>[];
+    for (var daysAgo = 0; daysAgo <= 150; daysAgo++) {
+      final finder =
+          find.text(dateFormat.format(now.subtract(Duration(days: daysAgo))));
+      if (finder.evaluate().isNotEmpty) visibleLabels.add(finder.first);
+    }
+
+    expect(visibleLabels.length, inInclusiveRange(7, 12));
+
+    final xs = visibleLabels
+        .map((finder) => tester.getCenter(finder).dx)
+        .toList()
+      ..sort();
+    final gaps = [
+      for (var i = 1; i < xs.length; i++) xs[i] - xs[i - 1],
+    ];
+    final smallestGap = gaps.reduce((a, b) => a < b ? a : b);
+    final largestGap = gaps.reduce((a, b) => a > b ? a : b);
+    expect(largestGap / smallestGap, lessThan(1.75));
 
     await db.close();
   });

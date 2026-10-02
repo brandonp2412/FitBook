@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:drift/drift.dart' hide Column;
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
@@ -51,156 +52,126 @@ class _TabSettingsState extends State<TabSettings> {
     });
   }
 
+  Future<void> _save() async {
+    await db.settings.update().write(
+          SettingsCompanion(
+            tabs: Value(
+              tabs.where((tab) => tab.enabled).map((tab) => tab.name).join(','),
+            ),
+          ),
+        );
+    if (mounted) Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
+    final desktop = usesSideNavigation(context);
+
+    final content = Column(
+      children: [
+        SwitchListTile(
+          title: Text(context.l10n.scrollableTabs),
+          value: settings.scrollableTabs,
+          onChanged: (value) {
+            db.settings.update().write(
+                  SettingsCompanion(
+                    scrollableTabs: Value(value),
+                  ),
+                );
+          },
+        ),
+        const Divider(height: 1),
+        Expanded(
+          child: ReorderableListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            onReorder: (oldIndex, newIndex) {
+              if (oldIndex < newIndex) {
+                newIndex--;
+              }
+
+              final temp = tabs[oldIndex];
+              setState(() {
+                tabs.removeAt(oldIndex);
+                tabs.insert(newIndex, temp);
+              });
+            },
+            itemBuilder: (context, index) {
+              final tab = tabs[index];
+              final (icon, label) = switch (tab.name) {
+                'DiaryPage' => (Icons.date_range, context.l10n.diary),
+                'GraphPage' => (Icons.insights, context.l10n.navGraph),
+                'FoodPage' => (Icons.restaurant, context.l10n.food),
+                'WeightPage' => (Icons.scale, context.l10n.weight),
+                _ => (Icons.error, context.l10n.invalidTabSettings),
+              };
+
+              return ListTile(
+                key: Key(tab.name),
+                onTap: () => setTab(tab.name, !tab.enabled),
+                leading: Switch(
+                  value: tab.enabled,
+                  onChanged: (value) => setTab(tab.name, value),
+                ),
+                title: Row(
+                  children: [
+                    Icon(icon),
+                    const SizedBox(width: 12),
+                    Text(label),
+                  ],
+                ),
+                trailing: ReorderableDragStartListener(
+                  index: index,
+                  child: const MouseRegion(
+                    cursor: SystemMouseCursors.grab,
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Icon(Icons.drag_handle),
+                    ),
+                  ),
+                ),
+              );
+            },
+            itemCount: tabs.length,
+          ),
+        ),
+        if (desktop)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton.icon(
+                onPressed: _save,
+                icon: const Icon(Icons.save_outlined),
+                label: Text(context.l10n.save),
+              ),
+            ),
+          ),
+      ],
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.tabs)),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            SwitchListTile(
-              title: Text(context.l10n.scrollableTabs),
-              value: settings.scrollableTabs,
-              onChanged: (value) {
-                db.settings.update().write(
-                      SettingsCompanion(
-                        scrollableTabs: Value(value),
-                      ),
-                    );
-              },
-            ),
-            Expanded(
-              child: ReorderableListView.builder(
-                onReorder: (oldIndex, newIndex) {
-                  if (oldIndex < newIndex) {
-                    newIndex--;
-                  }
-
-                  final temp = tabs[oldIndex];
-                  setState(() {
-                    tabs.removeAt(oldIndex);
-                    tabs.insert(newIndex, temp);
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final tab = tabs[index];
-                  if (tab.name == 'DiaryPage') {
-                    return ListTile(
-                      key: Key(tab.name),
-                      onTap: () => setTab(tab.name, !tab.enabled),
-                      leading: Switch(
-                        value: tab.enabled,
-                        onChanged: (value) => setTab(tab.name, value),
-                      ),
-                      title: Row(
-                        children: [
-                          const Icon(Icons.date_range),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(context.l10n.diary),
-                          ),
-                        ],
-                      ),
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    );
-                  } else if (tab.name == 'GraphPage') {
-                    return ListTile(
-                      key: Key(tab.name),
-                      onTap: () => setTab(tab.name, !tab.enabled),
-                      leading: Switch(
-                        value: tab.enabled,
-                        onChanged: (value) => setTab(tab.name, value),
-                      ),
-                      title: Row(
-                        children: [
-                          const Icon(Icons.insights),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(context.l10n.navGraph),
-                          ),
-                        ],
-                      ),
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    );
-                  } else if (tab.name == 'FoodPage') {
-                    return ListTile(
-                      key: Key(tab.name),
-                      onTap: () => setTab(tab.name, !tab.enabled),
-                      leading: Switch(
-                        value: tab.enabled,
-                        onChanged: (value) => setTab(tab.name, value),
-                      ),
-                      title: Row(
-                        children: [
-                          const Icon(Icons.restaurant),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(context.l10n.food),
-                          ),
-                        ],
-                      ),
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    );
-                  } else if (tab.name == 'WeightPage') {
-                    return ListTile(
-                      key: Key(tab.name),
-                      onTap: () => setTab(tab.name, !tab.enabled),
-                      leading: Switch(
-                        value: tab.enabled,
-                        onChanged: (value) => setTab(tab.name, value),
-                      ),
-                      title: Row(
-                        children: [
-                          const Icon(Icons.scale),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(context.l10n.weight),
-                          ),
-                        ],
-                      ),
-                      trailing: ReorderableDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
-                      ),
-                    );
-                  } else
-                    return ErrorWidget(context.l10n.invalidTabSettings);
-                },
-                itemCount: tabs.length,
-              ),
-            ),
-          ],
+      body: AdaptivePageBody(
+        maxWidth: 900,
+        child: Padding(
+          padding: EdgeInsets.all(desktop ? 24 : 8),
+          child: desktop
+              ? Card(
+                  margin: EdgeInsets.zero,
+                  clipBehavior: Clip.antiAlias,
+                  child: content,
+                )
+              : content,
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await (db.settings.update().write(
-                SettingsCompanion(
-                  tabs: Value(
-                    tabs
-                        .where((tab) => tab.enabled)
-                        .map((tab) => tab.name)
-                        .join(','),
-                  ),
-                ),
-              ));
-          if (context.mounted) Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.save),
-        label: Text(context.l10n.save),
-      ),
+      floatingActionButton: desktop
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: _save,
+              icon: const Icon(Icons.save),
+              label: Text(context.l10n.save),
+            ),
     );
   }
 }

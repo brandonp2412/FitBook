@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/utils.dart';
@@ -81,8 +82,11 @@ class FoodItemRow extends StatelessWidget {
           ],
         );
       }(),
+      trailing: usesDesktopInteractions(context)
+          ? Checkbox(value: isSelected, onChanged: (_) => onLongPress())
+          : null,
       onTap: onTap,
-      onLongPress: onLongPress,
+      onLongPress: usesDesktopInteractions(context) ? null : onLongPress,
     );
   }
 

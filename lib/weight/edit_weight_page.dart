@@ -66,19 +66,22 @@ void saveWeight(
   if (settings.autoCalc) {
     final macros = getMacros(amount, unit);
     db.settings.update().write(
-          SettingsCompanion(
-            dailyCalories: drift.Value(macros.calories.toInt()),
-            dailyCarb: drift.Value(macros.carb.toInt()),
-            dailyFat: drift.Value(macros.fat.toInt()),
-            dailyProtein: drift.Value(macros.protein.toInt()),
-          ),
-        );
+      SettingsCompanion(
+        dailyCalories: drift.Value(macros.calories.toInt()),
+        dailyCarb: drift.Value(macros.carb.toInt()),
+        dailyFat: drift.Value(macros.fat.toInt()),
+        dailyProtein: drift.Value(macros.protein.toInt()),
+      ),
+    );
   }
 
   if (settings.targetWeight == null) return;
   if (!settings.positiveReinforcement) return;
-  final show =
-      shouldNotify(amount, original.amount.value, settings.targetWeight!);
+  final show = shouldNotify(
+    amount,
+    original.amount.value,
+    settings.targetWeight!,
+  );
   if (!show) return;
   final reinforcements = localizedPositiveReinforcements(context.l10n);
   final random = Random();
@@ -88,24 +91,16 @@ void saveWeight(
 }
 
 /// Pushes the full [EditWeightPage] editor as a page route.
-Future<void> showEditWeight(
-  BuildContext context,
-  WeightsCompanion weight,
-) {
+Future<void> showEditWeight(BuildContext context, WeightsCompanion weight) {
   return Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => EditWeightPage(weight: weight),
-    ),
+    MaterialPageRoute(builder: (context) => EditWeightPage(weight: weight)),
   );
 }
 
 class EditWeightPage extends StatefulWidget {
   final WeightsCompanion weight;
 
-  const EditWeightPage({
-    super.key,
-    required this.weight,
-  });
+  const EditWeightPage({super.key, required this.weight});
 
   @override
   State<EditWeightPage> createState() => _EditWeightPageState();
@@ -224,169 +219,228 @@ class _EditWeightPageState extends State<EditWeightPage> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
     final l10n = context.l10n;
+    final desktop = usesSideNavigation(context);
+
+    final valueField = TextFormField(
+      autofocus: !desktop && !widget.weight.id.present,
+      controller: valueController,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      decoration: InputDecoration(labelText: l10n.weightWithUnit(unit)),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return l10n.pleaseEnterWeight;
+        }
+        if (parseDisplayNumber(context, value) == null) {
+          return l10n.pleaseEnterValidWeight;
+        }
+        return null;
+      },
+      onTap: () => selectAll(valueController),
+      onFieldSubmitted: (_) => save(),
+    );
+
+    final previousWeightField = TextFormField(
+      controller: TextEditingController(
+        text: "\${formatDisplayNumber(context, widget.weight.amount.value, minimumFractionDigits: 2, maximumFractionDigits: 2)} \${widget.weight.unit.value}",
+      ),
+      decoration: InputDecoration(labelText: l10n.lastWeight),
+      enabled: false,
+    );
+
+    final unitTile = ListTile(
+      contentPadding: desktop
+          ? const EdgeInsets.symmetric(horizontal: 4)
+          : null,
+      title: Text(l10n.unitWithValue(unit)),
+      leading: unit == 'kg'
+          ? const Icon(Icons.straighten)
+          : const Icon(Icons.square_foot),
+      onTap: () => setState(() {
+        unit = unit == 'kg' ? 'lb' : 'kg';
+        convertTo = unit;
+      }),
+      trailing: Switch(
+        value: unit == 'kg',
+        onChanged: (value) => setState(() {
+          unit = value ? 'kg' : 'lb';
+          convertTo = unit;
+        }),
+      ),
+    );
+
+    final conversionTile = ListTile(
+      contentPadding: desktop
+          ? const EdgeInsets.symmetric(horizontal: 4)
+          : null,
+      title: convertTo == unit
+          ? Text(l10n.keepUnitAs(unit))
+          : Text(l10n.convertToUnit(convertTo)),
+      leading: const Icon(Icons.swap_horiz),
+      onTap: () {
+        setState(() {
+          convertTo = convertTo == 'kg' ? 'lb' : 'kg';
+        });
+        db.settings.update().write(
+          SettingsCompanion(convertWeight: drift.Value(convertTo)),
+        );
+      },
+      trailing: Switch(
+        value: convertTo == 'kg',
+        onChanged: (value) {
+          setState(() {
+            convertTo = value ? 'kg' : 'lb';
+          });
+          db.settings.update().write(
+            SettingsCompanion(convertWeight: drift.Value(convertTo)),
+          );
+        },
+      ),
+    );
+
+    final createdTile = ListTile(
+      contentPadding: desktop
+          ? const EdgeInsets.symmetric(horizontal: 4)
+          : null,
+      title: Text(l10n.createdDate),
+      subtitle: Selector<SettingsState, String>(
+        selector: (p0, settings) => settings.value.longDateFormat,
+        builder: (context, longDateFormat, child) =>
+            Text(formatDisplayDate(context, created, longDateFormat)),
+      ),
+      leading: const Icon(Icons.event_outlined),
+      trailing: desktop ? const Icon(Icons.edit_calendar_outlined) : null,
+      onTap: _selectDate,
+    );
+
+    final imageWidgets = <Widget>[
+      if (image?.isNotEmpty == true && settings.showImages)
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            height: desktop ? 260 : 200,
+            width: double.infinity,
+            child: Image.file(
+              File(image!),
+              fit: BoxFit.cover,
+              cacheWidth:
+                  (MediaQuery.sizeOf(context).width *
+                          MediaQuery.devicePixelRatioOf(context))
+                      .round(),
+              errorBuilder: (context, error, stackTrace) => Center(
+                child: TextButton.icon(
+                  onPressed: _pickImage,
+                  label: Text(l10n.imageError),
+                  icon: const Icon(Icons.error),
+                ),
+              ),
+            ),
+          ),
+        ),
+      if (settings.showImages) ...[
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.image),
+          label: Text(l10n.setImage),
+          onPressed: _pickImage,
+        ),
+      ],
+      if (image != null && settings.showImages)
+        TextButton.icon(
+          icon: const Icon(Icons.delete_outline),
+          label: Text(l10n.removeImage),
+          onPressed: () => setState(() {
+            image = null;
+          }),
+        ),
+    ];
+
+    final formChildren = desktop
+        ? <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      valueField,
+                      const SizedBox(height: 16),
+                      previousWeightField,
+                      const SizedBox(height: 12),
+                      unitTile,
+                      conversionTile,
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 28),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      createdTile,
+                      const SizedBox(height: 12),
+                      ...imageWidgets,
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton.icon(
+                onPressed: save,
+                icon: const Icon(Icons.save_outlined),
+                label: Text(l10n.save),
+              ),
+            ),
+          ]
+        : <Widget>[
+            valueField,
+            previousWeightField,
+            const SizedBox(height: 8),
+            unitTile,
+            conversionTile,
+            createdTile,
+            ...imageWidgets,
+            SizedBox(height: navigationBottomClearance(context)),
+          ];
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(widget.weight.id.present ? l10n.editWeight : l10n.addWeight),
+        title: Text(
+          widget.weight.id.present ? l10n.editWeight : l10n.addWeight,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: () {
               SharePlus.instance.share(
-                ShareParams(
-                  text: l10n.shareWeight(valueController.text, unit),
-                ),
+                ShareParams(text: l10n.shareWeight(valueController.text, unit)),
               );
             },
           ),
         ],
       ),
       body: AdaptiveFormSurface(
-        maxWidth: 820,
+        maxWidth: desktop ? 1060 : 820,
         child: Form(
           key: formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                autofocus: !widget.weight.id.present,
-                controller: valueController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration:
-                    InputDecoration(labelText: l10n.weightWithUnit(unit)),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.pleaseEnterWeight;
-                  }
-                  if (parseDisplayNumber(context, value) == null) {
-                    return l10n.pleaseEnterValidWeight;
-                  }
-                  return null;
-                },
-                onTap: () => selectAll(valueController),
-                onFieldSubmitted: (value) => save(),
-              ),
-              TextFormField(
-                controller: TextEditingController(
-                  text:
-                      "${formatDisplayNumber(context, widget.weight.amount.value, minimumFractionDigits: 2, maximumFractionDigits: 2)} ${widget.weight.unit.value}",
-                ),
-                decoration: InputDecoration(labelText: l10n.lastWeight),
-                enabled: false,
-              ),
-              const SizedBox(height: 8.0),
-              ListTile(
-                title: Text(l10n.unitWithValue(unit)),
-                leading: unit == 'kg'
-                    ? const Icon(Icons.straighten)
-                    : const Icon(Icons.square_foot),
-                onTap: () => setState(() {
-                  unit = unit == 'kg' ? 'lb' : 'kg';
-                  convertTo = unit;
-                }),
-                trailing: Switch(
-                  value: unit == 'kg',
-                  onChanged: (value) => setState(() {
-                    if (value)
-                      unit = 'kg';
-                    else
-                      unit = 'lb';
-                    convertTo = unit;
-                  }),
-                ),
-              ),
-              ListTile(
-                title: convertTo == unit
-                    ? Text(l10n.keepUnitAs(unit))
-                    : Text(l10n.convertToUnit(convertTo)),
-                leading: const Icon(Icons.conveyor_belt),
-                onTap: () {
-                  setState(() {
-                    convertTo = convertTo == 'kg' ? 'lb' : 'kg';
-                  });
-                  db.settings.update().write(
-                        SettingsCompanion(
-                          convertWeight: drift.Value(convertTo),
-                        ),
-                      );
-                },
-                trailing: Switch(
-                  value: convertTo == 'kg',
-                  onChanged: (value) {
-                    setState(() {
-                      if (value)
-                        convertTo = 'kg';
-                      else
-                        convertTo = 'lb';
-                    });
-
-                    db.settings.update().write(
-                          SettingsCompanion(
-                            convertWeight: drift.Value(convertTo),
-                          ),
-                        );
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text(l10n.createdDate),
-                subtitle: Selector<SettingsState, String>(
-                  selector: (p0, settings) => settings.value.longDateFormat,
-                  builder: (context, longDateFormat, child) => Text(
-                    formatDisplayDate(context, created, longDateFormat),
-                  ),
-                ),
-                onTap: () => _selectDate(),
-              ),
-              if (image?.isNotEmpty == true && settings.showImages)
-                SizedBox(
-                  height: 200,
-                  child: Image.file(
-                    File(image!),
-                    cacheWidth: (MediaQuery.sizeOf(context).width *
-                            MediaQuery.devicePixelRatioOf(context))
-                        .round(),
-                    errorBuilder: (context, error, stackTrace) =>
-                        TextButton.icon(
-                      onPressed: () {},
-                      label: Text(l10n.imageError),
-                      icon: const Icon(Icons.error),
-                    ),
-                  ),
-                ),
-              if (settings.showImages) ...[
-                const SizedBox(height: 8),
-                TextButton.icon(
-                  icon: const Icon(Icons.image),
-                  label: Text(l10n.setImage),
-                  onPressed: _pickImage,
-                ),
-              ],
-              if (image != null && settings.showImages)
-                TextButton.icon(
-                  icon: const Icon(Icons.delete),
-                  label: Text(l10n.removeImage),
-                  onPressed: () => setState(() {
-                    image = null;
-                  }),
-                ),
-              SizedBox(height: navigationBottomClearance(context)),
-            ],
-          ),
+          child: ListView(children: formChildren),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
-        child: AnimatedFab(
-          onTap: save,
-          label: l10n.save,
-          icon: Icons.save,
-          scroll: ScrollController(),
-        ),
-      ),
+      floatingActionButton: desktop
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
+              ),
+              child: AnimatedFab(
+                onTap: save,
+                label: l10n.save,
+                icon: Icons.save,
+                scroll: ScrollController(),
+              ),
+            ),
     );
   }
 }

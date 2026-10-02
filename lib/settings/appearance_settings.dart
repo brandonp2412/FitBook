@@ -4,6 +4,7 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/navigation_animation.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/settings_surface.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +31,7 @@ final List<String> longFormats = [
   'yyyy.MM.dd H:mm',
 ];
 
-String _animationLabel(
-  AppLocalizations l10n,
-  NavigationAnimation animation,
-) =>
+String _animationLabel(AppLocalizations l10n, NavigationAnimation animation) =>
     switch (animation) {
       NavigationAnimation.fade => l10n.animationFade,
       NavigationAnimation.zoom => l10n.animationZoom,
@@ -50,10 +48,14 @@ List<Widget> getAppearanceSettings(
   final l10n = context.l10n;
   final locale = Localizations.localeOf(context).toLanguageTag();
   final now = DateTime.now();
-  String longExample = DateFormat(settings.value.longDateFormat, locale)
-      .format(DateTime(now.year, now.month, now.day, 13, 54));
-  String shortExample = DateFormat(settings.value.shortDateFormat, locale)
-      .format(DateTime(now.year, now.month, now.day, 13, 54));
+  String longExample = DateFormat(
+    settings.value.longDateFormat,
+    locale,
+  ).format(DateTime(now.year, now.month, now.day, 13, 54));
+  String shortExample = DateFormat(
+    settings.value.shortDateFormat,
+    locale,
+  ).format(DateTime(now.year, now.month, now.day, 13, 54));
 
   return [
     if ('language locale ${l10n.language.toLowerCase()}'.contains(term))
@@ -87,10 +89,7 @@ List<Widget> getAppearanceSettings(
             DropdownMenuItem(value: 'ur', child: Text(l10n.languageUrdu)),
             DropdownMenuItem(value: 'fa', child: Text(l10n.languagePersian)),
             DropdownMenuItem(value: 'ms', child: Text(l10n.languageMalay)),
-            DropdownMenuItem(
-              value: 'uk',
-              child: Text(l10n.languageUkrainian),
-            ),
+            DropdownMenuItem(value: 'uk', child: Text(l10n.languageUkrainian)),
             DropdownMenuItem(value: 'ja', child: Text(l10n.languageJapanese)),
             DropdownMenuItem(value: 'ko', child: Text(l10n.languageKorean)),
             DropdownMenuItem(
@@ -103,8 +102,8 @@ List<Widget> getAppearanceSettings(
             ),
           ],
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(locale: Value(value!)),
-              ),
+            SettingsCompanion(locale: Value(value!)),
+          ),
           decoration: InputDecoration(
             labelText: l10n.language,
             helperText: l10n.languageSubtitle,
@@ -140,8 +139,8 @@ List<Widget> getAppearanceSettings(
                 : settings.value.themeMode,
           },
           onSelectionChanged: (selection) => db.settings.update().write(
-                SettingsCompanion(themeMode: Value(selection.first)),
-              ),
+            SettingsCompanion(themeMode: Value(selection.first)),
+          ),
         ),
       ),
     if (l10n.pureBlackAmoled.toLowerCase().contains(term))
@@ -151,23 +150,21 @@ List<Widget> getAppearanceSettings(
           leading: const Icon(Icons.contrast),
           title: Text(l10n.pureBlackAmoled),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  themeMode: Value(
-                    settings.value.themeMode == 'ThemeMode.amoled'
-                        ? 'ThemeMode.dark'
-                        : 'ThemeMode.amoled',
-                  ),
-                ),
+            SettingsCompanion(
+              themeMode: Value(
+                settings.value.themeMode == 'ThemeMode.amoled'
+                    ? 'ThemeMode.dark'
+                    : 'ThemeMode.amoled',
               ),
+            ),
+          ),
           trailing: Switch(
             value: settings.value.themeMode == 'ThemeMode.amoled',
             onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(
-                    themeMode: Value(
-                      value ? 'ThemeMode.amoled' : 'ThemeMode.dark',
-                    ),
-                  ),
-                ),
+              SettingsCompanion(
+                themeMode: Value(value ? 'ThemeMode.amoled' : 'ThemeMode.dark'),
+              ),
+            ),
           ),
         ),
       ),
@@ -182,17 +179,15 @@ List<Widget> getAppearanceSettings(
                 ? const Icon(Icons.color_lens)
                 : const Icon(Icons.color_lens_outlined),
             onTap: () => db.settings.update().write(
-                  SettingsCompanion(
-                    systemColors: Value(!settings.value.systemColors),
-                  ),
-                ),
+              SettingsCompanion(
+                systemColors: Value(!settings.value.systemColors),
+              ),
+            ),
             trailing: Switch(
               value: settings.value.systemColors,
               onChanged: (value) => db.settings.update().write(
-                    SettingsCompanion(
-                      systemColors: Value(value),
-                    ),
-                  ),
+                SettingsCompanion(systemColors: Value(value)),
+              ),
             ),
           ),
         ),
@@ -206,17 +201,13 @@ List<Widget> getAppearanceSettings(
               ? const Icon(Icons.image)
               : const Icon(Icons.image_outlined),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  showImages: Value(!settings.value.showImages),
-                ),
-              ),
+            SettingsCompanion(showImages: Value(!settings.value.showImages)),
+          ),
           trailing: Switch(
             value: settings.value.showImages,
             onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(
-                    showImages: Value(value),
-                  ),
-                ),
+              SettingsCompanion(showImages: Value(value)),
+            ),
           ),
         ),
       ),
@@ -227,17 +218,13 @@ List<Widget> getAppearanceSettings(
           title: Text(l10n.curveLineGraphs),
           leading: const Icon(Icons.insights),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  curveLines: Value(!settings.value.curveLines),
-                ),
-              ),
+            SettingsCompanion(curveLines: Value(!settings.value.curveLines)),
+          ),
           trailing: Switch(
             value: settings.value.curveLines,
             onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(
-                    curveLines: Value(value),
-                  ),
-                ),
+              SettingsCompanion(curveLines: Value(value)),
+            ),
           ),
         ),
       ),
@@ -250,17 +237,15 @@ List<Widget> getAppearanceSettings(
               ? const Icon(Icons.list)
               : const Icon(Icons.grid_view),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  compactWeights: Value(!settings.value.compactWeights),
-                ),
-              ),
+            SettingsCompanion(
+              compactWeights: Value(!settings.value.compactWeights),
+            ),
+          ),
           trailing: Switch(
             value: !settings.value.compactWeights,
             onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(
-                    compactWeights: Value(!value),
-                  ),
-                ),
+              SettingsCompanion(compactWeights: Value(!value)),
+            ),
           ),
         ),
       ),
@@ -271,17 +256,15 @@ List<Widget> getAppearanceSettings(
           title: Text(l10n.graphsStartAtZero),
           leading: const Icon(Icons.vertical_align_bottom),
           onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
-                ),
-              ),
+            SettingsCompanion(
+              graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
+            ),
+          ),
           trailing: Switch(
             value: settings.value.graphsStartAtZero,
             onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(
-                    graphsStartAtZero: Value(value),
-                  ),
-                ),
+              SettingsCompanion(graphsStartAtZero: Value(value)),
+            ),
           ),
         ),
       ),
@@ -301,11 +284,9 @@ List<Widget> getAppearanceSettings(
               )
               .toList(),
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(navigationAnimation: Value(value!)),
-              ),
-          decoration: InputDecoration(
-            labelText: l10n.navigationAnimation,
+            SettingsCompanion(navigationAnimation: Value(value!)),
           ),
+          decoration: InputDecoration(labelText: l10n.navigationAnimation),
         ),
       ),
     if (l10n.longDateFormat('').toLowerCase().contains(term))
@@ -314,14 +295,11 @@ List<Widget> getAppearanceSettings(
         child: DropdownButtonFormField<String>(
           initialValue: settings.value.longDateFormat,
           items: longFormats.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
+            return DropdownMenuItem<String>(value: value, child: Text(value));
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(longDateFormat: Value(value!)),
-              ),
+            SettingsCompanion(longDateFormat: Value(value!)),
+          ),
           decoration: InputDecoration(
             labelText: l10n.longDateFormat(longExample),
           ),
@@ -333,14 +311,11 @@ List<Widget> getAppearanceSettings(
         child: DropdownButtonFormField<String>(
           initialValue: settings.value.shortDateFormat,
           items: shortFormats.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
+            return DropdownMenuItem<String>(value: value, child: Text(value));
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(shortDateFormat: Value(value!)),
-              ),
+            SettingsCompanion(shortDateFormat: Value(value!)),
+          ),
           decoration: InputDecoration(
             labelText: l10n.shortDateFormat(shortExample),
           ),
@@ -357,14 +332,9 @@ class AppearanceSettings extends StatelessWidget {
     final settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.appearanceSettings),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: getAppearanceSettings(context, '', settings),
-        ),
+      appBar: AppBar(title: Text(context.l10n.appearanceSettings)),
+      body: SettingsSurface(
+        children: getAppearanceSettings(context, '', settings),
       ),
     );
   }

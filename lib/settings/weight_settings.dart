@@ -3,6 +3,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:fit_book/settings/settings_surface.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,15 +23,13 @@ List<Widget> getWeightSettings({
         child: TextField(
           controller: targetWeight,
           onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(
-                  targetWeight: Value(parseDisplayNumber(context, value)),
-                ),
-              ),
+            SettingsCompanion(
+              targetWeight: Value(parseDisplayNumber(context, value)),
+            ),
+          ),
           onTap: () => selectAll(targetWeight),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: InputDecoration(
-            labelText: l10n.targetWeight,
-          ),
+          decoration: InputDecoration(labelText: l10n.targetWeight),
         ),
       ),
     if (l10n.positiveReinforcement.toLowerCase().contains(term))
@@ -41,19 +40,20 @@ List<Widget> getWeightSettings({
           title: Text(l10n.positiveReinforcement),
           onTap: () {
             db.settings.update().write(
-                  SettingsCompanion(
-                    positiveReinforcement:
-                        Value(!settings.value.positiveReinforcement),
-                  ),
-                );
+              SettingsCompanion(
+                positiveReinforcement: Value(
+                  !settings.value.positiveReinforcement,
+                ),
+              ),
+            );
             if (!settings.value.positiveReinforcement)
               toast(context, l10n.positiveReinforcementPreview);
           },
           trailing: Switch(
             value: settings.value.positiveReinforcement,
-            onChanged: (value) => db.settings
-                .update()
-                .write(SettingsCompanion(positiveReinforcement: Value(value))),
+            onChanged: (value) => db.settings.update().write(
+              SettingsCompanion(positiveReinforcement: Value(value)),
+            ),
           ),
         ),
       ),
@@ -96,18 +96,13 @@ class _WeightSettingsState extends State<WeightSettings> {
     final settings = context.watch<SettingsState>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.weightSettings),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: getWeightSettings(
-            context: context,
-            term: '',
-            settings: settings,
-            targetWeight: targetWeight,
-          ),
+      appBar: AppBar(title: Text(context.l10n.weightSettings)),
+      body: SettingsSurface(
+        children: getWeightSettings(
+          context: context,
+          term: '',
+          settings: settings,
+          targetWeight: targetWeight,
         ),
       ),
     );

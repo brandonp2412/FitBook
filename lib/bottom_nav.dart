@@ -7,6 +7,17 @@ const double extendedRailBreakpoint = 1200;
 bool usesSideNavigation(BuildContext context) =>
     MediaQuery.sizeOf(context).width >= largeScreenBreakpoint;
 
+bool usesDesktopInteractions(BuildContext context) {
+  if (!usesSideNavigation(context)) return false;
+  return switch (Theme.of(context).platform) {
+    TargetPlatform.windows ||
+    TargetPlatform.macOS ||
+    TargetPlatform.linux =>
+      true,
+    _ => false,
+  };
+}
+
 double navigationBottomClearance(BuildContext context) =>
     usesSideNavigation(context)
         ? MediaQuery.paddingOf(context).bottom + 16
@@ -87,19 +98,13 @@ class AdaptiveFormSurface extends StatelessWidget {
         ? Card(
             margin: EdgeInsets.zero,
             clipBehavior: Clip.antiAlias,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: child,
-            ),
+            child: Padding(padding: const EdgeInsets.all(20), child: child),
           )
         : child;
 
     return AdaptivePageBody(
       maxWidth: maxWidth,
-      child: Padding(
-        padding: EdgeInsets.all(wide ? 24 : 16),
-        child: content,
-      ),
+      child: Padding(padding: EdgeInsets.all(wide ? 24 : 16), child: content),
     );
   }
 }
@@ -161,9 +166,10 @@ class BottomNav extends StatelessWidget {
                 child: GestureDetector(
                   key: Key(tab),
                   onTap: () => onTap(index),
-                  onLongPress: onLongPress != null
-                      ? () => onLongPress!(context, tab)
-                      : null,
+                  onLongPress:
+                      !usesDesktopInteractions(context) && onLongPress != null
+                          ? () => onLongPress!(context, tab)
+                          : null,
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 350),
                     curve: Curves.easeOutCubic,
@@ -236,9 +242,7 @@ class SideNav extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLow,
-        border: Border(
-          right: BorderSide(color: colorScheme.outlineVariant),
-        ),
+        border: Border(right: BorderSide(color: colorScheme.outlineVariant)),
       ),
       child: NavigationRail(
         extended: extended,
