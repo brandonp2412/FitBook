@@ -142,7 +142,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
         env:
           FITBOOK_DEVICE_TYPE: ${{ matrix.device_type }}
-          FITBOOK_SCREEN_SIZE: ${{ matrix.screen_size }}
+          SCREENSHOT_SCREEN_SIZE: ${{ matrix.screen_size }}
         with:
           api-level: 35
           target: google_apis

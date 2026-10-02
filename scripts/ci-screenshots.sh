@@ -1,35 +1,32 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -u
+set -euo pipefail
 
-if [ -z "${FITBOOK_DEVICE_TYPE:-}" ]; then
-  echo "FITBOOK_DEVICE_TYPE must be set" >&2
-  exit 1
-fi
-
-if [ -z "${EMULATOR_PORT:-}" ]; then
-  echo "EMULATOR_PORT must be set" >&2
-  exit 1
-fi
+: "${FITBOOK_DEVICE_TYPE:?FITBOOK_DEVICE_TYPE must be set}"
+: "${EMULATOR_PORT:?EMULATOR_PORT must be set}"
 
 device="emulator-$EMULATOR_PORT"
-screenshot_dir="fastlane/metadata/android/en-US/images/$FITBOOK_DEVICE_TYPE"
+store_locale="en-US"
+screenshot_dir="fastlane/metadata/android/$store_locale/images/${FITBOOK_DEVICE_TYPE}"
+expected_count=8
 drive_timeout="${SCREENSHOT_DRIVE_TIMEOUT:-12m}"
+drive_log="$(mktemp)"
+trap 'rm -f "$drive_log"' EXIT
 
 wait_for_emulator() {
   timeout 60 adb -s "$device" wait-for-device >/dev/null 2>&1 || return 1
-
-  checks=0
-  while [ "$checks" -lt 30 ]; do
-    state=$(adb -s "$device" get-state 2>/dev/null || true)
-    boot_completed=$(adb -s "$device" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
-    if [ "$state" = "device" ] && [ "$boot_completed" = "1" ]; then
+  local checks=0
+  local state
+  local boot_completed
+  while (( checks < 30 )); do
+    state="$(adb -s "$device" get-state 2>/dev/null || true)"
+    boot_completed="$(adb -s "$device" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)"
+    if [[ "$state" == "device" && "$boot_completed" == "1" ]]; then
       return 0
     fi
     sleep 2
-    checks=$((checks + 1))
+    ((checks += 1))
   done
-
   return 1
 }
 
@@ -47,11 +44,15 @@ collect_diagnostics() {
   adb -s "$device" shell ps -A >&2 || true
 }
 
+screenshot_path() {
+  printf '%s/%s_%s.png' "$screenshot_dir" "$1" "$store_locale"
+}
+
 screenshots_complete() {
-  for number in $(seq 1 8); do
-    [ -s "$screenshot_dir/${number}_en-US.png" ] || return 1
+  local number
+  for ((number = 1; number <= expected_count; number += 1)); do
+    [[ -s "$(screenshot_path "$number")" ]] || return 1
   done
-  return 0
 }
 
 if ! wait_for_emulator; then
@@ -62,45 +63,42 @@ if ! wait_for_emulator; then
   }
 fi
 
-rm -rf "$screenshot_dir"
-mkdir -p "$screenshot_dir"
-
-if [ -n "${FITBOOK_SCREEN_SIZE:-}" ]; then
-  case "$FITBOOK_SCREEN_SIZE" in
-    *[!0-9x]* | *x | x*)
-      echo "Invalid FITBOOK_SCREEN_SIZE: $FITBOOK_SCREEN_SIZE" >&2
-      exit 1
-      ;;
-  esac
-
-  adb -s "$device" shell wm size "$FITBOOK_SCREEN_SIZE"
-  expected_dimensions=$(printf '%s' "$FITBOOK_SCREEN_SIZE" | sed 's/x/ x /')
+if [[ -n "${SCREENSHOT_SCREEN_SIZE:-}" ]]; then
+  if [[ ! "$SCREENSHOT_SCREEN_SIZE" =~ ^[0-9]+x[0-9]+$ ]]; then
+    echo "Invalid SCREENSHOT_SCREEN_SIZE: $SCREENSHOT_SCREEN_SIZE" >&2
+    exit 1
+  fi
+  adb -s "$device" shell wm size "$SCREENSHOT_SCREEN_SIZE"
+  expected_dimensions="${SCREENSHOT_SCREEN_SIZE/x/ x }"
 fi
 
-drive_log=$(mktemp)
-drive_status=0
-attempt=1
+drive_args=(
+  flutter drive
+  --profile
+  --driver=test_driver/integration_test.dart
+  --target=integration_test/screenshot_test.dart
+  -d "$device"
+)
 
-while :; do
+drive_status=1
+for attempt in 1 2; do
   rm -rf "$screenshot_dir"
   mkdir -p "$screenshot_dir"
+  : >"$drive_log"
   drive_status=0
 
   echo "Running screenshot drive attempt $attempt with a $drive_timeout timeout"
   timeout --foreground --signal=TERM --kill-after=30s "$drive_timeout" \
-    flutter drive --profile \
-      --driver=test_driver/integration_test.dart \
-      --target=integration_test/screenshot_test.dart \
-      -d "$device" >"$drive_log" 2>&1 || drive_status=$?
+    "${drive_args[@]}" >"$drive_log" 2>&1 || drive_status=$?
 
   cat "$drive_log"
 
-  if screenshots_complete && { [ "$drive_status" -eq 0 ] || grep -q "All tests passed!" "$drive_log"; }; then
+  if screenshots_complete && { [[ "$drive_status" -eq 0 ]] || grep -q "All tests passed!" "$drive_log"; }; then
     break
   fi
 
   transient_failure=0
-  if [ "$drive_status" -eq 124 ] || [ "$drive_status" -eq 137 ] || grep -Eiq \
+  if [[ "$drive_status" -eq 124 || "$drive_status" -eq 137 ]] || grep -Eiq \
     'device offline|Connection reset|Connection refused|Service has disappeared|Connecting to the VM Service is taking longer than expected|VMServiceFlutterDriver: It is taking an unusually long time to connect' \
     "$drive_log"; then
     transient_failure=1
@@ -108,7 +106,7 @@ while :; do
     transient_failure=1
   fi
 
-  if [ "$transient_failure" -ne 1 ] || [ "$attempt" -ge 2 ]; then
+  if [[ "$transient_failure" -ne 1 || "$attempt" -eq 2 ]]; then
     collect_diagnostics
     break
   fi
@@ -116,31 +114,28 @@ while :; do
   echo "Transient emulator failure on screenshot attempt $attempt; retrying once" >&2
   collect_diagnostics
   recover_emulator || break
-  attempt=$((attempt + 1))
-  drive_log=$(mktemp)
 done
 
-for number in $(seq 1 8); do
-  screenshot="$screenshot_dir/${number}_en-US.png"
-  if [ ! -s "$screenshot" ]; then
-    echo "Missing generated screenshot: ${number}_en-US.png" >&2
-    [ "$drive_status" -ne 0 ] && exit "$drive_status"
+for ((number = 1; number <= expected_count; number += 1)); do
+  screenshot="$(screenshot_path "$number")"
+  if [[ ! -s "$screenshot" ]]; then
+    echo "Missing generated screenshot: $screenshot" >&2
+    [[ "$drive_status" -ne 0 ]] && exit "$drive_status"
     exit 1
   fi
-
-  if [ -n "${FITBOOK_SCREEN_SIZE:-}" ] && ! file "$screenshot" | grep -Fq " $expected_dimensions,"; then
+  if [[ -n "${SCREENSHOT_SCREEN_SIZE:-}" ]] && ! file "$screenshot" | grep -Fq " $expected_dimensions,"; then
     echo "Screenshot has unexpected dimensions: $(file "$screenshot")" >&2
     exit 1
   fi
 done
 
-screenshot_count=$(find "$screenshot_dir" -maxdepth 1 -type f -name '*.png' | wc -l | tr -d ' ')
-if [ "$screenshot_count" -ne 8 ]; then
-  echo "Expected exactly 8 Google Play screenshots, found $screenshot_count" >&2
+screenshot_count="$(find "$screenshot_dir" -maxdepth 1 -type f -name '*.png' | wc -l | tr -d ' ')"
+if [[ "$screenshot_count" -ne "$expected_count" ]]; then
+  echo "Expected exactly $expected_count Google Play screenshots, found $screenshot_count" >&2
   exit 1
 fi
 
-if [ "$drive_status" -ne 0 ]; then
+if [[ "$drive_status" -ne 0 ]]; then
   if ! grep -q "All tests passed!" "$drive_log"; then
     exit "$drive_status"
   fi
