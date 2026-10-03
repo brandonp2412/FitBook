@@ -30,6 +30,55 @@ double? parseServingSizeFilter(String value, NumberFormat formatter) {
   }
 }
 
+String _foodLibraryItemName(Object item) => item is Meal
+    ? item.name
+    : (item as FoodListFood).food.name.value;
+
+DateTime _foodLibraryItemCreated(Object item) =>
+    (item is Meal ? item.created : (item as FoodListFood).food.created.value) ??
+    DateTime(0);
+
+DateTime _foodLibraryItemLastDiaryEntry(Object item) =>
+    item is FoodListFood ? item.lastDiaryEntry ?? DateTime(0) : DateTime(0);
+
+bool _foodLibraryItemFavorite(Object item) =>
+    item is FoodListFood && item.food.favorite.value == true;
+
+int _foodSearchRank(Object item, String searchLower) {
+  final name = _foodLibraryItemName(item).toLowerCase();
+  if (name == searchLower) return 0;
+  if (name.startsWith(searchLower)) return 1;
+  return 2;
+}
+
+int _compareFoodLibraryItems(Object a, Object b, String search) {
+  if (search.isNotEmpty) {
+    final searchLower = search.toLowerCase();
+    final rankComparison =
+        _foodSearchRank(a, searchLower).compareTo(_foodSearchRank(b, searchLower));
+    if (rankComparison != 0) return rankComparison;
+
+    final favoriteComparison =
+        (_foodLibraryItemFavorite(b) ? 1 : 0).compareTo(
+          _foodLibraryItemFavorite(a) ? 1 : 0,
+        );
+    if (favoriteComparison != 0) return favoriteComparison;
+  }
+
+  final createdComparison =
+      _foodLibraryItemCreated(b).compareTo(_foodLibraryItemCreated(a));
+  if (createdComparison != 0) return createdComparison;
+
+  final lastEntryComparison = _foodLibraryItemLastDiaryEntry(
+    b,
+  ).compareTo(_foodLibraryItemLastDiaryEntry(a));
+  if (lastEntryComparison != 0) return lastEntryComparison;
+
+  return _foodLibraryItemName(a)
+      .toLowerCase()
+      .compareTo(_foodLibraryItemName(b).toLowerCase());
+}
+
 class FoodPage extends StatefulWidget {
   const FoodPage({super.key});
 
@@ -93,6 +142,7 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
         lastDiaryEntry,
       ])
       ..groupBy([db.foods.id])
+      ..where(db.foods.name.isNotValue('Quick-add'))
       ..limit(limit));
 
     if (search.isNotEmpty) {
@@ -354,29 +404,8 @@ GROUP BY meal_foods.meal
                   }
                   final foods = resultsToCompanions(snapshot.data ?? []);
 
-                  final items = <Object>[...meals, ...foods];
-                  if (search.isEmpty) {
-                    items.sort((a, b) {
-                      final aDate = (a is Meal
-                              ? a.created
-                              : (a as FoodListFood).food.created.value) ??
-                          DateTime(0);
-                      final bDate = (b is Meal
-                              ? b.created
-                              : (b as FoodListFood).food.created.value) ??
-                          DateTime(0);
-                      final createdComparison = bDate.compareTo(aDate);
-                      if (createdComparison != 0) return createdComparison;
-
-                      final aLastEntry =
-                          a is FoodListFood ? a.lastDiaryEntry : null;
-                      final bLastEntry =
-                          b is FoodListFood ? b.lastDiaryEntry : null;
-                      return (bLastEntry ?? DateTime(0)).compareTo(
-                        aLastEntry ?? DateTime(0),
-                      );
-                    });
-                  }
+                  final items = <Object>[...meals, ...foods]
+                    ..sort((a, b) => _compareFoodLibraryItems(a, b, search));
 
                   final listStack = Stack(
                     children: [

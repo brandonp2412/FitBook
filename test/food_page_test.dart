@@ -122,4 +122,122 @@ void main() async {
 
     await db.close();
   });
+
+  testWidgets('Quick-add entries stay out of the food library and search', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.foods.deleteAll();
+    await db.foods.insertAll([
+      FoodsCompanion.insert(
+        name: 'Quick-add',
+        created: Value(DateTime(2026, 10, 4, 9)),
+        calories: const Value(500),
+      ),
+      FoodsCompanion.insert(
+        name: 'Apple',
+        created: Value(DateTime(2026, 10, 4, 10)),
+        calories: const Value(52),
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(home: const FoodPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Apple'), findsOneWidget);
+    expect(find.text('Quick-add'), findsNothing);
+
+    await tester.enterText(find.bySemanticsLabel('Search...'), 'Quick');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Quick-add'), findsNothing);
+
+    await db.close();
+  });
+
+  testWidgets('Food search ranks exact, prefix, then substring across meals', (
+    WidgetTester tester,
+  ) async {
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    await db.foods.deleteAll();
+    await db.meals.deleteAll();
+
+    await db.foods.insertAll([
+      FoodsCompanion.insert(
+        name: 'Coffee',
+        created: Value(DateTime(2026, 10, 4, 7)),
+        calories: const Value(5),
+      ),
+      FoodsCompanion.insert(
+        name: 'Coffee with milk',
+        created: Value(DateTime(2026, 10, 4, 8)),
+        calories: const Value(50),
+      ),
+      FoodsCompanion.insert(
+        name: 'Brand X Coffee Latte',
+        created: Value(DateTime(2026, 10, 4, 11)),
+        calories: const Value(100),
+      ),
+    ]);
+    await db.meals.insertAll([
+      MealsCompanion.insert(
+        name: 'Coffee Americano',
+        created: DateTime(2026, 10, 4, 6),
+      ),
+      MealsCompanion.insert(
+        name: 'Chocolate Mint Coffee',
+        created: DateTime(2026, 10, 4, 12),
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(home: const FoodPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.bySemanticsLabel('Search...'), 'coffee');
+    await tester.pumpAndSettle();
+
+    for (final name in [
+      'Coffee',
+      'Coffee with milk',
+      'Coffee Americano',
+      'Brand X Coffee Latte',
+      'Chocolate Mint Coffee',
+    ]) {
+      expect(find.text(name), findsOneWidget);
+    }
+
+    double top(String name) => tester.getTopLeft(find.text(name)).dy;
+    final prefixBottom = [
+      top('Coffee with milk'),
+      top('Coffee Americano'),
+    ].reduce((a, b) => a > b ? a : b);
+    final substringTop = [
+      top('Brand X Coffee Latte'),
+      top('Chocolate Mint Coffee'),
+    ].reduce((a, b) => a < b ? a : b);
+
+    expect(top('Coffee'), lessThan(top('Coffee with milk')));
+    expect(top('Coffee'), lessThan(top('Coffee Americano')));
+    expect(prefixBottom, lessThan(substringTop));
+
+    await db.close();
+  });
 }
