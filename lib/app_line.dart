@@ -6,7 +6,7 @@ import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:fit_book/app_line_chart.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -132,7 +132,7 @@ class _AppLineState extends State<AppLine> {
     return "$sign${_formatGraphValue(slopePerWeek)} ${data.first.unit}";
   }
 
-  List<FlSpot> _getTrendSpots(List<GraphData> data) {
+  List<AppLineChartPoint> _getTrendSpots(List<GraphData> data) {
     if (data.length < 2) return [];
 
     final trend = _calcTrend(data);
@@ -142,14 +142,13 @@ class _AppLineState extends State<AppLine> {
       data,
     )..sort((a, b) => a.created.compareTo(b.created))).first.created;
 
-    final trendSpots = <FlSpot>[];
-    for (int i = 0; i < data.length; i++) {
-      final days = data[i].created.difference(firstCreated).inDays.toDouble();
-      final trendVal = slope * days + intercept;
-      trendSpots.add(FlSpot(i.toDouble(), trendVal));
-    }
-
-    return trendSpots;
+    return [
+      for (int i = 0; i < data.length; i++)
+        AppLineChartPoint(
+          i,
+          slope * data[i].created.difference(firstCreated).inDays + intercept,
+        ),
+    ];
   }
 
   /// Trailing rolling average of `val`, one output per input point, using up
@@ -164,14 +163,14 @@ class _AppLineState extends State<AppLine> {
     return result;
   }
 
-  List<FlSpot> _getSmoothSpots(List<GraphData> data) {
+  List<AppLineChartPoint> _getSmoothSpots(List<GraphData> data) {
     final smoothed = _rollingAverage(
       data.map((row) => row.val).toList(),
       _smoothWindow,
     );
     return [
       for (int i = 0; i < smoothed.length; i++)
-        FlSpot(i.toDouble(), smoothed[i]),
+        AppLineChartPoint(i, smoothed[i]),
     ];
   }
 
@@ -365,162 +364,75 @@ class _AppLineState extends State<AppLine> {
             title: l10n.noDataYet,
             message: l10n.completePlansToViewGraphs,
           );
-        List<Color> gradColors = [
-          Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.surface,
-        ];
-
         final rows = snapshot.data!;
-        List<FlSpot> spots = [
+        final spots = [
           for (var index = 0; index < rows.length; index++)
-            FlSpot(index.toDouble(), rows[index].val),
+            AppLineChartPoint(index, rows[index].val),
         ];
-
-        List<FlSpot> trendSpots = showTrend ? _getTrendSpots(rows) : [];
-        List<FlSpot> smoothSpots = showSmooth ? _getSmoothSpots(rows) : [];
-
-        final lineBars = <LineChartBarData>[];
-        // Keep this in the same order as lineBarsData so each tooltip can use
-        // the same color as its series checkbox and line.
-        final seriesColors = <Color>[];
-
-        if (showMain) {
-          seriesColors.add(Theme.of(context).colorScheme.primary);
-          lineBars.add(
-            LineChartBarData(
-              spots: spots,
-              isCurved: sel.curveLines,
-              preventCurveOverShooting: true,
-              color: Theme.of(context).colorScheme.primary,
-              barWidth: 3,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: LinearGradient(
-                  colors: gradColors
-                      .map((color) => color.withValues(alpha: 0.3))
-                      .toList(),
-                ),
-              ),
+        final trendSpots = showTrend ? _getTrendSpots(rows) : <AppLineChartPoint>[];
+        final smoothSpots = showSmooth
+            ? _getSmoothSpots(rows)
+            : <AppLineChartPoint>[];
+        final colorScheme = Theme.of(context).colorScheme;
+        final chartSeries = <AppLineChartSeries>[
+          if (showMain)
+            AppLineChartSeries(
+              points: spots,
+              color: colorScheme.primary,
+              strokeWidth: 3,
+              curved: sel.curveLines,
+              fill: true,
             ),
-          );
-        }
-
-        if (showTrend && trendSpots.isNotEmpty) {
-          seriesColors.add(Theme.of(context).colorScheme.secondary);
-          lineBars.add(
-            LineChartBarData(
-              spots: trendSpots,
-              isCurved: false,
-              color: Theme.of(context).colorScheme.secondary,
-              barWidth: 2,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(show: false),
+          if (showTrend && trendSpots.isNotEmpty)
+            AppLineChartSeries(
+              points: trendSpots,
+              color: colorScheme.secondary,
+              strokeWidth: 2,
             ),
-          );
-        }
-
-        if (showSmooth && smoothSpots.isNotEmpty) {
-          seriesColors.add(Theme.of(context).colorScheme.tertiary);
-          lineBars.add(
-            LineChartBarData(
-              spots: smoothSpots,
-              isCurved: sel.curveLines,
-              preventCurveOverShooting: true,
-              color: Theme.of(context).colorScheme.tertiary,
-              barWidth: 2,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(show: false),
+          if (showSmooth && smoothSpots.isNotEmpty)
+            AppLineChartSeries(
+              points: smoothSpots,
+              color: colorScheme.tertiary,
+              strokeWidth: 2,
+              curved: sel.curveLines,
             ),
-          );
-        }
-
-        // fl_chart derives its bounds from line-bar spots, not extra lines.
-        // Extend the relevant bound when the goal is visible so the goal line
-        // remains inside the graph rather than being drawn beyond its edge.
-        final visibleSpots = lineBars.isEmpty
-            ? spots
-            : lineBars.expand((bar) => bar.spots);
-        double? lowestVisibleValue;
-        double? highestVisibleValue;
-        for (final spot in visibleSpots) {
-          lowestVisibleValue = lowestVisibleValue == null
-              ? spot.y
-              : spot.y < lowestVisibleValue
-              ? spot.y
-              : lowestVisibleValue;
-          highestVisibleValue = highestVisibleValue == null
-              ? spot.y
-              : spot.y > highestVisibleValue
-              ? spot.y
-              : highestVisibleValue;
-        }
-        final shouldIncludeGoal =
-            showGoal && goal > 0 && highestVisibleValue != null;
-        final minY = sel.graphsStartAtZero
-            ? 0.0
-            : shouldIncludeGoal && goal < lowestVisibleValue!
-            ? goal
-            : null;
-        final maxY = shouldIncludeGoal && goal > highestVisibleValue
-            ? goal
-            : null;
+        ];
+        final visibleGoal = showGoal && goal > 0 ? goal : null;
 
         return material.Column(
           children: [
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
-                child: LineChart(
-                  LineChartData(
-                    minY: minY,
-                    maxY: maxY,
-                    extraLinesData: ExtraLinesData(
-                      horizontalLines: [
-                        if (goal > 0 && showGoal)
-                          HorizontalLine(
-                            y: goal.toDouble(),
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                      ],
-                    ),
-                    titlesData: FlTitlesData(
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      leftTitles: const AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 45,
-                        ),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 34,
-                          interval: 1,
-                          getTitlesWidget: (value, meta) =>
-                              _bottomTitleWidgets(value, meta, rows),
-                        ),
-                      ),
-                    ),
-                    lineTouchData: LineTouchData(
-                      touchTooltipData: _tooltipData(
+                child: AppLineChart(
+                  series: chartSeries,
+                  fallbackPoints: spots,
+                  bottomLabels: [
+                    for (final row in rows)
+                      formatDisplayDate(
                         context,
-                        rows,
-                        rows.first.unit,
-                        seriesColors,
+                        row.created,
+                        settings.shortDateFormat,
                       ),
-                    ),
-                    lineBarsData: lineBars,
-                    gridData: const FlGridData(show: false),
-                  ),
+                  ],
+                  maxBottomTitles: widget.maxBottomTitles,
+                  referenceValue: visibleGoal,
+                  referenceColor: colorScheme.onSurface,
+                  startAtZero: sel.graphsStartAtZero,
+                  axisLabelFormatter: (value) =>
+                      formatDisplayNumber(context, value),
+                  tooltipText: (index, value) {
+                    final row = rows[index];
+                    final dateStr = formatDisplayDate(
+                      context,
+                      row.created,
+                      settings.shortDateFormat,
+                    );
+                    return "${_formatGraphValue(value)} ${row.unit}\n$dateStr";
+                  },
+                  accessibilityLabel: l10n.value,
+                  accessibilityValue:
+                      "${_formatGraphValue(rows.last.val)} ${rows.first.unit}",
                 ),
               ),
             ),
@@ -651,91 +563,4 @@ class _AppLineState extends State<AppLine> {
     );
   }
 
-  Widget _bottomTitleWidgets(
-    double value,
-    TitleMeta meta,
-    List<GraphData> rows,
-  ) {
-    if (rows.isEmpty) return const SizedBox.shrink();
-
-    final index = value.round();
-    if ((value - index).abs() > 0.001 || index < 0 || index >= rows.length) {
-      return const SizedBox.shrink();
-    }
-
-    final widthBasedCount = (meta.parentAxisSize / 88).floor();
-    final requestedCount = widget.maxBottomTitles == null
-        ? widthBasedCount
-        : widthBasedCount < widget.maxBottomTitles!
-        ? widthBasedCount
-        : widget.maxBottomTitles!;
-    final labelCount = rows.length == 1
-        ? 1
-        : requestedCount.clamp(2, rows.length).toInt();
-
-    final indices = <int>{
-      if (labelCount == 1)
-        0
-      else
-        for (var i = 0; i < labelCount; i++)
-          ((rows.length - 1) * i / (labelCount - 1)).round(),
-    };
-
-    if (!indices.contains(index)) return const SizedBox.shrink();
-
-    final createdDate = rows[index].created;
-    return SideTitleWidget(
-      meta: meta,
-      space: 8,
-      child: Text(
-        formatDisplayDate(context, createdDate, settings.shortDateFormat),
-        maxLines: 1,
-        softWrap: false,
-        overflow: TextOverflow.visible,
-        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-      ),
-    );
-  }
-
-  LineTouchTooltipData _tooltipData(
-    BuildContext context,
-    List<GraphData> rows,
-    String unit,
-    List<Color> seriesColors,
-  ) {
-    return LineTouchTooltipData(
-      getTooltipColor: (touchedSpot) => Theme.of(context).colorScheme.surface,
-      getTooltipItems: (touchedSpots) {
-        if (touchedSpots.isEmpty) return const [];
-
-        // Several series can have a point at the same cursor position. Show
-        // only the topmost one, while keeping its series-specific color.
-        var highestSpotIndex = 0;
-        for (var index = 1; index < touchedSpots.length; index++) {
-          if (touchedSpots[index].y > touchedSpots[highestSpotIndex].y) {
-            highestSpotIndex = index;
-          }
-        }
-
-        return List.generate(touchedSpots.length, (index) {
-          final spot = touchedSpots[index];
-          if (index != highestSpotIndex ||
-              spot.barIndex >= seriesColors.length ||
-              spot.spotIndex >= rows.length) {
-            return null;
-          }
-          final row = rows.elementAt(spot.spotIndex);
-          final dateStr = formatDisplayDate(
-            context,
-            row.created,
-            settings.shortDateFormat,
-          );
-          return LineTooltipItem(
-            "${_formatGraphValue(spot.y)} $unit\n$dateStr",
-            TextStyle(color: seriesColors[spot.barIndex]),
-          );
-        });
-      },
-    );
-  }
 }
