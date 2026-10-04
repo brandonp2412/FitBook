@@ -270,23 +270,32 @@ class _HomePageState extends State<HomePage> {
       (settings) => settings.value.scrollableTabs,
     );
 
-    void selectTab(int index) {
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-      );
+    void selectTab(int index, {required bool animate}) {
+      if (index == _currentIndex) return;
+      if (_pageController.hasClients) {
+        if (animate) {
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOutCubic,
+          );
+        } else {
+          _pageController.jumpToPage(index);
+        }
+      }
       setState(() => _currentIndex = index);
     }
 
-    Widget pages() => ValueListenableBuilder<int>(
+    Widget pages({required bool desktop}) => ValueListenableBuilder<int>(
           valueListenable: dbVersion,
           builder: (context, generation, child) => PageView.builder(
             key: ValueKey(generation),
             controller: _pageController,
-            physics: scrollableTabs
-                ? const AlwaysScrollableScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
+            physics: desktop
+                ? const NeverScrollableScrollPhysics()
+                : scrollableTabs
+                    ? const AlwaysScrollableScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
             itemCount: tabs.length,
             onPageChanged: (i) => setState(() => _currentIndex = i),
             itemBuilder: (context, index) => _buildTabPage(tabs[index], index),
@@ -306,21 +315,21 @@ class _HomePageState extends State<HomePage> {
                   SideNav(
                     tabs: tabs,
                     currentIndex: _currentIndex,
-                    onTap: selectTab,
+                    onTap: (index) => selectTab(index, animate: false),
                     onOpenSettings: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const SettingsPage(),
                       ),
                     ),
                   ),
-                  Expanded(child: pages()),
+                  Expanded(child: pages(desktop: true)),
                 ],
               );
             }
 
             return Stack(
               children: [
-                pages(),
+                pages(desktop: false),
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -328,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                   child: BottomNav(
                     tabs: tabs,
                     currentIndex: _currentIndex,
-                    onTap: selectTab,
+                    onTap: (index) => selectTab(index, animate: true),
                   ),
                 ),
               ],

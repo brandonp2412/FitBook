@@ -65,6 +65,68 @@ class GraphPageState extends State<GraphPage>
         ? metric
         : null;
 
+    Widget metricPicker({bool desktop = false}) {
+      return DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: metricValue,
+          isExpanded: true,
+          borderRadius: BorderRadius.circular(12),
+          style: (desktop
+                  ? theme.textTheme.titleLarge
+                  : theme.textTheme.headlineSmall)
+              ?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: colorScheme.onSurface,
+          ),
+          items: [
+            DropdownMenuItem(
+              value: db.foods.calories.name,
+              child: Text(context.l10n.calories),
+            ),
+            DropdownMenuItem(
+              value: 'body-weight',
+              child: Text(context.l10n.bodyWeight),
+            ),
+            ...filteredFields.map(
+              (field) => DropdownMenuItem(
+                value: field,
+                child: Text(localizedFoodFieldLabel(context.l10n, field)),
+              ),
+            ),
+          ],
+          onChanged: (value) {
+            if (value == null) return;
+            setState(() => metric = value);
+            db.settings.update().write(
+                  SettingsCompanion(lastGraph: Value(metric)),
+                );
+          },
+        ),
+      );
+    }
+
+    Widget periodPicker() {
+      return SizedBox(
+        width: double.infinity,
+        child: SegmentedButton<Period>(
+          showSelectedIcon: false,
+          style: SegmentedButton.styleFrom(
+            visualDensity: VisualDensity.compact,
+          ),
+          segments: [
+            ButtonSegment(value: Period.day, label: Text(context.l10n.day)),
+            ButtonSegment(value: Period.week, label: Text(context.l10n.week)),
+            ButtonSegment(value: Period.month, label: Text(context.l10n.month)),
+            ButtonSegment(value: Period.year, label: Text(context.l10n.year)),
+          ],
+          selected: {groupBy},
+          onSelectionChanged: (value) {
+            setState(() => groupBy = value.first);
+          },
+        ),
+      );
+    }
+
     if (!usesSideNavigation(context)) {
       return Scaffold(
         body: Padding(
@@ -80,44 +142,7 @@ class GraphPageState extends State<GraphPage>
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: metricValue,
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(12),
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: colorScheme.onSurface,
-                          ),
-                          items: [
-                            DropdownMenuItem(
-                              value: db.foods.calories.name,
-                              child: Text(context.l10n.calories),
-                            ),
-                            DropdownMenuItem(
-                              value: 'body-weight',
-                              child: Text(context.l10n.bodyWeight),
-                            ),
-                            ...filteredFields.map(
-                              (field) => DropdownMenuItem(
-                                value: field,
-                                child: Text(
-                                  localizedFoodFieldLabel(context.l10n, field),
-                                ),
-                              ),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            if (value == null) return;
-                            setState(() => metric = value);
-                            db.settings.update().write(
-                                  SettingsCompanion(lastGraph: Value(metric)),
-                                );
-                          },
-                        ),
-                      ),
-                    ),
+                    Expanded(child: metricPicker()),
                     const SizedBox(width: 8),
                     IconButton.filledTonal(
                       icon: const Icon(Icons.tune),
@@ -127,37 +152,7 @@ class GraphPageState extends State<GraphPage>
                   ],
                 ),
                 const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: SegmentedButton<Period>(
-                    showSelectedIcon: false,
-                    style: SegmentedButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
-                    ),
-                    segments: [
-                      ButtonSegment(
-                        value: Period.day,
-                        label: Text(context.l10n.day),
-                      ),
-                      ButtonSegment(
-                        value: Period.week,
-                        label: Text(context.l10n.week),
-                      ),
-                      ButtonSegment(
-                        value: Period.month,
-                        label: Text(context.l10n.month),
-                      ),
-                      ButtonSegment(
-                        value: Period.year,
-                        label: Text(context.l10n.year),
-                      ),
-                    ],
-                    selected: {groupBy},
-                    onSelectionChanged: (value) {
-                      setState(() => groupBy = value.first);
-                    },
-                  ),
-                ),
+                periodPicker(),
                 ConstrainedBox(
                   constraints: const BoxConstraints(
                     minHeight: 300,
@@ -179,11 +174,11 @@ class GraphPageState extends State<GraphPage>
 
     return Scaffold(
       body: AdaptivePageBody(
-        maxWidth: 1200,
+        maxWidth: 1280,
         child: Padding(
           padding: EdgeInsets.fromLTRB(
             24,
-            20,
+            24,
             24,
             navigationBottomClearance(context),
           ),
@@ -191,97 +186,47 @@ class GraphPageState extends State<GraphPage>
             child: material.Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: metricValue,
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(12),
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: colorScheme.onSurface,
-                          ),
-                          items: [
-                            DropdownMenuItem(
-                              value: db.foods.calories.name,
-                              child: Text(context.l10n.calories),
-                            ),
-                            DropdownMenuItem(
-                              value: 'body-weight',
-                              child: Text(context.l10n.bodyWeight),
-                            ),
-                            ...filteredFields.map(
-                              (field) => DropdownMenuItem(
-                                value: field,
-                                child: Text(
-                                  localizedFoodFieldLabel(context.l10n, field),
-                                ),
-                              ),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            if (value == null) return;
-                            setState(() => metric = value);
-                            db.settings.update().write(
-                                  SettingsCompanion(lastGraph: Value(metric)),
-                                );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton.filledTonal(
-                      icon: const Icon(Icons.tune),
-                      tooltip: context.l10n.options,
-                      onPressed: _showOptions,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: SegmentedButton<Period>(
-                    showSelectedIcon: false,
-                    style: SegmentedButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
-                    ),
-                    segments: [
-                      ButtonSegment(
-                        value: Period.day,
-                        label: Text(context.l10n.day),
-                      ),
-                      ButtonSegment(
-                        value: Period.week,
-                        label: Text(context.l10n.week),
-                      ),
-                      ButtonSegment(
-                        value: Period.month,
-                        label: Text(context.l10n.month),
-                      ),
-                      ButtonSegment(
-                        value: Period.year,
-                        label: Text(context.l10n.year),
-                      ),
-                    ],
-                    selected: {groupBy},
-                    onSelectionChanged: (value) {
-                      setState(() => groupBy = value.first);
-                    },
+                Text(
+                  context.l10n.navGraph,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Card(
+                  key: const Key('desktop-graph-controls'),
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 260,
+                          child: metricPicker(
+                            desktop: true,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(child: periodPicker()),
+                        const SizedBox(width: 12),
+                        IconButton.filledTonal(
+                          icon: const Icon(Icons.tune),
+                          tooltip: context.l10n.options,
+                          onPressed: _showOptions,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Card(
+                  key: const Key('desktop-graph-chart'),
                   margin: EdgeInsets.zero,
                   clipBehavior: Clip.antiAlias,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: usesSideNavigation(context) ? 440 : 300,
-                        maxHeight: usesSideNavigation(context) ? 620 : 450,
-                      ),
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
+                    child: SizedBox(
+                      height: 520,
                       child: AppLine(
                         metric: metric,
                         groupBy: groupBy,

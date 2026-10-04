@@ -38,27 +38,6 @@ class AppSearch extends StatefulWidget {
 }
 
 class _AppSearchState extends State<AppSearch> {
-  Future<void> _handleMenuAction(_AppSearchMenuAction? action) async {
-    if (action == null || !mounted) return;
-
-    switch (action) {
-      case _AppSearchMenuAction.selectAll:
-        widget.onSelect();
-        break;
-      case _AppSearchMenuAction.settings:
-        await Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(builder: (context) => const SettingsPage()),
-        );
-        break;
-      case _AppSearchMenuAction.edit:
-        widget.onEdit();
-        break;
-      case _AppSearchMenuAction.favorite:
-        widget.onFavorite();
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget trailingMain;
@@ -187,7 +166,7 @@ class _AppSearchState extends State<AppSearch> {
                                 title: Text(context.l10n.selectAll),
                               ),
                             ),
-                            if (widget.selected.isEmpty) ...[
+                            if (widget.selected.isEmpty)
                               PopupMenuItem(
                                 value: _AppSearchMenuAction.settings,
                                 child: ListTile(
@@ -195,7 +174,6 @@ class _AppSearchState extends State<AppSearch> {
                                   title: Text(context.l10n.settings),
                                 ),
                               ),
-                            ],
                             if (widget.selected.isNotEmpty) ...[
                               PopupMenuItem(
                                 value: _AppSearchMenuAction.edit,
@@ -214,7 +192,24 @@ class _AppSearchState extends State<AppSearch> {
                             ],
                           ],
                         );
-                        await _handleMenuAction(action);
+                        if (!context.mounted || action == null) return;
+                        switch (action) {
+                          case _AppSearchMenuAction.selectAll:
+                            widget.onSelect();
+                          case _AppSearchMenuAction.settings:
+                            await Navigator.of(
+                              context,
+                              rootNavigator: true,
+                            ).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SettingsPage(),
+                              ),
+                            );
+                          case _AppSearchMenuAction.edit:
+                            widget.onEdit();
+                          case _AppSearchMenuAction.favorite:
+                            widget.onFavorite();
+                        }
                       },
                     );
                   },

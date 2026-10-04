@@ -317,6 +317,15 @@ void main() async {
     );
     await tester.pumpAndSettle();
 
+    expect(find.byKey(const Key('desktop-graph-controls')), findsOneWidget);
+    expect(find.byKey(const Key('desktop-graph-chart')), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.byKey(const Key('desktop-graph-controls'))).dy,
+      lessThan(
+        tester.getTopLeft(find.byKey(const Key('desktop-graph-chart'))).dy,
+      ),
+    );
+
     final dateFormat = DateFormat(settings.shortDateFormat);
     final possibleDateLabels = {
       for (var daysAgo = 0; daysAgo <= 140; daysAgo++)

@@ -1,13 +1,12 @@
 // ignore_for_file: deprecated_member_use
 import 'package:drift/drift.dart';
 import 'package:drift/web.dart';
-import 'package:flutter/foundation.dart';
 
 QueryExecutor createWebConnection() {
   return LazyDatabase(() async {
     return WebDatabase.withStorage(
       await DriftWebStorage.indexedDbIfSupported('fitbook'),
-      logStatements: kDebugMode,
+      logStatements: false,
     );
   });
 }

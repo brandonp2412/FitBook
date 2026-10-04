@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,38 @@ void main() async {
     await tester.pumpAndSettle();
     await tester.tap(find.text('System color scheme'));
     await tester.pumpAndSettle();
+
+    await db.close();
+  });
+  testWidgets('desktop tab changes are immediate', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1400, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settings = await db.settings.select().getSingle();
+    final settingsState = SettingsState(settings);
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: const App(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('desktop-GraphPage')));
+    await tester.pump();
+
+    final graphRect = tester.getRect(
+      find.byKey(const Key('desktop-graph-controls')),
+    );
+    expect(graphRect.left, lessThan(1400));
+    expect(graphRect.right, greaterThan(232));
 
     await db.close();
   });

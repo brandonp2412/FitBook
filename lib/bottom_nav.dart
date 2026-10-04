@@ -236,75 +236,167 @@ class SideNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final extended = MediaQuery.sizeOf(context).width >= extendedRailBreakpoint;
+    final colors = Theme.of(context).colorScheme;
+    final compact = MediaQuery.sizeOf(context).width < extendedRailBreakpoint;
 
     return Container(
+      width: compact ? 80 : 232,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow,
-        border: Border(right: BorderSide(color: colorScheme.outlineVariant)),
+        color: colors.surfaceContainerLow,
+        border: Border(right: BorderSide(color: colors.outlineVariant)),
       ),
-      child: NavigationRail(
-        extended: extended,
-        minExtendedWidth: 220,
-        selectedIndex: currentIndex,
-        groupAlignment: -0.35,
-        labelType: extended
-            ? NavigationRailLabelType.none
-            : NavigationRailLabelType.all,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 12, bottom: 24),
-          child: extended
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.menu_book_rounded, color: colorScheme.primary),
-                    const SizedBox(width: 12),
-                    Text(
-                      context.l10n.appTitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w800),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            compact ? 12 : 16,
+            20,
+            compact ? 12 : 16,
+            16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (compact)
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: colors.primaryContainer,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ],
+                    child: Icon(
+                      Icons.menu_book_rounded,
+                      color: colors.onPrimaryContainer,
+                    ),
+                  ),
                 )
-              : Icon(
-                  Icons.menu_book_rounded,
-                  color: colorScheme.primary,
-                  size: 30,
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: colors.primaryContainer,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          Icons.menu_book_rounded,
+                          color: colors.onPrimaryContainer,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          context.l10n.appTitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-        ),
-        trailing: Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: extended
-                  ? FilledButton.tonalIcon(
-                      onPressed: onOpenSettings,
-                      icon: const Icon(Icons.settings_outlined),
-                      label: Text(context.l10n.settings),
-                    )
-                  : IconButton.filledTonal(
-                      onPressed: onOpenSettings,
-                      tooltip: context.l10n.settings,
-                      icon: const Icon(Icons.settings_outlined),
+              const SizedBox(height: 24),
+              ...tabs.asMap().entries.map(
+                    (entry) => Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: _DesktopNavItem(
+                        key: Key('desktop-${entry.value}'),
+                        icon: iconForTab(entry.value),
+                        label: labelForTab(context, entry.value),
+                        selected: entry.key == currentIndex,
+                        compact: compact,
+                        onTap: () => onTap(entry.key),
+                      ),
                     ),
-            ),
+                  ),
+              const Spacer(),
+              const Divider(),
+              const SizedBox(height: 8),
+              _DesktopNavItem(
+                icon: Icons.settings_rounded,
+                label: context.l10n.settings,
+                compact: compact,
+                onTap: onOpenSettings,
+              ),
+            ],
           ),
         ),
-        onDestinationSelected: onTap,
-        destinations: tabs
-            .map(
-              (tab) => NavigationRailDestination(
-                icon: Icon(iconForTab(tab)),
-                selectedIcon: Icon(iconForTab(tab)),
-                label: Text(labelForTab(context, tab), key: Key(tab)),
-              ),
-            )
-            .toList(),
       ),
+    );
+  }
+}
+
+class _DesktopNavItem extends StatelessWidget {
+  const _DesktopNavItem({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.selected = false,
+    this.compact = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final bool compact;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final foreground =
+        selected ? colors.onSecondaryContainer : colors.onSurfaceVariant;
+
+    final child = Material(
+      color: selected ? colors.secondaryContainer : Colors.transparent,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: compact
+            ? SizedBox(
+                height: 48,
+                child: Center(child: Icon(icon, size: 22, color: foreground)),
+              )
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+                child: Row(
+                  children: [
+                    Icon(icon, size: 22, color: foreground),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: foreground,
+                              fontWeight:
+                                  selected ? FontWeight.w700 : FontWeight.w500,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+      ),
+    );
+
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: compact ? Tooltip(message: label, child: child) : child,
     );
   }
 }

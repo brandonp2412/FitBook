@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:drafter/drafter.dart';
 import 'package:drafter/painting.dart';
 import 'package:flutter/foundation.dart';
@@ -139,11 +141,9 @@ class AppLineChart extends StatelessWidget {
       var bestOrderPosition = -1;
       var bestDistance = double.infinity;
 
-      for (
-        var position = previousOrderPosition + 1;
-        position <= maxOrderPosition;
-        position++
-      ) {
+      for (var position = previousOrderPosition + 1;
+          position <= maxOrderPosition;
+          position++) {
         final index = order[position];
         final previous = balanced.last;
         final left = centers[index] - widths[index] / 2;
@@ -169,8 +169,7 @@ class AppLineChart extends StatelessWidget {
     for (var i = 1; i < balanced.length; i++) {
       final previous = balanced[i - 1];
       final current = balanced[i];
-      final gap =
-          centers[current] -
+      final gap = centers[current] -
           widths[current] / 2 -
           (centers[previous] + widths[previous] / 2);
       if (gap < minGap) {
@@ -185,9 +184,8 @@ class AppLineChart extends StatelessWidget {
   Set<int> _bottomLabelIndexes(CartesianScale scale, Color labelColor) {
     if (bottomLabels.isEmpty || scale.count <= 0) return const {};
 
-    final count = bottomLabels.length < scale.count
-        ? bottomLabels.length
-        : scale.count;
+    final count =
+        bottomLabels.length < scale.count ? bottomLabels.length : scale.count;
     final centers = [
       for (var index = 0; index < count; index++) scale.xForIndex(index),
     ];
@@ -321,7 +319,8 @@ class _AppLineChartInteractionState extends State<_AppLineChartInteraction> {
     return switch (defaultTargetPlatform) {
       TargetPlatform.linux ||
       TargetPlatform.macOS ||
-      TargetPlatform.windows => true,
+      TargetPlatform.windows =>
+        true,
       _ => false,
     };
   }
@@ -472,23 +471,23 @@ class _AppLineChartRenderer extends ChartRenderer
     required this.axisLabelColor,
     required String accessibilityLabel,
     required String accessibilityValue,
-  }) : _accessibilityLabel = accessibilityLabel,
-       _accessibilityValue = accessibilityValue;
+  })  : _accessibilityLabel = accessibilityLabel,
+        _accessibilityValue = accessibilityValue;
 
   ChartBounds boundsFor(Size size) => ChartBounds.insets(
-    size,
-    left: 48,
-    top: _chartTopInset,
-    right: 8,
-    bottom: _chartBottomLabelInset,
-  );
+        size,
+        left: 48,
+        top: _chartTopInset,
+        right: 8,
+        bottom: _chartBottomLabelInset,
+      );
 
   CartesianScale scaleFor(Size size) => CartesianScale(
-    bounds: boundsFor(size),
-    count: rowCount,
-    minValue: minY,
-    maxValue: maxY,
-  );
+        bounds: boundsFor(size),
+        count: rowCount,
+        minValue: minY,
+        maxValue: maxY,
+      );
 
   Path _linePath(List<Offset> points, {required bool curved}) {
     if (!curved || points.length < 3) return polylinePath(points);
@@ -515,9 +514,9 @@ class _AppLineChartRenderer extends ChartRenderer
   }
 
   List<Offset> _pixelPoints(AppLineChartSeries line, CartesianScale scale) => [
-    for (final point in line.points)
-      Offset(scale.xForIndex(point.index), scale.yForValue(point.value)),
-  ];
+        for (final point in line.points)
+          Offset(scale.xForIndex(point.index), scale.yForValue(point.value)),
+      ];
 
   void _drawAxes(
     Canvas canvas,
@@ -574,14 +573,12 @@ class _AppLineChartRenderer extends ChartRenderer
         fillPath,
         Paint()
           ..style = PaintingStyle.fill
-          ..shader = LinearGradient(
-            colors: [
-              line.color.withValues(alpha: 0.3),
-              theme.surface.withValues(alpha: 0.3),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ).createShader(scale.bounds.rect),
+          ..shader = areaGradientShader(
+            line.color,
+            top: points.map((point) => point.dy).reduce(min),
+            bottom: scale.bounds.bottom,
+            topAlpha: 0.3,
+          ),
       );
     }
 
