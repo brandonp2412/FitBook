@@ -3,6 +3,12 @@ import 'package:drafter/painting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+const _axisLabelFontSize = 12.0;
+const _axisLabelFontWeight = FontWeight.w600;
+const _xAxisLabelMinGap = 12.0;
+const _chartTopInset = 24.0;
+const _chartBottomLabelInset = 38.0;
+
 @immutable
 class AppLineChartPoint {
   final int index;
@@ -91,32 +97,126 @@ class AppLineChart extends StatelessWidget {
     return (minY, maxY);
   }
 
-  Set<int> _bottomLabelIndexes(double width) {
-    if (bottomLabels.isEmpty) return const {};
-    final widthBasedCount = (width / 88).floor();
-    final requestedCount = maxBottomTitles == null
-        ? widthBasedCount
-        : widthBasedCount < maxBottomTitles!
-            ? widthBasedCount
-            : maxBottomTitles!;
-    final labelCount = bottomLabels.length == 1
-        ? 1
-        : requestedCount.clamp(2, bottomLabels.length).toInt();
+  @visibleForTesting
+  static List<int> selectXAxisLabelIndices(
+    List<double> centers,
+    List<double> widths,
+    double minGap,
+  ) {
+    final count = centers.length;
+    if (count == 0) return const [];
+    if (count == 1) return const [0];
 
-    return {
-      if (labelCount == 1)
-        0
-      else
-        for (var i = 0; i < labelCount; i++)
-          ((bottomLabels.length - 1) * i / (labelCount - 1)).round(),
-    };
+    final order = List<int>.generate(count, (index) => index)
+      ..sort((a, b) => centers[a].compareTo(centers[b]));
+    final first = order.first;
+    final last = order.last;
+    final lastLeft = centers[last] - widths[last] / 2;
+
+    final packed = <int>[first];
+    var lastRight = centers[first] + widths[first] / 2;
+    for (final index in order.skip(1).take(count - 2)) {
+      final left = centers[index] - widths[index] / 2;
+      final right = centers[index] + widths[index] / 2;
+      if (left < lastRight + minGap || right + minGap > lastLeft) continue;
+      packed.add(index);
+      lastRight = right;
+    }
+    packed.add(last);
+
+    if (packed.length <= 2 || packed.length == count) {
+      packed.sort();
+      return packed;
+    }
+
+    final balanced = <int>[first];
+    var previousOrderPosition = 0;
+    final span = centers[last] - centers[first];
+    for (var slot = 1; slot < packed.length - 1; slot++) {
+      final target = centers[first] + span * slot / (packed.length - 1);
+      final remainingSlots = packed.length - 1 - slot;
+      final maxOrderPosition = order.length - 1 - remainingSlots;
+      var bestOrderPosition = -1;
+      var bestDistance = double.infinity;
+
+      for (
+        var position = previousOrderPosition + 1;
+        position <= maxOrderPosition;
+        position++
+      ) {
+        final index = order[position];
+        final previous = balanced.last;
+        final left = centers[index] - widths[index] / 2;
+        final previousRight = centers[previous] + widths[previous] / 2;
+        if (left < previousRight + minGap) continue;
+
+        final distance = (centers[index] - target).abs();
+        if (distance <= bestDistance) {
+          bestDistance = distance;
+          bestOrderPosition = position;
+        }
+      }
+
+      if (bestOrderPosition < 0) {
+        packed.sort();
+        return packed;
+      }
+      balanced.add(order[bestOrderPosition]);
+      previousOrderPosition = bestOrderPosition;
+    }
+
+    balanced.add(last);
+    for (var i = 1; i < balanced.length; i++) {
+      final previous = balanced[i - 1];
+      final current = balanced[i];
+      final gap =
+          centers[current] -
+          widths[current] / 2 -
+          (centers[previous] + widths[previous] / 2);
+      if (gap < minGap) {
+        packed.sort();
+        return packed;
+      }
+    }
+    balanced.sort();
+    return balanced;
+  }
+
+  Set<int> _bottomLabelIndexes(CartesianScale scale, Color labelColor) {
+    if (bottomLabels.isEmpty || scale.count <= 0) return const {};
+
+    final count = bottomLabels.length < scale.count
+        ? bottomLabels.length
+        : scale.count;
+    final centers = [
+      for (var index = 0; index < count; index++) scale.xForIndex(index),
+    ];
+    final widths = [
+      for (var index = 0; index < count; index++)
+        measureChartText(
+          bottomLabels[index],
+          fontSize: _axisLabelFontSize,
+          weight: _axisLabelFontWeight,
+          color: labelColor,
+        ),
+    ];
+    var selected = selectXAxisLabelIndices(centers, widths, _xAxisLabelMinGap);
+
+    final cap = maxBottomTitles;
+    if (cap != null && selected.length > cap && cap > 0) {
+      if (cap == 1) return {selected.first};
+      selected = [
+        for (var slot = 0; slot < cap; slot++)
+          selected[((selected.length - 1) * slot / (cap - 1)).round()],
+      ];
+    }
+    return selected.toSet();
   }
 
   @override
   Widget build(BuildContext context) {
-    final visiblePoints = [
-      for (final line in series) ...line.points,
-    ];
+    final axisLabelColor = Theme.of(context).colorScheme.onSurface;
+    final visiblePoints = [for (final line in series) ...line.points];
     final boundsPoints = visiblePoints.isEmpty ? fallbackPoints : visiblePoints;
     final valueBounds = calculateBounds(
       points: boundsPoints,
@@ -135,11 +235,12 @@ class AppLineChart extends StatelessWidget {
           referenceValue: referenceValue,
           referenceColor: referenceColor,
           axisLabelFormatter: axisLabelFormatter,
+          axisLabelColor: axisLabelColor,
           accessibilityLabel: accessibilityLabel,
           accessibilityValue: accessibilityValue,
         );
         final scale = renderer.scaleFor(size);
-        final labelIndexes = _bottomLabelIndexes(scale.bounds.width);
+        final labelIndexes = _bottomLabelIndexes(scale, axisLabelColor);
 
         return Stack(
           clipBehavior: Clip.none,
@@ -168,9 +269,10 @@ class AppLineChart extends StatelessWidget {
                           softWrap: false,
                           overflow: TextOverflow.visible,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
+                          style: TextStyle(
+                            color: axisLabelColor,
+                            fontWeight: _axisLabelFontWeight,
+                            fontSize: _axisLabelFontSize,
                           ),
                         ),
                       ),
@@ -219,8 +321,7 @@ class _AppLineChartInteractionState extends State<_AppLineChartInteraction> {
     return switch (defaultTargetPlatform) {
       TargetPlatform.linux ||
       TargetPlatform.macOS ||
-      TargetPlatform.windows =>
-        true,
+      TargetPlatform.windows => true,
       _ => false,
     };
   }
@@ -334,11 +435,9 @@ class _AppLineTooltipPainter extends CustomPainter {
       anchor: Offset(x, bounds.top),
       container: size,
       background: theme.tooltipBackground,
-      textColor: highest.color,
+      textColor: theme.tooltipText,
       mutedTextColor: theme.tooltipMutedText,
-      rows: [
-        TooltipRow(tooltipText(highest.index, highest.value)),
-      ],
+      rows: [TooltipRow(tooltipText(highest.index, highest.value))],
     );
   }
 
@@ -358,6 +457,7 @@ class _AppLineChartRenderer extends ChartRenderer
   final double? referenceValue;
   final Color referenceColor;
   final String Function(double value) axisLabelFormatter;
+  final Color axisLabelColor;
   final String _accessibilityLabel;
   final String _accessibilityValue;
 
@@ -369,25 +469,26 @@ class _AppLineChartRenderer extends ChartRenderer
     required this.referenceValue,
     required this.referenceColor,
     required this.axisLabelFormatter,
+    required this.axisLabelColor,
     required String accessibilityLabel,
     required String accessibilityValue,
-  })  : _accessibilityLabel = accessibilityLabel,
-        _accessibilityValue = accessibilityValue;
+  }) : _accessibilityLabel = accessibilityLabel,
+       _accessibilityValue = accessibilityValue;
 
   ChartBounds boundsFor(Size size) => ChartBounds.insets(
-        size,
-        left: 45,
-        top: 0,
-        right: 0,
-        bottom: 34,
-      );
+    size,
+    left: 48,
+    top: _chartTopInset,
+    right: 8,
+    bottom: _chartBottomLabelInset,
+  );
 
   CartesianScale scaleFor(Size size) => CartesianScale(
-        bounds: boundsFor(size),
-        count: rowCount,
-        minValue: minY,
-        maxValue: maxY,
-      );
+    bounds: boundsFor(size),
+    count: rowCount,
+    minValue: minY,
+    maxValue: maxY,
+  );
 
   Path _linePath(List<Offset> points, {required bool curved}) {
     if (!curved || points.length < 3) return polylinePath(points);
@@ -413,14 +514,10 @@ class _AppLineChartRenderer extends ChartRenderer
     return path;
   }
 
-  List<Offset> _pixelPoints(
-    AppLineChartSeries line,
-    CartesianScale scale,
-  ) =>
-      [
-        for (final point in line.points)
-          Offset(scale.xForIndex(point.index), scale.yForValue(point.value)),
-      ];
+  List<Offset> _pixelPoints(AppLineChartSeries line, CartesianScale scale) => [
+    for (final point in line.points)
+      Offset(scale.xForIndex(point.index), scale.yForValue(point.value)),
+  ];
 
   void _drawAxes(
     Canvas canvas,
@@ -434,8 +531,9 @@ class _AppLineChartRenderer extends ChartRenderer
         canvas,
         axisLabelFormatter(value),
         Offset(scale.bounds.left - 7, scale.yForValue(value)),
-        color: theme.label,
-        fontSize: 10,
+        color: axisLabelColor,
+        fontSize: _axisLabelFontSize,
+        weight: _axisLabelFontWeight,
         h: HAlign.end,
         v: VAlign.center,
       );

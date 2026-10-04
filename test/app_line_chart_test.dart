@@ -6,10 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('chart bounds preserve zero baseline and visible reference line', () {
     final bounds = AppLineChart.calculateBounds(
-      points: const [
-        AppLineChartPoint(0, 70),
-        AppLineChartPoint(1, 80),
-      ],
+      points: const [AppLineChartPoint(0, 70), AppLineChartPoint(1, 80)],
       startAtZero: true,
       referenceValue: 90,
     );
@@ -18,19 +15,30 @@ void main() {
     expect(bounds.$2, 90);
   });
 
-  test('chart bounds include a goal below visible data when not zero-based',
-      () {
-    final bounds = AppLineChart.calculateBounds(
-      points: const [
-        AppLineChartPoint(0, 70),
-        AppLineChartPoint(1, 80),
-      ],
-      startAtZero: false,
-      referenceValue: 65,
+  test(
+    'chart bounds include a goal below visible data when not zero-based',
+    () {
+      final bounds = AppLineChart.calculateBounds(
+        points: const [AppLineChartPoint(0, 70), AppLineChartPoint(1, 80)],
+        startAtZero: false,
+        referenceValue: 65,
+      );
+
+      expect(bounds.$1, 65);
+      expect(bounds.$2, 80);
+    },
+  );
+
+  test('x-axis labels keep both ends and balance intermediate labels', () {
+    final selected = AppLineChart.selectXAxisLabelIndices(
+      const [0, 20, 40, 60, 80, 100],
+      const [18, 18, 18, 18, 18, 18],
+      12,
     );
 
-    expect(bounds.$1, 65);
-    expect(bounds.$2, 80);
+    expect(selected.first, 0);
+    expect(selected.last, 5);
+    expect(selected, orderedEquals([0, 3, 5]));
   });
 
   testWidgets('line chart renders through Drafter with responsive labels', (
@@ -86,7 +94,7 @@ void main() {
         .widgetList<Text>(find.byType(Text))
         .where((widget) => widget.data?.startsWith('D') ?? false)
         .length;
-    expect(visibleLabels, inInclusiveRange(7, 12));
+    expect(visibleLabels, inInclusiveRange(13, 19));
 
     final semantics = tester.getSemantics(find.byType(ChartCanvas));
     expect(semantics.label, 'Value chart');
