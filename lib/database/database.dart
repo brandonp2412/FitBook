@@ -101,6 +101,7 @@ class AppDatabase extends _$AppDatabase {
         talker.info('Migrated FitBook database to v$to');
       },
       beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON');
         talker.debug('Opening FitBook database schema v${details.versionNow}');
         // A device that already attempted the 51 -> 52 migration may have
         // reached schema 52 before its old orphaned rows were reported. Make
