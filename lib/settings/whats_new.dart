@@ -207,7 +207,8 @@ class _WhatsNewState extends State<WhatsNew> {
                   IconButton(
                     onPressed: _page > 0 ? () => _setPage(_page - 1) : null,
                     icon: const Icon(Icons.chevron_left),
-                    tooltip: 'Previous page',
+                    tooltip:
+                        MaterialLocalizations.of(context).previousPageTooltip,
                   ),
                   Text(
                     '${_page + 1} / ${(_changelogFiles.length / _pageSize).ceil()}',
@@ -215,10 +216,10 @@ class _WhatsNewState extends State<WhatsNew> {
                   IconButton(
                     onPressed:
                         _page + 1 < (_changelogFiles.length / _pageSize).ceil()
-                        ? () => _setPage(_page + 1)
-                        : null,
+                            ? () => _setPage(_page + 1)
+                            : null,
                     icon: const Icon(Icons.chevron_right),
-                    tooltip: 'Next page',
+                    tooltip: MaterialLocalizations.of(context).nextPageTooltip,
                   ),
                 ],
               ),
