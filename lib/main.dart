@@ -149,6 +149,9 @@ class App extends StatelessWidget {
           theme: ThemeData(
             colorScheme: settings.systemColors ? lightDynamic : defaultTheme,
             fontFamily: 'Manrope',
+            popupMenuTheme: const PopupMenuThemeData(
+              menuPadding: EdgeInsets.zero,
+            ),
             useMaterial3: true,
             pageTransitionsTheme:
                 navigationTransitionsTheme(settings.navigationAnimation),
@@ -162,6 +165,9 @@ class App extends StatelessWidget {
             ),
             fontFamily: 'Manrope',
             useMaterial3: true,
+            popupMenuTheme: const PopupMenuThemeData(
+              menuPadding: EdgeInsets.zero,
+            ),
             inputDecorationTheme: const InputDecorationTheme(
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 /// by this amount so the first item clears the floating bar.
 const double appSearchHeight = 72;
 
+enum _AppSearchMenuAction { selectAll, settings, edit, favorite }
+
 class AppSearch extends StatefulWidget {
   const AppSearch({
     super.key,
@@ -36,6 +38,27 @@ class AppSearch extends StatefulWidget {
 }
 
 class _AppSearchState extends State<AppSearch> {
+  Future<void> _handleMenuAction(_AppSearchMenuAction? action) async {
+    if (action == null || !mounted) return;
+
+    switch (action) {
+      case _AppSearchMenuAction.selectAll:
+        widget.onSelect();
+        break;
+      case _AppSearchMenuAction.settings:
+        await Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) => const SettingsPage()),
+        );
+        break;
+      case _AppSearchMenuAction.edit:
+        widget.onEdit();
+        break;
+      case _AppSearchMenuAction.favorite:
+        widget.onFavorite();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget trailingMain;
@@ -153,62 +176,45 @@ class _AppSearchState extends State<AppSearch> {
                           Offset.zero & overlay.size,
                         );
 
-                        await showMenu(
+                        final action = await showMenu<_AppSearchMenuAction>(
                           context: context,
                           position: position,
                           items: [
                             PopupMenuItem(
+                              value: _AppSearchMenuAction.selectAll,
                               child: ListTile(
                                 leading: const Icon(Icons.done_all),
                                 title: Text(context.l10n.selectAll),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  widget.onSelect();
-                                },
                               ),
                             ),
                             if (widget.selected.isEmpty) ...[
                               PopupMenuItem(
+                                value: _AppSearchMenuAction.settings,
                                 child: ListTile(
                                   leading: const Icon(Icons.settings),
                                   title: Text(context.l10n.settings),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SettingsPage(),
-                                      ),
-                                    );
-                                  },
                                 ),
                               ),
                             ],
                             if (widget.selected.isNotEmpty) ...[
                               PopupMenuItem(
+                                value: _AppSearchMenuAction.edit,
                                 child: ListTile(
                                   leading: const Icon(Icons.edit),
                                   title: Text(context.l10n.edit),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    widget.onEdit();
-                                  },
                                 ),
                               ),
                               PopupMenuItem(
+                                value: _AppSearchMenuAction.favorite,
                                 child: ListTile(
                                   leading: const Icon(Icons.favorite_outline),
                                   title: Text(context.l10n.favorite),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    widget.onFavorite();
-                                  },
                                 ),
                               ),
                             ],
                           ],
                         );
+                        await _handleMenuAction(action);
                       },
                     );
                   },
