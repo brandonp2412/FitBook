@@ -854,10 +854,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return 'প্রতি $quantity $unit-এ $nutrient';
   }
 

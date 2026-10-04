@@ -856,10 +856,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '$nutrient por $quantity $unit';
   }
 
@@ -2362,10 +2359,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '$nutrient por $quantity $unit';
   }
 
@@ -3871,10 +3865,7 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '$nutrient por $quantity $unit';
   }
 

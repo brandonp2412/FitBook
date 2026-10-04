@@ -852,10 +852,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '$nutrient به‌ازای $quantity $unit';
   }
 

@@ -137,7 +137,7 @@ abstract class AppLocalizations {
     Locale('vi'),
     Locale('zh'),
     Locale('zh', 'CN'),
-    Locale('zh', 'TW'),
+    Locale('zh', 'TW')
   ];
 
   /// No description provided for @appTitle.
@@ -1645,10 +1645,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{nutrient} per {quantity} {unit}'**
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  );
+      String nutrient, String quantity, String unit);
 
   /// No description provided for @fiber.
   ///
@@ -2846,7 +2843,7 @@ class _AppLocalizationsDelegate
         'uk',
         'ur',
         'vi',
-        'zh',
+        'zh'
       ].contains(locale.languageCode);
 
   @override
@@ -2925,9 +2922,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
-  );
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

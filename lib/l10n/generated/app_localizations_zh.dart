@@ -824,10 +824,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -2278,10 +2275,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '每 $quantity $unit的$nutrient';
   }
 
@@ -3732,10 +3726,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String nutritionPerQuantityUnit(
-    String nutrient,
-    String quantity,
-    String unit,
-  ) {
+      String nutrient, String quantity, String unit) {
     return '每 $quantity $unit的$nutrient';
   }
 
