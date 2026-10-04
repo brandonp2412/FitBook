@@ -110,9 +110,18 @@ class DiaryState extends ChangeNotifier {
     if (_foodGroup != null)
       query = query..where(db.foods.foodGroup.equals(_foodGroup!));
     if (_startDate != null)
-      query = query..where(db.diaries.created.isBiggerThanValue(_startDate!));
-    if (_endDate != null)
-      query = query..where(db.diaries.created.isSmallerThanValue(_endDate!));
+      query = query
+        ..where(db.diaries.created.isBiggerOrEqualValue(_startDate!));
+    if (_endDate != null) {
+      final endDate = _endDate!;
+      final dayAfterEndDate = DateTime(
+        endDate.year,
+        endDate.month,
+        endDate.day + 1,
+      );
+      query = query
+        ..where(db.diaries.created.isSmallerThanValue(dayAfterEndDate));
+    }
 
     _stream = query.watch().map(
           (results) => results.map(
