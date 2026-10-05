@@ -84,12 +84,22 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final desktop = usesSideNavigation(context);
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.editFoodsCount(widget.ids.length)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: AdaptiveFormSurface(
+        maxWidth: 980,
+        desktopActions: [
+          FilledButton.icon(
+            onPressed: save,
+            icon: const Icon(Icons.save_outlined),
+            label: Text(l10n.save),
+          ),
+        ],
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -143,17 +153,19 @@ class _EditFoodsPageState extends State<EditFoodsPage> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
-        child: AnimatedFab(
-          onTap: () => save(),
-          icon: Icons.save,
-          label: context.l10n.save,
-          scroll: scrollCtrl,
-        ),
-      ),
+      floatingActionButton: desktop
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
+              ),
+              child: AnimatedFab(
+                onTap: () => save(),
+                icon: Icons.save,
+                label: context.l10n.save,
+                scroll: scrollCtrl,
+              ),
+            ),
     );
   }
 }

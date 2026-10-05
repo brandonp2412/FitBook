@@ -66,13 +66,13 @@ void saveWeight(
   if (settings.autoCalc) {
     final macros = getMacros(amount, unit);
     db.settings.update().write(
-      SettingsCompanion(
-        dailyCalories: drift.Value(macros.calories.toInt()),
-        dailyCarb: drift.Value(macros.carb.toInt()),
-        dailyFat: drift.Value(macros.fat.toInt()),
-        dailyProtein: drift.Value(macros.protein.toInt()),
-      ),
-    );
+          SettingsCompanion(
+            dailyCalories: drift.Value(macros.calories.toInt()),
+            dailyCarb: drift.Value(macros.carb.toInt()),
+            dailyFat: drift.Value(macros.fat.toInt()),
+            dailyProtein: drift.Value(macros.protein.toInt()),
+          ),
+        );
   }
 
   if (settings.targetWeight == null) return;
@@ -240,17 +240,15 @@ class _EditWeightPageState extends State<EditWeightPage> {
     );
 
     final previousWeightField = TextFormField(
-      controller: TextEditingController(
-        text: "\${formatDisplayNumber(context, widget.weight.amount.value, minimumFractionDigits: 2, maximumFractionDigits: 2)} \${widget.weight.unit.value}",
-      ),
+      initialValue:
+          '${formatDisplayNumber(context, widget.weight.amount.value, minimumFractionDigits: 2, maximumFractionDigits: 2)} ${widget.weight.unit.value}',
       decoration: InputDecoration(labelText: l10n.lastWeight),
       enabled: false,
     );
 
     final unitTile = ListTile(
-      contentPadding: desktop
-          ? const EdgeInsets.symmetric(horizontal: 4)
-          : null,
+      contentPadding:
+          desktop ? const EdgeInsets.symmetric(horizontal: 4) : null,
       title: Text(l10n.unitWithValue(unit)),
       leading: unit == 'kg'
           ? const Icon(Icons.straighten)
@@ -269,9 +267,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
     );
 
     final conversionTile = ListTile(
-      contentPadding: desktop
-          ? const EdgeInsets.symmetric(horizontal: 4)
-          : null,
+      contentPadding:
+          desktop ? const EdgeInsets.symmetric(horizontal: 4) : null,
       title: convertTo == unit
           ? Text(l10n.keepUnitAs(unit))
           : Text(l10n.convertToUnit(convertTo)),
@@ -281,8 +278,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
           convertTo = convertTo == 'kg' ? 'lb' : 'kg';
         });
         db.settings.update().write(
-          SettingsCompanion(convertWeight: drift.Value(convertTo)),
-        );
+              SettingsCompanion(convertWeight: drift.Value(convertTo)),
+            );
       },
       trailing: Switch(
         value: convertTo == 'kg',
@@ -291,16 +288,15 @@ class _EditWeightPageState extends State<EditWeightPage> {
             convertTo = value ? 'kg' : 'lb';
           });
           db.settings.update().write(
-            SettingsCompanion(convertWeight: drift.Value(convertTo)),
-          );
+                SettingsCompanion(convertWeight: drift.Value(convertTo)),
+              );
         },
       ),
     );
 
     final createdTile = ListTile(
-      contentPadding: desktop
-          ? const EdgeInsets.symmetric(horizontal: 4)
-          : null,
+      contentPadding:
+          desktop ? const EdgeInsets.symmetric(horizontal: 4) : null,
       title: Text(l10n.createdDate),
       subtitle: Selector<SettingsState, String>(
         selector: (p0, settings) => settings.value.longDateFormat,
@@ -322,10 +318,9 @@ class _EditWeightPageState extends State<EditWeightPage> {
             child: Image.file(
               File(image!),
               fit: BoxFit.cover,
-              cacheWidth:
-                  (MediaQuery.sizeOf(context).width *
-                          MediaQuery.devicePixelRatioOf(context))
-                      .round(),
+              cacheWidth: (MediaQuery.sizeOf(context).width *
+                      MediaQuery.devicePixelRatioOf(context))
+                  .round(),
               errorBuilder: (context, error, stackTrace) => Center(
                 child: TextButton.icon(
                   onPressed: _pickImage,
@@ -384,15 +379,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FilledButton.icon(
-                onPressed: save,
-                icon: const Icon(Icons.save_outlined),
-                label: Text(l10n.save),
-              ),
-            ),
+            const SizedBox(height: 8),
           ]
         : <Widget>[
             valueField,
@@ -423,6 +410,13 @@ class _EditWeightPageState extends State<EditWeightPage> {
       ),
       body: AdaptiveFormSurface(
         maxWidth: desktop ? 1060 : 820,
+        desktopActions: [
+          FilledButton.icon(
+            onPressed: save,
+            icon: const Icon(Icons.save_outlined),
+            label: Text(l10n.save),
+          ),
+        ],
         child: Form(
           key: formKey,
           child: ListView(children: formChildren),

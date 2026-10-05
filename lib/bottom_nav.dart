@@ -86,25 +86,96 @@ class AdaptiveFormSurface extends StatelessWidget {
     super.key,
     required this.child,
     this.maxWidth = 820,
+    this.desktopActions = const [],
   });
 
   final Widget child;
   final double maxWidth;
+  final List<Widget> desktopActions;
 
   @override
   Widget build(BuildContext context) {
     final wide = usesSideNavigation(context);
-    final content = wide
-        ? Card(
-            margin: EdgeInsets.zero,
-            clipBehavior: Clip.antiAlias,
-            child: Padding(padding: const EdgeInsets.all(20), child: child),
-          )
-        : child;
+    if (!wide) {
+      return AdaptivePageBody(
+        maxWidth: maxWidth,
+        child: Padding(padding: const EdgeInsets.all(16), child: child),
+      );
+    }
+
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final radius = BorderRadius.circular(12);
+    final enabledBorder = OutlineInputBorder(
+      borderRadius: radius,
+      borderSide: BorderSide(color: colorScheme.outlineVariant),
+    );
+    final desktopTheme = theme.copyWith(
+      inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+        filled: true,
+        fillColor: colorScheme.surfaceContainerLowest,
+        border: enabledBorder,
+        enabledBorder: enabledBorder,
+        disabledBorder: OutlineInputBorder(
+          borderRadius: radius,
+          borderSide: BorderSide(
+            color: colorScheme.outlineVariant.withValues(alpha: 0.65),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: radius,
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+      ),
+    );
+
+    final form = Theme(data: desktopTheme, child: child);
+    final cardChild = desktopActions.isEmpty
+        ? Padding(padding: const EdgeInsets.all(20), child: form)
+        : Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                  child: form,
+                ),
+              ),
+              const Divider(height: 1),
+              ColoredBox(
+                color: colorScheme.surfaceContainerLow,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Wrap(
+                      spacing: 12,
+                      runSpacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: desktopActions,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
 
     return AdaptivePageBody(
       maxWidth: maxWidth,
-      child: Padding(padding: EdgeInsets.all(wide ? 24 : 16), child: content),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Card(
+          margin: EdgeInsets.zero,
+          clipBehavior: Clip.antiAlias,
+          child: cardChild,
+        ),
+      ),
     );
   }
 }

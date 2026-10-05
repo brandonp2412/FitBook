@@ -673,6 +673,57 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     final servingSize = selectedFood?.servingSize ?? 100;
     final showList =
         selectedFood == null && _selectedMealId == null && !_creatingFood;
+    final desktop = usesSideNavigation(context);
+    final canSave = selectedFood != null ||
+        _selectedMealId != null ||
+        (_creatingFood && nameController.text.trim().isNotEmpty);
+    final hasEditableImage =
+        bigImage?.isNotEmpty == true || imageFile?.isNotEmpty == true;
+
+    Widget imagePreview() {
+      return InkWell(
+        onTap: () => showImageOptionsSheet(
+          context: context,
+          onReplace: setImage,
+          onCamera: supportsCameraCapture
+              ? () => setImage(source: ImageSource.camera)
+              : null,
+          onDelete: () => setState(() {
+            imageFile = null;
+            bigImage = null;
+            foodDirty = true;
+          }),
+        ),
+        child: SizedBox(
+          height: desktop ? 220 : 200,
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: imageFile != null
+                ? Image.file(
+                    File(imageFile!),
+                    fit: BoxFit.cover,
+                    cacheWidth: (MediaQuery.sizeOf(context).width *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .round(),
+                    errorBuilder: (context, error, stackTrace) {
+                      return TextButton.icon(
+                        onPressed: setImage,
+                        label: Text(l10n.imageError),
+                        icon: const Icon(Icons.error),
+                      );
+                    },
+                  )
+                : CachedNetworkImage(
+                    imageUrl: bigImage!,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => const SizedBox.expand(),
+                    errorWidget: (_, __, ___) => const SizedBox.expand(),
+                  ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -729,49 +780,25 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       ),
       body: AdaptiveFormSurface(
         maxWidth: 980,
+        desktopActions: [
+          if (canSave)
+            FilledButton.icon(
+              onPressed: save,
+              icon: const Icon(Icons.save_outlined),
+              label: Text(l10n.save),
+            ),
+        ],
         child: ListView(
           controller: scrollCtrl,
           children: [
             if (settings.showImages && !kIsWeb) ...[
-              bigImage?.isNotEmpty == true || imageFile?.isNotEmpty == true
-                  ? InkWell(
-                      onTap: () => showImageOptionsSheet(
-                        context: context,
-                        onReplace: setImage,
-                        onCamera: supportsCameraCapture
-                            ? () => setImage(source: ImageSource.camera)
-                            : null,
-                        onDelete: () => setState(() {
-                          imageFile = null;
-                          bigImage = null;
-                          foodDirty = true;
-                        }),
-                      ),
-                      child: SizedBox(
-                        height: 200,
-                        child: imageFile != null
-                            ? Image.file(
-                                File(imageFile!),
-                                cacheWidth: (MediaQuery.sizeOf(context).width *
-                                        MediaQuery.devicePixelRatioOf(context))
-                                    .round(),
-                                errorBuilder: (context, error, stackTrace) {
-                                  return TextButton.icon(
-                                    onPressed: setImage,
-                                    label: Text(l10n.imageError),
-                                    icon: const Icon(Icons.error),
-                                  );
-                                },
-                              )
-                            : CachedNetworkImage(
-                                imageUrl: bigImage!,
-                                fit: BoxFit.cover,
-                                placeholder: (_, __) => const SizedBox.expand(),
-                                errorWidget: (_, __, ___) =>
-                                    const SizedBox.expand(),
-                              ),
-                      ),
-                    )
+              hasEditableImage
+                  ? desktop
+                      ? Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(width: 380, child: imagePreview()),
+                        )
+                      : imagePreview()
                   : Wrap(
                       alignment: WrapAlignment.center,
                       spacing: 8,
@@ -1261,9 +1288,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           ],
         ),
       ),
-      floatingActionButton: (selectedFood != null ||
-              _selectedMealId != null ||
-              (_creatingFood && nameController.text.trim().isNotEmpty))
+      floatingActionButton: !desktop && canSave
           ? Padding(
               padding: EdgeInsets.only(
                 bottom: navigationBottomClearance(context),

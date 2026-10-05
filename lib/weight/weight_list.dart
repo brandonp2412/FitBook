@@ -409,6 +409,24 @@ class _SparkPainter extends CustomPainter {
       }
     }
 
+    final fillPath = Path.from(path)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+    canvas.drawPath(
+      fillPath,
+      Paint()
+        ..style = PaintingStyle.fill
+        ..shader = LinearGradient(
+          colors: [
+            color.withValues(alpha: 0.3),
+            color.withValues(alpha: 0),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ).createShader(Offset.zero & size),
+    );
+
     canvas.drawPath(
       path,
       Paint()

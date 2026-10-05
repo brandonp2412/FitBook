@@ -254,6 +254,7 @@ class _EditMealPageState extends State<EditMealPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final desktop = usesSideNavigation(context);
     final wholeNumberFormatter = _mealNumberFormat(
       context,
       maximumFractionDigits: 0,
@@ -341,122 +342,138 @@ class _EditMealPageState extends State<EditMealPage> {
       ),
       body: loading
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              controller: scrollCtrl,
-              padding: EdgeInsets.fromLTRB(
-                16,
-                16,
-                16,
-                navigationBottomClearance(context),
-              ),
-              itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
-              itemBuilder: (ctx, i) {
-                if (i == 0)
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: TextField(
-                      controller: nameCtrl,
-                      decoration: InputDecoration(
-                        labelText: l10n.name,
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: const OutlineInputBorder(),
+          : AdaptiveFormSurface(
+              maxWidth: 980,
+              desktopActions: [
+                OutlinedButton.icon(
+                  onPressed: _pickFood,
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.addFood),
+                ),
+                FilledButton.icon(
+                  onPressed: _save,
+                  icon: const Icon(Icons.save_outlined),
+                  label: Text(l10n.save),
+                ),
+              ],
+              child: ListView.builder(
+                controller: scrollCtrl,
+                padding: EdgeInsets.only(
+                  bottom: desktop ? 0 : navigationBottomClearance(context),
+                ),
+                itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
+                itemBuilder: (ctx, i) {
+                  if (i == 0)
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: TextField(
+                        controller: nameCtrl,
+                        decoration: InputDecoration(
+                          labelText: l10n.name,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: const OutlineInputBorder(),
+                        ),
+                        onChanged: (_) => setState(() {}),
+                        textCapitalization: TextCapitalization.sentences,
+                        autofocus: widget.id == null,
+                        textInputAction: TextInputAction.done,
                       ),
-                      onChanged: (_) => setState(() {}),
-                      textCapitalization: TextCapitalization.sentences,
-                      autofocus: widget.id == null,
-                      textInputAction: TextInputAction.done,
-                    ),
-                  );
-                if (i == 1) {
-                  if (_imageFile != null)
-                    return Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              File(_imageFile!),
-                              cacheWidth: (MediaQuery.sizeOf(context).width *
-                                      MediaQuery.devicePixelRatioOf(
-                                        context,
-                                      ))
-                                  .round(),
-                              height: 160,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const Center(
-                                child: Icon(Icons.broken_image_outlined),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
-                          child: IconButton.filled(
-                            icon: const Icon(Icons.close),
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.black.withValues(
-                                alpha: 0.5,
-                              ),
-                              foregroundColor: Colors.white,
-                            ),
-                            onPressed: () => setState(() => _imageFile = null),
-                          ),
-                        ),
-                      ],
                     );
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: OutlinedButton.icon(
-                      icon: const Icon(Icons.image),
-                      label: Text(l10n.addImage),
-                      onPressed: _pickImage,
-                    ),
+                  if (i == 1) {
+                    if (_imageFile != null)
+                      return Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                File(_imageFile!),
+                                cacheWidth: (MediaQuery.sizeOf(context).width *
+                                        MediaQuery.devicePixelRatioOf(
+                                          context,
+                                        ))
+                                    .round(),
+                                height: 160,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => const Center(
+                                  child: Icon(Icons.broken_image_outlined),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                            child: IconButton.filled(
+                              icon: const Icon(Icons.close),
+                              style: IconButton.styleFrom(
+                                backgroundColor: Colors.black.withValues(
+                                  alpha: 0.5,
+                                ),
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () =>
+                                  setState(() => _imageFile = null),
+                            ),
+                          ),
+                        ],
+                      );
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.image),
+                        label: Text(l10n.addImage),
+                        onPressed: _pickImage,
+                      ),
+                    );
+                  }
+                  if (mealFoods.isEmpty)
+                    return SizedBox(
+                      height: 320,
+                      child: AppEmptyState(
+                        icon: Icons.restaurant_menu_rounded,
+                        title: l10n.noFoodsInMeal,
+                        message: l10n.addFoodToMealHint,
+                        actionLabel: l10n.addFood,
+                        actionIcon: Icons.add_rounded,
+                        onAction: _pickFood,
+                      ),
+                    );
+                  final idx = i - 2;
+                  return _FoodEntryCard(
+                    entry: mealFoods[idx],
+                    onRemove: () => setState(() => mealFoods.removeAt(idx)),
+                    onChanged: () => setState(() {}),
                   );
-                }
-                if (mealFoods.isEmpty)
-                  return SizedBox(
-                    height: 320,
-                    child: AppEmptyState(
-                      icon: Icons.restaurant_menu_rounded,
-                      title: l10n.noFoodsInMeal,
-                      message: l10n.addFoodToMealHint,
-                      actionLabel: l10n.addFood,
-                      actionIcon: Icons.add_rounded,
-                      onAction: _pickFood,
-                    ),
-                  );
-                final idx = i - 2;
-                return _FoodEntryCard(
-                  entry: mealFoods[idx],
-                  onRemove: () => setState(() => mealFoods.removeAt(idx)),
-                  onChanged: () => setState(() {}),
-                );
-              },
+                },
+              ),
             ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: navigationBottomClearance(context)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton.small(
-              heroTag: 'addFood',
-              tooltip: l10n.addFood,
-              onPressed: _pickFood,
-              child: const Icon(Icons.add),
+      floatingActionButton: desktop
+          ? null
+          : Padding(
+              padding:
+                  EdgeInsets.only(bottom: navigationBottomClearance(context)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton.small(
+                    heroTag: 'addFood',
+                    tooltip: l10n.addFood,
+                    onPressed: _pickFood,
+                    child: const Icon(Icons.add),
+                  ),
+                  const SizedBox(height: 8),
+                  AnimatedFab(
+                    onTap: _save,
+                    label: l10n.save,
+                    icon: Icons.save,
+                    scroll: scrollCtrl,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            AnimatedFab(
-              onTap: _save,
-              label: l10n.save,
-              icon: Icons.save,
-              scroll: scrollCtrl,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

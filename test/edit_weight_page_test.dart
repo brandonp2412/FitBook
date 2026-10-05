@@ -157,6 +157,12 @@ void main() async {
 
     expect(find.text('Edit weight'), findsOne);
     expect(find.text('Weight (kg)'), findsOne);
+    expect(
+      tester
+          .widgetList<TextFormField>(find.byType(TextFormField))
+          .any((field) => field.initialValue == '100.00 kg'),
+      isTrue,
+    );
 
     await tester.enterText(find.bySemanticsLabel('Weight (kg)'), '200');
     await tester.tap(find.text('Save'));

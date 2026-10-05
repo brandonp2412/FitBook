@@ -270,6 +270,7 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
     final l10n = context.l10n;
+    final desktop = usesSideNavigation(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -310,8 +311,15 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: AdaptiveFormSurface(
+        maxWidth: 980,
+        desktopActions: [
+          FilledButton.icon(
+            onPressed: _save,
+            icon: const Icon(Icons.save_outlined),
+            label: Text(l10n.save),
+          ),
+        ],
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -520,17 +528,19 @@ class _EditDiariesPageState extends State<EditDiariesPage> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
-        child: AnimatedFab(
-          onTap: () => _save(),
-          icon: Icons.save,
-          label: l10n.save,
-          scroll: scrollCtrl,
-        ),
-      ),
+      floatingActionButton: desktop
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
+              ),
+              child: AnimatedFab(
+                onTap: () => _save(),
+                icon: Icons.save,
+                label: l10n.save,
+                scroll: scrollCtrl,
+              ),
+            ),
     );
   }
 }

@@ -299,49 +299,64 @@ class _EditFoodPageState extends State<EditFoodPage> {
   Widget _imageSection() {
     if (!settings.showImages) return const SizedBox.shrink();
 
+    final desktop = usesSideNavigation(context);
     final hasImage = imgFile?.isNotEmpty == true ||
         smallImg?.isNotEmpty == true ||
         bigImg?.isNotEmpty == true;
 
+    Widget imagePreview() {
+      return InkWell(
+        onTap: () => showImageOptionsSheet(
+          context: context,
+          onReplace: setImage,
+          onCamera: supportsCameraCapture
+              ? () => setImage(source: ImageSource.camera)
+              : null,
+          onDelete: () => setState(() {
+            imgFile = null;
+            smallImg = null;
+            bigImg = null;
+          }),
+        ),
+        child: SizedBox(
+          height: desktop ? 220 : 200,
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: imgFile != null
+                ? Image.file(
+                    File(imgFile!),
+                    fit: BoxFit.cover,
+                    cacheWidth: (MediaQuery.sizeOf(context).width *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .round(),
+                    errorBuilder: (context, error, stackTrace) =>
+                        TextButton.icon(
+                      onPressed: setImage,
+                      label: Text(context.l10n.imageError),
+                      icon: const Icon(Icons.error),
+                    ),
+                  )
+                : CachedNetworkImage(
+                    imageUrl: smallImg ?? bigImg!,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => const SizedBox.expand(),
+                    errorWidget: (_, __, ___) => const SizedBox.expand(),
+                  ),
+          ),
+        ),
+      );
+    }
+
     return Column(
+      crossAxisAlignment:
+          desktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         if (hasImage)
-          InkWell(
-            onTap: () => showImageOptionsSheet(
-              context: context,
-              onReplace: setImage,
-              onCamera: supportsCameraCapture
-                  ? () => setImage(source: ImageSource.camera)
-                  : null,
-              onDelete: () => setState(() {
-                imgFile = null;
-                smallImg = null;
-                bigImg = null;
-              }),
-            ),
-            child: SizedBox(
-              height: 200,
-              child: imgFile != null
-                  ? Image.file(
-                      File(imgFile!),
-                      cacheWidth: (MediaQuery.sizeOf(context).width *
-                              MediaQuery.devicePixelRatioOf(context))
-                          .round(),
-                      errorBuilder: (context, error, stackTrace) =>
-                          TextButton.icon(
-                        onPressed: setImage,
-                        label: Text(context.l10n.imageError),
-                        icon: const Icon(Icons.error),
-                      ),
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: smallImg ?? bigImg!,
-                      fit: BoxFit.cover,
-                      placeholder: (_, __) => const SizedBox.expand(),
-                      errorWidget: (_, __, ___) => const SizedBox.expand(),
-                    ),
-            ),
-          )
+          if (desktop)
+            SizedBox(width: 380, child: imagePreview())
+          else
+            imagePreview()
         else
           Wrap(
             spacing: 8,
@@ -368,6 +383,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   Widget build(BuildContext context) {
     settings = context.watch<SettingsState>().value;
     final l10n = context.l10n;
+    final desktop = usesSideNavigation(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -418,6 +434,19 @@ class _EditFoodPageState extends State<EditFoodPage> {
       ),
       body: AdaptiveFormSurface(
         maxWidth: 980,
+        desktopActions: [
+          if (widget.id != null)
+            OutlinedButton.icon(
+              onPressed: saveAs,
+              icon: const Icon(Icons.save_as_outlined),
+              label: Text(l10n.saveAsNewCopy),
+            ),
+          FilledButton.icon(
+            onPressed: save,
+            icon: const Icon(Icons.save_outlined),
+            label: Text(l10n.save),
+          ),
+        ],
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -616,32 +645,34 @@ class _EditFoodPageState extends State<EditFoodPage> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(
-          bottom: navigationBottomClearance(context),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.id != null) ...[
-              FloatingActionButton.small(
-                heroTag: 'saveAs',
-                tooltip: l10n.saveAsNewCopy,
-                onPressed: saveAs,
-                child: const Icon(Icons.save_as),
+      floatingActionButton: desktop
+          ? null
+          : Padding(
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
               ),
-              const SizedBox(height: 8),
-            ],
-            AnimatedFab(
-              onTap: save,
-              label: l10n.save,
-              icon: Icons.save,
-              scroll: scrollCtrl,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.id != null) ...[
+                    FloatingActionButton.small(
+                      heroTag: 'saveAs',
+                      tooltip: l10n.saveAsNewCopy,
+                      onPressed: saveAs,
+                      child: const Icon(Icons.save_as),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                  AnimatedFab(
+                    onTap: save,
+                    label: l10n.save,
+                    icon: Icons.save,
+                    scroll: scrollCtrl,
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

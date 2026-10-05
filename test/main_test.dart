@@ -58,13 +58,13 @@ void main() async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider.value(value: settingsState),
           ChangeNotifierProvider(create: (context) => DiaryState()),
         ],
         child: const App(),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
 
     await tester.tap(find.byKey(const Key('desktop-GraphPage')));
     await tester.pump();
@@ -75,6 +75,8 @@ void main() async {
     expect(graphRect.left, lessThan(1400));
     expect(graphRect.right, greaterThan(232));
 
-    await db.close();
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 1));
+    await tester.pump(const Duration(milliseconds: 1));
   });
 }

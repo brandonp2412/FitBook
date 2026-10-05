@@ -59,6 +59,51 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('EditDiary constrains images and pins save on desktop', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1200, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    await db.settings.update().write(
+          const SettingsCompanion(showImages: Value(true)),
+        );
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+
+    final mealId = await db.meals.insertOne(
+      MealsCompanion.insert(
+        name: 'Desktop meal',
+        created: DateTime.now(),
+        imageFile: const Value('/tmp/desktop-meal.jpg'),
+      ),
+    );
+    final entryId = await db.diaries.insertOne(
+      DiariesCompanion.insert(
+        meal: Value(mealId),
+        created: DateTime.now(),
+        quantity: 1,
+        unit: 'serving',
+      ),
+    );
+
+    await tester.pumpWidget(_wrap(EditDiaryPage(id: entryId), settingsState));
+    await tester.pumpAndSettle();
+
+    final imageTarget = find
+        .ancestor(
+          of: find.byType(Image),
+          matching: find.byType(InkWell),
+        )
+        .first;
+    expect(tester.getSize(imageTarget).width, lessThanOrEqualTo(380));
+    expect(find.widgetWithText(FilledButton, 'Save'), findsOneWidget);
+
+    await db.close();
+  });
+
   testWidgets('EditDiary persists nutrient updates',
       (WidgetTester tester) async {
     await mockTests();
