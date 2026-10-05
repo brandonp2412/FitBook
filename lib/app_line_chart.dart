@@ -13,6 +13,7 @@ const _chartBottomLabelInset = 38.0;
 const _tooltipPadding = 8.0;
 const _tooltipRowHeight = 16.0;
 const _tooltipDotGap = 8.0;
+const _tooltipFontSize = 10.0;
 
 @immutable
 class AppLineChartPoint {
@@ -443,20 +444,36 @@ class _AppLineTooltipPainter extends CustomPainter {
       markers: [for (final mark in marks) mark.center],
       markerColors: [for (final mark in marks) mark.color],
     );
-    drawTooltip(
-      canvas,
-      anchor: Offset(
-        x,
-        AppLineChart.tooltipTopForMarks(
-          [for (final mark in marks) mark.center.dy],
-          rowCount: 1,
-        ),
+    final text = tooltipText(highest.index, highest.value);
+    final textWidth = measureChartText(
+      text,
+      color: theme.tooltipText,
+      fontSize: _tooltipFontSize,
+    );
+    final tooltipWidth = textWidth + _tooltipPadding * 2;
+    final tooltipHeight = _tooltipRowHeight + _tooltipPadding * 2;
+    var left = x + 12;
+    if (left + tooltipWidth > size.width) left = x - 12 - tooltipWidth;
+    left = left.clamp(0.0, max(0.0, size.width - tooltipWidth)).toDouble();
+    final top = AppLineChart.tooltipTopForMarks(
+      [for (final mark in marks) mark.center.dy],
+      rowCount: 1,
+    ).clamp(0.0, max(0.0, size.height - tooltipHeight)).toDouble();
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(left, top, tooltipWidth, tooltipHeight),
+        const Radius.circular(8),
       ),
-      container: size,
-      background: theme.tooltipBackground,
-      textColor: theme.tooltipText,
-      mutedTextColor: theme.tooltipMutedText,
-      rows: [TooltipRow(tooltipText(highest.index, highest.value))],
+      Paint()..color = theme.tooltipBackground,
+    );
+    drawChartText(
+      canvas,
+      text,
+      Offset(left + _tooltipPadding, top + tooltipHeight / 2),
+      color: theme.tooltipText,
+      fontSize: _tooltipFontSize,
+      v: VAlign.center,
     );
   }
 
