@@ -10,6 +10,9 @@ const _axisLabelFontWeight = FontWeight.w600;
 const _xAxisLabelMinGap = 12.0;
 const _chartTopInset = 24.0;
 const _chartBottomLabelInset = 38.0;
+const _tooltipPadding = 8.0;
+const _tooltipRowHeight = 16.0;
+const _tooltipDotGap = 8.0;
 
 @immutable
 class AppLineChartPoint {
@@ -97,6 +100,17 @@ class AppLineChart extends StatelessWidget {
       }
     }
     return (minY, maxY);
+  }
+
+  @visibleForTesting
+  static double tooltipTopForMarks(
+    List<double> markYs, {
+    required int rowCount,
+  }) {
+    if (markYs.isEmpty) return 0;
+
+    final tooltipHeight = rowCount * _tooltipRowHeight + _tooltipPadding * 2;
+    return markYs.reduce(min) - tooltipHeight - _tooltipDotGap;
   }
 
   @visibleForTesting
@@ -431,7 +445,13 @@ class _AppLineTooltipPainter extends CustomPainter {
     );
     drawTooltip(
       canvas,
-      anchor: Offset(x, bounds.top),
+      anchor: Offset(
+        x,
+        AppLineChart.tooltipTopForMarks(
+          [for (final mark in marks) mark.center.dy],
+          rowCount: 1,
+        ),
+      ),
       container: size,
       background: theme.tooltipBackground,
       textColor: theme.tooltipText,
