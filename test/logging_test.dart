@@ -18,15 +18,11 @@ void main() {
       pen: AnsiPen(),
     );
 
-    final narrow = formatter
-        .fmt(details, settings)
-        .split(String.fromCharCode(10))
-        .first;
+    final narrow =
+        formatter.fmt(details, settings).split(String.fromCharCode(10)).first;
     terminalColumns = 90;
-    final wide = formatter
-        .fmt(details, settings)
-        .split(String.fromCharCode(10))
-        .first;
+    final wide =
+        formatter.fmt(details, settings).split(String.fromCharCode(10)).first;
 
     expect(narrow.length, lessThan(50));
     expect(wide.length, lessThan(90));
@@ -47,10 +43,8 @@ void main() {
       pen: AnsiPen(),
     );
 
-    final border = formatter
-        .fmt(details, settings)
-        .split(String.fromCharCode(10))
-        .first;
+    final border =
+        formatter.fmt(details, settings).split(String.fromCharCode(10)).first;
     expect(border.length, 111);
   });
 }

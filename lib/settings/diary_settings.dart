@@ -46,8 +46,8 @@ List<Widget> getDiarySettings({
             );
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(entryUnit: Value(value!)),
-          ),
+                SettingsCompanion(entryUnit: Value(value!)),
+              ),
         ),
       ),
     if (l10n.diarySummary.toLowerCase().contains(term))
@@ -78,8 +78,8 @@ List<Widget> getDiarySettings({
             ),
           ],
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(diarySummary: Value(value.toString())),
-          ),
+                SettingsCompanion(diarySummary: Value(value.toString())),
+              ),
         ),
       ),
     if (l10n.dailyCaloriesKcal.toLowerCase().contains(term))
@@ -88,10 +88,10 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: calories,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(
-              dailyCalories: Value(parseDisplayInt(context, value)),
-            ),
-          ),
+                SettingsCompanion(
+                  dailyCalories: Value(parseDisplayInt(context, value)),
+                ),
+              ),
           onTap: () => selectAll(calories),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: l10n.dailyCaloriesKcal),
@@ -103,12 +103,12 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: protein,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(
-              dailyProtein: value.trim().isEmpty
-                  ? const Value(null)
-                  : Value(parseDisplayInt(context, value)),
-            ),
-          ),
+                SettingsCompanion(
+                  dailyProtein: value.trim().isEmpty
+                      ? const Value(null)
+                      : Value(parseDisplayInt(context, value)),
+                ),
+              ),
           onTap: () => selectAll(protein),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: l10n.dailyProteinG),
@@ -120,8 +120,10 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: fat,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(dailyFat: Value(parseDisplayInt(context, value))),
-          ),
+                SettingsCompanion(
+                  dailyFat: Value(parseDisplayInt(context, value)),
+                ),
+              ),
           onTap: () => selectAll(fat),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: l10n.dailyFatG),
@@ -133,10 +135,10 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: carb,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(
-              dailyCarb: Value(parseDisplayInt(context, value)),
-            ),
-          ),
+                SettingsCompanion(
+                  dailyCarb: Value(parseDisplayInt(context, value)),
+                ),
+              ),
           onTap: () => selectAll(carb),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: l10n.dailyCarbsG),
@@ -148,10 +150,10 @@ List<Widget> getDiarySettings({
         child: TextField(
           controller: fiber,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(
-              dailyFiber: Value(parseDisplayInt(context, value)),
-            ),
-          ),
+                SettingsCompanion(
+                  dailyFiber: Value(parseDisplayInt(context, value)),
+                ),
+              ),
           onTap: () => selectAll(fiber),
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: l10n.dailyFiberG),
@@ -168,21 +170,20 @@ List<Widget> getDiarySettings({
             onTap: () async {
               final value = !settings.value.autoCalc;
               db.settings.update().write(
-                SettingsCompanion(autoCalc: Value(value)),
-              );
+                    SettingsCompanion(autoCalc: Value(value)),
+                  );
 
               if (!value) return;
 
-              final bodyWeight =
-                  await (db.weights.select()
-                        ..orderBy([
-                          (u) => OrderingTerm(
+              final bodyWeight = await (db.weights.select()
+                    ..orderBy([
+                      (u) => OrderingTerm(
                             expression: u.created,
                             mode: OrderingMode.desc,
                           ),
-                        ])
-                        ..limit(1))
-                      .getSingle();
+                    ])
+                    ..limit(1))
+                  .getSingle();
 
               if (!context.mounted) return;
               final macros = getMacros(bodyWeight.amount, bodyWeight.unit);
@@ -207,19 +208,19 @@ List<Widget> getDiarySettings({
                 maximumFractionDigits: 0,
               );
               db.settings.update().write(
-                SettingsCompanion(
-                  dailyCalories: Value(macros.calories.toInt()),
-                  dailyCarb: Value(macros.carb.toInt()),
-                  dailyFat: Value(macros.fat.toInt()),
-                  dailyProtein: Value(macros.protein.toInt()),
-                ),
-              );
+                    SettingsCompanion(
+                      dailyCalories: Value(macros.calories.toInt()),
+                      dailyCarb: Value(macros.carb.toInt()),
+                      dailyFat: Value(macros.fat.toInt()),
+                      dailyProtein: Value(macros.protein.toInt()),
+                    ),
+                  );
             },
             trailing: Switch(
               value: settings.value.autoCalc,
               onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(autoCalc: Value(value)),
-              ),
+                    SettingsCompanion(autoCalc: Value(value)),
+                  ),
             ),
           ),
         ),
@@ -231,15 +232,16 @@ List<Widget> getDiarySettings({
           leading: const Icon(Icons.check),
           title: Text(l10n.selectNameOnSubmit),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(
-              selectEntryOnSubmit: Value(!settings.value.selectEntryOnSubmit),
-            ),
-          ),
+                SettingsCompanion(
+                  selectEntryOnSubmit:
+                      Value(!settings.value.selectEntryOnSubmit),
+                ),
+              ),
           trailing: Switch(
             value: settings.value.selectEntryOnSubmit,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(selectEntryOnSubmit: Value(value)),
-            ),
+                  SettingsCompanion(selectEntryOnSubmit: Value(value)),
+                ),
           ),
         ),
       ),

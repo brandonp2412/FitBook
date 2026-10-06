@@ -208,9 +208,8 @@ class DiaryPageState extends State<DiaryPage> {
                                           ? Icons.restaurant_menu_rounded
                                           : Icons.add_circle_outline_rounded,
                                       size: 56,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                     const SizedBox(height: 16),
                                     Text(
@@ -231,9 +230,8 @@ class DiaryPageState extends State<DiaryPage> {
                                     Text(
                                       searchTerm.isEmpty
                                           ? context.l10n.tapStartLoggingFood
-                                          : context
-                                                .l10n
-                                                .noMatchingDiaryEntriesTapCreate,
+                                          : context.l10n
+                                              .noMatchingDiaryEntriesTapCreate,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
@@ -294,7 +292,8 @@ class DiaryPageState extends State<DiaryPage> {
                     });
                     await (db.delete(
                       db.diaries,
-                    )..where((tbl) => tbl.id.isIn(selectedCopy))).go();
+                    )..where((tbl) => tbl.id.isIn(selectedCopy)))
+                        .go();
                   },
                   onSelect: () => setState(() {
                     selected.addAll(
@@ -303,11 +302,10 @@ class DiaryPageState extends State<DiaryPage> {
                   }),
                   selected: selected,
                   onFavorite: () async {
-                    final diaries =
-                        await (db.diaries.selectOnly()
-                              ..addColumns([db.diaries.id, db.diaries.food])
-                              ..where(db.diaries.id.isIn(selected)))
-                            .get();
+                    final diaries = await (db.diaries.selectOnly()
+                          ..addColumns([db.diaries.id, db.diaries.food])
+                          ..where(db.diaries.id.isIn(selected)))
+                        .get();
                     final foodIds = diaries.map(
                       (entry) => entry.read(db.diaries.food)!,
                     );

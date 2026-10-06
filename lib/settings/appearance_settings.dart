@@ -102,8 +102,8 @@ List<Widget> getAppearanceSettings(
             ),
           ],
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(locale: Value(value!)),
-          ),
+                SettingsCompanion(locale: Value(value!)),
+              ),
           decoration: InputDecoration(
             labelText: l10n.language,
             helperText: l10n.languageSubtitle,
@@ -139,8 +139,8 @@ List<Widget> getAppearanceSettings(
                 : settings.value.themeMode,
           },
           onSelectionChanged: (selection) => db.settings.update().write(
-            SettingsCompanion(themeMode: Value(selection.first)),
-          ),
+                SettingsCompanion(themeMode: Value(selection.first)),
+              ),
         ),
       ),
     if (l10n.pureBlackAmoled.toLowerCase().contains(term))
@@ -150,21 +150,22 @@ List<Widget> getAppearanceSettings(
           leading: const Icon(Icons.contrast),
           title: Text(l10n.pureBlackAmoled),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(
-              themeMode: Value(
-                settings.value.themeMode == 'ThemeMode.amoled'
-                    ? 'ThemeMode.dark'
-                    : 'ThemeMode.amoled',
+                SettingsCompanion(
+                  themeMode: Value(
+                    settings.value.themeMode == 'ThemeMode.amoled'
+                        ? 'ThemeMode.dark'
+                        : 'ThemeMode.amoled',
+                  ),
+                ),
               ),
-            ),
-          ),
           trailing: Switch(
             value: settings.value.themeMode == 'ThemeMode.amoled',
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(
-                themeMode: Value(value ? 'ThemeMode.amoled' : 'ThemeMode.dark'),
-              ),
-            ),
+                  SettingsCompanion(
+                    themeMode:
+                        Value(value ? 'ThemeMode.amoled' : 'ThemeMode.dark'),
+                  ),
+                ),
           ),
         ),
       ),
@@ -179,15 +180,15 @@ List<Widget> getAppearanceSettings(
                 ? const Icon(Icons.color_lens)
                 : const Icon(Icons.color_lens_outlined),
             onTap: () => db.settings.update().write(
-              SettingsCompanion(
-                systemColors: Value(!settings.value.systemColors),
-              ),
-            ),
+                  SettingsCompanion(
+                    systemColors: Value(!settings.value.systemColors),
+                  ),
+                ),
             trailing: Switch(
               value: settings.value.systemColors,
               onChanged: (value) => db.settings.update().write(
-                SettingsCompanion(systemColors: Value(value)),
-              ),
+                    SettingsCompanion(systemColors: Value(value)),
+                  ),
             ),
           ),
         ),
@@ -201,13 +202,15 @@ List<Widget> getAppearanceSettings(
               ? const Icon(Icons.image)
               : const Icon(Icons.image_outlined),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(showImages: Value(!settings.value.showImages)),
-          ),
+                SettingsCompanion(
+                  showImages: Value(!settings.value.showImages),
+                ),
+              ),
           trailing: Switch(
             value: settings.value.showImages,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(showImages: Value(value)),
-            ),
+                  SettingsCompanion(showImages: Value(value)),
+                ),
           ),
         ),
       ),
@@ -218,13 +221,15 @@ List<Widget> getAppearanceSettings(
           title: Text(l10n.curveLineGraphs),
           leading: const Icon(Icons.insights),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(curveLines: Value(!settings.value.curveLines)),
-          ),
+                SettingsCompanion(
+                  curveLines: Value(!settings.value.curveLines),
+                ),
+              ),
           trailing: Switch(
             value: settings.value.curveLines,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(curveLines: Value(value)),
-            ),
+                  SettingsCompanion(curveLines: Value(value)),
+                ),
           ),
         ),
       ),
@@ -237,15 +242,15 @@ List<Widget> getAppearanceSettings(
               ? const Icon(Icons.list)
               : const Icon(Icons.grid_view),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(
-              compactWeights: Value(!settings.value.compactWeights),
-            ),
-          ),
+                SettingsCompanion(
+                  compactWeights: Value(!settings.value.compactWeights),
+                ),
+              ),
           trailing: Switch(
             value: !settings.value.compactWeights,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(compactWeights: Value(!value)),
-            ),
+                  SettingsCompanion(compactWeights: Value(!value)),
+                ),
           ),
         ),
       ),
@@ -256,15 +261,15 @@ List<Widget> getAppearanceSettings(
           title: Text(l10n.graphsStartAtZero),
           leading: const Icon(Icons.vertical_align_bottom),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(
-              graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
-            ),
-          ),
+                SettingsCompanion(
+                  graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
+                ),
+              ),
           trailing: Switch(
             value: settings.value.graphsStartAtZero,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(graphsStartAtZero: Value(value)),
-            ),
+                  SettingsCompanion(graphsStartAtZero: Value(value)),
+                ),
           ),
         ),
       ),
@@ -284,8 +289,8 @@ List<Widget> getAppearanceSettings(
               )
               .toList(),
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(navigationAnimation: Value(value!)),
-          ),
+                SettingsCompanion(navigationAnimation: Value(value!)),
+              ),
           decoration: InputDecoration(labelText: l10n.navigationAnimation),
         ),
       ),
@@ -298,8 +303,8 @@ List<Widget> getAppearanceSettings(
             return DropdownMenuItem<String>(value: value, child: Text(value));
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(longDateFormat: Value(value!)),
-          ),
+                SettingsCompanion(longDateFormat: Value(value!)),
+              ),
           decoration: InputDecoration(
             labelText: l10n.longDateFormat(longExample),
           ),
@@ -314,8 +319,8 @@ List<Widget> getAppearanceSettings(
             return DropdownMenuItem<String>(value: value, child: Text(value));
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(shortDateFormat: Value(value!)),
-          ),
+                SettingsCompanion(shortDateFormat: Value(value!)),
+              ),
           decoration: InputDecoration(
             labelText: l10n.shortDateFormat(shortExample),
           ),

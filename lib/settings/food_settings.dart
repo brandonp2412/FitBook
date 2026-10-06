@@ -30,8 +30,8 @@ List<Widget> getFoodSettings({
             );
           }).toList(),
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(foodUnit: Value(value!)),
-          ),
+                SettingsCompanion(foodUnit: Value(value!)),
+              ),
         ),
       ),
     if (l10n.fields.toLowerCase().contains(term))
@@ -55,13 +55,15 @@ List<Widget> getFoodSettings({
           leading: const Icon(Icons.favorite_outline),
           title: Text(l10n.favoriteNewFoods),
           onTap: () => db.settings.update().write(
-            SettingsCompanion(favoriteNew: Value(!settings.value.favoriteNew)),
-          ),
+                SettingsCompanion(
+                  favoriteNew: Value(!settings.value.favoriteNew),
+                ),
+              ),
           trailing: Switch(
             value: settings.value.favoriteNew,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(favoriteNew: Value(value)),
-            ),
+                  SettingsCompanion(favoriteNew: Value(value)),
+                ),
           ),
         ),
       ),

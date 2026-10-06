@@ -30,9 +30,8 @@ double? parseServingSizeFilter(String value, NumberFormat formatter) {
   }
 }
 
-String _foodLibraryItemName(Object item) => item is Meal
-    ? item.name
-    : (item as FoodListFood).food.name.value;
+String _foodLibraryItemName(Object item) =>
+    item is Meal ? item.name : (item as FoodListFood).food.name.value;
 
 DateTime _foodLibraryItemCreated(Object item) =>
     (item is Meal ? item.created : (item as FoodListFood).food.created.value) ??
@@ -54,14 +53,13 @@ int _foodSearchRank(Object item, String searchLower) {
 int _compareFoodLibraryItems(Object a, Object b, String search) {
   if (search.isNotEmpty) {
     final searchLower = search.toLowerCase();
-    final rankComparison =
-        _foodSearchRank(a, searchLower).compareTo(_foodSearchRank(b, searchLower));
+    final rankComparison = _foodSearchRank(a, searchLower)
+        .compareTo(_foodSearchRank(b, searchLower));
     if (rankComparison != 0) return rankComparison;
 
-    final favoriteComparison =
-        (_foodLibraryItemFavorite(b) ? 1 : 0).compareTo(
-          _foodLibraryItemFavorite(a) ? 1 : 0,
-        );
+    final favoriteComparison = (_foodLibraryItemFavorite(b) ? 1 : 0).compareTo(
+      _foodLibraryItemFavorite(a) ? 1 : 0,
+    );
     if (favoriteComparison != 0) return favoriteComparison;
   }
 

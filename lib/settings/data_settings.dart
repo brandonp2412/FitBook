@@ -71,27 +71,27 @@ Future<void> tapBackup(
 
   if (!value) {
     await db.settings.update().write(
-      const SettingsCompanion(automaticBackups: Value(false)),
-    );
+          const SettingsCompanion(automaticBackups: Value(false)),
+        );
     return;
   }
 
   await db.settings.update().write(
-    const SettingsCompanion(automaticBackups: Value(false)),
-  );
+        const SettingsCompanion(automaticBackups: Value(false)),
+      );
 
   try {
     final selectedPath = await androidChannel.invokeMethod<String>('pick');
     if (selectedPath == null) return;
 
     await db.settings.update().write(
-      const SettingsCompanion(automaticBackups: Value(true)),
-    );
+          const SettingsCompanion(automaticBackups: Value(true)),
+        );
     await notifyAutomaticBackupEnabled(l10n, isAndroid: supportsBackup);
   } catch (_) {
     await db.settings.update().write(
-      const SettingsCompanion(automaticBackups: Value(false)),
-    );
+          const SettingsCompanion(automaticBackups: Value(false)),
+        );
     rethrow;
   }
 }

@@ -23,10 +23,10 @@ List<Widget> getWeightSettings({
         child: TextField(
           controller: targetWeight,
           onChanged: (value) => db.settings.update().write(
-            SettingsCompanion(
-              targetWeight: Value(parseDisplayNumber(context, value)),
-            ),
-          ),
+                SettingsCompanion(
+                  targetWeight: Value(parseDisplayNumber(context, value)),
+                ),
+              ),
           onTap: () => selectAll(targetWeight),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: InputDecoration(labelText: l10n.targetWeight),
@@ -40,20 +40,20 @@ List<Widget> getWeightSettings({
           title: Text(l10n.positiveReinforcement),
           onTap: () {
             db.settings.update().write(
-              SettingsCompanion(
-                positiveReinforcement: Value(
-                  !settings.value.positiveReinforcement,
-                ),
-              ),
-            );
+                  SettingsCompanion(
+                    positiveReinforcement: Value(
+                      !settings.value.positiveReinforcement,
+                    ),
+                  ),
+                );
             if (!settings.value.positiveReinforcement)
               toast(context, l10n.positiveReinforcementPreview);
           },
           trailing: Switch(
             value: settings.value.positiveReinforcement,
             onChanged: (value) => db.settings.update().write(
-              SettingsCompanion(positiveReinforcement: Value(value)),
-            ),
+                  SettingsCompanion(positiveReinforcement: Value(value)),
+                ),
           ),
         ),
       ),
