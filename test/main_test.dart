@@ -1,4 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:fit_book/bottom_nav.dart';
+import 'package:fit_book/diary/diary_page.dart';
+import 'package:fit_book/food/food_page.dart';
+import 'package:fit_book/graph_page.dart';
+import 'package:fit_book/weight/weight_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/settings/settings_state.dart';
@@ -6,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
+import '../integration_test/screenshot_navigation.dart';
 import 'mock_tests.dart';
 
 void main() async {
@@ -45,6 +51,67 @@ void main() async {
 
     await db.close();
   });
+  for (final width in [390.0, 899.0, 900.0, 960.0, 1400.0]) {
+    testWidgets('screenshot navigation selects all tabs at ${width.toInt()}px',
+        (WidgetTester tester) async {
+      tester.view.physicalSize = Size(width, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      await mockTests();
+      final settings = await db.settings.select().getSingle();
+      final settingsState = SettingsState(settings);
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: settingsState),
+            ChangeNotifierProvider(create: (context) => DiaryState()),
+          ],
+          child: const App(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final desktop = width >= largeScreenBreakpoint;
+      expect(find.byType(SideNav), desktop ? findsOneWidget : findsNothing);
+      expect(find.byType(BottomNav), desktop ? findsNothing : findsOneWidget);
+
+      for (final (index, tab) in [
+        'DiaryPage',
+        'GraphPage',
+        'FoodPage',
+        'WeightPage',
+      ].indexed) {
+        await selectScreenshotTab(tester, tab);
+        final selected = desktop
+            ? tester.widget<SideNav>(find.byType(SideNav)).currentIndex
+            : tester.widget<BottomNav>(find.byType(BottomNav)).currentIndex;
+        expect(
+          selected,
+          index,
+          reason: '$tab was not activated at ${width.toInt()}px',
+        );
+        final expectedPage = switch (tab) {
+          'DiaryPage' => find.byType(DiaryPage),
+          'GraphPage' => find.byType(GraphPage),
+          'FoodPage' => find.byType(FoodPage),
+          'WeightPage' => find.byType(WeightPage),
+          _ => throw StateError('Unknown screenshot tab: $tab'),
+        };
+        expect(
+          expectedPage,
+          findsOneWidget,
+          reason: '$tab did not render at ${width.toInt()}px',
+        );
+      }
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 1));
+      await tester.pump(const Duration(milliseconds: 1));
+    });
+  }
+
   testWidgets('desktop tab changes are immediate', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1400, 900);
     tester.view.devicePixelRatio = 1;

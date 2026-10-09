@@ -16,6 +16,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'screenshot_navigation.dart';
+
 List<FoodsCompanion> foods = [
   FoodsCompanion.insert(
     name: "Bacon & Eggs on Toast",
@@ -283,8 +285,7 @@ Future<void> generateScreenshot({
   await tester.pumpAndSettle();
   expect(find.textContaining('New version '), findsNothing);
 
-  await tester.tap(find.byKey(Key(tabNavigationKey(tabBarState))));
-  await tester.pumpAndSettle();
+  await selectScreenshotTab(tester, tabNavigationKey(tabBarState));
 
   if (navigateToPage != null) {
     final navState = getBuildContext(tester, tabBarState);
