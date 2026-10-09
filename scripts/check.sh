@@ -25,3 +25,6 @@ flutter/bin/flutter analyze lib test
 
 echo "== testing =="
 flutter/bin/flutter test
+
+echo "== screenshot CI recovery tests =="
+bash scripts/test-ci-screenshots.sh

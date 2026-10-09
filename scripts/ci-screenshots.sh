@@ -10,6 +10,11 @@ store_locale="en-US"
 screenshot_dir="fastlane/metadata/android/$store_locale/images/${FITBOOK_DEVICE_TYPE}"
 expected_count=8
 drive_timeout="${SCREENSHOT_DRIVE_TIMEOUT:-12m}"
+max_attempts="${SCREENSHOT_DRIVE_ATTEMPTS:-3}"
+if [[ ! "$max_attempts" =~ ^[1-9][0-9]*$ ]]; then
+  echo "Invalid SCREENSHOT_DRIVE_ATTEMPTS: $max_attempts" >&2
+  exit 1
+fi
 drive_log="$(mktemp)"
 trap 'rm -f "$drive_log"' EXIT
 
@@ -93,7 +98,7 @@ drive_args=(
 )
 
 drive_status=1
-for attempt in 1 2; do
+for ((attempt = 1; attempt <= max_attempts; attempt += 1)); do
   rm -rf "$screenshot_dir"
   mkdir -p "$screenshot_dir"
   : >"$drive_log"
@@ -122,12 +127,12 @@ for attempt in 1 2; do
     transient_failure=1
   fi
 
-  if [[ "$transient_failure" -ne 1 || "$attempt" -eq 2 ]]; then
+  if [[ "$transient_failure" -ne 1 || "$attempt" -eq "$max_attempts" ]]; then
     collect_diagnostics
     break
   fi
 
-  echo "Transient emulator failure on screenshot attempt $attempt; retrying once" >&2
+  echo "Transient emulator failure on screenshot attempt $attempt; retrying ($((attempt + 1))/$max_attempts)" >&2
   collect_diagnostics
   recover_emulator || break
 done
