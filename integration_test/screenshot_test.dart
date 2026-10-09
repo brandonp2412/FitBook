@@ -309,8 +309,8 @@ void main() {
     await app.db.weights.deleteAll();
     await app.db.metadata.deleteAll();
 
-    await app.db.diaries.insertAll(diaries);
     await app.db.foods.insertAll(foods);
+    await app.db.diaries.insertAll(diaries);
     await app.db.weights.insertAll(weights);
 
     final packageInfo = await PackageInfo.fromPlatform();
