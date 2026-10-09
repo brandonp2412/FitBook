@@ -305,7 +305,9 @@ void main() {
 
   setUpAll(() async {
     app.db = AppDatabase(dontLog: true);
+    await app.db.mealFoods.deleteAll();
     await app.db.diaries.deleteAll();
+    await app.db.meals.deleteAll();
     await app.db.foods.deleteAll();
     await app.db.weights.deleteAll();
     await app.db.metadata.deleteAll();
