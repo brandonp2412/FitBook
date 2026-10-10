@@ -29,6 +29,14 @@ set(CMAKE_SHARED_LINKER_FLAGS_PROFILE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
 set(CMAKE_C_FLAGS_PROFILE "${CMAKE_C_FLAGS_RELEASE}")
 set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
 
+# Keep native release symbols for Microsoft Store crash reports. MSVC's
+# /Zi emits PDBs; /DEBUG:FULL links usable symbols without disabling Release
+# optimisation. See https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements
+if(MSVC)
+  add_compile_options("$<$<CONFIG:Release>:/Zi>")
+  add_link_options("$<$<CONFIG:Release>:/DEBUG:FULL>")
+endif()
+
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
 

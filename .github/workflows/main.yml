@@ -448,11 +448,18 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter\bin\flutter pub get --enforce-lockfile
 
+      - name: Test native Windows integrations
+        run: flutter\bin\flutter test -d windows integration_test/windows_native_smoke_test.dart
+
       - name: Build Windows
         run: flutter build windows
 
       - name: Create Windows zip
-        run: Compress-Archive -Path ./build/windows/x64/runner/Release/* -DestinationPath ./fitbook-windows.zip
+        shell: pwsh
+        run: |
+          $releaseFiles = @(Get-ChildItem -LiteralPath 'build/windows/x64/runner/Release' |
+            Where-Object { $_.Extension -ne '.pdb' })
+          Compress-Archive -LiteralPath $releaseFiles.FullName -DestinationPath './fitbook-windows.zip'
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -607,6 +614,10 @@ jobs:
       - name: Build MSIX
         run: flutter pub run msix:create
 
+      - name: Create symbol-bearing Store upload
+        shell: pwsh
+        run: ./.github/scripts/create-store-upload.ps1
+
       - name: Setup .NET 9.0
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
@@ -695,15 +706,14 @@ jobs:
         env:
           PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
         run: |
-          $packages = @(Get-ChildItem -Path "build/windows/x64/runner/Release" -Filter "*.msix" -File -Recurse)
-          if ($packages.Count -ne 1) {
-            throw "Expected exactly one generated MSIX package, found $($packages.Count)."
+          $uploads = @(Get-ChildItem -Path "build/windows/x64/runner/Release" -Filter "*.msixupload" -File)
+          if ($uploads.Count -ne 1) {
+            throw "Expected exactly one symbol-bearing MSIX upload, found $($uploads.Count)."
           }
 
-          $package = $packages[0]
-          $packageDirectory = $package.Directory.FullName
-          Write-Host "Publishing $($package.FullName) to Microsoft Store product $env:PRODUCT_ID"
-          & msstore publish . --inputDirectory $packageDirectory --appId $env:PRODUCT_ID
+          $upload = $uploads[0]
+          Write-Host "Publishing $($upload.FullName) to Microsoft Store product $env:PRODUCT_ID"
+          & msstore publish . --inputFile $upload.FullName --appId $env:PRODUCT_ID
           if ($LASTEXITCODE -ne 0) {
             throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
           }

@@ -52,3 +52,28 @@ jobs:
 
       - name: Test
         run: flutter/bin/flutter test
+
+  windows-native:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Configure pinned Flutter SDK
+        shell: pwsh
+        run: |
+          flutter\bin\flutter config --enable-windows-desktop --no-analytics
+          "$env:GITHUB_WORKSPACE\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Install dependencies
+        run: flutter\bin\flutter pub get --enforce-lockfile
+
+      - name: Test Store symbol archive assembly
+        shell: pwsh
+        run: ./.github/scripts/test-create-store-upload.ps1
+
+      - name: Test Windows native integrations
+        run: flutter\bin\flutter test -d windows integration_test/windows_native_smoke_test.dart
