@@ -4,6 +4,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets('dense history keeps chart axis widgets bounded', (
+    WidgetTester tester,
+  ) async {
+    const count = 1500;
+    final points = List.generate(
+      count,
+      (index) => AppLineChartPoint(index, 70 + (index % 20).toDouble()),
+    );
+    final labels = List.generate(count, (index) => 'Day $index');
+    var axisTextCount = 0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 360,
+              height: 240,
+              child: AppLineChart(
+                series: [
+                  AppLineChartSeries(
+                    points: points,
+                    color: Colors.blue,
+                    strokeWidth: 2,
+                  ),
+                ],
+                fallbackPoints: points,
+                bottomLabels: labels,
+                referenceColor: Colors.black,
+                startAtZero: false,
+                axisLabelFormatter: (value) {
+                  axisTextCount++;
+                  return value.toStringAsFixed(0);
+                },
+                tooltipText: (index, value) => '$value at $index',
+                accessibilityLabel: 'Dense chart',
+                accessibilityValue: '1500 samples',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.byType(ChartCanvas), findsOneWidget);
+    final horizontalLabels = tester
+        .widgetList<Text>(find.byType(Text))
+        .where((widget) => widget.data?.startsWith('Day ') ?? false)
+        .length;
+    expect(horizontalLabels, lessThan(12));
+    expect(axisTextCount, lessThanOrEqualTo(15));
+    expect(tester.takeException(), isNull);
+  });
+
   test('chart bounds preserve zero baseline and visible reference line', () {
     final bounds = AppLineChart.calculateBounds(
       points: const [AppLineChartPoint(0, 70), AppLineChartPoint(1, 80)],
