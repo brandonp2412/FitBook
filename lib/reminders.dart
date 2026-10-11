@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
+import 'package:fit_book/main.dart' as app;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -84,7 +85,7 @@ Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
 }
 
 Future<void> doDesktopReminders() async {
-  final db = AppDatabase();
+  final db = app.db;
   final l10n = await _loadReminderLocalizations(db);
   final linux = LinuxInitializationSettings(
     defaultActionName: l10n.openNotification,

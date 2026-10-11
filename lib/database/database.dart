@@ -14,7 +14,6 @@ import 'package:fit_book/database/metadata.dart';
 import 'package:fit_book/database/settings.dart';
 import 'package:fit_book/database/weights.dart';
 import 'package:fit_book/logging.dart';
-import 'package:fit_book/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
@@ -58,7 +57,7 @@ class AppDatabase extends _$AppDatabase {
           insertables.add(RawValuesInsertable<Food>(map));
         }
 
-        await db.foods.insertAll(insertables);
+        await foods.insertAll(insertables);
 
         await settings.insertOne(defaultSettings);
         talker.info(
