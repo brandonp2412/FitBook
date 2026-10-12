@@ -1,0 +1,10 @@
+• Center FitBook chart tooltip text
+• Change menus
+• Delete codex hooks
+• Fix FitBook chart tooltip positioning
+• Ignore submodules in vscode & generate localizations
+• Improve FitBook desktop editing and chart presentation
+• Improve FitBook desktop layouts and interactions
+• Increase size of screenshots in readme
+• Migrate Android build to built-in Kotlin
+• Migrate FitBook charts to Drafter
