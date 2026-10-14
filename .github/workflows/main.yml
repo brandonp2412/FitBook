@@ -713,7 +713,10 @@ jobs:
 
           $upload = $uploads[0]
           Write-Host "Publishing $($upload.FullName) to Microsoft Store product $env:PRODUCT_ID"
-          & msstore publish . --inputFile $upload.FullName --appId $env:PRODUCT_ID
+          $storeUploadDirectory = Join-Path $env:RUNNER_TEMP "fitbook-store-upload"
+          New-Item -ItemType Directory -Path $storeUploadDirectory -Force | Out-Null
+          Copy-Item -LiteralPath $upload.FullName -Destination $storeUploadDirectory -Force
+          & msstore publish . --inputDirectory $storeUploadDirectory --appId $env:PRODUCT_ID
           if ($LASTEXITCODE -ne 0) {
             throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
           }

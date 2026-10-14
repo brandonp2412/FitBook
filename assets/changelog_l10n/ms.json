@@ -114,5 +114,6 @@
   "1790376451": "• ciri(l10n): terjemahkan sejarah log perubahan Hindi\n• pembaikan(l10n): lengkapkan terjemahan log perubahan terkini",
   "1790423940": "• dokumen: pusatkan persembahan README\n• ciri(l10n): lengkapkan metadata kedai Sepanyol",
   "134185267504059170": "• Tambah jadual 2x3 pada halaman diari untuk mengira pemakanan bagi setiap catatan",
-  "134188838719418420": "• Tambah jadual 2x3 pada halaman diari untuk mengira pemakanan bagi setiap catatan\n• Baiki pemilihan trend yang merosakkan tooltip pada graf"
+  "134188838719418420": "• Tambah jadual 2x3 pada halaman diari untuk mengira pemakanan bagi setiap catatan\n• Baiki pemilihan trend yang merosakkan tooltip pada graf",
+  "1791794550": "• Migrasi carta ke Drafter dan perbaiki petua alat\n• Perbaiki menu, penyuntingan dan susun atur desktop\n• Perbaiki imej README, binaan Kotlin dan alat penyetempatan"
 }

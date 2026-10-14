@@ -114,5 +114,6 @@
   "1790376451": "• feat(l10n): przetłumaczyć historię zmian na hindi\n• fix(l10n): uzupełnić najnowsze tłumaczenia dziennika zmian",
   "1790423940": "• docs: wyśrodkować prezentację README\n• feat(l10n): uzupełnić hiszpańskie metadane sklepu",
   "134188838719418420": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis\n• Naprawić wybór trendu powodujący uszkodzenie podpowiedzi na wykresach",
-  "134185267504059170": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis"
+  "134185267504059170": "• Dodać tabelę 2x3 do strony Dziennik, aby obliczać wartości odżywcze na wpis",
+  "1791794550": "• Przeniesiono wykresy do Drafter i poprawiono podpowiedzi\n• Ulepszono menu, edycję i układy na komputerze\n• Poprawiono obrazy README, kompilację Kotlin i narzędzia lokalizacji"
 }

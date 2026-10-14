@@ -114,5 +114,6 @@
   "1790376451": "• feat(l10n): tradurre la cronologia delle modifiche in hindi\n• fix(l10n): completare le traduzioni più recenti del registro modifiche",
   "1790423940": "• docs: centrare la presentazione del README\n• feat(l10n): completare i metadati dello store in spagnolo",
   "134188838719418420": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce\n• Correggere la selezione della tendenza che interrompeva il tooltip nei grafici",
-  "134185267504059170": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce"
+  "134185267504059170": "• Aggiungere una tabella 2x3 alla pagina Diario per calcolare la nutrizione per voce",
+  "1791794550": "• Grafici migrati a Drafter e descrizioni a comparsa migliorate\n• Migliorati menu, modifica e layout desktop\n• Migliorate le immagini nel README, la compilazione Kotlin e gli strumenti di localizzazione"
 }
