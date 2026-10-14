@@ -1,0 +1,2 @@
+• chore: stop tracking Serena project files
+• fix(release): repair Linux and Store packaging plus changelog locale coverage
