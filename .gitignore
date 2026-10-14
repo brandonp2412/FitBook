@@ -50,7 +50,6 @@ app.*.map.json
 
 coverage/
 **/test_bundle.dart
-.patrol.env
 app-store-connect.json
 fastlane/Deliverfile
 fastlane/Preview.html
