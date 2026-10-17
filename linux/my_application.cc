@@ -1,6 +1,11 @@
 #include "my_application.h"
 
 #include <flutter_linux/flutter_linux.h>
+
+// Flutter 3.44 does not expose this setter; newer Linux engines do.
+// The weak reference keeps Skia as the fallback on older Flutter releases.
+extern "C" void fl_dart_project_set_enable_impeller(
+    FlDartProject* project, gboolean enable_impeller) __attribute__((weak));
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
@@ -51,6 +56,9 @@ static void my_application_activate(GApplication* application) {
   gtk_widget_show(GTK_WIDGET(window));
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
+  if (fl_dart_project_set_enable_impeller != nullptr) {
+    fl_dart_project_set_enable_impeller(project, FALSE);
+  }
   fl_dart_project_set_dart_entrypoint_arguments(project, self->dart_entrypoint_arguments);
 
   FlView* view = fl_view_new(project);
