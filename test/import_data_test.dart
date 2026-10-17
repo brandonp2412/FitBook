@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:drift/native.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/backup_archive.dart';
 import 'package:fit_book/settings/backup_database.dart';
 import 'package:fit_book/settings/import_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as p;
 
+import 'drift/db/generated/schema_v40.dart' as v40;
 import 'test_utils.dart';
 
 class _FakeFilePicker extends FilePickerPlatform {
@@ -150,5 +154,62 @@ void main() {
       () => validateBackupDatabaseFile(file),
       throwsA(isA<FormatException>()),
     );
+  });
+  test('legacy standalone SQLite with entries is accepted and copied',
+      () async {
+    final root =
+        await Directory.systemTemp.createTemp('fitbook-sqlite-import-');
+    addTearDown(() => root.delete(recursive: true));
+    final source = File(p.join(root.path, 'old-fitbook.sqlite'));
+    final working = await Directory(p.join(root.path, 'working')).create();
+    final documents = await Directory(p.join(root.path, 'documents')).create();
+    final writer = openBackupDatabase(source.path);
+    writer.execute('CREATE TABLE foods (id INTEGER PRIMARY KEY, name TEXT)');
+    writer.execute('CREATE TABLE entries (id INTEGER PRIMARY KEY)');
+    writer.execute('PRAGMA user_version = 40');
+    writer.execute("INSERT INTO foods VALUES (1, 'Apple')");
+    writer.close();
+
+    final imported = await prepareBackupDatabase(
+      selectedFile: source,
+      workingDirectory: working,
+      documentsDirectory: documents,
+    );
+    expect(imported.path, isNot(source.path));
+    final reader = openBackupDatabase(imported.path);
+    try {
+      expect(reader.select('SELECT name FROM foods').single['name'], 'Apple');
+      expect(reader.select('PRAGMA user_version').single.values.single, 40);
+    } finally {
+      reader.close();
+    }
+  });
+  test('legacy v40 SQLite backup migrates to current schema', () async {
+    final root = await Directory.systemTemp.createTemp('fitbook-old-schema-');
+    addTearDown(() => root.delete(recursive: true));
+    final file = File(p.join(root.path, 'fitbook-old.sqlite'));
+    final legacy = v40.DatabaseAtV40(NativeDatabase(file));
+    await legacy.customSelect('SELECT 1 FROM foods LIMIT 1').get();
+    await legacy.close();
+
+    final working = await Directory(p.join(root.path, 'work')).create();
+    final documents = await Directory(p.join(root.path, 'documents')).create();
+    final imported = await prepareBackupDatabase(
+      selectedFile: file,
+      workingDirectory: working,
+      documentsDirectory: documents,
+    );
+    final upgraded = AppDatabase(executor: NativeDatabase(imported));
+    try {
+      await upgraded.customSelect('SELECT 1 FROM diaries LIMIT 1').get();
+      expect(
+        (await upgraded.customSelect('PRAGMA user_version').get())
+            .single
+            .read<int>('user_version'),
+        upgraded.schemaVersion,
+      );
+    } finally {
+      await upgraded.close();
+    }
   });
 }

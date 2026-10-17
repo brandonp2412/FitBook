@@ -19,14 +19,19 @@ void validateBackupDatabaseFile(File databaseFile) {
       "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'foods'",
     );
     final hasDiaries = database.select(
-      "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'diaries'",
+      "SELECT 1 FROM sqlite_master WHERE type = 'table' "
+      "AND name IN ('diaries', 'entries')",
     );
     if (hasFoods.isEmpty || hasDiaries.isEmpty) {
       throw const FormatException(
         'Selected file is not a FitBook database backup',
       );
     }
-    database.select('PRAGMA quick_check');
+    if (database.select('PRAGMA quick_check').single['quick_check'] != 'ok') {
+      throw const FormatException(
+        'Selected file is not a FitBook database backup',
+      );
+    }
   } on FormatException {
     rethrow;
   } catch (_) {
@@ -43,6 +48,32 @@ const _imageColumns = <(String, String)>[
   ('meals', 'image_file'),
   ('weights', 'image'),
 ];
+
+Future<File> prepareBackupDatabase({
+  required File selectedFile,
+  required Directory workingDirectory,
+  required Directory documentsDirectory,
+}) async {
+  if (p.extension(selectedFile.path).toLowerCase() == '.zip') {
+    return extractBackupArchive(
+      archiveFile: selectedFile,
+      workingDirectory: workingDirectory,
+      documentsDirectory: documentsDirectory,
+    );
+  }
+
+  validateBackupDatabaseFile(selectedFile);
+  final snapshot =
+      File(p.join(workingDirectory.path, 'imported-$backupDatabaseName'));
+  final escapedPath = snapshot.path.replaceAll("'", "''");
+  final source = openBackupDatabase(selectedFile.path);
+  try {
+    source.execute("VACUUM INTO '$escapedPath'");
+  } finally {
+    source.close();
+  }
+  return snapshot;
+}
 
 Future<File> createBackupArchive({
   required String databasePath,

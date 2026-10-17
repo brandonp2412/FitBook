@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
@@ -279,19 +280,46 @@ class _ImportDataState extends State<ImportData> {
     );
     setState(() => importing = true);
     try {
-      final sourceFile = p.extension(selectedFile.path).toLowerCase() == '.zip'
-          ? await extractBackupArchive(
-              archiveFile: selectedFile,
-              workingDirectory: workingDirectory,
-              documentsDirectory: dbFolder,
-            )
-          : selectedFile;
+      final sourceFile = await prepareBackupDatabase(
+        selectedFile: selectedFile,
+        workingDirectory: workingDirectory,
+        documentsDirectory: dbFolder,
+      );
       validateBackupDatabaseFile(sourceFile);
-      await db.close();
+      final candidate = AppDatabase(executor: NativeDatabase(sourceFile));
       try {
-        await sourceFile.copy(p.join(dbFolder.path, backupDatabaseName));
+        await candidate.customSelect('SELECT 1 FROM foods LIMIT 1').get();
+        final violations =
+            await candidate.customSelect('PRAGMA foreign_key_check').get();
+        if (violations.isNotEmpty) {
+          throw const FormatException(
+            'Imported database has foreign key violations',
+          );
+        }
       } finally {
+        await candidate.close();
+      }
+
+      final liveFile = File(p.join(dbFolder.path, backupDatabaseName));
+      final rollback =
+          File(p.join(workingDirectory.path, 'rollback-$backupDatabaseName'));
+      await db.close();
+      if (await liveFile.exists()) await liveFile.copy(rollback.path);
+      try {
+        await sourceFile.copy(liveFile.path);
         db = AppDatabase();
+        await db.customSelect('SELECT 1 FROM foods LIMIT 1').get();
+      } catch (_) {
+        try {
+          await db.close();
+        } catch (_) {}
+        if (await rollback.exists()) {
+          await rollback.copy(liveFile.path);
+        } else if (await liveFile.exists()) {
+          await liveFile.delete();
+        }
+        db = AppDatabase();
+        rethrow;
       }
       if (!widget.pageContext.mounted) return;
       talker.info('Imported FitBook database backup');
