@@ -36,7 +36,7 @@ class AboutPage extends StatelessWidget {
             onTap: () async {
               const url =
                   'https://github.com/brandonp2412/FitBook/releases/latest';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
           ListTile(
@@ -54,7 +54,7 @@ class AboutPage extends StatelessWidget {
             subtitle: const Text("Brandon Dick"),
             onTap: () async {
               const url = 'https://github.com/brandonp2412';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
           ListTile(
@@ -64,7 +64,7 @@ class AboutPage extends StatelessWidget {
             onTap: () async {
               const url =
                   'https://github.com/brandonp2412/FitBook?tab=MIT-1-ov-file#readme';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
           ListTile(
@@ -73,7 +73,7 @@ class AboutPage extends StatelessWidget {
             subtitle: Text(context.l10n.supportProject),
             onTap: () async {
               const url = 'https://github.com/sponsors/brandonp2412';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
           ListTile(
@@ -83,7 +83,7 @@ class AboutPage extends StatelessWidget {
             onTap: () async {
               const url =
                   'https://play.google.com/store/apps/details?id=com.presley.fit_book';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
           ListTile(
@@ -91,7 +91,7 @@ class AboutPage extends StatelessWidget {
             leading: const Icon(Icons.code),
             onTap: () async {
               const url = 'https://github.com/brandonp2412/FitBook';
-              if (await canLaunchUrlString(url)) await launchUrlString(url);
+              await launchUrlString(url);
             },
           ),
         ],
