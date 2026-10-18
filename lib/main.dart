@@ -196,17 +196,32 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _pageController = PageController();
   var _currentIndex = 0;
+  final _nestedPages = <String, bool>{};
+
+  void _onNestedPageChanged(String tab, bool nested) {
+    if (!mounted || (_nestedPages[tab] ?? false) == nested) return;
+    setState(() => _nestedPages[tab] = nested);
+  }
 
   Widget _pageForTab(String tab) {
     switch (tab) {
       case 'DiaryPage':
-        return const DiaryPage();
+        return DiaryPage(
+          onNestedNavigationChanged: (nested) =>
+              _onNestedPageChanged('DiaryPage', nested),
+        );
       case 'GraphPage':
         return const GraphPage();
       case 'FoodPage':
-        return const FoodPage();
+        return FoodPage(
+          onNestedNavigationChanged: (nested) =>
+              _onNestedPageChanged('FoodPage', nested),
+        );
       case 'WeightPage':
-        return const WeightPage();
+        return WeightPage(
+          onNestedNavigationChanged: (nested) =>
+              _onNestedPageChanged('WeightPage', nested),
+        );
       default:
         return Builder(
           builder: (context) => ErrorWidget(context.l10n.invalidTabSettings),
@@ -338,16 +353,19 @@ class _HomePageState extends State<HomePage> {
             return Stack(
               children: [
                 pages(desktop: false),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: BottomNav(
-                    tabs: tabs,
-                    currentIndex: _currentIndex,
-                    onTap: (index) => selectTab(index, animate: true),
+                if (!(_nestedPages[
+                        tabs[_currentIndex.clamp(0, tabs.length - 1)]] ??
+                    false))
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: BottomNav(
+                      tabs: tabs,
+                      currentIndex: _currentIndex,
+                      onTap: (index) => selectTab(index, animate: true),
+                    ),
                   ),
-                ),
               ],
             );
           },
