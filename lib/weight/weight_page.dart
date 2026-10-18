@@ -13,12 +13,9 @@ import 'package:fit_book/weight/weight_list.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:fit_book/tab_navigation_observer.dart';
 
 class WeightPage extends StatefulWidget {
-  const WeightPage({super.key, this.onNestedNavigationChanged});
-
-  final ValueChanged<bool>? onNestedNavigationChanged;
+  const WeightPage({super.key});
 
   @override
   State<WeightPage> createState() => WeightPageState();
@@ -28,9 +25,6 @@ class WeightPageState extends State<WeightPage>
     with AutomaticKeepAliveClientMixin {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  late final _visibilityObserver = TabNavigationObserver(
-    (nested) => widget.onNestedNavigationChanged?.call(nested),
-  );
   final TextEditingController searchController = TextEditingController();
   final ScrollController scrollCtrl = ScrollController();
 
@@ -75,7 +69,6 @@ class WeightPageState extends State<WeightPage>
       },
       child: Navigator(
         key: navigatorKey,
-        observers: [_visibilityObserver],
         onGenerateRoute: (settings) => MaterialPageRoute(
           builder: (context) => MediaQuery(
             data: MediaQuery.of(context).copyWith(viewInsets: EdgeInsets.zero),

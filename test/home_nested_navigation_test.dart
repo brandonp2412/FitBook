@@ -11,8 +11,7 @@ import 'package:provider/provider.dart';
 import 'mock_tests.dart';
 
 void main() {
-  testWidgets('tab dock hides for nested pages and returns on pop',
-      (tester) async {
+  testWidgets('tab dock stays visible on nested pages', (tester) async {
     await mockTests();
     final setting = await db.settings.select().getSingle();
     await tester.pumpWidget(
@@ -35,7 +34,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Nested details'), findsOneWidget);
-    expect(find.byType(BottomNav), findsNothing);
+    expect(find.byType(BottomNav), findsOneWidget);
 
     diary.navigatorKey.currentState!.pop();
     await tester.pumpAndSettle();

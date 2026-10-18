@@ -18,13 +18,10 @@ import 'package:fit_book/speed_dial_fab.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:fit_book/tab_navigation_observer.dart';
 import 'package:provider/provider.dart';
 
 class DiaryPage extends StatefulWidget {
-  const DiaryPage({super.key, this.onNestedNavigationChanged});
-
-  final ValueChanged<bool>? onNestedNavigationChanged;
+  const DiaryPage({super.key});
 
   @override
   State<DiaryPage> createState() => DiaryPageState();
@@ -33,9 +30,6 @@ class DiaryPage extends StatefulWidget {
 class DiaryPageState extends State<DiaryPage> {
   final Set<int> selected = {};
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  late final _visibilityObserver = TabNavigationObserver(
-    (nested) => widget.onNestedNavigationChanged?.call(nested),
-  );
 
   final ScrollController scrollCtrl = ScrollController();
   late var entriesState = context.read<DiaryState>();
@@ -152,7 +146,6 @@ class DiaryPageState extends State<DiaryPage> {
       },
       child: Navigator(
         key: navigatorKey,
-        observers: [_visibilityObserver],
         onGenerateRoute: (settings) => MaterialPageRoute(
           builder: (context) => _diaryPage(),
           settings: settings,

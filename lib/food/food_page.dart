@@ -16,7 +16,6 @@ import 'package:fit_book/speed_dial_fab.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:fit_book/tab_navigation_observer.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -79,9 +78,7 @@ int _compareFoodLibraryItems(Object a, Object b, String search) {
 }
 
 class FoodPage extends StatefulWidget {
-  const FoodPage({super.key, this.onNestedNavigationChanged});
-
-  final ValueChanged<bool>? onNestedNavigationChanged;
+  const FoodPage({super.key});
 
   @override
   State<FoodPage> createState() => FoodPageState();
@@ -99,9 +96,6 @@ class FoodPageState extends State<FoodPage> with AutomaticKeepAliveClientMixin {
   final Set<int> selected = {};
   final Set<int> selectedMeals = {};
   final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
-  late final _visibilityObserver = TabNavigationObserver(
-    (nested) => widget.onNestedNavigationChanged?.call(nested),
-  );
   final ScrollController scrollCtrl = ScrollController();
 
   String search = '';
@@ -376,7 +370,6 @@ GROUP BY meal_foods.meal
       },
       child: Navigator(
         key: navKey,
-        observers: [_visibilityObserver],
         onGenerateRoute: (settings) => MaterialPageRoute(
           builder: (context) => _foodsPage(),
           settings: settings,
