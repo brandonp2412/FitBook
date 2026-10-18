@@ -18,6 +18,7 @@ import 'package:fit_book/settings/settings_page.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/whats_new.dart';
 import 'package:fit_book/utils.dart';
+import 'package:fit_book/update_notice.dart';
 import 'package:fit_book/weight/weight_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -223,19 +224,26 @@ class _HomePageState extends State<HomePage> {
 
     final info = PackageInfo.fromPlatform();
     info.then((pkg) async {
+      final buildNumber = int.tryParse(pkg.buildNumber);
+      if (buildNumber == null) return;
       final meta = await (db.metadata.select()..limit(1)).getSingleOrNull();
-      if (int.parse(pkg.buildNumber) == meta?.buildNumber) return null;
-      if (meta == null)
-        db.metadata.insertOne(
-          MetadataCompanion(buildNumber: Value(int.parse(pkg.buildNumber))),
+      if (meta?.buildNumber == buildNumber) return;
+      if (meta == null) {
+        await db.metadata.insertOne(
+          MetadataCompanion(buildNumber: Value(buildNumber)),
         );
-      else
-        db.metadata.update().write(
-              MetadataCompanion(
-                buildNumber: Value(int.parse(pkg.buildNumber)),
-              ),
+      } else {
+        await db.metadata.update().write(
+              MetadataCompanion(buildNumber: Value(buildNumber)),
             );
+      }
 
+      if (meta == null ||
+          buildNumber <= meta.buildNumber ||
+          !mounted ||
+          !await claimUpdateNotice()) {
+        return;
+      }
       talker.info('Detected FitBook update to ${pkg.version}');
       if (mounted)
         toast(
