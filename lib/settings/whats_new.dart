@@ -226,13 +226,24 @@ class _WhatsNewState extends State<WhatsNew> {
             ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(Icons.favorite_outline),
-        onPressed: () async {
-          const url = 'https://github.com/sponsors/brandonp2412';
-          await launchUrlString(url);
-        },
-        label: Text(context.l10n.donate),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton.extended(
+                icon: const Icon(Icons.favorite_outline),
+                onPressed: () async {
+                  const url = 'https://github.com/sponsors/brandonp2412';
+                  await launchUrlString(url);
+                },
+                label: Text(context.l10n.donate),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
