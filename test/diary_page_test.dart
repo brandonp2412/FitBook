@@ -239,6 +239,12 @@ void main() async {
         )
         .first;
     expect(tester.widget<ListTile>(row).onLongPress, equals(null));
+    expect(tester.getSize(row).height, lessThanOrEqualTo(60));
+    expect(
+      find.descendant(of: row, matching: find.text('250 kcal')),
+      findsOneWidget,
+    );
+    expect(tester.getTopLeft(find.text('Add diary entry')).dy, lessThan(600));
 
     tester.widget<Checkbox>(checkbox).onChanged!(true);
     await tester.pump();

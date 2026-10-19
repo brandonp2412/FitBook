@@ -41,11 +41,17 @@ class DiaryEntryRow extends StatelessWidget {
     final thumbnail = DiaryFoodThumbnail(food: food, showImages: showImages);
 
     if (usesDesktopInteractions(context)) {
+      final secondaryStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          );
       return ListTile(
         tileColor: isSelected
             ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
             : null,
-        dense: dense,
+        dense: true,
+        visualDensity: VisualDensity.compact,
+        minVerticalPadding: 0,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
         leading: Checkbox(
           key: ValueKey('diary-select-${food.entryId}'),
           value: isSelected,
@@ -53,22 +59,21 @@ class DiaryEntryRow extends StatelessWidget {
         ),
         title: Row(
           children: [
-            thumbnail,
+            DiaryFoodThumbnail(food: food, showImages: showImages, size: 32),
             const SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(food.name + suffix),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                  ),
-                ],
+              child: Text(
+                food.name + suffix,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
+            ),
+            const SizedBox(width: 12),
+            Text('$kcal kcal', style: secondaryStyle),
+            const SizedBox(width: 16),
+            Text(
+              formatDisplayTime(context, food.created),
+              style: secondaryStyle,
             ),
           ],
         ),

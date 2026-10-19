@@ -319,6 +319,11 @@ void main() async {
 
     expect(find.byKey(const Key('desktop-graph-controls')), findsOneWidget);
     expect(find.byKey(const Key('desktop-graph-chart')), findsOneWidget);
+    expect(find.text('Start date'), findsOneWidget);
+    expect(find.text('Stop date'), findsOneWidget);
+    expect(find.text('Data points'), findsOneWidget);
+    expect(find.text('Customize fields'), findsOneWidget);
+    expect(find.byTooltip('Options'), findsNothing);
     expect(
       tester.getTopLeft(find.byKey(const Key('desktop-graph-controls'))).dy,
       lessThan(

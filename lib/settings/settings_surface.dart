@@ -23,6 +23,23 @@ class SettingsSurface extends StatelessWidget {
             ? LayoutBuilder(
                 builder: (context, constraints) {
                   final itemWidth = (constraints.maxWidth - 16) / 2;
+                  Widget cardContent(Widget child) {
+                    final unwrapped = child is Padding ? child.child : child;
+                    if (unwrapped is ListTile ||
+                        unwrapped is SwitchListTile ||
+                        unwrapped is CheckboxListTile ||
+                        unwrapped is RadioListTile) {
+                      return unwrapped!;
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 4,
+                      ),
+                      child: child,
+                    );
+                  }
+
                   return SingleChildScrollView(
                     child: Wrap(
                       spacing: 16,
@@ -34,13 +51,7 @@ class SettingsSurface extends StatelessWidget {
                             child: Card(
                               margin: EdgeInsets.zero,
                               clipBehavior: Clip.antiAlias,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 4,
-                                ),
-                                child: child,
-                              ),
+                              child: cardContent(child),
                             ),
                           ),
                       ],

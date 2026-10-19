@@ -70,6 +70,7 @@ class GraphPageState extends State<GraphPage>
         child: DropdownButton<String>(
           value: metricValue,
           isExpanded: true,
+          focusColor: Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           style: (desktop
                   ? theme.textTheme.titleLarge
@@ -97,6 +98,7 @@ class GraphPageState extends State<GraphPage>
           onChanged: (value) {
             if (value == null) return;
             setState(() => metric = value);
+            FocusManager.instance.primaryFocus?.unfocus();
             db.settings.update().write(
                   SettingsCompanion(lastGraph: Value(metric)),
                 );
@@ -198,21 +200,84 @@ class GraphPageState extends State<GraphPage>
                   margin: EdgeInsets.zero,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Row(
+                    child: material.Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 260,
-                          child: metricPicker(
-                            desktop: true,
-                          ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 240,
+                              child: metricPicker(desktop: true),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(child: periodPicker()),
+                          ],
                         ),
-                        const SizedBox(width: 20),
-                        Expanded(child: periodPicker()),
-                        const SizedBox(width: 12),
-                        IconButton.filledTonal(
-                          icon: const Icon(Icons.tune),
-                          tooltip: context.l10n.options,
-                          onPressed: _showOptions,
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 12,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 190,
+                              child: _DateField(
+                                label: context.l10n.startDate,
+                                value: start,
+                                hint: settings.shortDateFormat,
+                                onTap: _selectStart,
+                                onClear: () => setState(() => start = null),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 190,
+                              child: _DateField(
+                                label: context.l10n.stopDate,
+                                value: end,
+                                hint: settings.shortDateFormat,
+                                onTap: _selectEnd,
+                                onClear: () => setState(() => end = null),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 220,
+                              child: material.Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(context.l10n.dataPoints),
+                                      Text('${settings.limit}'),
+                                    ],
+                                  ),
+                                  Slider(
+                                    value: settings.limit.toDouble(),
+                                    min: 10,
+                                    max: 100,
+                                    onChanged: (value) {
+                                      db.settings.update().write(
+                                            SettingsCompanion(
+                                              limit: Value(value.toInt()),
+                                            ),
+                                          );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            OutlinedButton.icon(
+                              icon: const Icon(Icons.tune),
+                              label: Text(context.l10n.customizeFields),
+                              onPressed: () => Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute<void>(
+                                      builder: (context) => FieldsPicker(),
+                                    ),
+                                  )
+                                  .then((_) => setState(() {})),
+                            ),
+                          ],
                         ),
                       ],
                     ),

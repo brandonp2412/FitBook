@@ -47,7 +47,7 @@ class DiaryPageState extends State<DiaryPage> {
           ? null
           : (value / target).clamp(0.0, 1.0);
       return Padding(
-        padding: const EdgeInsets.only(bottom: 18),
+        padding: const EdgeInsets.only(bottom: 12),
         child: material.Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -72,7 +72,7 @@ class DiaryPageState extends State<DiaryPage> {
               ],
             ),
             if (progress != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
@@ -90,8 +90,9 @@ class DiaryPageState extends State<DiaryPage> {
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(22),
+        padding: const EdgeInsets.all(16),
         child: material.Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -107,7 +108,7 @@ class DiaryPageState extends State<DiaryPage> {
                 color: colors.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             metric(
               l10n.calories,
               day.stats.cals,
@@ -117,7 +118,7 @@ class DiaryPageState extends State<DiaryPage> {
             metric(l10n.protein, day.stats.protein, settings.dailyProtein, 'g'),
             metric(l10n.carbs, day.stats.carb, settings.dailyCarb, 'g'),
             metric(l10n.fat, day.stats.fat, settings.dailyFat, 'g'),
-            const Spacer(),
+            const SizedBox(height: 4),
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -340,17 +341,20 @@ class DiaryPageState extends State<DiaryPage> {
           final day = groupByDay(entryFoods).first;
           final appSettings = context.watch<SettingsState>().value;
           return AdaptivePageBody(
-            maxWidth: 1320,
+            maxWidth: 1600,
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(child: listStack),
-                  const SizedBox(width: 16),
-                  SizedBox(
-                    width: 320,
-                    child: _summaryCard(context, day, appSettings),
+                  const SizedBox(width: 12),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: 280,
+                      child: _summaryCard(context, day, appSettings),
+                    ),
                   ),
                 ],
               ),
