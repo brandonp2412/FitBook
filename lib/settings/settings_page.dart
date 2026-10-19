@@ -196,7 +196,7 @@ class _SettingsPageState extends State<SettingsPage> {
       return Card(
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
-        child: tile,
+        child: SizedBox.expand(child: tile),
       );
     }
 

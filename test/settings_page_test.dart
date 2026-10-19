@@ -143,6 +143,28 @@ void main() async {
 
     await db.close();
   });
+  testWidgets('Desktop settings cards are entirely hoverable', (tester) async {
+    tester.view.physicalSize = const Size(1600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    await tester.pumpWidget(_wrap(await _settingsState()));
+    await tester.pumpAndSettle();
+
+    final tile = find.ancestor(
+      of: find.text('Appearance'),
+      matching: find.byType(ListTile),
+    );
+    final card = find.ancestor(
+      of: tile,
+      matching: find.byType(Card),
+    );
+    expect(tester.getRect(tile), tester.getRect(card));
+    await db.close();
+  });
+
   testWidgets('Appearance settings use a desktop two-column surface', (
     WidgetTester tester,
   ) async {
