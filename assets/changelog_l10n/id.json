@@ -115,5 +115,6 @@
   "1790348228": "• feat(l10n): tambahkan terjemahan bahasa Hindi",
   "1790376451": "• feat(l10n): terjemahkan riwayat perubahan log bahasa Hindi\n• fix(l10n): menyelesaikan terjemahan changelog terbaru",
   "1790423940": "• dokumen: tengahkan presentasi README\n• feat(l10n): metadata toko bahasa Spanyol lengkap",
-  "1791794550": "• Memigrasikan grafik ke Drafter dan menyempurnakan tooltip\n• Memperbaiki menu, pengeditan, dan tata letak desktop\n• Menyempurnakan gambar README, build Kotlin, dan alat pelokalan"
+  "1791794550": "• Memigrasikan grafik ke Drafter dan menyempurnakan tooltip\n• Memperbaiki menu, pengeditan, dan tata letak desktop\n• Menyempurnakan gambar README, build Kotlin, dan alat pelokalan",
+  "1792006532": "• Pemeliharaan: hentikan pelacakan berkas proyek Serena\n• Perbaikan rilis: perbaiki paket Linux dan toko aplikasi serta kelengkapan terjemahan catatan perubahan"
 }

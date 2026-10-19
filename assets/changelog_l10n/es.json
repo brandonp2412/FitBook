@@ -115,5 +115,6 @@
   "1790423940": "• docs: centrar la presentación del README\n• feat(l10n): completar los metadatos de la tienda en español",
   "134188838719418420": "• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada\n• Corregir que seleccionar la tendencia rompa el tooltip en los gráficos",
   "134185267504059170": "• Añadir tabla 2x3 a la página Diario para calcular la nutrición por entrada",
-  "1791794550": "• Migración de gráficos a Drafter y mejoras de sus ayudas emergentes\n• Mejores menús, edición y diseños de escritorio\n• Mejoras en imágenes del README, compilación Kotlin y herramientas de localización"
+  "1791794550": "• Migración de gráficos a Drafter y mejoras de sus ayudas emergentes\n• Mejores menús, edición y diseños de escritorio\n• Mejoras en imágenes del README, compilación Kotlin y herramientas de localización",
+  "1792006532": "• Mantenimiento: dejar de rastrear los archivos del proyecto Serena\n• Corrección de versión: reparar los paquetes de Linux y las tiendas, y completar las traducciones del registro de cambios"
 }

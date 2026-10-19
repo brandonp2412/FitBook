@@ -115,5 +115,6 @@
   "1790300846": "• feat(l10n): Russische Übersetzungen hinzugefügt (#139)",
   "1790348228": "• feat(l10n): Hindi-Übersetzungen hinzufügen",
   "1790376451": "• feat(l10n): Hindi-Changelog-Verlauf übersetzen\n• fix(l10n): aktuelle Changelog-Übersetzungen vervollständigen",
-  "1791794550": "• Diagramme auf Drafter umgestellt und Tooltips verbessert\n• Desktop-Menüs, Bearbeitung und Layouts überarbeitet\n• README-Bilder, Kotlin-Build und Lokalisierungswerkzeuge verbessert"
+  "1791794550": "• Diagramme auf Drafter umgestellt und Tooltips verbessert\n• Desktop-Menüs, Bearbeitung und Layouts überarbeitet\n• README-Bilder, Kotlin-Build und Lokalisierungswerkzeuge verbessert",
+  "1792006532": "• Wartung: Serena-Projektdateien nicht mehr verfolgen\n• Release-Fix: Linux- und Store-Pakete sowie Changelog-Übersetzungen korrigieren"
 }

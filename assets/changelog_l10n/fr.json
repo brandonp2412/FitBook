@@ -115,5 +115,6 @@
   "1790300846": "• feat(l10n) : ajout des traductions russes (#139)",
   "1790348228": "• feat(l10n) : ajouter les traductions en hindi",
   "1790376451": "• feat(l10n) : traduire l’historique des modifications en hindi\n• fix(l10n) : compléter les dernières traductions du journal des modifications",
-  "1791794550": "• Migration des graphiques vers Drafter et amélioration des infobulles\n• Menus, édition et mises en page sur ordinateur améliorés\n• Amélioration des images du README, de la compilation Kotlin et des outils de traduction"
+  "1791794550": "• Migration des graphiques vers Drafter et amélioration des infobulles\n• Menus, édition et mises en page sur ordinateur améliorés\n• Amélioration des images du README, de la compilation Kotlin et des outils de traduction",
+  "1792006532": "• Maintenance : ne plus suivre les fichiers de projet Serena\n• Correctif de version : réparer les paquets Linux et des boutiques, et compléter les traductions du journal des modifications"
 }

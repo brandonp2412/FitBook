@@ -115,5 +115,6 @@
   "1790423940": "• docs: centreer de README-presentatie\n• feat(l10n): voltooi de Spaanse winkelmetadata",
   "134188838719418420": "• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen\n• Fout corrigeren waarbij trendselectie de tooltip in grafieken brak",
   "134185267504059170": "• 2x3-tabel aan de Dagboekpagina toevoegen om voeding per item te berekenen",
-  "1791794550": "• Grafieken gemigreerd naar Drafter en tooltips verbeterd\n• Desktopmenu's, bewerking en indelingen verbeterd\n• README-afbeeldingen, Kotlin-build en lokalisatietools verbeterd"
+  "1791794550": "• Grafieken gemigreerd naar Drafter en tooltips verbeterd\n• Desktopmenu's, bewerking en indelingen verbeterd\n• README-afbeeldingen, Kotlin-build en lokalisatietools verbeterd",
+  "1792006532": "• Onderhoud: Serena-projectbestanden niet langer volgen\n• Releasefix: Linux- en storepakketten herstellen en ontbrekende vertalingen van het wijzigingslog aanvullen"
 }
