@@ -1,3 +1,4 @@
+import 'package:fit_book/update_notice.dart';
 import 'dart:convert';
 
 import 'package:fit_book/logging.dart';
@@ -47,10 +48,35 @@ DateTime changelogDateFromTimestamp(int timestamp) {
 class _WhatsNewState extends State<WhatsNew> {
   static const _pageSize = 10;
   List<Changelog> changelogs = [];
+  bool _showUpdateNotices = true;
   List<String> _changelogFiles = [];
   int _page = 0;
   bool _isLoading = true;
   Locale? _loadedLocale;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUpdateNoticePreference();
+  }
+
+  Future<void> _loadUpdateNoticePreference() async {
+    try {
+      final enabled = await updateNoticesEnabled();
+      if (mounted) setState(() => _showUpdateNotices = enabled);
+    } catch (error) {
+      debugPrint('Unable to load update notice preference: $error');
+    }
+  }
+
+  Future<void> _setUpdateNotices(bool enabled) async {
+    try {
+      await setUpdateNoticesEnabled(enabled);
+      if (mounted) setState(() => _showUpdateNotices = enabled);
+    } catch (error) {
+      debugPrint('Unable to save update notice preference: $error');
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -189,6 +215,11 @@ class _WhatsNewState extends State<WhatsNew> {
       appBar: AppBar(title: Text(context.l10n.whatsNew)),
       body: Column(
         children: [
+          SwitchListTile.adaptive(
+            title: Text(context.l10n.showUpdateNotices),
+            value: _showUpdateNotices,
+            onChanged: _setUpdateNotices,
+          ),
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())

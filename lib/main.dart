@@ -241,6 +241,7 @@ class _HomePageState extends State<HomePage> {
       if (meta == null ||
           buildNumber <= meta.buildNumber ||
           !mounted ||
+          !await updateNoticesEnabled() ||
           !await claimUpdateNotice()) {
         return;
       }

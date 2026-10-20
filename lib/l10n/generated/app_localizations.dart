@@ -140,6 +140,12 @@ abstract class AppLocalizations {
     Locale('zh', 'TW')
   ];
 
+  /// Whether to show update notices after upgrading the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Show update notices'**
+  String get showUpdateNotices;
+
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
