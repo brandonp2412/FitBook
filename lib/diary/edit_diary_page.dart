@@ -841,46 +841,27 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                           _performSearch('');
                         },
                       )
-                    : Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (supportsBarcodeCamera)
-                            IconButton(
-                              icon: const Icon(Icons.barcode_reader),
-                              onPressed: () async {
-                                final result = await performBarcodeScan(
-                                  context,
-                                );
-                                if (!context.mounted) return;
-                                if (result.food != null) {
-                                  barcode.text = result.food!.barcode ?? '';
-                                  _applyFood(result.food!);
-                                } else if (result.barcode != null) {
-                                  barcode.text = result.barcode!;
-                                  toast(
-                                    context,
-                                    l10n.barcodeNotFoundSaveToInsert,
-                                  );
-                                }
-                              },
-                            ),
-                          IconButton(
-                            icon: const Icon(Icons.search),
+                    : supportsBarcodeCamera
+                        ? IconButton(
+                            icon: const Icon(Icons.barcode_reader),
                             onPressed: () async {
-                              final Food? food =
-                                  await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => SearchOpenFoodFacts(
-                                    terms: nameController.text,
-                                  ),
-                                ),
+                              final result = await performBarcodeScan(
+                                context,
                               );
-                              if (food == null) return;
-                              _applyFood(food);
+                              if (!context.mounted) return;
+                              if (result.food != null) {
+                                barcode.text = result.food!.barcode ?? '';
+                                _applyFood(result.food!);
+                              } else if (result.barcode != null) {
+                                barcode.text = result.barcode!;
+                                toast(
+                                  context,
+                                  l10n.barcodeNotFoundSaveToInsert,
+                                );
+                              }
                             },
-                          ),
-                        ],
-                      ),
+                          )
+                        : null,
               ),
               textCapitalization: TextCapitalization.sentences,
               onChanged: (value) {
