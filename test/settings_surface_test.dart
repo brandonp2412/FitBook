@@ -22,15 +22,45 @@ void main() {
                   onTap: () {},
                 ),
               ),
+              Tooltip(
+                message: 'Toggle feature',
+                child: ListTile(
+                  title: const Text('Feature'),
+                  onTap: () {},
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: SegmentedButton<String>(
+                  segments: const [
+                    ButtonSegment(value: 'system', label: Text('System')),
+                    ButtonSegment(value: 'dark', label: Text('Dark')),
+                  ],
+                  selected: const {'system'},
+                  onSelectionChanged: (_) {},
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
 
+    final cards = find.byType(Card);
+    final tiles = find.byType(ListTile);
+    expect(tester.getRect(tiles.first), tester.getRect(cards.first));
+    expect(tester.getRect(tiles.at(1)), tester.getRect(cards.at(1)));
     expect(
-      tester.getRect(find.byType(ListTile)),
-      tester.getRect(find.byType(Card)),
+      tester.getSize(cards.first).height,
+      tester.getSize(cards.at(1)).height,
+    );
+    expect(
+      tester.getSize(cards.first).height,
+      tester.getSize(cards.at(2)).height,
+    );
+    expect(
+      tester.getCenter(find.byType(SegmentedButton<String>)).dy,
+      closeTo(tester.getCenter(cards.at(2)).dy, 1),
     );
   });
 }

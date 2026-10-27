@@ -333,7 +333,7 @@ class _EditWeightPageState extends State<EditWeightPage> {
         ),
       if (settings.showImages) ...[
         const SizedBox(height: 8),
-        OutlinedButton.icon(
+        TextButton.icon(
           icon: const Icon(Icons.image),
           label: Text(l10n.setImage),
           onPressed: _pickImage,

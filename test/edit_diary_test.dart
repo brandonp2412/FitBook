@@ -99,7 +99,7 @@ void main() async {
         )
         .first;
     expect(tester.getSize(imageTarget).width, lessThanOrEqualTo(380));
-    expect(find.widgetWithText(FilledButton, 'Save'), findsOneWidget);
+    expect(find.widgetWithText(FloatingActionButton, 'Save'), findsOneWidget);
 
     await db.close();
   });

@@ -465,6 +465,27 @@ GROUP BY meal_foods.meal
                               mealCalories: mealCalories,
                               selected: selected,
                               selectedMeals: selectedMeals,
+                              onToggleAll: () => setState(() {
+                                final visibleFoods = <int>{};
+                                final visibleMeals = <int>{};
+                                for (final item in items) {
+                                  if (item is Meal) {
+                                    visibleMeals.add(item.id);
+                                  } else {
+                                    visibleFoods.add(
+                                      (item as FoodListFood).food.id.value,
+                                    );
+                                  }
+                                }
+                                if (selected.containsAll(visibleFoods) &&
+                                    selectedMeals.containsAll(visibleMeals)) {
+                                  selected.removeAll(visibleFoods);
+                                  selectedMeals.removeAll(visibleMeals);
+                                } else {
+                                  selected.addAll(visibleFoods);
+                                  selectedMeals.addAll(visibleMeals);
+                                }
+                              }),
                               onSavedNew: () => scrollCtrl.animateTo(
                                 0,
                                 duration: const Duration(milliseconds: 300),

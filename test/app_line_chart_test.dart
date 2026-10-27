@@ -84,6 +84,18 @@ void main() {
     },
   );
 
+  test('y-axis uses readable integer ticks for tightly clustered weights', () {
+    final axis = AppLineChart.calculateAxis((76.32, 77.43));
+    expect(axis.$1, 76);
+    expect(axis.$2, 78);
+    expect(axis.$3, 1);
+
+    final wide = AppLineChart.calculateAxis((74.4, 85.6));
+    expect(wide.$1, 70);
+    expect(wide.$2, 90);
+    expect(wide.$3, 5);
+  });
+
   test('x-axis labels keep both ends and balance intermediate labels', () {
     final selected = AppLineChart.selectXAxisLabelIndices(
       const [0, 20, 40, 60, 80, 100],

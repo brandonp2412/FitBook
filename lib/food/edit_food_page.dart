@@ -462,6 +462,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               onSubmitted: (_) => selectAll(calCtrl),
               textInputAction: TextInputAction.next,
             ),
+            if (desktop) const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -509,6 +510,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
+            if (desktop) const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -543,6 +545,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
+            if (desktop) const SizedBox(height: 12),
             TextField(
               controller: barcodeCtrl,
               textInputAction: TextInputAction.next,
@@ -568,6 +571,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ),
             ),
+            if (desktop) const SizedBox(height: 12),
             Wrap(
               alignment: WrapAlignment.center,
               children: [
@@ -616,27 +620,33 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 ),
               ],
             ),
+            if (desktop) const SizedBox(height: 12),
             ...controllers.entries.map(
               (entry) {
                 final column =
                     db.foods.$columns.firstWhere((c) => c.name == entry.key);
 
-                return TextField(
-                  controller: entry.value,
-                  textInputAction: TextInputAction.next,
-                  keyboardType: column.type == DriftSqlType.double
-                      ? TextInputType.numberWithOptions(decimal: true)
-                      : null,
-                  onTap: () => selectAll(entry.value),
-                  onSubmitted: (_) {
-                    final currentIndex =
-                        controllers.values.toList().indexOf(entry.value);
-                    if (currentIndex < controllers.length - 1) {
-                      selectAll(controllers.values.elementAt(currentIndex + 1));
-                    }
-                  },
-                  decoration: InputDecoration(
-                    labelText: localizedFoodFieldLabel(l10n, entry.key),
+                return Padding(
+                  padding: EdgeInsets.only(bottom: desktop ? 12 : 0),
+                  child: TextField(
+                    controller: entry.value,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: column.type == DriftSqlType.double
+                        ? TextInputType.numberWithOptions(decimal: true)
+                        : null,
+                    onTap: () => selectAll(entry.value),
+                    onSubmitted: (_) {
+                      final currentIndex =
+                          controllers.values.toList().indexOf(entry.value);
+                      if (currentIndex < controllers.length - 1) {
+                        selectAll(
+                          controllers.values.elementAt(currentIndex + 1),
+                        );
+                      }
+                    },
+                    decoration: InputDecoration(
+                      labelText: localizedFoodFieldLabel(l10n, entry.key),
+                    ),
                   ),
                 );
               },

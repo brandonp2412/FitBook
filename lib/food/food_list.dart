@@ -1,6 +1,7 @@
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/desktop_list_header.dart';
 import 'package:fit_book/food/edit_food_page.dart';
 import 'package:fit_book/food/edit_meal_page.dart';
 import 'package:fit_book/food/food_item_row.dart';
@@ -24,6 +25,7 @@ class FoodList extends StatefulWidget {
     required this.items,
     required this.selected,
     required this.onSelect,
+    required this.onToggleAll,
     required this.onNext,
     required this.ctrl,
     this.selectedMeals = const {},
@@ -37,6 +39,7 @@ class FoodList extends StatefulWidget {
   final Set<int> selected;
   final Set<int> selectedMeals;
   final ValueChanged<int> onSelect;
+  final VoidCallback onToggleAll;
   final ValueChanged<int>? onMealSelect;
   final VoidCallback onNext;
   final ScrollController ctrl;
@@ -73,7 +76,18 @@ class _FoodListState extends State<FoodList> {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
 
-    final children = <Widget>[];
+    final children = <Widget>[
+      if (usesDesktopInteractions(context))
+        DesktopListHeader(
+          totalCount: widget.items.length,
+          selectedCount: widget.items.where((item) {
+            if (item is Meal) return widget.selectedMeals.contains(item.id);
+            return widget.selected
+                .contains((item as FoodListFood).food.id.value);
+          }).length,
+          onToggleAll: widget.onToggleAll,
+        ),
+    ];
     for (final item in widget.items) {
       if (item is Meal) {
         children.add(
@@ -132,7 +146,8 @@ class _FoodListState extends State<FoodList> {
     return Expanded(
       child: ListView(
         padding: EdgeInsets.only(
-          top: appSearchHeight + 16,
+          top: appSearchHeight,
+          right: usesDesktopInteractions(context) ? 8 : 0,
           bottom: navigationBottomClearance(context),
         ),
         controller: widget.ctrl,

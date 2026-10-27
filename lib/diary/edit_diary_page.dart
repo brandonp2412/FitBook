@@ -780,14 +780,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       ),
       body: AdaptiveFormSurface(
         maxWidth: 980,
-        desktopActions: [
-          if (canSave)
-            FilledButton.icon(
-              onPressed: save,
-              icon: const Icon(Icons.save_outlined),
-              label: Text(l10n.save),
-            ),
-        ],
+        desktopActions: const [],
         child: ListView(
           controller: scrollCtrl,
           children: [
@@ -952,6 +945,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     settings.longDateFormat,
                   ),
                 ),
+                trailing:
+                    desktop ? const Icon(Icons.edit_calendar_outlined) : null,
                 onTap: () => pickDate(),
               ),
               if (_selectedMealId == null && !kIsWeb)
@@ -1265,23 +1260,33 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 ),
               ],
             ],
-            SizedBox(height: navigationBottomClearance(context)),
+            SizedBox(height: desktop ? 96 : navigationBottomClearance(context)),
           ],
         ),
       ),
-      floatingActionButton: !desktop && canSave
-          ? Padding(
-              padding: EdgeInsets.only(
-                bottom: navigationBottomClearance(context),
-              ),
-              child: AnimatedFab(
-                onTap: save,
-                label: l10n.save,
-                icon: Icons.save,
-                scroll: scrollCtrl,
-              ),
-            )
-          : null,
+      floatingActionButton: !canSave
+          ? null
+          : desktop
+              ? Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: FloatingActionButton.extended(
+                    heroTag: 'diary-desktop-save',
+                    onPressed: save,
+                    icon: const Icon(Icons.save_outlined),
+                    label: Text(l10n.save),
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.only(
+                    bottom: navigationBottomClearance(context),
+                  ),
+                  child: AnimatedFab(
+                    onTap: save,
+                    label: l10n.save,
+                    icon: Icons.save,
+                    scroll: scrollCtrl,
+                  ),
+                ),
     );
   }
 }

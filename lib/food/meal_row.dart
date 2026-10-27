@@ -33,8 +33,8 @@ class MealRow extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           SizedBox(
-            height: 48,
-            width: 48,
+            height: usesDesktopInteractions(context) ? 40 : 48,
+            width: usesDesktopInteractions(context) ? 40 : 48,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: Image.file(
@@ -74,6 +74,7 @@ class MealRow extends StatelessWidget {
       );
     }
 
+    final desktop = usesDesktopInteractions(context);
     return material.DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(
@@ -84,6 +85,11 @@ class MealRow extends StatelessWidget {
         ),
       ),
       child: ListTile(
+        dense: desktop,
+        visualDensity: desktop ? VisualDensity.compact : null,
+        minVerticalPadding: desktop ? 0 : null,
+        contentPadding:
+            desktop ? const EdgeInsets.symmetric(horizontal: 12) : null,
         tileColor: isSelected
             ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
             : null,

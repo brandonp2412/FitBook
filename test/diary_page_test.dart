@@ -223,6 +223,7 @@ void main() async {
         ),
       ),
     );
+    expect(find.text('No entries today.'), findsNothing);
     await tester.pumpAndSettle();
 
     expect(find.text('Add diary entry'), findsOneWidget);
@@ -241,7 +242,7 @@ void main() async {
     expect(tester.widget<ListTile>(row).onLongPress, equals(null));
     expect(tester.getSize(row).height, lessThanOrEqualTo(60));
     expect(
-      find.descendant(of: row, matching: find.text('250 kcal')),
+      find.descendant(of: row, matching: find.textContaining('250 kcal')),
       findsOneWidget,
     );
     expect(tester.getTopLeft(find.text('Add diary entry')).dy, lessThan(600));

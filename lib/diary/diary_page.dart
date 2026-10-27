@@ -171,7 +171,10 @@ class DiaryPageState extends State<DiaryPage> {
             return ErrorWidget(context.l10n.loadDataFailed);
           }
 
-          final entryFoods = snapshot.data ?? [];
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final entryFoods = snapshot.data!;
           final searchTerm = entriesState.search.trim();
 
           final wide = usesSideNavigation(context);
@@ -257,6 +260,15 @@ class DiaryPageState extends State<DiaryPage> {
                       diaryFoods: entryFoods,
                       showGoalSummary: !wide,
                       selected: selected,
+                      onToggleAll: () => setState(() {
+                        final visible =
+                            entryFoods.map((food) => food.entryId).toSet();
+                        if (selected.containsAll(visible)) {
+                          selected.removeAll(visible);
+                        } else {
+                          selected.addAll(visible);
+                        }
+                      }),
                       onSelect: (id) {
                         if (selected.contains(id))
                           setState(() {
@@ -341,18 +353,18 @@ class DiaryPageState extends State<DiaryPage> {
           final day = groupByDay(entryFoods).first;
           final appSettings = context.watch<SettingsState>().value;
           return AdaptivePageBody(
-            maxWidth: 1600,
+            maxWidth: 1320,
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(child: listStack),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 16),
                   Align(
                     alignment: Alignment.topCenter,
                     child: SizedBox(
-                      width: 280,
+                      width: 320,
                       child: _summaryCard(context, day, appSettings),
                     ),
                   ),

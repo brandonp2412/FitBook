@@ -243,7 +243,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       physics: const NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12,
-                      childAspectRatio: 3.2,
+                      childAspectRatio: 4.2,
                       children: categories
                           .map((category) => categoryTile(category, wide: true))
                           .toList(),

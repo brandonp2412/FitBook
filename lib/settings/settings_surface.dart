@@ -24,19 +24,26 @@ class SettingsSurface extends StatelessWidget {
                 builder: (context, constraints) {
                   final itemWidth = (constraints.maxWidth - 16) / 2;
                   Widget cardContent(Widget child) {
-                    final unwrapped = child is Padding ? child.child : child;
-                    if (unwrapped is ListTile ||
-                        unwrapped is SwitchListTile ||
-                        unwrapped is CheckboxListTile ||
-                        unwrapped is RadioListTile) {
-                      return unwrapped!;
+                    if (child is Padding && child.child != null) {
+                      return cardContent(child.child!);
                     }
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 4,
+                    if (child is Tooltip && child.child != null) {
+                      return Tooltip(
+                        message: child.message,
+                        child: cardContent(child.child!),
+                      );
+                    }
+                    if (child is ListTile ||
+                        child is SwitchListTile ||
+                        child is CheckboxListTile ||
+                        child is RadioListTile) {
+                      return child;
+                    }
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: child,
                       ),
-                      child: child,
                     );
                   }
 
@@ -51,7 +58,10 @@ class SettingsSurface extends StatelessWidget {
                             child: Card(
                               margin: EdgeInsets.zero,
                               clipBehavior: Clip.antiAlias,
-                              child: cardContent(child),
+                              child: SizedBox(
+                                height: 120,
+                                child: cardContent(child),
+                              ),
                             ),
                           ),
                       ],

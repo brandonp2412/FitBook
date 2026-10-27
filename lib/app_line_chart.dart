@@ -103,6 +103,32 @@ class AppLineChart extends StatelessWidget {
     return (minY, maxY);
   }
 
+  static double _niceYStep(double span) {
+    final target = span / 4;
+    final magnitude = pow(10, (log(target) / ln10).floor()).toDouble();
+    final scaled = target / magnitude;
+    final nice = scaled < 1.5
+        ? 1.0
+        : scaled < 2.25
+            ? 2.0
+            : scaled < 7.5
+                ? 5.0
+                : 10.0;
+    final step = nice * magnitude;
+    return span >= 1 && step < 1 ? 1 : step;
+  }
+
+  @visibleForTesting
+  static (double, double, double) calculateAxis((double, double) bounds) {
+    final minValue = bounds.$1;
+    final maxValue = bounds.$2;
+    final span = maxValue - minValue;
+    final step = _niceYStep(span);
+    final lower = (minValue / step).floor() * step;
+    final upper = (maxValue / step).ceil() * step;
+    return (lower, upper > lower ? upper : lower + step, step);
+  }
+
   @visibleForTesting
   static double tooltipTopForMarks(
     List<double> markYs, {
@@ -236,6 +262,7 @@ class AppLineChart extends StatelessWidget {
       startAtZero: startAtZero,
       referenceValue: referenceValue,
     );
+    final axis = calculateAxis(valueBounds);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -243,8 +270,9 @@ class AppLineChart extends StatelessWidget {
         final renderer = _AppLineChartRenderer(
           series: series,
           rowCount: bottomLabels.length,
-          minY: valueBounds.$1,
-          maxY: valueBounds.$2,
+          minY: axis.$1,
+          maxY: axis.$2,
+          yStep: axis.$3,
           referenceValue: referenceValue,
           referenceColor: referenceColor,
           axisLabelFormatter: axisLabelFormatter,
@@ -490,6 +518,7 @@ class _AppLineChartRenderer extends ChartRenderer
   final int rowCount;
   final double minY;
   final double maxY;
+  final double yStep;
   final double? referenceValue;
   final Color referenceColor;
   final String Function(double value) axisLabelFormatter;
@@ -502,6 +531,7 @@ class _AppLineChartRenderer extends ChartRenderer
     required this.rowCount,
     required this.minY,
     required this.maxY,
+    required this.yStep,
     required this.referenceValue,
     required this.referenceColor,
     required this.axisLabelFormatter,
@@ -560,9 +590,9 @@ class _AppLineChartRenderer extends ChartRenderer
     CartesianScale scale,
     DrafterThemeColors theme,
   ) {
-    const tickCount = 4;
+    final tickCount = ((maxY - minY) / yStep).round();
     for (var i = 0; i <= tickCount; i++) {
-      final value = minY + (maxY - minY) * i / tickCount;
+      final value = minY + yStep * i;
       drawChartText(
         canvas,
         axisLabelFormatter(value),

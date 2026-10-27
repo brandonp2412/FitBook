@@ -30,7 +30,9 @@ class FoodItemRow extends StatelessWidget {
     if (showImages && food.imageFile.value?.isNotEmpty == true)
       image = Image.file(
         File(food.imageFile.value!),
-        cacheWidth: (50 * MediaQuery.devicePixelRatioOf(context)).round(),
+        cacheWidth: ((usesDesktopInteractions(context) ? 40 : 50) *
+                MediaQuery.devicePixelRatioOf(context))
+            .round(),
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) => _placeholder(colorScheme),
       );
@@ -42,13 +44,20 @@ class FoodItemRow extends StatelessWidget {
         errorWidget: (_, __, ___) => _placeholder(colorScheme),
       );
 
+    final desktop = usesDesktopInteractions(context);
+    final imageSize = desktop ? 40.0 : 50.0;
     return ListTile(
+      dense: desktop,
+      visualDensity: desktop ? VisualDensity.compact : null,
+      minVerticalPadding: desktop ? 0 : null,
+      contentPadding:
+          desktop ? const EdgeInsets.symmetric(horizontal: 12) : null,
       tileColor: isSelected
           ? Theme.of(context).colorScheme.primary.withValues(alpha: .08)
           : null,
       leading: Container(
-        width: 50,
-        height: 50,
+        width: imageSize,
+        height: imageSize,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: colorScheme.surfaceContainerHighest,

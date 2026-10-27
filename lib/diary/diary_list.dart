@@ -1,6 +1,7 @@
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
+import 'package:fit_book/desktop_list_header.dart';
 import 'package:fit_book/diary/diary_entry_actions.dart';
 import 'package:fit_book/diary/diary_entry_row.dart';
 import 'package:fit_book/diary/diary_food.dart';
@@ -17,6 +18,7 @@ class DiaryList extends StatefulWidget {
     required this.diaryFoods,
     required this.selected,
     required this.onSelect,
+    required this.onToggleAll,
     required this.onNext,
     required this.ctrl,
     this.showGoalSummary = true,
@@ -26,6 +28,7 @@ class DiaryList extends StatefulWidget {
   final ScrollController ctrl;
   final Set<int> selected;
   final ValueChanged<int> onSelect;
+  final VoidCallback onToggleAll;
   final VoidCallback onNext;
   final bool showGoalSummary;
 
@@ -190,6 +193,14 @@ class _DiaryListState extends State<DiaryList> {
     final today = days.isEmpty ? null : days.first;
 
     final children = <Widget>[
+      if (usesDesktopInteractions(context))
+        DesktopListHeader(
+          totalCount: widget.diaryFoods.length,
+          selectedCount: widget.diaryFoods
+              .where((food) => widget.selected.contains(food.entryId))
+              .length,
+          onToggleAll: widget.onToggleAll,
+        ),
       if (today != null && widget.showGoalSummary) goalBars(context, today),
     ];
 
@@ -218,6 +229,7 @@ class _DiaryListState extends State<DiaryList> {
       child: ListView(
         padding: EdgeInsets.only(
           top: appSearchHeight,
+          right: usesDesktopInteractions(context) ? 8 : 0,
           bottom: navigationBottomClearance(context),
         ),
         controller: widget.ctrl,
