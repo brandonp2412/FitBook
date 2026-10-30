@@ -1,2 +1,10 @@
-• chore: stop tracking Serena project files
-• fix(release): repair Linux and Store packaging plus changelog locale coverage
+• Fix external link buttons on Android
+• Hide tab dock while nested pages are open
+• Keep Donate action clear of system navigation
+• Keep tab dock visible and align release-note footer
+• Limit upgrade snackbars to once every 14 days
+• Remove dependencies section of AGENTS.md
+• Remove patrol plugin registration
+• Simplify AGENTS.md
+• chore: remove obsolete Patrol test infrastructure
+• chore: reuse Play Store screenshots in README
