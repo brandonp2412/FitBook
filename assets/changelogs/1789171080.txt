@@ -2,7 +2,7 @@
 • Harden Patrol tests against timing
 • Prefer visible diary add selector
 • Prefer visible screenshot tab selectors
-• Preserve Nox FitBook fixes
+• Preserve earlier FitBook fixes
 • Prevent invalid nutrition and weight input crashes
 • Reject empty or malformed CSV imports
 • Remove broken schema history helper
