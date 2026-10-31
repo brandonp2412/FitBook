@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fit_book/logging.dart';
 import 'package:talker_flutter/talker_flutter.dart';
@@ -46,5 +47,23 @@ void main() {
     final border =
         formatter.fmt(details, settings).split(String.fromCharCode(10)).first;
     expect(border.length, 111);
+  });
+
+  test('test logging only prints warnings and errors', () {
+    final originalDebugPrint = debugPrint;
+    final output = <String>[];
+    debugPrint = (message, {wrapWidth}) {
+      if (message != null) output.add(message);
+    };
+    addTearDown(() => debugPrint = originalDebugPrint);
+
+    talker.debug('routine debug message');
+    talker.info('routine info message');
+    talker.warning('actionable warning message');
+    talker.error('actionable error message');
+
+    expect(output, hasLength(2));
+    expect(output[0], contains('actionable warning message'));
+    expect(output[1], contains('actionable error message'));
   });
 }
