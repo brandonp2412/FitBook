@@ -1,0 +1,35 @@
+Samsung verification, 2026-11-01 (Pacific/Auckland)
+
+Source: a3c2bf4b6af3988bdf539c499cfa1509a2beec37
+Device: Samsung Galaxy S25 (SM-S931B), Android 17.
+Installed release: com.presley.fit_book, 2.0.107, versionCode 2253.
+Install: adb install -r; succeeded. No uninstall or data clearing.
+Original firstInstallTime remained 2026-10-04 13:04:29.
+Installed APK matches the locally built release by SHA-256:
+29f7a58093d320d305b826bc658d639e40d5c0f6a7866c3db435ddc5ca4fb74e
+
+Checks through the shared buildq queue:
+3234: dart format --output=none --set-exit-if-changed lib test: passed.
+3234: flutter analyze lib test: passed.
+3234: flutter test test: 1235 passed, 3 failed.
+Failures:
+- graph_page_test: Body weight graph uses desktop width for date ticks
+  Expected <1.75; actual 2.5.
+- l10n_test: localized changelog bundles cover the same release entries
+- whats_new_test: Whats New uses localized release-note assets
+3238: flutter test test/crash_logger_startup_test.dart: passed.
+3238: flutter build apk --release --split-per-abi: passed.
+
+Samsung checks:
+- Updated existing release and opened it successfully.
+- All 12 visible weight rows matched the pre-update UI exactly.
+- Body weight graph rendered with existing history and goal.
+- Diary and Food screens displayed existing records.
+- Returned to Weight without editing any records.
+
+Limits:
+The requested commit handles crash-log directory lookup failure. Its injected
+storage-failure regression passed on the host. Samsung cannot establish the
+Windows-specific startup outcome. Android smoke checks do not prove that
+Windows behavior or turn the three full-suite failures into passes.
+Raw local evidence: /home/brandon/samsung-proof-20261101
