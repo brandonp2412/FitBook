@@ -255,7 +255,7 @@ class GraphPageState extends State<GraphPage>
                                     value: settings.limit.toDouble(),
                                     min: 10,
                                     max: 100,
-                                    divisions: 90,
+                                    divisions: 20,
                                     onChanged: (value) {
                                       db.settings.update().write(
                                             SettingsCompanion(
@@ -409,7 +409,7 @@ class GraphPageState extends State<GraphPage>
                           colorScheme.primary.withValues(alpha: 0.24),
                       min: 10,
                       max: 100,
-                      divisions: 90,
+                      divisions: 20,
                       onChanged: (value) {
                         db.settings.update().write(
                               SettingsCompanion(limit: Value(value.toInt())),
