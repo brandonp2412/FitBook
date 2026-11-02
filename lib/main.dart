@@ -154,6 +154,11 @@ class App extends StatelessWidget {
               menuPadding: EdgeInsets.zero,
             ),
             useMaterial3: true,
+            sliderTheme: const SliderThemeData(
+              trackHeight: 3,
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 7),
+              overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
+            ),
             pageTransitionsTheme:
                 navigationTransitionsTheme(settings.navigationAnimation),
           ),
@@ -166,6 +171,11 @@ class App extends StatelessWidget {
             ),
             fontFamily: 'Manrope',
             useMaterial3: true,
+            sliderTheme: const SliderThemeData(
+              trackHeight: 3,
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 7),
+              overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
+            ),
             popupMenuTheme: const PopupMenuThemeData(
               menuPadding: EdgeInsets.zero,
             ),
