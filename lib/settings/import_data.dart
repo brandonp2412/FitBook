@@ -60,8 +60,8 @@ class _ImportDataState extends State<ImportData> {
 
     try {
       final result = await FilePicker.pickFiles();
-      if (result == null) return;
-      final path = result.files.single.path;
+      if (result.isEmpty) return;
+      final path = result.single.path;
       if (path == null) return;
       if (mounted) {
         setState(() {
@@ -269,10 +269,12 @@ class _ImportDataState extends State<ImportData> {
     final entriesState = context.read<DiaryState>();
     final settingsState = context.read<SettingsState>();
     Navigator.pop(context);
-    FilePickerResult? result = await FilePicker.pickFiles();
-    if (result == null) return;
+    final result = await FilePicker.pickFiles();
+    if (result.isEmpty) return;
 
-    final selectedFile = File(result.files.single.path!);
+    final path = result.single.path;
+    if (path == null) return;
+    final selectedFile = File(path);
     final dbFolder = await getApplicationDocumentsDirectory();
     final tempDirectory = await getTemporaryDirectory();
     final workingDirectory = await tempDirectory.createTemp(
@@ -335,8 +337,8 @@ class _ImportDataState extends State<ImportData> {
   Future<void> _importEntries(BuildContext context) async {
     Navigator.pop(context);
     final result = await FilePicker.pickFiles();
-    if (result == null) return;
-    final path = result.files.single.path;
+    if (result.isEmpty) return;
+    final path = result.single.path;
     if (path == null) return;
     if (mounted) {
       setState(() {

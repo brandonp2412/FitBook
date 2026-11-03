@@ -171,8 +171,8 @@ class _EditMealPageState extends State<EditMealPage> {
 
   Future<void> _pickImage() async {
     final result = await FilePicker.pickFiles(type: FileType.image);
-    if (result == null) return;
-    final path = result.files.single.path;
+    if (result.isEmpty) return;
+    final path = result.single.path;
     if (path == null) return;
     final docsDir = (await getApplicationDocumentsDirectory()).path;
     final fileName = 'meal_${DateTime.now().millisecondsSinceEpoch}.jpg';

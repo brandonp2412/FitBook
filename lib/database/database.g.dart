@@ -10984,8 +10984,10 @@ class $$FoodsTableTableManager extends RootTableManager<
             zincZnMg: zincZnMg,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$FoodsTableReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$FoodsTable, Food>(table),
+                    $$FoodsTableReferences(db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: (
               {diariesRefs = false, mealFoodsRefs = false}) {
@@ -10999,26 +11001,26 @@ class $$FoodsTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (diariesRefs)
-                    await $_getPrefetchedData<Food, $FoodsTable, Diary>(
+                    await $_getPrefetchedDataByColumns<Food, $FoodsTable, Diary,
+                            $DiariesTable>(
                         currentTable: table,
                         referencedTable:
                             $$FoodsTableReferences._diariesRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$FoodsTableReferences(db, table, p0).diariesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.food == item.id),
+                        currentColumn: 'id',
+                        referencedColumn: 'food',
                         typedResults: items),
                   if (mealFoodsRefs)
-                    await $_getPrefetchedData<Food, $FoodsTable, MealFood>(
+                    await $_getPrefetchedDataByColumns<Food, $FoodsTable,
+                            MealFood, $MealFoodsTable>(
                         currentTable: table,
                         referencedTable:
                             $$FoodsTableReferences._mealFoodsRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$FoodsTableReferences(db, table, p0).mealFoodsRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.food == item.id),
+                        currentColumn: 'id',
+                        referencedColumn: 'food',
                         typedResults: items)
                 ];
               },
@@ -11296,8 +11298,10 @@ class $$MealsTableTableManager extends RootTableManager<
             imageFile: imageFile,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$MealsTableReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$MealsTable, Meal>(table),
+                    $$MealsTableReferences(db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: (
               {diariesRefs = false, mealFoodsRefs = false}) {
@@ -11311,26 +11315,26 @@ class $$MealsTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (diariesRefs)
-                    await $_getPrefetchedData<Meal, $MealsTable, Diary>(
+                    await $_getPrefetchedDataByColumns<Meal, $MealsTable, Diary,
+                            $DiariesTable>(
                         currentTable: table,
                         referencedTable:
                             $$MealsTableReferences._diariesRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$MealsTableReferences(db, table, p0).diariesRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.meal == item.id),
+                        currentColumn: 'id',
+                        referencedColumn: 'meal',
                         typedResults: items),
                   if (mealFoodsRefs)
-                    await $_getPrefetchedData<Meal, $MealsTable, MealFood>(
+                    await $_getPrefetchedDataByColumns<Meal, $MealsTable,
+                            MealFood, $MealFoodsTable>(
                         currentTable: table,
                         referencedTable:
                             $$MealsTableReferences._mealFoodsRefsTable(db),
                         managerFromTypedResult: (p0) =>
                             $$MealsTableReferences(db, table, p0).mealFoodsRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.meal == item.id),
+                        currentColumn: 'id',
+                        referencedColumn: 'meal',
                         typedResults: items)
                 ];
               },
@@ -11642,8 +11646,10 @@ class $$DiariesTableTableManager extends RootTableManager<
             unit: unit,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) =>
-                  (e.readTable(table), $$DiariesTableReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$DiariesTable, Diary>(table),
+                    $$DiariesTableReferences(db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: ({food = false, meal = false}) {
             return PrefetchHooks(
@@ -11844,7 +11850,11 @@ class $$WeightsTableTableManager extends RootTableManager<
             image: image,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$WeightsTable, Weight>(table),
+                    BaseReferences<_$AppDatabase, $WeightsTable, Weight>(
+                        db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: null,
         ));
@@ -12523,7 +12533,11 @@ class $$SettingsTableTableManager extends RootTableManager<
             graphSeries: graphSeries,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$SettingsTable, Setting>(table),
+                    BaseReferences<_$AppDatabase, $SettingsTable, Setting>(
+                        db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: null,
         ));
@@ -12628,7 +12642,11 @@ class $$MetadataTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) => (
+                    e.readTable<$MetadataTable, MetadataData>(table),
+                    BaseReferences<_$AppDatabase, $MetadataTable, MetadataData>(
+                        db, table, e)
+                  ))
               .toList(),
           prefetchHooksCallback: null,
         ));
@@ -12923,7 +12941,7 @@ class $$MealFoodsTableTableManager extends RootTableManager<
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
-                    e.readTable(table),
+                    e.readTable<$MealFoodsTable, MealFood>(table),
                     $$MealFoodsTableReferences(db, table, e)
                   ))
               .toList(),

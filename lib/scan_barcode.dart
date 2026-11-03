@@ -68,6 +68,7 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
     final result = await OpenFoodAPIClient.getProductV3(
       ProductQueryConfiguration(
         barcode,
+        // ignore: deprecated_member_use
         version: ProductQueryVersion.v3,
       ),
     ).timeout(const Duration(seconds: 10));
