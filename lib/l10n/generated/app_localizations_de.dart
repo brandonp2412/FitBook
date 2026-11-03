@@ -50,6 +50,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get searchSettings => 'Einstellungen durchsuchen...';
 
   @override
+  String get charts => 'Diagramme';
+
+  @override
+  String get chartsSubtitle => 'Gitternetz, Schattierung und Kurven';
+
+  @override
+  String get chartGridlines => 'Diagramm-Gitternetzlinien';
+
+  @override
+  String get chartShading => 'Diagramm-Flächenfüllung';
+
+  @override
+  String get curveSmoothness => 'Kurvenglättung';
+
+  @override
+  String get chartPreview => 'Live-Vorschau';
+
+  @override
   String get appearance => 'Darstellung';
 
   @override

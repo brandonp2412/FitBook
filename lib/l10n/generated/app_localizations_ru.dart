@@ -50,6 +50,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get searchSettings => 'Поиск настроек...';
 
   @override
+  String get charts => 'Графики';
+
+  @override
+  String get chartsSubtitle => 'Сетка, заливка и кривые';
+
+  @override
+  String get chartGridlines => 'Линии сетки графика';
+
+  @override
+  String get chartShading => 'Заливка графика';
+
+  @override
+  String get curveSmoothness => 'Плавность кривой';
+
+  @override
+  String get chartPreview => 'Предпросмотр в реальном времени';
+
+  @override
   String get appearance => 'Оформление';
 
   @override

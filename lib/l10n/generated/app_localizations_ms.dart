@@ -50,6 +50,24 @@ class AppLocalizationsMs extends AppLocalizations {
   String get searchSettings => 'Cari tetapan...';
 
   @override
+  String get charts => 'Carta';
+
+  @override
+  String get chartsSubtitle => 'Garis grid, lorekan dan lengkung';
+
+  @override
+  String get chartGridlines => 'Garis grid carta';
+
+  @override
+  String get chartShading => 'Lorekan carta';
+
+  @override
+  String get curveSmoothness => 'Kelancaran lengkung';
+
+  @override
+  String get chartPreview => 'Pratonton langsung';
+
+  @override
   String get appearance => 'Penampilan';
 
   @override

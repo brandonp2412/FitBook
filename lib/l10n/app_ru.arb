@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "Вес, эквивалентный 200 ккал"
+  "calorieEquivalentWeight200": "Вес, эквивалентный 200 ккал",
+  "charts": "Графики",
+  "chartsSubtitle": "Сетка, заливка и кривые",
+  "chartGridlines": "Линии сетки графика",
+  "chartShading": "Заливка графика",
+  "curveSmoothness": "Плавность кривой",
+  "chartPreview": "Предпросмотр в реальном времени"
 }

@@ -2,6 +2,7 @@ import 'package:fit_book/about_page.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/settings/appearance_settings.dart';
+import 'package:fit_book/settings/chart_settings.dart';
 import 'package:fit_book/settings/data_settings.dart';
 import 'package:fit_book/settings/diary_settings.dart';
 import 'package:fit_book/settings/food_settings.dart';
@@ -119,6 +120,19 @@ class _SettingsPageState extends State<SettingsPage> {
           term: search.text.toLowerCase(),
           targetWeight: targetWeight,
         ),
+        if ('${l10n.charts} ${l10n.chartsSubtitle} ${l10n.chartGridlines} ${l10n.chartShading} ${l10n.curveLineGraphs} ${l10n.curveSmoothness} ${l10n.graphsStartAtZero}'
+            .toLowerCase()
+            .contains(search.text.toLowerCase()))
+          ListTile(
+            leading: const Icon(Icons.show_chart_outlined),
+            title: Text(l10n.charts),
+            subtitle: Text(l10n.chartsSubtitle),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ChartSettingsPage(),
+              ),
+            ),
+          ),
         ...getFoodSettings(
           settings: settingsState,
           term: search.text.toLowerCase(),
@@ -155,6 +169,12 @@ class _SettingsPageState extends State<SettingsPage> {
         title: l10n.weight,
         subtitle: l10n.weightSubtitle,
         page: const WeightSettings(),
+      ),
+      _SettingsCategory(
+        icon: Icons.show_chart_outlined,
+        title: l10n.charts,
+        subtitle: l10n.chartsSubtitle,
+        page: const ChartSettingsPage(),
       ),
       _SettingsCategory(
         icon: Icons.tab_sharp,

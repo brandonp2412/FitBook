@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "Trọng lượng tương đương 200 kcal"
+  "calorieEquivalentWeight200": "Trọng lượng tương đương 200 kcal",
+  "charts": "Biểu đồ",
+  "chartsSubtitle": "Đường lưới, tô bóng và đường cong",
+  "chartGridlines": "Đường lưới biểu đồ",
+  "chartShading": "Tô bóng biểu đồ",
+  "curveSmoothness": "Độ mượt của đường cong",
+  "chartPreview": "Xem trước trực tiếp"
 }

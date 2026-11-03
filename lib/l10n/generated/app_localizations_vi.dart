@@ -50,6 +50,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get searchSettings => 'Cài đặt tìm kiếm...';
 
   @override
+  String get charts => 'Biểu đồ';
+
+  @override
+  String get chartsSubtitle => 'Đường lưới, tô bóng và đường cong';
+
+  @override
+  String get chartGridlines => 'Đường lưới biểu đồ';
+
+  @override
+  String get chartShading => 'Tô bóng biểu đồ';
+
+  @override
+  String get curveSmoothness => 'Độ mượt của đường cong';
+
+  @override
+  String get chartPreview => 'Xem trước trực tiếp';
+
+  @override
   String get appearance => 'Ngoại quan';
 
   @override

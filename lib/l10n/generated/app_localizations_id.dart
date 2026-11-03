@@ -50,6 +50,24 @@ class AppLocalizationsId extends AppLocalizations {
   String get searchSettings => 'Setelan penelusuran...';
 
   @override
+  String get charts => 'Grafik';
+
+  @override
+  String get chartsSubtitle => 'Garis kisi, arsiran, dan kurva';
+
+  @override
+  String get chartGridlines => 'Garis kisi grafik';
+
+  @override
+  String get chartShading => 'Arsiran grafik';
+
+  @override
+  String get curveSmoothness => 'Kehalusan kurva';
+
+  @override
+  String get chartPreview => 'Pratinjau langsung';
+
+  @override
   String get appearance => 'Penampilan';
 
   @override

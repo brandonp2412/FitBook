@@ -50,6 +50,24 @@ class AppLocalizationsBn extends AppLocalizations {
   String get searchSettings => 'সেটিংস খুঁজুন...';
 
   @override
+  String get charts => 'চার্ট';
+
+  @override
+  String get chartsSubtitle => 'গ্রিড লাইন, শেডিং এবং বক্ররেখা';
+
+  @override
+  String get chartGridlines => 'চার্টের গ্রিড লাইন';
+
+  @override
+  String get chartShading => 'চার্টের রঙিন ছায়া';
+
+  @override
+  String get curveSmoothness => 'বক্ররেখার মসৃণতা';
+
+  @override
+  String get chartPreview => 'সরাসরি প্রিভিউ';
+
+  @override
   String get appearance => 'চেহারা';
 
   @override

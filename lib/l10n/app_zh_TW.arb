@@ -457,5 +457,11 @@
   "nutrientTheobromine": "可可鹼",
   "servingWeightNumber": "份量重量 {number}",
   "servingDescriptionNumber": "份量描述 {number}",
-  "calorieEquivalentWeight200": "相當於 200 kcal 的重量"
+  "calorieEquivalentWeight200": "相當於 200 kcal 的重量",
+  "charts": "圖表",
+  "chartsSubtitle": "格線、填色與曲線",
+  "chartGridlines": "圖表格線",
+  "chartShading": "圖表區域填色",
+  "curveSmoothness": "曲線平滑度",
+  "chartPreview": "即時預覽"
 }

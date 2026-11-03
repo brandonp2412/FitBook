@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "Вага, еквівалентна 200 ккал"
+  "calorieEquivalentWeight200": "Вага, еквівалентна 200 ккал",
+  "charts": "Графіки",
+  "chartsSubtitle": "Сітка, заливка та криві",
+  "chartGridlines": "Лінії сітки графіка",
+  "chartShading": "Заливка графіка",
+  "curveSmoothness": "Плавність кривої",
+  "chartPreview": "Перегляд у реальному часі"
 }

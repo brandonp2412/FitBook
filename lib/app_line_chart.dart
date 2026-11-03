@@ -42,6 +42,8 @@ class AppLineChartSeries {
 
 class AppLineChart extends StatelessWidget {
   final List<AppLineChartSeries> series;
+  final double curveSmoothness;
+  final bool showGridlines;
   final List<AppLineChartPoint> fallbackPoints;
   final List<String> bottomLabels;
   final int? maxBottomTitles;
@@ -56,6 +58,8 @@ class AppLineChart extends StatelessWidget {
   const AppLineChart({
     super.key,
     required this.series,
+    this.curveSmoothness = 0.35,
+    this.showGridlines = false,
     required this.fallbackPoints,
     required this.bottomLabels,
     required this.referenceColor,
@@ -67,6 +71,35 @@ class AppLineChart extends StatelessWidget {
     this.maxBottomTitles,
     this.referenceValue,
   });
+
+  @visibleForTesting
+  static Path sampleCurvePath(List<Offset> points, double smoothnessValue) {
+    final smoothness = smoothnessValue.clamp(0.0, 1.0);
+    if (points.length < 3 || smoothness == 0) {
+      return polylinePath(points);
+    }
+
+    final controlScale = smoothness / 2.1;
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
+    for (var i = 0; i < points.length - 1; i++) {
+      final p0 = points[i == 0 ? i : i - 1];
+      final p1 = points[i];
+      final p2 = points[i + 1];
+      final p3 = points[i + 2 >= points.length ? i + 1 : i + 2];
+      final lowY = p1.dy < p2.dy ? p1.dy : p2.dy;
+      final highY = p1.dy > p2.dy ? p1.dy : p2.dy;
+      final c1 = Offset(
+        p1.dx + (p2.dx - p0.dx) * controlScale,
+        (p1.dy + (p2.dy - p0.dy) * controlScale).clamp(lowY, highY),
+      );
+      final c2 = Offset(
+        p2.dx - (p3.dx - p1.dx) * controlScale,
+        (p2.dy - (p3.dy - p1.dy) * controlScale).clamp(lowY, highY),
+      );
+      path.cubicTo(c1.dx, c1.dy, c2.dx, c2.dy, p2.dx, p2.dy);
+    }
+    return path;
+  }
 
   @visibleForTesting
   static (double, double) calculateBounds({
@@ -172,54 +205,73 @@ class AppLineChart extends StatelessWidget {
       return packed;
     }
 
-    final balanced = <int>[first];
-    var previousOrderPosition = 0;
-    final span = centers[last] - centers[first];
-    for (var slot = 1; slot < packed.length - 1; slot++) {
-      final target = centers[first] + span * slot / (packed.length - 1);
-      final remainingSlots = packed.length - 1 - slot;
-      final maxOrderPosition = order.length - 1 - remainingSlots;
-      var bestOrderPosition = -1;
-      var bestDistance = double.infinity;
+    double gapBetween(int previous, int current) =>
+        centers[current] -
+        widths[current] / 2 -
+        (centers[previous] + widths[previous] / 2);
 
-      for (var position = previousOrderPosition + 1;
-          position <= maxOrderPosition;
-          position++) {
-        final index = order[position];
-        final previous = balanced.last;
-        final left = centers[index] - widths[index] / 2;
-        final previousRight = centers[previous] + widths[previous] / 2;
-        if (left < previousRight + minGap) continue;
-
-        final distance = (centers[index] - target).abs();
-        if (distance <= bestDistance) {
-          bestDistance = distance;
-          bestOrderPosition = position;
+    for (var slots = packed.length; slots >= 2; slots--) {
+      final latestPositions = List<int>.filled(slots, -1);
+      latestPositions[slots - 1] = count - 1;
+      var feasible = true;
+      for (var slot = slots - 2; slot >= 1; slot--) {
+        final nextIndex = order[latestPositions[slot + 1]];
+        for (var position = latestPositions[slot + 1] - 1;
+            position >= slot;
+            position--) {
+          if (gapBetween(order[position], nextIndex) >= minGap) {
+            latestPositions[slot] = position;
+            break;
+          }
+        }
+        if (latestPositions[slot] < 0) {
+          feasible = false;
+          break;
         }
       }
+      if (!feasible) continue;
 
-      if (bestOrderPosition < 0) {
-        packed.sort();
-        return packed;
+      final spaced = <int>[first];
+      var previousPosition = 0;
+      for (var slot = 1; slot < slots - 1; slot++) {
+        final target = centers[first] +
+            (centers[last] - centers[first]) * slot / (slots - 1);
+        final nextIndex = order[latestPositions[slot + 1]];
+        var bestPosition = -1;
+        var bestDistance = double.infinity;
+        for (var position = previousPosition + 1;
+            position <= latestPositions[slot];
+            position++) {
+          final index = order[position];
+          if (gapBetween(spaced.last, index) < minGap ||
+              gapBetween(index, nextIndex) < minGap) {
+            continue;
+          }
+          final distance = (centers[index] - target).abs();
+          if (distance <= bestDistance) {
+            bestDistance = distance;
+            bestPosition = position;
+          }
+        }
+        if (bestPosition < 0) {
+          feasible = false;
+          break;
+        }
+        spaced.add(order[bestPosition]);
+        previousPosition = bestPosition;
       }
-      balanced.add(order[bestOrderPosition]);
-      previousOrderPosition = bestOrderPosition;
-    }
-
-    balanced.add(last);
-    for (var i = 1; i < balanced.length; i++) {
-      final previous = balanced[i - 1];
-      final current = balanced[i];
-      final gap = centers[current] -
-          widths[current] / 2 -
-          (centers[previous] + widths[previous] / 2);
-      if (gap < minGap) {
-        packed.sort();
-        return packed;
+      if (!feasible) continue;
+      spaced.add(last);
+      if (List.generate(spaced.length - 1, (i) => i).any(
+        (i) => gapBetween(spaced[i], spaced[i + 1]) < minGap,
+      )) {
+        continue;
       }
+      spaced.sort();
+      return spaced;
     }
-    balanced.sort();
-    return balanced;
+    packed.sort();
+    return packed;
   }
 
   Set<int> _bottomLabelIndexes(CartesianScale scale, Color labelColor) {
@@ -269,6 +321,8 @@ class AppLineChart extends StatelessWidget {
         final size = constraints.biggest;
         final renderer = _AppLineChartRenderer(
           series: series,
+          curveSmoothness: curveSmoothness,
+          showGridlines: showGridlines,
           rowCount: bottomLabels.length,
           minY: axis.$1,
           maxY: axis.$2,
@@ -515,6 +569,8 @@ class _AppLineTooltipPainter extends CustomPainter {
 class _AppLineChartRenderer extends ChartRenderer
     implements InteractiveRenderer {
   final List<AppLineChartSeries> series;
+  final double curveSmoothness;
+  final bool showGridlines;
   final int rowCount;
   final double minY;
   final double maxY;
@@ -528,6 +584,8 @@ class _AppLineChartRenderer extends ChartRenderer
 
   const _AppLineChartRenderer({
     required this.series,
+    required this.curveSmoothness,
+    required this.showGridlines,
     required this.rowCount,
     required this.minY,
     required this.maxY,
@@ -556,29 +614,9 @@ class _AppLineChartRenderer extends ChartRenderer
         maxValue: maxY,
       );
 
-  Path _linePath(List<Offset> points, {required bool curved}) {
-    if (!curved || points.length < 3) return polylinePath(points);
-
-    final path = Path()..moveTo(points.first.dx, points.first.dy);
-    for (var i = 0; i < points.length - 1; i++) {
-      final p0 = points[i == 0 ? i : i - 1];
-      final p1 = points[i];
-      final p2 = points[i + 1];
-      final p3 = points[i + 2 >= points.length ? i + 1 : i + 2];
-      final lowY = p1.dy < p2.dy ? p1.dy : p2.dy;
-      final highY = p1.dy > p2.dy ? p1.dy : p2.dy;
-      final c1 = Offset(
-        p1.dx + (p2.dx - p0.dx) / 6,
-        (p1.dy + (p2.dy - p0.dy) / 6).clamp(lowY, highY),
-      );
-      final c2 = Offset(
-        p2.dx - (p3.dx - p1.dx) / 6,
-        (p2.dy - (p3.dy - p1.dy) / 6).clamp(lowY, highY),
-      );
-      path.cubicTo(c1.dx, c1.dy, c2.dx, c2.dy, p2.dx, p2.dy);
-    }
-    return path;
-  }
+  Path _linePath(List<Offset> points, {required bool curved}) => curved
+      ? AppLineChart.sampleCurvePath(points, curveSmoothness)
+      : polylinePath(points);
 
   List<Offset> _pixelPoints(AppLineChartSeries line, CartesianScale scale) => [
         for (final point in line.points)
@@ -591,8 +629,19 @@ class _AppLineChartRenderer extends ChartRenderer
     DrafterThemeColors theme,
   ) {
     final tickCount = ((maxY - minY) / yStep).round();
+    final gridPaint = Paint()
+      ..color = axisLabelColor.withValues(alpha: 0.12)
+      ..strokeWidth = 1;
     for (var i = 0; i <= tickCount; i++) {
       final value = minY + yStep * i;
+      if (showGridlines) {
+        final y = scale.yForValue(value);
+        canvas.drawLine(
+          Offset(scale.bounds.left, y),
+          Offset(scale.bounds.right, y),
+          gridPaint,
+        );
+      }
       drawChartText(
         canvas,
         axisLabelFormatter(value),

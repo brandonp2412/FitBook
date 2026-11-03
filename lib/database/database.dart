@@ -85,6 +85,20 @@ class AppDatabase extends _$AppDatabase {
               "TEXT NOT NULL DEFAULT 'system'",
             );
           }
+          if (from < 57 && to >= 57) {
+            await customStatement(
+              "ALTER TABLE settings ADD COLUMN curve_smoothness "
+              "REAL NOT NULL DEFAULT 0.35",
+            );
+            await customStatement(
+              "ALTER TABLE settings ADD COLUMN show_chart_gridlines "
+              "INTEGER NOT NULL CHECK (show_chart_gridlines IN (0, 1)) DEFAULT 0",
+            );
+            await customStatement(
+              "ALTER TABLE settings ADD COLUMN fill_chart_area "
+              "INTEGER NOT NULL CHECK (fill_chart_area IN (0, 1)) DEFAULT 1",
+            );
+          }
         });
 
         if (kDebugMode) {
@@ -569,5 +583,5 @@ class AppDatabase extends _$AppDatabase {
   );
 
   @override
-  int get schemaVersion => 56;
+  int get schemaVersion => 57;
 }

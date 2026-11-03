@@ -312,6 +312,9 @@ class _AppLineState extends State<AppLine> {
           int? dailyFat,
           int? dailyCarb,
           bool curveLines,
+          double curveSmoothness,
+          bool showChartGridlines,
+          bool fillChartArea,
           bool graphsStartAtZero,
           String shortDateFormat,
         })>(
@@ -322,6 +325,9 @@ class _AppLineState extends State<AppLine> {
         dailyFat: s.value.dailyFat,
         dailyCarb: s.value.dailyCarb,
         curveLines: s.value.curveLines,
+        curveSmoothness: s.value.curveSmoothness,
+        showChartGridlines: s.value.showChartGridlines,
+        fillChartArea: s.value.fillChartArea,
         graphsStartAtZero: s.value.graphsStartAtZero,
         shortDateFormat: s.value.shortDateFormat,
       ),
@@ -379,14 +385,16 @@ class _AppLineState extends State<AppLine> {
               color: colorScheme.primary,
               strokeWidth: 3,
               curved: sel.curveLines,
-              fill: true,
+              fill: sel.fillChartArea,
             ),
           if (showTrend && trendSpots.isNotEmpty)
             AppLineChartSeries(
               points: trendSpots,
               color: colorScheme.secondary,
               strokeWidth: 2,
-              fill: !showMain && !(showSmooth && smoothSpots.isNotEmpty),
+              fill: sel.fillChartArea &&
+                  !showMain &&
+                  !(showSmooth && smoothSpots.isNotEmpty),
             ),
           if (showSmooth && smoothSpots.isNotEmpty)
             AppLineChartSeries(
@@ -394,7 +402,7 @@ class _AppLineState extends State<AppLine> {
               color: colorScheme.tertiary,
               strokeWidth: 2,
               curved: sel.curveLines,
-              fill: !showMain,
+              fill: sel.fillChartArea && !showMain,
             ),
         ];
         final visibleGoal = showGoal && goal > 0 ? goal : null;
@@ -406,6 +414,8 @@ class _AppLineState extends State<AppLine> {
                 padding: const EdgeInsets.only(right: 32.0, top: 16.0),
                 child: AppLineChart(
                   series: chartSeries,
+                  curveSmoothness: sel.curveSmoothness,
+                  showGridlines: sel.showChartGridlines,
                   fallbackPoints: spots,
                   bottomLabels: [
                     for (final row in rows)

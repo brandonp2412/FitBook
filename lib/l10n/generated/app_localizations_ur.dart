@@ -50,6 +50,24 @@ class AppLocalizationsUr extends AppLocalizations {
   String get searchSettings => 'ترتیبات تلاش کریں...';
 
   @override
+  String get charts => 'چارٹس';
+
+  @override
+  String get chartsSubtitle => 'گرڈ لائنیں، شیڈنگ اور منحنی خطوط';
+
+  @override
+  String get chartGridlines => 'چارٹ کی گرڈ لائنیں';
+
+  @override
+  String get chartShading => 'چارٹ کی شیڈنگ';
+
+  @override
+  String get curveSmoothness => 'منحنی کی ہمواری';
+
+  @override
+  String get chartPreview => 'براہِ راست پیش نظارہ';
+
+  @override
   String get appearance => 'ظاہری شکل';
 
   @override

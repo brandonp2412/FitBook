@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "Berat setara dengan 200 kkal"
+  "calorieEquivalentWeight200": "Berat setara dengan 200 kkal",
+  "charts": "Grafik",
+  "chartsSubtitle": "Garis kisi, arsiran, dan kurva",
+  "chartGridlines": "Garis kisi grafik",
+  "chartShading": "Arsiran grafik",
+  "curveSmoothness": "Kehalusan kurva",
+  "chartPreview": "Pratinjau langsung"
 }

@@ -50,6 +50,24 @@ class AppLocalizationsUk extends AppLocalizations {
   String get searchSettings => 'Пошук налаштувань...';
 
   @override
+  String get charts => 'Графіки';
+
+  @override
+  String get chartsSubtitle => 'Сітка, заливка та криві';
+
+  @override
+  String get chartGridlines => 'Лінії сітки графіка';
+
+  @override
+  String get chartShading => 'Заливка графіка';
+
+  @override
+  String get curveSmoothness => 'Плавність кривої';
+
+  @override
+  String get chartPreview => 'Перегляд у реальному часі';
+
+  @override
   String get appearance => 'Вигляд';
 
   @override

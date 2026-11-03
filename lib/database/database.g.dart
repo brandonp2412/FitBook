@@ -6597,6 +6597,34 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("curve_lines" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _curveSmoothnessMeta =
+      const VerificationMeta('curveSmoothness');
+  @override
+  late final GeneratedColumn<double> curveSmoothness = GeneratedColumn<double>(
+      'curve_smoothness', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0.35));
+  static const VerificationMeta _showChartGridlinesMeta =
+      const VerificationMeta('showChartGridlines');
+  @override
+  late final GeneratedColumn<bool> showChartGridlines = GeneratedColumn<bool>(
+      'show_chart_gridlines', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("show_chart_gridlines" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _fillChartAreaMeta =
+      const VerificationMeta('fillChartArea');
+  @override
+  late final GeneratedColumn<bool> fillChartArea = GeneratedColumn<bool>(
+      'fill_chart_area', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("fill_chart_area" IN (0, 1))'),
       defaultValue: const Constant(true));
   static const VerificationMeta _autoCalcMeta =
       const VerificationMeta('autoCalc');
@@ -6885,6 +6913,9 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   @override
   List<GeneratedColumn> get $columns => [
         curveLines,
+        curveSmoothness,
+        showChartGridlines,
+        fillChartArea,
         autoCalc,
         dailyCalories,
         dailyCarb,
@@ -6938,6 +6969,24 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           _curveLinesMeta,
           curveLines.isAcceptableOrUnknown(
               data['curve_lines']!, _curveLinesMeta));
+    }
+    if (data.containsKey('curve_smoothness')) {
+      context.handle(
+          _curveSmoothnessMeta,
+          curveSmoothness.isAcceptableOrUnknown(
+              data['curve_smoothness']!, _curveSmoothnessMeta));
+    }
+    if (data.containsKey('show_chart_gridlines')) {
+      context.handle(
+          _showChartGridlinesMeta,
+          showChartGridlines.isAcceptableOrUnknown(
+              data['show_chart_gridlines']!, _showChartGridlinesMeta));
+    }
+    if (data.containsKey('fill_chart_area')) {
+      context.handle(
+          _fillChartAreaMeta,
+          fillChartArea.isAcceptableOrUnknown(
+              data['fill_chart_area']!, _fillChartAreaMeta));
     }
     if (data.containsKey('auto_calc')) {
       context.handle(_autoCalcMeta,
@@ -7163,6 +7212,12 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     return Setting(
       curveLines: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}curve_lines'])!,
+      curveSmoothness: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}curve_smoothness'])!,
+      showChartGridlines: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}show_chart_gridlines'])!,
+      fillChartArea: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}fill_chart_area'])!,
       autoCalc: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}auto_calc'])!,
       dailyCalories: attachedDatabase.typeMapping
@@ -7248,6 +7303,9 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
 
 class Setting extends DataClass implements Insertable<Setting> {
   final bool curveLines;
+  final double curveSmoothness;
+  final bool showChartGridlines;
+  final bool fillChartArea;
   final bool autoCalc;
   final int? dailyCalories;
   final int? dailyCarb;
@@ -7287,6 +7345,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   final String graphSeries;
   const Setting(
       {required this.curveLines,
+      required this.curveSmoothness,
+      required this.showChartGridlines,
+      required this.fillChartArea,
       required this.autoCalc,
       this.dailyCalories,
       this.dailyCarb,
@@ -7328,6 +7389,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['curve_lines'] = Variable<bool>(curveLines);
+    map['curve_smoothness'] = Variable<double>(curveSmoothness);
+    map['show_chart_gridlines'] = Variable<bool>(showChartGridlines);
+    map['fill_chart_area'] = Variable<bool>(fillChartArea);
     map['auto_calc'] = Variable<bool>(autoCalc);
     if (!nullToAbsent || dailyCalories != null) {
       map['daily_calories'] = Variable<int>(dailyCalories);
@@ -7393,6 +7457,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   SettingsCompanion toCompanion(bool nullToAbsent) {
     return SettingsCompanion(
       curveLines: Value(curveLines),
+      curveSmoothness: Value(curveSmoothness),
+      showChartGridlines: Value(showChartGridlines),
+      fillChartArea: Value(fillChartArea),
       autoCalc: Value(autoCalc),
       dailyCalories: dailyCalories == null && nullToAbsent
           ? const Value.absent()
@@ -7459,6 +7526,9 @@ class Setting extends DataClass implements Insertable<Setting> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Setting(
       curveLines: serializer.fromJson<bool>(json['curveLines']),
+      curveSmoothness: serializer.fromJson<double>(json['curveSmoothness']),
+      showChartGridlines: serializer.fromJson<bool>(json['showChartGridlines']),
+      fillChartArea: serializer.fromJson<bool>(json['fillChartArea']),
       autoCalc: serializer.fromJson<bool>(json['autoCalc']),
       dailyCalories: serializer.fromJson<int?>(json['dailyCalories']),
       dailyCarb: serializer.fromJson<int?>(json['dailyCarb']),
@@ -7506,6 +7576,9 @@ class Setting extends DataClass implements Insertable<Setting> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'curveLines': serializer.toJson<bool>(curveLines),
+      'curveSmoothness': serializer.toJson<double>(curveSmoothness),
+      'showChartGridlines': serializer.toJson<bool>(showChartGridlines),
+      'fillChartArea': serializer.toJson<bool>(fillChartArea),
       'autoCalc': serializer.toJson<bool>(autoCalc),
       'dailyCalories': serializer.toJson<int?>(dailyCalories),
       'dailyCarb': serializer.toJson<int?>(dailyCarb),
@@ -7548,6 +7621,9 @@ class Setting extends DataClass implements Insertable<Setting> {
 
   Setting copyWith(
           {bool? curveLines,
+          double? curveSmoothness,
+          bool? showChartGridlines,
+          bool? fillChartArea,
           bool? autoCalc,
           Value<int?> dailyCalories = const Value.absent(),
           Value<int?> dailyCarb = const Value.absent(),
@@ -7587,6 +7663,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           String? graphSeries}) =>
       Setting(
         curveLines: curveLines ?? this.curveLines,
+        curveSmoothness: curveSmoothness ?? this.curveSmoothness,
+        showChartGridlines: showChartGridlines ?? this.showChartGridlines,
+        fillChartArea: fillChartArea ?? this.fillChartArea,
         autoCalc: autoCalc ?? this.autoCalc,
         dailyCalories:
             dailyCalories.present ? dailyCalories.value : this.dailyCalories,
@@ -7634,6 +7713,15 @@ class Setting extends DataClass implements Insertable<Setting> {
     return Setting(
       curveLines:
           data.curveLines.present ? data.curveLines.value : this.curveLines,
+      curveSmoothness: data.curveSmoothness.present
+          ? data.curveSmoothness.value
+          : this.curveSmoothness,
+      showChartGridlines: data.showChartGridlines.present
+          ? data.showChartGridlines.value
+          : this.showChartGridlines,
+      fillChartArea: data.fillChartArea.present
+          ? data.fillChartArea.value
+          : this.fillChartArea,
       autoCalc: data.autoCalc.present ? data.autoCalc.value : this.autoCalc,
       dailyCalories: data.dailyCalories.present
           ? data.dailyCalories.value
@@ -7717,6 +7805,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   String toString() {
     return (StringBuffer('Setting(')
           ..write('curveLines: $curveLines, ')
+          ..write('curveSmoothness: $curveSmoothness, ')
+          ..write('showChartGridlines: $showChartGridlines, ')
+          ..write('fillChartArea: $fillChartArea, ')
           ..write('autoCalc: $autoCalc, ')
           ..write('dailyCalories: $dailyCalories, ')
           ..write('dailyCarb: $dailyCarb, ')
@@ -7761,6 +7852,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   @override
   int get hashCode => Object.hashAll([
         curveLines,
+        curveSmoothness,
+        showChartGridlines,
+        fillChartArea,
         autoCalc,
         dailyCalories,
         dailyCarb,
@@ -7804,6 +7898,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       identical(this, other) ||
       (other is Setting &&
           other.curveLines == this.curveLines &&
+          other.curveSmoothness == this.curveSmoothness &&
+          other.showChartGridlines == this.showChartGridlines &&
+          other.fillChartArea == this.fillChartArea &&
           other.autoCalc == this.autoCalc &&
           other.dailyCalories == this.dailyCalories &&
           other.dailyCarb == this.dailyCarb &&
@@ -7845,6 +7942,9 @@ class Setting extends DataClass implements Insertable<Setting> {
 
 class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> curveLines;
+  final Value<double> curveSmoothness;
+  final Value<bool> showChartGridlines;
+  final Value<bool> fillChartArea;
   final Value<bool> autoCalc;
   final Value<int?> dailyCalories;
   final Value<int?> dailyCarb;
@@ -7884,6 +7984,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<String> graphSeries;
   const SettingsCompanion({
     this.curveLines = const Value.absent(),
+    this.curveSmoothness = const Value.absent(),
+    this.showChartGridlines = const Value.absent(),
+    this.fillChartArea = const Value.absent(),
     this.autoCalc = const Value.absent(),
     this.dailyCalories = const Value.absent(),
     this.dailyCarb = const Value.absent(),
@@ -7924,6 +8027,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   });
   SettingsCompanion.insert({
     this.curveLines = const Value.absent(),
+    this.curveSmoothness = const Value.absent(),
+    this.showChartGridlines = const Value.absent(),
+    this.fillChartArea = const Value.absent(),
     this.autoCalc = const Value.absent(),
     this.dailyCalories = const Value.absent(),
     this.dailyCarb = const Value.absent(),
@@ -7973,6 +8079,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
         themeMode = Value(themeMode);
   static Insertable<Setting> custom({
     Expression<bool>? curveLines,
+    Expression<double>? curveSmoothness,
+    Expression<bool>? showChartGridlines,
+    Expression<bool>? fillChartArea,
     Expression<bool>? autoCalc,
     Expression<int>? dailyCalories,
     Expression<int>? dailyCarb,
@@ -8013,6 +8122,10 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   }) {
     return RawValuesInsertable({
       if (curveLines != null) 'curve_lines': curveLines,
+      if (curveSmoothness != null) 'curve_smoothness': curveSmoothness,
+      if (showChartGridlines != null)
+        'show_chart_gridlines': showChartGridlines,
+      if (fillChartArea != null) 'fill_chart_area': fillChartArea,
       if (autoCalc != null) 'auto_calc': autoCalc,
       if (dailyCalories != null) 'daily_calories': dailyCalories,
       if (dailyCarb != null) 'daily_carb': dailyCarb,
@@ -8058,6 +8171,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
 
   SettingsCompanion copyWith(
       {Value<bool>? curveLines,
+      Value<double>? curveSmoothness,
+      Value<bool>? showChartGridlines,
+      Value<bool>? fillChartArea,
       Value<bool>? autoCalc,
       Value<int?>? dailyCalories,
       Value<int?>? dailyCarb,
@@ -8097,6 +8213,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<String>? graphSeries}) {
     return SettingsCompanion(
       curveLines: curveLines ?? this.curveLines,
+      curveSmoothness: curveSmoothness ?? this.curveSmoothness,
+      showChartGridlines: showChartGridlines ?? this.showChartGridlines,
+      fillChartArea: fillChartArea ?? this.fillChartArea,
       autoCalc: autoCalc ?? this.autoCalc,
       dailyCalories: dailyCalories ?? this.dailyCalories,
       dailyCarb: dailyCarb ?? this.dailyCarb,
@@ -8143,6 +8262,15 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     final map = <String, Expression>{};
     if (curveLines.present) {
       map['curve_lines'] = Variable<bool>(curveLines.value);
+    }
+    if (curveSmoothness.present) {
+      map['curve_smoothness'] = Variable<double>(curveSmoothness.value);
+    }
+    if (showChartGridlines.present) {
+      map['show_chart_gridlines'] = Variable<bool>(showChartGridlines.value);
+    }
+    if (fillChartArea.present) {
+      map['fill_chart_area'] = Variable<bool>(fillChartArea.value);
     }
     if (autoCalc.present) {
       map['auto_calc'] = Variable<bool>(autoCalc.value);
@@ -8263,6 +8391,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   String toString() {
     return (StringBuffer('SettingsCompanion(')
           ..write('curveLines: $curveLines, ')
+          ..write('curveSmoothness: $curveSmoothness, ')
+          ..write('showChartGridlines: $showChartGridlines, ')
+          ..write('fillChartArea: $fillChartArea, ')
           ..write('autoCalc: $autoCalc, ')
           ..write('dailyCalories: $dailyCalories, ')
           ..write('dailyCarb: $dailyCarb, ')
@@ -11864,6 +11995,9 @@ typedef $$WeightsTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function()>;
 typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   Value<bool> curveLines,
+  Value<double> curveSmoothness,
+  Value<bool> showChartGridlines,
+  Value<bool> fillChartArea,
   Value<bool> autoCalc,
   Value<int?> dailyCalories,
   Value<int?> dailyCarb,
@@ -11904,6 +12038,9 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
 });
 typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<bool> curveLines,
+  Value<double> curveSmoothness,
+  Value<bool> showChartGridlines,
+  Value<bool> fillChartArea,
   Value<bool> autoCalc,
   Value<int?> dailyCalories,
   Value<int?> dailyCarb,
@@ -11954,6 +12091,17 @@ class $$SettingsTableFilterComposer
   });
   ColumnFilters<bool> get curveLines => $composableBuilder(
       column: $table.curveLines, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get curveSmoothness => $composableBuilder(
+      column: $table.curveSmoothness,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get showChartGridlines => $composableBuilder(
+      column: $table.showChartGridlines,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get fillChartArea => $composableBuilder(
+      column: $table.fillChartArea, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<bool> get autoCalc => $composableBuilder(
       column: $table.autoCalc, builder: (column) => ColumnFilters(column));
@@ -12087,6 +12235,18 @@ class $$SettingsTableOrderingComposer
   });
   ColumnOrderings<bool> get curveLines => $composableBuilder(
       column: $table.curveLines, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get curveSmoothness => $composableBuilder(
+      column: $table.curveSmoothness,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get showChartGridlines => $composableBuilder(
+      column: $table.showChartGridlines,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get fillChartArea => $composableBuilder(
+      column: $table.fillChartArea,
+      builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<bool> get autoCalc => $composableBuilder(
       column: $table.autoCalc, builder: (column) => ColumnOrderings(column));
@@ -12228,6 +12388,15 @@ class $$SettingsTableAnnotationComposer
   GeneratedColumn<bool> get curveLines => $composableBuilder(
       column: $table.curveLines, builder: (column) => column);
 
+  GeneratedColumn<double> get curveSmoothness => $composableBuilder(
+      column: $table.curveSmoothness, builder: (column) => column);
+
+  GeneratedColumn<bool> get showChartGridlines => $composableBuilder(
+      column: $table.showChartGridlines, builder: (column) => column);
+
+  GeneratedColumn<bool> get fillChartArea => $composableBuilder(
+      column: $table.fillChartArea, builder: (column) => column);
+
   GeneratedColumn<bool> get autoCalc =>
       $composableBuilder(column: $table.autoCalc, builder: (column) => column);
 
@@ -12364,6 +12533,9 @@ class $$SettingsTableTableManager extends RootTableManager<
               $$SettingsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<bool> curveLines = const Value.absent(),
+            Value<double> curveSmoothness = const Value.absent(),
+            Value<bool> showChartGridlines = const Value.absent(),
+            Value<bool> fillChartArea = const Value.absent(),
             Value<bool> autoCalc = const Value.absent(),
             Value<int?> dailyCalories = const Value.absent(),
             Value<int?> dailyCarb = const Value.absent(),
@@ -12404,6 +12576,9 @@ class $$SettingsTableTableManager extends RootTableManager<
           }) =>
               SettingsCompanion(
             curveLines: curveLines,
+            curveSmoothness: curveSmoothness,
+            showChartGridlines: showChartGridlines,
+            fillChartArea: fillChartArea,
             autoCalc: autoCalc,
             dailyCalories: dailyCalories,
             dailyCarb: dailyCarb,
@@ -12444,6 +12619,9 @@ class $$SettingsTableTableManager extends RootTableManager<
           ),
           createCompanionCallback: ({
             Value<bool> curveLines = const Value.absent(),
+            Value<double> curveSmoothness = const Value.absent(),
+            Value<bool> showChartGridlines = const Value.absent(),
+            Value<bool> fillChartArea = const Value.absent(),
             Value<bool> autoCalc = const Value.absent(),
             Value<int?> dailyCalories = const Value.absent(),
             Value<int?> dailyCarb = const Value.absent(),
@@ -12484,6 +12662,9 @@ class $$SettingsTableTableManager extends RootTableManager<
           }) =>
               SettingsCompanion.insert(
             curveLines: curveLines,
+            curveSmoothness: curveSmoothness,
+            showChartGridlines: showChartGridlines,
+            fillChartArea: fillChartArea,
             autoCalc: autoCalc,
             dailyCalories: dailyCalories,
             dailyCarb: dailyCarb,

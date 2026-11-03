@@ -50,6 +50,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get searchSettings => 'Buscar en ajustes...';
 
   @override
+  String get charts => 'Gráficas';
+
+  @override
+  String get chartsSubtitle => 'Cuadrícula, sombreado y curvas';
+
+  @override
+  String get chartGridlines => 'Líneas de cuadrícula';
+
+  @override
+  String get chartShading => 'Sombreado del gráfico';
+
+  @override
+  String get curveSmoothness => 'Suavidad de la curva';
+
+  @override
+  String get chartPreview => 'Vista previa en vivo';
+
+  @override
   String get appearance => 'Apariencia';
 
   @override

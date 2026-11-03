@@ -457,5 +457,11 @@
   "nutrientTheobromine": "Théobromine",
   "servingWeightNumber": "Poids de portion {number}",
   "servingDescriptionNumber": "Description de portion {number}",
-  "calorieEquivalentWeight200": "Poids équivalent à 200 kcal"
+  "calorieEquivalentWeight200": "Poids équivalent à 200 kcal",
+  "charts": "Graphiques",
+  "chartsSubtitle": "Quadrillage, remplissage et courbes",
+  "chartGridlines": "Quadrillage du graphique",
+  "chartShading": "Remplissage du graphique",
+  "curveSmoothness": "Lissage des courbes",
+  "chartPreview": "Aperçu en direct"
 }

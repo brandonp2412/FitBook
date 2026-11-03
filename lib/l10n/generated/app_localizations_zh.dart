@@ -50,6 +50,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchSettings => '搜索设置...';
 
   @override
+  String get charts => '图表';
+
+  @override
+  String get chartsSubtitle => '网格线、填充与曲线';
+
+  @override
+  String get chartGridlines => '图表网格线';
+
+  @override
+  String get chartShading => '图表区域填充';
+
+  @override
+  String get curveSmoothness => '曲线平滑度';
+
+  @override
+  String get chartPreview => '实时预览';
+
+  @override
   String get appearance => '外观';
 
   @override
@@ -1504,6 +1522,24 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get searchSettings => '搜索设置...';
 
   @override
+  String get charts => '图表';
+
+  @override
+  String get chartsSubtitle => '网格线、填充与曲线';
+
+  @override
+  String get chartGridlines => '图表网格线';
+
+  @override
+  String get chartShading => '图表区域填充';
+
+  @override
+  String get curveSmoothness => '曲线平滑度';
+
+  @override
+  String get chartPreview => '实时预览';
+
+  @override
   String get appearance => '外观';
 
   @override
@@ -2956,6 +2992,24 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get searchSettings => '搜尋設定...';
+
+  @override
+  String get charts => '圖表';
+
+  @override
+  String get chartsSubtitle => '格線、填色與曲線';
+
+  @override
+  String get chartGridlines => '圖表格線';
+
+  @override
+  String get chartShading => '圖表區域填色';
+
+  @override
+  String get curveSmoothness => '曲線平滑度';
+
+  @override
+  String get chartPreview => '即時預覽';
 
   @override
   String get appearance => '外觀';

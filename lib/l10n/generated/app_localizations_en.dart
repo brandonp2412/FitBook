@@ -50,10 +50,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchSettings => 'Search settings...';
 
   @override
+  String get charts => 'Charts';
+
+  @override
+  String get chartsSubtitle => 'Gridlines, shading and curves';
+
+  @override
+  String get chartGridlines => 'Chart gridlines';
+
+  @override
+  String get chartShading => 'Chart shading';
+
+  @override
+  String get curveSmoothness => 'Curve smoothness';
+
+  @override
+  String get chartPreview => 'Live preview';
+
+  @override
   String get appearance => 'Appearance';
 
   @override
-  String get appearanceSubtitle => 'Theme, colors and graph display';
+  String get appearanceSubtitle => 'Theme, colors and display';
 
   @override
   String get diary => 'Diary';

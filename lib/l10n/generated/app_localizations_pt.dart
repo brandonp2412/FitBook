@@ -50,6 +50,24 @@ class AppLocalizationsPt extends AppLocalizations {
   String get searchSettings => 'Pesquisar configurações...';
 
   @override
+  String get charts => 'Gráficos';
+
+  @override
+  String get chartsSubtitle => 'Grelha, sombreado e curvas';
+
+  @override
+  String get chartGridlines => 'Linhas de grelha do gráfico';
+
+  @override
+  String get chartShading => 'Sombreado do gráfico';
+
+  @override
+  String get curveSmoothness => 'Suavidade da curva';
+
+  @override
+  String get chartPreview => 'Pré-visualização em tempo real';
+
+  @override
   String get appearance => 'Aparência';
 
   @override
@@ -1558,6 +1576,24 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get searchSettings => 'Pesquisar configurações...';
 
   @override
+  String get charts => 'Gráficos';
+
+  @override
+  String get chartsSubtitle => 'Grade, sombreamento e curvas';
+
+  @override
+  String get chartGridlines => 'Linhas de grade do gráfico';
+
+  @override
+  String get chartShading => 'Sombreamento do gráfico';
+
+  @override
+  String get curveSmoothness => 'Suavização da curva';
+
+  @override
+  String get chartPreview => 'Prévia em tempo real';
+
+  @override
   String get appearance => 'Aparência';
 
   @override
@@ -3063,6 +3099,24 @@ class AppLocalizationsPtPt extends AppLocalizationsPt {
 
   @override
   String get searchSettings => 'Pesquisar definições...';
+
+  @override
+  String get charts => 'Gráficos';
+
+  @override
+  String get chartsSubtitle => 'Grelha, sombreado e curvas';
+
+  @override
+  String get chartGridlines => 'Linhas de grelha do gráfico';
+
+  @override
+  String get chartShading => 'Sombreado do gráfico';
+
+  @override
+  String get curveSmoothness => 'Suavidade da curva';
+
+  @override
+  String get chartPreview => 'Pré-visualização em tempo real';
 
   @override
   String get appearance => 'Aparência';

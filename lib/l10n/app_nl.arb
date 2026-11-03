@@ -457,5 +457,11 @@
   "nutrientTheobromine": "Theobromine",
   "servingWeightNumber": "Portiegewicht {number}",
   "servingDescriptionNumber": "Portiebeschrijving {number}",
-  "calorieEquivalentWeight200": "Gewicht voor 200 kcal"
+  "calorieEquivalentWeight200": "Gewicht voor 200 kcal",
+  "charts": "Grafieken",
+  "chartsSubtitle": "Rasterlijnen, arcering en krommen",
+  "chartGridlines": "Rasterlijnen in grafiek",
+  "chartShading": "Grafiekvulling",
+  "curveSmoothness": "Vloeiendheid van krommen",
+  "chartPreview": "Livevoorbeeld"
 }

@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "200 kcal के बराबर वज़न"
+  "calorieEquivalentWeight200": "200 kcal के बराबर वज़न",
+  "charts": "चार्ट",
+  "chartsSubtitle": "ग्रिड रेखाएँ, छायांकन और वक्र",
+  "chartGridlines": "चार्ट की ग्रिड रेखाएँ",
+  "chartShading": "चार्ट का छायांकन",
+  "curveSmoothness": "वक्र की चिकनाई",
+  "chartPreview": "लाइव पूर्वावलोकन"
 }

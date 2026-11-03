@@ -50,6 +50,24 @@ class AppLocalizationsTh extends AppLocalizations {
   String get searchSettings => 'ค้นหาการตั้งค่า...';
 
   @override
+  String get charts => 'แผนภูมิ';
+
+  @override
+  String get chartsSubtitle => 'เส้นตาราง การแรเงา และเส้นโค้ง';
+
+  @override
+  String get chartGridlines => 'เส้นตารางแผนภูมิ';
+
+  @override
+  String get chartShading => 'การแรเงาแผนภูมิ';
+
+  @override
+  String get curveSmoothness => 'ความเรียบของเส้นโค้ง';
+
+  @override
+  String get chartPreview => 'ตัวอย่างแบบสด';
+
+  @override
   String get appearance => 'รูปลักษณ์';
 
   @override

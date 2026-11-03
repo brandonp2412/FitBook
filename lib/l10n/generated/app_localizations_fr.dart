@@ -50,6 +50,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get searchSettings => 'Rechercher dans les paramètres...';
 
   @override
+  String get charts => 'Graphiques';
+
+  @override
+  String get chartsSubtitle => 'Quadrillage, remplissage et courbes';
+
+  @override
+  String get chartGridlines => 'Quadrillage du graphique';
+
+  @override
+  String get chartShading => 'Remplissage du graphique';
+
+  @override
+  String get curveSmoothness => 'Lissage des courbes';
+
+  @override
+  String get chartPreview => 'Aperçu en direct';
+
+  @override
   String get appearance => 'Apparence';
 
   @override

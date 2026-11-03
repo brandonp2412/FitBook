@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "200 kcal کے برابر وزن"
+  "calorieEquivalentWeight200": "200 kcal کے برابر وزن",
+  "charts": "چارٹس",
+  "chartsSubtitle": "گرڈ لائنیں، شیڈنگ اور منحنی خطوط",
+  "chartGridlines": "چارٹ کی گرڈ لائنیں",
+  "chartShading": "چارٹ کی شیڈنگ",
+  "curveSmoothness": "منحنی کی ہمواری",
+  "chartPreview": "براہِ راست پیش نظارہ"
 }

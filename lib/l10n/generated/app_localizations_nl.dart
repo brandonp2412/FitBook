@@ -50,6 +50,24 @@ class AppLocalizationsNl extends AppLocalizations {
   String get searchSettings => 'Instellingen doorzoeken...';
 
   @override
+  String get charts => 'Grafieken';
+
+  @override
+  String get chartsSubtitle => 'Rasterlijnen, arcering en krommen';
+
+  @override
+  String get chartGridlines => 'Rasterlijnen in grafiek';
+
+  @override
+  String get chartShading => 'Grafiekvulling';
+
+  @override
+  String get curveSmoothness => 'Vloeiendheid van krommen';
+
+  @override
+  String get chartPreview => 'Livevoorbeeld';
+
+  @override
   String get appearance => 'Weergave';
 
   @override

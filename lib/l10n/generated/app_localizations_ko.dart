@@ -50,6 +50,24 @@ class AppLocalizationsKo extends AppLocalizations {
   String get searchSettings => '설정 검색...';
 
   @override
+  String get charts => '차트';
+
+  @override
+  String get chartsSubtitle => '격자선, 영역 음영 및 곡선';
+
+  @override
+  String get chartGridlines => '차트 격자선';
+
+  @override
+  String get chartShading => '차트 영역 음영';
+
+  @override
+  String get curveSmoothness => '곡선 부드러움';
+
+  @override
+  String get chartPreview => '실시간 미리보기';
+
+  @override
   String get appearance => '화면';
 
   @override

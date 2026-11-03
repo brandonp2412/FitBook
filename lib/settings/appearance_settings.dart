@@ -214,25 +214,6 @@ List<Widget> getAppearanceSettings(
           ),
         ),
       ),
-    if (l10n.curveLineGraphs.toLowerCase().contains(term))
-      Tooltip(
-        message: l10n.curveLineGraphsTooltip,
-        child: ListTile(
-          title: Text(l10n.curveLineGraphs),
-          leading: const Icon(Icons.insights),
-          onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  curveLines: Value(!settings.value.curveLines),
-                ),
-              ),
-          trailing: Switch(
-            value: settings.value.curveLines,
-            onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(curveLines: Value(value)),
-                ),
-          ),
-        ),
-      ),
     if (l10n.weightStatCards.toLowerCase().contains(term))
       Tooltip(
         message: l10n.weightStatCardsTooltip,
@@ -250,25 +231,6 @@ List<Widget> getAppearanceSettings(
             value: !settings.value.compactWeights,
             onChanged: (value) => db.settings.update().write(
                   SettingsCompanion(compactWeights: Value(!value)),
-                ),
-          ),
-        ),
-      ),
-    if (l10n.graphsStartAtZero.toLowerCase().contains(term))
-      Tooltip(
-        message: l10n.graphsStartAtZeroTooltip,
-        child: ListTile(
-          title: Text(l10n.graphsStartAtZero),
-          leading: const Icon(Icons.vertical_align_bottom),
-          onTap: () => db.settings.update().write(
-                SettingsCompanion(
-                  graphsStartAtZero: Value(!settings.value.graphsStartAtZero),
-                ),
-              ),
-          trailing: Switch(
-            value: settings.value.graphsStartAtZero,
-            onChanged: (value) => db.settings.update().write(
-                  SettingsCompanion(graphsStartAtZero: Value(value)),
                 ),
           ),
         ),

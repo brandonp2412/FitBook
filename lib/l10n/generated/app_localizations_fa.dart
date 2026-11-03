@@ -50,6 +50,24 @@ class AppLocalizationsFa extends AppLocalizations {
   String get searchSettings => 'جست‌وجوی تنظیمات...';
 
   @override
+  String get charts => 'نمودارها';
+
+  @override
+  String get chartsSubtitle => 'خطوط شبکه، سایه‌زنی و منحنی‌ها';
+
+  @override
+  String get chartGridlines => 'خطوط شبکه نمودار';
+
+  @override
+  String get chartShading => 'سایه‌زنی نمودار';
+
+  @override
+  String get curveSmoothness => 'نرمی منحنی';
+
+  @override
+  String get chartPreview => 'پیش‌نمایش زنده';
+
+  @override
   String get appearance => 'ظاهر';
 
   @override

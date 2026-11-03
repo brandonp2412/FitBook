@@ -50,6 +50,24 @@ class AppLocalizationsHi extends AppLocalizations {
   String get searchSettings => 'सेटिंग्स खोजें...';
 
   @override
+  String get charts => 'चार्ट';
+
+  @override
+  String get chartsSubtitle => 'ग्रिड रेखाएँ, छायांकन और वक्र';
+
+  @override
+  String get chartGridlines => 'चार्ट की ग्रिड रेखाएँ';
+
+  @override
+  String get chartShading => 'चार्ट का छायांकन';
+
+  @override
+  String get curveSmoothness => 'वक्र की चिकनाई';
+
+  @override
+  String get chartPreview => 'लाइव पूर्वावलोकन';
+
+  @override
   String get appearance => 'दिखावट';
 
   @override

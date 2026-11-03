@@ -218,6 +218,42 @@ abstract class AppLocalizations {
   /// **'Search settings...'**
   String get searchSettings;
 
+  /// No description provided for @charts.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts'**
+  String get charts;
+
+  /// No description provided for @chartsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gridlines, shading and curves'**
+  String get chartsSubtitle;
+
+  /// No description provided for @chartGridlines.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart gridlines'**
+  String get chartGridlines;
+
+  /// No description provided for @chartShading.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart shading'**
+  String get chartShading;
+
+  /// No description provided for @curveSmoothness.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve smoothness'**
+  String get curveSmoothness;
+
+  /// No description provided for @chartPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Live preview'**
+  String get chartPreview;
+
   /// No description provided for @appearance.
   ///
   /// In en, this message translates to:
@@ -227,7 +263,7 @@ abstract class AppLocalizations {
   /// No description provided for @appearanceSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Theme, colors and graph display'**
+  /// **'Theme, colors and display'**
   String get appearanceSubtitle;
 
   /// No description provided for @diary.

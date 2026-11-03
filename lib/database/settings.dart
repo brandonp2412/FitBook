@@ -10,7 +10,11 @@ final defaultFields = [
 ];
 
 class Settings extends Table {
-  BoolColumn get curveLines => boolean().withDefault(const Constant(true))();
+  BoolColumn get curveLines => boolean().withDefault(const Constant(false))();
+  RealColumn get curveSmoothness => real().withDefault(const Constant(0.35))();
+  BoolColumn get showChartGridlines =>
+      boolean().withDefault(const Constant(false))();
+  BoolColumn get fillChartArea => boolean().withDefault(const Constant(true))();
   BoolColumn get autoCalc => boolean().withDefault(const Constant(false))();
   IntColumn get dailyCalories => integer().nullable()();
   IntColumn get dailyCarb => integer().nullable()();

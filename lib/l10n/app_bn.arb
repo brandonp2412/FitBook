@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "২০০ kcal-এর সমতুল্য ওজন"
+  "calorieEquivalentWeight200": "২০০ kcal-এর সমতুল্য ওজন",
+  "charts": "চার্ট",
+  "chartsSubtitle": "গ্রিড লাইন, শেডিং এবং বক্ররেখা",
+  "chartGridlines": "চার্টের গ্রিড লাইন",
+  "chartShading": "চার্টের রঙিন ছায়া",
+  "curveSmoothness": "বক্ররেখার মসৃণতা",
+  "chartPreview": "সরাসরি প্রিভিউ"
 }

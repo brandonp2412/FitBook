@@ -50,6 +50,24 @@ class AppLocalizationsPl extends AppLocalizations {
   String get searchSettings => 'Szukaj w ustawieniach...';
 
   @override
+  String get charts => 'Wykresy';
+
+  @override
+  String get chartsSubtitle => 'Siatka, cieniowanie i krzywe';
+
+  @override
+  String get chartGridlines => 'Linie siatki wykresu';
+
+  @override
+  String get chartShading => 'Wypełnienie wykresu';
+
+  @override
+  String get curveSmoothness => 'Wygładzenie krzywej';
+
+  @override
+  String get chartPreview => 'Podgląd na żywo';
+
+  @override
   String get appearance => 'Wygląd';
 
   @override

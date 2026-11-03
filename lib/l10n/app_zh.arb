@@ -457,5 +457,11 @@
   "nutrientTheobromine": "可可碱",
   "servingWeightNumber": "份量重量 {number}",
   "servingDescriptionNumber": "份量描述 {number}",
-  "calorieEquivalentWeight200": "相当于 200 kcal 的重量"
+  "calorieEquivalentWeight200": "相当于 200 kcal 的重量",
+  "charts": "图表",
+  "chartsSubtitle": "网格线、填充与曲线",
+  "chartGridlines": "图表网格线",
+  "chartShading": "图表区域填充",
+  "curveSmoothness": "曲线平滑度",
+  "chartPreview": "实时预览"
 }

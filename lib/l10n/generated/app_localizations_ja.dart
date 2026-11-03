@@ -50,6 +50,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get searchSettings => '設定を検索...';
 
   @override
+  String get charts => 'グラフ';
+
+  @override
+  String get chartsSubtitle => 'グリッド線、塗りつぶし、曲線';
+
+  @override
+  String get chartGridlines => 'グラフのグリッド線';
+
+  @override
+  String get chartShading => 'グラフの塗りつぶし';
+
+  @override
+  String get curveSmoothness => '曲線の滑らかさ';
+
+  @override
+  String get chartPreview => 'ライブプレビュー';
+
+  @override
   String get appearance => '外観';
 
   @override

@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "وزن معادل ۲۰۰ kcal"
+  "calorieEquivalentWeight200": "وزن معادل ۲۰۰ kcal",
+  "charts": "نمودارها",
+  "chartsSubtitle": "خطوط شبکه، سایه‌زنی و منحنی‌ها",
+  "chartGridlines": "خطوط شبکه نمودار",
+  "chartShading": "سایه‌زنی نمودار",
+  "curveSmoothness": "نرمی منحنی",
+  "chartPreview": "پیش‌نمایش زنده"
 }

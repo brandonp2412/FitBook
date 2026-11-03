@@ -169,4 +169,34 @@ void main() {
 
     expect(tester.takeException(), isNull);
   });
+  test('curve smoothness changes the drawn path without moving data anchors',
+      () {
+    const points = [
+      Offset(10, 80),
+      Offset(90, 20),
+      Offset(170, 60),
+      Offset(250, 10),
+      Offset(330, 45),
+    ];
+    final straight = AppLineChart.sampleCurvePath(points, 0);
+    final subtle = AppLineChart.sampleCurvePath(points, 0.35);
+    final strong = AppLineChart.sampleCurvePath(points, 1);
+    final lengths = [
+      straight.computeMetrics().single.length,
+      subtle.computeMetrics().single.length,
+      strong.computeMetrics().single.length,
+    ];
+    expect(lengths[1], greaterThan(lengths[0]));
+    expect(lengths[2], greaterThan(lengths[1]));
+    for (final path in [straight, subtle, strong]) {
+      final metric = path.computeMetrics().single;
+      expect(metric.getTangentForOffset(0)!.position, points.first);
+      expect(metric.getTangentForOffset(metric.length)!.position, points.last);
+      for (var i = 0; i <= 100; i++) {
+        final y =
+            metric.getTangentForOffset(metric.length * i / 100)!.position.dy;
+        expect(y, inInclusiveRange(10, 80));
+      }
+    }
+  });
 }

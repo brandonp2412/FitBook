@@ -457,5 +457,11 @@
   "nutrientTheobromine": "Teobromina",
   "servingWeightNumber": "Masa porcji {number}",
   "servingDescriptionNumber": "Opis porcji {number}",
-  "calorieEquivalentWeight200": "Masa odpowiadająca 200 kcal"
+  "calorieEquivalentWeight200": "Masa odpowiadająca 200 kcal",
+  "charts": "Wykresy",
+  "chartsSubtitle": "Siatka, cieniowanie i krzywe",
+  "chartGridlines": "Linie siatki wykresu",
+  "chartShading": "Wypełnienie wykresu",
+  "curveSmoothness": "Wygładzenie krzywej",
+  "chartPreview": "Podgląd na żywo"
 }

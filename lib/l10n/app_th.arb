@@ -720,5 +720,11 @@
       }
     }
   },
-  "calorieEquivalentWeight200": "น้ำหนักที่เทียบเท่า 200 kcal"
+  "calorieEquivalentWeight200": "น้ำหนักที่เทียบเท่า 200 kcal",
+  "charts": "แผนภูมิ",
+  "chartsSubtitle": "เส้นตาราง การแรเงา และเส้นโค้ง",
+  "chartGridlines": "เส้นตารางแผนภูมิ",
+  "chartShading": "การแรเงาแผนภูมิ",
+  "curveSmoothness": "ความเรียบของเส้นโค้ง",
+  "chartPreview": "ตัวอย่างแบบสด"
 }

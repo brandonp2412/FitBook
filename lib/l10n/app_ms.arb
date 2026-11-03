@@ -480,5 +480,11 @@
   "@servingWeightNumber": {"placeholders": {"number": {"type": "int"}}},
   "servingDescriptionNumber": "Penerangan hidangan {number}",
   "@servingDescriptionNumber": {"placeholders": {"number": {"type": "int"}}},
-  "calorieEquivalentWeight200": "Berat bersamaan 200 kcal"
+  "calorieEquivalentWeight200": "Berat bersamaan 200 kcal",
+  "charts": "Carta",
+  "chartsSubtitle": "Garis grid, lorekan dan lengkung",
+  "chartGridlines": "Garis grid carta",
+  "chartShading": "Lorekan carta",
+  "curveSmoothness": "Kelancaran lengkung",
+  "chartPreview": "Pratonton langsung"
 }
