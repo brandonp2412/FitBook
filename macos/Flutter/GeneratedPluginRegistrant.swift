@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import dynamic_color
-import file_picker
+import file_picker_darwin
 import file_selector_macos
 import flutter_local_notifications
 import package_info_plus
