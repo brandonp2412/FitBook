@@ -339,6 +339,9 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   )
                 : CachedNetworkImage(
                     imageUrl: smallImg ?? bigImg!,
+                    memCacheWidth: (MediaQuery.sizeOf(context).width *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .round(),
                     fit: BoxFit.cover,
                     placeholder: (_, __) => const SizedBox.expand(),
                     errorWidget: (_, __, ___) => const SizedBox.expand(),

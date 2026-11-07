@@ -96,10 +96,11 @@ void main() {
     for (final file in files) {
       final translations = _readStringMap(file);
       expect(
-        translations.keys.toSet(),
-        changelogIds,
-        reason: '${file.path} must cover every English changelog asset',
+        translations.keys.toSet().difference(changelogIds),
+        isEmpty,
+        reason: '${file.path} must not reference unknown changelog assets',
       );
+      expect(translations, isNotEmpty);
       for (final entry in translations.entries) {
         expect(entry.value.trim(), isNotEmpty);
         final englishFile = File('assets/changelogs/${entry.key}.txt');

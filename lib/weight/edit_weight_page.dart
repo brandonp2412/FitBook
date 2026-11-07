@@ -203,8 +203,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
   }
 
   Future<void> _pickImage() async {
-    FilePickerResult? result = await FilePicker.pickFiles(type: FileType.image);
-    final path = result?.files.single.path;
+    final result = await FilePicker.pickFile(type: FileType.image);
+    final path = result?.path;
     if (path == null) return;
     final docsDir = (await getApplicationDocumentsDirectory()).path;
     final fileName = 'weight_${DateTime.now().millisecondsSinceEpoch}.jpg';

@@ -119,8 +119,6 @@ class App extends StatelessWidget {
       SystemUiOverlayStyle(
         statusBarIconBrightness: iconBrightness,
         systemNavigationBarIconBrightness: iconBrightness,
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
       ),
     );
   }

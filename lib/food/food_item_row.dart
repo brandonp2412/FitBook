@@ -39,6 +39,9 @@ class FoodItemRow extends StatelessWidget {
     else if (showImages && food.smallImage.value?.isNotEmpty == true)
       image = CachedNetworkImage(
         imageUrl: food.smallImage.value!,
+        memCacheWidth: ((usesDesktopInteractions(context) ? 40 : 50) *
+                MediaQuery.devicePixelRatioOf(context))
+            .round(),
         fit: BoxFit.cover,
         placeholder: (_, __) => _placeholder(colorScheme),
         errorWidget: (_, __, ___) => _placeholder(colorScheme),

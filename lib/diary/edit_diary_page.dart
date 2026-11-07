@@ -654,7 +654,10 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       return SizedBox(
         height: 48,
         width: 48,
-        child: CachedNetworkImage(imageUrl: food.bigImage ?? food.smallImage!),
+        child: CachedNetworkImage(
+          imageUrl: food.bigImage ?? food.smallImage!,
+          memCacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
+        ),
       );
     return const SizedBox(
       width: 48,
@@ -716,6 +719,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                   )
                 : CachedNetworkImage(
                     imageUrl: bigImage!,
+                    memCacheWidth: (MediaQuery.sizeOf(context).width *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .round(),
                     fit: BoxFit.cover,
                     placeholder: (_, __) => const SizedBox.expand(),
                     errorWidget: (_, __, ___) => const SizedBox.expand(),

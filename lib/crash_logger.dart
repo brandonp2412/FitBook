@@ -57,6 +57,12 @@ class CrashLogger {
     if (file == null) return;
 
     try {
+      const maxLogBytes = 512 * 1024;
+      if (file.existsSync() && file.lengthSync() >= maxLogBytes) {
+        final previousLog = File('${file.path}.previous');
+        if (previousLog.existsSync()) previousLog.deleteSync();
+        file.renameSync(previousLog.path);
+      }
       file.writeAsStringSync(entry.toString(), mode: FileMode.append);
     } catch (_) {
       // Logging must remain best-effort.

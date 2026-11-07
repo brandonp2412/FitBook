@@ -14,10 +14,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(
+    await tester.scrollUntilVisible(
       find.textContaining('READMEの表示を中央揃えに変更'),
-      findsOneWidget,
+      300,
+      scrollable: find.byType(Scrollable).first,
     );
+    expect(find.textContaining('READMEの表示を中央揃えに変更'), findsOneWidget);
   });
 
   group('changelogTranslationAssetCandidates', () {

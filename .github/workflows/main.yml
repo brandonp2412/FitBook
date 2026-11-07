@@ -349,6 +349,23 @@ jobs:
       - name: Build Windows
         run: flutter build windows
 
+      - name: Smoke test release Windows startup
+        shell: pwsh
+        run: |
+          $exe = (Resolve-Path 'build/windows/x64/runner/Release/fit_book.exe').Path
+          $process = Start-Process -FilePath $exe -PassThru
+          try {
+            Start-Sleep -Seconds 10
+            $process.Refresh()
+            if ($process.HasExited) {
+              throw "FitBook exited during release startup with code $($process.ExitCode)."
+            }
+          } finally {
+            if (-not $process.HasExited) {
+              Stop-Process -Id $process.Id -Force
+            }
+          }
+
       - name: Create Windows zip
         shell: pwsh
         run: |

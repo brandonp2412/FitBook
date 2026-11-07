@@ -35,6 +35,7 @@ class DiaryFoodThumbnail extends StatelessWidget {
     } else if (showImages && food.smallImage?.isNotEmpty == true) {
       image = CachedNetworkImage(
         imageUrl: food.smallImage!,
+        memCacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
         fit: BoxFit.cover,
         placeholder: (context, url) => _placeholder(colorScheme),
         errorWidget: (context, url, error) => _placeholder(colorScheme),

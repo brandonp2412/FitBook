@@ -264,6 +264,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               if (product.imageFrontUrl?.isNotEmpty == true)
                 CachedNetworkImage(
                   imageUrl: product.imageFrontUrl!,
+                  memCacheWidth:
+                      (165 * MediaQuery.devicePixelRatioOf(context)).round(),
                   placeholder: (context, url) => const SizedBox(
                     height: 80,
                     child: Center(child: CircularProgressIndicator()),
@@ -296,6 +298,8 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       trailing: product.imageFrontSmallUrl != null
           ? CachedNetworkImage(
               imageUrl: product.imageFrontUrl!,
+              memCacheWidth:
+                  (96 * MediaQuery.devicePixelRatioOf(context)).round(),
               placeholder: (context, url) => const SizedBox(
                 height: 100,
                 child: Center(child: CircularProgressIndicator()),

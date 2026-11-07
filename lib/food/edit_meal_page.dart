@@ -170,9 +170,8 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   Future<void> _pickImage() async {
-    final result = await FilePicker.pickFiles(type: FileType.image);
-    if (result == null) return;
-    final path = result.files.single.path;
+    final result = await FilePicker.pickFile(type: FileType.image);
+    final path = result?.path;
     if (path == null) return;
     final docsDir = (await getApplicationDocumentsDirectory()).path;
     final fileName = 'meal_${DateTime.now().millisecondsSinceEpoch}.jpg';
@@ -743,6 +742,7 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
     else if (showImages && food.smallImage?.isNotEmpty == true)
       content = CachedNetworkImage(
         imageUrl: food.smallImage!,
+        memCacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
         width: 44,
         height: 44,
         fit: BoxFit.cover,
