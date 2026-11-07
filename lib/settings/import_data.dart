@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_state.dart';
@@ -18,6 +17,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'backup_archive.dart';
+import 'import_validation.dart';
 
 double? _parseDouble(dynamic val) =>
     val is String ? double.tryParse(val) : val as double?;
@@ -286,7 +286,9 @@ class _ImportDataState extends State<ImportData> {
         documentsDirectory: dbFolder,
       );
       validateBackupDatabaseFile(sourceFile);
-      final candidate = AppDatabase(executor: NativeDatabase(sourceFile));
+      final candidate = AppDatabase(
+        executor: createImportValidationExecutor(sourceFile.path),
+      );
       try {
         await candidate.customSelect('SELECT 1 FROM foods LIMIT 1').get();
         final violations =
