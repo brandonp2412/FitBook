@@ -360,6 +360,9 @@ jobs:
             if ($process.HasExited) {
               throw "FitBook exited during release startup with code $($process.ExitCode)."
             }
+            if ($process.MainWindowHandle -eq [IntPtr]::Zero -or -not $process.Responding) {
+              throw "FitBook Windows release did not open a responsive window."
+            }
           } finally {
             if (-not $process.HasExited) {
               Stop-Process -Id $process.Id -Force
