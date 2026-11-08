@@ -1,10 +1,2 @@
-• build: preserve class names during release optimization
-• chore: remove nonportable local Windows folder metadata
-• docs: remove internal device identifiers from public text
-• docs: remove internal host references from translated notes
-• feat: add chart visuals settings and live preview
-• fix(windows): tolerate crash-log storage startup failures
-• fix: harden Windows diagnostics and Android image handling
-• style: add dotted ticks to graph sliders
-• style: apply compact slider theme across app
-• style: space graph slider tick marks visibly
+• fix(web): isolate native SQLite backup validation
+• fix(windows): guard font refresh and check startup UI
