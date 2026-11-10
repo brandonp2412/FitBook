@@ -146,6 +146,15 @@ class WeightPageState extends State<WeightPage>
                           setState(() => selected.add(id));
                         }
                       },
+                      onToggleAll: () => setState(() {
+                        final visible =
+                            weights.map((weight) => weight.id).toSet();
+                        if (selected.containsAll(visible)) {
+                          selected.removeAll(visible);
+                        } else {
+                          selected.addAll(visible);
+                        }
+                      }),
                       onNext: () async {
                         final result = await stream.first;
                         if (result.length <= limit) return;

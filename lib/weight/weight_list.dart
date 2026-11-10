@@ -1,6 +1,7 @@
 import 'package:fit_book/app_search.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
+import 'package:fit_book/desktop_list_header.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
@@ -41,6 +42,7 @@ class WeightList extends StatefulWidget {
     required this.weights,
     required this.selected,
     required this.onSelect,
+    required this.onToggleAll,
     required this.onNext,
     required this.ctrl,
     this.extraTopPadding = 0,
@@ -49,6 +51,7 @@ class WeightList extends StatefulWidget {
   final List<Weight> weights;
   final Set<int> selected;
   final ValueChanged<int> onSelect;
+  final VoidCallback onToggleAll;
   final VoidCallback onNext;
   final ScrollController ctrl;
   final double extraTopPadding;
@@ -94,6 +97,13 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final settings = context.watch<SettingsState>().value;
     final desktop = usesDesktopInteractions(context);
+    final selectionHeader = DesktopListHeader(
+      totalCount: widget.weights.length,
+      selectedCount: widget.weights
+          .where((weight) => widget.selected.contains(weight.id))
+          .length,
+      onToggleAll: widget.onToggleAll,
+    );
 
     if (settings.compactWeights) {
       final theme = Theme.of(context);
@@ -108,8 +118,10 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             bottom: navigationBottomClearance(context),
           ),
           controller: widget.ctrl,
-          itemCount: widget.weights.length,
-          itemBuilder: (context, index) {
+          itemCount: widget.weights.length + (desktop ? 1 : 0),
+          itemBuilder: (context, position) {
+            if (desktop && position == 0) return selectionHeader;
+            final index = position - (desktop ? 1 : 0);
             final weight = widget.weights[index];
             final isToday = isSameDay(weight.created, now);
             final isSelected = widget.selected.contains(weight.id);
@@ -130,6 +142,7 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
               },
               onLongPress: desktop ? null : () => widget.onSelect(weight.id),
               child: Container(
+                key: ValueKey('weight-select-${weight.id}'),
                 margin: const EdgeInsets.symmetric(vertical: 2),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                 decoration: BoxDecoration(
@@ -140,13 +153,6 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                 ),
                 child: Row(
                   children: [
-                    if (desktop) ...[
-                      Checkbox(
-                        value: isSelected,
-                        onChanged: (_) => widget.onSelect(weight.id),
-                      ),
-                      const SizedBox(width: 4),
-                    ],
                     Container(
                       constraints: const BoxConstraints(minWidth: 64),
                       padding: const EdgeInsets.symmetric(
@@ -207,6 +213,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
                           color: weightDeltaColor(colorScheme, delta),
                         ),
                       ),
+                    if (desktop)
+                      Checkbox(
+                        key: ValueKey('weight-checkbox-${weight.id}'),
+                        value: isSelected,
+                        onChanged: (_) => widget.onSelect(weight.id),
+                      ),
                   ],
                 ),
               ),
@@ -219,140 +231,183 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
       final colorScheme = theme.colorScheme;
 
       return Expanded(
-        child: GridView.builder(
-          padding: EdgeInsets.only(
-            top: appSearchHeight + widget.extraTopPadding + 16,
-            left: 12,
-            right: 12,
-            bottom: navigationBottomClearance(context),
-          ),
+        child: CustomScrollView(
           controller: widget.ctrl,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 190,
-            mainAxisExtent: 128,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          itemCount: widget.weights.length,
-          itemBuilder: (context, index) {
-            final weight = widget.weights[index];
-            final isToday = isSameDay(weight.created, now);
-            final isSelected = widget.selected.contains(weight.id);
-            final delta = weightDeltaLabel(
-              widget.weights,
-              index,
-              context: context,
-            );
-            final sparkColor = isToday
-                ? colorScheme.primary
-                : colorScheme.onSurfaceVariant.withValues(alpha: 0.5);
-
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                color: isToday
-                    ? colorScheme.primary.withValues(alpha: 0.1)
-                    : colorScheme.surfaceContainerHigh,
-                borderRadius: BorderRadius.circular(14),
-                border: isSelected
-                    ? Border.all(color: colorScheme.primary, width: 2)
-                    : null,
+          slivers: [
+            SliverPadding(
+              padding: EdgeInsets.only(
+                top: appSearchHeight + widget.extraTopPadding,
               ),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(14),
-                onTap: () {
-                  if (widget.selected.isEmpty) {
-                    showEditWeight(context, weight.toCompanion(false));
-                  } else {
-                    widget.onSelect(weight.id);
-                  }
-                },
-                onLongPress: desktop ? null : () => widget.onSelect(weight.id),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (desktop)
-                            Checkbox(
-                              value: isSelected,
-                              onChanged: (_) => widget.onSelect(weight.id),
-                            ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  formatDisplayNumber(
-                                    context,
-                                    weight.amount,
-                                    minimumFractionDigits: 1,
-                                    maximumFractionDigits: 1,
-                                  ),
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.0,
-                                    color: isToday ? colorScheme.primary : null,
-                                  ),
-                                ),
-                                Text(
-                                  '${weight.unit.toUpperCase()}${isToday ? ' · ${context.l10n.today.toUpperCase()}' : ''}',
-                                  style: theme.textTheme.labelSmall?.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                    letterSpacing: 0.4,
-                                  ),
-                                ),
-                              ],
-                            ),
+              sliver: SliverToBoxAdapter(
+                child: desktop ? selectionHeader : const SizedBox.shrink(),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(
+                12,
+                16,
+                12,
+                navigationBottomClearance(context),
+              ),
+              sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 190,
+                  mainAxisExtent: 128,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final weight = widget.weights[index];
+                    final isToday = isSameDay(weight.created, now);
+                    final isSelected = widget.selected.contains(weight.id);
+                    final delta = weightDeltaLabel(
+                      widget.weights,
+                      index,
+                      context: context,
+                    );
+                    final sparkColor = isToday
+                        ? colorScheme.primary
+                        : colorScheme.onSurfaceVariant.withValues(alpha: 0.5);
+
+                    final background = isToday
+                        ? Color.alphaBlend(
+                            colorScheme.primary.withValues(alpha: 0.1),
+                            colorScheme.surfaceContainerHigh,
+                          )
+                        : colorScheme.surfaceContainerHigh;
+
+                    return DecoratedBox(
+                      key: ValueKey('weight-select-${weight.id}'),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? Color.alphaBlend(
+                                colorScheme.primary.withValues(alpha: 0.08),
+                                background,
+                              )
+                            : background,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(14),
+                        onTap: () {
+                          if (widget.selected.isEmpty) {
+                            showEditWeight(context, weight.toCompanion(false));
+                          } else {
+                            widget.onSelect(weight.id);
+                          }
+                        },
+                        onLongPress:
+                            desktop ? null : () => widget.onSelect(weight.id),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: desktop ? 6 : 12,
                           ),
-                          if (delta != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 6,
-                                vertical: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          formatDisplayNumber(
+                                            context,
+                                            weight.amount,
+                                            minimumFractionDigits: 1,
+                                            maximumFractionDigits: 1,
+                                          ),
+                                          style: theme.textTheme.titleLarge
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            height: 1.0,
+                                            color: isToday
+                                                ? colorScheme.primary
+                                                : null,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${weight.unit.toUpperCase()}${isToday ? ' · ${context.l10n.today.toUpperCase()}' : ''}',
+                                          style: theme.textTheme.labelSmall
+                                              ?.copyWith(
+                                            color: colorScheme.onSurfaceVariant,
+                                            letterSpacing: 0.4,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (delta != null)
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                        vertical: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: weightDeltaColor(
+                                          colorScheme,
+                                          delta,
+                                        ).withValues(alpha: 0.14),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        delta,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w700,
+                                          color: weightDeltaColor(
+                                            colorScheme,
+                                            delta,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  if (desktop)
+                                    Checkbox(
+                                      key: ValueKey(
+                                        'weight-checkbox-${weight.id}',
+                                      ),
+                                      value: isSelected,
+                                      visualDensity: VisualDensity.compact,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (_) =>
+                                          widget.onSelect(weight.id),
+                                    ),
+                                ],
                               ),
-                              decoration: BoxDecoration(
-                                color: weightDeltaColor(
-                                  colorScheme,
-                                  delta,
-                                ).withValues(alpha: 0.14),
-                                borderRadius: BorderRadius.circular(20),
+                              _Spark(
+                                values: _sparkValues(widget.weights, index),
+                                color: sparkColor,
                               ),
-                              child: Text(
-                                delta,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: weightDeltaColor(colorScheme, delta),
+                              Text(
+                                isToday
+                                    ? context.l10n.today
+                                    : formatDisplayDate(
+                                        context,
+                                        weight.created,
+                                        settings.shortDateFormat,
+                                      ),
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
-                            ),
-                        ],
-                      ),
-                      _Spark(
-                        values: _sparkValues(widget.weights, index),
-                        color: sparkColor,
-                      ),
-                      Text(
-                        isToday
-                            ? context.l10n.today
-                            : formatDisplayDate(
-                                context,
-                                weight.created,
-                                settings.shortDateFormat,
-                              ),
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
+                  childCount: widget.weights.length,
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       );
     }
