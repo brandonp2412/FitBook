@@ -113,8 +113,6 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
         child: ListView.builder(
           padding: EdgeInsets.only(
             top: appSearchHeight + widget.extraTopPadding + 8,
-            left: 12,
-            right: 12,
             bottom: navigationBottomClearance(context),
           ),
           controller: widget.ctrl,
@@ -132,7 +130,6 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
             );
 
             return InkWell(
-              borderRadius: BorderRadius.circular(10),
               onTap: () {
                 if (widget.selected.isEmpty) {
                   showEditWeight(context, weight.toCompanion(false));
@@ -143,13 +140,12 @@ class _WeightListState extends State<WeightList> with WidgetsBindingObserver {
               onLongPress: desktop ? null : () => widget.onSelect(weight.id),
               child: Container(
                 key: ValueKey('weight-select-${weight.id}'),
-                margin: const EdgeInsets.symmetric(vertical: 2),
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? colorScheme.primary.withValues(alpha: 0.08)
                       : null,
-                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
                   children: [

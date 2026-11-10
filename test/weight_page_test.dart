@@ -188,6 +188,46 @@ void main() async {
     await db.close();
   });
 
+  testWidgets('Compact Weight selection matches Diary edge-to-edge tint', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await mockTests();
+    final settingsState = SettingsState(await db.settings.select().getSingle());
+    final id = await db.weights.insertOne(
+      WeightsCompanion.insert(created: DateTime.now(), unit: 'kg', amount: 75),
+    );
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => settingsState),
+          ChangeNotifierProvider(create: (context) => DiaryState()),
+        ],
+        child: localizedApp(home: const WeightPage()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.longPress(find.textContaining('75.0kg'));
+    await tester.pumpAndSettle();
+
+    final tile = find.byKey(ValueKey('weight-select-$id'));
+    final bounds = tester.getRect(tile);
+    final decoration =
+        tester.widget<Container>(tile).decoration as BoxDecoration;
+    final colorScheme = Theme.of(tester.element(tile)).colorScheme;
+    expect(bounds.left, 0);
+    expect(bounds.width, 390);
+    expect(decoration.borderRadius, equals(null));
+    expect(decoration.color, colorScheme.primary.withValues(alpha: 0.08));
+    expect(tester.takeException(), equals(null));
+
+    await db.close();
+  });
+
   testWidgets('Weight cards use Diary selection tint without borders', (
     WidgetTester tester,
   ) async {
