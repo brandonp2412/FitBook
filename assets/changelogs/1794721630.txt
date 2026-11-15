@@ -1,0 +1,2 @@
+• fix(weight): align selection visuals with diary controls
+• fix(weight): highlight selected rows edge to edge

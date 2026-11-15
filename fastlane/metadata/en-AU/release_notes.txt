@@ -1,2 +1,2 @@
-• fix(web): isolate native SQLite backup validation
-• fix(windows): guard font refresh and check startup UI
+• fix(weight): align selection visuals with diary controls
+• fix(weight): highlight selected rows edge to edge
