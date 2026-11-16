@@ -5,6 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart' as app;
+import 'package:fit_book/reminder_schedule.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -28,7 +29,7 @@ void setupReminders({bool requestPermission = true}) {
 
   if (!Platform.isAndroid && !Platform.isIOS) {
     timer = Timer.periodic(
-      const Duration(hours: 4),
+      const Duration(hours: 2),
       (timer) => doDesktopReminders(),
     );
     return;
@@ -39,7 +40,8 @@ void setupReminders({bool requestPermission = true}) {
   Workmanager().registerPeriodicTask(
     "reminders",
     "reminders",
-    frequency: const Duration(hours: 4),
+    frequency: const Duration(hours: 2),
+    existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
   );
 }
 
@@ -131,9 +133,9 @@ Future<void> doDesktopReminders() async {
         notificationDetails: _desktopNotificationDetails,
       );
     }
-  } else if (hour >= 16 && hour < 22) {
+  } else if (isDinnerReminderHour(hour)) {
     final entered = diaries.where(
-      (entry) => entry.created.hour >= 16 && entry.created.hour < 22,
+      (entry) => isDinnerDiaryHour(entry.created.hour),
     );
     if (entered.isEmpty) {
       await plugin.show(
@@ -185,7 +187,6 @@ void doMobileReminders() {
 
     bool isBreakfast(int value) => value >= 6 && value < 12;
     bool isLunch(int value) => value >= 12 && value < 16;
-    bool isDinner(int value) => value >= 16 && value < 22;
 
     if (isBreakfast(hour)) {
       final brekkie = diaries.where((entry) => isBreakfast(entry.created.hour));
@@ -217,8 +218,10 @@ void doMobileReminders() {
           ),
         ),
       );
-    } else if (isDinner(hour)) {
-      final dins = diaries.where((entry) => isDinner(entry.created.hour));
+    } else if (isDinnerReminderHour(hour)) {
+      final dins = diaries.where(
+        (entry) => isDinnerDiaryHour(entry.created.hour),
+      );
       if (dins.isNotEmpty) return Future.value(true);
 
       await plugin.show(
