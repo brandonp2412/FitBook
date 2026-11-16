@@ -52,21 +52,22 @@ fun openDb(context: Context): SQLiteDatabase? {
 fun getSettings(context: Context): Pair<Boolean, String?> {
     val db = openDb(context) ?: return Pair(false, null)
 
-    try {
-        var backupPath: String? = null
-        var automaticBackups = false
-        val query = "SELECT backup_path, automatic_backups FROM settings"
-        val cursor = db.rawQuery(query, null)
-
-        if (cursor.moveToFirst()) {
-            backupPath = cursor.getString(cursor.getColumnIndexOrThrow("backup_path"))
-            automaticBackups = cursor.getInt(cursor.getColumnIndexOrThrow("automatic_backups")) == 1
+    return try {
+        db.rawQuery("SELECT backup_path, automatic_backups FROM settings", null).use { cursor ->
+            if (!cursor.moveToFirst()) {
+                Pair(false, null)
+            } else {
+                Pair(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("automatic_backups")) == 1,
+                    cursor.getString(cursor.getColumnIndexOrThrow("backup_path"))
+                )
+            }
         }
-        cursor.close()
-        db.close()
-        return Pair(automaticBackups, backupPath)
     } catch (e: Exception) {
-        return Pair(false, null)
+        Log.e("BackupSettings", "Could not read backup settings", e)
+        Pair(false, null)
+    } finally {
+        db.close()
     }
 }
 
@@ -74,11 +75,14 @@ fun setAutomaticBackups(context: Context, enabled: Boolean) {
     val db = openDb(context) ?: return
 
     try {
-        val value = if (enabled) 1 else 0
-        val query = "UPDATE settings SET automatic_backups = $value"
-        db.execSQL(query)
-        db.close()
+        db.execSQL(
+            "UPDATE settings SET automatic_backups = ?",
+            arrayOf(if (enabled) 1 else 0)
+        )
     } catch (e: Exception) {
-        Log.e("utils@setAutomaticBackups:", e.toString())
+        Log.e("BackupSettings", "Could not update automatic backup setting", e)
+    } finally {
+        db.close()
     }
 }
+
