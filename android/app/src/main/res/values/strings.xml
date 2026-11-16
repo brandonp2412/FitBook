@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Backup failed: Database file not found. Automatic backups disabled.</string>
     <string name="backup_success_title">Backed up data and images</string>
     <string name="backup_failed_unexpected">Backup failed unexpectedly. Automatic backups disabled.</string>
+    <string name="backup_failed_retry">Backup failed. Automatic backups will retry tomorrow.</string>
 </resources>
