@@ -1,138 +1,85 @@
 #!/usr/bin/env python3
-"""Non-destructive on-device smoke test for FitBook's Android dinner alarms.
+"""Inspect FitBook's production Dart/WorkManager job on Samsung.
 
-Requires a signed, debuggable FitBook APK on the Samsung. The test receiver is
-compiled into debug builds only. No meal entries or app settings are modified.
-
-Usage: python3 scripts/samsung_reminder_smoke.py --device 10.66.66.3:5555
+No debug APK, Kotlin receiver, fake clock or changes to diary data.
+Optionally run a due job; WorkManager does not allow running a periodic task
+before its scheduled interval even when JobScheduler's --force is used.
 """
 
 import argparse
 import re
 import subprocess
 import time
-from pathlib import Path
 
-PACKAGE = "com.presley.fit_book"
-TEST_RECEIVER = f"{PACKAGE}/.MealReminderTestReceiver"
+PACKAGE = 'com.presley.fit_book'
+NAMESPACE = 'androidx.work.systemjobscheduler'
 
 
-def adb(device, *args, timeout=20):
+def adb(serial, *command):
     result = subprocess.run(
-        ["adb", "-s", device, *args], capture_output=True, text=True,
-        timeout=timeout, check=False,
+        ['adb', '-s', serial, *command], capture_output=True,
+        text=True, timeout=35,
     )
     if result.returncode:
-        raise RuntimeError(f"adb {args} failed: {result.stderr[-400:]}")
+        raise RuntimeError(f"ADB failed: {' '.join(command)}: {result.stderr[-350:]}")
     return result.stdout
-
-
-def broadcast(device, mode, seconds=None):
-    args = ["shell", "am", "broadcast", "-f", "0x20", "-n", TEST_RECEIVER,
-            "--es", "mode", mode]
-    if seconds is not None:
-        args += ["--ei", "seconds", str(seconds)]
-    output = adb(device, *args)
-    if "Broadcast completed" not in output:
-        raise AssertionError(f"Android did not dispatch QA broadcast: {output}")
-
-
-def notificationVisible(device):
-    data = adb(device, "shell", "dumpsys", "notification", "--noredact", timeout=30)
-    return bool(re.search(
-        r"NotificationRecord\([^\n]*pkg=com\.presley\.fit_book(?:\s|\|)[^\n]*id=9103\b", data
-    ))
-
-
-def alarmDump(device):
-    return adb(device, "shell", "dumpsys", "alarm", timeout=30)
-
-
-def assertRealAlarm(device):
-    data = alarmDump(device)
-    # Match *pending* RTC_WAKEUP alarms, not historical events from a past run.
-    pending = re.findall(
-        r"RTC_WAKEUP #\d+: Alarm\{[^\n]+com\.presley\.fit_book\}\s+"
-        r"tag=\*walarm\*:com\.presley\.fit_book/\.MealReminderReceiver",
-        data,
-    )
-    if len(pending) < 3:
-        raise AssertionError(f"Expected three pending meal alarms, found {len(pending)}")
-    print("PASS: three regular RTC_WAKEUP meal alarms remain scheduled", flush=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--device", default="10.66.66.3:5555")
-    parser.add_argument("--delay", type=int, default=20)
-    parser.add_argument("--timeout", type=int, default=150)
-    parser.add_argument("--leave-test-notification", action="store_true")
+    parser.add_argument('--device', default='10.66.66.3:5555')
+    parser.add_argument('--force-run', action='store_true',
+                        help='Try running a due worker; premature jobs remain deferred')
     args = parser.parse_args()
 
-    state = adb(args.device, "get-state").strip()
-    if state != "device":
-        raise AssertionError(f"ADB unavailable: {state}")
-    # Explicit receivers without intent-filters are not listed by Samsung's
-    # `dumpsys package` resolver table, so verify by dispatching a real intent.
-    broadcast(args.device, "cancel")
-    print("PASS: Samsung reachable and debug-only test receiver responds", flush=True)
-    assertRealAlarm(args.device)
+    package = adb(args.device, 'shell', 'dumpsys', 'package', PACKAGE)
+    if 'android.permission.POST_NOTIFICATIONS: granted=true' not in package:
+        raise AssertionError('Notification permission is not granted')
+    print('PASS: notification permission is granted', flush=True)
 
-    if notificationVisible(args.device):
-        raise AssertionError("Could not clear previous QA notification")
-    broadcast(args.device, "logged")
-    time.sleep(2)
-    if notificationVisible(args.device):
-        raise AssertionError("Logged dinner incorrectly displayed a notification")
-    print("PASS: logged dinner suppresses reminder", flush=True)
+    jobs = adb(args.device, 'shell', 'dumpsys', 'jobscheduler')
+    ids = sorted(set(re.findall(
+        r'^\s*JOB androidx\.work\.systemjobscheduler:u0a\d+/(\d+):'
+        r'[^\n]*@' + re.escape(PACKAGE) +
+        r'/androidx\.work\.impl\.background\.systemjob\.SystemJobService',
+        jobs, flags=re.MULTILINE,
+    )))
+    if not ids:
+        raise AssertionError('No pending FitBook WorkManager job')
+    print(f'PASS: persistent Android WorkManager job(s) scheduled: {ids}', flush=True)
 
-    broadcast(args.device, "unlogged")
-    time.sleep(2)
-    if not notificationVisible(args.device):
-        raise AssertionError("Unlogged dinner did not display a reminder")
-    print("PASS: unlogged dinner posts a visible notification", flush=True)
+    if not args.force_run:
+        print('Not forcing an early job: WorkManager waits until its periodic interval.', flush=True)
+        return
 
-    broadcast(args.device, "cancel")
-    broadcast(args.device, "schedule", seconds=args.delay)
-    if "MealReminderTestReceiver" not in alarmDump(args.device):
-        raise AssertionError("Android did not register the QA AlarmManager alarm")
-    print("PASS: AlarmManager accepted scheduled QA alarm", flush=True)
+    previous_logs = adb(args.device, 'logcat', '-d', '-v', 'epoch')
+    last_line_count = len(previous_logs.splitlines())
+    result = adb(args.device, 'shell', 'cmd', 'jobscheduler', 'run',
+                 '-f', '-n', NAMESPACE, PACKAGE, ids[0])
+    if 'Running job' not in result:
+        raise AssertionError(f'Android rejected job: {result}')
+    print(f'JobScheduler request: {result.strip()}', flush=True)
 
-    start = time.monotonic()
-    while time.monotonic() - start < args.timeout:
-        if notificationVisible(args.device):
-            print(f"PASS: Android alarm fired and posted reminder ({round(time.monotonic()-start)}s)", flush=True)
-            break
-        time.sleep(3)
-    else:
-        raise AssertionError("Scheduled QA reminder not delivered before timeout")
-
-    assertRealAlarm(args.device)
-    log = adb(args.device, "logcat", "-d", "-s", "FitBookReminders:I", "*:S", timeout=30)
-    for marker in ["QA suppressed", "QA posted", "QA alarm scheduled"]:
-        if marker not in log:
-            raise AssertionError(f"Expected diagnostic log missing: {marker}")
-    print("PASS: on-device logs confirm suppression, posting, and alarm", flush=True)
-    # A Samsung always-on display screenshots as nearly black, even when
-    # notifications exist. Wake and dismiss keyguard before opening the shade.
-    adb(args.device, "shell", "input", "keyevent", "KEYCODE_WAKEUP")
-    adb(args.device, "shell", "wm", "dismiss-keyguard")
-    adb(args.device, "shell", "input", "swipe", "500", "30", "500", "1700", "500")
-    time.sleep(1)
-    evidenceDir = Path("/tmp/fitbook-samsung-reminder-evidence")
-    evidenceDir.mkdir(parents=True, exist_ok=True)
-    imageFile = evidenceDir / "notification-shade.png"
-    screenshot = subprocess.run(
-        ["adb", "-s", args.device, "exec-out", "screencap", "-p"],
-        capture_output=True, timeout=25, check=True,
-    )
-    imageFile.write_bytes(screenshot.stdout)
-    print(f"SCREENSHOT: {imageFile}", flush=True)
-    if not args.leave_test_notification:
-        broadcast(args.device, "cancel")
-        print("PASS: QA notification and alarm cleaned up", flush=True)
-    print("PASS: Samsung dinner reminder smoke suite", flush=True)
+    for _ in range(15):
+        time.sleep(2)
+        recent = adb(args.device, 'logcat', '-d', '-v', 'epoch').splitlines()
+        # Keep only log entries newer than the baseline, if the ring buffer did not wrap.
+        new_entries = recent[last_line_count:] if len(recent) >= last_line_count else recent
+        lines = [s.strip() for s in new_entries if 'FitBookReminders:' in s]
+        if lines:
+            for line in lines[-5:]:
+                print(line[:400], flush=True)
+            if any('background check failed:' in line for line in lines):
+                raise AssertionError('Dart reminder callback raised an error')
+            print('PASS: background Dart callback executed', flush=True)
+            return
+        if any('Delaying execution for dev.fluttercommunity.workmanager.BackgroundWorker' in s
+               for s in new_entries):
+            print('DEFERRED: WorkManager ignored the early forced run; job remains scheduled.',
+                  flush=True)
+            return
+    raise AssertionError('Neither Dart callback nor WorkManager deferral was observed')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

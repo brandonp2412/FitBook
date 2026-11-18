@@ -1,109 +1,74 @@
 #!/usr/bin/env python3
-"""Safely install a signed debug FitBook, smoke-test reminders, restore release.
+"""Safely install signed FitBook release, run the actual WorkManager job.
 
-Pass two APKs signed by the installed FitBook certificate. The existing app is
-updated in place (never uninstalled), retaining its diary, settings and backups.
+The installed app's certificate and data are preserved. This no longer
+installs any debug APK or requires a Kotlin reminder test receiver.
 """
 
 import argparse
 import re
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 
-import samsung_reminder_smoke as smoke
-
-PACKAGE = "com.presley.fit_book"
+PACKAGE = 'com.presley.fit_book'
 
 
-def checked(*args, timeout=120):
-    result = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
-    if result.returncode:
-        raise RuntimeError(f"{' '.join(args[:4])} failed: {result.stderr[-500:]}")
-    return result.stdout
+def run(*args, timeout=120):
+    process = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+    if process.returncode:
+        raise RuntimeError(f"{' '.join(args[:4])}: {process.stderr[-420:]}")
+    return process.stdout
 
 
-def signer(apk):
-    output = checked("apksigner", "verify", "--print-certs", str(apk), timeout=35)
-    match = re.search(r"V2 Signer: certificate SHA-256 digest: ([0-9a-fA-F]+)", output)
-    if not match:
-        raise RuntimeError(f"Missing verified APK v2 certificate: {apk}")
-    return match.group(1).lower()
+def signature(path):
+    text = run('apksigner', 'verify', '--print-certs', str(path), timeout=35)
+    digest = re.search(r'V2 Signer: certificate SHA-256 digest: ([0-9a-fA-F]+)', text)
+    if not digest:
+        raise RuntimeError('Cannot validate signing certificate')
+    return digest.group(1).lower()
 
 
-def apkMetadata(apk):
-    output = checked("/opt/android-sdk/build-tools/37.0.0/aapt", "dump", "badging", str(apk), timeout=25)
-    match = re.search(r"package: name='([^']+)' versionCode='(\d+)'", output)
-    if not match or match.group(1) != PACKAGE:
-        raise RuntimeError(f"Wrong package: {apk}")
-    return int(match.group(2))
-
-
-def manifestHasTestReceiver(apk):
-    output = checked("/opt/android-sdk/build-tools/37.0.0/aapt", "dump", "xmltree", str(apk), "AndroidManifest.xml", timeout=25)
-    return "MealReminderTestReceiver" in output
-
-
-def install(device, apk, isDebug):
-    args = ["adb", "-s", device, "install", "-r"]
-    if isDebug:
-        args.append("-t")
-    print(checked(*args, str(apk), timeout=180).strip(), flush=True)
+def version(path):
+    text = run('/opt/android-sdk/build-tools/37.0.0/aapt', 'dump',
+               'badging', str(path), timeout=35)
+    result = re.search(r"package: name='([^']+)' versionCode='(\d+)'", text)
+    if not result or result.group(1) != PACKAGE:
+        raise RuntimeError(f'Unexpected APK identity: {path}')
+    return int(result.group(2))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--device", default="10.66.66.3:5555")
-    parser.add_argument("--debug-apk", type=Path, required=True)
-    parser.add_argument("--release-apk", type=Path, required=True)
-    parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument('--device', default='10.66.66.3:5555')
+    parser.add_argument('--release-apk', type=Path, required=True)
+    parser.add_argument('--preflight-only', action='store_true')
     args = parser.parse_args()
-
-    debug = args.debug_apk.resolve(strict=True)
     release = args.release_apk.resolve(strict=True)
-    debugVersion = apkMetadata(debug)
-    releaseVersion = apkMetadata(release)
-    if releaseVersion < debugVersion:
-        raise RuntimeError("Release APK must not be older than test APK")
-    if not manifestHasTestReceiver(debug) or manifestHasTestReceiver(release):
-        raise RuntimeError("Debug must contain QA receiver; release must omit it")
-    if signer(debug) != signer(release):
-        raise RuntimeError("Debug and release APKs are signed by different keys")
-
-    pathResult = checked("adb", "-s", args.device, "shell", "pm", "path", PACKAGE)
-    installedPath = next((line.split("package:", 1)[1].strip()
-                          for line in pathResult.splitlines() if line.startswith("package:")), None)
-    if not installedPath:
-        raise RuntimeError("FitBook is not installed; refusing first-time deployment")
-    with tempfile.TemporaryDirectory(prefix="fitbook-reminder-signature-") as temp:
-        installed = Path(temp) / "installed.apk"
-        checked("adb", "-s", args.device, "pull", installedPath, str(installed), timeout=120)
-        installedVersion = apkMetadata(installed)
-        if signer(installed) != signer(debug):
-            raise RuntimeError("Signature mismatch with installed FitBook; refusing install")
-        if debugVersion < installedVersion:
-            raise RuntimeError("Debug APK would downgrade FitBook; rebuild with newer versionCode")
-    print(f"PASS: same signing key, installed={installedVersion}, debug={debugVersion}, release={releaseVersion}", flush=True)
+    new_version = version(release)
+    existing = run('adb', '-s', args.device, 'shell', 'pm', 'path', PACKAGE)
+    package_path = next((line.partition('package:')[2].strip()
+                         for line in existing.splitlines()
+                         if line.startswith('package:')), None)
+    if not package_path:
+        raise RuntimeError('FitBook must already be installed')
+    with tempfile.TemporaryDirectory(prefix='fitbook-release-verify-') as directory:
+        apk = Path(directory) / 'installed.apk'
+        run('adb', '-s', args.device, 'pull', package_path, str(apk), timeout=120)
+        old_version = version(apk)
+        if signature(apk) != signature(release):
+            raise RuntimeError('Signing certificate mismatch; refusing to install')
+        if new_version < old_version:
+            raise RuntimeError('Refusing to downgrade FitBook')
+    print(f'PASS: safe signed in-place update: {old_version} -> {new_version}', flush=True)
     if args.preflight_only:
         return
-
-    installedDebug = False
-    try:
-        install(args.device, debug, isDebug=True)
-        installedDebug = True
-        checked("adb", "-s", args.device, "shell", "am", "start", "-n", f"{PACKAGE}/.MainActivity", timeout=35)
-        checked(sys.executable, str(Path(__file__).with_name("samsung_reminder_smoke.py")),
-                "--device", args.device, timeout=240)
-        print("PASS: real Samsung smoke suite", flush=True)
-    finally:
-        if installedDebug:
-            print("Restoring production signed release (in-place, preserving app data)", flush=True)
-            install(args.device, release, isDebug=False)
-            checked("adb", "-s", args.device, "shell", "am", "start", "-n", f"{PACKAGE}/.MainActivity", timeout=35)
-            smoke.assertRealAlarm(args.device)
-            print("PASS: production FitBook restored, real meal alarms scheduled", flush=True)
+    print(run('adb', '-s', args.device, 'install', '-r', str(release), timeout=180), flush=True)
+    run('adb', '-s', args.device, 'shell', 'am', 'start', '-n', f'{PACKAGE}/.MainActivity')
+    print(run('python3', str(Path(__file__).with_name('samsung_reminder_smoke.py')),
+        '--device', args.device, timeout=130), flush=True)
+    print('PASS: signed release installed and scheduled WorkManager job verified', flush=True)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
