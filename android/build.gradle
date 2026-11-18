@@ -13,6 +13,10 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 
     plugins.withId('com.android.library') {
+        // CameraX 1.6 references this annotation type during javac compilation.
+        if (project.name == 'camera_android_camerax') {
+            project.dependencies.add('implementation', 'androidx.concurrent:concurrent-futures:1.2.0')
+        }
         if (project.name in ['flutter_zxing', 'jni']) {
             android {
                 defaultConfig {
