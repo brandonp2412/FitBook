@@ -22,7 +22,6 @@ class MainActivity: FlutterActivity() {
 
         val (automaticBackups, backupPath) = getSettings(context)
         if (automaticBackups && backupPath != null) scheduleBackups(context)
-        scheduleMealReminders(context)
     }
 
     private fun pick() {
@@ -63,22 +62,6 @@ class MainActivity: FlutterActivity() {
         )
         channel.setMethodCallHandler { call, result ->
             when (call.method) {
-                "setMealReminders" -> {
-                    val enabled = call.argument<Boolean>("enabled") ?: false
-                    val titles = call.argument<Map<String, String>>("titles") ?: emptyMap()
-                    setMealReminders(applicationContext, enabled, titles)
-                    result.success(null)
-                }
-                "runMealReminderNow" -> {
-                    if (!BuildConfig.DEBUG) {
-                        result.notImplemented()
-                        return@setMethodCallHandler
-                    }
-                    sendBroadcast(Intent(this, MealReminderReceiver::class.java)
-                        .putExtra("mealId", 103)
-                        .putExtra("debugForce", true))
-                    result.success(null)
-                }
                 "pick" -> {
                     pendingPickResult = result
                     pick()

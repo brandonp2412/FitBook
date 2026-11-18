@@ -58,7 +58,7 @@ void main() {
       final state = SettingsState(settings);
       talker.info('Loaded application settings');
 
-      // Don't block the first frame while Android installs its alarms.
+      // Configure background checks without delaying the first frame.
       unawaited(
         (settings.reminders ? setupReminders : cancelReminders)().catchError(
           (Object error, StackTrace stack) {

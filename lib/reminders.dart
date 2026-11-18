@@ -2,13 +2,16 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
+
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/main.dart' as app;
 import 'package:fit_book/reminder_schedule.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 Timer? timer;
@@ -28,46 +31,44 @@ Future<void> setupReminders({bool requestPermission = true}) async {
   if (kIsWeb) return;
 
   if (!Platform.isAndroid && !Platform.isIOS) {
+    timer?.cancel();
     timer = Timer.periodic(
-      const Duration(hours: 2),
-      (timer) => doDesktopReminders(),
+      reminderCheckInterval,
+      (_) => unawaited(doDesktopReminders()),
     );
+    // Checking immediately avoids missing dinner when FitBook opens mid-window.
+    unawaited(doDesktopReminders());
     return;
   }
 
   if (requestPermission) await Permission.notification.request();
-  if (Platform.isAndroid) {
-    // Android's inexact four-hour work cannot reliably hit the meal window.
-    await Workmanager().cancelByUniqueName('reminders');
-    final l10n = await _loadReminderLocalizations(app.db);
-    await app.androidChannel.invokeMethod<void>('setMealReminders', {
-      'enabled': true,
-      'titles': {
-        'breakfast': l10n.breakfastReminderTitle,
-        'lunch': l10n.lunchReminderTitle,
-        'dinner': l10n.dinnerReminderTitle,
-      },
-    });
-    return;
-  }
-  await Workmanager().initialize(doMobileReminders);
-  await Workmanager().registerPeriodicTask(
+  final manager = Workmanager();
+  await manager.initialize(doMobileReminders);
+  await manager.registerPeriodicTask(
     'reminders',
     'reminders',
-    frequency: const Duration(hours: 2),
+    frequency: reminderCheckInterval,
     existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
   );
+}
+
+Future<void> cancelReminders() async {
+  if (kIsWeb) return;
+  if (Platform.isAndroid || Platform.isIOS) {
+    await Workmanager().cancelByUniqueName('reminders');
+  } else {
+    timer?.cancel();
+    timer = null;
+  }
 }
 
 /// Explains the reminder schedule the first time reminders are enabled.
 Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
   if (kIsWeb) return;
-
   if (Platform.isAndroid || Platform.isIOS) {
     final permission = await Permission.notification.request();
     if (!permission.isGranted) return;
   }
-
   const darwin = DarwinInitializationSettings();
   const android = AndroidInitializationSettings('@drawable/nutrition');
   final linux = LinuxInitializationSettings(
@@ -100,67 +101,6 @@ Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
   );
 }
 
-Future<void> doDesktopReminders() async {
-  final db = app.db;
-  final l10n = await _loadReminderLocalizations(db);
-  final linux = LinuxInitializationSettings(
-    defaultActionName: l10n.openNotification,
-  );
-  const darwin = DarwinInitializationSettings();
-  final init = InitializationSettings(
-    linux: linux,
-    macOS: darwin,
-    windows: _windowsNotificationSettings,
-  );
-  final plugin = FlutterLocalNotificationsPlugin();
-  await plugin.initialize(settings: init);
-
-  final diaries = await (db.diaries.select()
-        ..where(
-          (u) => const CustomExpression(
-            "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-          ),
-        ))
-      .get();
-  final now = DateTime.now();
-  final hour = now.hour;
-
-  if (hour >= 6 && hour < 12) {
-    final entered = diaries.where(
-      (entry) => entry.created.hour >= 6 && entry.created.hour < 12,
-    );
-    if (entered.isEmpty) {
-      await plugin.show(
-        id: 1,
-        title: l10n.breakfastReminderTitle,
-        notificationDetails: _desktopNotificationDetails,
-      );
-    }
-  } else if (hour >= 12 && hour < 16) {
-    final entered = diaries.where(
-      (entry) => entry.created.hour >= 12 && entry.created.hour < 16,
-    );
-    if (entered.isEmpty) {
-      await plugin.show(
-        id: 2,
-        title: l10n.lunchReminderTitle,
-        notificationDetails: _desktopNotificationDetails,
-      );
-    }
-  } else if (isDinnerReminderHour(hour)) {
-    final entered = diaries.where(
-      (entry) => isDinnerDiaryHour(entry.created.hour),
-    );
-    if (entered.isEmpty) {
-      await plugin.show(
-        id: 3,
-        title: l10n.dinnerReminderTitle,
-        notificationDetails: _desktopNotificationDetails,
-      );
-    }
-  }
-}
-
 Future<AppLocalizations> _loadReminderLocalizations(
   AppDatabase database,
 ) async {
@@ -168,95 +108,116 @@ Future<AppLocalizations> _loadReminderLocalizations(
   return localizationsFromPreference(settings.locale);
 }
 
-Future<void> cancelReminders() async {
-  if (kIsWeb) return;
-
-  if (Platform.isAndroid) {
-    await Workmanager().cancelByUniqueName('reminders');
-    await app.androidChannel.invokeMethod<void>('setMealReminders', {
-      'enabled': false,
-    });
-  } else if (Platform.isIOS) {
-    await Workmanager().cancelByUniqueName('reminders');
-  } else {
-    timer?.cancel();
+Future<void> _checkAndNotify({
+  required AppDatabase database,
+  required NotificationDetails Function(ReminderMeal, AppLocalizations) details,
+  required InitializationSettings initialization,
+}) async {
+  final now = DateTime.now();
+  final meal = reminderMealAt(now);
+  if (meal == null) {
+    debugPrint('FitBookReminders: outside meal reminder window');
+    return;
   }
+
+  final settings = await (database.settings.select()..limit(1)).getSingle();
+  if (!settings.reminders) {
+    debugPrint('FitBookReminders: reminders disabled');
+    return;
+  }
+
+  final startOfDay = DateTime(now.year, now.month, now.day);
+  final endOfDay = DateTime(now.year, now.month, now.day + 1);
+  final diaries = await (database.diaries.select()
+        ..where(
+          (diary) =>
+              diary.created.isBiggerOrEqualValue(startOfDay) &
+              diary.created.isSmallerThanValue(endOfDay),
+        ))
+      .get();
+  final entries = diaries.map((diary) => diary.created);
+  final prefs = SharedPreferencesAsync();
+  final sentKey = 'fitbook.reminder.lastSent.${meal.name}';
+  final previouslySent = await prefs.getString(sentKey);
+  if (!shouldSendMealReminder(
+    now: now,
+    meal: meal,
+    diaryEntries: entries,
+    lastSentDayKey: previouslySent,
+  )) {
+    debugPrint('FitBookReminders: ${meal.name} already logged or reminded');
+    return;
+  }
+
+  final l10n = await _loadReminderLocalizations(database);
+  final plugin = FlutterLocalNotificationsPlugin();
+  await plugin.initialize(settings: initialization);
+  final title = switch (meal) {
+    ReminderMeal.breakfast => l10n.breakfastReminderTitle,
+    ReminderMeal.lunch => l10n.lunchReminderTitle,
+    ReminderMeal.dinner => l10n.dinnerReminderTitle,
+  };
+  await plugin.show(
+    id: meal.index + 1,
+    title: title,
+    notificationDetails: details(meal, l10n),
+  );
+  await prefs.setString(sentKey, reminderDayKey(meal, now));
+  debugPrint('FitBookReminders: ${meal.name} reminder posted');
 }
 
-/// This is used by WorkManager so you can't reference any external variables.
+Future<void> doDesktopReminders() async {
+  final l10n = await _loadReminderLocalizations(app.db);
+  await _checkAndNotify(
+    database: app.db,
+    initialization: InitializationSettings(
+      linux: LinuxInitializationSettings(
+        defaultActionName: l10n.openNotification,
+      ),
+      macOS: const DarwinInitializationSettings(),
+      windows: _windowsNotificationSettings,
+    ),
+    details: (_, __) => _desktopNotificationDetails,
+  );
+}
+
+/// WorkManager invokes this Dart entry point even when the UI isn't running.
 @pragma('vm:entry-point')
 void doMobileReminders() {
   Workmanager().executeTask((task, inputData) async {
-    final db = AppDatabase();
-    final l10n = await _loadReminderLocalizations(db);
-    const darwin = DarwinInitializationSettings();
-    const android = AndroidInitializationSettings('@drawable/nutrition');
-    const init = InitializationSettings(iOS: darwin, android: android);
-    final plugin = FlutterLocalNotificationsPlugin();
-    await plugin.initialize(settings: init);
-
-    final diaries = await (db.diaries.select()
-          ..where(
-            (u) => const CustomExpression(
-              "created >= strftime('%s', 'now', 'localtime', '-24 hours')",
-            ),
-          ))
-        .get();
-    final now = DateTime.now();
-    final hour = now.hour;
-
-    bool isBreakfast(int value) => value >= 6 && value < 12;
-    bool isLunch(int value) => value >= 12 && value < 16;
-
-    if (isBreakfast(hour)) {
-      final brekkie = diaries.where((entry) => isBreakfast(entry.created.hour));
-      if (brekkie.isNotEmpty) return Future.value(true);
-
-      await plugin.show(
-        id: 1,
-        title: l10n.breakfastReminderTitle,
-        notificationDetails: NotificationDetails(
+    WidgetsFlutterBinding.ensureInitialized();
+    final database = AppDatabase();
+    try {
+      await _checkAndNotify(
+        database: database,
+        initialization: const InitializationSettings(
+          iOS: DarwinInitializationSettings(),
+          android: AndroidInitializationSettings('@drawable/nutrition'),
+        ),
+        details: (meal, l10n) => NotificationDetails(
           android: AndroidNotificationDetails(
-            'breakfast-reminders',
-            l10n.breakfastRemindersChannel,
-            channelDescription: l10n.breakfastRemindersChannelDescription,
+            '${meal.name}-reminders',
+            switch (meal) {
+              ReminderMeal.breakfast => l10n.breakfastRemindersChannel,
+              ReminderMeal.lunch => l10n.lunchRemindersChannel,
+              ReminderMeal.dinner => l10n.dinnerRemindersChannel,
+            },
+            channelDescription: switch (meal) {
+              ReminderMeal.breakfast =>
+                l10n.breakfastRemindersChannelDescription,
+              ReminderMeal.lunch => l10n.lunchRemindersChannelDescription,
+              ReminderMeal.dinner => l10n.dinnerRemindersChannelDescription,
+            },
           ),
+          iOS: const DarwinNotificationDetails(),
         ),
       );
-    } else if (isLunch(hour)) {
-      final lunch = diaries.where((entry) => isLunch(entry.created.hour));
-      if (lunch.isNotEmpty) return Future.value(true);
-
-      await plugin.show(
-        id: 2,
-        title: l10n.lunchReminderTitle,
-        notificationDetails: NotificationDetails(
-          android: AndroidNotificationDetails(
-            'lunch-reminders',
-            l10n.lunchRemindersChannel,
-            channelDescription: l10n.lunchRemindersChannelDescription,
-          ),
-        ),
-      );
-    } else if (isDinnerReminderHour(hour)) {
-      final dins = diaries.where(
-        (entry) => isDinnerDiaryHour(entry.created.hour),
-      );
-      if (dins.isNotEmpty) return Future.value(true);
-
-      await plugin.show(
-        id: 3,
-        title: l10n.dinnerReminderTitle,
-        notificationDetails: NotificationDetails(
-          android: AndroidNotificationDetails(
-            'dinner-reminders',
-            l10n.dinnerRemindersChannel,
-            channelDescription: l10n.dinnerRemindersChannelDescription,
-          ),
-        ),
-      );
+      return true;
+    } catch (error, stack) {
+      debugPrint('FitBookReminders: background check failed: $error\n$stack');
+      return false; // Allow the platform to retry a failed background check.
+    } finally {
+      await database.close();
     }
-
-    return Future.value(true);
   });
 }
