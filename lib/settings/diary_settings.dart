@@ -13,10 +13,10 @@ import 'package:provider/provider.dart';
 Future<void> setReminders(bool value, AppLocalizations l10n) async {
   await db.settings.update().write(SettingsCompanion(reminders: Value(value)));
   if (value) {
-    setupReminders(requestPermission: false);
+    await setupReminders(requestPermission: false);
     await notifyRemindersEnabled(l10n);
   } else {
-    cancelReminders();
+    await cancelReminders();
   }
 }
 

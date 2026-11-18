@@ -58,7 +58,14 @@ void main() {
       final state = SettingsState(settings);
       talker.info('Loaded application settings');
 
-      (settings.reminders ? setupReminders : cancelReminders)();
+      // Don't block the first frame while Android installs its alarms.
+      unawaited(
+        (settings.reminders ? setupReminders : cancelReminders)().catchError(
+          (Object error, StackTrace stack) {
+            talker.handle(error, stack, 'Unable to configure meal reminders');
+          },
+        ),
+      );
 
       runApp(appProviders(state));
 

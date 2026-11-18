@@ -24,7 +24,7 @@ const _desktopNotificationDetails = NotificationDetails(
   windows: WindowsNotificationDetails(),
 );
 
-void setupReminders({bool requestPermission = true}) {
+Future<void> setupReminders({bool requestPermission = true}) async {
   if (kIsWeb) return;
 
   if (!Platform.isAndroid && !Platform.isIOS) {
@@ -35,11 +35,25 @@ void setupReminders({bool requestPermission = true}) {
     return;
   }
 
-  if (requestPermission) Permission.notification.request();
-  Workmanager().initialize(doMobileReminders);
-  Workmanager().registerPeriodicTask(
-    "reminders",
-    "reminders",
+  if (requestPermission) await Permission.notification.request();
+  if (Platform.isAndroid) {
+    // Android's inexact four-hour work cannot reliably hit the meal window.
+    await Workmanager().cancelByUniqueName('reminders');
+    final l10n = await _loadReminderLocalizations(app.db);
+    await app.androidChannel.invokeMethod<void>('setMealReminders', {
+      'enabled': true,
+      'titles': {
+        'breakfast': l10n.breakfastReminderTitle,
+        'lunch': l10n.lunchReminderTitle,
+        'dinner': l10n.dinnerReminderTitle,
+      },
+    });
+    return;
+  }
+  await Workmanager().initialize(doMobileReminders);
+  await Workmanager().registerPeriodicTask(
+    'reminders',
+    'reminders',
     frequency: const Duration(hours: 2),
     existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
   );
@@ -154,13 +168,19 @@ Future<AppLocalizations> _loadReminderLocalizations(
   return localizationsFromPreference(settings.locale);
 }
 
-void cancelReminders() {
+Future<void> cancelReminders() async {
   if (kIsWeb) return;
 
-  if (Platform.isAndroid || Platform.isIOS)
-    Workmanager().cancelByUniqueName('reminders');
-  else
+  if (Platform.isAndroid) {
+    await Workmanager().cancelByUniqueName('reminders');
+    await app.androidChannel.invokeMethod<void>('setMealReminders', {
+      'enabled': false,
+    });
+  } else if (Platform.isIOS) {
+    await Workmanager().cancelByUniqueName('reminders');
+  } else {
     timer?.cancel();
+  }
 }
 
 /// This is used by WorkManager so you can't reference any external variables.
