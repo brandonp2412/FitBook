@@ -93,7 +93,7 @@ class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(cont
                         if (!writeBackupArchive(context, database, file)) return false
 
                         incompleteFile = null
-                        showBackupNotification(context, dir, file)
+                        BackupNotifications.show(context, dir, file)
                         return true
                 } catch (e: Exception) {
                         Log.e(BACKUP_LOG_TAG, "Error during backup: " + e.message, e)
@@ -160,81 +160,6 @@ class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(cont
                 images.forEach { (image, archivePath) ->
                         if (image.exists()) addFileToZip(zip, image, archivePath)
                 }
-        }
-
-        private fun showBackupNotification(
-                context: Context,
-                dir: DocumentFile,
-                file: DocumentFile
-        ) {
-                // Denying notifications must not prevent the actual data backup.
-                if (!areBackupNotificationsAllowed(context)) return
-
-                val manager = NotificationManagerCompat.from(context)
-                createBackupNotificationChannel(context, manager)
-                val notification = buildBackupNotification(context, dir, file).build()
-                try {
-                        manager.notify(2, notification)
-                } catch (e: SecurityException) {
-                        Log.w(BACKUP_LOG_TAG, "Backup saved, but notification blocked", e)
-                }
-        }
-
-        private fun areBackupNotificationsAllowed(context: Context): Boolean =
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-                        ActivityCompat.checkSelfPermission(
-                                context,
-                                Manifest.permission.POST_NOTIFICATIONS
-                        ) == PackageManager.PERMISSION_GRANTED
-
-        private fun createBackupNotificationChannel(
-                context: Context,
-                manager: NotificationManagerCompat
-        ) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-                val channel = NotificationChannel(
-                        BACKUP_CHANNEL_ID,
-                        context.getString(R.string.backup_channel_name),
-                        NotificationManager.IMPORTANCE_DEFAULT
-                )
-                channel.description = context.getString(R.string.backup_channel_description)
-                manager.createNotificationChannel(channel)
-        }
-
-        private fun buildBackupNotification(
-                context: Context,
-                dir: DocumentFile,
-                file: DocumentFile
-        ): NotificationCompat.Builder {
-                val openIntent = Intent().apply {
-                        action = Intent.ACTION_GET_CONTENT
-                        setDataAndType(dir.uri, "*/*")
-                }
-                val pendingOpen = PendingIntent.getActivity(
-                        context, 0, openIntent, PendingIntent.FLAG_IMMUTABLE
-                )
-
-                val shareIntent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_STREAM, file.uri)
-                        type = "application/zip"
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                val pendingShare = PendingIntent.getActivity(
-                        context, 0, shareIntent, PendingIntent.FLAG_IMMUTABLE
-                )
-
-                return NotificationCompat.Builder(context, BACKUP_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.baseline_download_24)
-                        .setAutoCancel(true)
-                        .setContentText(file.name)
-                        .setContentTitle(context.getString(R.string.backup_success_title))
-                        .setContentIntent(pendingOpen)
-                        .addAction(
-                                R.drawable.baseline_download_24,
-                                context.getString(R.string.share),
-                                pendingShare
-                        )
         }
 
         private fun removeIncompleteBackup(file: DocumentFile?) {
@@ -354,5 +279,82 @@ class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(cont
                 zip.putNextEntry(ZipEntry(archivePath))
                 BufferedInputStream(file.inputStream()).use { input -> input.copyTo(zip) }
                 zip.closeEntry()
+        }
+}
+
+private object BackupNotifications {
+        fun show(
+                context: Context,
+                dir: DocumentFile,
+                file: DocumentFile
+        ) {
+                // Denying notifications must not prevent the actual data backup.
+                if (!areBackupNotificationsAllowed(context)) return
+
+                val manager = NotificationManagerCompat.from(context)
+                createBackupNotificationChannel(context, manager)
+                val notification = buildBackupNotification(context, dir, file).build()
+                try {
+                        manager.notify(2, notification)
+                } catch (e: SecurityException) {
+                        Log.w(BACKUP_LOG_TAG, "Backup saved, but notification blocked", e)
+                }
+        }
+
+        private fun areBackupNotificationsAllowed(context: Context): Boolean =
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED
+
+        private fun createBackupNotificationChannel(
+                context: Context,
+                manager: NotificationManagerCompat
+        ) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+                val channel = NotificationChannel(
+                        BACKUP_CHANNEL_ID,
+                        context.getString(R.string.backup_channel_name),
+                        NotificationManager.IMPORTANCE_DEFAULT
+                )
+                channel.description = context.getString(R.string.backup_channel_description)
+                manager.createNotificationChannel(channel)
+        }
+
+        private fun buildBackupNotification(
+                context: Context,
+                dir: DocumentFile,
+                file: DocumentFile
+        ): NotificationCompat.Builder {
+                val openIntent = Intent().apply {
+                        action = Intent.ACTION_GET_CONTENT
+                        setDataAndType(dir.uri, "*/*")
+                }
+                val pendingOpen = PendingIntent.getActivity(
+                        context, 0, openIntent, PendingIntent.FLAG_IMMUTABLE
+                )
+
+                val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, file.uri)
+                        type = "application/zip"
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                val pendingShare = PendingIntent.getActivity(
+                        context, 0, shareIntent, PendingIntent.FLAG_IMMUTABLE
+                )
+
+                return NotificationCompat.Builder(context, BACKUP_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.baseline_download_24)
+                        .setAutoCancel(true)
+                        .setContentText(file.name)
+                        .setContentTitle(context.getString(R.string.backup_success_title))
+                        .setContentIntent(pendingOpen)
+                        .addAction(
+                                R.drawable.baseline_download_24,
+                                context.getString(R.string.share),
+                                pendingShare
+                        )
         }
 }
