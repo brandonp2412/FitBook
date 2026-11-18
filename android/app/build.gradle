@@ -117,6 +117,7 @@ flutter {
 
 dependencies {
     implementation 'androidx.documentfile:documentfile:1.1.0'
+    implementation 'androidx.work:work-runtime:2.11.2'
     implementation 'androidx.multidex:multidex:2.0.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     androidTestUtil 'androidx.test:orchestrator:1.5.1'
