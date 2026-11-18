@@ -156,13 +156,25 @@ class MealReminderReceiver : BroadcastReceiver() {
         val reminder = mealReminders.firstOrNull {
             it.id == intent?.getIntExtra(extraMeal, -1)
         } ?: return
+        val debugTest = BuildConfig.DEBUG && intent?.getBooleanExtra("debugTest", false) == true
         try {
-            if (!remindersEnabled(context)) return
+            if (!remindersEnabled(context)) {
+                if (debugTest) Log.i("FitBookReminders", "QA skipped: reminders disabled")
+                return
+            }
             val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val cutoff = if (reminder.id == 103) 21 else reminder.endHour
-            val debugForce = BuildConfig.DEBUG && intent?.getBooleanExtra("debugForce", false) == true
+            val debugForce = debugTest && intent?.getBooleanExtra("debugForce", false) == true
             if (!debugForce && (hour < reminder.hour || hour >= cutoff)) return
-            if (mealLoggedToday(context, reminder)) return
+            val logged = if (debugTest && intent?.hasExtra("debugAssumeLogged") == true) {
+                intent.getBooleanExtra("debugAssumeLogged", false)
+            } else {
+                mealLoggedToday(context, reminder)
+            }
+            if (logged) {
+                if (debugTest) Log.i("FitBookReminders", "QA suppressed: dinner already logged")
+                return
+            }
             if (Build.VERSION.SDK_INT >= 33 &&
                 context.checkSelfPermission(notificationPermission) != PackageManager.PERMISSION_GRANTED
             ) return
@@ -181,8 +193,9 @@ class MealReminderReceiver : BroadcastReceiver() {
             val notification = NotificationCompat.Builder(context, reminder.channelId)
                 .setSmallIcon(R.drawable.nutrition)
                 .setContentTitle(
-                    context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
-                        .getString("title_${reminder.titleKey}", reminder.defaultTitle)
+                    (if (debugTest) "[TEST] " else "") +
+                        context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+                            .getString("title_${reminder.titleKey}", reminder.defaultTitle)
                 )
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -194,11 +207,15 @@ class MealReminderReceiver : BroadcastReceiver() {
                     )
                 )
             }
-            notifications.notify(reminder.id, notification.build())
+            notifications.notify(if (debugTest) 9103 else reminder.id, notification.build())
+            if (debugTest) Log.i("FitBookReminders", "QA posted: dinner reminder notification")
         } catch (error: Exception) {
             Log.e("FitBookReminders", "Meal reminder failed", error)
         } finally {
-            if (remindersEnabled(context)) scheduleMealReminder(context, reminder, replace = true, afterFire = true)
+            // A QA broadcast must never replace the live 8 pm alarm.
+            if (!debugTest && remindersEnabled(context)) {
+                scheduleMealReminder(context, reminder, replace = true, afterFire = true)
+            }
         }
     }
 }
