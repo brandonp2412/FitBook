@@ -33,6 +33,9 @@ import java.util.Locale
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+private const val BACKUP_LOG_TAG = "BackupWorker"
+private const val BACKUP_CHANNEL_ID = "backup_channel"
+
 class BackupReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
                 if (context == null) return
@@ -45,6 +48,7 @@ class BackupReceiver : BroadcastReceiver() {
         }
 }
 
+/** Runs scheduled backups off the receiver thread without changing the daily alarm schedule. */
 class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
         override fun doWork(): Result =
                 if (performBackup(applicationContext)) Result.success() else Result.failure()
@@ -56,7 +60,7 @@ class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(cont
         }
 
         private fun performBackup(context: Context): Boolean {
-                Log.d("BackupWorker", "Performing automatic backup")
+                Log.d(BACKUP_LOG_TAG, "Performing automatic backup")
                 var incompleteFile: DocumentFile? = null
 
                 try {
@@ -69,158 +73,178 @@ class BackupWorker(context: Context, parameters: WorkerParameters) : Worker(cont
                                 return false
                         }
 
-                        val backupUri = Uri.parse(backupPath)
-
-                        val channelId = "backup_channel"
-                        var notificationBuilder =
-                                NotificationCompat.Builder(context, channelId)
-                                        .setSmallIcon(R.drawable.baseline_download_24)
-                                        .setAutoCancel(true)
-
-                        val notificationManager = NotificationManagerCompat.from(context)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                val channel =
-                                        NotificationChannel(
-                                                channelId,
-                                                context.getString(R.string.backup_channel_name),
-                                                NotificationManager.IMPORTANCE_DEFAULT
-                                        )
-                                channel.description =
-                                        context.getString(R.string.backup_channel_description)
-                                notificationManager.createNotificationChannel(channel)
-                        }
-
-                        // Denying notifications must not prevent the actual data backup.
-                        val notificationsAllowed =
-                                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-                                ActivityCompat.checkSelfPermission(
-                                        context,
-                                        Manifest.permission.POST_NOTIFICATIONS
-                                ) == PackageManager.PERMISSION_GRANTED
-
-                        val dir = DocumentFile.fromTreeUri(context, backupUri)
+                        val dir = DocumentFile.fromTreeUri(context, Uri.parse(backupPath))
                         if (dir == null) {
                                 setAutomaticBackups(context, false)
                                 showError(context, R.string.backup_failed_directory_access)
                                 return false
                         }
 
-                        val yyyyMMdd = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
-                        val fileName = "fitbook-${yyyyMMdd}.zip"
-                        val file = dir.createFile("application/zip", fileName)
+                        val database = getBackupDatabase(context) ?: return false
+                        val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+                        val file = dir.createFile("application/zip", "fitbook-" + date + ".zip")
                         if (file == null) {
                                 showError(context, R.string.backup_failed_retry)
                                 return false
                         }
                         incompleteFile = file
 
-                        Log.d("BackupWorker", "file.uri=${file.uri}")
-                        notificationBuilder = notificationBuilder.setContentText(file.name)
+                        Log.d(BACKUP_LOG_TAG, "file.uri=" + file.uri)
+                        if (!writeBackupArchive(context, database, file)) return false
 
-                        val openIntent =
-                                Intent().apply {
-                                        action = Intent.ACTION_GET_CONTENT
-                                        setDataAndType(dir.uri, "*/*")
-                                }
-                        val pendingOpen =
-                                PendingIntent.getActivity(
-                                        context,
-                                        0,
-                                        openIntent,
-                                        PendingIntent.FLAG_IMMUTABLE
-                                )
-                        notificationBuilder = notificationBuilder.setContentIntent(pendingOpen)
-
-                        val shareIntent =
-                                Intent().apply {
-                                        action = Intent.ACTION_SEND
-                                        putExtra(Intent.EXTRA_STREAM, file.uri)
-                                        type = "application/zip"
-                                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                }
-                        val pendingShare =
-                                PendingIntent.getActivity(
-                                        context,
-                                        0,
-                                        shareIntent,
-                                        PendingIntent.FLAG_IMMUTABLE
-                                )
-                        notificationBuilder =
-                                notificationBuilder.addAction(
-                                        R.drawable.baseline_download_24,
-                                        context.getString(R.string.share),
-                                        pendingShare
-                                )
-
-                        val filesDir = context.filesDir
-                        if (filesDir == null) {
-                                setAutomaticBackups(context, false)
-                                showError(context, R.string.backup_failed_app_files_directory)
-                                return false
-                        }
-                        val parentDir = filesDir.parentFile
-                        if (parentDir == null) {
-                                setAutomaticBackups(context, false)
-                                showError(context, R.string.backup_failed_parent_directory)
-                                return false
-                        }
-                        val dbFolder = File(parentDir, "app_flutter").absolutePath
-
-                        val dbFile = File(dbFolder, "fitbook.sqlite")
-
-                        if (!dbFile.exists()) {
-                                setAutomaticBackups(context, false)
-                                showError(context, R.string.backup_failed_database_missing)
-                                return false
-                        }
-
-                        val temporaryDatabase =
-                                File.createTempFile("fitbook-backup-", ".sqlite", context.cacheDir)
-                        try {
-                                val images = createPortableDatabaseCopy(dbFile, temporaryDatabase)
-                                val outputStream = context.contentResolver.openOutputStream(file.uri)
-                                if (outputStream == null) {
-                                        showError(context, R.string.backup_failed_retry)
-                                        return false
-                                }
-                                outputStream.use { output ->
-                                        ZipOutputStream(BufferedOutputStream(output)).use { zip ->
-                                                addFileToZip(zip, temporaryDatabase, "fitbook.sqlite")
-                                                images.forEach { (image, archivePath) ->
-                                                        if (image.exists()) {
-                                                                addFileToZip(zip, image, archivePath)
-                                                        }
-                                                }
-                                        }
-                                }
-                                notificationBuilder =
-                                        notificationBuilder.setContentTitle(
-                                                context.getString(R.string.backup_success_title)
-                                        )
-                                incompleteFile = null
-                                if (notificationsAllowed) {
-                                        try {
-                                                notificationManager.notify(2, notificationBuilder.build())
-                                        } catch (e: SecurityException) {
-                                                Log.w("BackupWorker", "Backup saved, but notification blocked", e)
-                                        }
-                                }
-                        } finally {
-                                temporaryDatabase.delete()
-                        }
+                        incompleteFile = null
+                        showBackupNotification(context, dir, file)
                         return true
                 } catch (e: Exception) {
-                        Log.e("BackupWorker", "Error during backup: ${e.message}", e)
+                        Log.e(BACKUP_LOG_TAG, "Error during backup: " + e.message, e)
                         // A transient failure must not disable every subsequent daily backup.
                         showError(context, R.string.backup_failed_retry)
                         return false
                 } finally {
-                        // Never leave corrupt/empty ZIPs when an attempt fails.
-                        try {
-                                incompleteFile?.delete()
-                        } catch (cleanupError: Exception) {
-                                Log.w("BackupWorker", "Could not remove incomplete backup", cleanupError)
+                        removeIncompleteBackup(incompleteFile)
+                }
+        }
+
+        private fun getBackupDatabase(context: Context): File? {
+                val filesDir = context.filesDir
+                if (filesDir == null) {
+                        setAutomaticBackups(context, false)
+                        showError(context, R.string.backup_failed_app_files_directory)
+                        return null
+                }
+                val parentDir = filesDir.parentFile
+                if (parentDir == null) {
+                        setAutomaticBackups(context, false)
+                        showError(context, R.string.backup_failed_parent_directory)
+                        return null
+                }
+                val database = File(File(parentDir, "app_flutter"), "fitbook.sqlite")
+                if (!database.exists()) {
+                        setAutomaticBackups(context, false)
+                        showError(context, R.string.backup_failed_database_missing)
+                        return null
+                }
+                return database
+        }
+
+        private fun writeBackupArchive(
+                context: Context,
+                sourceDatabase: File,
+                file: DocumentFile
+        ): Boolean {
+                val snapshot = File.createTempFile("fitbook-backup-", ".sqlite", context.cacheDir)
+                try {
+                        val images = createPortableDatabaseCopy(sourceDatabase, snapshot)
+                        val output = context.contentResolver.openOutputStream(file.uri)
+                        if (output == null) {
+                                showError(context, R.string.backup_failed_retry)
+                                return false
                         }
+                        output.use { stream ->
+                                ZipOutputStream(BufferedOutputStream(stream)).use { zip ->
+                                        addBackupFilesToZip(zip, snapshot, images)
+                                }
+                        }
+                        return true
+                } finally {
+                        snapshot.delete()
+                }
+        }
+
+        private fun addBackupFilesToZip(
+                zip: ZipOutputStream,
+                snapshot: File,
+                images: Map<File, String>
+        ) {
+                addFileToZip(zip, snapshot, "fitbook.sqlite")
+                images.forEach { (image, archivePath) ->
+                        if (image.exists()) addFileToZip(zip, image, archivePath)
+                }
+        }
+
+        private fun showBackupNotification(
+                context: Context,
+                dir: DocumentFile,
+                file: DocumentFile
+        ) {
+                // Denying notifications must not prevent the actual data backup.
+                if (!areBackupNotificationsAllowed(context)) return
+
+                val manager = NotificationManagerCompat.from(context)
+                createBackupNotificationChannel(context, manager)
+                val notification = buildBackupNotification(context, dir, file).build()
+                try {
+                        manager.notify(2, notification)
+                } catch (e: SecurityException) {
+                        Log.w(BACKUP_LOG_TAG, "Backup saved, but notification blocked", e)
+                }
+        }
+
+        private fun areBackupNotificationsAllowed(context: Context): Boolean =
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ActivityCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED
+
+        private fun createBackupNotificationChannel(
+                context: Context,
+                manager: NotificationManagerCompat
+        ) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+                val channel = NotificationChannel(
+                        BACKUP_CHANNEL_ID,
+                        context.getString(R.string.backup_channel_name),
+                        NotificationManager.IMPORTANCE_DEFAULT
+                )
+                channel.description = context.getString(R.string.backup_channel_description)
+                manager.createNotificationChannel(channel)
+        }
+
+        private fun buildBackupNotification(
+                context: Context,
+                dir: DocumentFile,
+                file: DocumentFile
+        ): NotificationCompat.Builder {
+                val openIntent = Intent().apply {
+                        action = Intent.ACTION_GET_CONTENT
+                        setDataAndType(dir.uri, "*/*")
+                }
+                val pendingOpen = PendingIntent.getActivity(
+                        context, 0, openIntent, PendingIntent.FLAG_IMMUTABLE
+                )
+
+                val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, file.uri)
+                        type = "application/zip"
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                val pendingShare = PendingIntent.getActivity(
+                        context, 0, shareIntent, PendingIntent.FLAG_IMMUTABLE
+                )
+
+                return NotificationCompat.Builder(context, BACKUP_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.baseline_download_24)
+                        .setAutoCancel(true)
+                        .setContentText(file.name)
+                        .setContentTitle(context.getString(R.string.backup_success_title))
+                        .setContentIntent(pendingOpen)
+                        .addAction(
+                                R.drawable.baseline_download_24,
+                                context.getString(R.string.share),
+                                pendingShare
+                        )
+        }
+
+        private fun removeIncompleteBackup(file: DocumentFile?) {
+                if (file == null) return
+                try {
+                        file.delete()
+                } catch (e: SecurityException) {
+                        Log.w(BACKUP_LOG_TAG, "Could not remove incomplete backup", e)
+                } catch (e: IllegalArgumentException) {
+                        Log.w(BACKUP_LOG_TAG, "Could not remove incomplete backup", e)
                 }
         }
 
