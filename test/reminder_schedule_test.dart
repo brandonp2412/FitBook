@@ -5,17 +5,104 @@ void main() {
   final today = DateTime(2026, 11, 19);
   final yesterday = today.subtract(const Duration(days: 1));
 
-  test('generous reminder windows permit multiple inexact background runs', () {
+  test('default targets are 9 am, 1 pm and 8 pm local time', () {
+    final date = DateTime(2026, 11, 19);
+    expect(reminderDefaultTimes[ReminderMeal.breakfast], 9 * 60);
+    expect(reminderDefaultTimes[ReminderMeal.lunch], 13 * 60);
+    expect(reminderDefaultTimes[ReminderMeal.dinner], 20 * 60);
+    for (final (meal, hour) in [
+      (ReminderMeal.breakfast, 9),
+      (ReminderMeal.lunch, 13),
+      (ReminderMeal.dinner, 20),
+    ]) {
+      expect(
+        reminderMealAt(DateTime(date.year, date.month, date.day, hour)),
+        meal,
+      );
+      expect(
+        eligibleReminderMealsAt(
+          DateTime(date.year, date.month, date.day, hour - 1, 59),
+        ).contains(meal),
+        isFalse,
+      );
+      expect(
+        eligibleReminderMealsAt(
+          DateTime(date.year, date.month, date.day, hour, 59),
+        ).contains(meal),
+        isTrue,
+      );
+      expect(
+        eligibleReminderMealsAt(
+          DateTime(date.year, date.month, date.day, hour + 1),
+        ).contains(meal),
+        isFalse,
+      );
+    }
+    expect(reminderCheckInterval, const Duration(minutes: 30));
+  });
+
+  test('custom time changes eligibility for only the configured meal', () {
+    final custom = {
+      ReminderMeal.breakfast: 7 * 60 + 45,
+      ReminderMeal.lunch: 14 * 60 + 10,
+      ReminderMeal.dinner: 21 * 60 + 15,
+    };
     expect(
-      reminderMealAt(DateTime(2026, 11, 19, 8, 0)),
+      reminderMealAt(DateTime(2026, 11, 19, 9), reminderTimes: custom),
+      isNull,
+    );
+    expect(
+      reminderMealAt(DateTime(2026, 11, 19, 7, 45), reminderTimes: custom),
       ReminderMeal.breakfast,
     );
-    expect(reminderMealAt(DateTime(2026, 11, 19, 12, 30)), ReminderMeal.lunch);
-    expect(reminderMealAt(DateTime(2026, 11, 19, 19, 0)), isNull);
-    expect(reminderMealAt(DateTime(2026, 11, 19, 19, 30)), ReminderMeal.dinner);
-    expect(reminderMealAt(DateTime(2026, 11, 19, 20, 59)), ReminderMeal.dinner);
-    expect(reminderMealAt(DateTime(2026, 11, 19, 21, 0)), isNull);
-    expect(reminderCheckInterval, const Duration(minutes: 30));
+    expect(
+      reminderMealAt(DateTime(2026, 11, 19, 14, 11), reminderTimes: custom),
+      ReminderMeal.lunch,
+    );
+    expect(
+      shouldSendMealReminder(
+        now: DateTime(2026, 11, 19, 21, 30),
+        meal: ReminderMeal.dinner,
+        reminderTimes: custom,
+        diaryEntries: const [],
+      ),
+      isTrue,
+    );
+  });
+
+  test('overlapping custom times evaluate every meal independently', () {
+    final times = {
+      ReminderMeal.breakfast: 13 * 60,
+      ReminderMeal.lunch: 13 * 60,
+      ReminderMeal.dinner: 20 * 60,
+    };
+    expect(
+      eligibleReminderMealsAt(
+        DateTime(2026, 11, 19, 13, 20),
+        reminderTimes: times,
+      ).toList(),
+      [ReminderMeal.breakfast, ReminderMeal.lunch],
+    );
+  });
+
+  test('late custom time does not roll over into the following day', () {
+    final times = {
+      ReminderMeal.dinner: 23 * 60 + 45,
+    };
+    expect(
+      eligibleReminderMealsAt(
+        DateTime(2026, 11, 19, 23, 55),
+        reminderTimes: times,
+      ).contains(ReminderMeal.dinner),
+      isTrue,
+    );
+    expect(
+      eligibleReminderMealsAt(
+        DateTime(2026, 11, 20, 0, 15),
+        reminderTimes: times,
+      ).contains(ReminderMeal.dinner),
+      isFalse,
+    );
   });
 
   test('yesterday dinner cannot suppress tonight reminder', () {
@@ -62,7 +149,7 @@ void main() {
     );
   });
 
-  test('lunch logged at 11:30 counts, even though reminder begins at noon', () {
+  test('lunch logged at 11:30 counts, even though reminder begins at 1 pm', () {
     final now = DateTime(2026, 11, 19, 13);
     expect(isLunchDiaryHour(11), isTrue);
     expect(
@@ -76,7 +163,7 @@ void main() {
   });
 
   test('a reminder is sent only once per meal per local day', () {
-    final now = DateTime(2026, 11, 19, 19, 45);
+    final now = DateTime(2026, 11, 19, 20, 45);
     final key = reminderDayKey(ReminderMeal.dinner, now);
     expect(
       shouldSendMealReminder(

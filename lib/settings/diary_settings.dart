@@ -4,6 +4,7 @@ import 'package:fit_book/database/database.dart';
 import 'package:fit_book/main.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/reminders.dart';
+import 'package:fit_book/reminder_schedule.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/settings/settings_surface.dart';
 import 'package:fit_book/utils.dart';
@@ -18,6 +19,44 @@ Future<void> setReminders(bool value, AppLocalizations l10n) async {
   } else {
     await cancelReminders();
   }
+}
+
+/// Native clock picker; values are saved in SQLite for background work and backups.
+Widget reminderTimeTile({
+  required BuildContext context,
+  required ReminderMeal meal,
+  required String title,
+  required int minutes,
+}) {
+  final current = TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
+  return ListTile(
+    key: Key('${meal.name}ReminderTimeTile'),
+    leading: const Icon(Icons.access_time_outlined),
+    title: Text(title),
+    trailing: Text(current.format(context)),
+    onTap: () async {
+      final selected = await showTimePicker(
+        context: context,
+        initialTime: current,
+      );
+      if (selected == null) return;
+      final newMinutes = selected.hour * 60 + selected.minute;
+      if (newMinutes == minutes) return;
+      await db.settings.update().write(
+            switch (meal) {
+              ReminderMeal.breakfast => SettingsCompanion(
+                  breakfastReminderMinutes: Value(newMinutes),
+                ),
+              ReminderMeal.lunch => SettingsCompanion(
+                  lunchReminderMinutes: Value(newMinutes),
+                ),
+              ReminderMeal.dinner => SettingsCompanion(
+                  dinnerReminderMinutes: Value(newMinutes),
+                ),
+            },
+          );
+    },
+  );
 }
 
 List<Widget> getDiarySettings({
@@ -257,6 +296,33 @@ List<Widget> getDiarySettings({
           onChanged: (value) => setReminders(value, l10n),
         ),
       ),
+    if (settings.value.reminders || term.isNotEmpty)
+      for (final (meal, title, minutes) in [
+        (
+          ReminderMeal.breakfast,
+          l10n.breakfastRemindersChannel,
+          settings.value.breakfastReminderMinutes,
+        ),
+        (
+          ReminderMeal.lunch,
+          l10n.lunchRemindersChannel,
+          settings.value.lunchReminderMinutes,
+        ),
+        (
+          ReminderMeal.dinner,
+          l10n.dinnerRemindersChannel,
+          settings.value.dinnerReminderMinutes,
+        ),
+      ])
+        if (term.isEmpty ||
+            title.toLowerCase().contains(term) ||
+            l10n.reminders.toLowerCase().contains(term))
+          reminderTimeTile(
+            context: context,
+            meal: meal,
+            title: title,
+            minutes: minutes,
+          ),
   ];
 }
 

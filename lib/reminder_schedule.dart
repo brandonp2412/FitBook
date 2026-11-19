@@ -8,16 +8,42 @@ bool isBreakfastDiaryHour(int hour) => hour >= 6 && hour < 12;
 bool isLunchDiaryHour(int hour) => hour >= 11 && hour < 16;
 bool isDinnerDiaryHour(int hour) => hour >= 16 && hour < 24;
 
-bool isLunchReminderHour(int hour) => hour >= 12 && hour < 16;
-bool isDinnerReminderHour(int hour) => hour >= 19 && hour < 21;
+/// User-configurable reminder time, expressed as minutes past local midnight.
+/// Defaults: breakfast 9:00, lunch 13:00, dinner 20:00.
+const reminderDefaultTimes = <ReminderMeal, int>{
+  ReminderMeal.breakfast: 9 * 60,
+  ReminderMeal.lunch: 13 * 60,
+  ReminderMeal.dinner: 20 * 60,
+};
 
-bool isDinnerReminderTime(DateTime now) =>
-    (now.hour == 19 && now.minute >= 30) || now.hour == 20;
+const reminderDeliveryWindow = Duration(minutes: 60);
 
-ReminderMeal? reminderMealAt(DateTime now) {
-  if (now.hour >= 8 && now.hour < 12) return ReminderMeal.breakfast;
-  if (isLunchReminderHour(now.hour)) return ReminderMeal.lunch;
-  if (isDinnerReminderTime(now)) return ReminderMeal.dinner;
+/// All eligible meals, since users may set two reminders to the same time.
+/// We never spill yesterday's reminders into today after midnight.
+Iterable<ReminderMeal> eligibleReminderMealsAt(
+  DateTime now, {
+  Map<ReminderMeal, int> reminderTimes = reminderDefaultTimes,
+}) sync* {
+  final minutes = now.hour * 60 + now.minute;
+  for (final meal in ReminderMeal.values) {
+    final start = reminderTimes[meal] ?? reminderDefaultTimes[meal]!;
+    if (start < 0 || start >= 24 * 60) continue;
+    if (minutes >= start &&
+        minutes < start + reminderDeliveryWindow.inMinutes) {
+      yield meal;
+    }
+  }
+}
+
+/// Retained for existing callers needing the first active meal.
+ReminderMeal? reminderMealAt(
+  DateTime now, {
+  Map<ReminderMeal, int> reminderTimes = reminderDefaultTimes,
+}) {
+  for (final meal
+      in eligibleReminderMealsAt(now, reminderTimes: reminderTimes)) {
+    return meal;
+  }
   return null;
 }
 
@@ -57,8 +83,10 @@ bool shouldSendMealReminder({
   required ReminderMeal meal,
   required Iterable<DateTime> diaryEntries,
   String? lastSentDayKey,
+  Map<ReminderMeal, int> reminderTimes = reminderDefaultTimes,
 }) {
-  return reminderMealAt(now) == meal &&
+  return eligibleReminderMealsAt(now, reminderTimes: reminderTimes)
+          .contains(meal) &&
       !hasLoggedMealToday(meal, diaryEntries, now) &&
       lastSentDayKey != reminderDayKey(meal, now);
 }

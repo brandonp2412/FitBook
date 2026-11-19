@@ -114,15 +114,23 @@ Future<void> _checkAndNotify({
   required InitializationSettings initialization,
 }) async {
   final now = DateTime.now();
-  final meal = reminderMealAt(now);
-  if (meal == null) {
-    debugPrint('FitBookReminders: outside meal reminder window');
-    return;
-  }
-
   final settings = await (database.settings.select()..limit(1)).getSingle();
   if (!settings.reminders) {
     debugPrint('FitBookReminders: reminders disabled');
+    return;
+  }
+
+  final reminderTimes = {
+    ReminderMeal.breakfast: settings.breakfastReminderMinutes,
+    ReminderMeal.lunch: settings.lunchReminderMinutes,
+    ReminderMeal.dinner: settings.dinnerReminderMinutes,
+  };
+  final dueMeals = eligibleReminderMealsAt(
+    now,
+    reminderTimes: reminderTimes,
+  ).toList();
+  if (dueMeals.isEmpty) {
+    debugPrint('FitBookReminders: outside meal reminder windows');
     return;
   }
 
@@ -137,33 +145,36 @@ Future<void> _checkAndNotify({
       .get();
   final entries = diaries.map((diary) => diary.created);
   final prefs = SharedPreferencesAsync();
-  final sentKey = 'fitbook.reminder.lastSent.${meal.name}';
-  final previouslySent = await prefs.getString(sentKey);
-  if (!shouldSendMealReminder(
-    now: now,
-    meal: meal,
-    diaryEntries: entries,
-    lastSentDayKey: previouslySent,
-  )) {
-    debugPrint('FitBookReminders: ${meal.name} already logged or reminded');
-    return;
-  }
-
   final l10n = await _loadReminderLocalizations(database);
   final plugin = FlutterLocalNotificationsPlugin();
   await plugin.initialize(settings: initialization);
-  final title = switch (meal) {
-    ReminderMeal.breakfast => l10n.breakfastReminderTitle,
-    ReminderMeal.lunch => l10n.lunchReminderTitle,
-    ReminderMeal.dinner => l10n.dinnerReminderTitle,
-  };
-  await plugin.show(
-    id: meal.index + 1,
-    title: title,
-    notificationDetails: details(meal, l10n),
-  );
-  await prefs.setString(sentKey, reminderDayKey(meal, now));
-  debugPrint('FitBookReminders: ${meal.name} reminder posted');
+  for (final meal in dueMeals) {
+    final sentKey = 'fitbook.reminder.lastSent.${meal.name}';
+    final previouslySent = await prefs.getString(sentKey);
+    if (!shouldSendMealReminder(
+      now: now,
+      meal: meal,
+      reminderTimes: reminderTimes,
+      diaryEntries: entries,
+      lastSentDayKey: previouslySent,
+    )) {
+      debugPrint('FitBookReminders: ${meal.name} already logged or reminded');
+      continue;
+    }
+
+    final title = switch (meal) {
+      ReminderMeal.breakfast => l10n.breakfastReminderTitle,
+      ReminderMeal.lunch => l10n.lunchReminderTitle,
+      ReminderMeal.dinner => l10n.dinnerReminderTitle,
+    };
+    await plugin.show(
+      id: meal.index + 1,
+      title: title,
+      notificationDetails: details(meal, l10n),
+    );
+    await prefs.setString(sentKey, reminderDayKey(meal, now));
+    debugPrint('FitBookReminders: ${meal.name} reminder posted');
+  }
 }
 
 Future<void> doDesktopReminders() async {

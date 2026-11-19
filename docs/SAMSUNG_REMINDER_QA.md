@@ -34,8 +34,8 @@ python3 scripts/samsung_reminder_qa_cycle.py \
 
 Android's WorkManager is **inexact**. A successful forced job proves Dart
 background execution and the diary-check path, but not that every future job
-will execute before 9 pm. The 30-minute polling interval and 7:30–9 pm window
-increase the opportunities. A 9 pm deadline is still best-effort, not guaranteed.
+will execute before 9 pm. The 30-minute polling interval and one-hour window after the
+configured meal time increase the opportunities. A 9 pm deadline is still best-effort, not guaranteed.
 
 All supported platforms use the same `reminder_schedule.dart` decision logic.
 `SharedPreferencesAsync` records the last notification per meal and day so
@@ -46,3 +46,9 @@ To request a run of an already-due job, use
 `python3 scripts/samsung_reminder_smoke.py --force-run`. If early, the script
 reports `DEFERRED` rather than incorrectly claiming that Dart failed. A
 scheduled job is not itself proof of a delivered notification.
+
+Reminder times default to breakfast 09:00, lunch 13:00 and dinner 20:00
+(local time). Users can change these through **Settings → Diary → Reminders**
+using the clock pickers. The times live in FitBook's SQLite settings table
+(schema v58), are preserved by backups and are read by the same background
+Dart callback on mobile and desktop. No Android-specific Kotlin logic is used.

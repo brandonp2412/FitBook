@@ -6748,6 +6748,30 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("reminders" IN (0, 1))'),
       defaultValue: const Constant(false));
+  static const VerificationMeta _breakfastReminderMinutesMeta =
+      const VerificationMeta('breakfastReminderMinutes');
+  @override
+  late final GeneratedColumn<int> breakfastReminderMinutes =
+      GeneratedColumn<int>('breakfast_reminder_minutes', aliasedName, false,
+          type: DriftSqlType.int,
+          requiredDuringInsert: false,
+          defaultValue: const Constant(9 * 60));
+  static const VerificationMeta _lunchReminderMinutesMeta =
+      const VerificationMeta('lunchReminderMinutes');
+  @override
+  late final GeneratedColumn<int> lunchReminderMinutes = GeneratedColumn<int>(
+      'lunch_reminder_minutes', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(13 * 60));
+  static const VerificationMeta _dinnerReminderMinutesMeta =
+      const VerificationMeta('dinnerReminderMinutes');
+  @override
+  late final GeneratedColumn<int> dinnerReminderMinutes = GeneratedColumn<int>(
+      'dinner_reminder_minutes', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(20 * 60));
   static const VerificationMeta _selectEntryOnSubmitMeta =
       const VerificationMeta('selectEntryOnSubmit');
   @override
@@ -6933,6 +6957,9 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
         offPassword,
         positiveReinforcement,
         reminders,
+        breakfastReminderMinutes,
+        lunchReminderMinutes,
+        dinnerReminderMinutes,
         selectEntryOnSubmit,
         shortDateFormat,
         fields,
@@ -7080,6 +7107,25 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     if (data.containsKey('reminders')) {
       context.handle(_remindersMeta,
           reminders.isAcceptableOrUnknown(data['reminders']!, _remindersMeta));
+    }
+    if (data.containsKey('breakfast_reminder_minutes')) {
+      context.handle(
+          _breakfastReminderMinutesMeta,
+          breakfastReminderMinutes.isAcceptableOrUnknown(
+              data['breakfast_reminder_minutes']!,
+              _breakfastReminderMinutesMeta));
+    }
+    if (data.containsKey('lunch_reminder_minutes')) {
+      context.handle(
+          _lunchReminderMinutesMeta,
+          lunchReminderMinutes.isAcceptableOrUnknown(
+              data['lunch_reminder_minutes']!, _lunchReminderMinutesMeta));
+    }
+    if (data.containsKey('dinner_reminder_minutes')) {
+      context.handle(
+          _dinnerReminderMinutesMeta,
+          dinnerReminderMinutes.isAcceptableOrUnknown(
+              data['dinner_reminder_minutes']!, _dinnerReminderMinutesMeta));
     }
     if (data.containsKey('select_entry_on_submit')) {
       context.handle(
@@ -7252,6 +7298,13 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           DriftSqlType.bool, data['${effectivePrefix}positive_reinforcement'])!,
       reminders: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}reminders'])!,
+      breakfastReminderMinutes: attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}breakfast_reminder_minutes'])!,
+      lunchReminderMinutes: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}lunch_reminder_minutes'])!,
+      dinnerReminderMinutes: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}dinner_reminder_minutes'])!,
       selectEntryOnSubmit: attachedDatabase.typeMapping.read(
           DriftSqlType.bool, data['${effectivePrefix}select_entry_on_submit'])!,
       shortDateFormat: attachedDatabase.typeMapping.read(
@@ -7323,6 +7376,9 @@ class Setting extends DataClass implements Insertable<Setting> {
   final String? offPassword;
   final bool positiveReinforcement;
   final bool reminders;
+  final int breakfastReminderMinutes;
+  final int lunchReminderMinutes;
+  final int dinnerReminderMinutes;
   final bool selectEntryOnSubmit;
   final String shortDateFormat;
   final String? fields;
@@ -7365,6 +7421,9 @@ class Setting extends DataClass implements Insertable<Setting> {
       this.offPassword,
       required this.positiveReinforcement,
       required this.reminders,
+      required this.breakfastReminderMinutes,
+      required this.lunchReminderMinutes,
+      required this.dinnerReminderMinutes,
       required this.selectEntryOnSubmit,
       required this.shortDateFormat,
       this.fields,
@@ -7423,6 +7482,9 @@ class Setting extends DataClass implements Insertable<Setting> {
     }
     map['positive_reinforcement'] = Variable<bool>(positiveReinforcement);
     map['reminders'] = Variable<bool>(reminders);
+    map['breakfast_reminder_minutes'] = Variable<int>(breakfastReminderMinutes);
+    map['lunch_reminder_minutes'] = Variable<int>(lunchReminderMinutes);
+    map['dinner_reminder_minutes'] = Variable<int>(dinnerReminderMinutes);
     map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit);
     map['short_date_format'] = Variable<String>(shortDateFormat);
     if (!nullToAbsent || fields != null) {
@@ -7491,6 +7553,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           : Value(offPassword),
       positiveReinforcement: Value(positiveReinforcement),
       reminders: Value(reminders),
+      breakfastReminderMinutes: Value(breakfastReminderMinutes),
+      lunchReminderMinutes: Value(lunchReminderMinutes),
+      dinnerReminderMinutes: Value(dinnerReminderMinutes),
       selectEntryOnSubmit: Value(selectEntryOnSubmit),
       shortDateFormat: Value(shortDateFormat),
       fields:
@@ -7547,6 +7612,12 @@ class Setting extends DataClass implements Insertable<Setting> {
       positiveReinforcement:
           serializer.fromJson<bool>(json['positiveReinforcement']),
       reminders: serializer.fromJson<bool>(json['reminders']),
+      breakfastReminderMinutes:
+          serializer.fromJson<int>(json['breakfastReminderMinutes']),
+      lunchReminderMinutes:
+          serializer.fromJson<int>(json['lunchReminderMinutes']),
+      dinnerReminderMinutes:
+          serializer.fromJson<int>(json['dinnerReminderMinutes']),
       selectEntryOnSubmit:
           serializer.fromJson<bool>(json['selectEntryOnSubmit']),
       shortDateFormat: serializer.fromJson<String>(json['shortDateFormat']),
@@ -7596,6 +7667,10 @@ class Setting extends DataClass implements Insertable<Setting> {
       'offPassword': serializer.toJson<String?>(offPassword),
       'positiveReinforcement': serializer.toJson<bool>(positiveReinforcement),
       'reminders': serializer.toJson<bool>(reminders),
+      'breakfastReminderMinutes':
+          serializer.toJson<int>(breakfastReminderMinutes),
+      'lunchReminderMinutes': serializer.toJson<int>(lunchReminderMinutes),
+      'dinnerReminderMinutes': serializer.toJson<int>(dinnerReminderMinutes),
       'selectEntryOnSubmit': serializer.toJson<bool>(selectEntryOnSubmit),
       'shortDateFormat': serializer.toJson<String>(shortDateFormat),
       'fields': serializer.toJson<String?>(fields),
@@ -7641,6 +7716,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           Value<String?> offPassword = const Value.absent(),
           bool? positiveReinforcement,
           bool? reminders,
+          int? breakfastReminderMinutes,
+          int? lunchReminderMinutes,
+          int? dinnerReminderMinutes,
           bool? selectEntryOnSubmit,
           String? shortDateFormat,
           Value<String?> fields = const Value.absent(),
@@ -7686,6 +7764,11 @@ class Setting extends DataClass implements Insertable<Setting> {
         positiveReinforcement:
             positiveReinforcement ?? this.positiveReinforcement,
         reminders: reminders ?? this.reminders,
+        breakfastReminderMinutes:
+            breakfastReminderMinutes ?? this.breakfastReminderMinutes,
+        lunchReminderMinutes: lunchReminderMinutes ?? this.lunchReminderMinutes,
+        dinnerReminderMinutes:
+            dinnerReminderMinutes ?? this.dinnerReminderMinutes,
         selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
         shortDateFormat: shortDateFormat ?? this.shortDateFormat,
         fields: fields.present ? fields.value : this.fields,
@@ -7752,6 +7835,15 @@ class Setting extends DataClass implements Insertable<Setting> {
           ? data.positiveReinforcement.value
           : this.positiveReinforcement,
       reminders: data.reminders.present ? data.reminders.value : this.reminders,
+      breakfastReminderMinutes: data.breakfastReminderMinutes.present
+          ? data.breakfastReminderMinutes.value
+          : this.breakfastReminderMinutes,
+      lunchReminderMinutes: data.lunchReminderMinutes.present
+          ? data.lunchReminderMinutes.value
+          : this.lunchReminderMinutes,
+      dinnerReminderMinutes: data.dinnerReminderMinutes.present
+          ? data.dinnerReminderMinutes.value
+          : this.dinnerReminderMinutes,
       selectEntryOnSubmit: data.selectEntryOnSubmit.present
           ? data.selectEntryOnSubmit.value
           : this.selectEntryOnSubmit,
@@ -7825,6 +7917,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('offPassword: $offPassword, ')
           ..write('positiveReinforcement: $positiveReinforcement, ')
           ..write('reminders: $reminders, ')
+          ..write('breakfastReminderMinutes: $breakfastReminderMinutes, ')
+          ..write('lunchReminderMinutes: $lunchReminderMinutes, ')
+          ..write('dinnerReminderMinutes: $dinnerReminderMinutes, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('shortDateFormat: $shortDateFormat, ')
           ..write('fields: $fields, ')
@@ -7872,6 +7967,9 @@ class Setting extends DataClass implements Insertable<Setting> {
         offPassword,
         positiveReinforcement,
         reminders,
+        breakfastReminderMinutes,
+        lunchReminderMinutes,
+        dinnerReminderMinutes,
         selectEntryOnSubmit,
         shortDateFormat,
         fields,
@@ -7918,6 +8016,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.offPassword == this.offPassword &&
           other.positiveReinforcement == this.positiveReinforcement &&
           other.reminders == this.reminders &&
+          other.breakfastReminderMinutes == this.breakfastReminderMinutes &&
+          other.lunchReminderMinutes == this.lunchReminderMinutes &&
+          other.dinnerReminderMinutes == this.dinnerReminderMinutes &&
           other.selectEntryOnSubmit == this.selectEntryOnSubmit &&
           other.shortDateFormat == this.shortDateFormat &&
           other.fields == this.fields &&
@@ -7962,6 +8063,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<String?> offPassword;
   final Value<bool> positiveReinforcement;
   final Value<bool> reminders;
+  final Value<int> breakfastReminderMinutes;
+  final Value<int> lunchReminderMinutes;
+  final Value<int> dinnerReminderMinutes;
   final Value<bool> selectEntryOnSubmit;
   final Value<String> shortDateFormat;
   final Value<String?> fields;
@@ -8004,6 +8108,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.offPassword = const Value.absent(),
     this.positiveReinforcement = const Value.absent(),
     this.reminders = const Value.absent(),
+    this.breakfastReminderMinutes = const Value.absent(),
+    this.lunchReminderMinutes = const Value.absent(),
+    this.dinnerReminderMinutes = const Value.absent(),
     this.selectEntryOnSubmit = const Value.absent(),
     this.shortDateFormat = const Value.absent(),
     this.fields = const Value.absent(),
@@ -8047,6 +8154,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     this.offPassword = const Value.absent(),
     this.positiveReinforcement = const Value.absent(),
     this.reminders = const Value.absent(),
+    this.breakfastReminderMinutes = const Value.absent(),
+    this.lunchReminderMinutes = const Value.absent(),
+    this.dinnerReminderMinutes = const Value.absent(),
     required bool selectEntryOnSubmit,
     required String shortDateFormat,
     this.fields = const Value.absent(),
@@ -8099,6 +8209,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<String>? offPassword,
     Expression<bool>? positiveReinforcement,
     Expression<bool>? reminders,
+    Expression<int>? breakfastReminderMinutes,
+    Expression<int>? lunchReminderMinutes,
+    Expression<int>? dinnerReminderMinutes,
     Expression<bool>? selectEntryOnSubmit,
     Expression<String>? shortDateFormat,
     Expression<String>? fields,
@@ -8144,6 +8257,12 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (positiveReinforcement != null)
         'positive_reinforcement': positiveReinforcement,
       if (reminders != null) 'reminders': reminders,
+      if (breakfastReminderMinutes != null)
+        'breakfast_reminder_minutes': breakfastReminderMinutes,
+      if (lunchReminderMinutes != null)
+        'lunch_reminder_minutes': lunchReminderMinutes,
+      if (dinnerReminderMinutes != null)
+        'dinner_reminder_minutes': dinnerReminderMinutes,
       if (selectEntryOnSubmit != null)
         'select_entry_on_submit': selectEntryOnSubmit,
       if (shortDateFormat != null) 'short_date_format': shortDateFormat,
@@ -8191,6 +8310,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       Value<String?>? offPassword,
       Value<bool>? positiveReinforcement,
       Value<bool>? reminders,
+      Value<int>? breakfastReminderMinutes,
+      Value<int>? lunchReminderMinutes,
+      Value<int>? dinnerReminderMinutes,
       Value<bool>? selectEntryOnSubmit,
       Value<String>? shortDateFormat,
       Value<String?>? fields,
@@ -8234,6 +8356,11 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       positiveReinforcement:
           positiveReinforcement ?? this.positiveReinforcement,
       reminders: reminders ?? this.reminders,
+      breakfastReminderMinutes:
+          breakfastReminderMinutes ?? this.breakfastReminderMinutes,
+      lunchReminderMinutes: lunchReminderMinutes ?? this.lunchReminderMinutes,
+      dinnerReminderMinutes:
+          dinnerReminderMinutes ?? this.dinnerReminderMinutes,
       selectEntryOnSubmit: selectEntryOnSubmit ?? this.selectEntryOnSubmit,
       shortDateFormat: shortDateFormat ?? this.shortDateFormat,
       fields: fields ?? this.fields,
@@ -8324,6 +8451,17 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (reminders.present) {
       map['reminders'] = Variable<bool>(reminders.value);
     }
+    if (breakfastReminderMinutes.present) {
+      map['breakfast_reminder_minutes'] =
+          Variable<int>(breakfastReminderMinutes.value);
+    }
+    if (lunchReminderMinutes.present) {
+      map['lunch_reminder_minutes'] = Variable<int>(lunchReminderMinutes.value);
+    }
+    if (dinnerReminderMinutes.present) {
+      map['dinner_reminder_minutes'] =
+          Variable<int>(dinnerReminderMinutes.value);
+    }
     if (selectEntryOnSubmit.present) {
       map['select_entry_on_submit'] = Variable<bool>(selectEntryOnSubmit.value);
     }
@@ -8411,6 +8549,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('offPassword: $offPassword, ')
           ..write('positiveReinforcement: $positiveReinforcement, ')
           ..write('reminders: $reminders, ')
+          ..write('breakfastReminderMinutes: $breakfastReminderMinutes, ')
+          ..write('lunchReminderMinutes: $lunchReminderMinutes, ')
+          ..write('dinnerReminderMinutes: $dinnerReminderMinutes, ')
           ..write('selectEntryOnSubmit: $selectEntryOnSubmit, ')
           ..write('shortDateFormat: $shortDateFormat, ')
           ..write('fields: $fields, ')
@@ -12015,6 +12156,9 @@ typedef $$SettingsTableCreateCompanionBuilder = SettingsCompanion Function({
   Value<String?> offPassword,
   Value<bool> positiveReinforcement,
   Value<bool> reminders,
+  Value<int> breakfastReminderMinutes,
+  Value<int> lunchReminderMinutes,
+  Value<int> dinnerReminderMinutes,
   required bool selectEntryOnSubmit,
   required String shortDateFormat,
   Value<String?> fields,
@@ -12058,6 +12202,9 @@ typedef $$SettingsTableUpdateCompanionBuilder = SettingsCompanion Function({
   Value<String?> offPassword,
   Value<bool> positiveReinforcement,
   Value<bool> reminders,
+  Value<int> breakfastReminderMinutes,
+  Value<int> lunchReminderMinutes,
+  Value<int> dinnerReminderMinutes,
   Value<bool> selectEntryOnSubmit,
   Value<String> shortDateFormat,
   Value<String?> fields,
@@ -12155,6 +12302,18 @@ class $$SettingsTableFilterComposer
 
   ColumnFilters<bool> get reminders => $composableBuilder(
       column: $table.reminders, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get breakfastReminderMinutes => $composableBuilder(
+      column: $table.breakfastReminderMinutes,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get lunchReminderMinutes => $composableBuilder(
+      column: $table.lunchReminderMinutes,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dinnerReminderMinutes => $composableBuilder(
+      column: $table.dinnerReminderMinutes,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<bool> get selectEntryOnSubmit => $composableBuilder(
       column: $table.selectEntryOnSubmit,
@@ -12304,6 +12463,18 @@ class $$SettingsTableOrderingComposer
   ColumnOrderings<bool> get reminders => $composableBuilder(
       column: $table.reminders, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get breakfastReminderMinutes => $composableBuilder(
+      column: $table.breakfastReminderMinutes,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get lunchReminderMinutes => $composableBuilder(
+      column: $table.lunchReminderMinutes,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dinnerReminderMinutes => $composableBuilder(
+      column: $table.dinnerReminderMinutes,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<bool> get selectEntryOnSubmit => $composableBuilder(
       column: $table.selectEntryOnSubmit,
       builder: (column) => ColumnOrderings(column));
@@ -12448,6 +12619,15 @@ class $$SettingsTableAnnotationComposer
   GeneratedColumn<bool> get reminders =>
       $composableBuilder(column: $table.reminders, builder: (column) => column);
 
+  GeneratedColumn<int> get breakfastReminderMinutes => $composableBuilder(
+      column: $table.breakfastReminderMinutes, builder: (column) => column);
+
+  GeneratedColumn<int> get lunchReminderMinutes => $composableBuilder(
+      column: $table.lunchReminderMinutes, builder: (column) => column);
+
+  GeneratedColumn<int> get dinnerReminderMinutes => $composableBuilder(
+      column: $table.dinnerReminderMinutes, builder: (column) => column);
+
   GeneratedColumn<bool> get selectEntryOnSubmit => $composableBuilder(
       column: $table.selectEntryOnSubmit, builder: (column) => column);
 
@@ -12553,6 +12733,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<String?> offPassword = const Value.absent(),
             Value<bool> positiveReinforcement = const Value.absent(),
             Value<bool> reminders = const Value.absent(),
+            Value<int> breakfastReminderMinutes = const Value.absent(),
+            Value<int> lunchReminderMinutes = const Value.absent(),
+            Value<int> dinnerReminderMinutes = const Value.absent(),
             Value<bool> selectEntryOnSubmit = const Value.absent(),
             Value<String> shortDateFormat = const Value.absent(),
             Value<String?> fields = const Value.absent(),
@@ -12596,6 +12779,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             offPassword: offPassword,
             positiveReinforcement: positiveReinforcement,
             reminders: reminders,
+            breakfastReminderMinutes: breakfastReminderMinutes,
+            lunchReminderMinutes: lunchReminderMinutes,
+            dinnerReminderMinutes: dinnerReminderMinutes,
             selectEntryOnSubmit: selectEntryOnSubmit,
             shortDateFormat: shortDateFormat,
             fields: fields,
@@ -12639,6 +12825,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             Value<String?> offPassword = const Value.absent(),
             Value<bool> positiveReinforcement = const Value.absent(),
             Value<bool> reminders = const Value.absent(),
+            Value<int> breakfastReminderMinutes = const Value.absent(),
+            Value<int> lunchReminderMinutes = const Value.absent(),
+            Value<int> dinnerReminderMinutes = const Value.absent(),
             required bool selectEntryOnSubmit,
             required String shortDateFormat,
             Value<String?> fields = const Value.absent(),
@@ -12682,6 +12871,9 @@ class $$SettingsTableTableManager extends RootTableManager<
             offPassword: offPassword,
             positiveReinforcement: positiveReinforcement,
             reminders: reminders,
+            breakfastReminderMinutes: breakfastReminderMinutes,
+            lunchReminderMinutes: lunchReminderMinutes,
+            dinnerReminderMinutes: dinnerReminderMinutes,
             selectEntryOnSubmit: selectEntryOnSubmit,
             shortDateFormat: shortDateFormat,
             fields: fields,

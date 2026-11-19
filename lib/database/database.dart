@@ -99,6 +99,20 @@ class AppDatabase extends _$AppDatabase {
               "INTEGER NOT NULL CHECK (fill_chart_area IN (0, 1)) DEFAULT 1",
             );
           }
+          if (from < 58 && to >= 58) {
+            await customStatement(
+              'ALTER TABLE settings ADD COLUMN breakfast_reminder_minutes '
+              'INTEGER NOT NULL DEFAULT 540',
+            );
+            await customStatement(
+              'ALTER TABLE settings ADD COLUMN lunch_reminder_minutes '
+              'INTEGER NOT NULL DEFAULT 780',
+            );
+            await customStatement(
+              'ALTER TABLE settings ADD COLUMN dinner_reminder_minutes '
+              'INTEGER NOT NULL DEFAULT 1200',
+            );
+          }
         });
 
         if (kDebugMode) {
@@ -583,5 +597,5 @@ class AppDatabase extends _$AppDatabase {
   );
 
   @override
-  int get schemaVersion => 57;
+  int get schemaVersion => 58;
 }

@@ -34,6 +34,13 @@ class Settings extends Table {
   BoolColumn get positiveReinforcement =>
       boolean().withDefault(const Constant(true))();
   BoolColumn get reminders => boolean().withDefault(const Constant(false))();
+  // Minutes after local midnight. Stored in SQLite so backups preserve times.
+  IntColumn get breakfastReminderMinutes =>
+      integer().withDefault(const Constant(9 * 60))();
+  IntColumn get lunchReminderMinutes =>
+      integer().withDefault(const Constant(13 * 60))();
+  IntColumn get dinnerReminderMinutes =>
+      integer().withDefault(const Constant(20 * 60))();
   BoolColumn get selectEntryOnSubmit => boolean()();
   TextColumn get shortDateFormat => text()();
   TextColumn get fields => text().nullable().withDefault(
