@@ -14,6 +14,50 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
+/// The meal reminders always open the diary, regardless of the tab order.
+const diaryReminderPayload = 'fitbook:diary';
+
+/// A notification can launch FitBook before its widget tree exists.
+/// Keep the request pending until HomePage has navigated to the diary.
+final openDiaryFromReminder = ValueNotifier<bool>(false);
+
+bool isDiaryReminderTap({int? id, String? payload}) =>
+    payload == diaryReminderPayload ||
+    (payload == null && id != null && id >= 1 && id <= 3);
+
+void _onNotificationResponse(NotificationResponse response) {
+  if (response.notificationResponseType !=
+      NotificationResponseType.selectedNotification) {
+    return;
+  }
+  if (isDiaryReminderTap(id: response.id, payload: response.payload)) {
+    openDiaryFromReminder.value = true;
+  }
+}
+
+/// Register in the UI isolate, including when reminders have been disabled.
+/// getNotificationAppLaunchDetails handles an Android/iOS cold start; the
+/// response callback handles a tap while the application is already running.
+Future<void> initializeReminderNotificationNavigation() async {
+  if (kIsWeb) return;
+  final plugin = FlutterLocalNotificationsPlugin();
+  final launch = await plugin.getNotificationAppLaunchDetails();
+  await plugin.initialize(
+    settings: const InitializationSettings(
+      android: AndroidInitializationSettings('@drawable/nutrition'),
+      iOS: DarwinInitializationSettings(),
+      macOS: DarwinInitializationSettings(),
+      linux: LinuxInitializationSettings(defaultActionName: 'Open FitBook'),
+      windows: _windowsNotificationSettings,
+    ),
+    onDidReceiveNotificationResponse: _onNotificationResponse,
+  );
+  if (launch?.didNotificationLaunchApp == true) {
+    final response = launch?.notificationResponse;
+    if (response != null) _onNotificationResponse(response);
+  }
+}
+
 Timer? timer;
 
 const _windowsNotificationSettings = WindowsInitializationSettings(
@@ -82,7 +126,10 @@ Future<void> notifyRemindersEnabled(AppLocalizations l10n) async {
     windows: _windowsNotificationSettings,
   );
   final plugin = FlutterLocalNotificationsPlugin();
-  await plugin.initialize(settings: init);
+  await plugin.initialize(
+    settings: init,
+    onDidReceiveNotificationResponse: _onNotificationResponse,
+  );
   await plugin.show(
     id: 0,
     title: l10n.mealRemindersEnabled,
@@ -112,6 +159,7 @@ Future<void> _checkAndNotify({
   required AppDatabase database,
   required NotificationDetails Function(ReminderMeal, AppLocalizations) details,
   required InitializationSettings initialization,
+  bool foreground = false,
 }) async {
   final now = DateTime.now();
   final settings = await (database.settings.select()..limit(1)).getSingle();
@@ -147,7 +195,11 @@ Future<void> _checkAndNotify({
   final prefs = SharedPreferencesAsync();
   final l10n = await _loadReminderLocalizations(database);
   final plugin = FlutterLocalNotificationsPlugin();
-  await plugin.initialize(settings: initialization);
+  await plugin.initialize(
+    settings: initialization,
+    onDidReceiveNotificationResponse:
+        foreground ? _onNotificationResponse : null,
+  );
   for (final meal in dueMeals) {
     final sentKey = 'fitbook.reminder.lastSent.${meal.name}';
     final previouslySent = await prefs.getString(sentKey);
@@ -171,6 +223,7 @@ Future<void> _checkAndNotify({
       id: meal.index + 1,
       title: title,
       notificationDetails: details(meal, l10n),
+      payload: diaryReminderPayload,
     );
     await prefs.setString(sentKey, reminderDayKey(meal, now));
     debugPrint('FitBookReminders: ${meal.name} reminder posted');
@@ -189,6 +242,7 @@ Future<void> doDesktopReminders() async {
       windows: _windowsNotificationSettings,
     ),
     details: (_, __) => _desktopNotificationDetails,
+    foreground: true,
   );
 }
 

@@ -36,8 +36,9 @@ set db(AppDatabase value) {
   dbVersion.value++;
 }
 
-MethodChannel androidChannel =
-    const MethodChannel("com.presley.fit_book/android");
+MethodChannel androidChannel = const MethodChannel(
+  "com.presley.fit_book/android",
+);
 
 void main() {
   runZonedGuarded(
@@ -58,13 +59,26 @@ void main() {
       final state = SettingsState(settings);
       talker.info('Loaded application settings');
 
+      // Notification taps must be registered in the UI isolate, including
+      // launches from a terminated state and when reminders are now disabled.
+      try {
+        await initializeReminderNotificationNavigation();
+      } catch (error, stack) {
+        talker.handle(
+          error,
+          stack,
+          'Unable to initialize notification routing',
+        );
+      }
+
       // Configure background checks without delaying the first frame.
       unawaited(
-        (settings.reminders ? setupReminders : cancelReminders)().catchError(
-          (Object error, StackTrace stack) {
-            talker.handle(error, stack, 'Unable to configure meal reminders');
-          },
-        ),
+        (settings.reminders ? setupReminders : cancelReminders)().catchError((
+          Object error,
+          StackTrace stack,
+        ) {
+          talker.handle(error, stack, 'Unable to configure meal reminders');
+        }),
       );
 
       runApp(appProviders(state));
@@ -98,9 +112,7 @@ void main() {
 Widget appProviders(SettingsState state) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => state),
-        ChangeNotifierProvider(
-          create: (context) => DiaryState(),
-        ),
+        ChangeNotifierProvider(create: (context) => DiaryState()),
       ],
       child: const App(),
     );
@@ -164,8 +176,9 @@ class App extends StatelessWidget {
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 7),
               overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
             ),
-            pageTransitionsTheme:
-                navigationTransitionsTheme(settings.navigationAnimation),
+            pageTransitionsTheme: navigationTransitionsTheme(
+              settings.navigationAnimation,
+            ),
           ),
           darkTheme: ThemeData(
             colorScheme:
@@ -187,13 +200,15 @@ class App extends StatelessWidget {
             inputDecorationTheme: const InputDecorationTheme(
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),
-            pageTransitionsTheme:
-                navigationTransitionsTheme(settings.navigationAnimation),
+            pageTransitionsTheme: navigationTransitionsTheme(
+              settings.navigationAnimation,
+            ),
           ),
           themeMode: settings.themeMode == 'ThemeMode.amoled'
               ? ThemeMode.dark
-              : ThemeMode.values
-                  .byName(settings.themeMode.replaceAll('ThemeMode.', '')),
+              : ThemeMode.values.byName(
+                  settings.themeMode.replaceAll('ThemeMode.', ''),
+                ),
           home: const HomePage(),
         );
       },
@@ -210,12 +225,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _pageController = PageController();
+  final _diaryPageKey = GlobalKey<DiaryPageState>();
   var _currentIndex = 0;
+  var _diaryNavigationScheduled = false;
 
   Widget _pageForTab(String tab) {
     switch (tab) {
       case 'DiaryPage':
-        return const DiaryPage();
+        return DiaryPage(key: _diaryPageKey);
       case 'GraphPage':
         return const GraphPage();
       case 'FoodPage':
@@ -233,9 +250,45 @@ class _HomePageState extends State<HomePage> {
     return RepaintBoundary(child: _pageForTab(tab));
   }
 
+  void _onDiaryReminderTap() {
+    if (!openDiaryFromReminder.value || _diaryNavigationScheduled) return;
+    _diaryNavigationScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _diaryNavigationScheduled = false;
+      if (!mounted || !openDiaryFromReminder.value) return;
+
+      // A reminder should take the user out of settings/details, not just
+      // select a tab behind the currently visible route.
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      final tabs = context.read<SettingsState>().value.tabs.split(',');
+      final diaryIndex = tabs.indexOf('DiaryPage');
+      if (diaryIndex == -1) {
+        // The diary might be hidden in the user's custom tab configuration.
+        Navigator.of(context)
+            .push(MaterialPageRoute<void>(builder: (_) => const DiaryPage()));
+      } else {
+        if (_currentIndex != diaryIndex) {
+          setState(() => _currentIndex = diaryIndex);
+        }
+        if (_pageController.hasClients) {
+          _pageController.jumpToPage(diaryIndex);
+        }
+        _diaryPageKey.currentState?.navigatorKey.currentState?.popUntil(
+          (route) => route.isFirst,
+        );
+      }
+      openDiaryFromReminder.value = false;
+    });
+    // A notification callback may arrive between frames (app in background).
+    // Scheduling the callback alone does not request a new Flutter frame.
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
   @override
   void initState() {
     super.initState();
+    openDiaryFromReminder.addListener(_onDiaryReminderTap);
+    _onDiaryReminderTap();
 
     final info = PackageInfo.fromPlatform();
     info.then((pkg) async {
@@ -268,9 +321,7 @@ class _HomePageState extends State<HomePage> {
           SnackBarAction(
             label: context.l10n.changes,
             onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const WhatsNew(),
-              ),
+              MaterialPageRoute(builder: (context) => const WhatsNew()),
             ),
           ),
         );
@@ -281,14 +332,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    openDiaryFromReminder.removeListener(_onDiaryReminderTap);
     _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final tabsSetting = context
-        .select<SettingsState, String>((settings) => settings.value.tabs);
+    final tabsSetting = context.select<SettingsState, String>(
+      (settings) => settings.value.tabs,
+    );
     final tabs = tabsSetting.split(',');
     final scrollableTabs = context.select<SettingsState, bool>(
       (settings) => settings.value.scrollableTabs,
