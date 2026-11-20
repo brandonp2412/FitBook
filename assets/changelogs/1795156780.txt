@@ -1,0 +1,3 @@
+• Fix clearing barcodes so they stay removed after saving and reopening
+• Save barcode changes from the diary food editor without duplicating foods
+• Preserve food names, nutrition, and images when editing barcodes
