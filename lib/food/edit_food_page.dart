@@ -191,7 +191,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
   Map<String, Expression> _buildFoodColumns({int? id}) {
     var food = FoodsCompanion.insert(
       name: nameCtrl.text,
-      barcode: Value(barcodeCtrl.text),
+      barcode: Value(normalizeBarcode(barcodeCtrl.text)),
       imageFile: Value(imgFile),
       smallImage: Value(smallImg),
       bigImage: Value(bigImg),

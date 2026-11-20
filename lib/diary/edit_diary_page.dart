@@ -368,6 +368,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       _creatingFood = false;
       foodDirty = false;
       selectedFood = food;
+      imageFile = food.imageFile;
+      bigImage = food.bigImage;
       nameController.text = food.name;
       calories.text =
           food.calories != null ? formatter.format(food.calories!) : "0";
@@ -444,7 +446,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           servingSize: Value(selectedFood?.servingSize ?? 100.0),
           servingUnit: Value(selectedFood?.servingUnit ?? settings.foodUnit),
           created: Value(DateTime.now()),
-          barcode: Value(barcode.text),
+          barcode: Value(normalizeBarcode(barcode.text)),
           imageFile: Value(imageFile),
         ),
       ));
@@ -464,6 +466,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           fatG: Value(parsedFat),
           fiberG: Value(parsedFiber),
           imageFile: Value(imageFile),
+          barcode: Value(normalizeBarcode(barcode.text)),
         ),
       );
       final food = await (db.foods.select()
@@ -959,18 +962,22 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 TextField(
                   controller: barcode,
                   textInputAction: TextInputAction.next,
+                  onChanged: (_) => setState(() => foodDirty = true),
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelText: l10n.barcode,
                     suffixIcon: ScanBarcode(
                       text: true,
                       value: barcode.text,
+                      barcodeOnly: selectedFood != null || _creatingFood,
                       onBarcode: (value) {
                         barcode.text = value;
-                        toast(context, l10n.barcodeNotFoundSaveToInsert);
+                        setState(() => foodDirty = true);
                       },
                       onFood: (food) {
-                        barcode.text = food.barcode!;
+                        // Only resolve a scanned food when selecting a food,
+                        // never when editing an existing/manual food's barcode.
+                        barcode.text = food.barcode ?? '';
                         _applyFood(food);
                       },
                     ),

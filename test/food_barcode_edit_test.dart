@@ -86,6 +86,55 @@ void main() {
     await db.close();
   });
 
+  testWidgets('clearing an existing barcode persists after reopening',
+      (tester) async {
+    await mockTests();
+    await db.foods.deleteAll();
+    final foodId = await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'My existing snack',
+        barcode: const Value('9412345678901'),
+        calories: const Value(180),
+        proteinG: const Value(12),
+      ),
+    );
+    final settings = await db.settings.select().getSingle();
+    Widget page() => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => SettingsState(settings)),
+            ChangeNotifierProvider(create: (_) => DiaryState()),
+          ],
+          child: localizedApp(home: EditFoodPage(id: foodId)),
+        );
+    await tester.pumpWidget(page());
+    await tester.pumpAndSettle();
+    final barcodeField = find.byWidgetPredicate(
+      (widget) =>
+          widget is TextField && widget.decoration?.labelText == 'Barcode',
+    );
+    expect(
+      tester.widget<TextField>(barcodeField).controller?.text,
+      '9412345678901',
+    );
+    await tester.enterText(barcodeField, '');
+    await tester.pump();
+    expect(tester.widget<TextField>(barcodeField).controller?.text, '');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+    var saved = await (db.foods.select()..where((f) => f.id.equals(foodId)))
+        .getSingle();
+    expect(saved.barcode, isNull, reason: 'Clearing should erase the barcode');
+    expect(saved.name, 'My existing snack');
+    expect(saved.proteinG, 12);
+    expect((await db.foods.select().get()), hasLength(1));
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+    await tester.pumpWidget(page());
+    await tester.pumpAndSettle();
+    expect(tester.widget<TextField>(barcodeField).controller?.text, '');
+    await db.close();
+  });
+
   testWidgets('the normal scanner still resolves catalogued foods',
       (tester) async {
     await mockTests();

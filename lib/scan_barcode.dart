@@ -19,6 +19,12 @@ import 'database/database.dart';
 bool get supportsBarcodeCamera =>
     !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 
+/// Treat a cleared barcode as absent rather than saving an empty identifier.
+String? normalizeBarcode(String value) {
+  final barcode = value.trim();
+  return barcode.isEmpty ? null : barcode;
+}
+
 class BarcodeScanResult {
   final Food? food;
   final String? barcode;
