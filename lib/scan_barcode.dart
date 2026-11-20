@@ -30,7 +30,10 @@ class BarcodeScanResult {
         barcode = null;
 }
 
-Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
+Future<BarcodeScanResult> performBarcodeScan(
+  BuildContext context, {
+  bool barcodeOnly = false,
+}) async {
   if (!supportsBarcodeCamera) return const BarcodeScanResult.cancelled();
 
   final status = await Permission.camera.request();
@@ -53,6 +56,19 @@ Future<BarcodeScanResult> performBarcodeScan(BuildContext context) async {
     return const BarcodeScanResult.cancelled();
   }
   talker.info('Scanned barcode');
+  if (!context.mounted) return const BarcodeScanResult.cancelled();
+
+  return resolveScannedBarcode(context, barcode, barcodeOnly: barcodeOnly);
+}
+
+/// Manually entered food barcode fields must not import or create products.
+/// Other scanner entry points still look up local and online products.
+Future<BarcodeScanResult> resolveScannedBarcode(
+  BuildContext context,
+  String barcode, {
+  bool barcodeOnly = false,
+}) async {
+  if (barcodeOnly) return BarcodeScanResult.barcode(barcode);
 
   var food = await (db.foods.select()
         ..where((tbl) => tbl.barcode.equals(barcode))
@@ -237,6 +253,7 @@ class ScanBarcode extends StatefulWidget {
   final ValueChanged<String> onBarcode;
   final bool? text;
   final String? value;
+  final bool barcodeOnly;
 
   const ScanBarcode({
     super.key,
@@ -244,6 +261,7 @@ class ScanBarcode extends StatefulWidget {
     required this.onBarcode,
     this.text,
     this.value,
+    this.barcodeOnly = false,
   });
 
   @override
@@ -257,7 +275,10 @@ class _ScanBarcodeState extends State<ScanBarcode> {
     setState(() {
       searching = true;
     });
-    final result = await performBarcodeScan(context);
+    final result = await performBarcodeScan(
+      context,
+      barcodeOnly: widget.barcodeOnly,
+    );
     if (!mounted) return;
     setState(() {
       searching = false;

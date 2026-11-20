@@ -558,18 +558,13 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 suffixIcon: ScanBarcode(
                   text: true,
                   value: barcodeCtrl.text,
+                  barcodeOnly: true,
                   onBarcode: (value) {
                     barcodeCtrl.text = value;
-                    toast(context, l10n.barcodeNotFoundSaveToInsert);
                   },
                   onFood: (food) {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditFoodPage(id: food.id),
-                      ),
-                    );
+                    // Never navigate away or replace the food being edited.
+                    barcodeCtrl.text = food.barcode ?? barcodeCtrl.text;
                   },
                 ),
               ),
