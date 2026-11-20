@@ -14,12 +14,13 @@ import 'test_utils.dart';
 Future<void> _pumpDiary(
   WidgetTester tester, {
   required int? calorieGoal,
+  int? proteinGoal,
 }) async {
   await mockTests();
   await db.settings.update().write(
         SettingsCompanion(
           dailyCalories: Value(calorieGoal),
-          dailyProtein: const Value(null),
+          dailyProtein: Value(proteinGoal),
           dailyCarb: const Value(null),
           dailyFat: const Value(null),
           dailyFiber: const Value(null),
@@ -66,8 +67,8 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await _pumpDiary(tester, calorieGoal: 2000);
-    expect(find.text('Nutrition details'), findsOneWidget);
-    await tester.tap(find.text('Nutrition details'));
+    expect(find.text('Nutrition details'), findsNothing);
+    await tester.tap(find.text('Calories'));
     await tester.pumpAndSettle();
 
     expect(find.text('Nutrition details'), findsOneWidget);
@@ -81,12 +82,30 @@ void main() {
 
     await tester.pageBack();
     await tester.pumpAndSettle();
-    expect(find.text('Nutrition details'), findsOneWidget);
+    expect(find.text('Nutrition details'), findsNothing);
+    expect(find.text('Calories'), findsOneWidget);
     await db.close();
   });
 
-  testWidgets('Nutrition details accessible even without any configured goals',
-      (
+  testWidgets('Desktop metric summary opens details directly without a link', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1600, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await _pumpDiary(tester, calorieGoal: 2000);
+    expect(find.text('Nutrition details'), findsNothing);
+    await tester.tap(find.text('Calories'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Nutrition details'), findsOneWidget);
+    expect(find.text('450 / 2,000 kcal'), findsOneWidget);
+    await db.close();
+  });
+
+  testWidgets('Protein progress opens details for nutrients without goals', (
     WidgetTester tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -94,8 +113,9 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await _pumpDiary(tester, calorieGoal: null);
-    await tester.tap(find.text('Nutrition details'));
+    await _pumpDiary(tester, calorieGoal: null, proteinGoal: 90);
+    expect(find.text('Nutrition details'), findsNothing);
+    await tester.tap(find.text('Protein'));
     await tester.pumpAndSettle();
     expect(find.text('450 kcal'), findsOneWidget);
     expect(find.text('Goal: Not set'), findsWidgets);

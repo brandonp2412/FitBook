@@ -180,36 +180,22 @@ class _DiaryListState extends State<DiaryList> {
           ),
       ];
 
-      if (settings.diarySummary == DiarySummary.none.toString()) {
+      if (bars.isEmpty ||
+          settings.diarySummary == DiarySummary.none.toString()) {
         return const SizedBox.shrink();
       }
 
       return Padding(
         padding: const EdgeInsets.fromLTRB(10, 8, 10, 4),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () => widget.onOpenDetails(today),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        context.l10n.nutritionDetails,
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ),
-                    const Icon(Icons.chevron_right, size: 20),
-                  ],
-                ),
-                if (bars.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  ...bars,
-                ],
-              ],
+        child: Semantics(
+          button: true,
+          label: context.l10n.nutritionDetails,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: () => widget.onOpenDetails(today),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+              child: Column(children: bars),
             ),
           ),
         ),

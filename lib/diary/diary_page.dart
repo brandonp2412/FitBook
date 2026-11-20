@@ -118,20 +118,38 @@ class DiaryPageState extends State<DiaryPage> {
               ),
             ),
             const SizedBox(height: 16),
-            metric(
-              l10n.calories,
-              day.stats.cals,
-              settings.dailyCalories,
-              'kcal',
-            ),
-            metric(l10n.protein, day.stats.protein, settings.dailyProtein, 'g'),
-            metric(l10n.carbs, day.stats.carb, settings.dailyCarb, 'g'),
-            metric(l10n.fat, day.stats.fat, settings.dailyFat, 'g'),
-            metric(l10n.fiber, day.stats.fiber, settings.dailyFiber, 'g'),
-            TextButton.icon(
-              onPressed: () => _openNutritionDetails(day),
-              icon: const Icon(Icons.insights_outlined),
-              label: Text(l10n.nutritionDetails),
+            Semantics(
+              button: true,
+              label: l10n.nutritionDetails,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => _openNutritionDetails(day),
+                child: material.Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    metric(
+                      l10n.calories,
+                      day.stats.cals,
+                      settings.dailyCalories,
+                      'kcal',
+                    ),
+                    metric(
+                      l10n.protein,
+                      day.stats.protein,
+                      settings.dailyProtein,
+                      'g',
+                    ),
+                    metric(l10n.carbs, day.stats.carb, settings.dailyCarb, 'g'),
+                    metric(l10n.fat, day.stats.fat, settings.dailyFat, 'g'),
+                    metric(
+                      l10n.fiber,
+                      day.stats.fiber,
+                      settings.dailyFiber,
+                      'g',
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 4),
             SizedBox(
