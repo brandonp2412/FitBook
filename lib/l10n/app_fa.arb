@@ -35,6 +35,7 @@
   "dataSubtitle": "درون‌ریزی، برون‌ریزی و داده‌های محلی",
   "todayProgress": "پیشرفت امروز",
   "latestDay": "آخرین روز",
+  "nutritionDetails": "جزئیات تغذیه",
   "loggedEntries": "{count, plural, =0{هیچ ورودی‌ای ثبت نشده} =1{۱ ورودی ثبت شده} other{{count} ورودی ثبت شده}}",
   "@loggedEntries": {
     "placeholders": {

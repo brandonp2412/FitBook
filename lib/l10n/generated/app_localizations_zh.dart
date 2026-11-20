@@ -110,6 +110,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get latestDay => '最近一天';
 
   @override
+  String get nutritionDetails => '营养详情';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1582,6 +1585,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get latestDay => '最近一天';
 
   @override
+  String get nutritionDetails => '营养详情';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -3052,6 +3058,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get latestDay => '最近一天';
+
+  @override
+  String get nutritionDetails => '營養詳情';
 
   @override
   String loggedEntries(int count) {

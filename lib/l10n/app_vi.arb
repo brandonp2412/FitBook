@@ -35,6 +35,7 @@
   "dataSubtitle": "Nhập, xuất và dữ liệu địa phương",
   "todayProgress": "Tiến độ của ngày hôm nay",
   "latestDay": "Ngày gần nhất",
+  "nutritionDetails": "Chi tiết dinh dưỡng",
   "loggedEntries": "{count, plural, =0{Không có mục nhập nào được ghi lại} =1{1 mục nhập được ghi lại} other{{count} mục nhập được ghi lại}}",
   "@loggedEntries": {
     "placeholders": {

@@ -35,6 +35,7 @@
   "dataSubtitle": "Імпорт, експорт і локальні дані",
   "todayProgress": "Сьогоднішній прогрес",
   "latestDay": "Останній день",
+  "nutritionDetails": "Деталі харчування",
   "loggedEntries": "{count, plural, =0{Записів немає} one{{count} запис} few{{count} записи} many{{count} записів} other{{count} запису}}",
   "@loggedEntries": {
     "placeholders": {

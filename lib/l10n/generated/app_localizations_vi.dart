@@ -110,6 +110,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get latestDay => 'Ngày gần nhất';
 
   @override
+  String get nutritionDetails => 'Chi tiết dinh dưỡng';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

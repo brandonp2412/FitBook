@@ -28,6 +28,7 @@
   "dataSubtitle": "インポート、エクスポート、ローカルデータ",
   "todayProgress": "今日の進捗",
   "latestDay": "最新の日",
+  "nutritionDetails": "栄養の詳細",
   "loggedEntries": "{count, plural, other{{count} 件を記録}}",
   "editEntries": "{count, plural, other{{count} 件の記録を編集}}",
   "calories": "カロリー",

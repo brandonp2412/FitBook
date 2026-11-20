@@ -3,6 +3,7 @@ import 'package:fit_book/app_search.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/diary/diary_filters.dart';
 import 'package:fit_book/diary/diary_list.dart';
+import 'package:fit_book/diary/nutrition_details_page.dart';
 import 'package:fit_book/diary/diary_state.dart';
 import 'package:fit_book/diary/diary_stats_utils.dart';
 import 'package:fit_book/diary/edit_diaries_page.dart';
@@ -36,6 +37,14 @@ class DiaryPageState extends State<DiaryPage> {
   late final TextEditingController searchController = TextEditingController(
     text: entriesState.search,
   );
+
+  void _openNutritionDetails(DayGroup day) {
+    navigatorKey.currentState!.push(
+      MaterialPageRoute<void>(
+        builder: (context) => NutritionDetailsPage(day: day),
+      ),
+    );
+  }
 
   Widget _summaryCard(BuildContext context, DayGroup day, Setting settings) {
     final theme = Theme.of(context);
@@ -118,6 +127,12 @@ class DiaryPageState extends State<DiaryPage> {
             metric(l10n.protein, day.stats.protein, settings.dailyProtein, 'g'),
             metric(l10n.carbs, day.stats.carb, settings.dailyCarb, 'g'),
             metric(l10n.fat, day.stats.fat, settings.dailyFat, 'g'),
+            metric(l10n.fiber, day.stats.fiber, settings.dailyFiber, 'g'),
+            TextButton.icon(
+              onPressed: () => _openNutritionDetails(day),
+              icon: const Icon(Icons.insights_outlined),
+              label: Text(l10n.nutritionDetails),
+            ),
             const SizedBox(height: 4),
             SizedBox(
               width: double.infinity,
@@ -259,6 +274,7 @@ class DiaryPageState extends State<DiaryPage> {
                       ctrl: scrollCtrl,
                       diaryFoods: entryFoods,
                       showGoalSummary: !wide,
+                      onOpenDetails: _openNutritionDetails,
                       selected: selected,
                       onToggleAll: () => setState(() {
                         final visible =

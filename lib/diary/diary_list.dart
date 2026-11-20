@@ -20,6 +20,7 @@ class DiaryList extends StatefulWidget {
     required this.onSelect,
     required this.onToggleAll,
     required this.onNext,
+    required this.onOpenDetails,
     required this.ctrl,
     this.showGoalSummary = true,
   });
@@ -30,6 +31,7 @@ class DiaryList extends StatefulWidget {
   final ValueChanged<int> onSelect;
   final VoidCallback onToggleAll;
   final VoidCallback onNext;
+  final ValueChanged<DayGroup> onOpenDetails;
   final bool showGoalSummary;
 
   @override
@@ -178,14 +180,39 @@ class _DiaryListState extends State<DiaryList> {
           ),
       ];
 
-      if (bars.isEmpty ||
-          settings.diarySummary == DiarySummary.none.toString()) {
+      if (settings.diarySummary == DiarySummary.none.toString()) {
         return const SizedBox.shrink();
       }
 
       return Padding(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 4),
-        child: Column(children: bars),
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 4),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => widget.onOpenDetails(today),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.l10n.nutritionDetails,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right, size: 20),
+                  ],
+                ),
+                if (bars.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  ...bars,
+                ],
+              ],
+            ),
+          ),
+        ),
       );
     }
 

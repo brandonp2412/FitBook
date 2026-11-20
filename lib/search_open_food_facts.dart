@@ -108,9 +108,6 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           message: hasSearched
               ? context.l10n.tryAnotherNameOrScanBarcode
               : context.l10n.enterFoodNameToSearch,
-          actionLabel: hasSearched ? context.l10n.scanBarcode : null,
-          actionIcon: Icons.barcode_reader,
-          onAction: hasSearched ? scan : null,
         ),
       );
 

@@ -35,6 +35,7 @@
   "dataSubtitle": "Импорт, экспорт и локальные данные",
   "todayProgress": "Прогресс за сегодня",
   "latestDay": "Последний день",
+  "nutritionDetails": "Сведения о питании",
   "loggedEntries": "{count, plural, =0{Нет записей} one{Добавлена {count} запись} few{Добавлено {count} записи} many{Добавлено {count} записей} other{Добавлено {count} записи}}",
   "@loggedEntries": {
     "placeholders": {

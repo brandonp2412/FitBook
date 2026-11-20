@@ -111,6 +111,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get latestDay => 'Ultimo giorno';
 
   @override
+  String get nutritionDetails => 'Dettagli nutrizionali';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

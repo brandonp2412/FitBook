@@ -110,6 +110,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get latestDay => 'تازہ ترین دن';
 
   @override
+  String get nutritionDetails => 'غذائیت کی تفصیلات';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

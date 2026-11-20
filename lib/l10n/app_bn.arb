@@ -35,6 +35,7 @@
   "dataSubtitle": "ইমপোর্ট, এক্সপোর্ট এবং স্থানীয় ডেটা",
   "todayProgress": "আজকের অগ্রগতি",
   "latestDay": "সর্বশেষ দিন",
+  "nutritionDetails": "পুষ্টির বিস্তারিত",
   "loggedEntries": "{count, plural, =0{কোনো এন্ট্রি লগ করা হয়নি} =1{১টি এন্ট্রি লগ করা হয়েছে} other{{count}টি এন্ট্রি লগ করা হয়েছে}}",
   "@loggedEntries": {
     "placeholders": {

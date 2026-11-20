@@ -28,6 +28,7 @@
   "dataSubtitle": "导入、导出和本地数据",
   "todayProgress": "今日进度",
   "latestDay": "最近一天",
+  "nutritionDetails": "营养详情",
   "loggedEntries": "{count, plural, other{已记录 {count} 项}}",
   "editEntries": "{count, plural, other{编辑 {count} 条记录}}",
   "calories": "热量",

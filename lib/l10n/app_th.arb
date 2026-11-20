@@ -35,6 +35,7 @@
   "dataSubtitle": "นำเข้า ส่งออก และข้อมูลในเครื่อง",
   "todayProgress": "ความคืบหน้าวันนี้",
   "latestDay": "วันล่าสุด",
+  "nutritionDetails": "รายละเอียดโภชนาการ",
   "loggedEntries": "{count, plural, =0{ยังไม่มีรายการที่บันทึก} =1{บันทึก 1 รายการ} other{บันทึก {count} รายการ}}",
   "@loggedEntries": {
     "placeholders": {

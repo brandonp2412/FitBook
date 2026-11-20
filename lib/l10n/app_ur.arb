@@ -35,6 +35,7 @@
   "dataSubtitle": "درآمد، برآمد اور مقامی ڈیٹا",
   "todayProgress": "آج کی پیش رفت",
   "latestDay": "تازہ ترین دن",
+  "nutritionDetails": "غذائیت کی تفصیلات",
   "loggedEntries": "{count, plural, =0{کوئی اندراج نہیں کیا گیا} =1{1 اندراج کیا گیا} other{{count} اندراج کیے گئے}}",
   "@loggedEntries": {
     "placeholders": {

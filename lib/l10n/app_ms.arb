@@ -29,6 +29,7 @@
   "dataSubtitle": "Import, eksport dan data setempat",
   "todayProgress": "Kemajuan hari ini",
   "latestDay": "Hari terkini",
+  "nutritionDetails": "Butiran pemakanan",
   "loggedEntries": "{count, plural, =0{Tiada catatan direkodkan} =1{1 catatan direkodkan} other{{count} catatan direkodkan}}",
   "@loggedEntries": {"placeholders": {"count": {"type": "int"}}},
   "editEntries": "{count, plural, =1{Edit 1 catatan} other{Edit {count} catatan}}",

@@ -28,6 +28,7 @@
   "dataSubtitle": "Importação, exportação e dados locais",
   "todayProgress": "Progresso de hoje",
   "latestDay": "Último dia",
+  "nutritionDetails": "Detalhes nutricionais",
   "loggedEntries": "{count, plural, =0{Nenhum registo} =1{1 registo} other{{count} registos}}",
   "editEntries": "{count, plural, =1{Editar 1 registo} other{Editar {count} registos}}",
   "calories": "Calorias",

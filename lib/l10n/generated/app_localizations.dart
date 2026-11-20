@@ -338,6 +338,12 @@ abstract class AppLocalizations {
   /// **'Latest day'**
   String get latestDay;
 
+  /// No description provided for @nutritionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition details'**
+  String get nutritionDetails;
+
   /// No description provided for @loggedEntries.
   ///
   /// In en, this message translates to:

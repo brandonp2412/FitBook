@@ -35,6 +35,7 @@
   "dataSubtitle": "Impor, ekspor, dan data lokal",
   "todayProgress": "Kemajuan hari ini",
   "latestDay": "Hari terakhir",
+  "nutritionDetails": "Rincian nutrisi",
   "loggedEntries": "{count, plural, =0{Belum ada entri yang dicatat} =1{1 entri dicatat} other{{count} entri dicatat}}",
   "@loggedEntries": {
     "placeholders": {

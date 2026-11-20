@@ -110,6 +110,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get latestDay => 'সর্বশেষ দিন';
 
   @override
+  String get nutritionDetails => 'পুষ্টির বিস্তারিত';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

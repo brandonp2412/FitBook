@@ -35,6 +35,7 @@
   "dataSubtitle": "इम्पोर्ट, एक्सपोर्ट और स्थानीय डेटा",
   "todayProgress": "आज की प्रगति",
   "latestDay": "नवीनतम दिन",
+  "nutritionDetails": "पोषण का विवरण",
   "loggedEntries": "{count, plural, =0{कोई प्रविष्टि लॉग नहीं हुई} =1{1 प्रविष्टि लॉग हुई} other{{count} प्रविष्टियाँ लॉग हुईं}}",
   "@loggedEntries": {
     "placeholders": {

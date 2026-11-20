@@ -110,6 +110,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get latestDay => 'Последний день';
 
   @override
+  String get nutritionDetails => 'Сведения о питании';
+
+  @override
   String loggedEntries(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
