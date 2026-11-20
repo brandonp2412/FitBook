@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">ব্যাকআপ ব্যর্থ: ডেটাবেস ফাইল পাওয়া যায়নি। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
     <string name="backup_success_title">ডেটা ও ছবির ব্যাকআপ সম্পন্ন হয়েছে</string>
     <string name="backup_failed_unexpected">অপ্রত্যাশিতভাবে ব্যাকআপ ব্যর্থ হয়েছে। স্বয়ংক্রিয় ব্যাকআপ বন্ধ করা হয়েছে।</string>
+    <string name="backup_failed_retry">ব্যাকআপ ব্যর্থ হয়েছে। আগামীকাল স্বয়ংক্রিয় ব্যাকআপ আবার চেষ্টা করবে।</string>
 </resources>

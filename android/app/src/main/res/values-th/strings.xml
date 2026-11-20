@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">สำรองข้อมูลล้มเหลว: ไม่พบไฟล์ฐานข้อมูล ปิดการสำรองอัตโนมัติแล้ว</string>
     <string name="backup_success_title">สำรองข้อมูลและรูปภาพแล้ว</string>
     <string name="backup_failed_unexpected">การสำรองข้อมูลล้มเหลวโดยไม่คาดคิด ปิดการสำรองอัตโนมัติแล้ว</string>
+    <string name="backup_failed_retry">การสำรองข้อมูลล้มเหลว ระบบสำรองข้อมูลอัตโนมัติจะลองอีกครั้งพรุ่งนี้</string>
 </resources>

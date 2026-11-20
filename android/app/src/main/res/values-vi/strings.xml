@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Sao lưu thất bại: Không tìm thấy tệp cơ sở dữ liệu. Đã tắt sao lưu tự động.</string>
     <string name="backup_success_title">Đã sao lưu dữ liệu và hình ảnh</string>
     <string name="backup_failed_unexpected">Sao lưu thất bại ngoài dự kiến. Đã tắt sao lưu tự động.</string>
+    <string name="backup_failed_retry">Sao lưu thất bại. Hệ thống sao lưu tự động sẽ thử lại vào ngày mai.</string>
 </resources>

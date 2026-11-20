@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Falha no backup: o arquivo do banco de dados não foi encontrado. Os backups automáticos foram desativados.</string>
     <string name="backup_success_title">Backup de dados e imagens concluído</string>
     <string name="backup_failed_unexpected">O backup falhou inesperadamente. Os backups automáticos foram desativados.</string>
+    <string name="backup_failed_retry">Falha no backup. Os backups automáticos tentarão novamente amanhã.</string>
 </resources>

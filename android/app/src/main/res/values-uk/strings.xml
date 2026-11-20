@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Не вдалося створити резервну копію: файл бази даних не знайдено. Автоматичне резервне копіювання вимкнено.</string>
     <string name="backup_success_title">Дані та зображення збережено в резервній копії</string>
     <string name="backup_failed_unexpected">Неочікувана помилка резервного копіювання. Автоматичне резервне копіювання вимкнено.</string>
+    <string name="backup_failed_retry">Не вдалося створити резервну копію. Автоматичне резервне копіювання повторить спробу завтра.</string>
 </resources>

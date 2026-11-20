@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Kopia zapasowa nie powiodła się: nie znaleziono pliku bazy danych. Automatyczne kopie zapasowe zostały wyłączone.</string>
     <string name="backup_success_title">Utworzono kopię zapasową danych i obrazów</string>
     <string name="backup_failed_unexpected">Kopia zapasowa nie powiodła się z powodu nieoczekiwanego błędu. Automatyczne kopie zapasowe zostały wyłączone.</string>
+    <string name="backup_failed_retry">Tworzenie kopii zapasowej nie powiodło się. Automatyczne kopie zapasowe spróbują ponownie jutro.</string>
 </resources>

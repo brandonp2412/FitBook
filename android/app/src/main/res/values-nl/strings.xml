@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Back-up mislukt: het databasebestand is niet gevonden. Automatische back-ups zijn uitgeschakeld.</string>
     <string name="backup_success_title">Gegevens en afbeeldingen geback-upt</string>
     <string name="backup_failed_unexpected">De back-up is onverwacht mislukt. Automatische back-ups zijn uitgeschakeld.</string>
+    <string name="backup_failed_retry">Back-up mislukt. Automatische back-ups proberen het morgen opnieuw.</string>
 </resources>

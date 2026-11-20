@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Pencadangan gagal: File basis data tidak ditemukan. Pencadangan otomatis dinonaktifkan.</string>
     <string name="backup_success_title">Data dan gambar yang dicadangkan</string>
     <string name="backup_failed_unexpected">Pencadangan gagal secara tidak terduga. Pencadangan otomatis dinonaktifkan.</string>
+    <string name="backup_failed_retry">Pencadangan gagal. Pencadangan otomatis akan mencoba lagi besok.</string>
 </resources>

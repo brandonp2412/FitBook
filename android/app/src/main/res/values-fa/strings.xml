@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">پشتیبان‌گیری ناموفق بود: فایل پایگاه داده پیدا نشد. پشتیبان‌گیری خودکار غیرفعال شد.</string>
     <string name="backup_success_title">از داده‌ها و تصاویر پشتیبان تهیه شد</string>
     <string name="backup_failed_unexpected">پشتیبان‌گیری به‌طور غیرمنتظره‌ای ناموفق بود. پشتیبان‌گیری خودکار غیرفعال شد.</string>
+    <string name="backup_failed_retry">پشتیبان‌گیری ناموفق بود. پشتیبان‌گیری خودکار فردا دوباره تلاش می‌کند.</string>
 </resources>

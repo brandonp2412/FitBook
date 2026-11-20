@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Error de copia de seguridad: no se ha encontrado el archivo de la base de datos. Se han desactivado las copias automáticas.</string>
     <string name="backup_success_title">Copia de seguridad de datos e imágenes completada</string>
     <string name="backup_failed_unexpected">La copia de seguridad ha fallado de forma inesperada. Se han desactivado las copias automáticas.</string>
+    <string name="backup_failed_retry">La copia de seguridad falló. Las copias automáticas volverán a intentarlo mañana.</string>
 </resources>

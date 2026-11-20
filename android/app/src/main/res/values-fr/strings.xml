@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Échec de la sauvegarde : fichier de base de données introuvable. Les sauvegardes automatiques ont été désactivées.</string>
     <string name="backup_success_title">Données et images sauvegardées</string>
     <string name="backup_failed_unexpected">La sauvegarde a échoué de manière inattendue. Les sauvegardes automatiques ont été désactivées.</string>
+    <string name="backup_failed_retry">Échec de la sauvegarde. Les sauvegardes automatiques réessaieront demain.</string>
 </resources>

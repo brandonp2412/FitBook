@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Falha na cópia de segurança: o ficheiro da base de dados não foi encontrado. As cópias de segurança automáticas foram desativadas.</string>
     <string name="backup_success_title">Cópia de segurança de dados e imagens concluída</string>
     <string name="backup_failed_unexpected">A cópia de segurança falhou inesperadamente. As cópias de segurança automáticas foram desativadas.</string>
+    <string name="backup_failed_retry">A cópia de segurança falhou. As cópias de segurança automáticas tentarão novamente amanhã.</string>
 </resources>

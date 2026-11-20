@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Backup non riuscito: file del database non trovato. I backup automatici sono stati disattivati.</string>
     <string name="backup_success_title">Dati e immagini salvati nel backup</string>
     <string name="backup_failed_unexpected">Il backup non è riuscito a causa di un errore imprevisto. I backup automatici sono stati disattivati.</string>
+    <string name="backup_failed_retry">Backup non riuscito. Il backup automatico riproverà domani.</string>
 </resources>

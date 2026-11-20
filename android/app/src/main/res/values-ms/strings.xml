@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Sandaran gagal: Fail pangkalan data tidak ditemui. Sandaran automatik dinyahdayakan.</string>
     <string name="backup_success_title">Data dan imej telah disandarkan</string>
     <string name="backup_failed_unexpected">Sandaran gagal secara tidak dijangka. Sandaran automatik dinyahdayakan.</string>
+    <string name="backup_failed_retry">Sandaran gagal. Sandaran automatik akan mencuba lagi esok.</string>
 </resources>

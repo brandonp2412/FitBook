@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">بیک اپ ناکام: ڈیٹابیس فائل نہیں ملی۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
     <string name="backup_success_title">ڈیٹا اور تصاویر کا بیک اپ بن گیا</string>
     <string name="backup_failed_unexpected">بیک اپ غیر متوقع طور پر ناکام ہو گیا۔ خودکار بیک اپ غیر فعال کر دیے گئے۔</string>
+    <string name="backup_failed_retry">بیک اپ ناکام ہو گیا۔ خودکار بیک اپ کل دوبارہ کوشش کرے گا۔</string>
 </resources>

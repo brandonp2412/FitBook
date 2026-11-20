@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">Sicherung fehlgeschlagen: Die Datenbankdatei wurde nicht gefunden. Automatische Sicherungen wurden deaktiviert.</string>
     <string name="backup_success_title">Daten und Bilder wurden gesichert</string>
     <string name="backup_failed_unexpected">Die Sicherung ist unerwartet fehlgeschlagen. Automatische Sicherungen wurden deaktiviert.</string>
+    <string name="backup_failed_retry">Sicherung fehlgeschlagen. Automatische Sicherungen versuchen es morgen erneut.</string>
 </resources>

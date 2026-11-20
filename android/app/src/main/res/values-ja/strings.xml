@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">バックアップに失敗しました：データベースファイルが見つかりません。自動バックアップを無効にしました。</string>
     <string name="backup_success_title">データと画像をバックアップしました</string>
     <string name="backup_failed_unexpected">予期しないエラーでバックアップに失敗しました。自動バックアップを無効にしました。</string>
+    <string name="backup_failed_retry">バックアップに失敗しました。自動バックアップは明日再試行します。</string>
 </resources>

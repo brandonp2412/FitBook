@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">बैकअप विफल: डेटाबेस फ़ाइल नहीं मिली। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
     <string name="backup_success_title">डेटा और चित्रों का बैकअप बन गया</string>
     <string name="backup_failed_unexpected">अप्रत्याशित त्रुटि के कारण बैकअप विफल हुआ। स्वचालित बैकअप बंद कर दिए गए हैं।</string>
+    <string name="backup_failed_retry">बैकअप विफल रहा। स्वचालित बैकअप कल फिर से प्रयास करेगा।</string>
 </resources>

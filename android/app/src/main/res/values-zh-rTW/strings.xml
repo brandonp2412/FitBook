@@ -12,4 +12,5 @@
     <string name="backup_failed_database_missing">備份失敗：找不到資料庫檔案。已停用自動備份。</string>
     <string name="backup_success_title">已備份資料和圖片</string>
     <string name="backup_failed_unexpected">備份因意外錯誤而失敗。已停用自動備份。</string>
+    <string name="backup_failed_retry">備份失敗。自動備份將於明天重試。</string>
 </resources>
