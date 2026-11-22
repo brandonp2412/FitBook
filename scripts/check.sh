@@ -28,3 +28,6 @@ flutter/bin/flutter test
 
 echo "== screenshot CI recovery tests =="
 bash scripts/test-ci-screenshots.sh
+
+echo "== Android release verification tests =="
+python3 scripts/test-verify-android-release.py

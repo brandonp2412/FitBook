@@ -1,0 +1,50 @@
+name: Audit published release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to check
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check publisher and required assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          gh release view "$RELEASE_TAG" --repo "$REPOSITORY" --json author,assets > release.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          release = json.loads(Path("release.json").read_text())
+          expected = {
+              "app-x86_64-release.apk",
+              "app-armeabi-v7a-release.apk",
+              "app-arm64-v8a-release.apk",
+              "fitbook.apk",
+              "app-release.aab",
+              "fitbook-linux.zip",
+              "fitbook-windows.zip",
+          }
+          present = {asset["name"] for asset in release["assets"] if asset["size"] > 0}
+          errors = []
+          if missing := expected - present:
+              errors.append("Missing release assets: " + ", ".join(sorted(missing)))
+          if release["author"]["login"] != "github-actions[bot]":
+              errors.append("Release was published outside the release workflow. Dispatch main.yml on main.")
+          if errors:
+              raise SystemExit("\n".join(errors))
+          print("Release publisher and assets verified.")
+          PY

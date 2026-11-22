@@ -29,3 +29,9 @@
 - **No Dead Code**: Never leave commented-out code blocks or references to removed behaviour.
 - **No markdown spam**: Do not create markdown files.
 - **Plain english**: Use simple words in any documentation / code.
+
+# Releases
+
+- Publish releases only by dispatching `.github/workflows/main.yml` on `main`.
+- Do not create release tags, create GitHub releases, or upload release assets from an agent session. A local APK build or device install does not authorize publishing a release.
+- Repair existing releases directly only when the user explicitly asks for that repair. Build from the exact release tag with its pinned Flutter SDK and lockfile, preserve existing assets, and verify APK versions, architectures, and signing certificates before uploading.
