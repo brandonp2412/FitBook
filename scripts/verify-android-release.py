@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import re
 import shutil
-import subprocess
+import subprocess  # nosec B404
 import sys
 import zipfile
 
@@ -44,7 +44,7 @@ def verify(directory, pubspec):
     aapt, apksigner = android_tool("aapt"), android_tool("apksigner")
     for name, (abis, code) in expected.items():
         path = directory / name
-        badging = subprocess.check_output([aapt, "dump", "badging", str(path)], text=True)
+        badging = subprocess.check_output([aapt, "dump", "badging", str(path)], text=True)  # nosec B603  # nosemgrep
         package = re.search(r"^package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging, re.MULTILINE)
         if not package or package.groups() != ("com.presley.fit_book", str(code), version):
             raise ValueError(f"Wrong package or release version: {path}")
@@ -57,7 +57,7 @@ def verify(directory, pubspec):
             for library in ("libflutter.so", "libapp.so"):
                 if f"lib/{abi}/{library}" not in libraries:
                     raise ValueError(f"Missing {abi}/{library} in {path}")
-        signing = subprocess.check_output([apksigner, "verify", "--print-certs", str(path)], text=True)
+        signing = subprocess.check_output([apksigner, "verify", "--print-certs", str(path)], text=True)  # nosec B603  # nosemgrep
         certificates = set(re.findall(r"^(?:Signer #\d+|V\d+ Signer):? certificate SHA-256 digest: (\S+)$", signing, re.MULTILINE))
         if certificates != {CERTIFICATE}:
             raise ValueError(f"Wrong release signing certificate: {path}")

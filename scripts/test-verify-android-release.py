@@ -2,7 +2,7 @@ import contextlib
 import importlib.util
 import io
 from pathlib import Path
-import subprocess
+import subprocess  # nosec B404
 import tempfile
 import unittest
 from unittest.mock import patch
