@@ -41,7 +41,11 @@ void _onNotificationResponse(NotificationResponse response) {
 Future<void> initializeReminderNotificationNavigation() async {
   if (kIsWeb) return;
   final plugin = FlutterLocalNotificationsPlugin();
-  final launch = await plugin.getNotificationAppLaunchDetails();
+  // Only Android and iOS expose launch details. Desktop implementations do
+  // not support this query, but still need the notification-tap callback.
+  final launch = (Platform.isAndroid || Platform.isIOS)
+      ? await plugin.getNotificationAppLaunchDetails()
+      : null;
   await plugin.initialize(
     settings: const InitializationSettings(
       android: AndroidInitializationSettings('@drawable/nutrition'),
