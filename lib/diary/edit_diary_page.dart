@@ -92,6 +92,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   String? imageFile;
   String? bigImage;
   List<_SearchResult> searchResults = [];
+  int _searchGeneration = 0;
 
   NumberFormat get formatter => NumberFormat.decimalPattern(
         localizationsFromPreference(settings.locale).localeName,
@@ -174,6 +175,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       _applyFood(widget.initialFood!);
     } else if (widget.initialBarcode != null) {
       barcode.text = widget.initialBarcode!;
+      _creatingFood = true;
+      foodDirty = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) toast(context, context.l10n.barcodeNotFoundSaveToInsert);
       });
@@ -239,6 +242,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   Future<void> _performSearch(String term) async {
+    final generation = ++_searchGeneration;
     final foods = await (db.foods.select()
           ..where(
             (f) => term.isEmpty
@@ -246,8 +250,18 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 : f.name.contains(term.toLowerCase()),
           )
           ..orderBy([
-            (f) =>
-                OrderingTerm(expression: f.favorite, mode: OrderingMode.desc),
+            (f) => OrderingTerm(
+                  expression: f.favorite,
+                  mode: OrderingMode.desc,
+                ),
+            (f) => OrderingTerm.desc(
+                  subqueryExpression<DateTime>(
+                    db.diaries.selectOnly()
+                      ..addColumns([db.diaries.created.max()])
+                      ..where(db.diaries.food.equalsExp(f.id)),
+                  ),
+                ),
+            (f) => OrderingTerm.asc(f.id),
           ])
           ..limit(20))
         .get();
@@ -259,8 +273,10 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                 : m.name.contains(term.toLowerCase()),
           )
           ..orderBy([
-            (m) =>
-                OrderingTerm(expression: m.favorite, mode: OrderingMode.desc),
+            (m) => OrderingTerm(
+                  expression: m.favorite,
+                  mode: OrderingMode.desc,
+                ),
           ])
           ..limit(10))
         .get();
@@ -274,7 +290,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       results.add(_SearchResult.openFoodFacts(term));
     }
 
-    if (!mounted) return;
+    if (!mounted || generation != _searchGeneration) return;
     setState(() {
       searchResults = results;
     });
@@ -388,6 +404,42 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     });
     quantityNode.requestFocus();
     selectAll(quantity);
+  }
+
+  void _startCreatingFood() {
+    nameController.text = nameController.text.trim();
+    setState(() {
+      _creatingFood = true;
+      foodDirty = true;
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      selectedFood = null;
+      _selectedMealId = null;
+      _creatingFood = false;
+      foodDirty = false;
+      nameController.clear();
+      barcode.clear();
+      imageFile = null;
+      bigImage = null;
+      if (widget.id == null) {
+        unit = settings.entryUnit;
+        quantity.text = unit == 'serving' ? '1' : '100';
+      }
+      for (final controller in [
+        calories,
+        kilojoules,
+        protein,
+        carb,
+        fat,
+        fiber,
+      ]) {
+        controller.text = '0';
+      }
+    });
+    _performSearch('');
   }
 
   Future<void> _onResultTap(_SearchResult result) async {
@@ -533,7 +585,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               ),
             );
       else
-        await (db.update(db.diaries)..where((u) => u.id.equals(widget.id!)))
+        await (db.update(
+          db.diaries,
+        )..where((u) => u.id.equals(widget.id!)))
             .write(
           DiariesCompanion(
             meal: Value(_selectedMealId!),
@@ -553,6 +607,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
       return;
     }
 
+    if (_creatingFood && nameController.text.trim().isEmpty) return;
+    if (_creatingFood) nameController.text = nameController.text.trim();
     if (foodDirty) await saveFood();
     final food = selectedFood!;
 
@@ -566,7 +622,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ),
           );
     else
-      await (db.update(db.diaries)..where((u) => u.id.equals(widget.id!)))
+      await (db.update(
+        db.diaries,
+      )..where((u) => u.id.equals(widget.id!)))
           .write(
         DiariesCompanion(
           food: Value(food.id),
@@ -674,8 +732,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     settings = context.watch<SettingsState>().value;
     final l10n = context.l10n;
 
-    final shortUnit =
-        getShortUnit(selectedFood?.servingUnit ?? settings.foodUnit);
+    final shortUnit = getShortUnit(
+      selectedFood?.servingUnit ?? settings.foodUnit,
+    );
     final servingSize = selectedFood?.servingSize ?? 100;
     final showList =
         selectedFood == null && _selectedMealId == null && !_creatingFood;
@@ -828,34 +887,27 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelText: l10n.name,
-                hintText: l10n.searchFoodsAndMeals,
-                suffixIcon: (selectedFood != null || _selectedMealId != null)
+                hintText: showList ? l10n.searchFoodsAndMeals : null,
+                suffixIcon: (selectedFood != null ||
+                        _selectedMealId != null ||
+                        _creatingFood)
                     ? IconButton(
                         tooltip: l10n.clearSelection,
                         icon: const Icon(Icons.close),
-                        onPressed: () {
-                          setState(() {
-                            selectedFood = null;
-                            _selectedMealId = null;
-                            foodDirty = false;
-                          });
-                          nameController.clear();
-                          _performSearch('');
-                        },
+                        onPressed: _clearSelection,
                       )
                     : supportsBarcodeCamera
                         ? IconButton(
                             icon: const Icon(Icons.barcode_reader),
                             onPressed: () async {
-                              final result = await performBarcodeScan(
-                                context,
-                              );
+                              final result = await performBarcodeScan(context);
                               if (!context.mounted) return;
                               if (result.food != null) {
                                 barcode.text = result.food!.barcode ?? '';
                                 _applyFood(result.food!);
                               } else if (result.barcode != null) {
                                 barcode.text = result.barcode!;
+                                _startCreatingFood();
                                 toast(
                                   context,
                                   l10n.barcodeNotFoundSaveToInsert,
@@ -878,6 +930,14 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
             ),
             const SizedBox(height: 8),
             if (showList) ...[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: FilledButton.tonalIcon(
+                  onPressed: _startCreatingFood,
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.addFood),
+                ),
+              ),
               for (final result in searchResults)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
@@ -1005,8 +1065,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                         onChanged: (value) {
                           setState(() {
                             foodDirty = true;
-                            kilojoules.text = formatter
-                                .format(formatter.parse(value) * 4.184);
+                            kilojoules.text = formatter.format(
+                              formatter.parse(value) * 4.184,
+                            );
                           });
                         },
                         onSubmitted: (value) => selectAll(kilojoules),
@@ -1031,8 +1092,9 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                           onChanged: (value) {
                             setState(() {
                               foodDirty = true;
-                              calories.text = formatter
-                                  .format(formatter.parse(value) / 4.184);
+                              calories.text = formatter.format(
+                                formatter.parse(value) / 4.184,
+                              );
                             });
                           },
                           onSubmitted: (value) => selectAll(protein),
