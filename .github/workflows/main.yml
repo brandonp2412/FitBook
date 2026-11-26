@@ -171,20 +171,7 @@ jobs:
           CHANGELOG_FILE="fastlane/metadata/android/en-US/changelogs/$CHANGELOG_NUMBER.txt"
           mkdir -p "$(dirname "$CHANGELOG_FILE")"
 
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -n "$LAST_TAG" ]; then
-            git --no-pager log --pretty=format:'%s' "$LAST_TAG"..HEAD
-          else
-            git --no-pager log --pretty=format:'%s'
-          fi | sort -u \
-            | grep -v "^Merge " \
-            | grep -v "^Release " \
-            | grep -v "^Bump " \
-            | grep -v "\[skip ci\]" \
-            | head -10 \
-            | sed 's/^/• /' > "$CHANGELOG_FILE"
-
-          [ -s "$CHANGELOG_FILE" ] || echo "• Bug fixes and improvements" > "$CHANGELOG_FILE"
+          python3 scripts/release_notes.py "release-notes/$NEW_VERSION.txt" "$CHANGELOG_FILE" release-notes/current.txt
 
           mkdir -p fastlane/metadata/en-AU
           cp "$CHANGELOG_FILE" fastlane/metadata/en-AU/release_notes.txt
@@ -198,7 +185,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.bump.outputs.version }}
         run: |
-          git add pubspec.yaml fastlane/metadata assets/changelogs
+          git add release-notes/current.txt pubspec.yaml fastlane/metadata assets/changelogs
           git commit -m "Release $RELEASE_VERSION [skip ci]"
           git tag "$RELEASE_VERSION"
           gh auth setup-git
@@ -509,7 +496,9 @@ jobs:
 
       - name: Publish Android App Bundle to Google Play
         run: |
+          python3 scripts/release_notes.py release-notes/current.txt "$RUNNER_TEMP/release-notes/en-US/changelogs/default.txt"
           bundle exec fastlane supply \
+            --metadata_path "$RUNNER_TEMP/release-notes" \
             --aab android-builds/bundle/release/app-release.aab \
             --track production \
             --package_name com.presley.fit_book \
@@ -518,7 +507,7 @@ jobs:
             --skip_upload_metadata true \
             --skip_upload_images true \
             --skip_upload_screenshots true \
-            --skip_upload_changelogs true
+            --skip_upload_changelogs false
 
   deploy-windows-store:
     needs: [version-bump, build-windows]
@@ -634,6 +623,9 @@ jobs:
         shell: pwsh
         env:
           PRODUCT_ID: ${{ secrets.PRODUCT_ID }}
+          NOTES_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          NOTES_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          NOTES_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
         run: |
           $uploads = @(Get-ChildItem -Path "build/windows/x64/runner/Release" -Filter "*.msixupload" -File)
           if ($uploads.Count -ne 1) {
@@ -645,10 +637,12 @@ jobs:
           $storeUploadDirectory = Join-Path $env:RUNNER_TEMP "fitbook-store-upload"
           New-Item -ItemType Directory -Path $storeUploadDirectory -Force | Out-Null
           Copy-Item -LiteralPath $upload.FullName -Destination $storeUploadDirectory -Force
-          & msstore publish . --inputDirectory $storeUploadDirectory --appId $env:PRODUCT_ID
+          if (-not (Test-Path -LiteralPath "release-notes/current.txt")) { throw "Missing release notes" }
+          & msstore publish . --inputDirectory $storeUploadDirectory --appId $env:PRODUCT_ID --noCommit
           if ($LASTEXITCODE -ne 0) {
             throw "Microsoft Store publish failed with exit code $LASTEXITCODE."
           }
+          ./scripts/publish-store-notes.ps1 -ProductId $env:PRODUCT_ID -NotesFile "release-notes/current.txt"
 
           Write-Host "Verifying Microsoft Store submission status"
           & msstore submission status $env:PRODUCT_ID

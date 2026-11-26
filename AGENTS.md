@@ -35,3 +35,8 @@
 - Publish releases only by dispatching `.github/workflows/main.yml` on `main`.
 - Do not create release tags, create GitHub releases, or upload release assets from an agent session. A local APK build or device install does not authorize publishing a release.
 - Repair existing releases directly only when the user explicitly asks for that repair. Build from the exact release tag with its pinned Flutter SDK and lockfile, preserve existing assets, and verify APK versions, architectures, and signing certificates before uploading.
+
+# Release notes
+- Before publishing, inspect changes since the last published release, including the diff, not just commit titles. Write concise plain-English notes about actual user-visible changes.
+- Commit the notes as release-notes/<version>.txt (without a v prefix), using at most 500 characters. Never use raw commit subjects, unverified claims, or generic placeholder text. Prepare notes before triggering the release workflow.
+- The release workflow uses the same notes for supported release destinations. Do not publish an extra release solely because release automation changed. Do not rewrite historical releases.
