@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
@@ -28,8 +27,8 @@ class FoodItemRow extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     Widget? image;
     if (showImages && food.imageFile.value?.isNotEmpty == true)
-      image = Image.file(
-        File(food.imageFile.value!),
+      image = storedImage(
+        food.imageFile.value!,
         cacheWidth: ((usesDesktopInteractions(context) ? 40 : 50) *
                 MediaQuery.devicePixelRatioOf(context))
             .round(),

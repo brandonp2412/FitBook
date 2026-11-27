@@ -35,12 +35,12 @@ async def request(page, message=None):
         raise RuntimeError(response)
     return json.loads(response["response"]["message"])
 
-async def capture(browser, url, out, name, debug_dir):
+async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
     w,h,scale = PROFILES[name]
     options = dict(viewport={"width":w,"height":h}, device_scale_factor=scale, reduced_motion="reduce", locale="en-US", timezone_id="UTC")
-    if name == "phoneScreenshots":
+    if name == "phoneScreenshots" and not args_camera_test:
         options.update(is_mobile=True, has_touch=True, user_agent="Mozilla/5.0 (Linux; Android 15; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36")
-    context=await browser.new_context(**options)
+    context=await browser.new_context(**options, **({"permissions": ["camera"]} if args_camera_test else {}))
     dest=out/name
     dest.mkdir(parents=True,exist_ok=True)
     page=await context.new_page()
@@ -92,11 +92,11 @@ async def main(args):
             staged = Path(directory)
             async with async_playwright() as p:
                 browser = await p.chromium.launch(
-                    headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"]
+                    headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"] + (["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream"] if args.web_camera_test else [])
                 )
                 try:
                     for name in args.profiles:
-                        await capture(browser, f"http://127.0.0.1:{server.server_port}/", staged, name, args.output)
+                        await capture(browser, f"http://127.0.0.1:{server.server_port}/", staged, name, args.output, args.web_camera_test)
                 finally:
                     await browser.close()
             for name in args.profiles:
@@ -111,8 +111,13 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--web",type=Path,required=True)
     parser.add_argument("--output",type=Path,required=True)
+    parser.add_argument("--web-camera-test", action="store_true", help="Capture the web_camera_test.dart fixture using a simulated webcam")
     parser.add_argument("profiles",nargs="*",default=list(PROFILES))
     args = parser.parse_args()
+    if args.web_camera_test:
+        EXPECTED_NAMES = {f"{n}_en-US.png" for n in range(1, 4)}
+        PROFILES = {"phoneScreenshots": (1200, 900, 1)}
+        args.profiles = ["phoneScreenshots"]
     if any(name not in PROFILES for name in args.profiles):
         parser.error("Unknown screenshot profile")
     asyncio.run(main(args))

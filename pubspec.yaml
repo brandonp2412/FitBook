@@ -18,6 +18,7 @@ dependencies:
   dynamic_color: ^1.9.0
   file_picker: ^13.4.1
   image_picker: ^1.2.3
+  camera: ^0.12.2
   drafter: ^0.3.0
   intl: ^0.20.2
   csv: ^8.0.0

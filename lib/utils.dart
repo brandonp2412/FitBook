@@ -1,17 +1,12 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:path_provider/path_provider.dart';
 
 class Macros {
   final double protein;
@@ -241,35 +236,11 @@ void toast(BuildContext context, String message, [SnackBarAction? action]) {
       margin: const EdgeInsets.only(bottom: 89, left: 16, right: 16),
       content: Text(message),
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       action: action ?? defaultAction,
       persist: false,
     ),
   );
-}
-
-bool get supportsCameraCapture =>
-    !kIsWeb && (Platform.isAndroid || Platform.isIOS);
-
-Future<String?> pickAndSaveImage(String prefix, {ImageSource? source}) async {
-  if (source == ImageSource.camera && !supportsCameraCapture) return null;
-
-  String? path;
-  if (source == null) {
-    final file = await FilePicker.pickFile(type: FileType.image);
-    path = file?.path;
-  } else {
-    path = (await ImagePicker().pickImage(source: source))?.path;
-  }
-  if (path == null) return null;
-
-  final docsDir = (await getApplicationDocumentsDirectory()).path;
-  final destPath =
-      '$docsDir/${prefix}_${DateTime.now().millisecondsSinceEpoch}.jpg';
-  await File(path).copy(destPath);
-  return destPath;
 }
 
 Future<void> showImageOptionsSheet({
@@ -367,9 +338,9 @@ String formatDisplayDate(
     ).format(value);
 
 /// Formats [value] as a locale-appropriate time.
-String formatDisplayTime(BuildContext context, DateTime value) => DateFormat.jm(
-      Localizations.localeOf(context).toLanguageTag(),
-    ).format(value);
+String formatDisplayTime(BuildContext context, DateTime value) =>
+    DateFormat.jm(Localizations.localeOf(context).toLanguageTag())
+        .format(value);
 
 /// Formats [value] using the active app locale and fraction-digit bounds.
 String formatDisplayNumber(
@@ -457,10 +428,7 @@ List<({DateTime created, double val})> bucketGraphData(
 
   return limitedKeys
       .map(
-        (key) => (
-          created: key,
-          val: periodSums[key]! / periodDayCounts[key]!,
-        ),
+        (key) => (created: key, val: periodSums[key]! / periodDayCounts[key]!),
       )
       .toList();
 }
@@ -685,10 +653,7 @@ String mealAwareFieldExpr(String field) => '''
 ''';
 
 void selectAll(TextEditingController ctrl) {
-  ctrl.selection = TextSelection(
-    baseOffset: 0,
-    extentOffset: ctrl.text.length,
-  );
+  ctrl.selection = TextSelection(baseOffset: 0, extentOffset: ctrl.text.length);
 }
 
 bool shouldNotify(
@@ -732,75 +697,159 @@ FoodsCompanion mapOpenFoodFacts(Product product, String foodUnit) {
     calories: Value((kj ?? 0) / 4.184),
     smallImage: Value(product.imageFrontSmallUrl),
     bigImage: Value(product.imageFrontUrl),
-    proteinG:
-        _getNutrimentValue(product.nutriments, Nutrient.proteins, perSize),
+    proteinG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.proteins,
+      perSize,
+    ),
     fatG: _getNutrimentValue(product.nutriments, Nutrient.fat, perSize),
-    carbohydrateG:
-        _getNutrimentValue(product.nutriments, Nutrient.carbohydrates, perSize),
+    carbohydrateG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.carbohydrates,
+      perSize,
+    ),
     sugarsG: _getNutrimentValue(product.nutriments, Nutrient.sugars, perSize),
     fiberG: _getNutrimentValue(product.nutriments, Nutrient.fiber, perSize),
-    cholesterolMg:
-        _getNutrimentValue(product.nutriments, Nutrient.cholesterol, perSize),
-    saturatedFatsG:
-        _getNutrimentValue(product.nutriments, Nutrient.saturatedFat, perSize),
-    calciumMg:
-        _getNutrimentValue(product.nutriments, Nutrient.calcium, perSize),
+    cholesterolMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.cholesterol,
+      perSize,
+    ),
+    saturatedFatsG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.saturatedFat,
+      perSize,
+    ),
+    calciumMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.calcium,
+      perSize,
+    ),
     ironFeMg: _getNutrimentValue(product.nutriments, Nutrient.iron, perSize),
-    potassiumKMg:
-        _getNutrimentValue(product.nutriments, Nutrient.potassium, perSize),
-    magnesiumMg:
-        _getNutrimentValue(product.nutriments, Nutrient.magnesium, perSize),
-    vitaminAIuIu:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminA, perSize),
-    vitaminCMg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminC, perSize),
-    vitaminB12Mcg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminB12, perSize),
-    vitaminDMcg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminD, perSize),
-    vitaminEAlphaTocopherolMg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminE, perSize),
-    addedSugarG:
-        _getNutrimentValue(product.nutriments, Nutrient.addedSugars, perSize),
+    potassiumKMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.potassium,
+      perSize,
+    ),
+    magnesiumMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.magnesium,
+      perSize,
+    ),
+    vitaminAIuIu: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminA,
+      perSize,
+    ),
+    vitaminCMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminC,
+      perSize,
+    ),
+    vitaminB12Mcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminB12,
+      perSize,
+    ),
+    vitaminDMcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminD,
+      perSize,
+    ),
+    vitaminEAlphaTocopherolMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminE,
+      perSize,
+    ),
+    addedSugarG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.addedSugars,
+      perSize,
+    ),
     omega3sMg: _getNutrimentValue(product.nutriments, Nutrient.omega3, perSize),
     omega6sMg: _getNutrimentValue(product.nutriments, Nutrient.omega6, perSize),
-    transFattyAcidsG:
-        _getNutrimentValue(product.nutriments, Nutrient.transFat, perSize),
-    solubleFiberG:
-        _getNutrimentValue(product.nutriments, Nutrient.fiber, perSize),
-    phosphorusPMg:
-        _getNutrimentValue(product.nutriments, Nutrient.phosphorus, perSize),
+    transFattyAcidsG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.transFat,
+      perSize,
+    ),
+    solubleFiberG: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.fiber,
+      perSize,
+    ),
+    phosphorusPMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.phosphorus,
+      perSize,
+    ),
     sodiumMg: _getNutrimentValue(product.nutriments, Nutrient.sodium, perSize),
     zincZnMg: _getNutrimentValue(product.nutriments, Nutrient.zinc, perSize),
-    copperCuMg:
-        _getNutrimentValue(product.nutriments, Nutrient.copper, perSize),
-    manganeseMg:
-        _getNutrimentValue(product.nutriments, Nutrient.manganese, perSize),
-    seleniumSeMcg:
-        _getNutrimentValue(product.nutriments, Nutrient.selenium, perSize),
-    fluorideFMcg:
-        _getNutrimentValue(product.nutriments, Nutrient.fluoride, perSize),
-    thiaminB1Mg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminB1, perSize),
-    riboflavinB2Mg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminB2, perSize),
+    copperCuMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.copper,
+      perSize,
+    ),
+    manganeseMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.manganese,
+      perSize,
+    ),
+    seleniumSeMcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.selenium,
+      perSize,
+    ),
+    fluorideFMcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.fluoride,
+      perSize,
+    ),
+    thiaminB1Mg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminB1,
+      perSize,
+    ),
+    riboflavinB2Mg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminB2,
+      perSize,
+    ),
     pantothenicAcidB5Mg: _getNutrimentValue(
       product.nutriments,
       Nutrient.pantothenicAcid,
       perSize,
     ),
-    vitaminB6Mg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminB6, perSize),
-    biotinB7Mcg:
-        _getNutrimentValue(product.nutriments, Nutrient.biotin, perSize),
-    folateB9Mcg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminB9, perSize),
-    caroteneBetaMcg:
-        _getNutrimentValue(product.nutriments, Nutrient.betaCarotene, perSize),
-    vitaminDIuIu:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminD, perSize),
-    vitaminKMcg:
-        _getNutrimentValue(product.nutriments, Nutrient.vitaminK, perSize),
+    vitaminB6Mg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminB6,
+      perSize,
+    ),
+    biotinB7Mcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.biotin,
+      perSize,
+    ),
+    folateB9Mcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminB9,
+      perSize,
+    ),
+    caroteneBetaMcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.betaCarotene,
+      perSize,
+    ),
+    vitaminDIuIu: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminD,
+      perSize,
+    ),
+    vitaminKMcg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.vitaminK,
+      perSize,
+    ),
     fattyAcidsTotalMonounsaturatedMg: _getNutrimentValue(
       product.nutriments,
       Nutrient.monounsaturatedFat,
@@ -812,7 +861,10 @@ FoodsCompanion mapOpenFoodFacts(Product product, String foodUnit) {
       perSize,
     ),
     alcoholG: _getNutrimentValue(product.nutriments, Nutrient.alcohol, perSize),
-    caffeineMg:
-        _getNutrimentValue(product.nutriments, Nutrient.caffeine, perSize),
+    caffeineMg: _getNutrimentValue(
+      product.nutriments,
+      Nutrient.caffeine,
+      perSize,
+    ),
   );
 }

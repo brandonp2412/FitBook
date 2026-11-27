@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Table;
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
@@ -675,8 +674,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   }
 
   void setImage({ImageSource? source}) async {
-    final destPath = await pickAndSaveImage('diary', source: source);
-    if (destPath == null) return;
+    final destPath = await pickAndSaveImage(context, 'diary', source: source);
+    if (destPath == null || !mounted) return;
     setState(() {
       imageFile = destPath;
       foodDirty = true;
@@ -699,8 +698,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           width: 48,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.file(
-              File(imageFile!),
+            child: storedImage(
+              imageFile!,
               cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Center(
@@ -732,8 +731,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
         width: 48,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.file(
-            File(food.imageFile!),
+          child: storedImage(
+            food.imageFile!,
             cacheWidth: (48 * MediaQuery.devicePixelRatioOf(context)).round(),
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => const SizedBox.shrink(),
@@ -806,8 +805,8 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: imageFile != null
-                ? Image.file(
-                    File(imageFile!),
+                ? storedImage(
+                    imageFile!,
                     fit: BoxFit.cover,
                     cacheWidth: (MediaQuery.sizeOf(context).width *
                             MediaQuery.devicePixelRatioOf(context))

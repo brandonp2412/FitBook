@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:drift/drift.dart' as drift;
-import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
@@ -12,7 +11,6 @@ import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -203,16 +201,9 @@ class _EditWeightPageState extends State<EditWeightPage> {
   }
 
   Future<void> _pickImage() async {
-    final result = await FilePicker.pickFile(type: FileType.image);
-    final path = result?.path;
-    if (path == null) return;
-    final docsDir = (await getApplicationDocumentsDirectory()).path;
-    final fileName = 'weight_${DateTime.now().millisecondsSinceEpoch}.jpg';
-    final destPath = '$docsDir/$fileName';
-    await File(path).copy(destPath);
-    setState(() {
-      image = destPath;
-    });
+    final path = await pickAndSaveImage(context, 'weight');
+    if (path == null || !mounted) return;
+    setState(() => image = path);
   }
 
   @override
@@ -315,8 +306,8 @@ class _EditWeightPageState extends State<EditWeightPage> {
           child: SizedBox(
             height: desktop ? 260 : 200,
             width: double.infinity,
-            child: Image.file(
-              File(image!),
+            child: storedImage(
+              image!,
               fit: BoxFit.cover,
               cacheWidth: (MediaQuery.sizeOf(context).width *
                       MediaQuery.devicePixelRatioOf(context))

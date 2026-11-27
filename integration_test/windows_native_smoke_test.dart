@@ -4,7 +4,7 @@ import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/reminders.dart';
 import 'package:fit_book/scan_barcode.dart';
 import 'package:fit_book/settings/data_settings.dart';
-import 'package:fit_book/utils.dart';
+import 'package:fit_book/image_capture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,15 +29,17 @@ void main() {
 
     expect(supportsCameraCapture, isFalse);
     expect(supportsBarcodeCamera, isFalse);
-    expect(
-      await pickAndSaveImage('windows-test', source: ImageSource.camera),
-      isNull,
+    await tester.pumpWidget(
+      const MaterialApp(home: SizedBox.shrink()),
     );
 
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: SizedBox.shrink(),
+    expect(
+      await pickAndSaveImage(
+        tester.element(find.byType(SizedBox)),
+        'windows-test',
+        source: ImageSource.camera,
       ),
+      isNull,
     );
 
     final result = await performBarcodeScan(

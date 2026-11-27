@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/database/database.dart';
 import 'package:fit_book/l10n/l10n.dart';
@@ -37,8 +36,8 @@ class MealRow extends StatelessWidget {
             width: usesDesktopInteractions(context) ? 40 : 48,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: Image.file(
-                File(meal.imageFile!),
+              child: storedImage(
+                meal.imageFile!,
                 cacheWidth:
                     (48 * MediaQuery.devicePixelRatioOf(context)).round(),
                 fit: BoxFit.cover,

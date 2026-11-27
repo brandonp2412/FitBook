@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/diary/diary_food.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +25,8 @@ class DiaryFoodThumbnail extends StatelessWidget {
 
     Widget? image;
     if (showImages && food.imageFile?.isNotEmpty == true) {
-      image = Image.file(
-        File(food.imageFile!),
+      image = storedImage(
+        food.imageFile!,
         cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) => _placeholder(colorScheme),

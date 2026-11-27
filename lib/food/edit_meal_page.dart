@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
-import 'package:file_picker/file_picker.dart';
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
@@ -15,7 +13,6 @@ import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 NumberFormat _mealNumberFormat(
@@ -170,14 +167,9 @@ class _EditMealPageState extends State<EditMealPage> {
   }
 
   Future<void> _pickImage() async {
-    final result = await FilePicker.pickFile(type: FileType.image);
-    final path = result?.path;
-    if (path == null) return;
-    final docsDir = (await getApplicationDocumentsDirectory()).path;
-    final fileName = 'meal_${DateTime.now().millisecondsSinceEpoch}.jpg';
-    final destPath = '$docsDir/$fileName';
-    await File(path).copy(destPath);
-    setState(() => _imageFile = destPath);
+    final path = await pickAndSaveImage(context, 'meal');
+    if (path == null || !mounted) return;
+    setState(() => _imageFile = path);
   }
 
   Future<void> _pickFood() async {
@@ -387,8 +379,8 @@ class _EditMealPageState extends State<EditMealPage> {
                             padding: const EdgeInsets.only(bottom: 8),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.file(
-                                File(_imageFile!),
+                              child: storedImage(
+                                _imageFile!,
                                 cacheWidth: (MediaQuery.sizeOf(context).width *
                                         MediaQuery.devicePixelRatioOf(
                                           context,
@@ -452,8 +444,9 @@ class _EditMealPageState extends State<EditMealPage> {
       floatingActionButton: desktop
           ? null
           : Padding(
-              padding:
-                  EdgeInsets.only(bottom: navigationBottomClearance(context)),
+              padding: EdgeInsets.only(
+                bottom: navigationBottomClearance(context),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -731,8 +724,8 @@ class _FoodPickerSheetState extends State<_FoodPickerSheet> {
 
     Widget content = placeholder;
     if (showImages && food.imageFile?.isNotEmpty == true)
-      content = Image.file(
-        File(food.imageFile!),
+      content = storedImage(
+        food.imageFile!,
         cacheWidth: (44 * MediaQuery.devicePixelRatioOf(context)).round(),
         width: 44,
         height: 44,

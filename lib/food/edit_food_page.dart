@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drift/drift.dart' hide Column;
+import 'package:fit_book/image_capture.dart';
 import 'package:fit_book/animated_fab.dart';
 import 'package:fit_book/bottom_nav.dart';
 import 'package:fit_book/constants.dart';
@@ -95,33 +94,34 @@ class _EditFoodPageState extends State<EditFoodPage> {
 
     if (widget.id == null) return;
 
-    (db.foods.select()..where((u) => u.id.equals(widget.id!)))
-        .getSingle()
-        .then((food) {
-      for (final field in food.toColumns(true).entries)
-        if (controllers.containsKey(field.key))
-          controllers[field.key]!.text =
-              _formatControllerValue((field.value as Variable).value);
+    (db.foods.select()..where((u) => u.id.equals(widget.id!))).getSingle().then(
+      (food) {
+        for (final field in food.toColumns(true).entries)
+          if (controllers.containsKey(field.key))
+            controllers[field.key]!.text = _formatControllerValue(
+              (field.value as Variable).value,
+            );
 
-      setState(() {
-        barcodeCtrl.text = food.barcode ?? "";
-        unit = food.servingUnit ?? unit;
-        nameCtrl.text = food.name;
-        imgFile = food.imageFile;
-        smallImg = food.smallImage;
-        bigImg = food.bigImage;
-        created = food.created;
-        calCtrl.text =
-            food.calories == null ? '' : formatter.format(food.calories!);
-        kjCtrl.text = food.calories == null
-            ? ''
-            : formatter.format(food.calories! * 4.184);
-        sizeCtrl.text = food.servingSize == null
-            ? '100'
-            : formatter.format(food.servingSize!);
-        _favorite = food.favorite;
-      });
-    });
+        setState(() {
+          barcodeCtrl.text = food.barcode ?? "";
+          unit = food.servingUnit ?? unit;
+          nameCtrl.text = food.name;
+          imgFile = food.imageFile;
+          smallImg = food.smallImage;
+          bigImg = food.bigImage;
+          created = food.created;
+          calCtrl.text =
+              food.calories == null ? '' : formatter.format(food.calories!);
+          kjCtrl.text = food.calories == null
+              ? ''
+              : formatter.format(food.calories! * 4.184);
+          sizeCtrl.text = food.servingSize == null
+              ? '100'
+              : formatter.format(food.servingSize!);
+          _favorite = food.favorite;
+        });
+      },
+    );
   }
 
   void setCtrls() async {
@@ -276,11 +276,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
       if (replace) {
         db.diaries.update()
           ..where((u) => u.food.equals(matches.first.id))
-          ..write(
-            DiariesCompanion(
-              food: Value(widget.id ?? id!),
-            ),
-          );
+          ..write(DiariesCompanion(food: Value(widget.id ?? id!)));
         await db.foods.deleteWhere((u) => u.id.equals(matches.first.id));
       }
     }
@@ -289,8 +285,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
   }
 
   void setImage({ImageSource? source}) async {
-    final destPath = await pickAndSaveImage('food', source: source);
-    if (destPath == null) return;
+    final destPath = await pickAndSaveImage(context, 'food', source: source);
+    if (destPath == null || !mounted) return;
     setState(() {
       imgFile = destPath;
     });
@@ -324,8 +320,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: imgFile != null
-                ? Image.file(
-                    File(imgFile!),
+                ? storedImage(
+                    imgFile!,
                     fit: BoxFit.cover,
                     cacheWidth: (MediaQuery.sizeOf(context).width *
                             MediaQuery.devicePixelRatioOf(context))
@@ -471,11 +467,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: TextField(
                     controller: calCtrl,
-                    decoration: InputDecoration(
-                      labelText: l10n.caloriesKcal,
+                    decoration: InputDecoration(labelText: l10n.caloriesKcal),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
                       final calories = _parseNumber(value);
                       if (calories == null) {
@@ -493,11 +488,10 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: TextField(
                     controller: kjCtrl,
-                    decoration: InputDecoration(
-                      labelText: l10n.kilojoulesKj,
+                    decoration: InputDecoration(labelText: l10n.kilojoulesKj),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (value) {
                       final kilojoules = _parseNumber(value);
                       if (kilojoules == null) {
@@ -518,9 +512,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
-                      labelText: l10n.servingSize,
-                    ),
+                    decoration: InputDecoration(labelText: l10n.servingSize),
                     controller: sizeCtrl,
                     onTap: () => selectAll(sizeCtrl),
                     textInputAction: TextInputAction.next,
@@ -530,9 +522,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     initialValue: unit,
-                    decoration: InputDecoration(
-                      labelText: l10n.servingUnit,
-                    ),
+                    decoration: InputDecoration(labelText: l10n.servingUnit),
                     items: unitOptions.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -588,9 +578,8 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   onPressed: () async {
                     Food? food = await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => SearchOpenFoodFacts(
-                          terms: nameCtrl.text,
-                        ),
+                        builder: (context) =>
+                            SearchOpenFoodFacts(terms: nameCtrl.text),
                       ),
                     );
                     if (food == null) return;
@@ -608,9 +597,7 @@ class _EditFoodPageState extends State<EditFoodPage> {
                 TextButton.icon(
                   onPressed: () => Navigator.of(context)
                       .push(
-                        MaterialPageRoute(
-                          builder: (context) => FieldsPicker(),
-                        ),
+                        MaterialPageRoute(builder: (context) => FieldsPicker()),
                       )
                       .then((_) => setCtrls()),
                   label: Text(l10n.fields),
@@ -619,36 +606,34 @@ class _EditFoodPageState extends State<EditFoodPage> {
               ],
             ),
             if (desktop) const SizedBox(height: 12),
-            ...controllers.entries.map(
-              (entry) {
-                final column =
-                    db.foods.$columns.firstWhere((c) => c.name == entry.key);
+            ...controllers.entries.map((entry) {
+              final column = db.foods.$columns.firstWhere(
+                (c) => c.name == entry.key,
+              );
 
-                return Padding(
-                  padding: EdgeInsets.only(bottom: desktop ? 12 : 0),
-                  child: TextField(
-                    controller: entry.value,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: column.type == DriftSqlType.double
-                        ? TextInputType.numberWithOptions(decimal: true)
-                        : null,
-                    onTap: () => selectAll(entry.value),
-                    onSubmitted: (_) {
-                      final currentIndex =
-                          controllers.values.toList().indexOf(entry.value);
-                      if (currentIndex < controllers.length - 1) {
-                        selectAll(
-                          controllers.values.elementAt(currentIndex + 1),
+              return Padding(
+                padding: EdgeInsets.only(bottom: desktop ? 12 : 0),
+                child: TextField(
+                  controller: entry.value,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: column.type == DriftSqlType.double
+                      ? TextInputType.numberWithOptions(decimal: true)
+                      : null,
+                  onTap: () => selectAll(entry.value),
+                  onSubmitted: (_) {
+                    final currentIndex = controllers.values.toList().indexOf(
+                          entry.value,
                         );
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: localizedFoodFieldLabel(l10n, entry.key),
-                    ),
+                    if (currentIndex < controllers.length - 1) {
+                      selectAll(controllers.values.elementAt(currentIndex + 1));
+                    }
+                  },
+                  decoration: InputDecoration(
+                    labelText: localizedFoodFieldLabel(l10n, entry.key),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            }),
             SizedBox(height: navigationBottomClearance(context)),
           ],
         ),

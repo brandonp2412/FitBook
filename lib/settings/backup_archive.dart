@@ -63,8 +63,9 @@ Future<File> prepareBackupDatabase({
   }
 
   validateBackupDatabaseFile(selectedFile);
-  final snapshot =
-      File(p.join(workingDirectory.path, 'imported-$backupDatabaseName'));
+  final snapshot = File(
+    p.join(workingDirectory.path, 'imported-$backupDatabaseName'),
+  );
   final escapedPath = snapshot.path.replaceAll("'", "''");
   final source = openBackupDatabase(selectedFile.path);
   try {
@@ -100,6 +101,7 @@ Future<File> createBackupArchive({
       );
       for (final row in rows) {
         final originalPath = row['path'] as String;
+        if (originalPath.startsWith('data:image/')) continue;
         final archivePath = imagePaths.putIfAbsent(
           originalPath,
           () => p.posix.join(
