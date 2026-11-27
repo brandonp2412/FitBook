@@ -12,6 +12,7 @@ import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SearchOpenFoodFacts extends StatefulWidget {
@@ -37,6 +38,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   bool selecting = false;
   bool failed = false;
   int searchGeneration = 0;
+  Map<String, Product> nutritionPreviews = {};
 
   @override
   void initState() {
@@ -55,6 +57,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     if (trimmed.isEmpty) {
       setState(() {
         products = [];
+        nutritionPreviews = {};
         searching = false;
         hasSearched = false;
         failed = false;
@@ -65,6 +68,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       searching = true;
       hasSearched = true;
       failed = false;
+      nutritionPreviews = {};
     });
     talker.info('Searching Open Food Facts');
 
@@ -72,7 +76,33 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
       final results = await widget.client
           .search(trimmed, Localizations.localeOf(context).languageCode);
       if (!mounted || generation != searchGeneration) return;
-      setState(() => products = results);
+      setState(() {
+        products = results;
+        searching = false;
+      });
+      final foodUnit = context.read<SettingsState>().value.foodUnit;
+      final perSize =
+          foodUnit == 'serving' ? PerSize.serving : PerSize.oneHundredGrams;
+      final missing = results
+          .where(
+            (product) => product.nutriments?.getComputedKJ(perSize) == null,
+          )
+          .map((product) => product.barcode!)
+          .toList();
+      if (missing.isNotEmpty) {
+        try {
+          final previews = await widget.client.previews(missing);
+          if (mounted && generation == searchGeneration) {
+            setState(() => nutritionPreviews = previews);
+          }
+        } catch (error, stackTrace) {
+          talker.handle(
+            error,
+            stackTrace,
+            'Open Food Facts nutrition previews failed',
+          );
+        }
+      }
       talker.info(
         'Open Food Facts search completed with ${products.length} results',
       );
@@ -96,6 +126,21 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   void dispose() {
     searchCtrl.dispose();
     super.dispose();
+  }
+
+  String? calorieLabel(Product product, BuildContext context) {
+    final foodUnit = context.read<SettingsState>().value.foodUnit;
+    final perSize =
+        foodUnit == 'serving' ? PerSize.serving : PerSize.oneHundredGrams;
+    final kj = product.nutriments?.getComputedKJ(perSize) ??
+        nutritionPreviews[product.barcode]?.nutriments?.getComputedKJ(perSize);
+    if (kj == null || !kj.isFinite || kj < 0) return null;
+    final formatter = NumberFormat.decimalPattern(
+      Localizations.localeOf(context).toLanguageTag(),
+    )
+      ..minimumFractionDigits = 2
+      ..maximumFractionDigits = 2;
+    return context.l10n.kcalValue(formatter.format(kj / 4.184));
   }
 
   Widget productsBuilder(BuildContext context) {
@@ -253,6 +298,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   Widget factCard(Product product, BuildContext context) {
+    final calories = calorieLabel(product, context);
     String brand = product.brands?.split(',').first ?? '';
     String title =
         product.productName != null ? "${product.productName} - " : '';
@@ -279,6 +325,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 child: material.Column(
                   children: [
                     Text('$title$brand ${product.quantity ?? ''}'),
+                    if (calories != null) Text(calories),
                   ],
                 ),
               ),
@@ -293,10 +340,13 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
     Product product,
     material.BuildContext context,
   ) {
+    final calories = calorieLabel(product, context);
     return ListTile(
       title: Text(product.productName ?? ""),
       subtitle: Text(
-        [product.brands, product.quantity].whereType<String>().join(' · '),
+        [product.brands, product.quantity, calories]
+            .whereType<String>()
+            .join(' · '),
       ),
       trailing: product.imageFrontSmallUrl?.isNotEmpty == true
           ? CachedNetworkImage(

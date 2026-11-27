@@ -18,6 +18,14 @@ import 'test_utils.dart';
 class FakeOffClient extends OffSearchClient {
   final queries = <String, Completer<List<Product>>>{};
   final requestedCodes = <String>[];
+  final previewRequests = <List<String>>[];
+  final previewCompleter = Completer<Map<String, Product>>();
+
+  @override
+  Future<Map<String, Product>> previews(List<String> codes) {
+    previewRequests.add(codes);
+    return previewCompleter.future;
+  }
 
   @override
   Future<List<Product>> search(String term, String language) =>
@@ -46,7 +54,11 @@ void main() {
             'brands': ['xx:Ferrero'],
             'quantity': '100 g',
           },
-          {'code': '002', 'product_name': 'Second'},
+          {
+            'code': '002',
+            'product_name': 'Second',
+            'nutriments': {'energy-kcal_100g': 0},
+          },
           {'code': '001', 'product_name': 'Duplicate'},
           {'code': '003', 'product_name': ''},
         ],
@@ -57,6 +69,7 @@ void main() {
     expect(products.first.productName, 'Chocolat');
     expect(products.first.brands, 'Ferrero');
     expect(products.first.nutriments, equals(null));
+    expect(products.last.nutriments?.getComputedKJ(PerSize.oneHundredGrams), 0);
   });
 
   testWidgets('Search ignores stale results and imports full nutrition on tap',
@@ -95,14 +108,34 @@ void main() {
     await tester.enterText(field, 'nutella');
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
-    client.queries['nutella']!
-        .complete([Product(barcode: '001', productName: 'Nutella')]);
+    client.queries['nutella']!.complete([
+      Product(barcode: '001', productName: 'Nutella'),
+      Product.fromJson({
+        'code': '003',
+        'product_name': 'Zero',
+        'nutriments': {'energy-kcal_100g': 0},
+      }),
+    ]);
     await tester.pumpAndSettle();
     client.queries['old']!
         .complete([Product(barcode: '002', productName: 'Old')]);
     await tester.pumpAndSettle();
     expect(find.textContaining('Old'), findsNothing);
     expect(client.requestedCodes, isEmpty);
+    expect(client.previewRequests, [
+      ['001'],
+    ]);
+    expect(find.text('0.00 kcal'), findsOneWidget);
+    expect(find.textContaining('Nutella -'), findsOneWidget);
+    client.previewCompleter.complete({
+      '001': Product.fromJson({
+        'code': '001',
+        'nutriments': {'energy-kj_100g': 2252},
+      }),
+    });
+    await tester.pumpAndSettle();
+    expect(find.text('538.24 kcal'), findsOneWidget);
+
     await tester.tap(find.textContaining('Nutella -'));
     await tester.pumpAndSettle();
     expect(client.requestedCodes, ['001']);

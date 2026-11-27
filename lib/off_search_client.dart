@@ -10,7 +10,7 @@ class OffSearchClient {
       'boost_phrase': 'true',
       'page_size': '20',
       'fields':
-          'code,product_name,product_name_$language,brands,quantity,image_front_url,image_front_small_url',
+          'code,product_name,product_name_$language,brands,quantity,image_front_url,image_front_small_url,nutriments,serving_quantity',
     });
     final response = await HttpHelper()
         .doGetRequest(
@@ -49,12 +49,38 @@ class OffSearchClient {
                   .join(', ')
               : brands,
           'quantity': hit['quantity'],
+          'nutriments': hit['nutriments'],
+          'serving_quantity': hit['serving_quantity'],
           'image_front_url': hit['image_front_url'],
           'image_front_small_url': hit['image_front_small_url'],
         }),
       );
     }
     return products;
+  }
+
+  Future<Map<String, Product>> previews(List<String> codes) async {
+    if (codes.isEmpty) return {};
+    final uri = Uri.https('world.openfoodfacts.org', '/api/v2/search', {
+      'code': codes.join(','),
+      'page_size': codes.length.toString(),
+      'fields': 'code,nutriments,serving_quantity',
+    });
+    final response = await HttpHelper()
+        .doGetRequest(uri, uriHelper: uriHelperFoodProd)
+        .timeout(const Duration(seconds: 15));
+    if (response.statusCode != 200) {
+      throw StateError(
+        'Open Food Facts nutrition preview: ${response.statusCode}',
+      );
+    }
+    final result = HttpHelper().jsonDecodeUtf8(response);
+    return {
+      for (final json
+          in (result['products'] as List).whereType<Map<String, dynamic>>())
+        if (json['code'] is String)
+          json['code'] as String: Product.fromJson(json),
+    };
   }
 
   Future<Product> details(String code) async {
