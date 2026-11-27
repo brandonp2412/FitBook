@@ -36,47 +36,60 @@ async def request(page, message=None):
         raise RuntimeError(response)
     return json.loads(response["response"]["message"])
 
-async def capture_with_status_bar(page, compositor, path, width, height):
+async def capture_with_status_bar(page, compositor, path, width, height, scale):
     screenshot = await page.screenshot(animations="disabled", scale="device")
-    await compositor.set_content("""
-        <style>
-            * { box-sizing: border-box; }
-            body { margin: 0; overflow: hidden; }
-            #status { height: 24px; display: flex; align-items: center;
-                justify-content: space-between; padding: 0 16px;
-                font: 500 14px Arial, sans-serif; }
-            #icons { display: flex; align-items: center; gap: 4px; }
-            #app { display: block; width: 100vw; height: calc(100vh - 24px); }
-        </style>
-        <div id="status"><span>9:41</span><div id="icons">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M0 5a12 12 0 0 1 16 0L8 15Z"/>
-            </svg>
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M1 15 15 1v14Z"/>
-            </svg>
-            <svg width="10" height="15" viewBox="0 0 10 15" fill="currentColor">
-                <rect x="3" y="0" width="4" height="2" rx=".5"/>
-                <rect x="1" y="2" width="8" height="13" rx="1.5"/>
-            </svg><span>100%</span>
-        </div></div>
-        <img id="app">
-    """)
-    await compositor.set_viewport_size({"width": width, "height": height})
-    await compositor.evaluate("""async src => {
-        const img = document.getElementById('app');
+    pixel_width, pixel_height = round(width * scale), round(height * scale)
+    app_width, app_height = struct.unpack(">II", screenshot[16:24])
+    if app_width != pixel_width or abs(pixel_height - app_height - STATUS_BAR_HEIGHT * scale) > 1:
+        raise ValueError(f"Unexpected app screenshot dimensions: {app_width}x{app_height}")
+    await compositor.set_content('<body style="margin:0;overflow:hidden"><canvas style="display:block"></canvas></body>')
+    await compositor.evaluate("""async ({src, width, height, scale}) => {
+        const img = new Image();
         img.src = src;
         await img.decode();
-        const canvas = document.createElement('canvas');
-        canvas.width = canvas.height = 1;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, img.naturalWidth, 1, 0, 0, 1, 1);
-        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-        const status = document.getElementById('status');
-        status.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-        status.style.color = (r * .299 + g * .587 + b * .114) > 150
+        const canvas = document.querySelector('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d', {alpha: false});
+        const barHeight = height - img.naturalHeight;
+        const sample = document.createElement('canvas');
+        sample.width = sample.height = 1;
+        const sampleCtx = sample.getContext('2d');
+        sampleCtx.drawImage(img, 0, 0, img.naturalWidth, 1, 0, 0, 1, 1);
+        const [r, g, b] = sampleCtx.getImageData(0, 0, 1, 1).data;
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        ctx.fillRect(0, 0, width, barHeight);
+        ctx.drawImage(img, 0, barHeight);
+        ctx.save();
+        ctx.scale(scale, scale);
+        ctx.translate(0, (barHeight / scale - 24) / 2);
+        ctx.fillStyle = (r * .299 + g * .587 + b * .114) > 150
             ? '#202124' : '#f1f3f4';
-    }""", "data:image/png;base64," + base64.b64encode(screenshot).decode(), isolated_context=False)
+        ctx.font = '500 14px Arial, sans-serif';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('9:41', 16, 12);
+        const right = width / scale - 16;
+        const percentWidth = ctx.measureText('100%').width;
+        const batteryX = right - percentWidth - 4 - 10;
+        ctx.fillText('100%', right - percentWidth, 12);
+        ctx.save();
+        ctx.translate(batteryX, 4.5);
+        ctx.beginPath();
+        ctx.roundRect(3, 0, 4, 2, .5);
+        ctx.roundRect(1, 2, 8, 13, 1.5);
+        ctx.fill();
+        ctx.restore();
+        ctx.save();
+        ctx.translate(batteryX - 19, 4.5);
+        ctx.fill(new Path2D('M1 14 14 1v13Z'));
+        ctx.restore();
+        ctx.save();
+        ctx.translate(batteryX - 39, 4);
+        ctx.fill(new Path2D('M0 5a12 12 0 0 1 16 0L8 15Z'));
+        ctx.restore();
+        ctx.restore();
+    }""", {"src": "data:image/png;base64," + base64.b64encode(screenshot).decode(),
+           "width": pixel_width, "height": pixel_height, "scale": scale}, isolated_context=False)
     await compositor.screenshot(path=str(path), animations="disabled", scale="device")
 
 
@@ -90,7 +103,7 @@ async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
     dest=out/name
     dest.mkdir(parents=True,exist_ok=True)
     page=await context.new_page()
-    compositor_context = await browser.new_context(viewport={"width": w, "height": h}, device_scale_factor=scale) if status_bar else None
+    compositor_context = await browser.new_context(viewport={"width": round(w * scale), "height": round(h * scale)}, device_scale_factor=1) if status_bar else None
     compositor = await compositor_context.new_page() if compositor_context else None
     page.on("console", lambda msg: print(name, msg.type, msg.text[:500], flush=True) if msg.type in ("error","warning") else None)
     errors = []
@@ -110,7 +123,7 @@ async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
                     raise RuntimeError(f"Unexpected screenshot: {filename}")
                 await page.wait_for_timeout(500)
                 if compositor:
-                    await capture_with_status_bar(page, compositor, dest/filename, w, h)
+                    await capture_with_status_bar(page, compositor, dest/filename, w, h, scale)
                 else:
                     await page.screenshot(path=str(dest/filename), animations="disabled", scale="device")
                 validate_screenshot(dest/filename, (round(w*scale), round(h*scale)))
