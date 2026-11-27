@@ -6,16 +6,21 @@ import 'package:fit_book/main.dart';
 import 'package:fit_book/logging.dart';
 import 'package:fit_book/l10n/l10n.dart';
 import 'package:fit_book/scan_barcode.dart';
+import 'package:fit_book/off_search_client.dart';
 import 'package:fit_book/settings/settings_state.dart';
 import 'package:fit_book/utils.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:provider/provider.dart';
 
 class SearchOpenFoodFacts extends StatefulWidget {
-  const SearchOpenFoodFacts({super.key, this.terms});
+  const SearchOpenFoodFacts({
+    super.key,
+    this.terms,
+    this.client = const OffSearchClient(),
+  });
+  final OffSearchClient client;
   final String? terms;
 
   @override
@@ -29,72 +34,72 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   bool searching = false;
   bool hasSearched = false;
   bool cards = true;
+  bool selecting = false;
+  bool failed = false;
+  int searchGeneration = 0;
 
   @override
   void initState() {
     super.initState();
     if (widget.terms?.isNotEmpty == true) {
-      search(widget.terms!);
       searchCtrl.text = widget.terms!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) search(searchCtrl.text);
+      });
     }
   }
 
   Future<void> search(String term) async {
+    final generation = ++searchGeneration;
     final trimmed = term.trim();
     if (trimmed.isEmpty) {
       setState(() {
         products = [];
         searching = false;
         hasSearched = false;
+        failed = false;
       });
       return;
     }
     setState(() {
       searching = true;
       hasSearched = true;
+      failed = false;
     });
     talker.info('Searching Open Food Facts');
 
     try {
-      final search = await OpenFoodAPIClient.searchProducts(
-        null,
-        ProductSearchQueryConfiguration(
-          parametersList: [
-            SearchTerms(terms: [trimmed]),
-          ],
-          version: ProductQueryVersion.v3,
-        ),
-      );
-      setState(() {
-        products = search.products ?? [];
-      });
+      final results = await widget.client
+          .search(trimmed, Localizations.localeOf(context).languageCode);
+      if (!mounted || generation != searchGeneration) return;
+      setState(() => products = results);
       talker.info(
         'Open Food Facts search completed with ${products.length} results',
       );
     } catch (error, stackTrace) {
       talker.handle(error, stackTrace, 'Open Food Facts search failed');
-      if (mounted) {
-        setState(() => products = []);
+      if (mounted && generation == searchGeneration) {
+        setState(() {
+          products = [];
+          failed = true;
+        });
       }
     } finally {
-      if (mounted)
+      if (mounted && generation == searchGeneration)
         setState(() {
           searching = false;
         });
     }
   }
 
-  String _calorieLabel(BuildContext context, double calories) {
-    final formatter = NumberFormat.decimalPattern(
-      Localizations.localeOf(context).toLanguageTag(),
-    )
-      ..minimumFractionDigits = 2
-      ..maximumFractionDigits = 2;
-    return context.l10n.kcalValue(formatter.format(calories));
+  @override
+  void dispose() {
+    searchCtrl.dispose();
+    super.dispose();
   }
 
-  Widget productsBuilder(BuildContext context, String foodUnit) {
-    if (searching)
+  Widget productsBuilder(BuildContext context) {
+    if (searching || selecting)
       return const Expanded(child: Center(child: CircularProgressIndicator()));
     if (products.isEmpty == true)
       return Expanded(
@@ -102,17 +107,16 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
           icon: hasSearched
               ? Icons.search_off_rounded
               : Icons.manage_search_rounded,
-          title: hasSearched
-              ? context.l10n.noMatchingProducts
-              : context.l10n.searchOpenFoodFacts,
+          title: failed
+              ? context.l10n.loadDataFailed
+              : hasSearched
+                  ? context.l10n.noMatchingProducts
+                  : context.l10n.searchOpenFoodFacts,
           message: hasSearched
               ? context.l10n.tryAnotherNameOrScanBarcode
               : context.l10n.enterFoodNameToSearch,
         ),
       );
-
-    PerSize perSize = PerSize.oneHundredGrams;
-    if (foodUnit == 'serving') perSize = PerSize.serving;
 
     if (cards)
       return Expanded(
@@ -123,9 +127,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             spacing: 8.0,
             runSpacing: 8.0,
             children: products.map((product) {
-              final kj = product.nutriments?.getComputedKJ(perSize);
-              final cals = (kj ?? 0) / 4.184;
-              return factCard(product, cals, context);
+              return factCard(product, context);
             }).toList(),
           ),
         ),
@@ -136,10 +138,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
         itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index];
-          final kj = product.nutriments?.getComputedKJ(perSize);
-          final cals = (kj ?? 0) / 4.184;
-
-          return factTile(product, cals, context);
+          return factTile(product, context);
         },
       ),
     );
@@ -153,10 +152,6 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   @override
   Widget build(BuildContext context) {
-    final foodUnit = context.select<SettingsState, String>(
-      (settings) => settings.value.foodUnit,
-    );
-
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.searchOpenFoodFacts)),
       body: material.Column(
@@ -165,6 +160,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
             padding: const EdgeInsets.all(8),
             child: SearchBar(
               hintText: context.l10n.submitToSearch,
+              enabled: !selecting,
               onSubmitted: (value) => search(value),
               onChanged: (value) => setState(() {}),
               padding: WidgetStateProperty.all(
@@ -178,14 +174,12 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                       child: Icon(Icons.search),
                     )
                   : IconButton(
-                      onPressed: () {
-                        searchCtrl.text = '';
-                        setState(() {
-                          products = [];
-                          searching = false;
-                          hasSearched = false;
-                        });
-                      },
+                      onPressed: selecting
+                          ? null
+                          : () {
+                              searchCtrl.text = '';
+                              search('');
+                            },
                       icon: const Icon(Icons.clear),
                       tooltip: context.l10n.clear,
                       padding: const EdgeInsets.only(left: 16.0, right: 8.0),
@@ -211,7 +205,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               ],
             ),
           ),
-          Builder(builder: (context) => productsBuilder(context, foodUnit)),
+          Builder(builder: (context) => productsBuilder(context)),
         ],
       ),
       floatingActionButton: supportsBarcodeCamera
@@ -221,7 +215,7 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
               ),
               child: FloatingActionButton.extended(
                 label: Text(context.l10n.scanBarcode),
-                onPressed: scan,
+                onPressed: selecting ? null : scan,
                 icon: const Icon(Icons.barcode_reader),
               ),
             )
@@ -230,23 +224,35 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
   }
 
   Future<void> tap(Product product) async {
-    final settings = context.read<SettingsState>().value;
-    var companion = mapOpenFoodFacts(product, settings.foodUnit);
-    if (settings.favoriteNew)
-      companion = companion.copyWith(
-        favorite: const Value(true),
+    if (selecting || product.barcode == null) return;
+    setState(() => selecting = true);
+    try {
+      final full = await widget.client.details(product.barcode!);
+      if (!mounted) return;
+      full.productName = product.productName ?? full.productName;
+      final settings = context.read<SettingsState>().value;
+      final companion = mapOpenFoodFacts(full, settings.foodUnit).copyWith(
+        favorite: Value(settings.favoriteNew),
         barcode: Value(product.barcode),
+        created: Value(DateTime.now()),
       );
-
-    final id = await db.foods.insertOne(
-      companion.copyWith(created: Value(DateTime.now())),
-    );
-    final food =
-        await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
-    if (mounted) Navigator.of(context).pop(food);
+      final id = await db.foods.insertOne(companion);
+      final food =
+          await (db.foods.select()..where((u) => u.id.equals(id))).getSingle();
+      if (mounted) Navigator.of(context).pop(food);
+    } catch (error, stackTrace) {
+      talker.handle(error, stackTrace, 'Open Food Facts product lookup failed');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.loadDataFailed)),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => selecting = false);
+    }
   }
 
-  Widget factCard(Product product, double cals, BuildContext context) {
+  Widget factCard(Product product, BuildContext context) {
     String brand = product.brands?.split(',').first ?? '';
     String title =
         product.productName != null ? "${product.productName} - " : '';
@@ -273,7 +279,6 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
                 child: material.Column(
                   children: [
                     Text('$title$brand ${product.quantity ?? ''}'),
-                    Text(_calorieLabel(context, cals)),
                   ],
                 ),
               ),
@@ -286,15 +291,16 @@ class _SearchOpenFoodFactsState extends State<SearchOpenFoodFacts> {
 
   ListTile factTile(
     Product product,
-    double cals,
     material.BuildContext context,
   ) {
     return ListTile(
       title: Text(product.productName ?? ""),
-      subtitle: Text(_calorieLabel(context, cals)),
-      trailing: product.imageFrontSmallUrl != null
+      subtitle: Text(
+        [product.brands, product.quantity].whereType<String>().join(' · '),
+      ),
+      trailing: product.imageFrontSmallUrl?.isNotEmpty == true
           ? CachedNetworkImage(
-              imageUrl: product.imageFrontUrl!,
+              imageUrl: product.imageFrontSmallUrl!,
               memCacheWidth:
                   (96 * MediaQuery.devicePixelRatioOf(context)).round(),
               placeholder: (context, url) => const SizedBox(
