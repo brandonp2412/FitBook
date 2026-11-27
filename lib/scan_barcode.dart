@@ -40,7 +40,15 @@ Future<BarcodeScanResult> performBarcodeScan(
   BuildContext context, {
   bool barcodeOnly = false,
 }) async {
-  if (!supportsBarcodeCamera) return const BarcodeScanResult.cancelled();
+  final barcode = await captureBarcode(context);
+  if (barcode == null || !context.mounted) {
+    return const BarcodeScanResult.cancelled();
+  }
+  return resolveScannedBarcode(context, barcode, barcodeOnly: barcodeOnly);
+}
+
+Future<String?> captureBarcode(BuildContext context) async {
+  if (!supportsBarcodeCamera) return null;
 
   final status = await Permission.camera.request();
   if (!status.isGranted) {
@@ -50,21 +58,19 @@ Future<BarcodeScanResult> performBarcodeScan(
         SnackBar(content: Text(context.l10n.cameraPermissionRequired)),
       );
     }
-    return const BarcodeScanResult.cancelled();
+    return null;
   }
 
-  if (!context.mounted) return const BarcodeScanResult.cancelled();
+  if (!context.mounted) return null;
   final barcode = await Navigator.of(context, rootNavigator: true).push<String>(
     MaterialPageRoute(builder: (_) => const _BarcodeScannerPage()),
   );
   if (barcode == null || barcode.isEmpty) {
     talker.debug('Barcode scan cancelled');
-    return const BarcodeScanResult.cancelled();
+    return null;
   }
   talker.info('Scanned barcode');
-  if (!context.mounted) return const BarcodeScanResult.cancelled();
-
-  return resolveScannedBarcode(context, barcode, barcodeOnly: barcodeOnly);
+  return barcode;
 }
 
 /// Manually entered food barcode fields must not import or create products.

@@ -13,6 +13,39 @@ import 'mock_tests.dart';
 import 'test_utils.dart';
 
 void main() {
+  testWidgets('scanned diary entry shows loading before filling in local food',
+      (tester) async {
+    await mockTests();
+    const barcode = '9412345678901';
+    await db.foods.insertOne(
+      FoodsCompanion.insert(
+        name: 'Scanned snack',
+        barcode: const Value(barcode),
+      ),
+    );
+    final settings = await db.settings.select().getSingle();
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => SettingsState(settings.copyWith(showImages: true)),
+        child: localizedApp(home: const EditDiaryPage(scannedBarcode: barcode)),
+      ),
+    );
+
+    expect(find.byType(EditDiaryPage), findsOneWidget);
+    expect(find.byType(LinearProgressIndicator), findsOneWidget);
+    expect(find.byIcon(Icons.restaurant_rounded), findsOneWidget);
+    expect(find.byType(TextField), findsNothing);
+
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+    expect(find.widgetWithText(TextField, 'Scanned snack'), findsOneWidget);
+    expect(find.widgetWithText(TextField, barcode), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pumpAndSettle();
+    await db.close();
+  });
+
   testWidgets('diary editor clears existing food barcode without duplication',
       (tester) async {
     await mockTests();

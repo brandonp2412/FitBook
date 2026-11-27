@@ -442,22 +442,14 @@ class DiaryPageState extends State<DiaryPage> {
                       icon: Icons.barcode_reader,
                       label: context.l10n.scanBarcode,
                       onSelected: () async {
-                        final result = await performBarcodeScan(context);
-                        if (result.food != null) {
-                          navigatorKey.currentState!.push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  EditDiaryPage(initialFood: result.food),
-                            ),
-                          );
-                        } else if (result.barcode != null) {
-                          navigatorKey.currentState!.push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  EditDiaryPage(initialBarcode: result.barcode),
-                            ),
-                          );
-                        }
+                        final barcode = await captureBarcode(context);
+                        if (barcode == null || !context.mounted) return;
+                        navigatorKey.currentState!.push(
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                EditDiaryPage(scannedBarcode: barcode),
+                          ),
+                        );
                       },
                     ),
                 ],

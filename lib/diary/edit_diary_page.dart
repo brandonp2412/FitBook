@@ -53,6 +53,7 @@ class EditDiaryPage extends StatefulWidget {
   final Food? initialFood;
   final String? initialBarcode;
   final String? initialName;
+  final String? scannedBarcode;
 
   const EditDiaryPage({
     super.key,
@@ -60,6 +61,7 @@ class EditDiaryPage extends StatefulWidget {
     this.initialFood,
     this.initialBarcode,
     this.initialName,
+    this.scannedBarcode,
   });
 
   @override
@@ -87,6 +89,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   DateTime? created;
   bool foodDirty = false;
   bool _creatingFood = false;
+  late bool _lookingUpBarcode = widget.scannedBarcode != null;
   Food? selectedFood;
   int? _selectedMealId;
   String? imageFile;
@@ -159,6 +162,14 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
   void initState() {
     super.initState();
     if (unit == 'serving') quantity.text = '1';
+
+    final scannedBarcode = widget.scannedBarcode;
+    if (scannedBarcode != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _loadScannedFood(scannedBarcode);
+      });
+      return;
+    }
 
     final initialName = widget.initialName?.trim();
     if (widget.id == null &&
@@ -376,6 +387,26 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     if (count != null && mounted) {
       talker.info('Scheduled $count repeated diary entries');
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> _loadScannedFood(String scannedBarcode) async {
+    Food? food;
+    try {
+      final result = await resolveScannedBarcode(context, scannedBarcode);
+      food = result.food;
+    } catch (error, stackTrace) {
+      talker.handle(error, stackTrace, 'Diary barcode lookup failed');
+    }
+    if (!mounted || ModalRoute.of(context)?.isActive == false) return;
+
+    setState(() => _lookingUpBarcode = false);
+    barcode.text = food?.barcode ?? scannedBarcode;
+    if (food != null) {
+      _applyFood(food);
+    } else {
+      _startCreatingFood();
+      toast(context, context.l10n.barcodeNotFoundSaveToInsert);
     }
   }
 
@@ -732,6 +763,16 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
     settings = context.watch<SettingsState>().value;
     final l10n = context.l10n;
 
+    if (_lookingUpBarcode) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.addDiaryEntry)),
+        body: AdaptiveFormSurface(
+          desktopActions: const [],
+          child: _ScannedFoodLoading(showImage: settings.showImages && !kIsWeb),
+        ),
+      );
+    }
+
     final shortUnit = getShortUnit(
       selectedFood?.servingUnit ?? settings.foodUnit,
     );
@@ -785,7 +826,7 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                             MediaQuery.devicePixelRatioOf(context))
                         .round(),
                     fit: BoxFit.cover,
-                    placeholder: (_, __) => const SizedBox.expand(),
+                    placeholder: (_, __) => const _FoodImagePlaceholder(),
                     errorWidget: (_, __, ___) => const SizedBox.expand(),
                   ),
           ),
@@ -1362,6 +1403,65 @@ class _EditDiaryPageState extends State<EditDiaryPage> {
                     scroll: scrollCtrl,
                   ),
                 ),
+    );
+  }
+}
+
+class _ScannedFoodLoading extends StatelessWidget {
+  const _ScannedFoodLoading({required this.showImage});
+
+  final bool showImage;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return ListView(
+      children: [
+        if (showImage) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              height: usesSideNavigation(context) ? 220 : 200,
+              child: const _FoodImagePlaceholder(),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+        for (final width in [240.0, 140.0]) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Container(
+              width: width,
+              height: 20,
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
+        const LinearProgressIndicator(),
+      ],
+    );
+  }
+}
+
+class _FoodImagePlaceholder extends StatelessWidget {
+  const _FoodImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return ColoredBox(
+      color: colors.surfaceContainerHighest,
+      child: Center(
+        child: Icon(
+          Icons.restaurant_rounded,
+          size: 48,
+          color: colors.onSurfaceVariant,
+        ),
+      ),
     );
   }
 }
