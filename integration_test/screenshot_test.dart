@@ -1,3 +1,22 @@
+import 'package:fit_book/diary/diary_filters.dart';
+import 'package:fit_book/food/food_filters.dart';
+import 'package:fit_book/about_page.dart';
+import 'package:fit_book/diary/edit_diaries_page.dart';
+import 'package:fit_book/diary/repeat_entry_page.dart';
+import 'package:fit_book/food/edit_foods_page.dart';
+import 'package:fit_book/food/edit_meal_page.dart';
+import 'package:fit_book/quick_add_page.dart';
+import 'package:fit_book/search_open_food_facts.dart';
+import 'package:fit_book/settings/appearance_settings.dart';
+import 'package:fit_book/settings/chart_settings.dart';
+import 'package:fit_book/settings/data_settings.dart';
+import 'package:fit_book/settings/diary_settings.dart';
+import 'package:fit_book/settings/food_settings.dart';
+import 'package:fit_book/settings/open_food_facts_login.dart';
+import 'package:fit_book/settings/delete_records_button.dart';
+import 'package:fit_book/settings/tab_settings.dart';
+import 'package:fit_book/settings/weight_settings.dart';
+import 'package:fit_book/settings/whats_new.dart';
 import 'package:drift/drift.dart';
 import 'package:fit_book/constants.dart';
 import 'package:fit_book/database/database.dart';
@@ -280,6 +299,7 @@ Future<void> generateScreenshot({
   required TabBarState tabBarState,
   Future<void> Function(BuildContext context)? navigateToPage,
   bool skipSettle = false,
+  Future<void> Function(WidgetTester tester)? interact,
 }) async {
   await appWrapper();
   await tester.pumpAndSettle();
@@ -294,6 +314,10 @@ Future<void> generateScreenshot({
   }
 
   skipSettle ? await tester.pump() : await tester.pumpAndSettle();
+  if (interact != null) {
+    await interact(tester);
+    await tester.pumpAndSettle();
+  }
   await binding.convertFlutterSurfaceToImage();
   skipSettle ? await tester.pump() : await tester.pumpAndSettle();
   await binding.takeScreenshot(screenshotName);
@@ -315,6 +339,29 @@ void main() {
     await app.db.foods.insertAll(foods);
     await app.db.diaries.insertAll(diaries);
     await app.db.weights.insertAll(weights);
+    if (Uri.base.queryParameters['gallery'] == 'full') {
+      await app.db.meals.insertOne(
+        MealsCompanion.insert(
+          id: const Value(1),
+          name: 'Lunch',
+          created: DateTime.now(),
+        ),
+      );
+      await app.db.mealFoods.insertAll([
+        MealFoodsCompanion.insert(
+          meal: 1,
+          food: 2,
+          quantity: 150,
+          unit: 'grams',
+        ),
+        MealFoodsCompanion.insert(
+          meal: 1,
+          food: 3,
+          quantity: 100,
+          unit: 'grams',
+        ),
+      ]);
+    }
 
     final packageInfo = await PackageInfo.fromPlatform();
     final buildNumber = int.parse(packageInfo.buildNumber);
@@ -322,6 +369,386 @@ void main() {
       MetadataCompanion(buildNumber: Value(buildNumber)),
     );
   });
+
+  if (Uri.base.queryParameters['gallery'] == 'full') {
+    group('Full gallery', () {
+      testWidgets('settings-appearance', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-appearance',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const AppearanceSettings()),
+        );
+      });
+      testWidgets('settings-diary', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-diary',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const DiarySettings()),
+        );
+      });
+      testWidgets('settings-food', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-food',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const FoodSettings()),
+        );
+      });
+      testWidgets('settings-weight', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-weight',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const WeightSettings()),
+        );
+      });
+      testWidgets('settings-charts', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-charts',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const ChartSettingsPage()),
+        );
+      });
+      testWidgets('settings-tabs', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-tabs',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const TabSettings()),
+        );
+      });
+      testWidgets('settings-data', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-data',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const DataSettings()),
+        );
+      });
+      testWidgets('about', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-about',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const AboutPage()),
+        );
+      });
+      testWidgets('whats-new', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-whats-new',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const WhatsNew()),
+        );
+      });
+      testWidgets('open-food-facts-login', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-open-food-facts-login',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const DataSettings()),
+          interact: (tester) async {
+            final login = find.byType(OpenFoodFactsLogin);
+            await tester.ensureVisible(login);
+            await tester.tap(login);
+          },
+        );
+      });
+      testWidgets('open-food-facts-search', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-open-food-facts-search',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: const SearchOpenFoodFacts(),
+          ),
+        );
+      });
+      testWidgets('quick-add', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-quick-add',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const QuickAddPage()),
+        );
+      });
+      testWidgets('meal-create', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-meal-create',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const EditMealPage()),
+        );
+      });
+      testWidgets('food-create', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-food-create',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: const EditFoodPage(id: null),
+          ),
+        );
+      });
+      testWidgets('foods-bulk-edit', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-foods-bulk-edit',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: const EditFoodsPage(ids: [0, 1]),
+          ),
+        );
+      });
+      testWidgets('diary-edit', (tester) async {
+        final diaryIds =
+            (await app.db.diaries.select().get()).map((row) => row.id).toList();
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-diary-edit',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: EditDiaryPage(id: diaryIds.first),
+          ),
+        );
+      });
+      testWidgets('diary-bulk-edit', (tester) async {
+        final diaryIds =
+            (await app.db.diaries.select().get()).map((row) => row.id).toList();
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-diary-bulk-edit',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: EditDiariesPage(diaryIds: diaryIds.take(2).toList()),
+          ),
+        );
+      });
+      testWidgets('diary-repeat', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-diary-repeat',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: RepeatEntryPage(
+              foodId: 0,
+              mealId: null,
+              quantity: 200,
+              unit: 'grams',
+              initialDate: DateTime.now(),
+            ),
+          ),
+        );
+      });
+      testWidgets('weight-edit', (tester) async {
+        final weight = (await app.db.weights.select().get()).first;
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-weight-edit',
+          tabBarState: TabBarState.weights,
+          navigateToPage: (context) async => navigateTo(
+            context: context,
+            page: EditWeightPage(
+              weight: weight.toCompanion(true),
+            ),
+          ),
+        );
+      });
+      testWidgets('diary-filters', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-diary-filters',
+          tabBarState: TabBarState.diary,
+          interact: (tester) async {
+            await tester.tap(
+              find
+                  .descendant(
+                    of: find.byType(DiaryFilters),
+                    matching: find.byType(IconButton),
+                  )
+                  .first,
+            );
+          },
+        );
+      });
+      testWidgets('food-filters', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-food-filters',
+          tabBarState: TabBarState.foods,
+          interact: (tester) async {
+            await tester.tap(
+              find
+                  .descendant(
+                    of: find.byType(FoodFilters),
+                    matching: find.byType(IconButton),
+                  )
+                  .first,
+            );
+          },
+        );
+      });
+      testWidgets('meal-food-picker', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-meal-food-picker',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const EditMealPage()),
+          interact: (tester) async {
+            final fab = find.byTooltip('Add food');
+            await tester.tap(
+              fab.evaluate().isNotEmpty
+                  ? fab.first
+                  : find.text('Add food').first,
+            );
+          },
+        );
+      });
+      testWidgets('settings-search', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-settings-search',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const SettingsPage()),
+          interact: (tester) async {
+            await tester.enterText(
+              find.descendant(
+                of: find.byType(SearchBar),
+                matching: find.byType(EditableText),
+              ),
+              'calories',
+            );
+          },
+        );
+      });
+
+      testWidgets('meal-edit', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-meal-edit',
+          tabBarState: TabBarState.foods,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const EditMealPage(id: 1)),
+        );
+      });
+      testWidgets('nutrition-details', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-nutrition-details',
+          tabBarState: TabBarState.diary,
+          interact: (tester) async {
+            final button = find.byWidgetPredicate(
+              (widget) =>
+                  widget is Semantics &&
+                  widget.properties.label == 'Nutrition details',
+            );
+            await tester.tap(button.first);
+          },
+        );
+      });
+      testWidgets('graph-weight', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-graph-weight',
+          tabBarState: TabBarState.graph,
+          interact: (tester) async {
+            await tester.tap(find.byType(DropdownButton<String>));
+            await tester.pumpAndSettle();
+            await tester.tap(find.text('Body weight').last);
+          },
+        );
+      });
+      testWidgets('graph-metric-picker', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-graph-metric-picker',
+          tabBarState: TabBarState.graph,
+          interact: (tester) async =>
+              tester.tap(find.byType(DropdownButton<String>)),
+        );
+      });
+      testWidgets('data-delete-picker', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-data-delete-picker',
+          tabBarState: TabBarState.diary,
+          navigateToPage: (context) async =>
+              navigateTo(context: context, page: const DataSettings()),
+          interact: (tester) async {
+            final button = find.byType(DeleteRecordsButton);
+            await tester.ensureVisible(button);
+            await tester.tap(button);
+          },
+        );
+      });
+      testWidgets('diary-search-empty', (tester) async {
+        await generateScreenshot(
+          binding: binding,
+          tester: tester,
+          screenshotName: 'full-diary-search-empty',
+          tabBarState: TabBarState.diary,
+          interact: (tester) async {
+            await tester.enterText(
+              find.byType(EditableText).first,
+              'No matching food',
+            );
+          },
+        );
+      });
+    });
+    return;
+  }
 
   group("Generate default screenshots ", () {
     testWidgets(

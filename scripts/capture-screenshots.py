@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-import argparse, asyncio, base64, functools, http.server, json, threading, shutil, struct, tempfile
+import argparse, asyncio, base64, html, functools, http.server, json, threading, shutil, struct, tempfile
 from pathlib import Path
 from patchright.async_api import async_playwright
 
 EXPECTED_NAMES = {f"{n}_en-US.png" for n in range(1, 9)}
+FULL_NAMES = {f"full-{name}.png" for name in ('settings-appearance', 'settings-diary', 'settings-food', 'settings-weight', 'settings-charts', 'settings-tabs', 'settings-data', 'about', 'whats-new', 'open-food-facts-login', 'open-food-facts-search', 'quick-add', 'meal-create', 'food-create', 'foods-bulk-edit', 'diary-edit', 'diary-bulk-edit', 'diary-repeat', 'weight-edit', 'diary-filters', 'food-filters', 'meal-food-picker', 'settings-search', 'meal-edit', 'nutrition-details', 'graph-weight', 'graph-metric-picker', 'data-delete-picker', 'diary-search-empty')}
 MAX_BYTES = 8 * 1024 * 1024
 STATUS_BAR_HEIGHT = 24
 
@@ -11,6 +12,7 @@ PROFILES = {
     "phoneScreenshots": (450, 800, 2.4),
     "sevenInchScreenshots": (1440, 810, 4/3),
     "tenInchScreenshots": (1280, 800, 2),
+    "desktop": (1600, 881, 1),
 }
 
 def validate_screenshot(path, expected):
@@ -93,9 +95,10 @@ async def capture_with_status_bar(page, compositor, path, width, height, scale):
     await compositor.screenshot(path=str(path), animations="disabled", scale="device")
 
 
-async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
+async def capture(browser, url, out, name, debug_dir, args_camera_test=False, expected=None):
     w,h,scale = PROFILES[name]
-    status_bar = not args_camera_test
+    expected = EXPECTED_NAMES if expected is None else expected
+    status_bar = not args_camera_test and name != "desktop"
     options = dict(viewport={"width":w,"height":h - STATUS_BAR_HEIGHT if status_bar else h}, device_scale_factor=scale, reduced_motion="reduce", locale="en-US", timezone_id="UTC")
     if name == "phoneScreenshots" and not args_camera_test:
         options.update(is_mobile=True, has_touch=True, user_agent="Mozilla/5.0 (Linux; Android 15; Pixel 6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36")
@@ -119,7 +122,7 @@ async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
             command=data.get("web_driver_command")
             if command=="WebDriverCommandType.screenshot":
                 filename=data["screenshot_name"]+".png"
-                if filename not in EXPECTED_NAMES or filename in captured:
+                if filename not in expected or filename in captured:
                     raise RuntimeError(f"Unexpected screenshot: {filename}")
                 await page.wait_for_timeout(500)
                 if compositor:
@@ -135,7 +138,7 @@ async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
             elif command=="WebDriverCommandType.noop":
                 result=await request(page)
                 print(name,"RESULT",json.dumps(result)[:5000],flush=True)
-                if captured != EXPECTED_NAMES or result.get("result") != "true" or errors:
+                if captured != expected or result.get("result") != "true" or errors:
                     raise RuntimeError(f"{name}: captured={captured}, result={result}, page errors={errors}")
                 return
             else:
@@ -148,13 +151,90 @@ async def capture(browser, url, out, name, debug_dir, args_camera_test=False):
         if compositor_context:
             await compositor_context.close()
 
+STORE_NAMES = ("diary", "graphs", "settings", "foods", "weights", "add-weight", "edit-food", "add-diary-entry")
+
+PROFILE_LABELS = {
+    "phoneScreenshots": "Phone",
+    "sevenInchScreenshots": "7-inch tablet",
+    "tenInchScreenshots": "10-inch tablet",
+    "desktop": "Desktop",
+}
+
+
+def build_gallery(captures, destination):
+    entries = {}
+    for profile in PROFILES:
+        files = [
+            (captures / profile / f"{number}_en-US.png", f"{number:02}-{name}.png")
+            for number, name in enumerate(STORE_NAMES, 1)
+        ] + [
+            (captures / "full" / profile / name, name.removeprefix("full-"))
+            for name in sorted(FULL_NAMES)
+        ]
+        w, h, scale = PROFILES[profile]
+        for source, name in files:
+            validate_screenshot(source, (round(w * scale), round(h * scale)))
+        entries[profile] = files
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=destination.parent, prefix=".gallery-") as temp:
+        gallery = Path(temp) / "gallery"
+        gallery.mkdir()
+        root = ["# FitBook screenshot gallery", "",
+                "Generated from the automated screenshot fixture with sample data.", "",
+                f"{sum(map(len, entries.values()))} screenshots across {len(entries)} device profiles.", ""]
+        sections = []
+        for profile, files in entries.items():
+            label = PROFILE_LABELS[profile]
+            root.append(f"- [{label} — {len(files)} screenshots]({profile}/)")
+            directory = gallery / profile
+            directory.mkdir()
+            markdown = [f"# {label}", "", "[All device profiles](../)", ""]
+            cards = []
+            w, h, scale = PROFILES[profile]
+            image_width, image_height = round(w * scale), round(h * scale)
+            for source, filename in files:
+                shutil.copyfile(source, directory / filename)
+                title = filename.removesuffix(".png")
+                if title[:2].isdigit():
+                    title = title[3:]
+                title = title.replace("-", " ").capitalize()
+                width = 260 if profile == "phoneScreenshots" else 480
+                markdown.extend([f"### {title}", "", f'<a href="{filename}"><img src="{filename}" alt="{title}" width="{width}"/></a>', ""])
+                path = f"{profile}/{filename}"
+                cards.append(f'<a href="{path}"><img loading="lazy" src="{path}" width="{image_width}" height="{image_height}" alt="{html.escape(title)}"><span>{html.escape(title)}</span></a>')
+            (directory / "README.md").write_text("\n".join(markdown), encoding="utf-8")
+            sections.append(f'<section id="{profile}"><h2>{label} · {len(files)} screenshots</h2><div class="screens {profile}">{"".join(cards)}</div></section>')
+        (gallery / "README.md").write_text("\n".join(root) + "\n", encoding="utf-8")
+        links = " ".join(f'<a href="#{profile}">{label}</a>' for profile, label in PROFILE_LABELS.items())
+        (gallery / "index.html").write_text(
+            '<!doctype html><html lang="en"><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width,initial-scale=1">'
+            '<title>FitBook screenshots</title><style>'
+            'body{font:16px system-ui;margin:24px;background:#17161b;color:#eee}'
+            'nav{display:flex;gap:20px;flex-wrap:wrap;position:sticky;top:0;z-index:1;background:#17161b;padding:12px 0}'
+            'a{color:#d3bfff;text-decoration:none}.screens{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}'
+            '.phoneScreenshots{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}'
+            '.screens a{display:flex;flex-direction:column;gap:8px;background:#25242b;border-radius:12px;padding:12px}'
+            'img{display:block;width:100%;height:auto;object-fit:contain;border-radius:5px;background:#17161b}section{scroll-margin-top:calc(var(--nav-height, 65px) + 12px)}'
+            '@media(max-width:500px){.screens,.phoneScreenshots{grid-template-columns:1fr}}'
+            '</style><h1>FitBook screenshots</h1><p>All device profiles · Sample data · Click any image for full resolution</p>'
+            f'<nav>{links}</nav>{"".join(sections)}<script>const nav=document.querySelector("nav");const resize=()=>document.documentElement.style.setProperty("--nav-height",nav.offsetHeight+"px");resize();new ResizeObserver(resize).observe(nav);</script></html>',
+            encoding="utf-8",
+        )
+        if destination.exists():
+            shutil.rmtree(destination)
+        gallery.rename(destination)
+
+
 async def main(args):
+    expected = FULL_NAMES if args.full else EXPECTED_NAMES
     args.output.mkdir(parents=True, exist_ok=True)
     handler=functools.partial(http.server.SimpleHTTPRequestHandler,directory=str(args.web))
     server=http.server.ThreadingHTTPServer(("127.0.0.1",0),handler)
     threading.Thread(target=server.serve_forever,daemon=True).start()
     try:
-        with tempfile.TemporaryDirectory(prefix="flex-screenshots-") as directory:
+        with tempfile.TemporaryDirectory(prefix="fitbook-screenshots-") as directory:
             staged = Path(directory)
             async with async_playwright() as p:
                 browser = await p.chromium.launch(
@@ -162,24 +242,32 @@ async def main(args):
                 )
                 try:
                     for name in args.profiles:
-                        await capture(browser, f"http://127.0.0.1:{server.server_port}/", staged, name, args.output, args.web_camera_test)
+                        await capture(browser, f"http://127.0.0.1:{server.server_port}/" + ("?gallery=full" if args.full else ""), staged, name, args.output, args.web_camera_test, expected)
                 finally:
                     await browser.close()
             for name in args.profiles:
-                destination = args.output / name
+                destination = args.output / "full" / name if args.full else args.output / name
                 destination.mkdir(parents=True, exist_ok=True)
-                for filename in sorted(EXPECTED_NAMES):
+                for filename in sorted(expected):
                     shutil.copyfile(staged / name / filename, destination / filename)
+            if args.gallery:
+                build_gallery(args.output, args.gallery)
     finally:
         server.shutdown()
         server.server_close()
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
+    parser.add_argument("--full", action="store_true")
+    parser.add_argument("--gallery", type=Path)
     parser.add_argument("--web",type=Path,required=True)
     parser.add_argument("--output",type=Path,required=True)
     parser.add_argument("--web-camera-test", action="store_true", help="Capture the web_camera_test.dart fixture using a simulated webcam")
     parser.add_argument("profiles",nargs="*",default=list(PROFILES))
     args = parser.parse_args()
+    if args.gallery and not args.full:
+        parser.error("--gallery requires --full")
+    if args.full and args.web_camera_test:
+        parser.error("--full is incompatible with --web-camera-test")
     if args.web_camera_test:
         EXPECTED_NAMES = {f"{n}_en-US.png" for n in range(1, 4)}
         PROFILES = {"phoneScreenshots": (1200, 900, 1)}

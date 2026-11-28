@@ -44,7 +44,7 @@ jobs:
   generate-screenshots:
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -73,13 +73,25 @@ jobs:
 
       - name: Capture all screenshot profiles
         run: |
-          python scripts/capture-screenshots.py --web build/web --output "$RUNNER_TEMP/flex-screenshots"
+          python scripts/capture-screenshots.py --web build/web --output "$RUNNER_TEMP/fitbook-screenshots"
+
+      - name: Capture full screenshot gallery
+        run: |
+          python scripts/capture-screenshots.py --full --web build/web --output "$RUNNER_TEMP/fitbook-screenshots" --gallery "$RUNNER_TEMP/fitbook-gallery"
+
+      - name: Upload full screenshot gallery
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fitbook-screenshot-gallery
+          path: ${{ runner.temp }}/fitbook-gallery/
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Upload phoneScreenshots
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: screenshots-phoneScreenshots
-          path: ${{ runner.temp }}/flex-screenshots/phoneScreenshots
+          path: ${{ runner.temp }}/fitbook-screenshots/phoneScreenshots
           if-no-files-found: error
           retention-days: 7
 
@@ -87,7 +99,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: screenshots-sevenInchScreenshots
-          path: ${{ runner.temp }}/flex-screenshots/sevenInchScreenshots
+          path: ${{ runner.temp }}/fitbook-screenshots/sevenInchScreenshots
           if-no-files-found: error
           retention-days: 7
 
@@ -95,7 +107,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: screenshots-tenInchScreenshots
-          path: ${{ runner.temp }}/flex-screenshots/tenInchScreenshots
+          path: ${{ runner.temp }}/fitbook-screenshots/tenInchScreenshots
           if-no-files-found: error
           retention-days: 7
 
@@ -104,7 +116,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: screenshot-failure
-          path: ${{ runner.temp }}/flex-screenshots/**/*-debug.png
+          path: ${{ runner.temp }}/fitbook-screenshots/**/*-debug.png
           if-no-files-found: ignore
           retention-days: 3
 
@@ -379,7 +391,8 @@ jobs:
           path: fitbook-windows.zip
 
   build-and-deploy-web:
-    needs: version-bump
+    needs: [generate-screenshots, version-bump]
+    if: ${{ always() && github.ref == 'refs/heads/main' && needs.generate-screenshots.result == 'success' && (github.event_name == 'push' || needs.version-bump.result == 'success') }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -391,7 +404,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: main
+          ref: ${{ needs.version-bump.outputs.commit_sha || github.sha }}
           persist-credentials: false
 
       - name: Setup Flutter from submodule
@@ -414,6 +427,15 @@ jobs:
 
       - name: Add privacy policy to web deployment
         run: cp docs/privacy-policy.html build/web/privacy-policy.html
+
+      - name: Download screenshot gallery
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fitbook-screenshot-gallery
+          path: build/web/screenshots
+
+      - name: Validate screenshot gallery
+        run: test -s build/web/screenshots/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0

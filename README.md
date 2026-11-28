@@ -39,6 +39,8 @@ Graph your eating habits with ease!
   <img alt="FitBook add diary entry screen for searching and selecting foods" src="fastlane/metadata/android/en-US/images/phoneScreenshots/8_en-US.png" style="height: 667px !important;">
 </p>
 
+[Browse all screenshots (phone, tablets and desktop)](https://brandonp2412.github.io/FitBook/screenshots/)
+
 ## Donations
 
 Contributing to this project helps us keep adding awesome features!
