@@ -639,12 +639,7 @@ void main() {
           navigateToPage: (context) async =>
               navigateTo(context: context, page: const EditMealPage()),
           interact: (tester) async {
-            final fab = find.byTooltip('Add food');
-            await tester.tap(
-              fab.evaluate().isNotEmpty
-                  ? fab.first
-                  : find.text('Add food').first,
-            );
+            await tester.tap(find.text('Add food').first);
           },
         );
       });

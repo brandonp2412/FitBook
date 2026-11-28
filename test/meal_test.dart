@@ -70,7 +70,10 @@ void main() {
     await tester.enterText(find.bySemanticsLabel('Name'), 'Chicken and Rice');
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Add food'));
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.text('Add food'), findsOneWidget);
+    await tester.ensureVisible(find.text('Add food'));
+    await tester.tap(find.text('Add food'));
     await settle(tester);
 
     expect(find.text('Search foods...'), findsOne);
@@ -79,7 +82,10 @@ void main() {
 
     expect(find.text('Chicken'), findsOne);
 
-    await tester.tap(find.byTooltip('Add food'));
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.text('Add food'), findsOneWidget);
+    await tester.ensureVisible(find.text('Add food'));
+    await tester.tap(find.text('Add food'));
     await settle(tester);
 
     await tester.tap(find.text('Rice'));
@@ -137,7 +143,10 @@ void main() {
     await tester.enterText(find.bySemanticsLabel('Name'), 'New Meal Name');
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Add food'));
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+    expect(find.text('Add food'), findsOneWidget);
+    await tester.ensureVisible(find.text('Add food'));
+    await tester.tap(find.text('Add food'));
     await settle(tester);
 
     expect(find.text('Search foods...'), findsOne);

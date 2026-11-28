@@ -603,6 +603,12 @@ class _EditFoodPageState extends State<EditFoodPage> {
                   label: Text(l10n.fields),
                   icon: const Icon(Icons.settings),
                 ),
+                if (!desktop && widget.id != null)
+                  TextButton.icon(
+                    onPressed: saveAs,
+                    icon: const Icon(Icons.save_as),
+                    label: Text(l10n.saveAsNewCopy),
+                  ),
               ],
             ),
             if (desktop) const SizedBox(height: 12),
@@ -644,26 +650,11 @@ class _EditFoodPageState extends State<EditFoodPage> {
               padding: EdgeInsets.only(
                 bottom: navigationBottomClearance(context),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.id != null) ...[
-                    FloatingActionButton.small(
-                      heroTag: 'saveAs',
-                      tooltip: l10n.saveAsNewCopy,
-                      onPressed: saveAs,
-                      child: const Icon(Icons.save_as),
-                    ),
-                    const SizedBox(height: 8),
-                  ],
-                  AnimatedFab(
-                    onTap: save,
-                    label: l10n.save,
-                    icon: Icons.save,
-                    scroll: scrollCtrl,
-                  ),
-                ],
+              child: AnimatedFab(
+                onTap: save,
+                label: l10n.save,
+                icon: Icons.save,
+                scroll: scrollCtrl,
               ),
             ),
     );

@@ -352,7 +352,10 @@ class _EditMealPageState extends State<EditMealPage> {
                 padding: EdgeInsets.only(
                   bottom: desktop ? 0 : navigationBottomClearance(context),
                 ),
-                itemCount: 2 + (mealFoods.isEmpty ? 1 : mealFoods.length),
+                itemCount: 2 +
+                    (mealFoods.isEmpty
+                        ? 1
+                        : mealFoods.length + (desktop ? 0 : 1)),
                 itemBuilder: (ctx, i) {
                   if (i == 0)
                     return Padding(
@@ -432,6 +435,14 @@ class _EditMealPageState extends State<EditMealPage> {
                         onAction: _pickFood,
                       ),
                     );
+                  if (i == mealFoods.length + 2)
+                    return Center(
+                      child: TextButton.icon(
+                        onPressed: _pickFood,
+                        icon: const Icon(Icons.add),
+                        label: Text(l10n.addFood),
+                      ),
+                    );
                   final idx = i - 2;
                   return _FoodEntryCard(
                     entry: mealFoods[idx],
@@ -447,23 +458,11 @@ class _EditMealPageState extends State<EditMealPage> {
               padding: EdgeInsets.only(
                 bottom: navigationBottomClearance(context),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FloatingActionButton.small(
-                    heroTag: 'addFood',
-                    tooltip: l10n.addFood,
-                    onPressed: _pickFood,
-                    child: const Icon(Icons.add),
-                  ),
-                  const SizedBox(height: 8),
-                  AnimatedFab(
-                    onTap: _save,
-                    label: l10n.save,
-                    icon: Icons.save,
-                    scroll: scrollCtrl,
-                  ),
-                ],
+              child: AnimatedFab(
+                onTap: _save,
+                label: l10n.save,
+                icon: Icons.save,
+                scroll: scrollCtrl,
               ),
             ),
     );
